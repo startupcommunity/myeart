@@ -1,0 +1,216 @@
+.home-login {
+  height: 100vh;
+  background: linear-gradient(270deg, #000000 65.09%, rgba(0, 0, 0, 0.125) 79.09%, rgba(0, 0, 0, 0) 90.36%), url("/img/image1.png") no-repeat center center fixed;
+  width: 100%;
+  margin: 0 auto;
+  background-size: cover;
+}
+.home-login .wrap-login {
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+.home-login .wrap-login .container-login {
+  width: 544px;
+  height: 576px;
+  box-shadow: 20px 10px 40px rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 55px 55px 37px 55px;
+  margin-right: 12rem;
+}
+.home-login .wrap-login .container-login .login-form {
+  width: 100%;
+  color: #FFFFFF;
+}
+.home-login .wrap-login .container-login .login-form-logo {
+  font-size: 60px;
+  color: #333333;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+}
+.home-login .wrap-login .container-login .login-form-logo .img-logo {
+  background: url("/img/Logo_Myeart.svg") no-repeat center;
+  width: 60%;
+  height: 200px;
+}
+.home-login .wrap-login .container-login .container-login-form-btn {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.home-login .wrap-login .container-login .login-form-btn {
+  background: #B2794C;
+  border: 2px solid #B2794C;
+  width: 100%;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 10px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+}
+.home-login .wrap-login .container-login .google-form-btn {
+  background: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  color: #383838;
+  width: 100%;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 10px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+}
+.home-login .wrap-login .container-login .register-form-btn {
+  color: #FFFFFF;
+  width: 100%;
+  border: 2px solid #FFFFFF;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 10px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+}
+.home-login .wrap-login .container-login .login-form-btn:hover {
+  opacity: 0.5;
+}
+.home-login .wrap-login .container-login .register-form-btn:hover {
+  opacity: 0.5;
+}
+.home-login .wrap-login .container-login .google-form-btn:hover {
+  opacity: 0.5;
+}
+.home-login .wrap-login .container-login .login-icon {
+  width: 21px;
+  height: 120px;
+}
+.home-login .wrap-login .container-login .wrap-input100 {
+  width: 100%;
+  position: relative;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.24);
+  margin-bottom: 30px;
+}
+.home-login .wrap-login .container-login .input100 {
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.2;
+  border: 0px !important;
+  display: block;
+  width: 100%;
+  height: 45px;
+  background: transparent !important;
+  padding: 0 5px 0 38px;
+}
+.home-login .wrap-login .container-login .focus-input100 {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+.home-login .wrap-login .container-login .focus-input100::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  transition: all 0.4s;
+  background: #fff;
+}
+.home-login .wrap-login .container-login .focus-input100::after {
+  font-family: "FontAwesome";
+  font-size: 22px;
+  color: #fff;
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 6px;
+  left: 0px;
+  padding-left: 5px;
+  transition: all 0.4s;
+}
+.home-login .wrap-login .container-login .input100:focus {
+  border: 0px !important;
+  border-color: #000000 !important;
+  background: transparent !important;
+  outline: none;
+}
+.home-login .wrap-login .container-login .input100:focus + .focus-input100::after {
+  font-size: 18px;
+}
+.home-login .wrap-login .container-login .input100:focus + .focus-input100::before {
+  width: 100%;
+}
+.home-login .wrap-login .container-login .has-val.input100 + .focus-input100::after {
+  top: -22px;
+  font-size: 18px;
+}
+.home-login .wrap-login .container-login .has-val.input100 + .focus-input100::before {
+  width: 100%;
+}
+.home-login .wrap-login .container-login .has-val.input100 {
+  padding-left: 5px;
+}
+
+@media (max-width: 576px) {
+  .home-login {
+    background: linear-gradient(270deg, #000000 65.09%, rgba(0, 0, 0, 0.125) 79.09%, rgba(0, 0, 0, 0) 90.36%), url("/img/image_movil.png") no-repeat center center fixed;
+    background-size: cover;
+  }
+  .home-login .wrap-login {
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+  }
+  .home-login .wrap-login .container-login {
+    width: 100%;
+    height: 55%;
+    margin-right: 0px !important;
+  }
+  .home-login .login-form-logo {
+    height: 100px !important;
+  }
+  .home-login .login-form-logo .img-logo {
+    height: 100px !important;
+  }
+  .home-login .login-icon {
+    height: 30px !important;
+  }
+  .home-login .container-login-form-btn {
+    margin-bottom: 10px !important;
+  }
+  .home-login .login-form-btn {
+    font-size: 16px !important;
+  }
+  .home-login .register-form-btn {
+    font-size: 16px !important;
+  }
+  .home-login .google-form-btn {
+    font-size: 16px !important;
+  }
+}
