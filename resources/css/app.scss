@@ -1,3 +1,9 @@
+html, body{
+    height:100%;
+    margin:0;
+    display: flex;
+    flex-direction: column;
+}
 
 .home-login{
     height: 100vh;
@@ -20,7 +26,7 @@
             width: 544px;
             height: 576px;
 
-            
+            background: rgba(255, 255, 255, 0.05);
             box-shadow: 20px 10px 40px rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 55px 55px 37px 55px;
@@ -232,11 +238,17 @@
 
 @media (max-width: 576px) {
     .home-login{
-        background: linear-gradient(270deg, #000000 65.09%, rgba(0, 0, 0, 0.125) 79.09%, rgba(0, 0, 0, 0) 90.36%), url('/img/image_movil.png') no-repeat center center fixed; 
+        width: 100%;
+        height: 100%;
+        background: url('/img/image_movil.png');
+        background-repeat:no-repeat;
+        background-size:contain;
+        background-position:center;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
+
         .wrap-login {
             display: flex !important;
             align-items: flex-end !important;
@@ -245,6 +257,11 @@
                 width: 100%;
                 height: 55%;
                 margin-right: 0px !important;
+                background: transparent;
+                box-shadow: none;
+                padding-bottom: 0px;
+                display: flex;
+                align-items: flex-end;
             }
         }
 
