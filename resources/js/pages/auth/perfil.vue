@@ -94,5 +94,18 @@
         background: rgb(178, 121, 76);
         border-color:rgb(178, 121, 76);
     }
+    .vue-form-wizard .wizard-nav-pills {
+        top: 18rem;
+    }
+    .vue-form-wizard.xs .wizard-navigation .wizard-progress-with-circle {
+        top: 19rem;
+    }
     .wizard-card-footer{ position: fixed; bottom: 12px; /* set whatever bottom margin you want */ width: 100%;}
+    .vue-form-wizard .wizard-header {
+        display: none;
+    }
+    .vue-form-wizard .wizard-tab-content {
+        padding: 0px;
+        padding-bottom: 40px;
+    }   
 </style>
