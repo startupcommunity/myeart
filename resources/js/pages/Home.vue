@@ -12,9 +12,9 @@
 					</div>
 
                     <div class="container-login-form-btn">
-						<button class="btn btn-primary login-form-btn">
+						<router-link to="/register"  class="btn btn-primary login-form-btn">
 							Registrate
-						</button>
+                        </router-link>
 					</div>
                 </form>
             </div>

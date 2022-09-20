@@ -1,29 +1,40 @@
-
-require('./bootstrap');
 import vue from 'vue'
+import VueRouter from 'vue-router'
 window.Vue = vue;
 
-import App from './pages/App.vue';
+import { routes } from './router/routes';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import VueEvents from 'vue-events';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
-//importamos Axios
-import VueAxios from 'vue-axios';
-import axios from 'axios';
+import ApiService from './api/api.service';
+import Vuelidate from 'vuelidate';
 
-//Importamos y configuramos el Vue-router
-import VueRouter from 'vue-router';
-import {routes} from './routes';
- 
+import App from './App.vue';
+
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+Vue.use(Vuelidate);
+Vue.use(VueEvents);
 Vue.use(VueRouter);
-Vue.use(VueAxios, axios);
- 
+
 const router = new VueRouter({
     mode: 'history',
     routes: routes
 });
- 
-//finalmente, definimos nuestra app de Vue
+
+ApiService.init();
+
+import { store } from './store/store';
+
 const app = new Vue({
     el: '#app',
     router: router,
+    created(){
+        if (this.$store.getters.isAuthenticated) {
+            this.$store.dispatch('userRequest');
+        }
+    },
+    store,
     render: h => h(App),
 });

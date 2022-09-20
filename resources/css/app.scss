@@ -1,3 +1,10 @@
+// Bootstrap
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import "variables";
+@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
+
+
 html, body{
     height:100%;
     margin:0;
@@ -24,7 +31,6 @@ html, body{
         
         .container-login{
             width: 544px;
-            height: 576px;
 
             background: rgba(255, 255, 255, 0.05);
             box-shadow: 20px 10px 40px rgba(255, 255, 255, 0.05);
@@ -39,9 +45,8 @@ html, body{
             }
 
             .login-form-logo {
-                font-size: 60px; 
-                color: #333333;
-                text-align: center;
+                font-size: 44px; 
+                color: #FFF;
                 display: -webkit-box;
                 display: -webkit-flex;
                 display: -moz-box;
@@ -71,7 +76,7 @@ html, body{
             }
 
             .login-form-btn{
-                background: #B2794C;
+                background: $primary;
                 border: 2px solid #B2794C;
                 width: 100%;
                 border-radius: 6px;
@@ -134,7 +139,7 @@ html, body{
 
             .login-icon{
                 width: 21px;
-                height: 120px;
+                height: 30px;
             }
 
             .wrap-input100 {
@@ -255,13 +260,15 @@ html, body{
             justify-content: center !important;
             .container-login {
                 width: 100%;
-                height: 55%;
                 margin-right: 0px !important;
                 background: transparent;
                 box-shadow: none;
                 padding-bottom: 0px;
                 display: flex;
                 align-items: flex-end;
+                h1{
+                    font-size: 1.5rem !important;
+                }
             }
         }
 

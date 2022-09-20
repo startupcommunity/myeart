@@ -2,26 +2,33 @@
     <div class="home-login">
         <div class="wrap-login p-2 ">
             <div class="container-login" style="background: rgba(255, 255, 255, 0.05);">
-                <form class="login-form validate-form">
+                <form class="login-form validate-form" method="POST" v-on:submit.prevent="login">
                     <div class="login-icon">
                         <router-link exact-active-class="active" to="/" style="color:#FFF">
                             <i class="fas fa-arrow-left"></i>
                         </router-link>
                     </div>
 
+                    <p class="text-danger" v-if="authErrors.has('invalid_credentials')" v-text="authErrors.get('invalid_credentials')"></p>
+
+                    <div class="alert alert-danger mt-3" role="alert" v-if="authErrors.has('email') || authErrors.has('password')">
+                        <div v-text="authErrors.get('email')"></div>
+                        <div v-text="authErrors.get('password')"></div>
+                    </div>
+
                     <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                        <input class="input100" type="text" name="username" placeholder='Nombre de usuario / Teléfono / Correo' />
+                        <b-form-input v-model="user.email" type="text" placeholder="Nombre de usuario / Teléfono / Correo" class="input100"></b-form-input>
                         <span class="focus-input100 user-input"></span>
                     </div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-                        <input class="input100" type="password" name="password" placeholder='Contraseña' />
+                        <b-form-input v-model="user.password" type="password" placeholder="Contraseña" class="input100"></b-form-input>
                         <span class="focus-input100 password-input"></span>
                     </div>
 
                     <div class="container-login-form-btn">
-						<button class="btn btn-primary login-form-btn">
-							Registrate
+						<button :to="{ name: 'register' }" class="btn btn-primary login-form-btn" type="submit">
+							Iniciar sesión
 						</button>
 					</div>
 
@@ -37,8 +44,38 @@
 </template>
 
 <script>
+
+    //data
+    function data(){
+        return {
+            user: {
+                email:'',
+                password:'',
+                remember:false,
+            }
+        }
+    }
+    //methods
+    function login () {
+        const { email, password, remember } = this.user;
+        this.$store.dispatch('authRequest', { email, password, remember })
+            .then(() => {
+                this.$router.push('/dashboard')
+            })
+    }
+    //computed
+    function authErrors(){
+        return this.$store.getters.authErrors;
+    }
     export default {
-        name:'login'
+        name:'login',
+        data,
+        methods: {
+            login
+        },
+        computed:{
+            authErrors
+        }
     }
 </script>
 

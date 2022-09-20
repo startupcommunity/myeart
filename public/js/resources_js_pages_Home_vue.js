@@ -48,7 +48,14 @@ var render = function render() {
       "exact-active-class": "active",
       to: "/login"
     }
-  }, [_vm._v("Iniciar sesión")])], 1), _vm._v(" "), _vm._m(1)])])])]);
+  }, [_vm._v("Iniciar sesión")])], 1), _vm._v(" "), _c("div", {
+    staticClass: "container-login-form-btn"
+  }, [_c("router-link", {
+    staticClass: "btn btn-primary login-form-btn",
+    attrs: {
+      to: "/register"
+    }
+  }, [_vm._v("\n\t\t\t\t\t\t\tRegistrate\n                        ")])], 1)])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -60,15 +67,6 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "img-logo"
   })]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "container-login-form-btn"
-  }, [_c("button", {
-    staticClass: "btn btn-primary login-form-btn"
-  }, [_vm._v("\n\t\t\t\t\t\t\tRegistrate\n\t\t\t\t\t\t")])]);
 }];
 render._withStripped = true;
 
