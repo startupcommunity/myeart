@@ -12,11 +12,15 @@ import Vuelidate from 'vuelidate';
 
 import App from './App.vue';
 
+import VueFormWizard from 'vue-form-wizard'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(Vuelidate);
 Vue.use(VueEvents);
 Vue.use(VueRouter);
+Vue.use(VueFormWizard);
 
 const router = new VueRouter({
     mode: 'history',
