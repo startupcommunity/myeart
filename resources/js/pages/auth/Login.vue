@@ -1,5 +1,6 @@
 <template>
     <div class="home-login">
+        <loading-overlay :active="apiStateFormLoading" :is-full-page="true" loader="bars"/>
         <div class="wrap-login p-2 ">
             <div class="container-login" style="background: rgba(255, 255, 255, 0.05);">
                 <form class="login-form validate-form" method="POST" v-on:submit.prevent="login">
@@ -44,7 +45,7 @@
 </template>
 
 <script>
-
+    import { mapState } from 'vuex';
     //data
     function data(){
         return {
@@ -67,6 +68,9 @@
     function authErrors(){
         return this.$store.getters.authErrors;
     }
+    function apiStateFormLoading(){
+        return this.status === 'loading';
+    }
     export default {
         name:'login',
         data,
@@ -74,7 +78,11 @@
             login
         },
         computed:{
-            authErrors
+            authErrors,
+            apiStateFormLoading,
+            ...mapState({
+                status: state=> state.auth.status,
+            })
         }
     }
 </script>
