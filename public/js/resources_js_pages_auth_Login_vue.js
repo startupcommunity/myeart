@@ -128,42 +128,60 @@ var render = function render() {
     attrs: {
       "data-validate": "Enter username"
     }
-  }, [_c("b-form-input", {
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.user.email,
+      expression: "user.email"
+    }],
     staticClass: "input100",
     attrs: {
       type: "text",
       placeholder: "Nombre de usuario / Teléfono / Correo"
     },
-    model: {
-      value: _vm.user.email,
-      callback: function callback($$v) {
-        _vm.$set(_vm.user, "email", $$v);
-      },
-      expression: "user.email"
+    domProps: {
+      value: _vm.user.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.user, "email", $event.target.value);
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 user-input"
-  })], 1), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "wrap-input100 validate-input",
     attrs: {
       "data-validate": "Enter password"
     }
-  }, [_c("b-form-input", {
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.user.password,
+      expression: "user.password"
+    }],
     staticClass: "input100",
     attrs: {
       type: "password",
       placeholder: "Contraseña"
     },
-    model: {
-      value: _vm.user.password,
-      callback: function callback($$v) {
-        _vm.$set(_vm.user, "password", $$v);
-      },
-      expression: "user.password"
+    domProps: {
+      value: _vm.user.password
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.user, "password", $event.target.value);
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 password-input"
-  })], 1), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "container-login-form-btn"
   }, [_c("button", {
     staticClass: "btn btn-primary login-form-btn",

@@ -17,39 +17,29 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                        <b-form-input v-model="email" type="text" placeholder="Correo electronico" class="input100"></b-form-input>
+                        <input v-model="email" type="text" placeholder="Correo electronico" class="input100"/>
                         <span class="focus-input100 email-input"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                        <b-form-input v-model="name" type="text" placeholder="Nombre y apellido" class="input100"></b-form-input>
+                        <input v-model="name" type="text" placeholder="Nombre y apellido" class="input100"/>
                         <span class="focus-input100 user-input"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                        <b-form-input v-model="username" type="text" placeholder="Nombre de usuario" class="input100"></b-form-input>
+                        <input v-model="username" type="text" placeholder="Nombre de usuario" class="input100"/>
                         <span class="focus-input100 user-input"></span>
                     </div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-                        <b-form-input v-model="password" type="password" placeholder="Contraseña" class="input100"></b-form-input>
+                        <input v-model="password" type="password" placeholder="Contraseña" class="input100"/>
                         <span class="focus-input100 password-input"></span>
                     </div>
                     
                     <div class="wrap-input100 validate-input" data-validate="Enter confirm password">
-                        <b-form-input v-model="password_confirmation" type="password" placeholder="Confirmar contraseña" class="input100"></b-form-input>
+                        <input v-model="password_confirmation" type="password" placeholder="Confirmar contraseña" class="input100"/>
                         <span class="focus-input100 password-input"></span>
                     </div>
-
-                    <b-form-checkbox
-                        id="checkbox-1"
-                        v-model="accept"
-                        name="checkbox-1"
-                        value="accepted"
-                        unchecked-value="not_accepted"
-                    >
-                        Acepto los <b style="border-bottom: 2px solid #FFF;">Términos y Condiciones</b>
-                    </b-form-checkbox>
 
                     <br/>
 

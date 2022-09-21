@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 window.Vue = vue;
 
 import { routes } from './router/routes';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import VueEvents from 'vue-events';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
@@ -12,11 +11,12 @@ import Vuelidate from 'vuelidate';
 
 import App from './App.vue';
 
-import VueFormWizard from 'vue-form-wizard'
-import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+import VueFormWizard from 'vue-form-wizard';
+import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
+import vuetify  from './plugins/vuetify'
+
+
 Vue.use(Vuelidate);
 Vue.use(VueEvents);
 Vue.use(VueRouter);
@@ -40,5 +40,6 @@ const app = new Vue({
         }
     },
     store,
+    vuetify,
     render: h => h(App),
 });

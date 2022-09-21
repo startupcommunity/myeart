@@ -2,8 +2,9 @@
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 @import "variables";
 @import "~bootstrap/scss/bootstrap";
-@import '~bootstrap-vue/dist/bootstrap-vue.css';
-
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900");
+@import url("https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css");
+@import '~vuetify/dist/vuetify.min.css';
 
 html, body{
     height:100%;
@@ -13,7 +14,7 @@ html, body{
 }
 
 .home-login{
-    height: 100vh;
+    height: 100%;
     background: linear-gradient(270deg, #000000 65.09%, rgba(0, 0, 0, 0.125) 79.09%, rgba(0, 0, 0, 0) 90.36%), url('/img/image1.png') no-repeat center center fixed; 
     width: 100%;
     margin: 0 auto;
@@ -76,7 +77,7 @@ html, body{
             }
 
             .login-form-btn{
-                background: $primary;
+                background: #B2794C;
                 border: 2px solid #B2794C;
                 width: 100%;
                 border-radius: 6px;

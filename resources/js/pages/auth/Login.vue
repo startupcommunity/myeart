@@ -17,12 +17,12 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                        <b-form-input v-model="user.email" type="text" placeholder="Nombre de usuario / Teléfono / Correo" class="input100"></b-form-input>
+                        <input v-model="user.email" type="text" placeholder="Nombre de usuario / Teléfono / Correo" class="input100" />
                         <span class="focus-input100 user-input"></span>
                     </div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-                        <b-form-input v-model="user.password" type="password" placeholder="Contraseña" class="input100"></b-form-input>
+                        <input v-model="user.password" type="password" placeholder="Contraseña" class="input100" />
                         <span class="focus-input100 password-input"></span>
                     </div>
 

@@ -131,120 +131,142 @@ var render = function render() {
     attrs: {
       "data-validate": "Enter username"
     }
-  }, [_c("b-form-input", {
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.email,
+      expression: "email"
+    }],
     staticClass: "input100",
     attrs: {
       type: "text",
       placeholder: "Correo electronico"
     },
-    model: {
-      value: _vm.email,
-      callback: function callback($$v) {
-        _vm.email = $$v;
-      },
-      expression: "email"
+    domProps: {
+      value: _vm.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.email = $event.target.value;
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 email-input"
-  })], 1), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "wrap-input100 validate-input",
     attrs: {
       "data-validate": "Enter username"
     }
-  }, [_c("b-form-input", {
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.name,
+      expression: "name"
+    }],
     staticClass: "input100",
     attrs: {
       type: "text",
       placeholder: "Nombre y apellido"
     },
-    model: {
-      value: _vm.name,
-      callback: function callback($$v) {
-        _vm.name = $$v;
-      },
-      expression: "name"
+    domProps: {
+      value: _vm.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.name = $event.target.value;
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 user-input"
-  })], 1), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "wrap-input100 validate-input",
     attrs: {
       "data-validate": "Enter username"
     }
-  }, [_c("b-form-input", {
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.username,
+      expression: "username"
+    }],
     staticClass: "input100",
     attrs: {
       type: "text",
       placeholder: "Nombre de usuario"
     },
-    model: {
-      value: _vm.username,
-      callback: function callback($$v) {
-        _vm.username = $$v;
-      },
-      expression: "username"
+    domProps: {
+      value: _vm.username
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.username = $event.target.value;
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 user-input"
-  })], 1), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "wrap-input100 validate-input",
     attrs: {
       "data-validate": "Enter password"
     }
-  }, [_c("b-form-input", {
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.password,
+      expression: "password"
+    }],
     staticClass: "input100",
     attrs: {
       type: "password",
       placeholder: "Contraseña"
     },
-    model: {
-      value: _vm.password,
-      callback: function callback($$v) {
-        _vm.password = $$v;
-      },
-      expression: "password"
+    domProps: {
+      value: _vm.password
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.password = $event.target.value;
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 password-input"
-  })], 1), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "wrap-input100 validate-input",
     attrs: {
       "data-validate": "Enter confirm password"
     }
-  }, [_c("b-form-input", {
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.password_confirmation,
+      expression: "password_confirmation"
+    }],
     staticClass: "input100",
     attrs: {
       type: "password",
       placeholder: "Confirmar contraseña"
     },
-    model: {
-      value: _vm.password_confirmation,
-      callback: function callback($$v) {
-        _vm.password_confirmation = $$v;
-      },
-      expression: "password_confirmation"
+    domProps: {
+      value: _vm.password_confirmation
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.password_confirmation = $event.target.value;
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 password-input"
-  })], 1), _vm._v(" "), _c("b-form-checkbox", {
-    attrs: {
-      id: "checkbox-1",
-      name: "checkbox-1",
-      value: "accepted",
-      "unchecked-value": "not_accepted"
-    },
-    model: {
-      value: _vm.accept,
-      callback: function callback($$v) {
-        _vm.accept = $$v;
-      },
-      expression: "accept"
-    }
-  }, [_vm._v("\n                        Acepto los "), _c("b", {
-    staticStyle: {
-      "border-bottom": "2px solid #FFF"
-    }
-  }, [_vm._v("Términos y Condiciones")])]), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
     staticClass: "container-login-form-btn"
   }, [_c("button", {
     staticClass: "btn btn-primary login-form-btn",
@@ -254,7 +276,7 @@ var render = function render() {
     on: {
       click: _vm.register
     }
-  }, [_vm._v("\n\t\t\t\t\t\t\tRegistrate\n\t\t\t\t\t\t")])]), _vm._v(" "), _vm._m(0)], 1)])])]);
+  }, [_vm._v("\n\t\t\t\t\t\t\tRegistrate\n\t\t\t\t\t\t")])]), _vm._v(" "), _vm._m(0)])])])]);
 };
 
 var staticRenderFns = [function () {
