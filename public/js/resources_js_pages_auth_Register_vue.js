@@ -11,7 +11,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//data
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+ //data
+
 function data() {
   return {
     action: 'register',
@@ -51,6 +59,11 @@ function register() {
       _this.$router.push('/perfil');
     });
   } else {}
+} //computed
+
+
+function apiStateFormLoading() {
+  return this.status === 'loading';
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -59,9 +72,14 @@ function register() {
   methods: {
     register: register
   },
-  computed: {
-    authErrors: authErrors
-  }
+  computed: _objectSpread({
+    authErrors: authErrors,
+    apiStateFormLoading: apiStateFormLoading
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
+    status: function status(state) {
+      return state.auth.status;
+    }
+  }))
 });
 
 /***/ }),
@@ -84,7 +102,13 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "home-login"
-  }, [_c("div", {
+  }, [_c("loading-overlay", {
+    attrs: {
+      active: _vm.apiStateFormLoading,
+      "is-full-page": true,
+      loader: "bars"
+    }
+  }), _vm._v(" "), _c("div", {
     staticClass: "wrap-login p-2"
   }, [_c("div", {
     staticClass: "container-login",
@@ -266,7 +290,29 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 password-input"
-  })]), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("v-checkbox", {
+    attrs: {
+      "hide-details": ""
+    },
+    model: {
+      value: _vm.accept,
+      callback: function callback($$v) {
+        _vm.accept = $$v;
+      },
+      expression: "accept"
+    }
+  }, [_c("template", {
+    slot: "label"
+  }, [_c("label", {
+    staticStyle: {
+      "margin-bottom": "0px",
+      "padding-bottom": "0px"
+    }
+  }, [_vm._v("Acepto los "), _c("b", {
+    staticStyle: {
+      "border-bottom": "2px solid #FFF"
+    }
+  }, [_vm._v("Términos y Condiciones")])])])], 2), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
     staticClass: "container-login-form-btn"
   }, [_c("button", {
     staticClass: "btn btn-primary login-form-btn",
@@ -276,7 +322,7 @@ var render = function render() {
     on: {
       click: _vm.register
     }
-  }, [_vm._v("\n\t\t\t\t\t\t\tRegistrate\n\t\t\t\t\t\t")])]), _vm._v(" "), _vm._m(0)])])])]);
+  }, [_vm._v("\n\t\t\t\t\t\t\tRegistrate\n\t\t\t\t\t\t")])]), _vm._v(" "), _vm._m(0)], 1)])])], 1);
 };
 
 var staticRenderFns = [function () {
@@ -329,7 +375,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.email-input::after {\n    content: \"\\f0e0\";\n}\n.user-input::after {\n    content: \"\\f007\";\n}\n.password-input::after {\n    content: \"\\f023\";\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.email-input::after {\n    content: \"\\f0e0\";\n}\n.user-input::after {\n    content: \"\\f007\";\n}\n.password-input::after {\n    content: \"\\f023\";\n}\n.v-input--selection-controls .v-input__slot>.v-label, .v-input--selection-controls .v-radio>.v-label {\n    padding-bottom:0px;\n    margin-bottom: 0px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

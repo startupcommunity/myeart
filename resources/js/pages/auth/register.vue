@@ -1,5 +1,6 @@
 <template>
     <div class="home-login">
+        <loading-overlay :active="apiStateFormLoading" :is-full-page="true" loader="bars"/>
         <div class="wrap-login p-2 ">
             <div class="container-login" style="background: rgba(255, 255, 255, 0.05);">
                 <form class="login-form validate-form">
@@ -41,6 +42,15 @@
                         <span class="focus-input100 password-input"></span>
                     </div>
 
+                    <v-checkbox
+                        v-model="accept"
+                        hide-details
+                    >
+                        <template slot="label">
+                            <label style="margin-bottom:0px;padding-bottom:0px;">Acepto los <b style="border-bottom: 2px solid #FFF">Términos y Condiciones</b></label>
+                        </template>
+                    </v-checkbox>
+
                     <br/>
 
                     <div class="container-login-form-btn">
@@ -61,6 +71,7 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
     //data
     function data(){
         return {
@@ -89,6 +100,10 @@
 
         }
     }
+    //computed
+    function apiStateFormLoading(){
+        return this.status === 'loading';
+    }
     export default {
         name: 'register',
         data,
@@ -96,7 +111,11 @@
             register
         },
         computed:{
-            authErrors
+            authErrors,
+            apiStateFormLoading,
+            ...mapState({
+                status: state=> state.auth.status,
+            })
         }
     }
 </script>
@@ -110,5 +129,9 @@
     }
     .password-input::after {
         content: "\f023";
+    }
+    .v-input--selection-controls .v-input__slot>.v-label, .v-input--selection-controls .v-radio>.v-label {
+        padding-bottom:0px;
+        margin-bottom: 0px;
     }
 </style>

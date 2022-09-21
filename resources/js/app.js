@@ -15,12 +15,16 @@ import VueFormWizard from 'vue-form-wizard';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 
 import vuetify  from './plugins/vuetify'
-
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+import loadingOverlayComponent from './components/loadingOverlay';
 
 Vue.use(Vuelidate);
 Vue.use(VueEvents);
 Vue.use(VueRouter);
 Vue.use(VueFormWizard);
+Vue.component('loading-overlay-original', Loading);
+Vue.component('loading-overlay', loadingOverlayComponent);
 
 const router = new VueRouter({
     mode: 'history',
