@@ -1,5 +1,6 @@
 <template>
     <div class="home-login">
+        <loading-overlay :active="apiStateFormLoading" :is-full-page="true" loader="bars"/>
         <div class="wrap-login p-2 ">
             <div class="row" style="margin:0px;padding:0px;">
                 <div class="col-12 d-none d-lg-flex justify-content-md-end" v-if="indexForm == 0">
@@ -424,7 +425,9 @@
     function listArtistic(){
         return this.artistic;
     }
-    
+    function apiStateFormLoading(){
+        return this.status === 'loading';
+    }
     export default {
         name:'perfil',
         data,
@@ -444,10 +447,12 @@
             listSexo,
             listIdioma,
             listArtistic,
+            apiStateFormLoading,
             computedDateFormatted () {
                 return this.formatDate(this.date)
             },
             ...mapState({
+                status: state=> state.user_information.status,
                 artistic: state=> state.user_information.artistic,
             })
         },
