@@ -39,6 +39,7 @@ class CreateArtisticActivitysTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('artistic_activitys_user');
         Schema::dropIfExists('artistic_activitys');
     }
 }
