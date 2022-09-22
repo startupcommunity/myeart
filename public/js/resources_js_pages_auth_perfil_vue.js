@@ -246,6 +246,10 @@ function listArtistic() {
   return this.artistic;
 }
 
+function apiStateFormLoading() {
+  return this.status === 'loading';
+}
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'perfil',
   data: data,
@@ -265,10 +269,14 @@ function listArtistic() {
     listSexo: listSexo,
     listIdioma: listIdioma,
     listArtistic: listArtistic,
+    apiStateFormLoading: apiStateFormLoading,
     computedDateFormatted: function computedDateFormatted() {
       return this.formatDate(this.date);
     }
   }, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
+    status: function status(state) {
+      return state.user_information.status;
+    },
     artistic: function artistic(state) {
       return state.user_information.artistic;
     }
@@ -300,7 +308,13 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "home-login"
-  }, [_c("div", {
+  }, [_c("loading-overlay", {
+    attrs: {
+      active: _vm.apiStateFormLoading,
+      "is-full-page": true,
+      loader: "bars"
+    }
+  }), _vm._v(" "), _c("div", {
     staticClass: "wrap-login p-2"
   }, [_c("div", {
     staticClass: "row",
@@ -891,7 +905,7 @@ var render = function render() {
         return _vm.submit();
       }
     }
-  }, [_vm._v("\n                                Ir al home\n                            ")])], 1)])])])])])]);
+  }, [_vm._v("\n                                Ir al home\n                            ")])], 1)])])])])])], 1);
 };
 
 var staticRenderFns = [function () {

@@ -48,7 +48,7 @@ const actions = {
     registerPerfil: ({commit, dispatch}, payload) => {
         let actionUrl='/api/registerPerfil';
         let formData = new FormData();
-        formData.append('imagen',payload.image);
+        formData.append('imagen', payload.image ? payload.image : '');
         formData.append('perfil',payload.perfil);
         formData.append('date',payload.date);
         formData.append('asociacion_arte',payload.asociacion_arte);

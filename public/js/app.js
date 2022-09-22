@@ -2569,7 +2569,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "API_URL": () => (/* binding */ API_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var API_URL = 'http://127.0.0.1:8000';
+var API_URL = 'https://test.myeart.org/';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (API_URL);
 
 /***/ }),
@@ -3075,7 +3075,7 @@ var actions = {
         dispatch = _ref3.dispatch;
     var actionUrl = '/api/registerPerfil';
     var formData = new FormData();
-    formData.append('imagen', payload.image);
+    formData.append('imagen', payload.image ? payload.image : '');
     formData.append('perfil', payload.perfil);
     formData.append('date', payload.date);
     formData.append('asociacion_arte', payload.asociacion_arte);

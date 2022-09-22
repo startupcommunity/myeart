@@ -43,7 +43,7 @@ class UserInformationsController extends Controller
             $UserInformations->galeria = $request->galeria;
             $UserInformations->asociacion_turismo = $request->asociacion_turismo;
 
-            if ($request['imagen'] != '') {
+            if ($request->imagen) {
                 $img_Ruta = public_path('/assets/img/users/'.$request->user()->id);
                 $imagen = $request->file('imagen');
                 $fecha = date("Ymd");
@@ -96,7 +96,7 @@ class UserInformationsController extends Controller
             'consejeria_ayuntamiento' => 'nullable|max:50',
             'pais' => 'nullable|integer',
             'artistic_list' => 'nullable',
-            'imagen' => 'nullable|image|mimes:jpeg,jpg,png|max:10000',
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:1999'
         ];
     }
 }
