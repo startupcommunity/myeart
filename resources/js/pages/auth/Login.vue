@@ -60,9 +60,14 @@
     function login () {
         const { email, password, remember } = this.user;
         this.$store.dispatch('authRequest', { email, password, remember })
-            .then(() => {
-                this.$router.push('/dashboard')
-            })
+        .then(() => {
+            this.$notify({
+                group: 'container',
+                text: 'Logeado con exito',
+                type: "success"
+            });
+            this.$router.push('/dashboard')
+        })
     }
     //computed
     function authErrors(){
@@ -70,6 +75,12 @@
     }
     function apiStateFormLoading(){
         return this.status === 'loading';
+    }
+    //watch
+    function statusEvents(){
+        if(this.status === 'success'){
+            this.$router.push('/dashboard')
+        }
     }
     export default {
         name:'login',
@@ -83,6 +94,9 @@
             ...mapState({
                 status: state=> state.auth.status,
             })
+        },
+        watch:{
+            statusEvents
         }
     }
 </script>

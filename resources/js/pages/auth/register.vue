@@ -94,15 +94,31 @@
             const { action, username, name, email, password, password_confirmation } = this;
             this.$store.dispatch('authRequest', { action, username,name, email, password, password_confirmation })
             .then(() => {
+                this.$notify({
+                    group: 'container',
+                    text: 'Usuario registrado',
+                    type: "success"
+                });
                 this.$router.push('/perfil')
             })
         }else{
-
+            this.$notify({
+                group: 'container',
+                title: '¡Error!',
+                text: "Porfavor aceptar los terminos y condiciones",
+                type: "error"
+            })
         }
     }
     //computed
     function apiStateFormLoading(){
         return this.status === 'loading';
+    }
+    //watch
+    function statusEvents(){
+        if(this.status === 'success'){
+            this.$router.push('/perfil')
+        }
     }
     export default {
         name: 'register',
@@ -116,6 +132,9 @@
             ...mapState({
                 status: state=> state.auth.status,
             })
+        },
+        watch:{
+            statusEvents
         }
     }
 </script>

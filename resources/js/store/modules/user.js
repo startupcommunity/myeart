@@ -13,14 +13,14 @@ const getters = {
 const actions = {
     userRequest: ({commit, dispatch}) => {
         commit('userRequest')
-        axios.get('/api/user')
+        Vue.axios.get('/api/user')
             .then((resp) => {
                 commit('userSuccess', resp.data);
             })
             .catch((err) => {
                 commit('userError');
                 // if resp is unauthorized, logout, to
-                dispatch('authLogout')
+                //dispatch('authLogout')
             })
     },
 }

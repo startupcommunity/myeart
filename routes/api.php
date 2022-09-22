@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PaisesController;
+use App\Http\Controllers\ArtisticActivitysController;
+use App\Http\Controllers\UserInformationsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,8 +20,10 @@ use App\Http\Controllers\PaisesController;
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
 
-Route::middleware('auth:sanctum')->post('/logout', [LoginController::class, 'logout']);
-Route::middleware('auth:sanctum')->get('/paises', [PaisesController::class, 'getAll']);
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->post('/logout', [LoginController::class, 'logout']);
+Route::middleware('auth:api')->get('/paises', [PaisesController::class, 'getAll']);
+Route::middleware('auth:api')->get('/artistics', [ArtisticActivitysController::class, 'getAll']);
+Route::middleware('auth:api')->put('/registerPerfil', [UserInformationsController::class, 'create']);
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

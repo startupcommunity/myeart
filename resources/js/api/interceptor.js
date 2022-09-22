@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { routes } from '../router/routes';
 import { store } from '../store/store';
+import JwtService from "../common/jwt.service";
 
 export default () => {
 
@@ -13,10 +14,10 @@ export default () => {
       });
     }
 
-    let user = JSON.parse(localStorage.getItem('user'));
+    let user = JSON.parse(JwtService.getUser());
 
     if (user && user.refreshToken){
-      const refreshToken = user.refreshToken;
+      const refreshToken = user.refresh_token;
 
       const config = error.config;
       config.headers['refresh'] = `${refreshToken}`;
@@ -24,7 +25,7 @@ export default () => {
       return await new Promise( async (resolve, reject) => {
         await axios.request(config).then(response => {
           user.token = response.data.newToken;
-          localStorage.setItem('user', JSON.stringify(user));
+          Cookies.set('user', JSON.stringify(user));
 
           resolve(response);
         }).catch((error) => {

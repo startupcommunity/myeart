@@ -56,14 +56,34 @@ function register() {
       password: password,
       password_confirmation: password_confirmation
     }).then(function () {
+      _this.$notify({
+        group: 'container',
+        text: 'Usuario registrado',
+        type: "success"
+      });
+
       _this.$router.push('/perfil');
     });
-  } else {}
+  } else {
+    this.$notify({
+      group: 'container',
+      title: '¡Error!',
+      text: "Porfavor aceptar los terminos y condiciones",
+      type: "error"
+    });
+  }
 } //computed
 
 
 function apiStateFormLoading() {
   return this.status === 'loading';
+} //watch
+
+
+function statusEvents() {
+  if (this.status === 'success') {
+    this.$router.push('/perfil');
+  }
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -79,7 +99,10 @@ function apiStateFormLoading() {
     status: function status(state) {
       return state.auth.status;
     }
-  }))
+  })),
+  watch: {
+    statusEvents: statusEvents
+  }
 });
 
 /***/ }),

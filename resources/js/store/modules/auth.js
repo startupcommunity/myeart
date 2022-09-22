@@ -1,8 +1,9 @@
-import Cookies from 'js-cookie'
+import ApiService from '../../api/api.service';
+import JwtService from "../../common/jwt.service";
 import Errors from './../../modules/errors';
 
 const state = {
-    access_token: Cookies.get('access_token') || '',
+    access_token: ( JwtService.getUser() ? JSON.parse(JwtService.getUser()).access_token : '') ,
     status: '',
     hasLoadedOnce: false,
     errors: new Errors()
@@ -49,16 +50,20 @@ const actions = {
             Vue.axios.post(actionUrl, data)
                 .then((resp) => {
                     let access_token = 'Bearer ' + resp.data.access_token;
-                    Cookies.set('access_token', access_token, { expires: remember ? 365 : 1 });
-                    Vue.axios.defaults.headers.common['Authorization'] = access_token;
+                    console.log(resp.data);
+                    JwtService.setUser(resp.data);
+
+                    ApiService.setHeader();
 
                     commit('authSuccess', access_token);
-                    dispatch('userRequest');
+                    //dispatch('userRequest');
                     resolve(access_token);
                 })
                 .catch((err) => {
+                    console.log(err);
                     commit('authError', err.response.data);
-                    Cookies.remove('access_token');
+                    JwtService.unsetUser();
+                    ApiService.init();
                     reject(err);
                 })
         })
@@ -101,6 +106,8 @@ const mutations = {
     },
     authLogout: (state) => {
         state.access_token = '';
+        JwtService.unsetUser();
+        ApiService.init();
     }
 }
 

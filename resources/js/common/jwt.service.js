@@ -1,15 +1,17 @@
+import Cookies from 'js-cookie';
 const ID_API_TOKEN = '5ZVzK4RMa1EKNYW9FvoNi8eJGcsZzVsPmd4xhgvV';
 
-export const getToken = () => {
-    return window.localStorage.getItem(ID_API_TOKEN)
+export const getUser = () => {
+    return Cookies.get(ID_API_TOKEN)
 };
 
-export const setToken = token => {
-    window.localStorage.setItem(ID_API_TOKEN, token);
+export const setUser = ( user ) => {
+    Cookies.set(ID_API_TOKEN, JSON.stringify(user), { expires: user.expires_in });
+    console.log(Cookies.get(ID_API_TOKEN));
 };
 
-export const unsetToken = () => {
-    window.localStorage.removeItem(ID_API_TOKEN);
+export const unsetUser = () => {
+    Cookies.remove(ID_API_TOKEN);
 };
 
-export default {getToken, setToken, unsetToken}
+export default {getUser, setUser, unsetUser}

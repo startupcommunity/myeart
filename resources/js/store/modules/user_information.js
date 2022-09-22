@@ -2,38 +2,84 @@ import Vue from 'vue'
 
 const state = {
     status: '',
-    paises: []
+    paises: [],
+    artistic: [],
 }
 
 const getters = {
-    getProfile: state => state.paises,
+    getPaises: (state) => {
+        let list = [
+            { state: 'Seleccione país', abbr: '' },
+        ];
+        state.paises.map((item) => {
+            list.push({ state: item.nombre, abbr: item.id })
+        })
+
+        return list;
+    },
 }
 
 const actions = {
-    paisesRequest: ({commit, dispatch}) => {
+    artisticRequest: ({commit, dispatch}) => {
         commit('paisesRequest')
-        axios.get('/api/user')
+        Vue.axios.get('/api/artistics')
             .then((resp) => {
-                commit('paisesSuccess', resp.data);
+                commit('artisticSuccess', resp.data);
             })
             .catch((err) => {
                 commit('paisesError');
                 // if resp is unauthorized, logout, to
-                dispatch('authLogout')
+                //dispatch('authLogout')
             })
     },
-    userInformationRequest: ({commit, dispatch}) => {
-        commit('userInformationRequest')
-        axios.get('/api/user')
+    paisesRequest: ({commit, dispatch}) => {
+        commit('paisesRequest')
+        Vue.axios.get('/api/paises')
             .then((resp) => {
-                commit('userInformationSuccess', resp.data);
+                commit('paisesSuccess', resp.data);
+                dispatch('artisticRequest')
             })
             .catch((err) => {
-                commit('userInformationError');
+                commit('paisesError');
                 // if resp is unauthorized, logout, to
-                dispatch('authLogout')
+                //dispatch('authLogout')
             })
     },
+    registerPerfil: ({commit, dispatch}, payload) => {
+        let actionUrl='/api/registerPerfil';
+        let formData = new FormData();
+        formData.append('imagen',payload.image);
+        formData.append('perfil',payload.perfil);
+        formData.append('date',payload.date);
+        formData.append('asociacion_arte',payload.asociacion_arte);
+        formData.append('consejeria_ayuntamiento',payload.consejeria_ayuntamiento);
+        formData.append('galeria',payload.galeria);
+        formData.append('asociacion_turismo',payload.asociacion_turismo);
+        formData.append('sexo',payload.sexo);
+        formData.append('pais',payload.pais);
+        formData.append('idioma',payload.idioma);
+        for (let index = 0; index < payload.artistic_list.length; index++) {
+            formData.append('artistic_list[]',payload.artistic_list[index]);
+        }
+        
+        formData.append('_method', 'PUT');
+
+        return new Promise((resolve, reject) => {
+            commit('userInformationRequest');
+            Vue.axios.post(actionUrl, formData)
+                .then((resp) => {
+                    commit('userInformationSuccess', resp);
+                    //dispatch('userRequest');
+                    resolve(resp);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    commit('userInformationError');
+                    // if resp is unauthorized, logout, to
+                    //dispatch('authLogout')
+                })
+        })
+    }
 }
 
 const mutations = {
@@ -42,7 +88,11 @@ const mutations = {
     },
     paisesSuccess: (state, resp) => {
         state.status = 'success';
-        Vue.set(state, 'paises', resp);
+        Vue.set(state, 'paises', resp.data);
+    },
+    artisticSuccess: (state, resp) => {
+        state.status = 'success';
+        Vue.set(state, 'artistic', resp.data);
     },
     paisesError: (state) => {
         state.status = 'error';

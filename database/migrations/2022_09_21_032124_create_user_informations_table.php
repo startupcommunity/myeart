@@ -15,16 +15,17 @@ class CreateUserInformationsTable extends Migration
     {
         Schema::create('user_informations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('perfil');
-            $table->date('fecha_nacimiento');
-            $table->integer('sexo');
-            $table->string('asociacion_arte');
-            $table->string('consejeria_ayuntamiento');
-            $table->string('galeria');
-            $table->string('asociacion_turismo');
-            $table->unsignedBigInteger('user_id');            
+            $table->integer('perfil')->nullable();
+            $table->date('fecha_nacimiento')->nullable();
+            $table->integer('sexo')->nullable();
+            $table->string('asociacion_arte')->nullable();
+            $table->string('consejeria_ayuntamiento')->nullable();
+            $table->string('galeria')->nullable();
+            $table->string('asociacion_turismo')->nullable();
+            $table->string('adjunto')->nullable();
+            $table->unsignedBigInteger('user_id');           
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('pais_id');            
+            $table->unsignedBigInteger('pais_id');           
             $table->foreign('pais_id')->references('id')->on('paises');
             $table->timestamps();
         });

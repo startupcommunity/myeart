@@ -9,6 +9,8 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import ApiService from './api/api.service';
 import Vuelidate from 'vuelidate';
 
+import jwtService from './common/jwt.service';
+
 import App from './App.vue';
 
 import VueFormWizard from 'vue-form-wizard';
@@ -18,7 +20,9 @@ import vuetify  from './plugins/vuetify'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import loadingOverlayComponent from './components/loadingOverlay';
+import Notifications from 'vue-notification'
 
+Vue.use(Notifications);
 Vue.use(Vuelidate);
 Vue.use(VueEvents);
 Vue.use(VueRouter);
@@ -32,6 +36,10 @@ const router = new VueRouter({
 });
 
 ApiService.init();
+
+if(jwtService.getUser()){
+    ApiService.setHeader();
+}
 
 import { store } from './store/store';
 
