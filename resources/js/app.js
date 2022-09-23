@@ -59,10 +59,8 @@ const app = new Vue({
     el: '#app',
     router: router,
     async beforeCreate(){
-        console.log(this.$router.currentRoute);
         if (this.$store.getters.isAuthenticated) {
             await this.$store.dispatch('userRequest');
-            console.log(this.$route.path );
         }
     },
     store,
