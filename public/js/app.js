@@ -2487,12 +2487,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _router_routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router/routes */ "./resources/js/router/routes.js");
 /* harmony import */ var vue_events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-events */ "./node_modules/vue-events/dist/index.js");
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
 /* harmony import */ var _api_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./api/api.service */ "./resources/js/api/api.service.js");
-/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
 /* harmony import */ var _common_jwt_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./common/jwt.service */ "./resources/js/common/jwt.service.js");
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 /* harmony import */ var vue_form_wizard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-form-wizard */ "./node_modules/vue-form-wizard/dist/vue-form-wizard.js");
@@ -2504,7 +2504,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_loadingOverlay__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/loadingOverlay */ "./resources/js/components/loadingOverlay.vue");
 /* harmony import */ var vue_notification__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-notification */ "./node_modules/vue-notification/dist/index.js");
 /* harmony import */ var vue_notification__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vue_notification__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./store/store */ "./resources/js/store/store.js");
+/* harmony import */ var vue_i18n__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vue-i18n */ "./node_modules/vue-i18n/dist/vue-i18n.esm.js");
+/* harmony import */ var _lang_en__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lang/en */ "./resources/js/lang/en.js");
+/* harmony import */ var _lang_es__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lang/es */ "./resources/js/lang/es.js");
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./store/store */ "./resources/js/store/store.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 window.Vue = vue__WEBPACK_IMPORTED_MODULE_0__["default"];
@@ -2522,14 +2533,26 @@ window.Vue = vue__WEBPACK_IMPORTED_MODULE_0__["default"];
 
 
 
+
+
+
 Vue.use((vue_notification__WEBPACK_IMPORTED_MODULE_12___default()));
-Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_13__["default"]);
+Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_15__["default"]);
 Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_2__["default"]);
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_14__["default"]);
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_16__["default"]);
 Vue.use((vue_form_wizard__WEBPACK_IMPORTED_MODULE_7___default()));
 Vue.component('loading-overlay-original', (vue_loading_overlay__WEBPACK_IMPORTED_MODULE_10___default()));
 Vue.component('loading-overlay', _components_loadingOverlay__WEBPACK_IMPORTED_MODULE_11__["default"]);
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_14__["default"]({
+Vue.use(vue_i18n__WEBPACK_IMPORTED_MODULE_17__["default"]);
+var i18n = new vue_i18n__WEBPACK_IMPORTED_MODULE_17__["default"]({
+  locale: 'es',
+  fallbackLocale: 'es',
+  messages: {
+    en: _lang_en__WEBPACK_IMPORTED_MODULE_13__.en,
+    es: _lang_es__WEBPACK_IMPORTED_MODULE_14__.es
+  }
+});
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_16__["default"]({
   mode: 'history',
   routes: _router_routes__WEBPACK_IMPORTED_MODULE_1__.routes
 });
@@ -2543,13 +2566,38 @@ if (_common_jwt_service__WEBPACK_IMPORTED_MODULE_5__["default"].getUser()) {
 var app = new Vue({
   el: '#app',
   router: router,
-  created: function created() {
-    if (this.$store.getters.isAuthenticated) {
-      this.$store.dispatch('userRequest');
-    }
+  beforeCreate: function beforeCreate() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              console.log(_this.$router.currentRoute);
+
+              if (!_this.$store.getters.isAuthenticated) {
+                _context.next = 5;
+                break;
+              }
+
+              _context.next = 4;
+              return _this.$store.dispatch('userRequest');
+
+            case 4:
+              console.log(_this.$route.path);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
-  store: _store_store__WEBPACK_IMPORTED_MODULE_15__.store,
+  store: _store_store__WEBPACK_IMPORTED_MODULE_18__.store,
   vuetify: _plugins_vuetify__WEBPACK_IMPORTED_MODULE_9__["default"],
+  i18n: i18n,
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_6__["default"]);
   }
@@ -2569,7 +2617,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "API_URL": () => (/* binding */ API_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var API_URL = 'https://test.myeart.org/';
+var API_URL = 'http://127.0.0.1:8000/';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (API_URL);
 
 /***/ }),
@@ -2598,7 +2646,6 @@ var setUser = function setUser(user) {
   js_cookie__WEBPACK_IMPORTED_MODULE_0__["default"].set(ID_API_TOKEN, JSON.stringify(user), {
     expires: user.expires_in
   });
-  console.log(js_cookie__WEBPACK_IMPORTED_MODULE_0__["default"].get(ID_API_TOKEN));
 };
 var unsetUser = function unsetUser() {
   js_cookie__WEBPACK_IMPORTED_MODULE_0__["default"].remove(ID_API_TOKEN);
@@ -2608,6 +2655,1709 @@ var unsetUser = function unsetUser() {
   setUser: setUser,
   unsetUser: unsetUser
 });
+
+/***/ }),
+
+/***/ "./resources/js/lang/en.js":
+/*!*********************************!*\
+  !*** ./resources/js/lang/en.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "en": () => (/* binding */ en)
+/* harmony export */ });
+var _label, _validation;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var en = {
+  label: (_label = {
+    //-----------------------------------------------------------------------------------------------------------
+    //ETIQUETAS COMPUESTAS
+    //-----------------------------------------------------------------------------------------------------------
+    newActivity: 'NEW PORT ACTIVITY',
+    modifActivity: 'EDIT PORT ACTIVITY',
+    registerActivity: 'REGISTER PORT ACTIVITY',
+    portActivity: 'PORT ACTIVITY',
+    nameActivity: 'NAME PORT ACTIVITY',
+    listActivity: 'PORTS ACTIVITIES LIST',
+    listBrand: 'BRANDS / MODELS  LIST',
+    listScale: 'TRUCK WEIGHING SCALE LIST',
+    listCrane: 'CRANES TYPES LIST',
+    cranesTypesGeneralList: 'CRANES TYPES GENERAL LIST',
+    listStowage: 'STOWAGE LIST',
+    listLost: 'DELAY TIMES LIST',
+    listLostTime: 'DELAY TIMES LIST',
+    listType: 'TYPE LIST',
+    listVessel: 'VESSELS LIST',
+    vesselsGeneralList: 'VESSELS GENERAL LIST',
+    listTypeVessel: 'VESSELS TYPE LIST',
+    portList: 'PORT LIST',
+    berthList: 'BERTH LIST',
+    companyBranchList: 'COMPANY/BRANCH LIST',
+    locationList: 'LOCATION LIST',
+    moduleList: 'MODULES LIST',
+    moduleRoleList: 'MODULES ROLE LIST',
+    roleList: 'ROLE LIST',
+    generalRoleList: 'GENERAL ROLE LIST',
+    specificRoleList: 'SPECIFIC ROLE LIST',
+    generalRole: 'GENERAL ROLE',
+    specificRole: 'SPECIFIC ROLE',
+    portName: 'PORT NAME',
+    portCode: 'PORT CODE',
+    lostTimeType: 'DELAY TIME TYPE',
+    lostTimeTypeName: 'DELAY TIME TYPE NAME',
+    lostTimeName: 'DELAY TIME NAME',
+    TdrCode: 'TDR CODE',
+    craneType: 'CRANE TYPE',
+    craneTypeName: 'CRANE TYPE NAME',
+    craneName: 'CRANE NAME',
+    vesselType: 'VESSEL TYPE',
+    vesselName: 'VESSEL NAME',
+    vesselTypeName: 'VESSEL TYPE NAME',
+    vesselTypeDescription: 'VESSEL TYPE DESCRIPTION',
+    vesselCrane: 'VESSEL CRANE',
+    moduleType: 'MODULE TYPE',
+    maxHeigth: 'MAX HEIGTH',
+    maxWeigth: 'MAX WEIGTH',
+    maxRange: 'MAX RANGE',
+    stowageWorkShift: 'STOWAGE WORK SHIFT',
+    workShifts: 'WORK SHIFTS',
+    workShift: 'WORK SHIFT',
+    WorkShift: 'WORK SHIFT',
+    shiftName: 'SHIFT NAME',
+    turnName: 'TURN NAME',
+    fromHour: 'FROM HOUR',
+    hourFrom: 'HOUR (FROM)',
+    DFrom: 'D/H (FROM)',
+    toHour: 'TO HOUR',
+    hourTo: 'HOUR (TO)',
+    DTo: 'D/H (TO)',
+    startHour: 'HOUR (START)',
+    endHour: 'HOUR (END)',
+    stowageTurn: 'STOWAGE TURN ',
+    stowageMov: 'STOWAGE MOVEMENTS',
+    stowageMovement: 'STOWAGE MOVEMENT',
+    stowageMovementTransaction: 'STOWAGE MOVEMENT TRANSACTION',
+    stowageRole: 'STOWAGE ROLE',
+    stowageSupplies: 'STOWAGE SUPPLIES',
+    transactionMov: 'MOVEMENTS TRANSACTIONS',
+    movementName: 'MOVEMENT NAME',
+    movementType: 'MOVEMENT TYPE ',
+    transactionName: 'TRANSACTION NAME',
+    transactionType: 'TRANSACTION TYPE',
+    supplieName: 'SUPPLIE NAME',
+    groupName: 'GROUP NAME',
+    groupDescription: 'GROUP DESCRIPTION',
+    lostTime: 'DELAY TIME',
+    hatchCover: 'HATCH COVER',
+    hatchCoverName: 'HATCH COVER NAME',
+    hatchCoverId: 'HATCH COVER ID',
+    hatchCoverType: 'HATCH COVER TYPE',
+    holdName: 'HOLD NAME',
+    underCover: 'UNDER COVER',
+    dustCover: 'DUST COVER',
+    availableAssign: 'AVAILABLE TO ASSIGN',
+    vesselInfo: 'VESSEL INFO',
+    vesselDocumentation: 'VESSEL DOCUMENTATION',
+    onDeck: ' ON DECK',
+    Outside: 'OUTSIDE',
+    Inside: 'INSIDE',
+    chooseFile: 'CHOOSE FILE',
+    bulkLoad: 'BULK LOAD',
+    seeFormat: 'SEE FORMAT',
+    berthLine: 'BERTH LINE',
+    associatedLine: 'ASSOCIATED LINES',
+    associatedPort: 'ASSOCIATED PORT',
+    associatedRol: 'ASSOCIATED ROL',
+    relatedLine: 'RELATED LINES',
+    representativeLine: 'REPRESENTATIVE LINE',
+    initialDate: 'INITIAL DATE',
+    finalDate: 'FINAL DATE',
+    startDate: 'START DATE',
+    endDate: 'END DATE',
+    date: 'DATE',
+    bulkCargo: 'BULK CARGO MERCHANDISE',
+    originPort: 'ORIGIN PORT',
+    destinationPort: 'DESTINATION PORT',
+    arrivalTime: 'ARRIVAL TIME',
+    arrivalDate: 'ARRIVAL DATE',
+    sailTime: 'SAIL TIME',
+    departureTime: 'DEPARTURE TIME',
+    departureDate: 'DEPARTURE DATE',
+    basicData: 'BASIC DATA',
+    mainPhone: 'MAIN PHONE',
+    secondaryPhone: 'SECONDARY PHONE',
+    mainEmail: 'PRIMARY EMAIL',
+    secondaryEmail: 'SECONDARY EMAIL',
+    badFormat: 'BAD FORMAT',
+    businessProcess: 'BUSINESS PROCESS',
+    masterDirectory: 'MASTER DIRECTORY',
+    menuIdentifier: 'MENU IDENTIFIER',
+    proceduralManual: 'PROCEDURAL MANUAL',
+    userManual: 'USER MANUAL',
+    user: 'USER',
+    userId: 'USER ID',
+    userList: 'USER LIST',
+    userType: 'TYPE OF USER',
+    userTypeName: 'USER TYPE NAME',
+    enterSearch: 'ENTER SEARCH',
+    accessRoute: 'ROUTE ACCESS',
+    interfaceAction: 'INTERFACE ACTION',
+    noData: 'NO DATA',
+    recordsPerPage: 'RECORDS PER PAGE',
+    perPage: ' PER PAGE',
+    noResultsFound: 'NO RESULTS FOUND',
+    noRecordsAvailble: 'NO RECORDS AVAILABLE',
+    routeDash: 'ROUTE DASH INIT',
+    route: 'ROUTE',
+    unitSize: 'UNIT SIZE',
+    sizeUnit: 'SIZE UNIT',
+    measureUnit: 'MEASURE UNIT',
+    measureUnitType: 'MEASURE UNIT TYPE',
+    gpoSupply: 'GROUP SUPPLY',
+    payrollType: 'PAYROLL TYPE',
+    employeeRole: 'EMPLOYEE BY ROLE',
+    employeesRole: 'EMPLOYEES BY ROLE',
+    //DIEGO
+    transversalView: 'TRANSVERSAL VIEW',
+    previouslyAssigned: 'PREVIOUSLY ASSIGNED',
+    associateBayPair: 'ASSOCIATE BAY PAIR',
+    baySelected: 'BAY SELECTED',
+    notAvailable: 'NOT AVAILABLE',
+    bay: 'BAY',
+    tierRows: 'TIER-ROWS',
+    positions: 'POSITIONS',
+    download: 'DOWNLOAD',
+    atLeast: 'AT LEAST',
+    selectIt: 'SELECT',
+    holdType: 'HOLD TYPE',
+    changeStatusQuestion: 'Are you sure to make the status change for the record',
+    changeViewQuestion: 'Are you sure to make the view change for the record',
+    changeElementQuestion: 'Are you sure to make the element change for the record',
+    deleteQuestion: 'Are you sure to delete the record',
+    fileSizeExceedsAllowedLimit: 'file size exceeds allowed limit.',
+    fileTypeIsNotAllowed: 'file type is not allowed.',
+    touchToSelectPicture: 'touch to select picture.',
+    clickHereToSelectPicture: 'Click here to select a <br> Picture.',
+    deviceDoesNotSupportFileUploads: 'Device does not support file uploads.',
+    operationCancelled: 'OPERATION CANCELLED',
+    operationType: 'OPERATION TYPE',
+    CProa: 'BOW DRAFT',
+    CPopa: 'STERN DRAFT',
+    draftForward: 'DRAFT FORWARD',
+    draftAft: 'DRAFT AFT',
+    summerDWT: 'SUMMER DWT',
+    bowDraft: 'BOW DRAFT',
+    sternDraft: 'STERN DRAFT',
+    LWL: "L.W.L",
+    deckCrane: "DECK CRANE?",
+    fuelOilCapacity: "FUEL OIL CAPACITY",
+    documentDescription: "Document Description",
+    grainCapacity: "GRAIN CAPACITY",
+    baleCapacity: "BALE CAPACITY",
+    documentType: 'DOCUMENT TYPE',
+    document: 'DOCUMENT',
+    removeDocument: 'REMOVE DOCUMENT',
+    transacType: 'TRANSACTION TYPE',
+    details: 'DETAILS',
+    cancelUpload: 'CANCEL UPLOAD',
+    mustSelectDocType: 'Must select a Document Type',
+    docTypeInvalid: 'Invalid Document Type.',
+    information: 'INFORMATION',
+    alerts: 'ALERTS',
+    errors: 'ERRORS',
+    navReports: 'REPORTS',
+    navConfig: 'SETTING',
+    navViews: 'VIEWS',
+    views: 'VIEWS',
+    navPersonalReport: 'CUSTOMIZE REPORTS',
+    values: 'VALUES',
+    viewType: 'VIEW TYPE',
+    filterBy: 'FILTER BY',
+    filteredBy: 'FILTER BY',
+    page: 'PAGE',
+    of: 'OF',
+    legend: 'LEGEND',
+    preferences: 'PREFERENCES',
+    print: 'PRINT',
+    columns: 'COLUMNS',
+    rows: 'ROWS',
+    next: 'NEXT',
+    last: 'LAST',
+    first: 'FIRST',
+    previous: 'PREVIOUS',
+    selectFilter: 'Select a Filter',
+    viewBy: 'VIEW BY',
+    Mode: 'MODE',
+    shippingAgency: 'SHIPPING AGENCY',
+    shippingLineName: 'SHIPPING LINE NAME',
+    shippingLineRepresentative: "SHIPPING LINE REPRESENTATIVE",
+    errorsPleaseCheck: 'There are errors, please check.',
+    containersList: 'CONTAINERS LIST',
+    containerGroup: 'GROUP',
+    codesPerDocuments: 'CODES PER DOCUMENTS',
+    containersCodesPerDocuments: 'CONTAINERS CODES PER DOCUMENTS',
+    exportToExcel: 'EXPORT INFO TO EXCEL',
+    serialNumber: 'SERIAL NUMBER',
+    damageType: 'DAMAGE TYPE',
+    damageTypes: 'DAMAGE TYPE',
+    damagesType: 'DAMAGE TYPE',
+    damageTypeRegistration: 'NEW DAMAGE TYPE',
+    damageTypeName: 'DAMAGE TYPE NAME',
+    verifyFields: 'Verify  fields',
+    eir: 'eir',
+    eirList: 'EIR\'S LIST',
+    eirType: 'EIR TYPE',
+    eirTypeName: 'EIR TYPE NAME',
+    eirTransaction: 'EIR TRANSACTION',
+    eirTypeTransaction: 'EIR TYPE TRANSACTION',
+    eirTypeTransactionName: 'EIR TYPE TRANSACTION NAME',
+    cargoGroup: 'CARGO GROUP',
+    cargoGroupName: 'CARGO GROUP NAME',
+    cargoGroupList: 'CARGO GROUP LIST',
+    listMeasurementUnits: 'LIST MEASUREMENT UNITS',
+    measurementUnits: 'MEASUREMENT UNITS',
+    measurementUnit: 'MEASUREMENT UNIT',
+    MeasurementUnit: 'MEASUREMENT UNIT',
+    measurementUnitList: 'MEASUREMENT UNIT LIST',
+    unitsOfMeasurement: 'LIST MEASUREMENT UNITS',
+    cargoState: 'CARGO STATE',
+    stateName: 'STATE NAME',
+    stateDescription: 'STATE DESCRIPTION',
+    packaging: 'PACKAGING',
+    packagingName: 'PACKAGING NAME',
+    packagingRelationship: 'PACKAGING RELATIONSHIP',
+    associatePackaging: 'ASSOCIATE PACKAGING',
+    commodity: 'COMMODITY',
+    commodityName: 'COMMODITY NAME',
+    commodityDescription: 'COMMODITY DESCRIPTION',
+    commodityRelationship: 'COMMODITY RELATIONSHIP',
+    commodityHandlingDocumentation: 'COMMODITY HANDLING DOCUMENTATION',
+    bulkCargoList: 'BULK CARGO LIST',
+    bulkCargoState: 'BULK CARGO STATE',
+    bulkCargoCommodity: 'BULK CARGO COMMODITY',
+    bulkCargoRelationship: 'BULK CARGO RELATIONSHIP',
+    newBulkCargoRegistration: 'NEW BULK CARGO REGISTRATION',
+    relationshipBulkCargoCommodity: 'RELATIONSHIP BULK CARGO COMMODITY',
+    applyToAll: 'APPLY TO ALL',
+    rubro: 'ITEM',
+    generalCargoGroups: 'GENERAL CARGO GROUPS',
+    generalCargoGroup: 'GENERAL CARGO GROUP',
+    generalCargoGroupClassification: 'GENERAL CARGO GROUP CLASSIFICATION',
+    generalCargoList: 'GENERAL CARGO LIST',
+    associateGeneralGroupCargoPackaging: 'ASSOCIATE GENERAL GROUP CARGO PACKAGING',
+    unitType: 'UNIT TYPE',
+    unitTypes: 'UNIT TYPES',
+    weightRange: 'WEIGHT RANGE',
+    weightLimit: 'WEIGHT LIMIT',
+    lessOrEqualThan: 'LESS OR EQUAL THAN',
+    greaterOrEqualThan: 'GREATER OR EQUAL THAN',
+    manualsHandlingCommodity: 'MANUALS HANDLING COMMODITY',
+    handlingManuals: 'HANDLING MANUALS',
+    statusName: 'STATUS NAME',
+    planificacionEstiba: 'PLANNING',
+    generalData: 'GENERAL DATA',
+    dragAndDropToUploadContent: 'Drag and drop to upload content',
+    orClickToSelectFileFromYourComputer: 'or click to select a file from your computer',
+    TotalHours: 'TOTAL HOURS',
+    EstimatedHours: 'ESTIMATED HOURS',
+    craneWorkShifts: 'CRANE WORK SHIFTS',
+    CraneWorkShift: 'CRANE WORK SHIFT',
+    machineWorkShifts: 'MACHINE WORK SHIFTS',
+    machineCondition: 'MACHINE CONDITION',
+    machineSupplier: 'MACHINE SUPPLIER',
+    machineType: 'MACHINE TYPE',
+    machineName: 'MACHINE NAME',
+    inactivateCranePlanification: 'INACTIVATE CRANE PLANIFICATION',
+    inactivateMachinePlanification: 'INACTIVATE MACHINE PLANIFICATION',
+    assignCraneWorkShift: 'ASSIGN CRANE WORK SHIFT',
+    assignMachineWorkShift: 'ASSIGN MACHINE WORK SHIFT',
+    electronicData: 'ELECTRONIC DATA',
+    liftingSpeed: 'LIFTING SPEED',
+    loweringSpeed: 'LOWERING SPEED',
+    maxLoadCapacity: 'MAX LOAD CAPACITY',
+    onTheLine: 'ON THE LINE',
+    maximumRadio: 'MAXIMUM RADIO',
+    loadDischargeOperations: 'LOAD/DISCHARGE OPERATIONS',
+    deleteFile: 'Are you sure to delete the file?',
+    isoCode: 'ISO CODE',
+    isoStandar: 'ISO STANDARD',
+    Estandar: 'STANDARD',
+    forAllTypeLoadsInGeneral: 'FOR ALL TYPES OF LOAD IN GENERAL',
+    itsNotColour: 'IT\'S NOT A COLOUR',
+    elementName: 'ELEMENT NAME',
+    accesoryName: 'ACCESSORY NAME',
+    componentName: 'COMPONENT NAME',
+    resume: 'RESUME',
+    plans: 'VESSEL PLAN',
+    transacModalTitle: 'TRANSACTIONS GENERATE BY',
+    removeContainerOne: 'ARE YOU SURE TO REMOVE CONTAINER',
+    removeContainerTwo: 'IN BAY POSITION',
+    deviceList: 'DEVICE LIST',
+    device: 'DEVICE',
+    registerDevice: 'REGISTER NEW DEVICE',
+    editDevice: 'EDIT DEVICE',
+    macAddress: 'MAC ADDRESS',
+    deviceName: 'DEVICE NAME',
+    deviceType: 'DEVICE TYPE',
+    operatingSystem: 'OPERATING SYSTEM',
+    storageCapacity: 'STORAGE CAPACITY',
+    screenSize: 'SCREEN SIZE',
+    largo: 'LENGTH',
+    resolution: 'RESOLUTION',
+    codImei: 'IMEI CODE',
+    validateDevice: 'VALIDATE DEVICE',
+    depth: 'DEPTH',
+    manufacturer: 'MANUFACTURER',
+    levelPreference: 'LEVEL PREFERENCE',
+    assignDevice: 'DEVICE ASSIGN',
+    responsible: 'RESPONSIBLE',
+    transfer: 'TRANSFER',
+    hatch: 'HATCH',
+    reeferSockets: 'REEFER SOCKETS',
+    socket: 'SOCKET',
+    totalQuantity: 'TOTAL QUANTITY',
+    vesselSheet: 'VESSEL DATA SHEET',
+    bale: 'BALE',
+    baleOnGrain: 'BALE ON GRAIN',
+    baleOnDeck: 'BALE ON DECK',
+    stacking: 'STACKING',
+    upTier: 'UP TIER',
+    row: 'ROW',
+    inHold: 'IN HOLD',
+    onDeck2: 'ON DECK',
+    generalFilter: 'GENERAL FILTER',
+    multipleFilter: 'MULTIPLE FILTER',
+    matching: 'MATCHING',
+    executed: 'EXECUTED',
+    today: 'TODAY',
+    delays: 'DELAYS',
+    dateStartOperations: 'D. BEGIN OPERATIONS',
+    dateEndOperations: 'D. LAST OPERATION',
+    empty: 'EMPTY',
+    full: 'FULL',
+    clearFilters: 'CLEAR FILTERS',
+    ship_ship: 'SHIP-SHIP',
+    shipToShip: 'SHIP TO SHIP',
+    shipLandShip: 'SHIP LAND TO SHIP',
+    ship_land_ship: 'SHIP-LAND-SHIP',
+    shipment: 'SHIPMENT',
+    stowagePlanning: 'STOWAGE PLANNING',
+    stevedore: 'STEVEDORE',
+    cranesMovements: 'CRANE MOVEMENTS',
+    averageMovementsPerHrs: 'AVERAGE MOVEMENTS PER HOUR',
+    DischargeMovements: 'DISCHARGE MOVEMENTS',
+    LoadMovements: 'LOAD MOVEMENTS',
+    HatchMovements: 'HATCH COVER MOVEMENTS',
+    MovsNumbers: 'NUMBER OF MOVEMENTS',
+    vesselPlanning: 'VESSEL PLANNING',
+    mobilized: 'MOBILIZED',
+    TimeLost: "DELAY",
+    Scale: "TRUCK WEIGHING SCALE",
+    nameScale: "TRUCK WEIGHING SCALE NAME",
+    connectedTo: 'CONNECTED TO',
+    readingFile: 'READING FILE',
+    errosHourPleaseCheck: 'Hour errors, please check',
+    errosDatePleaseCheck: 'Date errors, please check',
+    applyPlan: 'APPLY PLAN',
+    refresh: 'REFRESH',
+    format: 'FORMAT',
+    resourcesQty: 'RESOURCES',
+    rightRows: 'RIGHT ROWS',
+    wrongRows: 'WRONG ROWS',
+    bankDetails: 'BANKS DETAILS',
+    the: 'THE',
+    successUpload: 'HAS BEEN UPLOADED SUCCESSFULLY',
+    errorsStaff: 'DOWNLOAD THE EXCEL FILE WITH THE WRONG ROW FOR CORRECTION',
+    column: 'COLUMN',
+    deactivateFile: 'Are you sure to deactivate the file?',
+    phone: 'PHONE',
+    bank: 'BANK',
+    currency: 'CURRENCY',
+    accountType: 'ACCOUNT TYPE',
+    accountNumber: 'ACCOUNT #',
+    holder: 'HOLDER',
+    alias: 'ALIAS',
+    bankAccount: 'BANK ACCOUNT',
+    P2P: 'P2P',
+    initialInventory: 'INITIAL INVENTORY',
+    inventory: 'INVENTORY',
+    commodityType: 'COMMODITY TYPE',
+    certificationDate: 'CERTIFICATION DATE',
+    clientRif: 'CLIENT RIF',
+    inventoryContains: 'GENERAL INFO',
+    totalWeight: 'TOTAL WEIGHT',
+    reportStaffList: 'REPORT - STAFF LIST',
+    netWeight: 'NET WEIGHT',
+    manualLoad: 'MANUAL LOAD',
+    historic: 'HISTORIC',
+    scrapReception: 'SCRAP RECEPTION',
+    entryOrders: 'ENTRY ORDERS',
+    massiveLoading: 'MASSIVE LOADING',
+    newReception: 'NEW RECEPTION',
+    editReception: 'EDIT RECEPTION',
+    nroControl: 'CONTROL Nº',
+    idDriver: 'ID DRIVER',
+    nroGuide: 'GUIDE Nº',
+    carPlate: 'CAR PLATE',
+    carrierCompany: 'CARRIER COMPANY',
+    carrierRif: 'CARRIER RIF',
+    receptionDate: 'RECEPTION DATE',
+    truckScale: 'TRUCK WEIGHING SCALE',
+    typeMovement: 'MOVEMENT TYPE',
+    metalScrapReception: "METAL SCRAP RECEPTION LIST"
+  }, _defineProperty(_label, "scrapReception", "METAL SCRAP RECEPTION"), _defineProperty(_label, "circuit", 'CIRCUIT'), _defineProperty(_label, "circuits", 'CIRCUITS'), _defineProperty(_label, "circuitList", 'CIRCUIT LIST'), _defineProperty(_label, "circuitName", 'CIRCUIT NAME'), _defineProperty(_label, "circuitNameLabelEn", 'CIRCUIT NAME EN'), _defineProperty(_label, "circuitNameLabelEs", 'CIRCUIT NAME ES'), _defineProperty(_label, "mandatory", 'REQUIRED'), _defineProperty(_label, "require", 'REQUIRE'), _defineProperty(_label, "radioactivity", 'RADIOACTIVITY'), _defineProperty(_label, "radioactivityLevel", 'RADIOACTIVITY LEVEL'), _defineProperty(_label, "machineryInYard", 'YARD MACHINERY'), _defineProperty(_label, "selectRequireOption", 'AT LEAST 1 REQUIRE OPTION MUST BE SELECTED'), _defineProperty(_label, "selectDateOption", 'DATE OPTION REQUIRED'), _defineProperty(_label, "entryDate", 'ENTRY DATE'), _defineProperty(_label, "outDate", 'OUT DATE'), _defineProperty(_label, "consignee", 'CLIENT'), _defineProperty(_label, "commodity", 'COMMODITY'), _defineProperty(_label, "stowagePlan", 'STOWAGE PLAN'), _defineProperty(_label, "importer", 'IMPORTER'), _defineProperty(_label, "exporter", 'EXPORTER'), _defineProperty(_label, "rifExporter", 'EXPORTER RIF'), _defineProperty(_label, "rifImporter", 'IMPORTER RIF'), _defineProperty(_label, "notifyParty", 'NOTIFY PARTY'), _defineProperty(_label, "seller", 'SELLER'), _defineProperty(_label, "cargoType", 'CARGO TYPE'), _defineProperty(_label, "viscosity", 'VISCOSITY'), _defineProperty(_label, "temperature", 'TEMPERATURE'), _defineProperty(_label, "estimatedToShip", 'ESTIMATED TO SHIP'), _defineProperty(_label, "actualInventory", 'ACTUAL INVENTORY'), _defineProperty(_label, "available", 'AVAILABLE'), _defineProperty(_label, "occupied", 'OCCUPIED'), _defineProperty(_label, "assignationPlanned", 'ASSIGNATION PLANNED'), _defineProperty(_label, "assignBl", 'ASSIGN BL'), _defineProperty(_label, "assignTon", 'ASSIGN TON'), _defineProperty(_label, "tonAssigned", 'TON ASSIGNED'), _defineProperty(_label, "clientExporter", 'EXPORTER CLIENT'), _defineProperty(_label, "clientImporter", 'IMPORTER CLIENT'), _defineProperty(_label, "billOfLading", 'BILL OF LADING'), _defineProperty(_label, "plannedAssignment", 'PLANNED ASSIGNMENT'), _defineProperty(_label, "declared", 'DECLARED'), _defineProperty(_label, "assignation", 'ASSIGN'), _defineProperty(_label, "loadCondition", 'LOAD - CONDITIONS'), _defineProperty(_label, "availabilityByBl", 'AVAILABILITY BY BL'), _defineProperty(_label, "equipment", 'EQUIPMENT'), _defineProperty(_label, "planned", 'PLANNED'), _defineProperty(_label, "loadPortSituation", 'LOAD'), _defineProperty(_label, "executedPortSituation", 'EXECUTED'), _defineProperty(_label, "BTB", 'STS'), _defineProperty(_label, "twinBoxes", 'TWIN BOXES'), _defineProperty(_label, "ultMov", 'LAST MOV'), _defineProperty(_label, "lastRead", 'LAST READ'), _defineProperty(_label, "availability", 'AVAILABILITY'), _defineProperty(_label, "noDelays", "NO DELAYS"), _defineProperty(_label, "onCircuit", 'ON CIRCUIT'), _defineProperty(_label, "tonLastRead", 'TON LAST READ'), _defineProperty(_label, "otherTerminals", 'OTHER TERMINALS'), _defineProperty(_label, "plannedEquipment", 'PLANNED EQUIPMENT'), _defineProperty(_label, "iniOps", 'START OPER.'), _defineProperty(_label, "puestoDeAtraque", 'BERTHS'), _defineProperty(_label, "needFilter", 'MUST SELECT AT LEAST ONE FILTER OPTION'), _defineProperty(_label, "needOptionCol", 'MUST SELECT THE COLUMN TO GENERATE THE MATCHING'), _defineProperty(_label, "needOptionRow", 'MUST SELECT THE ROW TO GENERATE THE MATCHING'), _defineProperty(_label, "TotalMovements", "TOTAL MOVEMENTS"), _defineProperty(_label, "Day", 'DAY'), _defineProperty(_label, "OperationSituationCurrent", "OPERATIONAL SITUATION CURRENT"), _defineProperty(_label, "OperationSituationHistorical", "OPERATIONAL SITUATION HISTORICAL"), _defineProperty(_label, "QuantityContainers", 'QUANTITY OF CONTAINERS'), _defineProperty(_label, "MobilizedContainers", 'MOBILIZED CONTAINERS'), _defineProperty(_label, "CranesTimeLine", 'CRANES TIMELINE'), _defineProperty(_label, "TheValueIs", 'The value is: '), _defineProperty(_label, "Minimize", "Minimize"), _defineProperty(_label, "Maximize", "Maximize"), _defineProperty(_label, "OperationSituationOptions", {
+    OperationalSituation: "OPERATIONAL SITUATION",
+    InactivityTime: "INACTIVITY TIMES",
+    HistoryVesselsServed: "HISTORY OF VESSELS SERVED",
+    Productivity: "PRODUCTIVITY",
+    ProductivityTime: "LAPSE PRODUCTIVITY"
+  }), _defineProperty(_label, "InactivityTimeOptions", {
+    InactivityTimePerCrane: "CRANE ACTIVITY TIMES",
+    InactivityTimeTheVessel: "VESSEL INACTIVITY TIMES",
+    MovementsPerHoursVsWorkingHours: "MOVEMENTS PER HOUR VS WORKING HOURS",
+    MovementsPerHour: "MOVEMENTS PER HOUR"
+  }), _defineProperty(_label, "Lines", "LINES"), _defineProperty(_label, "TypeOfContainer", "TYPES OF CONTAINERS"), _defineProperty(_label, "Movements", "MOVEMENTS"), _defineProperty(_label, "sumaries", "SUMARIES"), _defineProperty(_label, "ExportAs", "EXPORT AS: "), _defineProperty(_label, "Month", "MONTH"), _defineProperty(_label, "Yearh", "YEAR"), _defineProperty(_label, "selectedYear", "SELECT YEAR..."), _defineProperty(_label, "selectedMonth", "SELECT MONTH.."), _defineProperty(_label, "Description", "DESCRIPTION"), _defineProperty(_label, "lists", "LISTS"), _defineProperty(_label, "currentStatusVessel", "CURRENT STATUS OF THE VESSEL"), _defineProperty(_label, "preliminarycuts", "PRELIMINARY CUTS"), _defineProperty(_label, "reportQuery", "REPORT QUERY"), _defineProperty(_label, "dateRequired", "THE DATE IS REQUIRED IN "), _defineProperty(_label, "dateInvalidIn", "INVALID DATE ON "), _defineProperty(_label, "nameRequiredIn", "FIELD NAME REQUIRED IN "), _defineProperty(_label, "dateInvalidHigherIn", "DATE CANNOT BE GREATER THAN "), _defineProperty(_label, "dateInvalidLessIn", "DATE CANNOT BE LESS THAN "), _defineProperty(_label, "ammounInvalidZero", "THE AMOUNT CANNOT BE LESS THAN ZERO "), _defineProperty(_label, "In", " IN "), _defineProperty(_label, "invalidDatesList", {
+    titleDate: "The date of ",
+    invalidlessThan: 'It cannot be less than ',
+    invalidgreaterThan: 'It cannot be greater than ',
+    invalidlessThanOrEqual: 'Must be less than or equal to ',
+    invalidgreaterThanOrEqual: 'Must be greater than or equal to ',
+    invalidOrEqual: 'It cannot be the same as '
+  }), _defineProperty(_label, "doubleClickEdit", "double click to edit"), _defineProperty(_label, "statusVisit", "VISIT STATUS"), _defineProperty(_label, "benningOperation", "BEGINNING OF OPERATIONS"), _defineProperty(_label, "endOperation", "END OF OPERATIONS"), _defineProperty(_label, "transactionHistory", "TRANSACTION HISTORY"), _defineProperty(_label, "shippingLine", "SHIPPING LINE"), _defineProperty(_label, "shippingAgent", "SHIPPING AGENT"), _defineProperty(_label, "shippingLineVoyage", "SHIPPING LINE VOYAGE"), _defineProperty(_label, "portOperator", "PORT OPERATOR"), _defineProperty(_label, "berth", "BERTH"), _defineProperty(_label, "portOrigin", "ORIGIN PORT"), _defineProperty(_label, "portDestiny", "DESTINY PORT"), _defineProperty(_label, "field", "FIELD"), _defineProperty(_label, "agenda", "SCHEDULE"), _defineProperty(_label, "times", "TIMES"), _defineProperty(_label, "summary_of_operations", "SUMMARY OF OPERATIONS"), _defineProperty(_label, "activityType", 'TYPE OF ACTIVITY'), _defineProperty(_label, "ock_file", "OCK FILE"), _defineProperty(_label, "menu_diary", {
+    TERMINAL_DETAILS: "TERMINAL DETAILS",
+    AGENDA_DETAILS: "SCHEDULE DETAILS",
+    CRANES: "CRANES"
+  }), _defineProperty(_label, "list_terminal", {
+    n_toque: 'CALLED',
+    viaje_arribo: 'V. ARRIVAL',
+    viaje_zarpe: 'V. DEPARTURE '
+  }), _defineProperty(_label, "ships_captain", "VESSEL CAPTAIN"), _defineProperty(_label, "ship_security_level", 'PROTECTION LEVEL'), _defineProperty(_label, "name_pilot", "PILOT'S NAME"), _defineProperty(_label, "activitys_list", {
+    call_time: 'CALL TIME',
+    dock_pilot: 'DOCK PILOT',
+    appointment_crew: 'APPOINTMENT OF THE CREW'
+  }), _defineProperty(_label, "filters", "FILTERS"), _defineProperty(_label, "selectAll", 'SELECT ALL'), _defineProperty(_label, "preliminary_file", "preliminary file"), _defineProperty(_label, "PreliminaryDischargeFile", "PRELIMINARY DISCHARGE FILE"), _defineProperty(_label, "PreliminaryShipmentFile", "PRELIMINARY SHIPMENT FILE"), _defineProperty(_label, "TITLE_PRELIMINAR_FILE", 'PRELIMINARY FILE TITLE'), _defineProperty(_label, "AUTHORIZED_BY", 'AUTHORIZED BY'), _defineProperty(_label, "ARRIVAL_POSITION", 'ARRIVAL POSITION'), _defineProperty(_label, "ARRIVAL_POSITION_DATE", "ARRIVAL POSITION DATE"), _defineProperty(_label, "ARRIVAL_POSITION_TIME", "ARRIVAL POSITION TIME"), _defineProperty(_label, "DEPARTURE_POSITION", 'DEPARTURE POSITION'), _defineProperty(_label, "DEPARTURE_POSITION_DATE", "DEPARTURE POSITION DATE"), _defineProperty(_label, "DEPARTURE_POSITION_TIME", "DEPARTURE POSITION TIME"), _defineProperty(_label, "VOYAGE_ARRIVAL", "VOYAGE ARRIVAL"), _defineProperty(_label, "VOYAGE_DEPARTURE", "VOYAGE DEPARTURE"), _defineProperty(_label, "MOVIMIENTO", {
+    SHIP_TO_SHIP: "SHIP TO SHIP",
+    SHIP_LAND_TO_SHIP: "SHIP LAND TO SHIP",
+    CANCEL: "CANCEL",
+    observation: "OBSERVATIONS"
+  }), _defineProperty(_label, "anular_movimiento_restow", 'Are you sure you cancel the restow movement?'), _defineProperty(_label, "filter_preliminar", {
+    see_booth: "SEE BOTH",
+    see_discrepancies: "SEE DISCREPANCIES",
+    see_matches: "SEE MATCHES"
+  }), _defineProperty(_label, "container_data", {
+    not_siglas: "ACRONYMS ON THE CONTAINER DO NOT FULFILL THE VALIDATION FORMAT",
+    notsameAsLoading: "Discharge port cannot be the same as loading port",
+    notsameAsDischarge: "Port of loading cannot be the same as the port of discharge ",
+    container_size: "The container cannot exceed the maximum size of ",
+    container_weight: "The container cannot exceed the maximum weight of "
+  }), _defineProperty(_label, "aplicar_restow", 'APPLY / EDIT MOVEMENT RESTOW'), _defineProperty(_label, "auxiliary_file", "AUXILIARY FILE"), _defineProperty(_label, "filename", 'FILENAME'), _defineProperty(_label, "decription", "DESCRIPTION"), _defineProperty(_label, "value", "VALUE"), _defineProperty(_label, "bug_list", "BUG LIST"), _defineProperty(_label, "download_file_structure", 'Download file structure'), _defineProperty(_label, "download_auxiliar_list_instructions", 'DOWNLOAD AUXILIARY LIST INSTRUCTIONS'), _defineProperty(_label, "differences", "DIFFERENCES"), _defineProperty(_label, "visits", "VISITS"), _defineProperty(_label, "Timeslost", "DELAY TIMES"), _defineProperty(_label, "detailsmobilizedteams", "DETAILS OF MOBILIZED EQUIPMENT "), _defineProperty(_label, "cranesTypes", "TYPE OF CRANE"), _defineProperty(_label, "deviceCode", "DEVICE CODE"), _defineProperty(_label, "duration", "DURATION"), _defineProperty(_label, "timeLine", "TIMELINE"), _defineProperty(_label, "noDataAvailable", 'No data available'), _defineProperty(_label, "totalMovemnsPerDay", 'TOTAL MOVEMENTS PER DAY - LAPSE'), _defineProperty(_label, "seeDatails", "SEE DETAILS"), _defineProperty(_label, "LastUpdate", "Last update: "), _defineProperty(_label, "NoLoadDistributionPlan", "No load distribution plan is available for the selected visit "), _defineProperty(_label, "NoHasOperations", "OPERATIONS HAS NOT STARTED"), _defineProperty(_label, "DirectDischarge", "DIRECT DISCHARGE"), _defineProperty(_label, "Seal", "SEAL"), _defineProperty(_label, "Restow", "RESTOW"), _defineProperty(_label, "Warning", 'WARNING'), _defineProperty(_label, "Default", 'DEFAULT'), _defineProperty(_label, "fileBaplie", 'BAPLIE FILE'), _defineProperty(_label, "selectFile", "SELECT FILE"), _defineProperty(_label, "listings", "LISTINGS"), _defineProperty(_label, "preliminarList", "PRELIMINARY LIST"), _defineProperty(_label, "selectedFiles", "SELECTED FILES"), _defineProperty(_label, "resumido", "SUMMARIZED"), _defineProperty(_label, "confirmedContainers", "CONFIRMED CONTAINERS"), _defineProperty(_label, "filesTransferred", "FILE TRANSFER"), _defineProperty(_label, "transferredFiles", "TRANSFERRED FILES"), _defineProperty(_label, "totalContainers", "TOTAL CONTAINERS"), _defineProperty(_label, "reverse", "REVERSE"), _defineProperty(_label, "confirmedCOntainersDetails", "CONFIRMED CONTAINER DETAILS"), _defineProperty(_label, "reverseFile", 'You are sure to reverse the file transfer?'), _defineProperty(_label, "confirmationDate", 'CONFIRMATION DATE'), _defineProperty(_label, "selectFilesElectronics", 'SELECT ELECTRONIC FILES'), _defineProperty(_label, "NextPort", 'NEXT PORT'), _defineProperty(_label, "DeliveryPort", 'DELIVERY PORT'), _defineProperty(_label, "Origin", 'ORIGIN'), _defineProperty(_label, "assignResource", 'NEW RESOURCE'), _defineProperty(_label, "generalList", 'GENERAL LIST'), _defineProperty(_label, "accesoriesList", 'LIST OF ACCESSORIES'), _defineProperty(_label, "apply", "APPLY"), _defineProperty(_label, "highOutside", "HIGH OUTSIDE"), _defineProperty(_label, "lengthOutside", "OUTSIDE LENGTH"), _defineProperty(_label, "widthOutside", "OUTSIDE WIDTH"), _defineProperty(_label, "volumeOutside", "OUTSIDE VOLUME"), _defineProperty(_label, "highInside", "HIGH INSIDE"), _defineProperty(_label, "lengthInside", "INSIDE LENGTH"), _defineProperty(_label, "widthInside", "INSIDE WIDTH"), _defineProperty(_label, "volumeInside", "INSIDE VOLUME"), _defineProperty(_label, "emptyWeith", "EMPTY WEIGHT"), _defineProperty(_label, "maximumLoad", "MAXIMUM LOAD"), _defineProperty(_label, "maximunGrossWeight", "MAXIMUM GROSS WEIGHT"), _defineProperty(_label, "containerLists", {
+    accesoriesList: 'CONTAINER ACCESSORIES LIST',
+    clasificationsList: 'CONTAINER CLASSIFICATIONS LIST',
+    isoCodesList: 'CONTAINER ISO CODES LIST',
+    componentsList: 'CONTAINER COMPONENTS LIST',
+    conditionsList: 'CONTAINER CONDITIONS LIST',
+    elementsList: 'CONTAINER PARTS LIST',
+    groupsLists: 'CONTAINER GROUP LIST',
+    sizeLists: 'CONTAINER SIZES LIST',
+    statusLists: 'CONTAINER STATUS LIST',
+    viewsLists: 'CONTAINER VIEWS LIST'
+  }), _defineProperty(_label, "listsManual", 'MANUAL LISTS'), _defineProperty(_label, "history", 'HISTORY'), _defineProperty(_label, "typeOfFile", 'TYPE OF FILE'), _defineProperty(_label, "DownloadFormat", 'DOWNLOAD FORM'), _defineProperty(_label, "Discrepancies", 'DISCREPANCIES'), _defineProperty(_label, "UploadFile", 'UPLOAD FILE'), _defineProperty(_label, "CustomListsFormat", 'CUSTOM LIST FORMAT'), _defineProperty(_label, "logistics", 'LOGISTICS'), _defineProperty(_label, "NewTransportationCompany", 'NEW TRANSPORTATION COMPANY'), _defineProperty(_label, "ScaleWeightRequired", 'IS TRUCK WEIGHING SCALE REQUIRED?'), _defineProperty(_label, "AssignCrane", 'ASSIGN CRANE'), _defineProperty(_label, "stowageGans", 'STOWAGE GANS'), _defineProperty(_label, "fullName", 'FULL NAME'), _defineProperty(_label, "deletedRecords", 'DELETE RECORDS'), _defineProperty(_label, "downloadExcel", 'DOWNLOAD EXCEL'), _defineProperty(_label, "openErrors", 'OPEN ERRORS'), _defineProperty(_label, "listOfDriversTransports", 'LIST OF DRIVERS BY TRANSPORTATION'), _defineProperty(_label, "listOfVehiclesTransports", 'LIST OF VEHICLES BY TRANSPORT'), _defineProperty(_label, "reportMigrationMassive", 'FILE MIGRATION REPORT'), _defineProperty(_label, "RequiredWeight", 'WEIGHING REQUIRED'), _defineProperty(_label, "SituacionBuque", 'VESSEL STATUS'), _defineProperty(_label, "SituacionBodega", 'HOLD STATUS'), _defineProperty(_label, "Loadeds", 'LOADED'), _defineProperty(_label, "Returned", 'RETURNED'), _defineProperty(_label, "Dispached", 'DISPATCHED'), _defineProperty(_label, "VinCircuit", 'V. ON CIRCUIT'), _defineProperty(_label, "CTotalVoyages", 'TOTAL NUMBERS OF VOYAGES'), _defineProperty(_label, "TonPlanning", 'PLANNED TON'), _defineProperty(_label, "TonRemai", 'REMAINING TON'), _defineProperty(_label, "LastReading", 'LAST READING'), _defineProperty(_label, "DateLastRead", 'LAST READING DATE'), _defineProperty(_label, "CargoShipped", 'LOADED CARGO'), _defineProperty(_label, "GamelaByWinery", 'BIN PER HOLD'), _defineProperty(_label, "TonEmbargoedByShifts", 'LOADED TON PER TURNS'), _defineProperty(_label, "EstimatedTONperScrap", 'ESTIMATED TON PER BIN'), _defineProperty(_label, "Diurnal", 'DIURNAL'), _defineProperty(_label, "Nocturnal", 'NOCTURNAL'), _defineProperty(_label, "transportationCarrier", 'CARRIER'), _defineProperty(_label, "StartLoard", 'START OF LOAD OPERATIONS'), _defineProperty(_label, "Remaing", 'REMAING'), _defineProperty(_label, "CantGamelaxHora", 'BIN NUMBER PER HOUR'), _defineProperty(_label, "LoadEnd", 'END OF LOAD OPERATIONS'), _defineProperty(_label, "done", 'DONE'), _defineProperty(_label, "CurrentSituationBlVessel", 'BL-HOLD CURRENT STATUS'), _defineProperty(_label, "ShippedEstimatedVsPlanned", 'PLANNED VS ESTIMATED SHIPPED'), _defineProperty(_label, "PlannedVsCertificate", 'PLANNED VS CERTIFICATE'), _defineProperty(_label, "ToDischarge", 'TO DISCHARGE'), _defineProperty(_label, "Heavy", 'HEAVY'), _defineProperty(_label, "ValuesExpressedInMt", 'VALUES EXPRESSED IN TON'), _defineProperty(_label, "EstimedTonShipped", 'ESTIMATED TON SHIPPED'), _defineProperty(_label, "CurrentSituationCrane", 'CURRENT SITUATION BY CRANE'), _defineProperty(_label, "CurrentSituationTransportation", 'CURRENT TRANSPORTATION SITUATION'), _defineProperty(_label, "HatchMovilized", "MOBILIZED HACH"), _defineProperty(_label, "Certificate", 'CERTIFICATE'), _defineProperty(_label, "CurrentSituationHold", 'CURRENT SITUATION HOLD'), _defineProperty(_label, "IniOps", 'START OF THE OPERATIONS'), _defineProperty(_label, "FinOps", 'END OF OPERATIONS'), _defineProperty(_label, "HrOperando", 'HRS-OPERATING'), _defineProperty(_label, "PerHours", 'PER HOURS'), _defineProperty(_label, "PerGamela", 'PER BIN'), _defineProperty(_label, "TotalGamelas", 'TOTAL OF BIN'), _defineProperty(_label, "Loaded", 'LOADED'), _defineProperty(_label, "GamelaXdia", 'BIN PER DAY'), _defineProperty(_label, "Gamela", 'BIN'), _defineProperty(_label, "PlannedVsCurrentStatus", 'PLANNED VS CURRENT STATUS'), _defineProperty(_label, "GamelaxHora", 'BIN PER HOUR'), _defineProperty(_label, "PerHour", 'PER HOUR'), _defineProperty(_label, "HorasTrabajadas", 'HRS. WORKED'), _defineProperty(_label, "HorasRetrasos", 'HRS. DELAYS'), _defineProperty(_label, "HorasEfectivas", 'EFFECTIVE HRS.'), _defineProperty(_label, "Annulled", 'ANNULLED'), _defineProperty(_label, "InCircuit", 'IN CIRCUIT'), _defineProperty(_label, "tonEstim", 'EST TON'), _defineProperty(_label, "tonPlannif", 'PLND TON'), _defineProperty(_label, "listApk", 'APK LIST'), _defineProperty(_label, "nameApk", 'APK NAME'), _defineProperty(_label, "typeApk", 'APK TYPE'), _defineProperty(_label, "creationDate", 'CREATION DATE'), _defineProperty(_label, "LastUpdateDate", 'LAST UPDATE DATE'), _defineProperty(_label, "assignationGamela", 'ASSIGNATION BIN'), _defineProperty(_label, "HistoryAssociation", "ASSOCIATION HISTORIC"), _defineProperty(_label, "HistoryOrders", "ORDERS HISTORY"), _defineProperty(_label, "D_emission", 'ISSUE DATE'), _defineProperty(_label, "D_shipping", 'LOAD DATE'), _defineProperty(_label, "DetenerOperaciones", 'STOP OPERATIONS'), _defineProperty(_label, "AsignarCuadrilla", 'ASSIGN STAFF'), _defineProperty(_label, "Associateamela", 'ASSOCIATE BIN'), _defineProperty(_label, "AssociationGamela", 'BIN ASSOCIATION'), _defineProperty(_label, "PorGamela", 'PER BIN'), _defineProperty(_label, "TotalLoaded", 'LOADED TOTAL'), _defineProperty(_label, "TotalDelaysPerDay", 'TOTAL DELAYS PER DAY'), _defineProperty(_label, "TotalDelaysAccumulated", 'TOTAL ACCUMULATED DELAYS'), _defineProperty(_label, "InOperations", 'IN OPERATIONS'), _defineProperty(_label, "TonxHour", 'TON PER HOUR'), _defineProperty(_label, "Ship", 'SHIP'), _defineProperty(_label, "OfOperation", 'OF OPERATION'), _defineProperty(_label, "DayOfOperations", 'DAY OF OPERATIONS'), _defineProperty(_label, "PerDay", 'PER DÍA'), _defineProperty(_label, "LoadedTon", 'LOADED TON'), _defineProperty(_label, "TotalPerDay", 'TOTAL PER DAY'), _defineProperty(_label, "tonRestante", 'REMAINING TON'), _defineProperty(_label, "StoppedOperation", 'STOPPED OPERATION'), _defineProperty(_label, "clientYard", 'CLIENT - YARD'), _defineProperty(_label, "qtyWeighed", 'WEIGHED QTY'), _defineProperty(_label, "tonHeavy", 'HEAVY TON'), _defineProperty(_label, "qtyWithoutWeighing", 'QTY WITHOUT WEIGHING'), _defineProperty(_label, "tonEstimated", 'ESTIMATED TON'), _defineProperty(_label, "totalVoyageDone", 'TOTAL VOYAGE DONE'), _defineProperty(_label, "attribute", 'ATTRIBUTE'), _defineProperty(_label, "correctionControl", 'CORRECTION CONTROL'), _defineProperty(_label, "projection", 'PROJECTION'), _defineProperty(_label, "exe", 'EXE'), _defineProperty(_label, "workHour", 'WORK HOURS'), _defineProperty(_label, "hour", 'HOUR'), _defineProperty(_label, "estimated", 'ESTIMATE'), _defineProperty(_label, "average", 'AVERAGE'), _defineProperty(_label, "equipmentDetail", 'EQUIPMENT DETAIL'), _defineProperty(_label, "loadPort", 'LOAD PORT'), _defineProperty(_label, "dischargePort", 'DISCHARGE PORT'), _defineProperty(_label, "generalInfo", 'GENERAL INFORMATION'), _defineProperty(_label, "recordInfo", 'RECORD'), _defineProperty(_label, "arrival", 'ARRIVAL'), _defineProperty(_label, "departure", 'DEPARTURE'), _defineProperty(_label, "canceledList", 'CANCELED LIST'), _defineProperty(_label, "dischargeList", 'DISCHARGE LIST'), _defineProperty(_label, "generate", 'GENERATE '), _defineProperty(_label, "bapliesList", 'GENERATE BAPLIES LIST'), _defineProperty(_label, "search", 'SEARCH'), _defineProperty(_label, "docked", 'DOCKED'), _defineProperty(_label, "planned", 'PLANNED'), _defineProperty(_label, "dockAssignment", 'DOCK ASSIGNMENT'), _defineProperty(_label, "asignDevice", 'DEVICE ASSIGN'), _defineProperty(_label, "equipmentQuantity", 'EQUIPMENT QUANTITY'), _defineProperty(_label, "estimatedTime", 'ESTIMATED TIME'), _defineProperty(_label, "deviceTransfer", 'DEVICE TRANSFER'), _defineProperty(_label, "selectEdi", 'SELECT EDI'), _defineProperty(_label, "confirmation", 'CONFIRMATION'), _defineProperty(_label, "confirmed", 'CONFIRMED'), _defineProperty(_label, "tobeconfirmed", 'TO BE CONFIRMED'), _defineProperty(_label, "standardOrganization", 'STANDARD ORGANIZATION'), _defineProperty(_label, "stowageStaff", 'STOWAGE STAFF'), _defineProperty(_label, "mobilizedReport", 'DETAILS OF MOVILIZED REPORT'), _defineProperty(_label, "historyStaff", 'STAFF HISTORY'), _defineProperty(_label, "companyStaff", 'COMPANY STAFF'), _defineProperty(_label, "fileName", 'FILE NAME'), _defineProperty(_label, "birthday", 'BIRTHDAY'), _defineProperty(_label, "charge", 'CHARGE'), _defineProperty(_label, "inspection", 'INSPECTION'), _defineProperty(_label, "inspections", 'INSPECTIONS'), _defineProperty(_label, "inspectionType", 'INSPECTION TYPE'), _defineProperty(_label, "dimensions", 'DIMENSIONS'), _defineProperty(_label, "validateUser", 'VALIDATE USER'), _defineProperty(_label, "validateCode", 'VALIDATE CODE'), _defineProperty(_label, "moment", 'MOMENT'), _defineProperty(_label, "transactionDate", 'TRANSACTION DATE'), _defineProperty(_label, "damage", 'DAMAGE'), _defineProperty(_label, "newDamage", 'NEW DAMAGE'), _defineProperty(_label, "editDamage", 'EDIT DAMAGE'), _defineProperty(_label, "inspectionMoment", 'INSPECTION MOMENT'), _defineProperty(_label, "inspectionSeals", 'INSPECTION SEALS'), _defineProperty(_label, "inspectionDamage", 'INSPECTION DAMAGE'), _defineProperty(_label, "received", 'RECEIVED'), _defineProperty(_label, "loadGroupAssociatedTo", 'LOAD GROUP ASSOCIATED TO'), _defineProperty(_label, "container", 'CONTAINER'), _defineProperty(_label, "width", 'WIDTH'), _defineProperty(_label, "weightEmpty", 'WEIGTH EMPTY'), _defineProperty(_label, "MaxWeight", 'MAX WEIGHT'), _defineProperty(_label, "maxLoad", 'MAX LOAD'), _defineProperty(_label, "maxGrossWeight", 'MAX GROSS WEIGTH'), _defineProperty(_label, "itemsAndCommoditiesList", 'ITEMS AND COMMODITIES LIST'), _defineProperty(_label, "pdfManuals", 'PDF MANUALS'), _defineProperty(_label, "uploadCommodityDocuments", 'UPLOAD COMMODITY DOCUMENTS'), _defineProperty(_label, "handlingDocumentation", 'HANDLING DOCUMENTATION'), _defineProperty(_label, "openDocumentation", 'OPEN DOCUMENTATION'), _defineProperty(_label, "uploadHandlingDocumentation", 'UPLOAD HANDLING DOCUMENTATION'), _defineProperty(_label, "listOfGroupsAndImplements", 'LIST OF GROUPS AND IMPLEMENTS'), _defineProperty(_label, "listOfImplements", 'LIST OF IMPLEMENTS'), _defineProperty(_label, "Implement", 'IMPLEMENT'), _defineProperty(_label, "implementsPerPage", 'IMPLEMENTS PER PAGE'), _defineProperty(_label, "implementsGroup", 'IMPLEMENTS GROUP'), _defineProperty(_label, "groups", 'GROUPS'), _defineProperty(_label, "implements", 'IMPLEMENTS'), _defineProperty(_label, "implement", 'IMPLEMENT'), _defineProperty(_label, "gruopName", 'GROUP NAME'), _defineProperty(_label, "implementName", 'IMPLEMENT NAME'), _defineProperty(_label, "implementDescription", 'IMPLEMENT DESCRIPTION'), _defineProperty(_label, "unitConvertionList", 'UNIT CONVERTION LIST'), _defineProperty(_label, "newConvertionUnit", 'NEW CONVERTION UNIT'), _defineProperty(_label, "unit", 'UNIT'), _defineProperty(_label, "equals", 'EQUALS'), _defineProperty(_label, "operator", 'OPERATOR'), _defineProperty(_label, "units", 'UNITS'), _defineProperty(_label, "destination", 'DESTINATION'), _defineProperty(_label, "convertionUnitRegistration", 'CONVERTION UNIT REGISTRATION'), _defineProperty(_label, "editConversionRule", 'EDIT CONVERSION RULE'), _defineProperty(_label, "convertionunitType", 'CONVERTION UNIT TYPE'), _defineProperty(_label, "typeOfUnitToConvert", 'TYPE OF UNIT TO CONVERT'), _defineProperty(_label, "unitOfOrigin", 'UNIT OF ORIGIN'), _defineProperty(_label, "unitOfDestination", 'UNIT DESTINATION'), _defineProperty(_label, "mathematicalOperation", 'MATHEMATICAL OPERATION'), _defineProperty(_label, "packagingList", 'PACKAGING LIST'), _defineProperty(_label, "groupAndType", 'GROUP AND TYPE'), _defineProperty(_label, "imdg", 'IMDG'), _defineProperty(_label, "imdgClass", 'IMDG CLASS'), _defineProperty(_label, "newImdg", 'NEW IMDG'), _defineProperty(_label, "imdgCode", 'IMDG CODE'), _defineProperty(_label, "imdgDivision", 'IMDG DIVISION'), _defineProperty(_label, "classCode", 'CLASS CODE'), _defineProperty(_label, "imdgList", 'IMDG LIST'), _defineProperty(_label, "imdgClassName", 'IMDG CLASS NAME'), _defineProperty(_label, "imdgClassAcronym", 'IMDG CLASS ACRONYM'), _defineProperty(_label, "classAcronym", 'CLASS ACRONYM'), _defineProperty(_label, "imdgDivisionName", 'IMDG DIVISION NAME'), _defineProperty(_label, "measurementUnitsList", 'MEASUREMENT UNITS LIST'), _defineProperty(_label, "measurementUnitType", 'MEASUREMENT UNIT TYPE'), _defineProperty(_label, "meaurenmentUnitRegistration", 'MEASUREMENT UNIT REGISTRATION'), _defineProperty(_label, "measurementUnitAcronym", 'MEASUREMENT UNIT ACRONYM'), _defineProperty(_label, "measurementUnitName", 'MEASUREMENT UNIT NAME'), _defineProperty(_label, "measurementUnitTypeName", 'MEASUREMENT UNIT TYPE NAME'), _defineProperty(_label, "radioactiveMaterials", 'RADIOACTIVE MATERIALS'), _defineProperty(_label, "multiplication", 'MULTIPLICATION'), _defineProperty(_label, "editImplementGroup", 'EDIT IMPLEMENT GROUP'), _defineProperty(_label, "conversionRule", 'CONVERSION RULE'), _defineProperty(_label, "portActivityName", 'PORT ACTIVITY NAME'), _defineProperty(_label, "municipalityName", 'MUNICIPALITY NAME'), _defineProperty(_label, "countryName", 'COUNTRY NAME'), _defineProperty(_label, "alpha2Code", 'ALPHA 2 CODE'), _defineProperty(_label, "alpha3Code", 'ALPHA 3 CODE'), _defineProperty(_label, "countryNumericCode", 'COUNTRY NUMERIC CODE'), _defineProperty(_label, "flag", 'FLAG'), _defineProperty(_label, "parishName", 'PARISH NAME'), _defineProperty(_label, "everybody", 'EVERYBODY'), _defineProperty(_label, "moduleGroup", 'MODULE GROUP'), _defineProperty(_label, "viewHierarchy", 'VIEW HIERARCHY'), _defineProperty(_label, "seeRolesAssociatedWithTheModule", 'SEE ROLES ASSOCIATED WITH THE MODULE'), _defineProperty(_label, "dashLogin", 'DASH LOGIN'), _defineProperty(_label, "groupModuleList", 'GROUP MODULE LIST'), _defineProperty(_label, "father", 'FATHER'), _defineProperty(_label, "newModuloRegistrarion", 'NEW MODULE REGISTRATION'), _defineProperty(_label, "dependencies", 'DEPENDENCIES'), _defineProperty(_label, "gpmoduloName", 'GPMODULO NAME'), _defineProperty(_label, "apiRoutes", 'API ROUTES'), _defineProperty(_label, "structure", 'STRUCTURE'), _defineProperty(_label, "fileDirectory", 'FILE DIRECTORY'), _defineProperty(_label, "loadBaplie", 'LOAD BAPLIE'), _defineProperty(_label, "dischargeBaplie", 'DISCHARGE BAPLIE'), _defineProperty(_label, "asignResource", 'RESOURCE ASSIGN'), _defineProperty(_label, "enterEmployeeInfo", 'ENTER EMPLOYEE INFO'), _defineProperty(_label, "employeeInfo", 'EMPLOYEE INFO'), _defineProperty(_label, "rotate", 'ROTATE'), _defineProperty(_label, "version", 'VERSION'), _defineProperty(_label, "review", 'REVIEW'), _defineProperty(_label, "effectiveTime", 'EFFECTIVE TIME'), _defineProperty(_label, "incidenceDate", 'INCIDENCE DATE'), _defineProperty(_label, "yardConsignee", 'YARD CONSIGNEE'), _defineProperty(_label, "invalidGreaterThan", 'Must be greater than'), _defineProperty(_label, "sspNumber", 'SSP NUMBER'), _defineProperty(_label, "sspYear", 'SSP YEAR'), _defineProperty(_label, "onePortCompanyBranch", 'ONE OF THE PORTS MUST BE A COMPANY BRANCH'), _defineProperty(_label, "notsameAsOrigin", "Destination port cannot be the same as the origin port"), _defineProperty(_label, "registerMachineFirst", 'FIRST YOU MUST REGISTER THE DATA OF THE MACHINE'), _defineProperty(_label, "idleTime", 'IDLE TIME'), _defineProperty(_label, "transactionsTablets", 'TRANSACTIONS - TABLETS'), _defineProperty(_label, "tdr", 'TDR'), _defineProperty(_label, "bayView", 'BAY VIEW'), _defineProperty(_label, "fullCargoPlan", 'FULL CARGO PLAN'), _defineProperty(_label, "yardClient", 'YARD - CLIENT'), _defineProperty(_label, "vehicleBin", 'VEHICLE - BIN'), _defineProperty(_label, "detail", 'DETAIL'), _defineProperty(_label, "yardClientSummary", 'YARD - CLIENT SUMMARY'), _defineProperty(_label, "vehicleBinSummary", 'VEHICLE - BIN SUMMARY'), _defineProperty(_label, "tonsWeighed", 'TONS WEIGHED'), _defineProperty(_label, "estimatedTons", 'ESTIMATED TONS'), _defineProperty(_label, "gamelasQuantity", 'BIN QUANTITY'), _defineProperty(_label, "orders", 'ORDERS'), _defineProperty(_label, "transportSummary", 'TRANSPORT SUMMARY'), _defineProperty(_label, "hatchCoverLocation", 'HATCH COVER LOCATION'), _defineProperty(_label, "inspectionDate", 'INSPECTION DATE'), _defineProperty(_label, "canceledDocument", 'CANCELED'), _defineProperty(_label, "generateOrder", "GENERATE ORDER"), _defineProperty(_label, "dateFrom", 'DATE FROM'), _defineProperty(_label, "dateTo", 'DATE TO'), _defineProperty(_label, "fullWeighing", 'FULL WEIGHING'), _defineProperty(_label, "emptyWeighing", 'EMPTY WEIGHING'), _defineProperty(_label, "logisticTimeLine", 'LOGISTIC TIMELINE'), _defineProperty(_label, "verifyDriverId", "VERIFY DRIVER ID"), _defineProperty(_label, "verifyLicensePlate", "VERIFY LICENCE PLATE"), _defineProperty(_label, "transport", 'CARRIER'), _defineProperty(_label, "incidenceType", 'INCIDENCE TYPE'), _defineProperty(_label, "noOrder", 'ORDER NO.'), _defineProperty(_label, "emissionDate", 'EMISSION DATE'), _defineProperty(_label, "shippingDate", 'SHIPPING DATE'), _defineProperty(_label, "lapse", 'LAPSE'), _defineProperty(_label, "totalTime", 'TOTAL TIME'), _defineProperty(_label, "checker", 'CHECKER'), _defineProperty(_label, "lastDate", 'LAST DATE'), _defineProperty(_label, "currentCircuit", 'CURRENT CIRCUIT'), _defineProperty(_label, "draftInspections", 'DRAFT INSPECTIONS'), _defineProperty(_label, "portPlan", 'PORT PLAN'), _defineProperty(_label, "ordersByCarrier", 'ORDERS BY CARRIER'), _defineProperty(_label, "ordersByDriver", 'ORDERS BY DRIVER'), _defineProperty(_label, "ordersByVehicle", 'ORDERS BY VEHICLE'), _defineProperty(_label, "ordersByScrapContainer", 'ORDERS BY BIN'), _defineProperty(_label, "ordersByYard", 'ORDERS BY YARD'), _defineProperty(_label, "dailyReport", 'DAILY REPORT'), _defineProperty(_label, "finalReport", 'FINAL REPORT'), _defineProperty(_label, "operativReport", 'OPERATIV REPORT'), _defineProperty(_label, "tablets", 'TABLETS'), _defineProperty(_label, "ordersList", 'ORDERS LIST'), _defineProperty(_label, "incidence", 'INCIDENCE'), _defineProperty(_label, "incidences", 'INCIDENCE'), _defineProperty(_label, "shipmentOrders", 'SHIPMENT ORDERS'), _defineProperty(_label, "shipmentOrder", 'SHIPMENT ORDER'), _defineProperty(_label, "minimum", 'MINIMUM'), _defineProperty(_label, "operationsSummary", 'VESSEL ACTIVITY RECAP'), _defineProperty(_label, "delaysByVessel", 'DELAYS BY VESSEL'), _defineProperty(_label, "delaysByOperator", 'DELAYS BY OPERATOR'), _defineProperty(_label, "delaysPerPort", 'DELAYS PER PORT'), _defineProperty(_label, "providers", 'PROVIDERS'), _defineProperty(_label, "ice", 'ICE'), _defineProperty(_label, "water", 'WATER'), _defineProperty(_label, "food", 'FOOD'), _defineProperty(_label, "item", 'ITEM'), _defineProperty(_label, "mobilizationOfShipHatch", 'MOBILIZATION OF SHIP HATCH COVER'), _defineProperty(_label, "mobilizationOfTwinboxes", 'MOBILIZATION OF TWINBOXES'), _defineProperty(_label, "supplementForSealingEmptyContainers", 'SUPPLEMENT FOR SEALING EMPTY CONTAINERS (MINIMUM$50.00)'), _defineProperty(_label, "sealingEmptyContainers", 'SEALING EMPTY CONTAINERS'), _defineProperty(_label, "shippingContainers", 'SHIPPING CONTAINERS'), _defineProperty(_label, "containersFull", 'FULL'), _defineProperty(_label, "containersEmpty", 'EMPTY'), _defineProperty(_label, "unloadContainers", 'UNLOAD CONTAINERS'), _defineProperty(_label, "metricTonnageAcronym", '(TON)'), _defineProperty(_label, "ballast", 'BALLAST'), _defineProperty(_label, "fuelOil", 'FUEL OIL'), _defineProperty(_label, "dieselOil", 'DIESEL OIL'), _defineProperty(_label, "constant", 'CONSTANT'), _defineProperty(_label, "freshWater", 'FRESH WATER'), _defineProperty(_label, "errorsCurrentDateTimePleaseCheck", 'TIME MUST NOT BE LATER THAN THE CURRENT TIME, PLEASE CHECK'), _defineProperty(_label, "errorsStartDateTimePleaseCheck", 'TIME MUST NOT BE LESS THAN ATA/ETA, PLEASE CHECK'), _defineProperty(_label, "errorsHourDateTimePleaseCheck", 'END TIME MUST NOT BE LESS THAN START TIME, PLEASE CHECK'), _defineProperty(_label, "transactionReverseList", 'TRANSACTION REVERSE LIST'), _defineProperty(_label, "actualPosition", 'ACTUAL POSITION'), _defineProperty(_label, "previousPosition", 'PREVIOUS POSITION'), _defineProperty(_label, "transactionReversals", 'TRANSACTION REVERSALS'), _defineProperty(_label, "damageOption", 'DAMAGE'), _defineProperty(_label, "searchForContainerToContinue", 'YOU MUST SEARCH THE CONTAINER FIRST TO BE ABLE TO CONTINUE WITH THE REGISTRATION'), _defineProperty(_label, "beginningTurn", 'BEGINNING OF TURN'), _defineProperty(_label, "finalTurn", 'FINAL TURN'), _defineProperty(_label, "netTime", 'NET TIME'), _defineProperty(_label, "timeOperations", 'TIME OPERATIONS'), _defineProperty(_label, "beginningHour", 'BEGINNING OF HOUR'), _defineProperty(_label, "finalHour", 'END HOUR'), _defineProperty(_label, "inactivityTime", 'INACTIVITY TIME'), _defineProperty(_label, "delayTimesWithoutMovements", 'DELAY TIMES WITHOUT MOVEMENTS'), _defineProperty(_label, "registerDate", 'REGISTER DATE'), _defineProperty(_label, "editWorkTurnByTypeOfVessel", 'EDIT WORK SHIFT BY TYPE OF VESSEL'), _defineProperty(_label, "newWorkTurnByTypeOfVessel", 'NEW WORK SHIFT BY TYPE OF VESSEL'), _defineProperty(_label, "workTurnsByTypeOfVessel", 'WORK SHIFTS BY TYPE OF VESSEL'), _defineProperty(_label, "workTurnByTypeOfVessel", 'WORK SHIFT BY TYPE OF VESSEL'), _defineProperty(_label, "turns", 'TURNS'), _defineProperty(_label, "stern", 'STERN'), _defineProperty(_label, "bow", 'BOW'), _defineProperty(_label, "gross", 'GROSS'), _defineProperty(_label, "stowageRoles", 'STOWAGE ROLES'), _defineProperty(_label, "verifyContainer", "VERIFY CONTAINER ACRONYMS"), _defineProperty(_label, "deleteImage", 'Are you sure to delete the image?'), _defineProperty(_label, "other", 'OTHER'), _defineProperty(_label, "CULMINADO", 'COMPLETED'), _defineProperty(_label, "correlative", 'CORRELATIVE'), _defineProperty(_label, "staffOperator", 'STAFF OPERATOR'), _defineProperty(_label, "staffSupervisor", 'STAFF SUPERVISOR'), _defineProperty(_label, "supervisor", 'SUPERVISOR'), _defineProperty(_label, "uploadDocuments", 'UPLOAD DOCUMENTS'), _defineProperty(_label, "clearFilter", 'CLEAR FILTER'), _defineProperty(_label, "requiresAtLeastOneSealInspection", 'REQUIRES AT LEAST ONE SEAL INSPECTION'), _defineProperty(_label, "withoutSeal", 'WITHOUT SEAL'), _defineProperty(_label, "time", 'TIME'), _defineProperty(_label, "errorList", 'ERROR LIST'), _defineProperty(_label, "driverId", 'DRIVER ID'), _defineProperty(_label, "driverName", 'DRIVER NAME'), _defineProperty(_label, "driverLicenseDateFormat", 'DD-MM-YYYY'), _defineProperty(_label, "vehicleClasificationName", 'NAME CLASSIFICATION OF VEHICLE'), _defineProperty(_label, "driversAndVehicleList", 'DRIVERS AND VEHICLE LIST'), _defineProperty(_label, "driver", 'DRIVER'), _defineProperty(_label, "drivers", 'DRIVERS'), _defineProperty(_label, "driverLicense", 'DRIVER LICENSE'), _defineProperty(_label, "licenseExpirationDate", 'EXPIRATION DATE'), _defineProperty(_label, "vehicle", 'VEHICLE'), _defineProperty(_label, "tpVehicle", 'VEHICLE TYPE'), _defineProperty(_label, "tpVehicleName", 'VEHICLE TYPE NAME'), _defineProperty(_label, "vehiclePlate", 'VEHICLE PLATE'), _defineProperty(_label, "vehicleClasification", 'VEHICLE CLASIFICATION'), _defineProperty(_label, "vehicleClasific", 'VEHICLE CLASIFICATION'), _defineProperty(_label, "vehicleType", 'VEHICLE TYPE'), _defineProperty(_label, "clasificationName", 'CLASIFICATION NAME'), _defineProperty(_label, "listMachine", 'MACHINE LIST'), _defineProperty(_label, "registerMachine", 'MACHINE REGISTER'), _defineProperty(_label, "registerPhotoMachine", 'MACHINE PHOTO REGISTER'), _defineProperty(_label, "machineTypeRelationShip", 'MACHINE TYPE RELATION SHIP'), _defineProperty(_label, "serialUnique", 'UNIQUE SERIAL'), _defineProperty(_label, "nameIdDriver", 'NAME OR ID DRIVER'), _defineProperty(_label, "tableReset", 'TABLE RESET'), _defineProperty(_label, "aggregate", 'ADD'), _defineProperty(_label, "machineTypeName", 'MACHINE TYPE NAME'), _defineProperty(_label, "selectOption", 'SELECT AN OPTION'), _defineProperty(_label, "icon", 'ICON'), _defineProperty(_label, "typeMachine", 'MACHINE TYPE'), _defineProperty(_label, "containers", 'CONTAINERS'), _defineProperty(_label, "associatedEquipment", 'ASSOCIATED EQUIPMENT'), _defineProperty(_label, "machineAssociation", 'MACHINE ASSOCIATION'), _defineProperty(_label, "bulk", 'BULK'), _defineProperty(_label, "generalCargo", 'GENERAL CARGO'), _defineProperty(_label, "clientsActivitiesList", 'CLIENTS AND ACTIVITIES LIST'), _defineProperty(_label, "activities", 'ACTIVITIES'), _defineProperty(_label, "transactions", 'TRANSACTIONS'), _defineProperty(_label, "rifNumber", 'RIF NUMBER'), _defineProperty(_label, "transactionsClient", 'TRANSACTIONS GENERATED BY THE CLIENT'), _defineProperty(_label, "motive", 'MOTIVE'), _defineProperty(_label, "clientActivities", 'CLIENT ACTIVITIES'), _defineProperty(_label, "dataTable", 'DATA TABLE'), _defineProperty(_label, "updateActivities", 'UPDATE ACTIVITIES'), _defineProperty(_label, "grabar", 'SAVE'), _defineProperty(_label, "clientsByActivity", 'CLIENTS BY ACTIVITY'), _defineProperty(_label, "plate", 'PLATE'), _defineProperty(_label, "errorSelectActivities", 'Please select the Activities.'), _defineProperty(_label, "shippingLineList", 'SHIPPING LINES LIST'), _defineProperty(_label, "assignAcronym", 'ASSING ACRONYM'), _defineProperty(_label, "assignShippingLineRepresentative", 'ASSIGN SHIPPING LINE REPRESENTATIVE'), _defineProperty(_label, "requiresSuplier", 'REQUIRES SUPLIER'), _defineProperty(_label, "completedSuccessfully", 'YOUR PROCESS HAS BEEN COMPLETED SUCCESSFULLY'), _defineProperty(_label, "unexpectedError", 'UNEXPECTED ERROR HAS OCURRED'), _defineProperty(_label, "lineRepresentative", 'LINE REPRESENTATIVE'), _defineProperty(_label, "inactivateRepresentative", 'INACTIVATE REPRESENTATIVE'), _defineProperty(_label, "activateRepresentative", 'ACTIVATE REPRESENTATIVE'), _defineProperty(_label, "shippingLineAbbreviations", 'SHIPPING LINE ABBREVIATIONS'), _defineProperty(_label, "abbreviation", 'ABBREVIATION'), _defineProperty(_label, "newShippingLine", 'SHIPPING LINE'), _defineProperty(_label, "activityName", 'ACTIVITY NAME'), _defineProperty(_label, "clientRepresentativeName", 'CLIENT REPRESENTATIVE NAME'), _defineProperty(_label, "clientAddress", 'CLIENT ADDRESS'), _defineProperty(_label, "clientName", 'CLIENT NAME'), _defineProperty(_label, "newShippingLineName", 'SHIPPING LINE NAME'), _defineProperty(_label, "newShippingLineAddress", 'SHIPPING LINE ADDRESS'), _defineProperty(_label, "newShippingLineAbbreviation", 'SHIPPING LINE ABBREVIATION'), _defineProperty(_label, "inactivateActivity", 'INACTIVATE ACTIVITY'), _defineProperty(_label, "activateActivity", 'ACTIVATE ACTIVITY'), _defineProperty(_label, "inactivateRole", 'INACTIVAR ROL'), _defineProperty(_label, "activateRole", 'ACTIVAR ROL'), _defineProperty(_label, "applySigetMobile", 'APPLY SIGET-MOBILE'), _defineProperty(_label, "lostTimeCode", 'DELAY TIME CODE'), _defineProperty(_label, "devices", 'DEVICES'), _defineProperty(_label, "applyTo", 'APPLY TO'), _defineProperty(_label, "noSearchData", 'NO SEARCH DATA'), _defineProperty(_label, "documentQuestion", 'REQUIRES A DOCUMENT'), _defineProperty(_label, "addFileQuestion", 'ARE YOU SURE TO UPLOAD THE FILE'), _defineProperty(_label, "carrier", 'CARRIER'), _defineProperty(_label, "containerCode", 'CONTAINER CODE'), _defineProperty(_label, "transhipmentPort", 'TRANSHIPMENT PORT'), _defineProperty(_label, "certificateVGM", 'VGM CERTIFICATE'), _defineProperty(_label, "class", 'CLASE'), _defineProperty(_label, "length", 'Length'), _defineProperty(_label, "columnConfig", 'COLUMN CONFIGURATION'), _defineProperty(_label, "portCodes", 'PORT CODES'), _defineProperty(_label, "hideTableRoles", 'HIDE TABLE OF SELECTED ROLES'), _defineProperty(_label, "viewTableRoles", 'VIEW TABLE OF SELECTED ROLES'), _defineProperty(_label, "delayTdrCode", 'DELAYS TDR CODE'), _defineProperty(_label, "delayCustomCode", 'DELAYS CUSTOM CODE'), _defineProperty(_label, "customCode", 'CUSTOM CODE'), _defineProperty(_label, "chronometer", 'CHRONOMETER'), _defineProperty(_label, "dateRange", 'DATE RANGE'), _defineProperty(_label, "app", 'APP'), _defineProperty(_label, "errorsDatePleaseCheck", 'Errors in Date, please check.'), _defineProperty(_label, "errorsHourPleaseCheck", 'Errors in Hour, please check.'), _defineProperty(_label, "fin", 'END'), _defineProperty(_label, "inicio", 'START'), _defineProperty(_label, "twinsBox", 'TWINS BOX'), _defineProperty(_label, "configurations", 'SETTINGS'), _defineProperty(_label, "delayResponsible", 'DELAY RESPONSIBLE'), _defineProperty(_label, "others", 'OTHERS'), _defineProperty(_label, "codesDocuments", 'CODES PER DOCUMENTS'), _defineProperty(_label, "vesselDocuments", 'VESSEL DOCUMENTS'), _defineProperty(_label, "errorsIdleTime", 'SELECTED VESSEL DOESNT HAVE A DELAY TIME REGISTERED'), _defineProperty(_label, "errorsUnitSelected", 'THE TYPE OF MEASUREMENT UNIT HAS BEEN PREVIOUSLY SELECTED'), _defineProperty(_label, "geolocation", 'GEOLOCATION'), _defineProperty(_label, "color", 'COLOR'), _defineProperty(_label, "timeCode", 'TIME CODE'), _defineProperty(_label, "equipmentTotal", 'EQUIPMENT TOTAL'), _defineProperty(_label, "timeReport", 'TIME REPORT'), _defineProperty(_label, "ALL", 'ALL'), _defineProperty(_label, "dischargePortVisit", 'DISCHARGE PORT'), _defineProperty(_label, "generalContainers", 'CONTAINERS (GENERAL)'), _defineProperty(_label, "movementsRestow", 'RESTOW'), _defineProperty(_label, "shipments", 'LOAD'), _defineProperty(_label, "canceled", 'CANCELED'), _defineProperty(_label, "discharges", 'DISCHARGE'), _defineProperty(_label, "vgmDetail", 'VGM DETAIL'), _defineProperty(_label, "oversizedContainers", 'OOG CARGO'), _defineProperty(_label, "reeferContainers", 'REEFER CONTAINERS'), _defineProperty(_label, "imdgContainers", 'DANGEROUS CARGO'), _defineProperty(_label, "containersByTypeStatus", 'TYPE-STATUS CONTAINERS'), _defineProperty(_label, "containersByType", 'TYPE CONTAINERS'), _defineProperty(_label, "containersByPortLine", 'PORT-LINE CONTAINERS'), _defineProperty(_label, "typeOfLoadPerCrane", 'TYPE OF LOAD BY CRANE'), _defineProperty(_label, "listOfPlannedGeneralContainers", 'CONTAINER LIST'), _defineProperty(_label, "listOfPlannedImdgContainers", 'DANGEROUS CARGO LIST'), _defineProperty(_label, "listOfPlannedMovementsRestow", 'RESTOW LIST'), _defineProperty(_label, "listOfPlannedReeferContainers", 'REEFER LIST'), _defineProperty(_label, "listOfPlannedShipments", 'LOAD LIST'), _defineProperty(_label, "listOfPlannedCanceled", 'CANCELED LIST'), _defineProperty(_label, "listOfPlannedDischarges", 'DISCHARGE LIST'), _defineProperty(_label, "listOfPlannedVgmDetail", 'VGM DETAIL'), _defineProperty(_label, "listOfPlannedOversizedContainers", 'OOG CARGO LIST'), _defineProperty(_label, "summaryOfPlannedContainersByTypeStatus", 'CONTAINER TYPE SUMMARY'), _defineProperty(_label, "summaryOfPlannedContainersByType", 'CARGO SUMMARY'), _defineProperty(_label, "summaryOfPlannedContainersByPortLine", 'LOAD PORT SUMMARY BY OPERATOR'), _defineProperty(_label, "summaryOfPlannedImdgContainers", 'DANGEROUS CARGO SUMMARY'), _defineProperty(_label, "listOfGeneralContainers", 'CONTAINER LIST (GENERAL)'), _defineProperty(_label, "listOfImdgContainers", 'DANGEROUS CARGO LIST'), _defineProperty(_label, "listOfMovementsRestow", 'RESTOW LIST'), _defineProperty(_label, "listOfReeferContainers", 'REEFER LIST'), _defineProperty(_label, "listOfShipments", 'LOAD LIST'), _defineProperty(_label, "listOfCanceled", 'CANCELED LIST'), _defineProperty(_label, "listOfDischarges", 'DISCHARGE LIST'), _defineProperty(_label, "listOfOversizedContainers", 'OOG CARGO LIST'), _defineProperty(_label, "summaryOfContainersByTypeStatus", 'CONTAINER TYPE SUMMARY'), _defineProperty(_label, "summaryOfContainersByType", 'CARGO SUMMARY'), _defineProperty(_label, "summaryOfContainersByPortLine", 'LOAD PORT SUMMARY BY OPERATOR'), _defineProperty(_label, "summaryOfImdgContainers", 'DANGEROUS CARGO SUMMARY'), _defineProperty(_label, "summaryCraneLoadType", 'TYPE OF LOAD BY CRANE SUMMARY'), _defineProperty(_label, "transactionReport", 'TRANSACTIONS REPORT'), _defineProperty(_label, "noRecordsAvailbleReport", 'NO RECORDS AVAILABLE TO GENERATE THE REPORT'), _defineProperty(_label, "printed", 'PRINTED'), _defineProperty(_label, "reportSuccessfully", 'SUCCESSFULLY GENERATED REPORT'), _defineProperty(_label, "reportError", 'ERROR WHEN GENERATING THE REPORT'), _defineProperty(_label, "discountedTdr", 'WITH DISCOUNTS'), _defineProperty(_label, "pageReport", 'Page'), _defineProperty(_label, "ofReport", 'of'), _defineProperty(_label, "delay", 'DELAY'), _defineProperty(_label, "timeCodeDetails", 'TIME CODE DETAILS'), _defineProperty(_label, "applyTdr", 'APPLIES TO TDR'), _defineProperty(_label, "currentTime", 'CURRENT TIME'), _defineProperty(_label, "serial", 'SERIAL'), _defineProperty(_label, "berthVisit", 'BERTH'), _defineProperty(_label, "position", 'POSITION'), _defineProperty(_label, "isoCodes", 'ISO CODES'), _defineProperty(_label, "equivalent", 'EQUIVALENT'), _defineProperty(_label, "image", 'IMAGE'), _defineProperty(_label, "selectedImage", 'SELECTED IMAGE'), _defineProperty(_label, "toPage", 'TO'), _defineProperty(_label, "records", 'RECORDS'), _defineProperty(_label, "discharge", 'DISCHARGE'), _defineProperty(_label, "modality", 'MODALITY'), _defineProperty(_label, "height", 'HEIGHT'), _defineProperty(_label, "actualConditions", 'ACTUAL CONDITIONS'), _defineProperty(_label, "resultEqualValue", 'RESULT = VALUE '), _defineProperty(_label, "locationName", 'LOCATION NAME'), _defineProperty(_label, "ID", "ID"), _defineProperty(_label, "password", "PASSWORD"), _defineProperty(_label, "userIdentificationInfo", "USER IDENTIFICATION INFO"), _defineProperty(_label, "invalidContainerCode", "CODIGO DE CONTENEDOR INVALIDO"), _defineProperty(_label, "checkDigit", "CHECK-DIGIT"), _defineProperty(_label, "asignUserRole", 'ASIGN USER ROLE'), _defineProperty(_label, "rolesAssigned", 'ROLES ASIGNED'), _defineProperty(_label, "rolesToBeAssigned", 'ROLES TO BE ASIGNED'), _defineProperty(_label, "selectedRoles", 'SELECTED ROLE(S)'), _defineProperty(_label, "transactionHourDate", "TRANSACTION HOUR/DATE"), _defineProperty(_label, "generateReport", "GENERATE REPORT"), _defineProperty(_label, "holiday", 'HOLIDAY'), _defineProperty(_label, "holidayDay", 'HOLIDAY'), _defineProperty(_label, "holidayDayName", 'HOLIDAY DAY NAME'), _defineProperty(_label, "holidayDate", 'HOLIDAY DATE'), _defineProperty(_label, "holidayType", 'HOLIDAY TYPE'), _defineProperty(_label, "holidayTypeName", 'HOLIDAY TYPE NAME'), _defineProperty(_label, "calendary", 'CALENDARY'), _defineProperty(_label, "colorIdentification", 'color Identification'), _defineProperty(_label, "standard", 'STANDARD'), _defineProperty(_label, "standardDocumentation", 'STANDARD DOCUMENTATION'), _defineProperty(_label, "files", 'FILES'), _defineProperty(_label, "regulatoryBody", "REGULATORY BODY"), _defineProperty(_label, "path", 'PATH'), _defineProperty(_label, "Alias", 'ALIAS NAME'), _defineProperty(_label, "registeredPreviouslyCircuit", 'REGISTERED PREVIOUSLY CIRCUIT'), _defineProperty(_label, "modalityName", 'MODALITY NAME'), _defineProperty(_label, "CircuitAssociation", 'CIRCUIT ASSOCIATION'), _defineProperty(_label, "ModalityAssociation", 'ASSOCIATION MODALITY'), _defineProperty(_label, "Up", 'UP'), _defineProperty(_label, "Down", 'DOWN'), _defineProperty(_label, "IdentificationClient", 'CLIENT IDENTIFICATION'), _defineProperty(_label, "Agency", 'AGENCY'), _defineProperty(_label, "ToLoad", 'TO LOAD'), _defineProperty(_label, "AveragePerBin", 'AVERAGE PER BIN'), _defineProperty(_label, "Accumulated", 'ACCUMULATED'), _defineProperty(_label, "LoadedPerTurns", 'LOADED PER TURNS'), _defineProperty(_label, "IncidenceName", 'INCIDENCE NAME'), _defineProperty(_label, "BinName", 'BIN NAME'), _defineProperty(_label, "DeviceCode", 'DEVICE CODE'), _defineProperty(_label, "Slot", 'SLOT'), _defineProperty(_label, "CargoStatus", 'CARDO STATUS'), _defineProperty(_label, "PlaceOfDelivery", 'PLACE OF DELIVERY'), _defineProperty(_label, "CargoOriginPort", 'CARGO ORIGIN PORT'), _defineProperty(_label, "TransshipmentPortCode", 'TRANSSHIPMENT PORT CODE'), _defineProperty(_label, "IsoInfo", 'ISO INFO'), _defineProperty(_label, "GroupType", 'GROUP TYPE'), _defineProperty(_label, "SizeFt", 'SIZE (FT)'), _defineProperty(_label, "DangerousInfo", 'DANGEROUS INFO'), _defineProperty(_label, "UnNumber", 'UN NUMBER'), _defineProperty(_label, "IMDGPageNO", 'IMDG PAGE NO'), _defineProperty(_label, "FlashPoint", 'FLASH POINT'), _defineProperty(_label, "PackagingGroup", 'PACKAGING GROUP'), _defineProperty(_label, "DescriptionOfGoods", 'DESCRIPTION OF GOODS'), _defineProperty(_label, "OversizeInfo", 'OVERSIZE INFO'), _defineProperty(_label, "DimFront", 'DIM FRONT'), _defineProperty(_label, "DimBack", 'DIM BACK'), _defineProperty(_label, "DimLeft", 'DIM LEFT'), _defineProperty(_label, "DimRight", 'DIM RIGHT'), _defineProperty(_label, "DimTop", 'DIM TOP'), _defineProperty(_label, "ReeferInfo", 'REEFER INFOR'), _defineProperty(_label, "ReeferSetting", 'REEFER SETTING'), _defineProperty(_label, "MinimumRange", 'MINIMUM RANGE'), _defineProperty(_label, "MaximumRange", 'MAXIMUM RANGE'), _defineProperty(_label, "ModifyShipmentOrder", 'MODIFY SHIPMENT ORDER'), _defineProperty(_label, "HoldHatchCover", 'HOLD HATCH COVER'), _defineProperty(_label, "BABOR", 'PORT'), _defineProperty(_label, "CENTRO", 'CENTRO'), _defineProperty(_label, "ESTRIBOR", 'STARBOARD'), _defineProperty(_label, "Underdeck", 'UNDER DECK'), _defineProperty(_label, "TierRows", 'TIER-ROWS'), _defineProperty(_label, "RowsToStartboard", 'ROWS TO STARTBOARD'), _defineProperty(_label, "RowsToPort", 'ROWS TO PORT'), _defineProperty(_label, "Disabled", 'DISABLED'), _defineProperty(_label, "CrosssLine", 'CROSS LINE'), _defineProperty(_label, "Confirm", 'CONFIRM'), _defineProperty(_label, "Hazard", 'HAZARD'), _defineProperty(_label, "Hazard_Restriction", 'HAZARD RESTRICTION'), _defineProperty(_label, "Not_Exist", 'NOT_EXIST'), _defineProperty(_label, "Reefer_Plug", 'REEFER PLUG'), _defineProperty(_label, "EstimatedBin", 'ESTIMATED BIN'), _defineProperty(_label, "Inactivate", 'INACTIVATE'), _defineProperty(_label, "BinReturn", 'BIN RETURN'), _defineProperty(_label, "IncidenceGroup", 'INCIDENCE GROUP'), _defineProperty(_label, "IncidentList", 'INCIDENCE LIST'), _defineProperty(_label, "FullLessTare", 'FULL WEIGHT CAN NOT BE LESS THAN TARE WEIGHT'), _defineProperty(_label, "ValueNotNegative", 'VALUE CAN NOT BE NEGATIVE'), _defineProperty(_label, "CapacityEstimated", 'CAPACITY ESTIMATED'), _defineProperty(_label, "BinTareweightlist", 'BIN TARE WEIGHT LIST'), _defineProperty(_label, "TareWeightlist", 'TARE WEIGHT LIST'), _defineProperty(_label, "BinOrderNoList", 'BIN ORDER NO. LIST'), _defineProperty(_label, "OrderNolist", 'ORDER NO. LIST'), _defineProperty(_label, "sequence", 'SEQUENCE'), _defineProperty(_label, "activity", 'ACTIVITY'), _defineProperty(_label, "initials", 'INITIALS'), _defineProperty(_label, "typecargocode", 'TYPE CARGO CODE'), _defineProperty(_label, "acronym", 'ACRONYM'), _defineProperty(_label, "required", 'Field Required. '), _defineProperty(_label, "onlyText", 'Only Text'), _defineProperty(_label, "onlyCoordinate", 'Only Coordinates'), _defineProperty(_label, "onlyAlphanumeric", 'Only Alphanumeric'), _defineProperty(_label, "onlyNumber", 'Only Numbers'), _defineProperty(_label, "onlyDecimal", 'Only Decimals'), _defineProperty(_label, "onlyUppercase", 'Only Uppercase.'), _defineProperty(_label, "integer", 'only interger'), _defineProperty(_label, "minValueIs", 'min value is'), _defineProperty(_label, "maxValueIs", 'max value is'), _defineProperty(_label, "metrics", 'ONLY METRICS'), _defineProperty(_label, "filter", 'FILTER'), _defineProperty(_label, "filtro", 'FILTER'), _defineProperty(_label, "file", 'FILE'), _defineProperty(_label, "number", 'NUMBER'), _defineProperty(_label, "lang", 'ENGLISH'), _defineProperty(_label, "yard", 'YARD'), _defineProperty(_label, "toSelect", 'SELECT '), _defineProperty(_label, "select", 'SELECT '), _defineProperty(_label, "selected", 'SELECTED '), _defineProperty(_label, "selectedLogo", 'SELECTED LOGO'), _defineProperty(_label, "option", 'OPTION '), _defineProperty(_label, "load", 'LOADING'), _defineProperty(_label, "process", "PROCESS"), _defineProperty(_label, "success", "SUCCESS"), _defineProperty(_label, "error", "ERROR"), _defineProperty(_label, "changePass", 'Change your Password'), _defineProperty(_label, "moduleInfo", 'Module Info'), _defineProperty(_label, "nueva", 'NEW '), _defineProperty(_label, "nuevo", 'NEW '), _defineProperty(_label, "modelBrand", 'BRAND/MODEL'), _defineProperty(_label, "model", 'MODEL'), _defineProperty(_label, "modelName", 'MODEL NAME'), _defineProperty(_label, "brand", 'BRAND'), _defineProperty(_label, "brandName", 'BRAND NAME'), _defineProperty(_label, "brands", 'BRANDS'), _defineProperty(_label, "name", 'NAME'), _defineProperty(_label, "lastName", 'LAST NAME'), _defineProperty(_label, "registerName", 'NAME REGISTER'), _defineProperty(_label, "register", 'REGISTER '), _defineProperty(_label, "clearFields", 'CLEAR FIELDS'), _defineProperty(_label, "cleanInformation", 'CLEAN INFORMATION'), _defineProperty(_label, "add", 'ADD '), _defineProperty(_label, "edit", 'EDIT '), _defineProperty(_label, "delete", 'DELETE '), _defineProperty(_label, "Remove", 'REMOVE'), _defineProperty(_label, "badImage", 'REQUIRE VALID IMAGE'), _defineProperty(_label, "needValidImage", 'NEED A VALID IMAGE'), _defineProperty(_label, "picture", 'PICTURE'), _defineProperty(_label, "crane", 'CRANE'), _defineProperty(_label, "type", 'TYPE'), _defineProperty(_label, "list", 'LIST'), _defineProperty(_label, "work", 'WORK'), _defineProperty(_label, "movements", 'MOVEMENTS'), _defineProperty(_label, "movement", 'MOVEMENT'), _defineProperty(_label, "supplies", 'SUPPLIES'), _defineProperty(_label, "Supplies", 'SUPPLIES'), _defineProperty(_label, "supplie", 'SUPPLIE'), _defineProperty(_label, "supply", 'SUPPLY'), _defineProperty(_label, "turn", 'TURN'), _defineProperty(_label, "stowage", 'STOWAGE'), _defineProperty(_label, "vessel", 'VESSEL'), _defineProperty(_label, "role", 'ROLE'), _defineProperty(_label, "must", 'YOU MUST '), _defineProperty(_label, "transaction", 'TRANSACTION'), _defineProperty(_label, "FINALIZADO", 'FINISHED'), _defineProperty(_label, "CANCELADO", 'CANCELLED'), _defineProperty(_label, "ACTIVO", 'ACTIVE'), _defineProperty(_label, "INACTIVO", 'INACTIVE'), _defineProperty(_label, "USUARIO", 'USER'), _defineProperty(_label, "FECHA", 'DATE'), _defineProperty(_label, "group", 'GROUP'), _defineProperty(_label, "min", 'REQUIRED MIN '), _defineProperty(_label, "max", 'REQUIRED MAX '), _defineProperty(_label, "chars", ' CHARS'), _defineProperty(_label, "change", 'CHANGE '), _defineProperty(_label, "code", 'CODE'), _defineProperty(_label, "open", 'OPEN'), _defineProperty(_label, "close", 'CLOSE'), _defineProperty(_label, "watch", 'WATCH'), _defineProperty(_label, "hold", 'HOLD'), _defineProperty(_label, "from", 'FROM'), _defineProperty(_label, "to", 'TO'), _defineProperty(_label, "preselected", 'PRESELECTED'), _defineProperty(_label, "holdAssigned", 'HOLD ASSIGNED'), _defineProperty(_label, "country", 'COUNTRY'), _defineProperty(_label, "documents", 'DOCUMENTS'), _defineProperty(_label, "invalid", 'Field Invalid. '), _defineProperty(_label, "capacity", 'CAPACITY'), _defineProperty(_label, "grain", ' GRAIN '), _defineProperty(_label, "bail", ' BAIL '), _defineProperty(_label, "deck", 'DECK'), _defineProperty(_label, "finish", 'FINISH'), _defineProperty(_label, "operative", 'OPERATIVE'), _defineProperty(_label, "operational", 'OPERATIONAL'), _defineProperty(_label, "operativa", "OPERATIONAL"), _defineProperty(_label, "range", 'RANGE'), _defineProperty(_label, "description", 'DESCRIPTION'), _defineProperty(_label, "return", 'RETURN'), _defineProperty(_label, "port", 'PORT'), _defineProperty(_label, "location", 'LOCATION'), _defineProperty(_label, "localizacion", "LOCATION"), _defineProperty(_label, "state", 'STATE'), _defineProperty(_label, "latitude", 'LATITUDE'), _defineProperty(_label, "longitude", 'LONGITUDE'), _defineProperty(_label, "berthName", 'BERTH NAME'), _defineProperty(_label, "condition", 'CONDITION '), _defineProperty(_label, "conditions", 'CONDITIONS '), _defineProperty(_label, "draft", 'DRAFT'), _defineProperty(_label, "mooring", 'MOORING BOLLARDS'), _defineProperty(_label, "service", 'SERVICE'), _defineProperty(_label, "serviceList", 'SERVICE LIST'), _defineProperty(_label, "serviceCode", 'SERVICE CODE'), _defineProperty(_label, "itinerary", 'ITINERARY'), _defineProperty(_label, "line", 'LINE'), _defineProperty(_label, "see", 'SEE '), _defineProperty(_label, "exit", 'EXIT'), _defineProperty(_label, "all", 'ALL'), _defineProperty(_label, "ton", 'TON'), _defineProperty(_label, "affiliate", 'AFFILIATE '), _defineProperty(_label, "frecuency", 'FRECUENCY'), _defineProperty(_label, "reset", 'RESET '), _defineProperty(_label, "table", 'TABLE '), _defineProperty(_label, "observation", 'OBSERVATION'), _defineProperty(_label, "voyage", 'VOYAGE'), _defineProperty(_label, "voyageNumber", 'VOYAGE NUMBER'), _defineProperty(_label, "company", 'COMPANY'), _defineProperty(_label, "branch", 'BRANCH'), _defineProperty(_label, "object", 'OBJECT'), _defineProperty(_label, "municipality", 'MUNICIPALITY'), _defineProperty(_label, "parish", 'PARISH'), _defineProperty(_label, "address", 'ADDRESS'), _defineProperty(_label, "client", 'CLIENT'), _defineProperty(_label, "contact", 'CONTACT'), _defineProperty(_label, "save", 'SAVE CHANGES'), _defineProperty(_label, "level", 'LEVEL'), _defineProperty(_label, "module", 'MODULE'), _defineProperty(_label, "order", 'ORDER'), _defineProperty(_label, "view", 'VIEW'), _defineProperty(_label, "viewName", 'VIEW NAME'), _defineProperty(_label, "toView", 'VIEW'), _defineProperty(_label, "preview", 'PREVIEW'), _defineProperty(_label, "permission", 'PERMISSIONS'), _defineProperty(_label, "assign", 'ASSIGN '), _defineProperty(_label, "supplier", 'SUPPLIER'), _defineProperty(_label, "quantity", 'QUANTITY'), _defineProperty(_label, "representative", 'REPRESENTATIVE'), _defineProperty(_label, "resource", 'RESOURCE'), _defineProperty(_label, "resources", 'RESOURCES'), _defineProperty(_label, "or", 'or'), _defineProperty(_label, "status", 'STATUS'), _defineProperty(_label, "applies", 'APPLIES'), _defineProperty(_label, "Applies", 'APPLIES'), _defineProperty(_label, "AppliesTo", 'APPLIES TO'), _defineProperty(_label, "apply", 'APPLY'), _defineProperty(_label, "IMO", 'IMO'), _defineProperty(_label, "yes", 'YES'), _defineProperty(_label, "accesory", 'ACCESORY'), _defineProperty(_label, "accesories", 'ACCESORIES'), _defineProperty(_label, "component", 'COMPONENT'), _defineProperty(_label, "components", 'COMPONENTS'), _defineProperty(_label, "standar", 'STANDAR'), _defineProperty(_label, "january", 'JANUARY'), _defineProperty(_label, "february", 'FEBRUARY'), _defineProperty(_label, "march", 'MARCH'), _defineProperty(_label, "april", 'APRIL'), _defineProperty(_label, "may", 'MAY'), _defineProperty(_label, "june", 'JUNE'), _defineProperty(_label, "july", 'JULY'), _defineProperty(_label, "august", 'AUGUST'), _defineProperty(_label, "september", 'SEPTEMBER'), _defineProperty(_label, "octuber", 'OCTOBER'), _defineProperty(_label, "november", 'NOVEMBER'), _defineProperty(_label, "december", 'DECEMBER'), _defineProperty(_label, "weight", 'WEIGHT'), _defineProperty(_label, "density", 'DENSITY'), _defineProperty(_label, "classification", 'CLASSIFICATION'), _defineProperty(_label, "classifications", 'CLASSIFICATIONS'), _defineProperty(_label, "part", 'PART'), _defineProperty(_label, "parts", 'PARTS'), _defineProperty(_label, "general", 'GENERAL'), _defineProperty(_label, "loading", 'CARGANDO'), _defineProperty(_label, "planning", 'PLANNING'), _defineProperty(_label, "enter", 'ENTER'), _defineProperty(_label, "machine", 'MACHINE'), _defineProperty(_label, "machinery", 'MACHINERY'), _defineProperty(_label, "machineries", 'MACHINERIES'), _defineProperty(_label, "ubication", 'UBICATION'), _defineProperty(_label, "year", 'YEAR'), _defineProperty(_label, "and", 'AND'), _defineProperty(_label, "Amount", 'AMOUNT'), _defineProperty(_label, "IdNumber", 'ID NUMBER'), _defineProperty(_label, "lessThan", 'LESS THAN'), _defineProperty(_label, "greaterThan", 'GREATER THAN'), _defineProperty(_label, "size", 'SIZE'), _defineProperty(_label, "sizes", 'SIZES'), _defineProperty(_label, "back", 'BACK'), _defineProperty(_label, "special", 'SPECIAL'), _defineProperty(_label, "element", 'ELEMENT'), _defineProperty(_label, "volume", 'VOLUME'), _defineProperty(_label, "LOAD", 'LOAD'), _defineProperty(_label, "DISCHARGE", 'DISCHARGE'), _defineProperty(_label, "entity", 'ENTITY'), _defineProperty(_label, "FULLLOADLIST", 'FULL LOAD LIST'), _defineProperty(_label, "EMPTYLOADLIST", 'EMPTY LOAD LIST'), _defineProperty(_label, "damageTypeAcronym", 'DAMAGE TYPE ACRONYMS'), _defineProperty(_label, "StateAcronyms", 'STATE ACRONYMS'), _defineProperty(_label, "Sender", 'SENDER'), _defineProperty(_label, "Recipient", 'RECIPIENT'), _defineProperty(_label, "TimeOfPreparation", 'TIME OF PREPARATION'), _defineProperty(_label, "ControlReference", 'CONTROL REFERENCE'), _defineProperty(_label, "CommunicationAgreement", 'COMMUNICATION AGREEMENT'), _defineProperty(_label, "MessageReferenceNumber", 'MESSAGE REFERENCE NUMBER'), _defineProperty(_label, "MessageTypeIdentifier", 'MESSAGE TYPE IDENTIFIER'), _defineProperty(_label, "MessageTypeVersionNo", 'MESSAGE TYPE VERSION NO'), _defineProperty(_label, "MessageTypeReleaseNumber", 'MESSAGE TYPE RELEASE NUMBER'), _defineProperty(_label, "ControllingAgency", 'CONTROLLING AGENCY'), _defineProperty(_label, "AssociationAssignedCode", 'ASSOCIATION ASSIGNED CODE'), _defineProperty(_label, "DocumentNumber", 'DOCUMENT NUMBER'), _defineProperty(_label, "MessageType", 'MESSAGE TYPE'), _defineProperty(_label, "MessageCompilationTime", 'MESSAGE COMPLILATION TIME'), _defineProperty(_label, "DischargeVoyageNumber", 'DISCHARGE VOYAGE NUMBER'), _defineProperty(_label, "PlaceOfDeparture", 'PLACE OF DEPARTURE'), _defineProperty(_label, "EstimatedTimeOfDeparture", 'ESTIMATED TIME OF DEPARTURE'), _defineProperty(_label, "NextPortOfCall", 'NEXT PORT OF CALL'), _defineProperty(_label, "ActualTimeOfArrival", 'ACTUAL TIME OF ARRIVAL'), _defineProperty(_label, "ACTUAL_TIME_DEPARTURE", 'ACTUAL TIME OF ARRIVAL'), _defineProperty(_label, "ESTIMATED_TIME_ARRIVAL", 'ACTUAL TIME OF DEPARTURE'), _defineProperty(_label, "CarrierCode", 'CARRIER CODE'), _defineProperty(_label, "STANDARD_DOCUMENTATION", 'STANDARD DOCUMENTATION'), _defineProperty(_label, "VesselCallSign", 'VESSEL CALL SIGN'), _defineProperty(_label, "VesselLloydsCode", 'VESSEL LLOYDS CODE'), _defineProperty(_label, "IdMeanfTransportIdentification", 'ID OF MEANS OF TRANSPORT IDENTIFICATION'), _defineProperty(_label, "VesselName", 'VESSEL NAME'), _defineProperty(_label, "LoadingVoyageNumber", 'LOADING VOYAGE NUMBER'), _defineProperty(_label, "Containers", 'CONTAINERS'), _defineProperty(_label, "InspectionsDone", 'INSPECTIONS DONE'), _defineProperty(_label, "ListInspectionsDone", 'LIST OF INSPECTIONS DONE'), _defineProperty(_label, "TransactionDate", 'TRANSACTION DATE'), _defineProperty(_label, "damageReport", 'DAMAGE REPORT'), _defineProperty(_label, "ESTIMATEDTIMEOFARRIVAL", 'ESTIMATED TIME OF ARRIVAL'), _defineProperty(_label, "StowageFactor", 'STOWAGE FACTOR'), _defineProperty(_label, "DraftListing", 'DRAFT LISTING'), _defineProperty(_label, "TotalCertification", 'TOTAL CERTIFICATION'), _defineProperty(_label, "HoldList", 'HOLD LIST'), _defineProperty(_label, "CertifiedCapacity", 'CERTIFIED CAPACITY'), _defineProperty(_label, "Deadweight", 'DEADWEIGHT'), _defineProperty(_label, "PermissibleLoanOn", 'PERMISSIBLE LOAD ON'), _defineProperty(_label, "Weighing", 'WEIGHING'), _defineProperty(_label, "Taraweight", 'TARE WEIGHT'), _defineProperty(_label, "Id_Driver", 'ID/DRIVER'), _defineProperty(_label, "FullWeight", 'FULL WEIGHT'), _defineProperty(_label, "DraftInspection", 'DRAFT INSPECTION'), _defineProperty(_label, "errorHoldPleaseCheck", 'WEIGHT IS REQUIRED AT LEAST IN A HOLD'), _defineProperty(_label, "MachineInformation", 'MACHINE INFORMATION'), _label),
+  agridTable: {
+    // Set Filter
+    selectAll: '(Select All)',
+    selectAllSearchResults: '(Select All Search Results)',
+    searchOoo: 'Search...',
+    blanks: '(Blanks)',
+    noMatches: 'No matches',
+    // Number Filter & Text Filter
+    filterOoo: 'Filter...',
+    equals: 'Equals',
+    notEqual: 'Not equal',
+    empty: 'Choose One',
+    // Number Filter
+    lessThan: 'Less than',
+    greaterThan: 'Greater than',
+    lessThanOrEqual: 'Less than or equal',
+    greaterThanOrEqual: 'Greater than or equal',
+    inRange: 'In range',
+    inRangeStart: 'to',
+    inRangeEnd: 'from',
+    // Text Filter
+    contains: 'Contains',
+    notContains: 'Not contains',
+    startsWith: 'Starts with',
+    endsWith: 'Ends with',
+    // Date Filter
+    dateFormatOoo: 'yyyy-mm-dd',
+    // Filter Conditions
+    andCondition: 'AND',
+    orCondition: 'OR',
+    // Filter Buttons
+    applyFilter: 'Applies',
+    resetFilter: 'Reset',
+    clearFilter: 'Clear',
+    cancelFilter: 'Cancel',
+    // Filter Titles
+    textFilter: 'Text Filter',
+    numberFilter: 'Number Filter',
+    dateFilter: 'Date Filter',
+    setFilter: 'Set Filter',
+    // Side Bar
+    columns: 'Columns',
+    filters: 'Filters',
+    // columns tool panel
+    pivotMode: 'Pivot Mode',
+    groups: 'Row Groups',
+    rowGroupColumnsEmptyMessage: 'Drag here to set row groups',
+    values: 'Values',
+    valueColumnsEmptyMessage: 'Drag here to aggregate',
+    pivots: 'Column Labels',
+    pivotColumnsEmptyMessage: 'Drag here to set column labels',
+    // Header of the Default Group Column
+    group: 'Group',
+    // Other
+    loadingOoo: 'Loading...',
+    noRowsToShow: 'No Rows To Show',
+    enabled: 'Enabled',
+    // Menu
+    pinColumn: 'Pin Column',
+    pinLeft: 'Pin Left',
+    pinRight: 'Pin Right',
+    noPin: 'No Pin',
+    valueAggregation: 'Value Aggregation',
+    autosizeThiscolumn: 'Autosize This Column',
+    autosizeAllColumns: 'Autosize All Columns',
+    groupBy: 'Group by',
+    ungroupBy: 'Un-Group by',
+    resetColumns: 'Reset Columns',
+    expandAll: 'Expand All',
+    collapseAll: 'Close All',
+    copy: 'Copy',
+    ctrlC: 'Ctrl+C',
+    copyWithHeaders: 'Copy With Headers',
+    paste: 'Paste',
+    ctrlV: 'Ctrl+V',
+    "export": 'Export',
+    csvExport: 'CSV Export',
+    excelExport: 'Excel Export',
+    excelXmlExport: 'Export to old Excel (.xml)',
+    // Enterprise Menu Aggregation and Status Bar
+    sum: 'Sum',
+    min: 'Min',
+    max: 'Max',
+    none: 'None',
+    count: 'Count',
+    avg: 'Average',
+    filteredRows: 'Filtered',
+    selectedRows: 'Selected',
+    totalRows: 'Total Rows',
+    totalAndFilteredRows: 'Rows',
+    page: 'Page',
+    more: 'More',
+    to: 'to',
+    of: 'of',
+    next: 'Next',
+    last: 'Last',
+    first: 'First',
+    firstPage: 'First Page',
+    previous: 'Previous',
+    previousPage: 'Previous Page',
+    nextPage: 'Next Page',
+    lastPage: 'Last Page',
+    // Enterprise Menu (Charts)
+    pivotChartAndPivotMode: 'Pivot Chart & Pivot Mode',
+    pivotChart: 'Pivot Chart',
+    chartRange: 'Chart Range',
+    columnChart: 'Column',
+    groupedColumn: 'Grouped',
+    stackedColumn: 'Stacked',
+    normalizedColumn: '100% Stacked',
+    barChart: 'Bar',
+    groupedBar: 'Grouped',
+    stackedBar: 'Stacked',
+    normalizedBar: '100% Stacked',
+    pieChart: 'Pie',
+    pie: 'Pie',
+    doughnut: 'Doughnut',
+    line: 'Line',
+    xyChart: 'X Y (Scatter)',
+    scatter: 'Scatter',
+    bubble: 'Bubble',
+    areaChart: 'Area',
+    area: 'Area',
+    stackedArea: 'Stacked',
+    normalizedArea: '100% Stacked',
+    histogramChart: 'Histogram',
+    // Charts
+    pivotChartTitle: 'Pivot Chart',
+    rangeChartTitle: 'Range Chart',
+    settings: 'Settings',
+    data: 'Data',
+    format: 'Format',
+    categories: 'Categories',
+    defaultCategory: '(None)',
+    series: 'Series',
+    xyValues: 'X Y Values',
+    paired: 'Paired Mode',
+    axis: 'Axis',
+    navigator: 'Navigator',
+    color: 'Color',
+    thickness: 'Thickness',
+    xType: 'X Type',
+    automatic: 'Automatic',
+    category: 'Category',
+    number: 'Number',
+    time: 'Time',
+    xRotation: 'X Rotation',
+    yRotation: 'Y Rotation',
+    ticks: 'Ticks',
+    width: 'Width',
+    height: 'Height',
+    length: 'Length',
+    padding: 'Padding',
+    spacing: 'Spacing',
+    chart: 'Chart',
+    title: 'Title',
+    titlePlaceholder: 'Chart title - double click to edit',
+    background: 'Background',
+    font: 'Font',
+    top: 'Top',
+    right: 'Right',
+    bottom: 'Bottom',
+    left: 'Left',
+    labels: 'Labels',
+    size: 'Size',
+    minSize: 'Minimum Size',
+    maxSize: 'Maximum Size',
+    legend: 'Legend',
+    position: 'Position',
+    markerSize: 'Marker Size',
+    markerStroke: 'Marker Stroke',
+    markerPadding: 'Marker Padding',
+    itemSpacing: 'Item Spacing',
+    itemPaddingX: 'Item Padding X',
+    itemPaddingY: 'Item Padding Y',
+    layoutHorizontalSpacing: 'Horizontal Spacing',
+    layoutVerticalSpacing: 'Vertical Spacing',
+    strokeWidth: 'Stroke Width',
+    offset: 'Offset',
+    offsets: 'Offsets',
+    tooltips: 'Tooltips',
+    callout: 'Callout',
+    markers: 'Markers',
+    shadow: 'Shadow',
+    blur: 'Blur',
+    xOffset: 'X Offset',
+    yOffset: 'Y Offset',
+    lineWidth: 'Line Width',
+    normal: 'Normal',
+    bold: 'Bold',
+    italic: 'Italic',
+    boldItalic: 'Bold Italic',
+    predefined: 'Predefined',
+    fillOpacity: 'Fill Opacity',
+    strokeOpacity: 'Line Opacity',
+    histogramBinCount: 'Bin count',
+    columnGroup: 'Column',
+    barGroup: 'Bar',
+    pieGroup: 'Pie',
+    lineGroup: 'Line',
+    scatterGroup: 'X Y (Scatter)',
+    areaGroup: 'Area',
+    histogramGroup: 'Histogram',
+    groupedColumnTooltip: 'Grouped',
+    stackedColumnTooltip: 'Stacked',
+    normalizedColumnTooltip: '100% Stacked',
+    groupedBarTooltip: 'Grouped',
+    stackedBarTooltip: 'Stacked',
+    normalizedBarTooltip: '100% Stacked',
+    pieTooltip: 'Pie',
+    doughnutTooltip: 'Doughnut',
+    lineTooltip: 'Line',
+    groupedAreaTooltip: 'Area',
+    stackedAreaTooltip: 'Stacked',
+    normalizedAreaTooltip: '100% Stacked',
+    scatterTooltip: 'Scatter',
+    bubbleTooltip: 'Bubble',
+    histogramTooltip: 'Histogram',
+    noDataToChart: 'No data available to be charted.',
+    pivotChartRequiresPivotMode: 'Pivot Chart requires Pivot Mode enabled.',
+    chartSettingsToolbarTooltip: 'Menu',
+    chartLinkToolbarTooltip: 'Linked to Grid',
+    chartUnlinkToolbarTooltip: 'Unlinked from Grid',
+    chartDownloadToolbarTooltip: 'Download Chart',
+    // ARIA
+    ariaHidden: 'hidden',
+    ariaVisible: 'visible',
+    ariaChecked: 'checked',
+    ariaUnchecked: 'unchecked',
+    ariaIndeterminate: 'indeterminate',
+    ariaColumnSelectAll: 'Toggle Select All Columns',
+    ariaInputEditor: 'Input Editor',
+    ariaDateFilterInput: 'Date Filter Input',
+    ariaFilterInput: 'Filter Input',
+    ariaFilterColumnsInput: 'Filter Columns Input',
+    ariaFilterValue: 'Filter Value',
+    ariaFilterFromValue: 'Filter from value',
+    ariaFilterToValue: 'Filter to value',
+    ariaFilteringOperator: 'Filtering Operator',
+    ariaColumnToggleVisibility: 'column toggle visibility',
+    ariaColumnGroupToggleVisibility: 'column group toggle visibility',
+    ariaRowSelect: 'Press SPACE to select this row',
+    ariaRowDeselect: 'Press SPACE to deselect this row',
+    ariaRowToggleSelection: 'Press Space to toggle row selection',
+    ariaRowSelectAll: 'Press Space to toggle all rows selection',
+    ariaSearch: 'Search',
+    ariaSearchFilterValues: 'Search filter values'
+  },
+  button: {
+    accept: 'ACCEPT',
+    modify: 'MODIFY',
+    cancel: 'CANCEL',
+    confirm: 'CONFIRM',
+    exit: 'EXIT',
+    preview: 'PREVIEW',
+    annul: 'ANNUL',
+    "return": 'REGRESAR'
+  },
+  buttonWizard: {
+    Next: 'Next',
+    Back: 'Back',
+    Finish: 'Finish'
+  },
+  status: {
+    ACTIVO: "ACTIVE",
+    INACTIVO: "INACTIVE"
+  },
+  validation: (_validation = {
+    onlyMayusTextEspecial: 'ONLY TEXT AND CHARS , . - Ñ ´ /',
+    UtcZone: "REQUIRED FORMAT +00:00",
+    onlyNumeroTresdigitos: 'ONLY NUMBER THREE DIGIT',
+    not_siglas: "ACRONYMS ON THE CONTAINER DO NOT FULFILL THE VALIDATION FORMAT",
+    notsameAsLoading: "Discharge port cannot be the same as loading port",
+    notsameAsDischarge: "Port of loading cannot be the same as the port of discharge ",
+    container_size: "The container cannot exceed the maximum size of ",
+    container_weight: "The container cannot exceed the maximum weight of ",
+    onlyCoordinate: 'Only Coordinates',
+    onlyDecimal: 'Only Decimals',
+    onlyUppercase: 'Only Uppercase.',
+    needValidImage: 'NEED A VALID IMAGE',
+    badImage: 'IMAGE NO VALID',
+    min: 'REQUIRED MIN ',
+    max: 'REQUIRED MAX ',
+    minValueIs: 'min value is',
+    maxValueIs: 'max value is',
+    number: 'NUMBER',
+    verifyFields: 'Verify  fields',
+    requiresUm: 'REQUIRES UNIT MEASURE',
+    chars: 'CHARS',
+    alphaSpecials: 'ONLY TEXT AND CHARS . - / $ & ()',
+    email: 'REQUIRED FORMAT MAIL@EXAMPLE.COM',
+    maxLength: 'REQUIRED MAX ',
+    minLength: 'REQUIRED MIN  ',
+    metrics: 'ONLY METRICS',
+    onlyAlphanumeric: 'Only Alphanumeric',
+    onlyNumber: 'Only Numbers',
+    onlyNumbers: 'Only Numbers',
+    onlyText: 'Only Text',
+    required: 'FIELD REQUIRED',
+    integer: 'only interger',
+    maxValue: 'max value is',
+    minValue: 'min value is',
+    textareaSpecials: 'ONLY TEXT AND CHARS , . * + - # / $ ! ()',
+    mobileNotReq: 'REQUIRED FORMAT +584120000000, 0242-0000000 o 02420000000',
+    emailToLower: 'REQUIRED FORMAT MAIL@EXAMPLE.COM',
+    correctValue: 'FIELD REQUIRED',
+    alpha: 'ALPHABETICAL CHARACTERS ONLY',
+    especiales: 'ONLY ALPHANUMERIC AND CHARS -\/\\.,;@ -#():',
+    correctDate: 'REQUIRED FORMAT DD/MM/YYYY',
+    checkDigit: 'CHECK-DIGIT',
+    LaitudeNotReq: 'Only Coordinates',
+    metricsWSNotReq: 'Only Coordinates',
+    textEspecials: 'ONLY TEXT',
+    alphaNum: 'Only Alphanumeric',
+    verifyNumber: 'FIELD REQUIRED',
+    siglasAlphanumeric: 'Only Alphanumeric',
+    credentials2: 'REQUIRED FORMAT V99999999',
+    validMac: 'INVALID MAC ADDRESS',
+    notsameAsOrigin: "Destination port cannot be the same as the origin port",
+    notsameAsDestiny: "Port of origin cannot be the same as destination",
+    codeDelay: 'ONLY ALPHANUMERIC AND CHARS ( )',
+    onlyAlphanumeric2: 'Only Alphanumeric',
+    manufactererNotReq: 'ONLY TEXT',
+    IMEINotReq: 'ONLY NUMBERS',
+    resolution: 'ONLY NUMBERS',
+    invalidCode: ' Invalid Code',
+    textNotReq: 'Only Text',
+    textareaNotReq: 'ONLY TEXT AND CHARS , . * + - # / $ ! ()',
+    invalidCodeImdg: 'THE FIRST ACRONYM MUST MATCH THE IMDG CLASS. ONLY NUMBERS AND THE CHARACTER . ',
+    alphaNumCustom: 'ONLY NUMBERS AND CHAR -',
+    numberId: 'DOCUMENT NUMBER - REQUIRED FORMAT V99999999'
+  }, _defineProperty(_validation, "especiales", 'ONLY ALPHANUMERIC AND CHAR -'), _defineProperty(_validation, "temperature", 'ONLY NUMBERS'), _defineProperty(_validation, "notsameAsPol", "POL cannot be the same as the POD"), _defineProperty(_validation, "notsameAsPod", "POD cannot be the same as POL"), _defineProperty(_validation, "notAvailableTotal", 'Amount of Tons to Assign must not be greater than the Availability of the Hold'), _defineProperty(_validation, "notAvailableBl", 'Amount of Tons to Assign cannot be greater than what is available to be assigned per Bl'), _defineProperty(_validation, "exceedtActualInventory", 'Amount of weight must not be greater than the Availability of the actual inventory'), _defineProperty(_validation, "exceedEstimatedToShip", 'Amount of weight must not be lower than the estimated to ship'), _defineProperty(_validation, "nameLength", 'INVALID WORD LENGTTH'), _defineProperty(_validation, "RangeValidate", 'INVALID DATE RANGE'), _defineProperty(_validation, "onlyAlphaguion", 'ONLY TEXT AND CHARS -'), _validation)
+};
+
+
+/***/ }),
+
+/***/ "./resources/js/lang/es.js":
+/*!*********************************!*\
+  !*** ./resources/js/lang/es.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "es": () => (/* binding */ es)
+/* harmony export */ });
+var _label;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var es = {
+  label: (_label = {
+    //-----------------------------------------------------------------------------------------------------------
+    //ETIQUETAS COMPUESTAS
+    //-----------------------------------------------------------------------------------------------------------
+    newActivity: 'NUEVA ACTIVIDAD PORTUARIA',
+    modifActivity: 'EDITAR ACTIVIDAD PORTUARIA',
+    registerActivity: 'REGISTRAR ACTIVIDAD PORTUARIA',
+    portActivity: 'ACTIVIDAD PORTUARIA',
+    nameActivity: 'NOMBRE ACTIVIDAD PORTUARIA',
+    listActivity: 'LISTADO DE ACTIVIDADES PORTUARIAS',
+    listBrand: 'LISTADO DE MARCAS Y MODELOS',
+    listScale: 'LISTADO DE BÁSCULAS',
+    listCrane: 'LISTADO DE TIPOS DE GRUAS',
+    cranesTypesGeneralList: 'LISTADO GENERAL DE TIPOS DE GRUAS',
+    listLost: 'LISTADO DE TIEMPOS PERDIDOS',
+    listLostTime: 'LISTADO DE TIEMPOS PERDIDOS',
+    listType: 'LISTA DE TIPOS',
+    listStowage: 'LISTADO DE ESTIBA',
+    vesselsGeneralList: 'LISTADO GENERAL DE BUQUES',
+    listVessel: 'LISTADO DE BUQUES',
+    portList: 'LISTADO DE PUERTOS',
+    berthList: 'LISTADO DE MUELLES',
+    companyBranchList: 'LISTADO DE EMPRESAS Y SUCURSALES',
+    locationList: 'LISTADO DE UBICACIONES',
+    moduleList: 'LISTADO DE MODULOS',
+    roleList: 'LISTADO DE ROLES',
+    generalRoleList: 'LISTADO DE ROLES GENERALES',
+    specificRoleList: 'LISTADO DE ROLES ESPECIFICOS',
+    generalRole: 'ROL GENERAL',
+    specificRole: 'ROL ESPECÍFICO',
+    moduleRoleList: 'LISTADO DE MÓDULOS POR ROL',
+    portName: 'NOMBRE PUERTO',
+    portCode: 'CODE PUERTO',
+    listTypeVessel: 'LISTADO DE TIPOS DE BUQUE',
+    lostTimeType: 'TIPO DE TIEMPO PERDIDO',
+    lostTimeTypeName: 'NOMBRE DE TIPO DE TIEMPO PERDIDO',
+    lostTimeName: 'NOMBRE DE TIEMPO PERDIDO',
+    TdrCode: 'CÓDIGO TDR',
+    craneType: 'TIPO DE GRUA',
+    craneTypeName: 'NOMBRE DEL TIPO DE GRUA',
+    craneName: 'NOMBRE GRUA',
+    vesselType: 'TIPO DE BUQUE',
+    vesselName: 'BUQUE',
+    vesselTypeName: 'NOMBRE TIPO DE BUQUE',
+    vesselTypeDescription: 'DESCRIPCION TIPO DE BUQUE',
+    vesselCrane: 'GRUA BUQUE',
+    moduleType: 'TIPO MODULO',
+    maxHeigth: 'ALTURA MAXIMA',
+    maxWeigth: 'PESO MAXIMO',
+    maxRange: 'ALCANCE MAXIMO',
+    stowageWorkShift: 'TURNO ESTIBA',
+    workShifts: 'TURNOS DE TRABAJO',
+    workShift: 'TURNO DE TRABAJO',
+    WorkShift: 'TURNO',
+    shiftName: 'NOMBRE TURNO',
+    turnName: 'NOMBRE TURNO',
+    fromHour: 'HORA DESDE',
+    hourFrom: 'HORA DESDE',
+    DFrom: 'F/H DESDE',
+    toHour: 'HORA HASTA',
+    hourTo: 'HORA HASTA',
+    DTo: 'F/H HASTA',
+    startHour: 'HORA DESDE',
+    endHour: 'HORA HASTA',
+    stowageTurn: 'TURNO ESTIBA',
+    stowageMov: 'MOVIMIENTOS DE ESTIBA',
+    stowageMovement: 'MOVIMIENTO ESTIBA',
+    stowageMovementTransaction: 'TRANSACCIÓN MOVIMIENTO ESTIBA',
+    stowageRole: 'ROL ESTIBA',
+    stowageSupplies: 'ALMACEN DE SUMINISTROS',
+    transactionMov: 'TRANSACCIONES DE MOVIMIENTOS',
+    movementName: 'NOMBRE DE MOVIMIENTO',
+    movementType: 'TIPO DE MOVIMIENTO ',
+    transactionName: 'NOMBRE DE TRANSACCION',
+    transactionType: 'TIPO DE TRANSACCION',
+    supplieName: 'NOMBRE INSUMO',
+    groupName: 'NOMBRE GRUPO',
+    groupDescription: 'DESCRIPCIÓN GRUPO',
+    lostTime: 'TIEMPO PERDIDO',
+    hatchCover: 'TAPA',
+    hatchCoverName: 'NOMBRE TAPA',
+    hatchCoverId: 'IDENTIFICACIÓN TAPA',
+    hatchCoverType: 'TIPO DE TAPA',
+    holdName: 'NOMBRE BODEGA',
+    underCover: 'BAJO CUBIERTA',
+    dustCover: 'SOBRE CUBIERTA',
+    availableAssign: 'DISPONIBLE PARA ASIGNAR',
+    vesselInfo: 'DATOS DEL BUQUE',
+    vesselDocumentation: 'DOCUMENTACIÓN DEL BUQUE',
+    onDeck: ' EN CUBIERTA',
+    Outside: 'EXTERIOR',
+    Inside: 'INTERIOR',
+    chooseFile: 'SELECCIONE ARCHIVO',
+    bulkLoad: 'CARGA MASIVA',
+    seeFormat: 'VER FORMATO',
+    berthLine: 'LINEA DE ATRAQUE',
+    associatedLine: 'LINEAS ASOCIADAS',
+    associatedPort: 'PUERTO ASOCIADO',
+    associatedRol: 'ROL ASOCIADO',
+    relatedLine: 'LINEAS RELACIONADAS',
+    representativeLine: 'LINEA REPRESENTANTE',
+    initialDate: 'FECHA INICIAL',
+    finalDate: 'FECHA FINAL',
+    startDate: 'FECHA INICIO',
+    endDate: 'FECHA FINAL',
+    date: 'FECHA',
+    bulkCargo: 'MERCANCIA DE LA CARGA GRANEL',
+    originPort: 'PUERTO DE ORIGEN',
+    destinationPort: 'PUERTO DESTINO',
+    arrivalTime: 'HORA DE ARRIBO',
+    arrivalDate: 'FECHA DE ARRIBO',
+    sailTime: 'HORA DE ZARPE',
+    departureTime: 'HORA DE ZARPE',
+    departureDate: 'FECHA DE ZARPE',
+    basicData: 'DATOS BÁSICOS',
+    mainPhone: 'TELÉFONO PRINCIPAL',
+    secondaryPhone: 'TELÉFONO SECUNDARIO',
+    mainEmail: 'CORREO PRINCIPAL',
+    secondaryEmail: 'CORREO SECUNDARIO',
+    badFormat: 'FORMATO INCORRECTO',
+    businessProcess: 'PROCESO DE NEGOCIO',
+    masterDirectory: 'DIRECTORIO MAESTRO',
+    menuIdentifier: 'IDENTIFICADOR DEL MENU',
+    proceduralManual: 'MANUAL DE PROCEDIMIENTO',
+    userManual: 'MANUAL DE USUARIO',
+    user: 'USUARIO',
+    userId: 'CI USUARIO',
+    userList: 'LISTA DE USUARIOS',
+    userType: 'TIPO DE USUARIO',
+    userTypeName: 'NOMBRE DE TIPO DE USUARIO',
+    enterSearch: 'INGRESE BUSQUEDA',
+    accessRoute: 'RUTA DE ACCESO',
+    interfaceAction: 'ACCIÓN QUE EJECUTARÁ LA INTERFAZ',
+    noData: 'NO EXISTEN REGISTROS',
+    recordsPerPage: 'REGISTROS POR PAGINA',
+    perPage: ' POR PAGINA',
+    noResultsFound: 'NO SE HAN ENCONTRADO RESULTADOS',
+    noRecordsAvailble: 'NO HAY REGISTROS DISPONIBLES',
+    routeDash: 'RUTA DASH INICIO',
+    route: 'RUTA',
+    unitSize: 'UNIDAD DE MEDIDA',
+    sizeUnit: 'UNIDAD DE MEDIDA',
+    measureUnit: 'UNIDAD DE MEDIDA',
+    measureUnitType: 'TIPO UNIDAD DE MEDIDA',
+    gpoSupply: 'GRUPO DE INSUMO',
+    payrollType: 'TIPO DE NÓMINA',
+    employeeRole: 'EMPLEADO POR ROL',
+    employeesRole: 'EMPLEADOS POR ROL',
+    //DIEGO
+    transversalView: 'VISTA TRANSVERSAL',
+    previouslyAssigned: 'ASIGNADO PREVIAMENTE',
+    associateBayPair: 'ASOCIAR BAY PAR',
+    baySelected: 'BAY SELECCIONADO',
+    notAvailable: 'NO DISPONIBLE',
+    bay: 'BAY',
+    tierRows: 'TIER-ROWS',
+    positions: 'POSICIONES',
+    download: 'DESCARGAR',
+    atLeast: 'POR LO MENOS',
+    selectIt: 'SELECCIONAR',
+    holdType: 'TIPO DE BODEGA',
+    changeStatusQuestion: '¿Esta seguro de realizar el cambio de status para el registro',
+    changeViewQuestion: '¿Esta seguro de realizar el cambio de vista para el registro',
+    changeElementQuestion: '¿Esta seguro de realizar el cambio de elemento para el registro',
+    deleteQuestion: '¿Esta seguro de eliminar el registro',
+    fileSizeExceedsAllowedLimit: 'El tipo de archivo no esta permitido.',
+    fileTypeIsNotAllowed: 'El tipo de archivo no esta permitido.',
+    touchToSelectPicture: 'TOQUE PARA SELECCIONAR FOTO',
+    clickHereToSelectPicture: 'Click aqui para seleccionar una <br>FOTO',
+    deviceDoesNotSupportFileUploads: 'Dispositivo no soporta la subida de archivos.',
+    operationCancelled: 'OPERACIÓN CANCELADA',
+    operationType: 'TIPO DE OPERACIÓN',
+    CProa: 'C.PROA',
+    CPopa: 'C.POPA',
+    draftForward: 'CALADO PROA',
+    draftAft: 'CALADO POPA',
+    bowDraft: 'CALADO PROA',
+    sternDraft: 'CALADO POPA',
+    summerDWT: 'SUMMERDWT',
+    LWL: "LWL",
+    deckCrane: 'GRUA A BORDO',
+    fuelOilCapacity: "CAPACIDAD DE COMBUSTIBLE",
+    documentDescription: "Descripción del Documento",
+    grainCapacity: "CAPACIDAD GRANO",
+    baleCapacity: "CAPACIDAD BALA",
+    documentType: 'TIPO DE DOCUMENTO',
+    document: 'DOCUMENTO',
+    removeDocument: 'ELIMINAR DOCUMENTO',
+    transacType: 'TIPO DE TRANSACCION',
+    details: 'DETALLES',
+    cancelUpload: 'CANCELAR CARGA',
+    mustSelectDocType: 'Debe seleccionar un Tipo de Documento.',
+    docTypeInvalid: 'El formato del Documento es invalido.',
+    information: 'INFORMACIÓN',
+    alerts: 'ALERTAS',
+    errors: 'ERRORES',
+    navReports: 'REPORTES',
+    navConfig: 'CONFIGURACIÓN',
+    navViews: 'VISTAS',
+    views: 'VISTAS',
+    navPersonalReport: 'PERSONALIZAR REPORTES',
+    values: 'VALORES',
+    viewType: 'TIPO DE VISTA',
+    filterBy: 'FILTRAR POR',
+    filteredBy: 'FILTRADO POR',
+    page: 'PÁGINA',
+    of: 'DE',
+    legend: 'LEYENDA',
+    preferences: 'PREFERENCIAS',
+    print: 'IMPRIMIR',
+    columns: 'COLUMNAS',
+    rows: 'FILAS',
+    next: 'SIGUIENTE',
+    last: 'ÚLTIMO',
+    first: 'PRIMERO',
+    previous: 'ANTERIOR',
+    selectFilter: 'Seleccione un Filtro',
+    viewBy: 'VISTA POR',
+    Mode: 'CONDICIÓN',
+    shippingAgency: 'AGENTE NAVIERO',
+    shippingLineName: 'LINEA',
+    shippingLineRepresentative: 'LINEA REPRESENTANTE',
+    errorsPleaseCheck: 'Existen errores, por favor, verifique.',
+    containersList: 'LISTADO DE CONTENEDORES',
+    containerGroup: 'GRUPO',
+    codesPerDocuments: 'VER CODIGOS POR DOCUMENTOS',
+    containersCodesPerDocuments: 'VER CODIGOS POR DOCUMENTOS',
+    exportToExcel: 'EXPORTAR INFO A EXCEL',
+    serialNumber: 'SIGLAS',
+    damageType: 'TIPO DE DAÑO',
+    damageTypes: 'TIPOS DE DAÑO',
+    damagesType: 'TIPO DE DAÑOS',
+    damageTypeRegistration: 'NUEVO TIPO DE DAÑO',
+    damageTypeName: 'NOMBRE DE TIPO DE DAÑO',
+    verifyFields: 'Verificar Campos',
+    eir: 'eir',
+    eirList: 'LISTADO DE EIR',
+    eirType: 'TIPO EIR',
+    eirTypeName: 'NOMBRE DE TIPO EIR',
+    eirTransaction: 'TRANSACCIÓN EIR',
+    eirTypeTransaction: 'TIPO DE TRANSACCIÓN EIR',
+    eirTypeTransactionName: 'NOMBRE DE TIPO DE TRANSACCIÓN EIR',
+    cargoGroup: 'GRUPO CARGA',
+    cargoGroupName: 'NOMBRE DE GRUPO CARGA',
+    cargoGroupList: 'LISTADO DE GRUPO CARGA',
+    listMeasurementUnits: 'VER UNIDADES DE MEDIDAS RELACIONADAS',
+    measurementUnits: 'TIPOS DE UNIDAD',
+    measurementUnit: 'TIPO DE UNIDAD',
+    MeasurementUnit: 'UNIDAD DE MEDIDA',
+    measurementUnitList: 'LISTA DE UNIDADES',
+    unitsOfMeasurement: 'UNIDADES DE MEDIDA RELACIONADAS',
+    cargoState: 'ESTADO',
+    stateName: 'NOMBRE ESTADO',
+    stateDescription: 'DESCRIPCIÓN DE ESTADO',
+    packaging: 'EMBALAJE',
+    packagingName: 'NOMBRE DE EMBALAJE',
+    packagingRelationship: 'ASOCIAR EMBALAJE',
+    associatePackaging: 'ASOCIAR EMBALAJE',
+    commodity: 'MERCANCÍA',
+    commodityName: 'NOMBRE DE LA MERCANCÍA',
+    commodityDescription: 'DESCRIPCIÓN DE LA MERCANCÍA',
+    commodityRelationship: 'ASOCIAR MERCANCÍA',
+    commodityHandlingDocumentation: 'MANUALES DE MANIPULACIÓN DE LA MERCANCÍA',
+    bulkCargoList: 'LISTADO DE CARGA GRANEL',
+    bulkCargoState: 'ESTADO CARGA GRANEL',
+    bulkCargoCommodity: 'MERCANCIA DE LA CARGA GRANEL',
+    bulkCargoRelationship: 'ASOCIAR EMBALAJE CARGA GRANEL',
+    newBulkCargoRegistration: 'REGISTRAR NUEVO ESTADO CARGA GRANEL',
+    relationshipBulkCargoCommodity: 'ASOCIAR MERCANCIA DE CARGA GRANEL',
+    applyToAll: 'APLICAR A TODOS',
+    rubro: 'RUBRO',
+    generalCargoGroups: 'GRUPOS',
+    generalCargoGroup: 'GRUPO CARGA GENERAL',
+    generalCargoGroupClassification: 'CLASIFICACIÓN GRUPO CARGA GENERAL',
+    generalCargoList: 'LISTADO DE CARGA GENERAL',
+    associateGeneralGroupCargoPackaging: 'ASOCIAR EMBALAJE GRUPO CARGA GENERAL',
+    unitType: 'TIPO DE UNIDAD',
+    unitTypes: 'TIPOS DE UNIDAD',
+    weightRange: 'RANGO DE PESO',
+    weightLimit: 'LIMITE',
+    lessOrEqualThan: 'MENOR O IGUAL',
+    greaterOrEqualThan: 'MAYOR O IGUAL',
+    manualsHandlingCommodity: 'MANUALES MANIPULACIÓN MERCANCIA',
+    handlingManuals: 'MANUALES DE MANIPULACIÓN',
+    statusName: 'NOMBRE ESTATUS',
+    planificacionEstiba: 'PLANIFICACIÓN ESTIBA',
+    generalData: 'DATOS GENERALES',
+    dragAndDropToUploadContent: 'Arrastra y suelta para subir contenido',
+    orClickToSelectFileFromYourComputer: 'o haga clic para seleccionar un archivo de su computadora',
+    TotalHours: 'CANT HORAS',
+    EstimatedHours: 'HORAS ESTIMADAS',
+    craneWorkShifts: 'TURNOS DE TRABAJO DE GRUA',
+    CraneWorkShift: 'TURNO DE GRUA',
+    machineWorkShifts: 'TURNOS DE TRABAJO DE MAQUINA',
+    machineCondition: 'CONDICIÓN MAQUINA',
+    machineSupplier: 'PROVEEDOR MAQUINA',
+    machineType: 'TIPO DE MAQUINA',
+    machineName: 'NOMBRE MAQUINA',
+    inactivateCranePlanification: 'INACTIVAR PLANIFICACION DE GRUA',
+    inactivateMachinePlanification: 'INACTIVAR PLANIFICACION DE MAQUINA',
+    assignCraneWorkShift: 'ASIGNAR TURNO DE GRUA',
+    assignMachineWorkShift: 'ASIGNAR TURNO DE MAQUINA',
+    electronicData: 'ARCHIVOS ELECTRONICOS',
+    liftingSpeed: 'VELOCIDAD DE SUBIDA',
+    loweringSpeed: 'VELOCIDAD DE BAJADA',
+    maxLoadCapacity: 'CAPACIDAD MAXIMA DE CARGA',
+    onTheLine: 'EN LA LÍNEA',
+    maximumRadio: 'RADIO MAX',
+    loadDischargeOperations: 'OPERACIONES DE CARGA/DESCARGA',
+    deleteFile: '¿Esta seguro de eliminar este archivo?',
+    isoCode: 'CODIGO ISO',
+    isoStandar: 'ESTANDAR ISO',
+    Estandar: 'ESTANDAR',
+    forAllTypeLoadsInGeneral: 'PARA TODO TIPO DE CARGA EN GENERAL',
+    itsNotColour: 'NO ES UN COLOR',
+    elementName: 'NOMBRE ELEMENTO',
+    accesoryName: 'NOMBRE ACCESORIO',
+    componentName: 'NOMBRE COMPONENTE',
+    resume: 'RESUMEN',
+    plans: 'PLANO DEL BUQUE',
+    transacModalTitle: 'TRANSACCIONES GENERADAS POR',
+    removeContainerOne: 'ESTA SEGURO DE ELIMINAR EL CONTENEDOR',
+    removeContainerTwo: 'EN LA POSICION DEL BAY',
+    deviceList: 'LISTADO DE DISPOSITIVOS',
+    device: 'DISPOSITIVO',
+    registerDevice: 'REGISTRAR NUEVO DISPOSITIVO',
+    editDevice: 'EDITAR DISPOSITIVO',
+    macAddress: 'DIRECCION MAC',
+    deviceName: 'NOMBRE DISPOSITIVO',
+    deviceType: 'TIPO DISPOSITIVO',
+    operatingSystem: 'SISTEMA OPERATIVO',
+    storageCapacity: 'MEMORIA INTERNA',
+    screenSize: 'TAMAÑO PANTALLA',
+    largo: 'LARGO',
+    resolution: 'RESOLUCION',
+    codImei: 'CODIGO IMEI',
+    validateDevice: 'VALIDAR DISPOSITIVO',
+    depth: 'ESPESOR',
+    manufacturer: 'FABRICANTE',
+    levelPreference: 'NIVEL PREFERENCIA',
+    assignDevice: 'ASIGNACION DISPOSITIVOS',
+    responsible: 'RESPONSABLE',
+    transfer: 'TRANSFERIR',
+    hatch: 'TAPA',
+    reeferSockets: 'TOMAS REFRIGERADAS',
+    socket: 'TOMA',
+    totalQuantity: 'CANTIDAD TOTAL',
+    vesselSheet: 'FICHA TECNICA BUQUE',
+    bale: 'BALA',
+    baleOnGrain: 'CAPACIDAD DE GRANO',
+    baleOnDeck: 'CAPACIDAD EN CUBIERTA',
+    stacking: 'APILADO',
+    upTier: 'ALTURA MAXIMA',
+    row: 'FILA',
+    inHold: 'BODEGA',
+    onDeck2: 'SOBRE CUBIERTA',
+    generalFilter: 'FILTRO GENERAL',
+    multipleFilter: 'FILTRO MULTIPLE',
+    matching: 'PAREO',
+    executed: 'EJECUTADO',
+    today: 'HOY',
+    delays: 'RETRASOS',
+    dateStartOperations: 'F. INICIO OPERACIONES',
+    dateEndOperations: 'F. ULTIMA OPERACION',
+    empty: 'VACIO',
+    full: 'LLENO',
+    clearFilters: 'LIMPIAR FILTROS',
+    shipToShip: 'BUQUE A BUQUE',
+    ship_ship: 'BUQUE-BUQUE',
+    shipLandShip: 'BUQUE TIERRA BUQUE',
+    ship_land_ship: 'BUQUE-TIERRA-BUQUE',
+    shipment: 'EMBARQUE',
+    stowagePlanning: 'PLANIFICACION DE ESTIBA',
+    stevedore: 'ESTIBADOR',
+    cranesMovements: 'MOVIMIENTOS DE GRUA',
+    averageMovementsPerHrs: 'PROMEDIO DE MOVIMIENTOS POR HORA',
+    DischargeMovements: 'MOVIMIENTOS DE DESEMBARQUE',
+    LoadMovements: 'MOVIMIENTOS DE EMBARQUE',
+    HatchMovements: 'MOVIMIENTOS DE LA TAPA DE LA ESCOTILLA',
+    MovsNumbers: 'NUMERO DE MOVIMIENTOS',
+    vesselPlanning: 'PROGRAMACION DE BUQUES',
+    mobilized: 'MOVILIZADOS',
+    TimeLost: "TIEMPO PERDIDO",
+    Scale: "BASCULA",
+    nameScale: "NOMBRE BASCULA",
+    connectedTo: 'CONECTADO A',
+    readingFile: 'LEYENDO ARCHIVO',
+    errosHourPleaseCheck: 'Error en horas, favor validar',
+    errosDatePleaseCheck: 'Error en fechas, favor validar',
+    applyPlan: 'APLICA PLANO',
+    refresh: 'ACTUALIZAR',
+    format: 'FORMATO',
+    resourcesQty: 'CANTIDAD DE RECURSOS',
+    rightRows: 'FILAS CORRECTAS',
+    wrongRows: 'FILAS CON ERRORES',
+    bankDetails: 'DATOS BANCARIOS',
+    the: 'EL',
+    successUpload: 'SE CARGO DE MANERA EXITOSA',
+    errorsStaff: 'DESCARGUE EL ARCHIVO EXCEL CON LAS FILAS INCORRECTAS PARA SU CORRECCION',
+    column: 'COLUMNA',
+    deactivateFile: '¿Esta seguro de desactivar este archivo?',
+    phone: 'TELÉFONO',
+    bank: 'BANCO',
+    currency: 'MONEDA',
+    accountType: 'TIPO CUENTA',
+    accountNumber: 'N° CUENTA',
+    holder: 'TITULAR',
+    alias: 'ALIAS',
+    bankAccount: 'CUENTA BANCARIA',
+    P2P: 'PAGO MOVIL',
+    initialInventory: 'INVENTARIO INICIAL',
+    inventory: 'INVENTARIO',
+    commodityType: 'TIPO MERCANCÍA',
+    certificationDate: 'FECHA CERTIFICACION',
+    clientRif: 'RIF CLIENTE',
+    inventoryContains: 'DICE CONTENER',
+    totalWeight: 'PESO TOTAL',
+    reportStaffList: 'REPORTE - LISTA DE CUADRILLA',
+    netWeight: 'PESO NETO',
+    manualLoad: 'CARGA MANUAL',
+    historic: 'HISTORICO',
+    scrapReception: 'RECEPCION CHATARRA',
+    entryOrders: 'ORDENES DE INGRESO',
+    massiveLoading: 'CARGA MASIVA',
+    newReception: 'NUEVA RECEPCION',
+    editReception: 'EDITAR RECEPCION',
+    nroControl: 'Nº CONTROL',
+    idDriver: 'CI CHOFER',
+    nroGuide: 'Nº GUIA',
+    carPlate: 'PLACA VEHICULO',
+    carrierCompany: 'EMPRESA TRANSPORTE',
+    carrierRif: 'RIF TRANSPORTE',
+    receptionDate: 'FECHA RECEPCION',
+    truckScale: 'BASCULA',
+    typeMovement: 'TIPO MOVIMIENTO',
+    metalScrapReception: "LISTA DE RECEPCIÓN CHATARRA"
+  }, _defineProperty(_label, "scrapReception", "RECEPCIÓN CHATARRA"), _defineProperty(_label, "circuit", 'CIRCUITO'), _defineProperty(_label, "circuits", 'CIRCUITOS'), _defineProperty(_label, "circuitList", 'LISTADO DE CIRCUITOS'), _defineProperty(_label, "circuitName", 'NOMBRE DE CIRCUITO'), _defineProperty(_label, "circuitNameLabelEn", 'NOMBRE CIRCUITO EN'), _defineProperty(_label, "circuitNameLabelEs", 'NOMBRE CIRCUITO ES'), _defineProperty(_label, "mandatory", 'REQUERIDO'), _defineProperty(_label, "require", 'REQUIERE'), _defineProperty(_label, "radioactivity", 'RADIOACTIVIDAD'), _defineProperty(_label, "radioactivityLevel", 'NIVEL DE RADIOACTIVIDAD'), _defineProperty(_label, "machineryInYard", 'MAQUINARIA EN PATIO'), _defineProperty(_label, "selectRequireOption", 'SE REQUIERE AL MENOS 1 OPCION SELECCIONADA'), _defineProperty(_label, "selectDateOption", 'OPCION DE FECHA REQUERIDA'), _defineProperty(_label, "entryDate", 'FECHA ENTRADA'), _defineProperty(_label, "outDate", 'FECHA SALIDA'), _defineProperty(_label, "consignee", 'CONSIGNATARIO'), _defineProperty(_label, "commodity", 'MERCANCIA'), _defineProperty(_label, "stowagePlan", 'PLAN DE ESTIBA'), _defineProperty(_label, "importer", 'IMPORTADOR'), _defineProperty(_label, "exporter", 'EXPORTADOR'), _defineProperty(_label, "rifExporter", 'RIF EXPORTADOR'), _defineProperty(_label, "rifImporter", 'RIF IMPORTADOR'), _defineProperty(_label, "notifyParty", 'NOTIFICAR A'), _defineProperty(_label, "seller", 'VENDEDOR'), _defineProperty(_label, "cargoType", 'TIPO DE CARGA'), _defineProperty(_label, "viscosity", 'VISCOSIDAD'), _defineProperty(_label, "temperature", 'TEMPERATURA'), _defineProperty(_label, "estimatedToShip", 'ESTIMADO A EMBARCAR'), _defineProperty(_label, "actualInventory", 'INVENTARIO ACTUAL'), _defineProperty(_label, "available", 'DISPONIBLE'), _defineProperty(_label, "occupied", 'OCUPADO'), _defineProperty(_label, "assignationPlanned", 'ASIGNACIÓN PLANIFICADA'), _defineProperty(_label, "assignBl", 'ASIGNAR BL'), _defineProperty(_label, "assignTon", 'ASIGNAR TON'), _defineProperty(_label, "tonAssigned", 'TON ASIGNADAS'), _defineProperty(_label, "clientExporter", 'CLIENTE EXPORTADOR'), _defineProperty(_label, "clientImporter", 'CLIENTE IMPORTADOR'), _defineProperty(_label, "billOfLading", 'MANIFIESTO DE CARGA'), _defineProperty(_label, "plannedAssignment", 'ASIGNACIÓN PLANIFICADA'), _defineProperty(_label, "declared", 'DECLARADO'), _defineProperty(_label, "assignation", 'ASIGNACIÓN'), _defineProperty(_label, "loadCondition", 'CARGA - CONDICIONES'), _defineProperty(_label, "availabilityByBl", 'DISPONIBILIDAD POR BL'), _defineProperty(_label, "equipment", 'EQUIPOS'), _defineProperty(_label, "planned", 'PLANIFICADOS'), _defineProperty(_label, "loadPortSituation", 'CARGA'), _defineProperty(_label, "executedPortSituation", 'EJECUTADO'), _defineProperty(_label, "BTB", 'BB'), _defineProperty(_label, "twinBoxes", 'CAJAS PIÑAS'), _defineProperty(_label, "ultMov", 'ULT MOV'), _defineProperty(_label, "lastRead", 'ULT LECTURAS'), _defineProperty(_label, "availability", 'DISPONIBILIDAD'), _defineProperty(_label, "noDelays", "NO HAY RETRASOS"), _defineProperty(_label, "onCircuit", 'EN CIRCUITO'), _defineProperty(_label, "tonLastRead", 'TON ULT LECTURA'), _defineProperty(_label, "otherTerminals", 'OTRAS TERMINALES'), _defineProperty(_label, "plannedEquipment", 'EQUIPO PLANIFICADO'), _defineProperty(_label, "iniOps", 'INI. (OPS)'), _defineProperty(_label, "puestoDeAtraque", 'PUESTOS DE ATRAQUE'), _defineProperty(_label, "needFilter", 'DEBE SELECCIONAR AL MENOS UNA OPCION DEL FILTRO'), _defineProperty(_label, "needOptionCol", 'DEBE SELECCIONAR LA COLUMNA PARA GENERAR EL PAREO'), _defineProperty(_label, "needOptionRow", 'DEBE SELECCIONAR LA FILA PARA GENERAR EL PAREO'), _defineProperty(_label, "TotalMovements", "TOTAL MOVIMIENTOS"), _defineProperty(_label, "Day", 'DÍA'), _defineProperty(_label, "OperationSituationCurrent", "SITUACIÓN OPERATIVA ACTUAL"), _defineProperty(_label, "OperationSituationHistorical", "SITUACIÓN OPERATIVA HISTÓRICA"), _defineProperty(_label, "QuantityContainers", 'CANTIDAD DE CONTENEDORES'), _defineProperty(_label, "MobilizedContainers", 'CONTENEDORES MOVILIZADOS'), _defineProperty(_label, "CranesTimeLine", 'LÍNEA DE TIEMPO DE GRÚAS'), _defineProperty(_label, "TheValueIs", "El valor es: "), _defineProperty(_label, "Minimize", "Minimizar"), _defineProperty(_label, "Maximize", "Maximizar"), _defineProperty(_label, "OperationSituationOptions", {
+    OperationalSituation: "SITUACIÓN OPERATIVA",
+    InactivityTime: "TIEMPOS DE INACTIVIDAD",
+    HistoryVesselsServed: "HISTORICO DE BUQUES ATENDIDOS",
+    Productivity: "PRODUCTIVIDAD",
+    ProductivityTime: "PRODUCTIVIDAD POR CORTE"
+  }), _defineProperty(_label, "InactivityTimeOptions", {
+    InactivityTimePerCrane: "TIEMPOS DE INACTIVIDAD POR GRUA",
+    InactivityTimeTheVessel: "TIEMPOS DE INACTIVIDAD POR TODO EL BUQUE",
+    MovementsPerHoursVsWorkingHours: "MOVIMIENTOS POR HORA VS HORAS DE TRABAJO",
+    MovementsPerHour: "MOVIMIENTOS POR HORA"
+  }), _defineProperty(_label, "Lines", "LÍNEAS"), _defineProperty(_label, "TypeOfContainer", "TIPOS DE CONTENEDOR"), _defineProperty(_label, "Movements", "MOVIMIENTOS"), _defineProperty(_label, "sumaries", "SUMARIOS"), _defineProperty(_label, "ExportAs", "EXPORTAR COMO: "), _defineProperty(_label, "Month", "MES"), _defineProperty(_label, "Yearh", "AÑO"), _defineProperty(_label, "selectedYear", "SELECCIONE AÑO..."), _defineProperty(_label, "selectedMonth", "SELECCIONE MES..."), _defineProperty(_label, "Description", "DESCRIPCIÓN"), _defineProperty(_label, "lists", "LISTAS"), _defineProperty(_label, "currentStatusVessel", "SITUACIÓN ACTUAL DEL BUQUE"), _defineProperty(_label, "preliminarycuts", "CORTES PRELIMINARES"), _defineProperty(_label, "reportQuery", "CONSULTA DE REPORTE"), _defineProperty(_label, "dateRequired", "LA FECHA ES REQUERIDA EN "), _defineProperty(_label, "dateInvalidIn", "FECHA INVÁLIDA EN "), _defineProperty(_label, "nameRequiredIn", "CAMPO NOMBRE REQUERIDO EN "), _defineProperty(_label, "dateInvalidHigherIn", "FECHA NO PUEDE SER MAYOR A "), _defineProperty(_label, "dateInvalidLessIn", "FECHA NO PUEDE SER MENOR A "), _defineProperty(_label, "ammounInvalidZero", "LA CANTIDAD NO PUEDE SER MENOR A CERO "), _defineProperty(_label, "In", " EN "), _defineProperty(_label, "invalidDatesList", {
+    titleDate: "La fecha de ",
+    invalidlessThan: 'No puede ser menor que ',
+    invalidgreaterThan: 'No puede ser mayor que ',
+    invalidlessThanOrEqual: 'Debe ser menor o igual que ',
+    invalidgreaterThanOrEqual: 'Debe ser mayor o igual que ',
+    invalidOrEqual: 'No puede ser igual que '
+  }), _defineProperty(_label, "doubleClickEdit", "doble click para editar"), _defineProperty(_label, "statusVisit", "ESTATUS DE LA VISITA"), _defineProperty(_label, "benningOperation", "INICIO DE OPERACIONES"), _defineProperty(_label, "endOperation", "FIN DE OPERACIONES"), _defineProperty(_label, "transactionHistory", "HISTORIAL DE TRANSACCIONES"), _defineProperty(_label, "shippingLine", "COMPAÑÍA NAVIERA"), _defineProperty(_label, "shippingAgent", "AGENTE NAVIERO"), _defineProperty(_label, "shippingLineVoyage", "VIAJE LÍNEA NAVIERA "), _defineProperty(_label, "portOperator", "OPERADOR PORTUARIO"), _defineProperty(_label, "berth", "MUELLE"), _defineProperty(_label, "portOrigin", "PUERTO PROCEDENCIA"), _defineProperty(_label, "portDestiny", "PUERTO DESTINO"), _defineProperty(_label, "field", "CAMPO"), _defineProperty(_label, "agenda", "AGENDA"), _defineProperty(_label, "times", "TIEMPOS"), _defineProperty(_label, "summary_of_operations", "RESUMEN DE OPERACIONES"), _defineProperty(_label, "activityType", 'TIPO DE ACTIVIDAD'), _defineProperty(_label, "ock_file", "OCK EXPEDIENTE"), _defineProperty(_label, "menu_diary", {
+    TERMINAL_DETAILS: "DETALLES DE TERMINAL",
+    AGENDA_DETAILS: "DETALLES DE LA AGENDA",
+    CRANES: "GRÚAS"
+  }), _defineProperty(_label, "list_terminal", {
+    n_toque: 'TOQUE',
+    viaje_arribo: 'VIAJE ARRIBO',
+    viaje_zarpe: 'VIAJE ZARPE'
+  }), _defineProperty(_label, "ships_captain", 'CAPITÁN DEL BUQUE'), _defineProperty(_label, "ship_security_level", 'NIVEL DE PROTECCIÓN DEL BUQUE'), _defineProperty(_label, "name_pilot", 'NOMBRE DEL PILOTO'), _defineProperty(_label, "activitys_list", {
+    call_time: 'TIEMPO DE LLAMADA',
+    dock_pilot: 'PILOTO DE ATRAQUE',
+    appointment_crew: 'NOMBRAMIENTO DE CUADRILLA'
+  }), _defineProperty(_label, "filters", "FILTROS"), _defineProperty(_label, "selectAll", 'SELECCIONAR TODO'), _defineProperty(_label, "preliminary_file", "archivo preliminar"), _defineProperty(_label, "PreliminaryDischargeFile", "ARCHIVO DE DESCARGA PRELIMINAR"), _defineProperty(_label, "PreliminaryShipmentFile", "ARCHIVO DE EMBARQUE PRELIMINAR"), _defineProperty(_label, "TITLE_PRELIMINAR_FILE", 'TÍTULO ARCHIVO PRELIMINAR'), _defineProperty(_label, "AUTHORIZED_BY", 'AUTORIZADO POR'), _defineProperty(_label, "ARRIVAL_POSITION", 'POSICIÓN DE LLEGADA'), _defineProperty(_label, "ARRIVAL_POSITION_DATE", "POSICIÓN DE LLEGADA FECHA"), _defineProperty(_label, "ARRIVAL_POSITION_TIME", "HORA DE LLEGADA"), _defineProperty(_label, "DEPARTURE_POSITION", 'POSICIÓN DE SALIDA'), _defineProperty(_label, "DEPARTURE_POSITION_DATE", "POSICIÓN DE SALIDA FECHA"), _defineProperty(_label, "DEPARTURE_POSITION_TIME", "HORA DE SALIDA"), _defineProperty(_label, "VOYAGE_ARRIVAL", "VIAJE DE ARRIBO"), _defineProperty(_label, "VOYAGE_DEPARTURE", "VIAJE DE ZARPE"), _defineProperty(_label, "MOVIMIENTO", {
+    SHIP_TO_SHIP: "MOVIMIENTO BUQUE - BUQUE",
+    SHIP_LAND_TO_SHIP: "MOVIMIENTO BUQUE TIERRA BUQUE",
+    CANCEL: "CANCELADO",
+    observation: "OBSERVACIONES"
+  }), _defineProperty(_label, "anular_movimiento_restow", '¿Esta seguro de anular el movimiento restow?'), _defineProperty(_label, "filter_preliminar", {
+    see_booth: "VER AMBAS",
+    see_discrepancies: "VER DISCREPANCIAS",
+    see_matches: "VER COINCIDENCIAS"
+  }), _defineProperty(_label, "container_data", {
+    not_siglas: "SIGLAS DEL CONTENEDOR NO CUMPLEN EL FORMATO DE VALIDACIÓN",
+    notsameAsLoading: "Puerto de descarga no puede ser igual al de carga",
+    notsameAsDischarge: "Puerto de carga no puede ser igual al de descarga",
+    container_size: "El contenedor no puede superar el tamaño máximo de ",
+    container_weight: "El contenedor no puede superar el peso máximo de "
+  }), _defineProperty(_label, "aplicar_restow", 'APLICAR / EDITAR MOVIMIENTO RESTOW'), _defineProperty(_label, "differences", "DIFERENCIAS"), _defineProperty(_label, "filename", 'NOMBRE DE ARCHIVO'), _defineProperty(_label, "auxiliary_file", "ARCHIVO AUXILIAR"), _defineProperty(_label, "decription", "DESCRIPCIÓN"), _defineProperty(_label, "value", "VALOR"), _defineProperty(_label, "bug_list", "LISTA DE ERRORES"), _defineProperty(_label, "download_file_structure", 'Descargar estructura del archivo'), _defineProperty(_label, "download_auxiliar_list_instructions", 'DESCARGAR INSTRUCTIVO LISTA AUXILIARES'), _defineProperty(_label, "visits", "VISITAS"), _defineProperty(_label, "Timeslost", "TIEMPOS PERDIDOS"), _defineProperty(_label, "detailsmobilizedteams", "DETALLES EQUIPOS MOVILIZADOS"), _defineProperty(_label, "cranesTypes", "TIPO DE GRÚA"), _defineProperty(_label, "deviceCode", "CODIGO DISPOSITIVO"), _defineProperty(_label, "duration", "DURACIÓN"), _defineProperty(_label, "timeLine", "LÍNEA DE TIEMPO"), _defineProperty(_label, "noDataAvailable", 'No hay datos disponibles'), _defineProperty(_label, "totalMovemnsPerDay", 'TOTAL MOVIMIENTOS POR DÍA - CORTE'), _defineProperty(_label, "seeDatails", "VER DETALLES"), _defineProperty(_label, "LastUpdate", "Última actualización: "), _defineProperty(_label, "NoLoadDistributionPlan", "No se dispone plano de distribución de carga para la visita seleccionada"), _defineProperty(_label, "NoHasOperations", "NO HA COMENZADO OPERACIONES"), _defineProperty(_label, "DirectDischarge", "DESCARGA DIRECTA"), _defineProperty(_label, "Seal", "PRECINTO"), _defineProperty(_label, "Restow", "MOVILIZADOS"), _defineProperty(_label, "Warning", 'ADVERTENCIA'), _defineProperty(_label, "Default", 'PREDETERMINADO'), _defineProperty(_label, "fileBaplie", "ARCHIVO BAPLIE"), _defineProperty(_label, "selectFile", "SELECCIONAR ARCHIVO"), _defineProperty(_label, "listings", "LISTADOS"), _defineProperty(_label, "preliminarList", "LISTA PRELIMINAR"), _defineProperty(_label, "selectedFiles", "ARCHIVOS SELECCIONADOS"), _defineProperty(_label, "resumido", "RESUMIDO"), _defineProperty(_label, "confirmedContainers", "CONTENEDORES CONFIRMADOS"), _defineProperty(_label, "filesTransferred", "TRANSFERENCIA DE ARCHIVOS"), _defineProperty(_label, "transferredFiles", "ARCHIVOS TRANSFERIDOS"), _defineProperty(_label, "totalContainers", "TOTAL DE CONTENEDORES"), _defineProperty(_label, "reverse", "REVERTIR"), _defineProperty(_label, "confirmedCOntainersDetails", "DETALLES DE CONTENEDORES CONFIRMADOS"), _defineProperty(_label, "reverseFile", '¿Está seguro de reversar la transferencia del archivo?'), _defineProperty(_label, "confirmationDate", 'FECHA CONFIRMACIÓN'), _defineProperty(_label, "selectFilesElectronics", 'SELECCIONAR ARCHIVOS ELECTRÓNICOS'), _defineProperty(_label, "NextPort", 'PUERTO PRÓXIMO'), _defineProperty(_label, "DeliveryPort", 'PUERTO DE ENTREGA'), _defineProperty(_label, "Origin", 'PROCEDENCIA'), _defineProperty(_label, "assignResource", 'ASIGNACIÓN RECURSO'), _defineProperty(_label, "generalList", 'LISTADO GENERAL'), _defineProperty(_label, "accesoriesList", 'LISTADO DE ACCESORIOS'), _defineProperty(_label, "apply", "APLICA"), _defineProperty(_label, "highOutside", "ALTO EXTERIOR"), _defineProperty(_label, "lengthOutside", "LARGO EXTERIOR"), _defineProperty(_label, "widthOutside", "ANCHO EXTERIOR"), _defineProperty(_label, "volumeOutside", "VOLUMEN EXTERIOR"), _defineProperty(_label, "highInside", "ALTO INTERIOR"), _defineProperty(_label, "lengthInside", "LARGO INTERIOR"), _defineProperty(_label, "widthInside", "ANCHO INTERIOR"), _defineProperty(_label, "volumeInside", "VOLUMEN INTERIOR"), _defineProperty(_label, "emptyWeith", "PESO VACÍO"), _defineProperty(_label, "maximumLoad", "CARGA MAXIMA"), _defineProperty(_label, "maximunGrossWeight", "PESO BRUTO MAXIMO"), _defineProperty(_label, "containerLists", {
+    accesoriesList: 'LISTADO DE ACCESORIOS DE CONTENEDORES',
+    clasificationsList: 'LISTADO DE CLASIFICACIONES DE CONTENEDORES',
+    isoCodesList: 'LISTADO DE CODIGOS ISO DE CONTENEDORES',
+    componentsList: 'LISTADO DE COMPONENTES DE CONTENEDORES',
+    conditionsList: 'LISTADO DE CONDICIONES DE CONTENEDORES',
+    elementsList: 'LISTADO DE ELEMENTOS DE CONTENEDORES',
+    groupsLists: 'LISTADO DE GRUPOS DE CONTENEDORES',
+    sizeLists: 'LISTADO DE TAMAÑOS DE CONTENEDORES',
+    statusLists: 'LISTADO DE ESTATUS DE CONTENEDORES',
+    viewsLists: 'LISTADO DE VISTAS DE CONTENEDORES'
+  }), _defineProperty(_label, "listsManual", 'LISTAS MANUALES'), _defineProperty(_label, "history", 'HISTÓRICO'), _defineProperty(_label, "typeOfFile", 'TIPO DE ARCHIVO'), _defineProperty(_label, "DownloadFormat", 'DESCARGAR FORMATO'), _defineProperty(_label, "Discrepancies", 'DISCREPANCIAS'), _defineProperty(_label, "UploadFile", 'SUBIR ARCHIVO'), _defineProperty(_label, "CustomListsFormat", 'FORMATO PARA LISTA DE SOBORDO'), _defineProperty(_label, "logistics", 'LOGÍSTICA'), _defineProperty(_label, "NewTransportationCompany", 'NUEVA EMPRESA TRANSPORTE'), _defineProperty(_label, "ScaleWeightRequired", '¿REQUIERE EL USO DE BALANZA?'), _defineProperty(_label, "AssignCrane", 'ASIGNAR GRÚA'), _defineProperty(_label, "stowageGans", 'CUADRILLA DE ESTIBA'), _defineProperty(_label, "fullName", 'NOMBRE COMPLETO'), _defineProperty(_label, "deletedRecords", 'ELIMINAR REGISTROS'), _defineProperty(_label, "downloadExcel", 'DESCARGAR EXCEL'), _defineProperty(_label, "openErrors", 'VER ERRORES'), _defineProperty(_label, "listOfDriversTransports", 'LISTA DE CONDUCTORES POR TRANSPORTE'), _defineProperty(_label, "listOfVehiclesTransports", 'LISTA DE VEHÍCULOS POR TRANSPORTE'), _defineProperty(_label, "reportMigrationMassive", 'REPORTE MIGRACIÓN DE ARCHIVO'), _defineProperty(_label, "RequiredWeight", 'REQUIERE PESAJE'), _defineProperty(_label, "SituacionBuque", 'SITUACIÓN BUQUE'), _defineProperty(_label, "SituacionBodega", 'SITUACIÓN BODEGA'), _defineProperty(_label, "Loadeds", 'EMBARCADAS'), _defineProperty(_label, "Returned", 'DEVUELTAS'), _defineProperty(_label, "Dispached", 'DESPACHADAS'), _defineProperty(_label, "VinCircuit", 'V. EN CIRCUITO'), _defineProperty(_label, "CTotalVoyages", 'C. TOTAL VIAJES'), _defineProperty(_label, "TonPlanning", 'TON. PLANIF'), _defineProperty(_label, "TonRemai", 'TON. RESTANTE'), _defineProperty(_label, "LastReading", 'ULTIMA LECTURA'), _defineProperty(_label, "DateLastRead", 'FECHA ULT LECTURA'), _defineProperty(_label, "CargoShipped", 'CARGA EMBARCADA'), _defineProperty(_label, "GamelaByWinery", 'GAMELA POR BODEGA'), _defineProperty(_label, "TonEmbargoedByShifts", 'TON EMBARCADAS POR TURNOS'), _defineProperty(_label, "EstimatedTONperScrap", 'TON. ESTIM GAMELA'), _defineProperty(_label, "Diurnal", 'DIURNO'), _defineProperty(_label, "Nocturnal", 'NOCTURNO'), _defineProperty(_label, "transportationCarrier", 'TRANSPORTE'), _defineProperty(_label, "StartLoard", 'INICIO DE CARGA'), _defineProperty(_label, "Remaing", 'RESTANTE'), _defineProperty(_label, "CantGamelaxHora", 'CANT GAMELA X HORA'), _defineProperty(_label, "LoadEnd", 'FIN CARGA'), _defineProperty(_label, "done", 'REALIZADO'), _defineProperty(_label, "CurrentSituationBlVessel", 'SITUACION ACTUAL BODEGA-BL'), _defineProperty(_label, "ShippedEstimatedVsPlanned", 'PLANIFICADO VS EMBARCADO ESTIMADO'), _defineProperty(_label, "PlannedVsCertificate", 'PLANIFICADO VS CERTIFICADO'), _defineProperty(_label, "ToDischarge", 'POR DESCARGAR'), _defineProperty(_label, "Heavy", 'PESADO'), _defineProperty(_label, "ValuesExpressedInMt", 'VALORES EXPRESADOS EN TON'), _defineProperty(_label, "EstimedTonShipped", 'TON ESTIMADO EMBARCADO'), _defineProperty(_label, "CurrentSituationCrane", 'SITUACIÓN ACTUAL POR GRÚA'), _defineProperty(_label, "CurrentSituationTransportation", 'SITUACIÓN ACTUAL TRANSPORTE'), _defineProperty(_label, "HatchMovilized", "TAPAS MOVILIZADAS"), _defineProperty(_label, "Certificate", 'CERTIFICADO'), _defineProperty(_label, "CurrentSituationHold", 'SITUACIÓN ACTUAL BODEGA'), _defineProperty(_label, "IniOps", 'INI. (OPS)'), _defineProperty(_label, "FinOps", 'FIN. (OPS)'), _defineProperty(_label, "HrOperando", 'HR-OPERANDO'), _defineProperty(_label, "PerHours", 'X HORA'), _defineProperty(_label, "PerGamela", 'X GAMELA'), _defineProperty(_label, "TotalGamelas", 'TOTAL GAMELAS'), _defineProperty(_label, "Loaded", 'EMBARCADO'), _defineProperty(_label, "GamelaXdia", 'GAMELA X DÍA'), _defineProperty(_label, "Gamela", 'GAMELA'), _defineProperty(_label, "PlannedVsCurrentStatus", 'PLANIFICADO VS SITUACIÓN ACTUAL'), _defineProperty(_label, "GamelaxHora", 'GAMELA X HORA'), _defineProperty(_label, "PerHour", 'X HORA'), _defineProperty(_label, "HorasTrabajadas", 'HRS. TRABAJADAS'), _defineProperty(_label, "HorasRetrasos", 'HRS. RETRASOS'), _defineProperty(_label, "HorasEfectivas", 'HRS. EFECTIVAS'), _defineProperty(_label, "Annulled", 'ANULADAS'), _defineProperty(_label, "InCircuit", 'EN CIRCUITO'), _defineProperty(_label, "tonEstim", 'TON ESTIM'), _defineProperty(_label, "tonPlannif", 'TON PLANIF'), _defineProperty(_label, "listApk", 'LISTADO DE APK'), _defineProperty(_label, "nameApk", 'NOMBRE DE APK'), _defineProperty(_label, "typeApk", 'TIPO DE APK'), _defineProperty(_label, "creationDate", 'FECHA DE CREACIÓN'), _defineProperty(_label, "LastUpdateDate", 'FECHA ÚLTIMA ACTUALIZACIÓN'), _defineProperty(_label, "assignationGamela", 'ASIGNACIÓN DE GAMELA'), _defineProperty(_label, "HistoryAssociation", "HISTORICO DE ASOCIACIÓN"), _defineProperty(_label, "HistoryOrders", "HISTORICO DE ORDENES"), _defineProperty(_label, "D_emission", 'F. EMISION'), _defineProperty(_label, "D_shipping", 'F. EMBARQUE'), _defineProperty(_label, "DetenerOperaciones", 'DETENER OPERACIONES'), _defineProperty(_label, "AsignarCuadrilla", 'ASIGNAR CUADRILLA'), _defineProperty(_label, "Associateamela", 'ASOCIAR GAMELA'), _defineProperty(_label, "AssociationGamela", 'ASOCIACION DE GAMELA'), _defineProperty(_label, "PorGamela", 'POR GAMELA'), _defineProperty(_label, "TotalLoaded", 'TOTAL EMBARCADO'), _defineProperty(_label, "TotalDelaysPerDay", 'TOTAL RETRASOS AL DÍA'), _defineProperty(_label, "TotalDelaysAccumulated", 'TOTAL RETRASOS ACUMULADOS'), _defineProperty(_label, "InOperations", 'EN OPERACIONES'), _defineProperty(_label, "TonxHour", 'TON X HORA'), _defineProperty(_label, "Ship", 'BUQUE'), _defineProperty(_label, "OfOperation", 'DE OPERACIÓN'), _defineProperty(_label, "DayOfOperations", 'DÍAS DE OPERACIONES'), _defineProperty(_label, "PerDay", 'X DÍA'), _defineProperty(_label, "LoadedTon", 'TON EMBARCADAS'), _defineProperty(_label, "TotalPerDay", 'TOTAL POR DÍA'), _defineProperty(_label, "tonRestante", 'TON RESTANTES'), _defineProperty(_label, "StoppedOperation", 'OPERACIONES DETENIDAS'), _defineProperty(_label, "clientYard", 'CLIENTE - PATIO'), _defineProperty(_label, "qtyWeighed", 'CANT PESADA'), _defineProperty(_label, "tonHeavy", 'TON PESADO'), _defineProperty(_label, "qtyWithoutWeighing", 'CANT SIN PESAJE'), _defineProperty(_label, "tonEstimated", 'TON ESTIMADA'), _defineProperty(_label, "totalVoyageDone", 'TOTAL VIAJES REALIZADOS'), _defineProperty(_label, "attribute", 'ATRIBUTO'), _defineProperty(_label, "correctionControl", 'CONTROL DE CORRECCION'), _defineProperty(_label, "projection", 'PROYECCIÓN'), _defineProperty(_label, "exe", 'EJECUCION'), _defineProperty(_label, "workHour", 'HORAS DE TRABAJO'), _defineProperty(_label, "hour", 'HORA'), _defineProperty(_label, "estimated", 'ESTIMADO'), _defineProperty(_label, "average", 'PROMEDIO'), _defineProperty(_label, "equipmentDetail", 'DETALLE DE EQUIPO'), _defineProperty(_label, "loadPort", 'PUERTO DE CARGA'), _defineProperty(_label, "dischargePort", 'PUERTO DE DESCARGA'), _defineProperty(_label, "generalInfo", 'INFORMACIÓN GENERAL'), _defineProperty(_label, "recordInfo", 'HISTORIAL DE TRANSACCIONES'), _defineProperty(_label, "arrival", 'ARRIBO'), _defineProperty(_label, "departure", 'ZARPE'), _defineProperty(_label, "canceledList", 'LISTA DE MOVIMIENTOS CANCELADOS PLANIFICADOS'), _defineProperty(_label, "dischargeList", 'LISTA DE EQUIPOS A DESEMBARCAR'), _defineProperty(_label, "generate", 'GENERAR '), _defineProperty(_label, "bapliesList", 'LISTADO DE BAPLIES GENERADOS'), _defineProperty(_label, "search", 'BUSCAR'), _defineProperty(_label, "docked", 'ATRACADO'), _defineProperty(_label, "planned", 'PLANIFICADO'), _defineProperty(_label, "dockAssignment", 'ASIGNACION DE MUELLE'), _defineProperty(_label, "asignDevice", 'ASIGNACION DE DISPOSITIVOS'), _defineProperty(_label, "equipmentQuantity", 'CANTIDAD DE EQUIPOS'), _defineProperty(_label, "estimatedTime", 'TIEMPO ESTIMADO'), _defineProperty(_label, "deviceTransfer", 'TRANSFERIR DISPOSITIVO'), _defineProperty(_label, "selectEdi", 'SELECCIÓN DE EDI'), _defineProperty(_label, "confirmation", 'CONFIRMACION'), _defineProperty(_label, "confirmed", 'CONFIRMADOS'), _defineProperty(_label, "tobeconfirmed", 'PENDIENTES POR CONFIRMAR'), _defineProperty(_label, "standardOrganization", 'ENTE REGULADOR'), _defineProperty(_label, "stowageStaff", 'CUADRILLA DE ESTIBA'), _defineProperty(_label, "mobilizedReport", 'REPORTE DE MOVILIZACION DE EQUIPOS'), _defineProperty(_label, "historyStaff", 'HISTÓRICO DE STAFF'), _defineProperty(_label, "companyStaff", 'STAFF POR EMPRESA'), _defineProperty(_label, "fileName", 'NOMBRE DE ARCHIVO'), _defineProperty(_label, "birthday", 'FECHA DE NACIMIENTO'), _defineProperty(_label, "charge", 'CARGO'), _defineProperty(_label, "inspection", 'INSPECCIÓN'), _defineProperty(_label, "inspections", 'INSPECCIONES'), _defineProperty(_label, "inspectionType", 'TIPO DE INSPECCIÓN'), _defineProperty(_label, "dimensions", 'DIMENSIONES'), _defineProperty(_label, "validateUser", 'VALIDAR USUARIO'), _defineProperty(_label, "validateCode", 'VALIDAR CODIGO'), _defineProperty(_label, "moment", 'MOMENTO'), _defineProperty(_label, "transactionDate", 'FECHA TRANSACCIÓN'), _defineProperty(_label, "damage", 'DAÑO'), _defineProperty(_label, "newDamage", 'NUEVO DAÑO'), _defineProperty(_label, "editDamage", 'EDITAR DAÑO'), _defineProperty(_label, "inspectionMoment", 'MOMENTO INSPECCION'), _defineProperty(_label, "inspectionSeals", 'INSPECCION DE PRECINTOS'), _defineProperty(_label, "inspectionDamage", 'INSPECCION DE DAÑOS'), _defineProperty(_label, "received", 'RECIBIDO'), _defineProperty(_label, "loadGroupAssociatedTo", 'GRUPO DE CARGA ASOCIADO A'), _defineProperty(_label, "container", 'CONTENEDOR'), _defineProperty(_label, "width", 'ANCHO'), _defineProperty(_label, "weightEmpty", 'PESO VACIO'), _defineProperty(_label, "MaxWeight", 'PESO MAXIMO'), _defineProperty(_label, "maxLoad", 'CARGA MAXIMA'), _defineProperty(_label, "maxGrossWeight", 'MAXIMO PESO BRUTO'), _defineProperty(_label, "itemsAndCommoditiesList", 'LISTADO DE RUBROS Y MERCANCIAS'), _defineProperty(_label, "pdfManuals", 'MANUALES'), _defineProperty(_label, "uploadCommodityDocuments", 'SUBIR DOCUMENTOS'), _defineProperty(_label, "handlingDocumentation", 'MANUAL DE MERCANCIA'), _defineProperty(_label, "openDocumentation", 'VER MANUAL'), _defineProperty(_label, "uploadHandlingDocumentation", 'CARGAR MANUALES DE MERCANCIA'), _defineProperty(_label, "listOfGroupsAndImplements", 'LISTA DE GRUPOS E IMPLEMENTOS'), _defineProperty(_label, "listOfImplements", 'LISTADO DE IMPLEMENTOS'), _defineProperty(_label, "Implement", 'IMPLEMENTO'), _defineProperty(_label, "implementsPerPage", ' IMPLEMENTOS POR PAGINA'), _defineProperty(_label, "implementsGroup", 'GRUPO IMPLEMENTO'), _defineProperty(_label, "groups", 'GRUPOS'), _defineProperty(_label, "implements", 'IMPLEMENTOS'), _defineProperty(_label, "implement", 'IMPLEMENTO'), _defineProperty(_label, "gruopName", 'NOMBRE DE GRUPO'), _defineProperty(_label, "implementName", 'NOMBRE DE IMPLEMENTO'), _defineProperty(_label, "implementDescription", 'DESCRIPCION DE IMPLEMENTO'), _defineProperty(_label, "unitConvertionList", 'LISTADO DE CONVERSION DE UNIDADES'), _defineProperty(_label, "newConvertionUnit", 'NUEVA REGLA DE CONVERSIÓN'), _defineProperty(_label, "unit", 'UNIDAD'), _defineProperty(_label, "equals", 'EQUIVALE'), _defineProperty(_label, "operator", 'OPERADOR'), _defineProperty(_label, "units", 'UNIDADES'), _defineProperty(_label, "destination", 'DESTINO'), _defineProperty(_label, "convertionUnitRegistration", 'REGISTRAR REGLA DE CONVERSION'), _defineProperty(_label, "editConversionRule", 'EDITAR REGLA DE CONVERSION'), _defineProperty(_label, "convertionunitType", 'TIPO DE UNIDAD DE ORIGEN'), _defineProperty(_label, "typeOfUnitToConvert", 'TIPO DE UNIDAD A CONVERTIR'), _defineProperty(_label, "unitOfOrigin", 'UNIDAD DE ORIGEN'), _defineProperty(_label, "unitOfDestination", 'UNIDAD DE DESTINO'), _defineProperty(_label, "mathematicalOperation", 'OPERACIÓN'), _defineProperty(_label, "packagingList", 'LISTADO DE EMBALAJES'), _defineProperty(_label, "groupAndType", 'GRUPO Y TIPO'), _defineProperty(_label, "imdg", 'IMDG'), _defineProperty(_label, "imdgClass", 'CLASE IMDG'), _defineProperty(_label, "newImdg", 'NUEVO IMDG'), _defineProperty(_label, "imdgCode", 'CODIGO IMDG'), _defineProperty(_label, "imdgDivision", 'DIVISION IMDG'), _defineProperty(_label, "classCode", 'CODIGO CLASE'), _defineProperty(_label, "imdgList", 'LISTADO DE IMDG'), _defineProperty(_label, "imdgClassName", 'NOMBRE DE CLASE IMDG'), _defineProperty(_label, "imdgClassAcronym", 'SIGLA DE CLASE IMDG'), _defineProperty(_label, "classAcronym", 'SIGLA CLASE'), _defineProperty(_label, "imdgDivisionName", 'NOMBRE DE DIVISION IMDG'), _defineProperty(_label, "measurementUnitsList", 'LISTADO DE UNIDADES DE MEDIDA'), _defineProperty(_label, "measurementUnitType", 'TIPO UNIDAD MEDIDA'), _defineProperty(_label, "meaurenmentUnitRegistration", 'REGISTRAR UNIDAD DE MEDIDA'), _defineProperty(_label, "measurementUnitAcronym", 'SIGLAS DE UNIDAD DE MEDIDA'), _defineProperty(_label, "measurementUnitName", 'NOMBRE DE UNIDAD DE MEDIDA'), _defineProperty(_label, "measurementUnitTypeName", 'NOMBRE DE TIPO UNIDAD DE MEDIDA'), _defineProperty(_label, "radioactiveMaterials", 'MATERIALES RADIOACTIVOS'), _defineProperty(_label, "multiplication", 'MULTIPLICACION'), _defineProperty(_label, "editImplementGroup", 'EDITAR GRUPO IMPLEMENTO'), _defineProperty(_label, "conversionRule", 'REGLA DE CONVERSIÓN'), _defineProperty(_label, "portActivityName", 'NOMBRE ACTIVIDAD PORTUARIA'), _defineProperty(_label, "municipalityName", 'NOMBRE DEL MUNICIPIO'), _defineProperty(_label, "countryName", 'NOMBRE PAIS'), _defineProperty(_label, "alpha2Code", 'CODIGO ALPHA 2'), _defineProperty(_label, "alpha3Code", 'CODIGO ALPHA 3'), _defineProperty(_label, "countryNumericCode", 'CODIGO NUMERICO'), _defineProperty(_label, "flag", 'BANDERA'), _defineProperty(_label, "parishName", 'NOMBRE DE LA PARROQUIA'), _defineProperty(_label, "everybody", 'TODOS'), _defineProperty(_label, "moduleGroup", 'GRUPO MODULO'), _defineProperty(_label, "viewHierarchy", 'VER JERARQUIA'), _defineProperty(_label, "seeRolesAssociatedWithTheModule", 'VER ROLES ASOCIADOS AL MODULO'), _defineProperty(_label, "dashLogin", 'DASH INICIO SESIÓN'), _defineProperty(_label, "groupModuleList", 'LISTADO DE GRUPO MODULO'), _defineProperty(_label, "father", 'PADRE'), _defineProperty(_label, "newModuloRegistrarion", 'REGISTRAR GRUPO MODULO'), _defineProperty(_label, "dependencies", 'DEPENDENCIAS'), _defineProperty(_label, "gpmoduloName", 'NOMBRE GPMODULO'), _defineProperty(_label, "apiRoutes", 'RUTAS API'), _defineProperty(_label, "structure", 'ESTRUCTURA'), _defineProperty(_label, "fileDirectory", 'DIRECTORIO DE ARCHIVOS'), _defineProperty(_label, "loadBaplie", 'BAPLIE DE CARGA'), _defineProperty(_label, "dischargeBaplie", 'BAPLIE DE DESCARGA'), _defineProperty(_label, "asignResource", 'ASIGNACION DE RECURSO'), _defineProperty(_label, "enterEmployeeInfo", 'INGRESE LOS DATOS DEL EMPLEADO'), _defineProperty(_label, "employeeInfo", 'DATOS DEL EMPLEADO'), _defineProperty(_label, "rotate", 'GIRAR'), _defineProperty(_label, "version", 'VERSION'), _defineProperty(_label, "review", 'REVISION'), _defineProperty(_label, "effectiveTime", 'TIEMPO EFECTIVO'), _defineProperty(_label, "incidenceDate", 'FECHA INCIDENCIA'), _defineProperty(_label, "yardConsignee", 'CONSIGNATARIO DEL PATIO'), _defineProperty(_label, "invalidGreaterThan", 'Debe ser mayor que'), _defineProperty(_label, "sspNumber", 'NUMERO SSP'), _defineProperty(_label, "sspYear", 'AÑO SSP'), _defineProperty(_label, "onePortCompanyBranch", 'UNO DE LOS PUERTOS DEBE SER LA SUCURSAL DE LA EMPRESA'), _defineProperty(_label, "notsameAsOrigin", "Puerto de destino no puede ser igual al de origen"), _defineProperty(_label, "registerMachineFirst", 'PRIMERO DEBE REGISTRAR LOS DATOS DE LA MAQUINA'), _defineProperty(_label, "idleTime", 'IDLE TIME'), _defineProperty(_label, "transactionsTablets", 'TRANSACCIONES - TABLETAS'), _defineProperty(_label, "tdr", 'TDR'), _defineProperty(_label, "bayView", 'BAY VIEW'), _defineProperty(_label, "fullCargoPlan", 'FULL CARGO PLAN'), _defineProperty(_label, "yardClient", 'PATIO - CLIENTE'), _defineProperty(_label, "vehicleBin", 'VEHICULO - GAMELA'), _defineProperty(_label, "detail", 'DETALLE'), _defineProperty(_label, "yardClientSummary", 'SUMARIO POR PATIO - CLIENTE'), _defineProperty(_label, "vehicleBinSummary", 'SUMARIO DE VEHICULO - GAMELA'), _defineProperty(_label, "tonsWeighed", 'TONELADAS PESADAS'), _defineProperty(_label, "estimatedTons", 'TONELADAS ESTIMADAS'), _defineProperty(_label, "gamelasQuantity", 'CANTIDAD GAMELAS'), _defineProperty(_label, "orders", 'ORDENES'), _defineProperty(_label, "transportSummary", 'SUMARIO DE TRANSPORTE'), _defineProperty(_label, "hatchCoverLocation", 'UBICACION DE TAPA'), _defineProperty(_label, "inspectionDate", 'FECHA DE INSPECCION'), _defineProperty(_label, "canceledDocument", 'ANULADO'), _defineProperty(_label, "generateOrder", "GENERAR ORDEN"), _defineProperty(_label, "dateFrom", 'FECHA DESDE'), _defineProperty(_label, "dateTo", 'FECHA HASTA'), _defineProperty(_label, "fullWeighing", 'PESAJE FULL'), _defineProperty(_label, "emptyWeighing", 'PESAJE VACIO'), _defineProperty(_label, "logisticTimeLine", 'LINEA DE TIEMPO DE LOGISTICA'), _defineProperty(_label, "verifyDriverId", "VERIFIQUE LA CEDULA DEL CHOFER"), _defineProperty(_label, "verifyLicensePlate", "VERIFIQUE LA PLACA DEL VEHICULO"), _defineProperty(_label, "transport", 'TRANSPORTE'), _defineProperty(_label, "incidenceType", 'TIPO DE INCIDENCIA'), _defineProperty(_label, "noOrder", 'NRO ORDEN'), _defineProperty(_label, "emissionDate", 'FECHA DE EMISION'), _defineProperty(_label, "shippingDate", 'FECHA EMBARQUE'), _defineProperty(_label, "lapse", 'CORTE'), _defineProperty(_label, "totalTime", 'TIEMPO TOTAL'), _defineProperty(_label, "checker", 'CHEQUEADOR'), _defineProperty(_label, "lastDate", 'ULTIMA FECHA'), _defineProperty(_label, "currentCircuit", 'CIRCUITO ACTUAL'), _defineProperty(_label, "draftInspections", 'INSPECCIONES DE CALADO'), _defineProperty(_label, "portPlan", 'PLANO DEL PUERTO'), _defineProperty(_label, "ordersByCarrier", 'ORDENES POR TRANSPORTE'), _defineProperty(_label, "ordersByDriver", 'ORDENES POR CONDUCTOR'), _defineProperty(_label, "ordersByVehicle", 'ORDENES POR VEHICULO'), _defineProperty(_label, "ordersByScrapContainer", 'ORDENES POR GAMELA'), _defineProperty(_label, "ordersByYard", 'ORDENES POR PATIO'), _defineProperty(_label, "dailyReport", 'REPORTE DIARIO'), _defineProperty(_label, "finalReport", 'REPORTE FINAL'), _defineProperty(_label, "operativReport", 'REPORTE OPERATIVO'), _defineProperty(_label, "tablets", 'TABLETAS'), _defineProperty(_label, "ordersList", 'LISTA DE ORDENES'), _defineProperty(_label, "incidence", 'INCIDENCIA'), _defineProperty(_label, "incidences", 'INCIDENCIAS'), _defineProperty(_label, "shipmentOrders", 'ORDENES DE EMBARQUE'), _defineProperty(_label, "shipmentOrder", 'ORDEN DE EMBARQUE'), _defineProperty(_label, "minimum", 'MÍNIMO'), _defineProperty(_label, "operationsSummary", 'VESSEL ACTIVITY RECAP'), _defineProperty(_label, "delaysByVessel", 'RETRASOS POR BUQUE'), _defineProperty(_label, "delaysByOperator", 'RETRASOS POR OPERADOR'), _defineProperty(_label, "delaysPerPort", 'RETRASOS POR PUERTO'), _defineProperty(_label, "providers", 'PROVEEDORES'), _defineProperty(_label, "ice", 'HIELO'), _defineProperty(_label, "water", 'AGUA'), _defineProperty(_label, "food", 'COMIDA'), _defineProperty(_label, "item", 'ITEM'), _defineProperty(_label, "mobilizationOfShipHatch", 'MOVILIZACION DE TAPAS DEL BUQUES'), _defineProperty(_label, "mobilizationOfTwinboxes", 'MOVILIZACION DE CAJAS PIÑA'), _defineProperty(_label, "supplementForSealingEmptyContainers", 'COMPLEMENTO POR PRECINTADO CONTENEDORES VACIOS (MÍNIMO$50.00)'), _defineProperty(_label, "sealingEmptyContainers", 'PRECINTADO CONTENEDORES VACIOS'), _defineProperty(_label, "shippingContainers", 'EMBARQUE CONTENEDORES'), _defineProperty(_label, "containersFull", 'LLENOS'), _defineProperty(_label, "containersEmpty", 'VACIOS'), _defineProperty(_label, "unloadContainers", 'DESEMBARQUE CONTENEDORES'), _defineProperty(_label, "metricTonnageAcronym", '(TON)'), _defineProperty(_label, "ballast", 'EN LASTRE'), _defineProperty(_label, "fuelOil", 'GASOLINA'), _defineProperty(_label, "dieselOil", 'GASOIL'), _defineProperty(_label, "constant", 'PROVISIONES Y OTROS'), _defineProperty(_label, "freshWater", 'AGUA FRESCA'), _defineProperty(_label, "errorsCurrentDateTimePleaseCheck", 'LA HORA NO DEBE SER SUPERIOR A LA HORA ACTUAL, POR FAVOR, VERIFIQUE'), _defineProperty(_label, "errorsStartDateTimePleaseCheck", 'LA HORA NO DEBE SER INFERIOR A LA HORA DE ATA / ETA, POR FAVOR, VERIFIQUE'), _defineProperty(_label, "errorsHourDateTimePleaseCheck", 'LA HORA HASTA NO DEBE SER INFERIOR A LA HORA DESDE, POR FAVOR, VERIFIQUE'), _defineProperty(_label, "transactionReverseList", 'LISTA DE REVERSOS DE TRANSACCIONES'), _defineProperty(_label, "actualPosition", 'POSICION ACTUAL'), _defineProperty(_label, "previousPosition", 'POSICION PREVIA'), _defineProperty(_label, "transactionReversals", 'REVERSOS DE TRANSACCIONES'), _defineProperty(_label, "damageOption", 'DAÑOS'), _defineProperty(_label, "searchForContainerToContinue", 'DEBE BUSCAR PRIMERO EL CONTENEDOR PARA PODER CONTINUAR CON EL REGISTRO'), _defineProperty(_label, "beginningTurn", 'TURNO DE INICIO'), _defineProperty(_label, "finalTurn", 'TURNO FINAL'), _defineProperty(_label, "netTime", 'TIEMPO NETO'), _defineProperty(_label, "timeOperations", 'TIEMPO DE OPERACIONES'), _defineProperty(_label, "beginningHour", 'HORA DE INICIO'), _defineProperty(_label, "finalHour", 'HORA FINAL'), _defineProperty(_label, "inactivityTime", 'TIEMPO DE INACTIVIDAD'), _defineProperty(_label, "delayTimesWithoutMovements", 'TIEMPOS PERDIDOS SIN MOVIMIENTOS'), _defineProperty(_label, "registerDate", 'FECHA REGISTRO'), _defineProperty(_label, "editWorkTurnByTypeOfVessel", 'EDITAR TURNO DE TRABAJO POR TIPO DE BUQUE'), _defineProperty(_label, "newWorkTurnByTypeOfVessel", 'NUEVO TURNO DE TRABAJO POR TIPO DE BUQUE'), _defineProperty(_label, "workTurnsByTypeOfVessel", 'TURNOS POR TIPO DE BUQUE'), _defineProperty(_label, "workTurnByTypeOfVessel", 'TURNO POR TIPO DE BUQUE'), _defineProperty(_label, "turns", 'TURNOS'), _defineProperty(_label, "stern", 'POPA'), _defineProperty(_label, "bow", 'PROA'), _defineProperty(_label, "gross", 'PESO BRUTO'), _defineProperty(_label, "stowageRoles", 'ROLES DE ESTIBA'), _defineProperty(_label, "verifyContainer", "VERIFIQUE SIGLAS DEL CONTENEDOR"), _defineProperty(_label, "deleteImage", '¿Esta seguro de eliminar esta imagen?'), _defineProperty(_label, "other", 'OTRO'), _defineProperty(_label, "CULMINADO", 'CULMINADO'), _defineProperty(_label, "correlative", 'CORRELATIVO'), _defineProperty(_label, "staffOperator", 'OPERADOR CUADRILLA'), _defineProperty(_label, "staffSupervisor", 'SUPERVISOR CUADRILLA'), _defineProperty(_label, "supervisor", 'SUPERVISOR'), _defineProperty(_label, "uploadDocuments", 'CARGAR DOCUMENTOS'), _defineProperty(_label, "clearFilter", 'LIMPIAR FILTRO'), _defineProperty(_label, "requiresAtLeastOneSealInspection", 'REQUIERE AL MENOS LA INSPECCION DE UN PRECINTO'), _defineProperty(_label, "withoutSeal", 'SIN PRECINTO'), _defineProperty(_label, "time", 'TIEMPO'), _defineProperty(_label, "errorList", 'LISTA DE ERRORES'), _defineProperty(_label, "driverId", 'CEDULA CHOFER'), _defineProperty(_label, "driverName", 'NOMBRE CHOFER'), _defineProperty(_label, "driverLicenseDateFormat", 'DD-MM-YYYY'), _defineProperty(_label, "vehicleClasificationName", 'NOMBRE CLASIFICACION DEL VEHICULO'), _defineProperty(_label, "driversAndVehicleList", 'LISTADO DE CHOFERES Y VEHÍCULO'), _defineProperty(_label, "driver", 'CHOFER'), _defineProperty(_label, "drivers", 'CHOFERES'), _defineProperty(_label, "driverLicense", 'NRO. LICENCIA'), _defineProperty(_label, "licenseExpirationDate", 'FECHA VENCIMIENTO LICENCIA'), _defineProperty(_label, "vehicle", 'VEHICULO'), _defineProperty(_label, "tpVehicle", 'TIPO VEHICULO'), _defineProperty(_label, "tpVehicleName", 'NOMBRE TIPO DE VEHICULO'), _defineProperty(_label, "vehiclePlate", 'PLACA'), _defineProperty(_label, "vehicleClasification", 'CLASIFICACION VEHICULO'), _defineProperty(_label, "vehicleClasific", 'CLASIFICACION DE VEHICULO'), _defineProperty(_label, "vehicleType", 'TIPO DE VEHICULO'), _defineProperty(_label, "clasificationName", 'NOMBRE DE LA CLASIFICACION'), _defineProperty(_label, "listMachine", 'LISTADO DE MAQUINAS'), _defineProperty(_label, "registerMachine", 'REGISTRO MAQUINA'), _defineProperty(_label, "registerPhotoMachine", 'REGISTRO FOTO DE MAQUINA'), _defineProperty(_label, "machineTypeRelationShip", 'ASOCIAR MAQUINA TIPO CARGA'), _defineProperty(_label, "serialUnique", 'SERIAL UNICO'), _defineProperty(_label, "nameIdDriver", 'NOMRE O CEDULA DEL CHOFER'), _defineProperty(_label, "tableReset", 'REINICIAR TABLA'), _defineProperty(_label, "aggregate", 'AGREGAR'), _defineProperty(_label, "machineTypeName", 'NOMBRE TIPO MAQUINA'), _defineProperty(_label, "selectOption", 'SELECCIONE OPCION'), _defineProperty(_label, "icon", 'ICONO'), _defineProperty(_label, "typeMachine", 'TIPO MAQUINA'), _defineProperty(_label, "containers", 'CONTAINERS'), _defineProperty(_label, "associatedEquipment", 'EQUIPOS ASOCIADOS'), _defineProperty(_label, "machineAssociation", 'ASOCIACION DE MAQUINAS'), _defineProperty(_label, "bulk", 'BULK'), _defineProperty(_label, "generalCargo", 'GENERAL CARGO'), _defineProperty(_label, "clientsActivitiesList", 'LISTADO DE CLIENTES Y ACTIVIDADES'), _defineProperty(_label, "activities", 'ACTIVIDADES'), _defineProperty(_label, "transactions", 'TRANSACCIONES'), _defineProperty(_label, "rifNumber", 'RIF'), _defineProperty(_label, "transactionsClient", 'TRANSACCIONES GENERADAS POR CLIENTE'), _defineProperty(_label, "motive", 'MOTIVO'), _defineProperty(_label, "clientActivities", 'ACTIVIDADES DEL CLIENTE'), _defineProperty(_label, "dataTable", 'TABLA DE DATOS'), _defineProperty(_label, "updateActivities", 'ACTUALIZAR ACTIVIDADES'), _defineProperty(_label, "grabar", 'GRABAR'), _defineProperty(_label, "clientsByActivity", 'CLIENTES POR ACTIVIDAD'), _defineProperty(_label, "plate", 'PLACA'), _defineProperty(_label, "errorSelectActivities", 'Por favor seleccione las Actividades.'), _defineProperty(_label, "shippingLineList", 'LISTADO DE LINEAS NAVIERAS'), _defineProperty(_label, "assignAcronym", 'ASIGNAR ABREVIATURA'), _defineProperty(_label, "assignShippingLineRepresentative", 'ASIGNAR REPRESENTANTE'), _defineProperty(_label, "requiresSuplier", 'REQUIERE PROVEEDOR'), _defineProperty(_label, "completedSuccessfully", 'SU PROCESO HA FINALIZADO CON EXITO'), _defineProperty(_label, "unexpectedError", 'SE HA PRODUCIDO UN ERROR INESPERADO'), _defineProperty(_label, "lineRepresentative", 'REPRESENTANTE LINEA'), _defineProperty(_label, "inactivateRepresentative", 'INACTIVAR REPRESENTANTE'), _defineProperty(_label, "activateRepresentative", 'ACTIVAR REPRESENTANTE'), _defineProperty(_label, "shippingLineAbbreviations", 'ABREVIATURAS DE LINEA NAVIERA'), _defineProperty(_label, "abbreviation", 'ABREVIATURA'), _defineProperty(_label, "newShippingLine", 'LINEA NAVIERA'), _defineProperty(_label, "activityName", 'NOMBRE ACTIVIDAD'), _defineProperty(_label, "clientRepresentativeName", 'NOMBRE REPRESENTANTE DEL CLIENTE'), _defineProperty(_label, "clientAddress", 'DIRECCION CLIENTE'), _defineProperty(_label, "clientName", 'NOMBRE CLIENTE'), _defineProperty(_label, "newShippingLineName", 'NOMBRE LINEA NAVIERA'), _defineProperty(_label, "newShippingLineAddress", 'DIRECCION LINEA NAVIERA'), _defineProperty(_label, "newShippingLineAbbreviation", 'ABREVIATURA LINEA NAVIERA'), _defineProperty(_label, "inactivateActivity", 'INACTIVAR ACTIVIDAD'), _defineProperty(_label, "activateActivity", 'ACTIVAR ACTIVIDAD'), _defineProperty(_label, "inactivateRole", 'INACTIVAR ROL'), _defineProperty(_label, "activateRole", 'ACTIVAR ROL'), _defineProperty(_label, "applySigetMobile", 'APLICA SIGET-MOBILE'), _defineProperty(_label, "lostTimeCode", 'CODIGO DE TIEMPO PERDIDO'), _defineProperty(_label, "devices", 'DISPOSITIVOS'), _defineProperty(_label, "applyTo", 'APLICA A'), _defineProperty(_label, "noSearchData", 'SIN DATOS DE BUSQUEDA'), _defineProperty(_label, "documentQuestion", 'REQUIERE AGREGAR UN DOCUMENTO'), _defineProperty(_label, "addFileQuestion", '¿ESTA SEGURO DE SUBIR EL ARCHIVO'), _defineProperty(_label, "carrier", 'LINEA NAVIERA'), _defineProperty(_label, "containerCode", 'CODIGO DE CONTENEDOR'), _defineProperty(_label, "transhipmentPort", 'PUERTO DE TRANSICION'), _defineProperty(_label, "certificateVGM", 'CERTIFICADO VGM'), _defineProperty(_label, "class", 'CLASE'), _defineProperty(_label, "length", 'LARGO'), _defineProperty(_label, "columnConfig", 'CONFIGURACION DE COLUMNAS'), _defineProperty(_label, "portCodes", 'CODIGOS DEL PUERTO'), _defineProperty(_label, "hideTableRoles", 'OCULTAR TABLA DE ROLES SELECCIONADOS'), _defineProperty(_label, "viewTableRoles", 'VER TABLA DE ROLES SELECCIONADOS'), _defineProperty(_label, "delayTdrCode", 'CODIGO DE RETRASOS DEL TDR'), _defineProperty(_label, "delayCustomCode", 'CODIGO DE RETRASOS PERSONALIZADO'), _defineProperty(_label, "customCode", 'CODIGO PERSONALIZADO'), _defineProperty(_label, "chronometer", 'CRONOMETRO'), _defineProperty(_label, "dateRange", 'RANGO DE FECHAS'), _defineProperty(_label, "app", 'APLICACION'), _defineProperty(_label, "errorsDatePleaseCheck", 'Error en las Fechas, por favor, verifique.'), _defineProperty(_label, "errorsHourPleaseCheck", 'Error en las horas, por favor, verifique.'), _defineProperty(_label, "fin", 'FIN'), _defineProperty(_label, "inicio", 'INICIO'), _defineProperty(_label, "twinsBox", 'CAJA PIÑA'), _defineProperty(_label, "configurations", 'CONFIGURACIONES'), _defineProperty(_label, "delayResponsible", 'RESPONSABLE DEL RETRASO'), _defineProperty(_label, "others", 'OTROS'), _defineProperty(_label, "codesDocuments", 'CODIGOS POR DOCUMENTOS'), _defineProperty(_label, "vesselDocuments", 'DOCUMENTOS DEL BUQUE'), _defineProperty(_label, "errorsIdleTime", 'EL BUQUE SELECCIONADO NO TIENE REGISTRO DE TIEMPOS'), _defineProperty(_label, "errorsUnitSelected", 'EL TIPO DE UNIDAD DE MEDIDA HA SIDO SELECCIONADA PREVIAMENTE'), _defineProperty(_label, "geolocation", 'POSICION GEOGRAFICA'), _defineProperty(_label, "color", 'COLOR'), _defineProperty(_label, "timeCode", 'CODIGO TIEMPO'), _defineProperty(_label, "equipmentTotal", 'TOTAL DE EQUIPOS'), _defineProperty(_label, "timeReport", 'REPORTE TIEMPOS'), _defineProperty(_label, "ALL", 'TODAS'), _defineProperty(_label, "dischargePortVisit", 'PUERTO DESCARGA'), _defineProperty(_label, "generalContainers", 'CONTENEDORES (GENERAL)'), _defineProperty(_label, "movementsRestow", 'MOVIMIENTOS RESTOW'), _defineProperty(_label, "shipments", 'EMBARQUES'), _defineProperty(_label, "canceled", 'CANCELADOS'), _defineProperty(_label, "discharges", 'DESCARGAS'), _defineProperty(_label, "vgmDetail", 'DETALLES DE VGM'), _defineProperty(_label, "oversizedContainers", 'CONTENEDORES SOBREDIMENSIONADOS'), _defineProperty(_label, "reeferContainers", 'CONTENEDORES REFRIGERADOS'), _defineProperty(_label, "imdgContainers", 'CONTENEDORES CARGA PELIGROSA'), _defineProperty(_label, "containersByTypeStatus", 'CONTENEDORES DE TIPO-ESTATUS'), _defineProperty(_label, "containersByType", 'CONTENEDORES POR TIPO'), _defineProperty(_label, "containersByPortLine", 'CONTENEDORES POR PUERTO-LINEA'), _defineProperty(_label, "typeOfLoadPerCrane", 'TIPO DE CARGA POR GRUA'), _defineProperty(_label, "listOfPlannedGeneralContainers", 'LISTA DE CONTENEDORES PLANIFICADOS'), _defineProperty(_label, "listOfPlannedImdgContainers", 'LISTA DE CONTENEDORES CARGA PELIGROSA PLANIFICADA'), _defineProperty(_label, "listOfPlannedMovementsRestow", 'LISTA DE MOVIMIENTOS RESTOW PLANIFICADOS'), _defineProperty(_label, "listOfPlannedReeferContainers", 'LISTA DE CONTENEDORES REFRIGERADOS PLANIFICADOS'), _defineProperty(_label, "listOfPlannedShipments", 'LISTA DE EMBARQUES PLANIFICADOS'), _defineProperty(_label, "listOfPlannedCanceled", 'LISTA DE CANCELADOS PLANIFICADOS'), _defineProperty(_label, "listOfPlannedDischarges", 'LISTA DE DESCARGA PLANIFICADA'), _defineProperty(_label, "listOfPlannedOversizedContainers", 'LISTA DE CONTENEDORES SOBREDIMENSIONADOS PLANIFICADO'), _defineProperty(_label, "listOfPlannedVgmDetail", 'DETALLES DE VGM PLANIFICADOS'), _defineProperty(_label, "summaryOfPlannedContainersByTypeStatus", 'SUMARIO DE CONTENEDORES DE TIPO-ESTATUS PLANIFICADO'), _defineProperty(_label, "summaryOfPlannedContainersByType", 'SUMARIO DE CONTENEDORES POR TIPO PLANIFICADO'), _defineProperty(_label, "summaryOfPlannedContainersByPortLine", 'SUMARIO DE CONTENEDORES POR PUERTO-LINEA PLANIFICADO'), _defineProperty(_label, "summaryOfPlannedImdgContainers", 'SUMARIO DE CONTENEDORES CARGA PELIGROSA PLANIFICADO'), _defineProperty(_label, "listOfGeneralContainers", 'LISTA DE CONTENEDORES (GENERAL)'), _defineProperty(_label, "listOfImdgContainers", 'LISTA DE CONTENEDORES CARGA PELIGROSA'), _defineProperty(_label, "listOfMovementsRestow", 'LISTA DE MOVIMIENTOS RESTOW'), _defineProperty(_label, "listOfReeferContainers", 'LISTA DE CONTENEDORES REFRIGERADOS'), _defineProperty(_label, "listOfShipments", 'LISTA DE EMBARQUES'), _defineProperty(_label, "listOfCanceled", 'LISTA DE CANCELADOS'), _defineProperty(_label, "listOfDischarges", 'LISTA DE DESCARGA'), _defineProperty(_label, "listOfOversizedContainers", 'LISTA DE CONTENEDORES SOBREDIMENSIONADOS'), _defineProperty(_label, "summaryOfContainersByTypeStatus", 'SUMARIO DE CONTENEDORES DE TIPO-ESTATUS'), _defineProperty(_label, "summaryOfContainersByType", 'SUMARIO DE CONTENEDORES POR TIPO'), _defineProperty(_label, "summaryOfContainersByPortLine", 'SUMARIO DE CONTENEDORES POR PUERTO-LINEA '), _defineProperty(_label, "summaryOfImdgContainers", 'SUMARIO DE CONTENEDORES CARGA PELIGROSA'), _defineProperty(_label, "summaryCraneLoadType", 'SUMARIO DE TIPO DE CARGA POR GRUA'), _defineProperty(_label, "transactionReport", 'REPORTE DE TRANSACCIONES'), _defineProperty(_label, "noRecordsAvailbleReport", 'NO HAY REGISTROS DISPONIBLES PARA GENERAR EL REPORTE'), _defineProperty(_label, "printed", 'IMPRESO'), _defineProperty(_label, "reportSuccessfully", 'REPORTE GENERADO EXITOSAMENTE'), _defineProperty(_label, "reportError", 'ERROR AL GENERAR EL REPORTE'), _defineProperty(_label, "discountedTdr", 'CON DESCUENTOS'), _defineProperty(_label, "pageReport", 'Página'), _defineProperty(_label, "ofReport", 'de'), _defineProperty(_label, "delay", 'TIEMPO'), _defineProperty(_label, "timeCodeDetails", 'DETALLES DEL CODIGO DE TIEMPO'), _defineProperty(_label, "applyTdr", 'APLICA AL TDR'), _defineProperty(_label, "currentTime", 'TIEMPO EN CURSO'), _defineProperty(_label, "serial", 'SERIAL'), _defineProperty(_label, "berthVisit", 'ATRAQUE'), _defineProperty(_label, "position", 'POSICION'), _defineProperty(_label, "isoCodes", 'CODIGOS ISO'), _defineProperty(_label, "equivalent", 'EQUIVALENTE'), _defineProperty(_label, "image", 'IMAGEN'), _defineProperty(_label, "selectedImage", 'IMAGEN SELECCIONADA'), _defineProperty(_label, "toPage", 'A'), _defineProperty(_label, "records", 'REGISTROS'), _defineProperty(_label, "discharge", 'DESCARGA'), _defineProperty(_label, "modality", 'MODALIDAD'), _defineProperty(_label, "height", 'ALTO'), _defineProperty(_label, "actualConditions", 'CONDICIONES ACTUALES'), _defineProperty(_label, "resultEqualValue", 'RESULTADO = VALOR '), _defineProperty(_label, "locationName", 'NOMBRE DE LA UBICACION'), _defineProperty(_label, "ID", "IDENTIFICACIÓN"), _defineProperty(_label, "password", "CONTRASEÑA"), _defineProperty(_label, "userIdentificationInfo", "DATOS DE INDENTIFICACIÓN DEL USUARIO"), _defineProperty(_label, "invalidContainerCode", "CODIGO DE CONTENEDOR INVALIDO"), _defineProperty(_label, "checkDigit", "CHECK-DIGIT"), _defineProperty(_label, "asignUserRole", 'ASIGNAR ROLES DE USUARIOS'), _defineProperty(_label, "rolesAssigned", 'ROLES ASIGNADOS'), _defineProperty(_label, "rolesToBeAssigned", 'ROLES POR ASIGNAR'), _defineProperty(_label, "selectedRoles", 'ROL(ES) SELECCIONADO(S)'), _defineProperty(_label, "transactionHourDate", "FECHA HORA TRANSACCION"), _defineProperty(_label, "generateReport", "GENERAR REPORTE"), _defineProperty(_label, "holiday", 'FERIADO'), _defineProperty(_label, "holidayDay", 'DIA FERIADO'), _defineProperty(_label, "holidayDayName", 'NOMBRE DE DIA FERIADO'), _defineProperty(_label, "holidayDate", 'FECHA FERIADO'), _defineProperty(_label, "holidayType", 'TIPO FERIADO'), _defineProperty(_label, "holidayTypeName", 'NOMBRE TIPO FERIADO'), _defineProperty(_label, "calendary", 'CALENDARIO'), _defineProperty(_label, "colorIdentification", 'color Identificación'), _defineProperty(_label, "standard", "ESTANDAR"), _defineProperty(_label, "standardDocumentation", 'DOCUMENTACION ESTANDAR'), _defineProperty(_label, "files", 'ARCHIVOS'), _defineProperty(_label, "regulatoryBody", "ENTE REGULADOR"), _defineProperty(_label, "path", 'RUTA'), _defineProperty(_label, "Alias", 'NOMBRE ALIAS'), _defineProperty(_label, "registeredPreviouslyCircuit", 'CIRCUITO REGISTRADO PREVIAMENTE'), _defineProperty(_label, "modalityName", 'NOMBRE DE MODALIDAD'), _defineProperty(_label, "CircuitAssociation", 'ASOCIACIÓN DE CIRCUITO'), _defineProperty(_label, "ModalityAssociation", 'ASOCIACIÓN MODALIDAD'), _defineProperty(_label, "Up", 'SUBIR'), _defineProperty(_label, "Down", 'BAJAR'), _defineProperty(_label, "IdentificationClient", 'IDENTIFICACION CLIENTE'), _defineProperty(_label, "Agency", 'AGENCIA'), _defineProperty(_label, "ToLoad", 'POR EMBARCAR'), _defineProperty(_label, "AveragePerBin", 'PROMEDIO POR GAMELA'), _defineProperty(_label, "Accumulated", 'ACUMULADO'), _defineProperty(_label, "LoadedPerTurn", 'EMBARCADAS POR TURNOS'), _defineProperty(_label, "IncidenceName", 'NOMBRE DE INCIDENCIA'), _defineProperty(_label, "BinName", 'NOMBRE DE LA GAMELA'), _defineProperty(_label, "DeviceCode", 'CÓDIGO DE DISPOSITIVO'), _defineProperty(_label, "Slot", 'POSICIÓN'), _defineProperty(_label, "CargoStatus", 'ESTATUS DE CARGA'), _defineProperty(_label, "PlaceOfDelivery", 'LUGAR DE ENTREGA'), _defineProperty(_label, "CargoOriginPort", 'PUERTO DE ORIGEN DE LA CARGA'), _defineProperty(_label, "TransshipmentPortCode", 'CODIGO DE PUERTO DE TRANSBORDO'), _defineProperty(_label, "IsoInfo", 'INFORMACION DE ISO'), _defineProperty(_label, "GroupType", 'TIPO DE GRUPO'), _defineProperty(_label, "SizeFt", 'TAMAÑO (FT)'), _defineProperty(_label, "DangerousInfo", 'INFORMACIÓN DE PELIGRO'), _defineProperty(_label, "UnNumber", 'NUMERO UN'), _defineProperty(_label, "IMDGPageNO", 'NRO. PAGINA IMDG'), _defineProperty(_label, "FlashPoint", 'PUNTO DE INFLAMACIÓN'), _defineProperty(_label, "PackagingGroup", 'GRUPO DE EMBALAJE'), _defineProperty(_label, "DescriptionOfGoods", 'DESCRIPCION DE MERCANCIA'), _defineProperty(_label, "OversizeInfo", 'INFORMACION DE EQUIPOS SOBREDIMENSIONADO'), _defineProperty(_label, "DimFront", 'MEDIA FRONTAL'), _defineProperty(_label, "DimBack", 'MEDIA TRASERA'), _defineProperty(_label, "DimLeft", 'MEDIA IZQUIERDA'), _defineProperty(_label, "DimRight", 'MEDIA DERECHA'), _defineProperty(_label, "DimTop", 'MEDIA SUPERIOR'), _defineProperty(_label, "ReeferInfo", 'INFORMACIÓN DE EQUIPOS REFRIGERADOS'), _defineProperty(_label, "ReeferSetting", 'CONFIGURACIÓN DE EQUIPOS REFRIFERADOS'), _defineProperty(_label, "MinimumRange", 'RANGO MINIMO'), _defineProperty(_label, "MaximumRange", 'RANGO MAXIMO'), _defineProperty(_label, "ModifyShipmentOrder", 'MODIFICAR ORDEN DE EMBARQUE'), _defineProperty(_label, "HoldHatchCover", 'TAPA DE LA BODEGA'), _defineProperty(_label, "BABOR", 'BABOR'), _defineProperty(_label, "CENTRO", 'CENTRO'), _defineProperty(_label, "ESTRIBOR", 'ESTRIBOR'), _defineProperty(_label, "Underdeck", 'BAJO CUBIERTA'), _defineProperty(_label, "TierRows", 'NIVEL-FILAS'), _defineProperty(_label, "RowsToStartboard", 'FILAS A ESTRIBOR'), _defineProperty(_label, "RowsToPort", 'FILAS A BABOR'), _defineProperty(_label, "Disabled", 'DESHABILITADO'), _defineProperty(_label, "CrosssLine", 'EJE CENTRAL'), _defineProperty(_label, "Confirm", 'CONFIRMAR'), _defineProperty(_label, "Hazard", 'HABILITADO CARGA PELIGROSA'), _defineProperty(_label, "Hazard_Restriction", 'RESTRINGIDO CARGA PELIGROSA'), _defineProperty(_label, "Not_Exist", 'NO EXISTE'), _defineProperty(_label, "Reefer_Plug", 'CARGA REFRIGERADA'), _defineProperty(_label, "EstimatedBin", 'GAMELA ESTIMADAS'), _defineProperty(_label, "Inactivate", 'INACTIVAR'), _defineProperty(_label, "BinReturn", 'DEVOLUCÓN DE GAMELA'), _defineProperty(_label, "IncidenceGroup", 'GRUPO DE INCIDENCIA'), _defineProperty(_label, "IncidentList", 'LISTA DE INCIDENCIA'), _defineProperty(_label, "FullLessTare", 'EL PESO FULL NO PUEDE SER INFERIOR AL PESO TARA'), _defineProperty(_label, "ValueNotNegative", 'EL VALOR NO PUEDE SER NEGATIVO'), _defineProperty(_label, "CapacityEstimated", 'CAPACIDAD ESTIMADA'), _defineProperty(_label, "BinTareweightlist", 'LISTA DE PESO TARA DE LA GAMELA'), _defineProperty(_label, "TareWeightlist", 'LISTA DE PESO TARA'), _defineProperty(_label, "BinOrderNoList", 'LISTA DE NRO ORDEN DE LA GAMELA'), _defineProperty(_label, "OrderNolist", 'LISTA DE NRO ORDEN'), _defineProperty(_label, "sequence", 'SECUENCIA'), _defineProperty(_label, "activity", 'ACTIVIDAD'), _defineProperty(_label, "initials", 'SIGLAS'), _defineProperty(_label, "typecargocode", 'SIGLAS'), _defineProperty(_label, "acronym", 'SIGLAS'), _defineProperty(_label, "required", 'Campo requerido. '), _defineProperty(_label, "onlyText", 'Solo Texto'), _defineProperty(_label, "onlyNumber", 'Solo Números'), _defineProperty(_label, "onlyAlphanumeric", 'Solo Alfanuméricos'), _defineProperty(_label, "onlyCoordinate", 'Solo Coordenadas'), _defineProperty(_label, "onlyDecimal", 'Solo Decimales'), _defineProperty(_label, "onlyUppercase", 'SOLO MAYÚSCULAS.'), _defineProperty(_label, "integer", 'solo enteros'), _defineProperty(_label, "minValueIs", 'El valor minimo es'), _defineProperty(_label, "maxValueIs", 'El valor maximo es'), _defineProperty(_label, "metrics", 'SOLO MÉTRICAS'), _defineProperty(_label, "number", 'NÚMERO'), _defineProperty(_label, "filter", 'FILTRAR'), _defineProperty(_label, "filtro", 'FILTRO'), _defineProperty(_label, "file", 'ARCHIVO'), _defineProperty(_label, "lang", 'ESPAÑOL'), _defineProperty(_label, "yard", 'PATIO'), _defineProperty(_label, "toSelect", 'SELECCIONAR '), _defineProperty(_label, "select", 'SELECCIONE '), _defineProperty(_label, "selected", 'SELECCIONADOS '), _defineProperty(_label, "selectedLogo", 'LOGO SELECCIONADO'), _defineProperty(_label, "option", 'OPCIÓN '), _defineProperty(_label, "load", 'CARGANDO'), _defineProperty(_label, "process", "PROCESO"), _defineProperty(_label, "success", "EXITO"), _defineProperty(_label, "error", "ERROR"), _defineProperty(_label, "changePass", 'Cambiar Contraseña'), _defineProperty(_label, "moduleInfo", 'Información del módulo'), _defineProperty(_label, "nueva", 'NUEVA '), _defineProperty(_label, "nuevo", 'NUEVO '), _defineProperty(_label, "modelBrand", 'MARCA Y MODELO'), _defineProperty(_label, "modelName", 'NOMBRE DEL MODELO'), _defineProperty(_label, "model", 'MODELO'), _defineProperty(_label, "brand", 'MARCA'), _defineProperty(_label, "brandName", 'NOMBRE DE LA MARCA'), _defineProperty(_label, "brands", 'MARCAS'), _defineProperty(_label, "name", 'NOMBRE'), _defineProperty(_label, "lastName", 'APELLIDO'), _defineProperty(_label, "registerName", 'INGRESE EL NOMBRE'), _defineProperty(_label, "register", 'REGISTRAR '), _defineProperty(_label, "clearFields", 'LIMPIAR CAMPOS'), _defineProperty(_label, "cleanInformation", 'LIMPIAR INFORMACIÓN'), _defineProperty(_label, "add", 'AGREGAR '), _defineProperty(_label, "edit", 'EDITAR '), _defineProperty(_label, "delete", 'ELIMINAR '), _defineProperty(_label, "Romeve", 'ELIMINAR'), _defineProperty(_label, "badImage", 'REQUIERE UNA IMAGEN VALIDA'), _defineProperty(_label, "needValidImage", 'NECESITO UNA IMAGEN VALIDA'), _defineProperty(_label, "picture", 'FOTO'), _defineProperty(_label, "crane", 'GRUA'), _defineProperty(_label, "type", 'TIPO'), _defineProperty(_label, "list", 'LISTA'), _defineProperty(_label, "work", 'TRABAJO'), _defineProperty(_label, "movements", 'MOVIMIENTOS'), _defineProperty(_label, "movement", 'MOVIMIENTO'), _defineProperty(_label, "supplies", 'INSUMOS'), _defineProperty(_label, "Supplies", 'INSUMO'), _defineProperty(_label, "supplie", 'INSUMO'), _defineProperty(_label, "supply", 'INSUMO'), _defineProperty(_label, "turn", 'TURNO'), _defineProperty(_label, "stowage", 'ESTIBA'), _defineProperty(_label, "vessel", 'BUQUE'), _defineProperty(_label, "role", 'ROL'), _defineProperty(_label, "must", 'DEBE '), _defineProperty(_label, "transaction", 'TRANSACCION'), _defineProperty(_label, "FINALIZADO", 'FINALIZADO'), _defineProperty(_label, "CANCELADO", 'CANCELADO'), _defineProperty(_label, "ACTIVO", 'ACTIVO'), _defineProperty(_label, "INACTIVO", 'INACTIVO'), _defineProperty(_label, "USUARIO", 'USUARIO'), _defineProperty(_label, "FECHA", 'FECHA'), _defineProperty(_label, "group", 'GRUPO'), _defineProperty(_label, "min", 'CAMPO REQUIERE MÍNIMO '), _defineProperty(_label, "max", 'CAMPO REQUIERE MÁXIMO '), _defineProperty(_label, "chars", ' CARACTERES'), _defineProperty(_label, "change", 'CAMBIAR '), _defineProperty(_label, "code", 'CÓDIGO'), _defineProperty(_label, "open", 'ABRIR'), _defineProperty(_label, "close", 'CERRAR'), _defineProperty(_label, "watch", 'VER'), _defineProperty(_label, "hold", 'BODEGA'), _defineProperty(_label, "from", 'DESDE'), _defineProperty(_label, "to", 'HASTA'), _defineProperty(_label, "preselected", 'PRESELECCIONADO'), _defineProperty(_label, "holdAssigned", 'ASIGNADO A UNA BODEGA'), _defineProperty(_label, "country", 'PAIS'), _defineProperty(_label, "documents", 'DOCUMENTOS'), _defineProperty(_label, "invalid", 'Campo Invalido. '), _defineProperty(_label, "capacity", 'CAPACIDAD'), _defineProperty(_label, "grain", ' GRANO '), _defineProperty(_label, "bail", ' BALA '), _defineProperty(_label, "deck", 'CUBIERTA'), _defineProperty(_label, "finish", 'FINALIZAR'), _defineProperty(_label, "operative", 'OPERATIVA'), _defineProperty(_label, "operational", 'OPERATIVO'), _defineProperty(_label, "operativa", "OPERATIVA"), _defineProperty(_label, "range", 'ALCANCE'), _defineProperty(_label, "description", 'DESCRIPCIÓN'), _defineProperty(_label, "return", 'REGRESAR'), _defineProperty(_label, "port", 'PUERTO'), _defineProperty(_label, "location", 'UBICACIÓN'), _defineProperty(_label, "localizacion", "LOCALIZACIÓN"), _defineProperty(_label, "state", 'ESTADO'), _defineProperty(_label, "latitude", 'LATITUD'), _defineProperty(_label, "longitude", 'LONGITUD'), _defineProperty(_label, "berthName", 'NOMBRE DEL MUELLE'), _defineProperty(_label, "condition", 'CONDICIÓN '), _defineProperty(_label, "conditions", 'CONDICIONES '), _defineProperty(_label, "draft", 'CALADO'), _defineProperty(_label, "mooring", 'BITA'), _defineProperty(_label, "service", 'SERVICIO'), _defineProperty(_label, "serviceList", 'LISTADO DE SERVICIOS'), _defineProperty(_label, "serviceCode", 'CODIGO SERVICIO'), _defineProperty(_label, "itinerary", 'ITINERARIO'), _defineProperty(_label, "line", 'LINEA'), _defineProperty(_label, "see", ' VER '), _defineProperty(_label, "exit", 'SALIR'), _defineProperty(_label, "all", 'TODOS'), _defineProperty(_label, "ton", 'TONELADA'), _defineProperty(_label, "affiliate", 'ASOCIAR '), _defineProperty(_label, "frecuency", 'FRECUENCIA'), _defineProperty(_label, "reset", 'REINICIAR '), _defineProperty(_label, "table", 'TABLA '), _defineProperty(_label, "observation", 'OBSERVACIÓN'), _defineProperty(_label, "voyage", 'VIAJE'), _defineProperty(_label, "voyageNumber", 'NRO. VIAJE'), _defineProperty(_label, "company", 'EMPRESA'), _defineProperty(_label, "branch", 'SUCURSAL'), _defineProperty(_label, "object", 'OBJETO'), _defineProperty(_label, "municipality", 'MUNICIPIO'), _defineProperty(_label, "parish", 'PARROQUIA'), _defineProperty(_label, "address", 'DIRECCIÓN'), _defineProperty(_label, "client", 'CLIENTE'), _defineProperty(_label, "contact", 'CONTACTO'), _defineProperty(_label, "save", 'GUARDAR CAMBIOS'), _defineProperty(_label, "level", 'NIVEL'), _defineProperty(_label, "module", 'MODULO'), _defineProperty(_label, "order", 'ORDEN'), _defineProperty(_label, "view", 'VISTA'), _defineProperty(_label, "viewName", 'NOMBRE VISTA'), _defineProperty(_label, "toView", 'VER'), _defineProperty(_label, "preview", 'PREVISUALIZAR'), _defineProperty(_label, "permission", 'PERMISOS'), _defineProperty(_label, "assign", 'ASIGNAR '), _defineProperty(_label, "supplier", 'PROVEEDOR'), _defineProperty(_label, "quantity", 'CANTIDAD'), _defineProperty(_label, "representative", 'REPRESENTANTE'), _defineProperty(_label, "resource", 'RECURSO'), _defineProperty(_label, "resources", 'RECURSOS'), _defineProperty(_label, "or", 'o'), _defineProperty(_label, "status", 'ESTATUS'), _defineProperty(_label, "applies", 'APLICAR'), _defineProperty(_label, "Applies", 'APLICA'), _defineProperty(_label, "AppliesTo", 'APLICA'), _defineProperty(_label, "apply", 'APLICA'), _defineProperty(_label, "IMO", 'ÍMO'), _defineProperty(_label, "yes", 'SI'), _defineProperty(_label, "accesory", 'ACCESORIO'), _defineProperty(_label, "accesories", 'ACCESORIOS'), _defineProperty(_label, "component", 'COMPONENTE'), _defineProperty(_label, "components", 'COMPONENTES'), _defineProperty(_label, "standar", 'ÉSTANDAR'), _defineProperty(_label, "january", 'ENERO'), _defineProperty(_label, "february", 'FEBRERO'), _defineProperty(_label, "march", 'MARZO'), _defineProperty(_label, "april", 'ABRIL'), _defineProperty(_label, "may", 'MAYO'), _defineProperty(_label, "june", 'JUNIO'), _defineProperty(_label, "july", 'JULIO'), _defineProperty(_label, "august", 'AGOSTO'), _defineProperty(_label, "september", 'SEPTIEMBRE'), _defineProperty(_label, "octuber", 'OCTUBRE'), _defineProperty(_label, "november", 'NOVIEMBRE'), _defineProperty(_label, "december", 'DICIEMBRE'), _defineProperty(_label, "weight", 'PESO'), _defineProperty(_label, "density", 'DENSIDAD'), _defineProperty(_label, "classification", 'CLASIFICACIÓN'), _defineProperty(_label, "classifications", 'CLASIFICACIONES'), _defineProperty(_label, "part", 'ELEMENTO'), _defineProperty(_label, "parts", 'ELEMENTOS'), _defineProperty(_label, "general", 'GENERAL'), _defineProperty(_label, "loading", 'CARGANDO'), _defineProperty(_label, "planning", 'PLANIFICACÍON'), _defineProperty(_label, "enter", 'INGRESE'), _defineProperty(_label, "machine", 'MAQUINA'), _defineProperty(_label, "machinery", 'MAQUINARIA'), _defineProperty(_label, "machineries", 'MAQUINARIAS'), _defineProperty(_label, "ubication", 'UBICACIÓN'), _defineProperty(_label, "year", 'AÑO'), _defineProperty(_label, "and", 'Y'), _defineProperty(_label, "Amount", 'CANTIDAD'), _defineProperty(_label, "IdNumber", 'CEDULA'), _defineProperty(_label, "lessThan", 'MENOR A'), _defineProperty(_label, "greaterThan", 'MAYOR A'), _defineProperty(_label, "size", 'TAMAÑO'), _defineProperty(_label, "sizes", 'TAMAÑOS'), _defineProperty(_label, "back", 'ATRÁS'), _defineProperty(_label, "special", 'ESPECIAL'), _defineProperty(_label, "element", 'ELEMENTO'), _defineProperty(_label, "volume", 'VOLUMEN'), _defineProperty(_label, "LOAD", 'EMBARQUE'), _defineProperty(_label, "DISCHARGE", 'DESEMBARQUE'), _defineProperty(_label, "entity", 'ENTIDAD'), _defineProperty(_label, "FULLLOADLIST", 'LISTA DE CARGA FULL'), _defineProperty(_label, "EMPTYLOADLIST", 'LISTA DE CARGA VACÍA'), _defineProperty(_label, "damageTypeAcronym", 'SIGLAS DE TIPO DE DAÑO'), _defineProperty(_label, "StateAcronyms", 'SIGLAS DE ESTADO'), _defineProperty(_label, "Sender", 'REMITENTE'), _defineProperty(_label, "Recipient", 'DESTINATARIO'), _defineProperty(_label, "TimeOfPreparation", 'TIEMPO DE PREPARACIÓN'), _defineProperty(_label, "ControlReference", 'REFERENCIA DE CONTROL'), _defineProperty(_label, "CommunicationAgreement", 'ACUERDO DE COMUNICACIÓN'), _defineProperty(_label, "MessageReferenceNumber", 'NUMERO REFERENCIAL DEL MENSAJE'), _defineProperty(_label, "MessageTypeIdentifier", 'IDENTIFICADOR DEL TIPO DE MENSAJE'), _defineProperty(_label, "MessageTypeVersionNo", 'NRO. DE VERSIÓN DEL TIPO DE MENSAJE'), _defineProperty(_label, "MessageTypeReleaseNumber", 'NRO. DE LIBERACIÓN DEL TIPO DE MENSAJE'), _defineProperty(_label, "ControllingAgency", 'ORGANISMO DE CONTROL'), _defineProperty(_label, "AssociationAssignedCode", 'CODIGO ASIGNADO A LA ASOCIACIÓN'), _defineProperty(_label, "DocumentNumber", 'NUMERO DEL DOCUMENTO'), _defineProperty(_label, "MessageType", 'TIPO DE MENSAJE'), _defineProperty(_label, "MessageCompilationTime", 'TIEMPO DE COMPILACIÓN DEL MENSAJE'), _defineProperty(_label, "DischargeVoyageNumber", 'NUMERO DEL VIAJE DE DESCARGA'), _defineProperty(_label, "PlaceOfDeparture", 'LUGAR DE SALIDA'), _defineProperty(_label, "EstimatedTimeOfDeparture", 'TIEMPO ESTIMADO DE SALIDA'), _defineProperty(_label, "NextPortOfCall", 'PROXIMO PUERTO DE ESCALA'), _defineProperty(_label, "ActualTimeOfArrival", 'TIEMPO REAL DE LLEGADA'), _defineProperty(_label, "ACTUAL_TIME_DEPARTURE", 'TIEMPO REAL DE SALIDA'), _defineProperty(_label, "ESTIMATED_TIME_ARRIVAL", 'TIEMPO ESTIMADO DE LLEGADA'), _defineProperty(_label, "CarrierCode", 'CODIGO DEL TRANSPORTADOR'), _defineProperty(_label, "STANDARD_DOCUMENTATION", 'DOCUMENTACIÓN ESTÁNDAR'), _defineProperty(_label, "VesselCallSign", 'SEÑAL DE LLAMADA DEL BUQUE'), _defineProperty(_label, "VesselLloydsCode", 'CODIGO LLOYD DEL BUQUE'), _defineProperty(_label, "IdMeanfTransportIdentification", 'ID DEL MEDIO DE IDENTIFICACIÓN DEL TRANSPORTE'), _defineProperty(_label, "VesselName", 'NOMBRE DEL BUQUE'), _defineProperty(_label, "LoadingVoyageNumber", 'NUMERO DEL VIAJE DE CARGA'), _defineProperty(_label, "Containers", 'CONTENEDORES'), _defineProperty(_label, "InspectionsDone", 'INSPECCIONES REALIZADAS'), _defineProperty(_label, "ListInspectionsDone", 'LISTA DE INSPECCIONES REALIZADAS'), _defineProperty(_label, "TransactionDate", 'FECHA DE TRANSACCIÓN'), _defineProperty(_label, "damageReport", 'REPORTE DE DAÑOS'), _defineProperty(_label, "ESTIMATEDTIMEOFARRIVAL", 'TIEMPO ESTIMADO DE LLEGADA'), _defineProperty(_label, "StowageFactor", 'FACTOR DE ESTIBA'), _defineProperty(_label, "DraftListing", 'LISTADO DE CALADO'), _defineProperty(_label, "TotalCertification", 'CERTIFICACIÓN TOTAL'), _defineProperty(_label, "HoldList", 'LISTA DE BODEGAS'), _defineProperty(_label, "CertifiedCapacity", 'CAPACIDAD CERTIFICADA'), _defineProperty(_label, "Deadweight", 'PESO MUERTO'), _defineProperty(_label, "PermissibleLoanOn", 'CAPACIDAD DE CARGA'), _defineProperty(_label, "Weighing", 'PESAJE'), _defineProperty(_label, "Taraweight", 'PESO TARA'), _defineProperty(_label, "Id_Driver", 'CI/CHOFER'), _defineProperty(_label, "FullWeight", 'PESO FULL'), _defineProperty(_label, "DraftInspection", 'INSPECCIÓN DE CALADO'), _defineProperty(_label, "errorHoldPleaseCheck", 'SE REQUIERE PESO AL MENOS EN UNA BODEGA'), _defineProperty(_label, "MachineInformation", 'INFORMACIÓN DE LA MÁQUINA'), _label),
+  agridTable: {
+    // Set Filter
+    selectAll: 'Seleccionar todo',
+    selectAllSearchResults: 'Seleccionar todos los resultados de búsqueda',
+    searchOoo: 'Buscar...',
+    blanks: 'Vacíos',
+    noMatches: 'Sin coincidencias',
+    // Number Filter & Text Filter
+    filterOoo: 'Filtro...',
+    equals: 'Igual',
+    notEqual: 'Diferente',
+    empty: 'ELIGE UNO',
+    // Number Filter
+    lessThan: 'Menor que',
+    greaterThan: 'Mayor que',
+    lessThanOrEqual: 'Menor o igual que',
+    greaterThanOrEqual: 'Mayor o igual que',
+    inRange: 'En el rango',
+    inRangeStart: 'Desde',
+    inRangeEnd: 'Hasta',
+    // Text Filter
+    contains: 'Contiene',
+    notContains: 'No contiene',
+    startsWith: 'Empieza con',
+    endsWith: 'Termina con',
+    // Date Filter
+    dateFormatOoo: 'dd-mm-Yyyy',
+    // Filter Conditions
+    andCondition: 'Y',
+    orCondition: 'O',
+    // Filter Buttons
+    applyFilter: 'Aplicar',
+    resetFilter: 'Reiniciar',
+    clearFilter: 'Borrar',
+    cancelFilter: 'Cancelar',
+    // Filter Titles
+    textFilter: 'FILTRO DE TEXTO',
+    numberFilter: 'FILTRO DE NUMEROS',
+    dateFilter: 'FILTRO DE FECHAS',
+    setFilter: 'ESTABLECER FILTRO',
+    // Side Bar
+    columns: 'Columnas',
+    filters: 'Filtros',
+    // columns tool panel
+    pivotMode: 'Modo Pivote',
+    groups: 'Grupos de columnas',
+    rowGroupColumnsEmptyMessage: 'Soltar aquí para crear un grupo de columnas',
+    values: 'Valores',
+    valueColumnsEmptyMessage: 'Soltar aquí para agregar',
+    pivots: 'Column Labels',
+    pivotColumnsEmptyMessage: 'Soltar aquí para indicar etiquetas de columna',
+    // Header of the Default Group Column
+    group: 'Grupo',
+    // Other
+    loadingOoo: 'Cargando...',
+    noRowsToShow: 'No hay filas para mostrar',
+    enabled: 'Activado',
+    // Menu
+    pinColumn: 'Fijar Columna',
+    pinLeft: 'Fijar a Izquierda',
+    pinRight: 'Fijar a Derecha',
+    noPin: 'Soltar',
+    valueAggregation: 'Agregación por valor',
+    autosizeThiscolumn: 'Tamaño automático para esta Columna',
+    autosizeAllColumns: 'Tamaño automático para todas las Columnas',
+    groupBy: 'Agrupar por',
+    ungroupBy: 'Desagrupar por',
+    resetColumns: 'Reiniciar Columnas',
+    expandAll: 'Expandir Todo',
+    collapseAll: 'Cerrar Todo',
+    copy: 'Copiar',
+    ctrlC: 'Ctrl+C',
+    copyWithHeaders: 'Copiar con Cabeceras',
+    paste: 'Pegar',
+    ctrlV: 'Ctrl+V',
+    "export": 'Exportar',
+    csvExport: 'Exportar a CSV',
+    excelExport: 'Exportar a Excel (.xlsx)',
+    excelXmlExport: 'Exportar a Excel antiguo (.xml)',
+    // Enterprise Menu Aggregation and Status Bar
+    sum: 'Sum',
+    min: 'Min',
+    max: 'Max',
+    none: 'Nada',
+    count: 'Cuenta',
+    avg: 'Media',
+    filteredRows: 'Filtrado',
+    selectedRows: 'Seleccionado',
+    totalRows: 'Total Filas',
+    totalAndFilteredRows: 'Filas',
+    page: 'Página',
+    more: 'Más',
+    to: 'A',
+    of: 'De',
+    next: 'Siguiente',
+    last: 'Último',
+    first: 'Primero',
+    firstPage: 'Primera Página',
+    previous: 'Anterior',
+    previousPage: 'Pagina anterior',
+    nextPage: 'SIGUIENTE PAGINA',
+    lastPage: 'ULTIMA PAGINA',
+    // Enterprise Menu (Charts)
+    pivotChartAndPivotMode: 'Gráfico de Pivote y Modo Pivote',
+    pivotChart: 'Gráfico de Pivote',
+    chartRange: 'Gráfico de Intervalo',
+    columnChart: 'Columna',
+    groupedColumn: 'Agrupado',
+    stackedColumn: 'Apilado',
+    normalizedColumn: '100% Apilado',
+    barChart: 'Barra',
+    groupedBar: 'Agrupado',
+    stackedBar: 'Apilado',
+    normalizedBar: '100% Apilado',
+    pieChart: 'Tarta',
+    pie: 'Tarta',
+    doughnut: 'Donut',
+    line: 'Línea',
+    xyChart: 'X Y (Dispersión)',
+    scatter: 'Dispersión',
+    bubble: 'Burbuja',
+    areaChart: 'Area',
+    area: 'Area',
+    stackedArea: 'Apilado',
+    normalizedArea: '100% Apilado',
+    histogramChart: 'Histograma',
+    // Charts
+    pivotChartTitle: 'Gráfico de Pivote',
+    rangeChartTitle: 'Gráfico de Intervalo',
+    settings: 'Configuración',
+    data: 'Datos',
+    format: 'Formato',
+    categories: 'Categorías',
+    defaultCategory: '(Ninguna)',
+    series: 'Series',
+    xyValues: 'Valores X Y',
+    paired: 'Mode pareado',
+    axis: 'Eje',
+    navigator: 'Navegador',
+    color: 'Color',
+    thickness: 'Grosor',
+    xType: 'Tipo X',
+    automatic: 'Automático',
+    category: 'Categoría',
+    number: 'Número',
+    time: 'Tiempo',
+    xRotation: 'Rotación X',
+    yRotation: 'Rotación Y',
+    ticks: 'Ticks',
+    width: 'Ancho',
+    height: 'Alto',
+    length: 'Longitud',
+    padding: 'Relleno',
+    spacing: 'Espaciado',
+    chart: 'Gráfico',
+    title: 'Título',
+    titlePlaceholder: 'Título del Gráfico - doble clic para editar',
+    background: 'Fondo',
+    font: 'Fuente',
+    top: 'Arriba',
+    right: 'Derecha',
+    bottom: 'Abajo',
+    left: 'Izquierda',
+    labels: 'Etiquetas',
+    size: 'Tamaño',
+    minSize: 'Tamaño mínimo',
+    maxSize: 'Tamaño máximo',
+    legend: 'Leyenda',
+    position: 'Posición',
+    markerSize: 'Ancho pincel',
+    markerStroke: 'Trazo pincel',
+    markerPadding: 'Relleno pincel',
+    itemSpacing: 'Espaciado del ítem',
+    itemPaddingX: 'Relleno X del ítem',
+    itemPaddingY: 'Relleno Y del ítem',
+    layoutHorizontalSpacing: 'Espaciado horizontal',
+    layoutVerticalSpacing: 'Espaciado vertical',
+    strokeWidth: 'Ancho del trazo',
+    offset: 'Desplazamiento',
+    offsets: 'Desplazamiento',
+    tooltips: 'Tooltips',
+    callout: 'Rótulo',
+    markers: 'Pinceles',
+    shadow: 'Sombra',
+    blur: 'Difuminado',
+    xOffset: 'Desplazamiento X',
+    yOffset: 'Desplazamiento Y',
+    lineWidth: 'Ancho de línea',
+    normal: 'Normal',
+    bold: 'Negrita',
+    italic: 'Itálica',
+    boldItalic: 'Negrita Itálica',
+    predefined: 'Predefinido',
+    fillOpacity: 'Opacidad de relleno',
+    strokeOpacity: 'Opacidad de línea',
+    histogramBinCount: 'Total papelera',
+    columnGroup: 'Columna',
+    barGroup: 'Barra',
+    pieGroup: 'Tarta',
+    lineGroup: 'Línea',
+    scatterGroup: 'X Y (Dispersión)',
+    areaGroup: 'Area',
+    histogramGroup: 'Histograma',
+    groupedColumnTooltip: 'Agrupado',
+    stackedColumnTooltip: 'Apilado',
+    normalizedColumnTooltip: '100% Apilado',
+    groupedBarTooltip: 'Agrupado',
+    stackedBarTooltip: 'Apilado',
+    normalizedBarTooltip: '100% Apilado',
+    pieTooltip: 'Tsrta',
+    doughnutTooltip: 'Donut',
+    lineTooltip: 'Línea',
+    groupedAreaTooltip: 'Area',
+    stackedAreaTooltip: 'Apilado',
+    normalizedAreaTooltip: '100% Apilado',
+    scatterTooltip: 'Dispersión',
+    bubbleTooltip: 'Burbuja',
+    histogramTooltip: 'Histograma',
+    noDataToChart: 'No hay datos disponibles para hacer el gráfico.',
+    pivotChartRequiresPivotMode: 'Gráfico de Pivote requiere activar el modo Pivote.',
+    chartSettingsToolbarTooltip: 'Menu',
+    chartLinkToolbarTooltip: 'Vinculado a la cuadricula',
+    chartUnlinkToolbarTooltip: 'Desvinculado de la cuadricula',
+    chartDownloadToolbarTooltip: 'Descargar grafico',
+    // ARIA
+    ariaHidden: 'oculto',
+    ariaVisible: 'visible',
+    ariaChecked: 'chequeado',
+    ariaUnchecked: 'no chequeado',
+    ariaIndeterminate: 'indeterminado',
+    ariaColumnSelectAll: 'Seleccionar todas las columnas',
+    ariaInputEditor: 'Editor de entrada',
+    ariaDateFilterInput: 'Entrada de filtro de fecha',
+    ariaFilterInput: 'Entrada de filtro',
+    ariaFilterColumnsInput: 'Entrada de columnas de filtro',
+    ariaFilterValue: 'Filtrar valor',
+    ariaFilterFromValue: 'Filtrar desde valor',
+    ariaFilterToValue: 'Filtrar hasta valor',
+    ariaFilteringOperator: 'Operador de filtrado',
+    ariaColumnToggleVisibility: 'visibilidad de alternancia de columna',
+    ariaColumnGroupToggleVisibility: 'visibilidad de alternancia del grupo de columnas',
+    ariaRowSelect: 'Presione la barra espaciadora para seleccionar esta fila',
+    ariaRowDeselect: 'Presione la barra espaciadora para anular la selección de esta fila',
+    ariaRowToggleSelection: 'Presione la barra espaciadora para alternar la selección de filas',
+    ariaRowSelectAll: 'Presione la barra espaciadora para alternar la seleccion de todas las filas',
+    ariaSearch: 'Buscar',
+    ariaSearchFilterValues: 'Valores del filtro de busqueda'
+  },
+  button: {
+    accept: 'ACEPTAR',
+    modify: 'MODIFICAR',
+    cancel: 'CANCELAR',
+    confirm: 'CONFIRMAR',
+    exit: 'SALIR',
+    preview: 'VISTA PREVIA',
+    annul: 'ANULAR',
+    "return": 'REGRESAR'
+  },
+  buttonWizard: {
+    Next: 'Siguiente',
+    Back: 'Atrás',
+    Finish: 'Finalizar'
+  },
+  status: {
+    ACTIVO: "ACTIVO",
+    INACTIVO: "INACTIVO"
+  },
+  validation: {
+    onlyMayusTextEspecial: 'SOLO TEXTO Y CARACTERES , . - Ñ ´ /',
+    UtcZone: "FORMATO REQUERIDO +00:00",
+    onlyNumeroTresdigitos: "SOLO NÚMEROS DE 3 DIGITOS",
+    not_siglas: "SIGLAS DEL CONTENEDOR NO CUMPLEN EL FORMATO DE VALIDACIÓN",
+    notsameAsLoading: "Puerto de descarga no puede ser igual al de carga",
+    notsameAsDischarge: "Puerto de carga no puede ser igual al de descarga",
+    container_size: "El contenedor no puede superar el tamaño máximo de ",
+    container_weight: "El contenedor no puede superar el peso máximo de ",
+    onlyCoordinate: 'Solo Coordenadas',
+    onlyDecimal: 'Solo Decimales',
+    onlyUppercase: 'SOLO MAYÚSCULAS.',
+    needValidImage: 'NECESITO UNA IMAGEN VALIDA',
+    badImage: 'IMAGEN NO VALIDA',
+    min: 'CAMPO REQUIERE MÍNIMO ',
+    max: 'CAMPO REQUIERE MÁXIMO ',
+    minValueIs: 'El valor minimo es',
+    maxValueIs: 'El valor maximo es',
+    number: 'NUMERO',
+    verifyFields: 'Verificar Campos',
+    requiresUm: 'REQUIERE UNIDAD DE MEDIDA',
+    chars: 'CARACTERES',
+    alphaSpecials: 'SOLO TEXTO Y CARACTERES . - / $ & ()',
+    email: 'FORMATO REQUERIDO MAIL@EXAMPLE.COM',
+    maxLength: 'CAMPO REQUIERE MAXIMO',
+    minLength: 'CAMPO REQUIERE MÍNIMO ',
+    metrics: 'SOLO MÉTRICAS',
+    onlyAlphanumeric: 'SOLO ALFANUMERICOS',
+    onlyNumber: 'SOLO NUMEROS',
+    onlyNumbers: 'SOLO NUMEROS',
+    onlyText: 'SOLO TEXTO',
+    required: 'CAMPO REQUERIDO',
+    integer: 'SOLO ENTEROS',
+    maxValue: 'EL VALOR MAXIMO ES',
+    minValue: 'EL VALOR MINIMO ES',
+    textareaSpecials: 'SOLO TEXTO Y CARACTERES , . * + - # / $ ! ()',
+    mobileNotReq: 'FORMATO REQUERIDO +584120000000, 0242-0000000 o 02420000000',
+    emailToLower: 'FORMATO REQUERIDO MAIL@EXAMPLE.COM',
+    correctValue: 'CAMPO REQUERIDO',
+    alpha: 'SOLO CARACTERES ALFABETICOS',
+    especiales: 'SOLO ALFANUMERICOS Y CARACTERES -\/\\.,;@ -#():',
+    correctDate: 'FORMATO REQUERIDO DD/MM/YYYY',
+    checkDigit: 'CHECK-DIGIT',
+    LaitudeNotReq: 'Solo Coordenadas',
+    metricsWSNotReq: 'Solo Coordenadas',
+    textEspecials: 'SOLO TEXTO',
+    alphaNum: 'SOLO ALFANUMERICOS',
+    verifyNumber: 'CAMPO REQUERIDO',
+    siglasAlphanumeric: 'SOLO ALFANUMERICOS',
+    credentials2: 'FORMATO REQUERIDO V99999999',
+    validMac: 'DIRECCION MAC INVALIDA',
+    notsameAsOrigin: "Puerto de destino no puede ser igual al de origen",
+    notsameAsDestiny: "Puerto de procedencia no puede ser igual al de destino",
+    codeDelay: 'SOLO ALFANUMERICOS Y CARACTERES ( )',
+    onlyAlphanumeric2: 'Solo Alfanumericos',
+    manufactererNotReq: 'SOLO TEXTO',
+    IMEINotReq: 'SOLO NUMEROS',
+    resolution: 'SOLO NUMEROS',
+    invalidCode: ' Código no válido',
+    textNotReq: 'SOLO TEXTO',
+    textareaNotReq: 'SOLO TEXTO Y CARACTERES , . * + - # / $ ! ()',
+    invalidCodeImdg: 'LA PRIMERA SIGLA DEBE COINCIDIR CON LA CLASE IMDG. SOLO NUMEROS Y EL CARACTER . ',
+    alphaNumCustom: 'SOLO NUMEROS Y CARACTER -',
+    numberId: 'NUMERO DE DOCUMENTO - FORMATO REQUERIDO V99999999',
+    validationSeal: 'SOLO ALFANUMERICOS Y CARACTER -',
+    temperature: 'SOLO NUMEROS',
+    notsameAsPol: "POL no puede ser igual al POD",
+    notsameAsPod: "POD no puede ser igual al POL",
+    notAvailableTotal: 'Cantidad de Toneladas a Asignar no debe ser mayor a la Disponibilidad de la Bodega',
+    notAvailableBl: 'Cantidad de Toneladas a Asignar no puede ser mayor a lo disponible a asignar por Bl',
+    exceedtActualInventory: 'Cantidad de peso no debe ser mayor a la Disponibilidad del inventario actual',
+    exceedEstimatedToShip: 'Cantidad de peso no debe ser menor al estimado a embarcar',
+    nameLength: 'LONGITUD DE LA PALABRA INVÁLIDA',
+    RangeValidate: 'RANGO DE FECHA INVALIDO',
+    onlyAlphaguion: 'SOLO TEXTO Y GUIONES'
+  }
+};
+
 
 /***/ }),
 
@@ -2779,7 +4529,7 @@ var ifNotAuthenticated = function ifNotAuthenticated(to, from, next) {
     return;
   }
 
-  next('/dashboard');
+  next('/');
 };
 
 var ifAuthenticated = function ifAuthenticated(to, from, next) {
@@ -2788,7 +4538,7 @@ var ifAuthenticated = function ifAuthenticated(to, from, next) {
     return;
   }
 
-  next('/');
+  next('/dashboard');
 };
 
 var routes = [{
@@ -2807,14 +4557,18 @@ var routes = [{
   component: Register,
   beforeEnter: ifNotAuthenticated
 }, {
-  name: 'perfil',
-  path: '/perfil',
-  component: Perfil
-}, {
   name: 'dashboard',
   path: '/',
   component: Dashboard,
   beforeEnter: ifAuthenticated
+}, {
+  name: 'perfil',
+  path: '/perfil',
+  component: Perfil,
+  beforeEnter: ifAuthenticated,
+  meta: {
+    title: 'perfil'
+  }
 }];
 
 /***/ }),
@@ -2838,6 +4592,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   access_token: _common_jwt_service__WEBPACK_IMPORTED_MODULE_1__["default"].getUser() ? JSON.parse(_common_jwt_service__WEBPACK_IMPORTED_MODULE_1__["default"].getUser()).access_token : '',
+  perfil_info: _common_jwt_service__WEBPACK_IMPORTED_MODULE_1__["default"].getUser() ? JSON.parse(_common_jwt_service__WEBPACK_IMPORTED_MODULE_1__["default"].getUser()) : {},
   status: '',
   hasLoadedOnce: false,
   errors: new _modules_errors__WEBPACK_IMPORTED_MODULE_2__["default"]()
@@ -2845,6 +4600,9 @@ var state = {
 var getters = {
   isAuthenticated: function isAuthenticated(state) {
     return !!state.access_token;
+  },
+  isPerfilCreated: function isPerfilCreated(state) {
+    return !!state.perfil_info;
   },
   authStatus: function authStatus(state) {
     return state.status;
@@ -2889,7 +4647,6 @@ var actions = {
       commit('authRequest');
       Vue.axios.post(actionUrl, data).then(function (resp) {
         var access_token = 'Bearer ' + resp.data.access_token;
-        console.log(resp.data);
         _common_jwt_service__WEBPACK_IMPORTED_MODULE_1__["default"].setUser(resp.data);
         _api_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].setHeader();
         commit('authSuccess', access_token); //dispatch('userRequest');
@@ -2907,7 +4664,8 @@ var actions = {
   authLogout: function authLogout(_ref2) {
     var commit = _ref2.commit,
         dispatch = _ref2.dispatch;
-    Cookies.remove('access_token');
+    _common_jwt_service__WEBPACK_IMPORTED_MODULE_1__["default"].unsetUser();
+    _api_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].init();
     return new Promise(function (resolve, reject) {
       Vue.axios.post('/api/logout').then(function (resp) {
         commit('authLogout');
@@ -2932,7 +4690,7 @@ var mutations = {
     var errors = err.errors ? err.errors : {};
 
     if (err.error == "invalid_grant") {
-      errors.invalid_credentials = ['The user credentials were incorrect.'];
+      errors.invalid_credentials = ['Usuario o contraseña incorrectos.'];
     }
 
     state.status = 'error';
@@ -2988,7 +4746,8 @@ var actions = {
       commit('userSuccess', resp.data);
     })["catch"](function (err) {
       commit('userError'); // if resp is unauthorized, logout, to
-      //dispatch('authLogout')
+
+      dispatch('authLogout');
     });
   }
 };
@@ -3055,7 +4814,8 @@ var actions = {
       commit('artisticSuccess', resp.data);
     })["catch"](function (err) {
       commit('paisesError'); // if resp is unauthorized, logout, to
-      //dispatch('authLogout')
+
+      dispatch('authLogout');
     });
   },
   paisesRequest: function paisesRequest(_ref2) {
@@ -3067,7 +4827,8 @@ var actions = {
       dispatch('artisticRequest');
     })["catch"](function (err) {
       commit('paisesError'); // if resp is unauthorized, logout, to
-      //dispatch('authLogout')
+
+      dispatch('authLogout');
     });
   },
   registerPerfil: function registerPerfil(_ref3, payload) {
@@ -4025,6 +5786,2217 @@ exports["default"] = plugin;
 /***/ (function(module) {
 
 !function(t,e){ true?module.exports=e():0}("undefined"!=typeof self?self:this,function(){return function(t){function e(n){if(a[n])return a[n].exports;var i=a[n]={i:n,l:!1,exports:{}};return t[n].call(i.exports,i,i.exports,e),i.l=!0,i.exports}var a={};return e.m=t,e.c=a,e.d=function(t,a,n){e.o(t,a)||Object.defineProperty(t,a,{configurable:!1,enumerable:!0,get:n})},e.n=function(t){var a=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(a,"a",a),a},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=7)}([function(t,e){t.exports=function(t,e,a,n,i,r){var s,o=t=t||{},c=typeof t.default;"object"!==c&&"function"!==c||(s=t,o=t.default);var u="function"==typeof o?o.options:o;e&&(u.render=e.render,u.staticRenderFns=e.staticRenderFns,u._compiled=!0),a&&(u.functional=!0),i&&(u._scopeId=i);var l;if(r?(l=function(t){t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,t||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),n&&n.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(r)},u._ssrRegister=l):n&&(l=n),l){var d=u.functional,b=d?u.render:u.beforeCreate;d?(u._injectStyles=l,u.render=function(t,e){return l.call(e),b(t,e)}):u.beforeCreate=b?[].concat(b,l):[l]}return{esModule:s,exports:o,options:u}}},function(t,e,a){"use strict";var n=a(2),i=a(4),r=a(14);e.a={name:"form-wizard",components:{WizardButton:n.a,WizardStep:i.a},props:{title:{type:String,default:"Awesome Wizard"},subtitle:{type:String,default:"Split a complicated flow in multiple steps"},nextButtonText:{type:String,default:"Next"},backButtonText:{type:String,default:"Back"},finishButtonText:{type:String,default:"Finish"},hideButtons:{type:Boolean,default:!1},validateOnBack:Boolean,color:{type:String,default:"#e74c3c"},errorColor:{type:String,default:"#8b0000"},shape:{type:String,default:"circle"},layout:{type:String,default:"horizontal"},stepsClasses:{type:[String,Array],default:""},stepSize:{type:String,default:"md",validator:function(t){return-1!==["xs","sm","md","lg"].indexOf(t)}},transition:{type:String,default:""},startIndex:{type:Number,default:0,validator:function(t){return t>=0}}},provide:function(){return{addTab:this.addTab,removeTab:this.removeTab}},data:function(){return{activeTabIndex:0,currentPercentage:0,maxStep:0,loading:!1,tabs:[]}},computed:{slotProps:function(){return{nextTab:this.nextTab,prevTab:this.prevTab,activeTabIndex:this.activeTabIndex,isLastStep:this.isLastStep,fillButtonStyle:this.fillButtonStyle}},tabCount:function(){return this.tabs.length},isLastStep:function(){return this.activeTabIndex===this.tabCount-1},isVertical:function(){return"vertical"===this.layout},displayPrevButton:function(){return 0!==this.activeTabIndex},stepPercentage:function(){return 1/(2*this.tabCount)*100},progressBarStyle:function(){return{backgroundColor:this.color,width:this.progress+"%",color:this.color}},fillButtonStyle:function(){return{backgroundColor:this.color,borderColor:this.color,color:"white"}},progress:function(){return this.activeTabIndex>0?this.stepPercentage*(2*this.activeTabIndex+1):this.stepPercentage}},methods:{emitTabChange:function(t,e){this.$emit("on-change",t,e),this.$emit("update:startIndex",e)},addTab:function(t){var e=this.$slots.default.indexOf(t.$vnode);t.tabId=""+t.title.replace(/ /g,"")+e,this.tabs.splice(e,0,t),e<this.activeTabIndex+1&&(this.maxStep=e,this.changeTab(this.activeTabIndex+1,e))},removeTab:function(t){var e=this.tabs,a=e.indexOf(t);a>-1&&(a===this.activeTabIndex&&(this.maxStep=this.activeTabIndex-1,this.changeTab(this.activeTabIndex,this.activeTabIndex-1)),a<this.activeTabIndex&&(this.maxStep=this.activeTabIndex-1,this.activeTabIndex=this.activeTabIndex-1,this.emitTabChange(this.activeTabIndex+1,this.activeTabIndex)),e.splice(a,1))},reset:function(){this.maxStep=0,this.tabs.forEach(function(t){t.checked=!1}),this.navigateToTab(0)},activateAll:function(){this.maxStep=this.tabs.length-1,this.tabs.forEach(function(t){t.checked=!0})},navigateToTab:function(t){var e=this,a=t>this.activeTabIndex;if(t<=this.maxStep){var n=function n(){a&&t-e.activeTabIndex>1?(e.changeTab(e.activeTabIndex,e.activeTabIndex+1),e.beforeTabChange(e.activeTabIndex,n)):(e.changeTab(e.activeTabIndex,t),e.afterTabChange(e.activeTabIndex))};a?this.beforeTabChange(this.activeTabIndex,n):(this.setValidationError(null),n())}return t<=this.maxStep},nextTab:function(){var t=this,e=function(){t.activeTabIndex<t.tabCount-1?(t.changeTab(t.activeTabIndex,t.activeTabIndex+1),t.afterTabChange(t.activeTabIndex)):t.$emit("on-complete")};this.beforeTabChange(this.activeTabIndex,e)},prevTab:function(){var t=this,e=function(){t.activeTabIndex>0&&(t.setValidationError(null),t.changeTab(t.activeTabIndex,t.activeTabIndex-1))};this.validateOnBack?this.beforeTabChange(this.activeTabIndex,e):e()},focusNextTab:function(){var t=Object(r.b)(this.tabs);if(-1!==t&&t<this.tabs.length-1){var e=this.tabs[t+1];e.checked&&Object(r.a)(e.tabId)}},focusPrevTab:function(){var t=Object(r.b)(this.tabs);if(-1!==t&&t>0){var e=this.tabs[t-1].tabId;Object(r.a)(e)}},setLoading:function(t){this.loading=t,this.$emit("on-loading",t)},setValidationError:function(t){this.tabs[this.activeTabIndex].validationError=t,this.$emit("on-error",t)},validateBeforeChange:function(t,e){var a=this;if(this.setValidationError(null),Object(r.c)(t))this.setLoading(!0),t.then(function(t){a.setLoading(!1);var n=!0===t;a.executeBeforeChange(n,e)}).catch(function(t){a.setLoading(!1),a.setValidationError(t)});else{var n=!0===t;this.executeBeforeChange(n,e)}},executeBeforeChange:function(t,e){this.$emit("on-validate",t,this.activeTabIndex),t?e():this.tabs[this.activeTabIndex].validationError="error"},beforeTabChange:function(t,e){if(!this.loading){var a=this.tabs[t];if(a&&void 0!==a.beforeChange){var n=a.beforeChange();this.validateBeforeChange(n,e)}else e()}},afterTabChange:function(t){if(!this.loading){var e=this.tabs[t];e&&void 0!==e.afterChange&&e.afterChange()}},changeTab:function(t,e){var a=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],n=this.tabs[t],i=this.tabs[e];return n&&(n.active=!1),i&&(i.active=!0),a&&this.activeTabIndex!==e&&this.emitTabChange(t,e),this.activeTabIndex=e,this.activateTabAndCheckStep(this.activeTabIndex),!0},tryChangeRoute:function(t){this.$router&&t.route&&this.$router.push(t.route)},checkRouteChange:function(t){var e=-1,a=this.tabs.find(function(a,n){var i=a.route===t;return i&&(e=n),i});if(a&&!a.active){var n=e>this.activeTabIndex;this.navigateToTab(e,n)}},deactivateTabs:function(){this.tabs.forEach(function(t){t.active=!1})},activateTab:function(t){this.deactivateTabs();var e=this.tabs[t];e&&(e.active=!0,e.checked=!0,this.tryChangeRoute(e))},activateTabAndCheckStep:function(t){this.activateTab(t),t>this.maxStep&&(this.maxStep=t),this.activeTabIndex=t},initializeTabs:function(){this.tabs.length>0&&0===this.startIndex&&this.activateTab(this.activeTabIndex),this.startIndex<this.tabs.length?this.activateTabAndCheckStep(this.startIndex):window.console.warn("Prop startIndex set to "+this.startIndex+" is greater than the number of tabs - "+this.tabs.length+". Make sure that the starting index is less than the number of tabs registered")}},mounted:function(){this.initializeTabs()},watch:{"$route.path":function(t){this.checkRouteChange(t)}}}},function(t,e,a){"use strict";function n(t){a(10)}var i=a(3),r=a(11),s=a(0),o=n,c=s(i.a,r.a,!1,o,null,null);e.a=c.exports},function(t,e,a){"use strict";e.a={}},function(t,e,a){"use strict";function n(t){a(12)}var i=a(5),r=a(13),s=a(0),o=n,c=s(i.a,r.a,!1,o,null,null);e.a=c.exports},function(t,e,a){"use strict";e.a={name:"wizard-step",props:{tab:{type:Object,default:function(){}},transition:{type:String,default:""},index:{type:Number,default:0}},computed:{iconActiveStyle:function(){return{backgroundColor:this.tab.color}},stepCheckedStyle:function(){return{borderColor:this.tab.color}},errorStyle:function(){return{borderColor:this.tab.errorColor,backgroundColor:this.tab.errorColor}},stepTitleStyle:function(){return{color:this.tab.validationError?this.tab.errorColor:this.tab.color}},isStepSquare:function(){return"square"===this.tab.shape},isTabShape:function(){return"tab"===this.tab.shape}}}},function(t,e,a){"use strict";e.a={name:"tab-content",props:{title:{type:String,default:""},icon:{type:String,default:""},beforeChange:{type:Function},afterChange:{type:Function},route:{type:[String,Object]},additionalInfo:{type:Object,default:function(){}}},inject:["addTab","removeTab"],data:function(){return{active:!1,validationError:null,checked:!1,tabId:""}},computed:{shape:function(){return this.$parent.shape},color:function(){return this.$parent.color},errorColor:function(){return this.$parent.errorColor}},mounted:function(){this.addTab(this)},destroyed:function(){this.$el&&this.$el.parentNode&&this.$el.parentNode.removeChild(this.$el),this.removeTab(this)}}},function(t,e,a){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=a(8),i=a(16),r=a(2),s=a(4);a.d(e,"FormWizard",function(){return n.a}),a.d(e,"TabContent",function(){return i.a}),a.d(e,"WizardButton",function(){return r.a}),a.d(e,"WizardStep",function(){return s.a});var o={install:function(t){t.component("form-wizard",n.a),t.component("tab-content",i.a),t.component("wizard-button",r.a),t.component("wizard-step",s.a)}};"undefined"!=typeof window&&window.Vue&&window.Vue.use(o),e.default=o},function(t,e,a){"use strict";function n(t){a(9)}var i=a(1),r=a(15),s=a(0),o=n,c=s(i.a,r.a,!1,o,null,null);e.a=c.exports},function(t,e){},function(t,e){},function(t,e,a){"use strict";var n=function(){var t=this,e=t.$createElement;return(t._self._c||e)("button",{staticClass:"wizard-btn",attrs:{tabindex:"-1",type:"button"}},[t._t("default")],2)},i=[],r={render:n,staticRenderFns:i};e.a=r},function(t,e){},function(t,e,a){"use strict";var n=function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("li",{class:{active:t.tab.active}},[a("a",{class:{disabled:!t.tab.checked},attrs:{href:"javascript:void(0)"}},[a("div",{staticClass:"wizard-icon-circle md",class:{checked:t.tab.checked,square_shape:t.isStepSquare,tab_shape:t.isTabShape},style:[t.tab.checked?t.stepCheckedStyle:{},t.tab.validationError?t.errorStyle:{}],attrs:{role:"tab",tabindex:t.tab.checked?0:"",id:"step-"+t.tab.tabId,"aria-controls":t.tab.tabId,"aria-disabled":t.tab.active,"aria-selected":t.tab.active}},[a("transition",{attrs:{name:t.transition,mode:"out-in"}},[t.tab.active?a("div",{staticClass:"wizard-icon-container",class:{square_shape:t.isStepSquare,tab_shape:t.isTabShape},style:[t.tab.active?t.iconActiveStyle:{},t.tab.validationError?t.errorStyle:{}]},[t._t("active-step",[t.tab.icon?a("i",{staticClass:"wizard-icon",class:t.tab.icon}):a("i",{staticClass:"wizard-icon"},[t._v(t._s(t.index+1))])])],2):t._e(),t._v(" "),t.tab.active?t._e():t._t("default",[!t.tab.active&&t.tab.icon?a("i",{staticClass:"wizard-icon",class:t.tab.icon}):t._e(),t._v(" "),t.tab.active||t.tab.icon?t._e():a("i",{staticClass:"wizard-icon"},[t._v(t._s(t.index+1))])])],2)],1),t._v(" "),t._t("title",[a("span",{staticClass:"stepTitle",class:{active:t.tab.active,has_error:t.tab.validationError},style:t.tab.active?t.stepTitleStyle:{}},[t._v("\n            "+t._s(t.tab.title)+"\n      ")])])],2)])},i=[],r={render:n,staticRenderFns:i};e.a=r},function(t,e,a){"use strict";function n(){return document.activeElement.id}function i(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],e=n();return t.findIndex(function(t){return t.tabId===e})}function r(t){document.getElementById(t).focus()}function s(t){return t.then&&"function"==typeof t.then}e.b=i,e.a=r,e.c=s},function(t,e,a){"use strict";var n=function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("div",{staticClass:"vue-form-wizard",class:[t.stepSize,{vertical:t.isVertical}],on:{keyup:[function(e){return"button"in e||!t._k(e.keyCode,"right",39,e.key)?"button"in e&&2!==e.button?null:void t.focusNextTab(e):null},function(e){return"button"in e||!t._k(e.keyCode,"left",37,e.key)?"button"in e&&0!==e.button?null:void t.focusPrevTab(e):null}]}},[a("div",{staticClass:"wizard-header"},[t._t("title",[a("h4",{staticClass:"wizard-title"},[t._v(t._s(t.title))]),t._v(" "),a("p",{staticClass:"category"},[t._v(t._s(t.subtitle))])])],2),t._v(" "),a("div",{staticClass:"wizard-navigation"},[t.isVertical?t._e():a("div",{staticClass:"wizard-progress-with-circle"},[a("div",{staticClass:"wizard-progress-bar",style:t.progressBarStyle})]),t._v(" "),a("ul",{staticClass:"wizard-nav wizard-nav-pills",class:t.stepsClasses,attrs:{role:"tablist"}},[t._l(t.tabs,function(e,n){return t._t("step",[a("wizard-step",{attrs:{tab:e,"step-size":t.stepSize,transition:t.transition,index:n},nativeOn:{click:function(e){t.navigateToTab(n)},keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"enter",13,e.key))return null;t.navigateToTab(n)}}})],{tab:e,index:n,navigateToTab:t.navigateToTab,stepSize:t.stepSize,transition:t.transition})})],2),t._v(" "),a("div",{staticClass:"wizard-tab-content"},[t._t("default",null,null,t.slotProps)],2)]),t._v(" "),t.hideButtons?t._e():a("div",{staticClass:"wizard-card-footer clearfix"},[t._t("footer",[a("div",{staticClass:"wizard-footer-left"},[t.displayPrevButton?a("span",{attrs:{role:"button",tabindex:"0"},on:{click:t.prevTab,keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"enter",13,e.key))return null;t.prevTab(e)}}},[t._t("prev",[a("wizard-button",{style:t.fillButtonStyle,attrs:{disabled:t.loading}},[t._v("\n              "+t._s(t.backButtonText)+"\n            ")])],null,t.slotProps)],2):t._e(),t._v(" "),t._t("custom-buttons-left",null,null,t.slotProps)],2),t._v(" "),a("div",{staticClass:"wizard-footer-right"},[t._t("custom-buttons-right",null,null,t.slotProps),t._v(" "),t.isLastStep?a("span",{attrs:{role:"button",tabindex:"0"},on:{click:t.nextTab,keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"enter",13,e.key))return null;t.nextTab(e)}}},[t._t("finish",[a("wizard-button",{style:t.fillButtonStyle},[t._v("\n              "+t._s(t.finishButtonText)+"\n            ")])],null,t.slotProps)],2):a("span",{attrs:{role:"button",tabindex:"0"},on:{click:t.nextTab,keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"enter",13,e.key))return null;t.nextTab(e)}}},[t._t("next",[a("wizard-button",{style:t.fillButtonStyle,attrs:{disabled:t.loading}},[t._v("\n            "+t._s(t.nextButtonText)+"\n           ")])],null,t.slotProps)],2)],2)],null,t.slotProps)],2)])},i=[],r={render:n,staticRenderFns:i};e.a=r},function(t,e,a){"use strict";var n=a(6),i=a(17),r=a(0),s=r(n.a,i.a,!1,null,null,null);e.a=s.exports},function(t,e,a){"use strict";var n=function(){var t=this,e=t.$createElement;return(t._self._c||e)("div",{directives:[{name:"show",rawName:"v-show",value:t.active,expression:"active"}],staticClass:"wizard-tab-container",attrs:{role:"tabpanel",id:t.tabId,"aria-hidden":!t.active,"aria-labelledby":"step-"+t.tabId}},[t._t("default",null,{active:t.active})],2)},i=[],r={render:n,staticRenderFns:i};e.a=r}])});
+
+/***/ }),
+
+/***/ "./node_modules/vue-i18n/dist/vue-i18n.esm.js":
+/*!****************************************************!*\
+  !*** ./node_modules/vue-i18n/dist/vue-i18n.esm.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/*!
+ * vue-i18n v8.22.4 
+ * (c) 2021 kazuya kawaguchi
+ * Released under the MIT License.
+ */
+/*  */
+
+/**
+ * constants
+ */
+
+var numberFormatKeys = [
+  'compactDisplay',
+  'currency',
+  'currencyDisplay',
+  'currencySign',
+  'localeMatcher',
+  'notation',
+  'numberingSystem',
+  'signDisplay',
+  'style',
+  'unit',
+  'unitDisplay',
+  'useGrouping',
+  'minimumIntegerDigits',
+  'minimumFractionDigits',
+  'maximumFractionDigits',
+  'minimumSignificantDigits',
+  'maximumSignificantDigits'
+];
+
+/**
+ * utilities
+ */
+
+function warn (msg, err) {
+  if (typeof console !== 'undefined') {
+    console.warn('[vue-i18n] ' + msg);
+    /* istanbul ignore if */
+    if (err) {
+      console.warn(err.stack);
+    }
+  }
+}
+
+function error (msg, err) {
+  if (typeof console !== 'undefined') {
+    console.error('[vue-i18n] ' + msg);
+    /* istanbul ignore if */
+    if (err) {
+      console.error(err.stack);
+    }
+  }
+}
+
+var isArray = Array.isArray;
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isBoolean (val) {
+  return typeof val === 'boolean'
+}
+
+function isString (val) {
+  return typeof val === 'string'
+}
+
+var toString = Object.prototype.toString;
+var OBJECT_STRING = '[object Object]';
+function isPlainObject (obj) {
+  return toString.call(obj) === OBJECT_STRING
+}
+
+function isNull (val) {
+  return val === null || val === undefined
+}
+
+function isFunction (val) {
+  return typeof val === 'function'
+}
+
+function parseArgs () {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  var locale = null;
+  var params = null;
+  if (args.length === 1) {
+    if (isObject(args[0]) || isArray(args[0])) {
+      params = args[0];
+    } else if (typeof args[0] === 'string') {
+      locale = args[0];
+    }
+  } else if (args.length === 2) {
+    if (typeof args[0] === 'string') {
+      locale = args[0];
+    }
+    /* istanbul ignore if */
+    if (isObject(args[1]) || isArray(args[1])) {
+      params = args[1];
+    }
+  }
+
+  return { locale: locale, params: params }
+}
+
+function looseClone (obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
+
+function remove (arr, item) {
+  if (arr.length) {
+    var index = arr.indexOf(item);
+    if (index > -1) {
+      return arr.splice(index, 1)
+    }
+  }
+}
+
+function includes (arr, item) {
+  return !!~arr.indexOf(item)
+}
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+function hasOwn (obj, key) {
+  return hasOwnProperty.call(obj, key)
+}
+
+function merge (target) {
+  var arguments$1 = arguments;
+
+  var output = Object(target);
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments$1[i];
+    if (source !== undefined && source !== null) {
+      var key = (void 0);
+      for (key in source) {
+        if (hasOwn(source, key)) {
+          if (isObject(source[key])) {
+            output[key] = merge(output[key], source[key]);
+          } else {
+            output[key] = source[key];
+          }
+        }
+      }
+    }
+  }
+  return output
+}
+
+function looseEqual (a, b) {
+  if (a === b) { return true }
+  var isObjectA = isObject(a);
+  var isObjectB = isObject(b);
+  if (isObjectA && isObjectB) {
+    try {
+      var isArrayA = isArray(a);
+      var isArrayB = isArray(b);
+      if (isArrayA && isArrayB) {
+        return a.length === b.length && a.every(function (e, i) {
+          return looseEqual(e, b[i])
+        })
+      } else if (!isArrayA && !isArrayB) {
+        var keysA = Object.keys(a);
+        var keysB = Object.keys(b);
+        return keysA.length === keysB.length && keysA.every(function (key) {
+          return looseEqual(a[key], b[key])
+        })
+      } else {
+        /* istanbul ignore next */
+        return false
+      }
+    } catch (e) {
+      /* istanbul ignore next */
+      return false
+    }
+  } else if (!isObjectA && !isObjectB) {
+    return String(a) === String(b)
+  } else {
+    return false
+  }
+}
+
+/**
+ * Sanitizes html special characters from input strings. For mitigating risk of XSS attacks.
+ * @param rawText The raw input from the user that should be escaped.
+ */
+function escapeHtml(rawText) {
+  return rawText
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
+/**
+ * Escapes html tags and special symbols from all provided params which were returned from parseArgs().params.
+ * This method performs an in-place operation on the params object.
+ *
+ * @param {any} params Parameters as provided from `parseArgs().params`.
+ *                     May be either an array of strings or a string->any map.
+ *
+ * @returns The manipulated `params` object.
+ */
+function escapeParams(params) {
+  if(params != null) {
+    Object.keys(params).forEach(function (key) {
+      if(typeof(params[key]) == 'string') {
+        params[key] = escapeHtml(params[key]);
+      }
+    });
+  }
+  return params
+}
+
+/*  */
+
+function extend (Vue) {
+  if (!Vue.prototype.hasOwnProperty('$i18n')) {
+    // $FlowFixMe
+    Object.defineProperty(Vue.prototype, '$i18n', {
+      get: function get () { return this._i18n }
+    });
+  }
+
+  Vue.prototype.$t = function (key) {
+    var values = [], len = arguments.length - 1;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 1 ];
+
+    var i18n = this.$i18n;
+    return i18n._t.apply(i18n, [ key, i18n.locale, i18n._getMessages(), this ].concat( values ))
+  };
+
+  Vue.prototype.$tc = function (key, choice) {
+    var values = [], len = arguments.length - 2;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 2 ];
+
+    var i18n = this.$i18n;
+    return i18n._tc.apply(i18n, [ key, i18n.locale, i18n._getMessages(), this, choice ].concat( values ))
+  };
+
+  Vue.prototype.$te = function (key, locale) {
+    var i18n = this.$i18n;
+    return i18n._te(key, i18n.locale, i18n._getMessages(), locale)
+  };
+
+  Vue.prototype.$d = function (value) {
+    var ref;
+
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+    return (ref = this.$i18n).d.apply(ref, [ value ].concat( args ))
+  };
+
+  Vue.prototype.$n = function (value) {
+    var ref;
+
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+    return (ref = this.$i18n).n.apply(ref, [ value ].concat( args ))
+  };
+}
+
+/*  */
+
+var mixin = {
+  beforeCreate: function beforeCreate () {
+    var options = this.$options;
+    options.i18n = options.i18n || (options.__i18n ? {} : null);
+
+    if (options.i18n) {
+      if (options.i18n instanceof VueI18n) {
+        // init locale messages via custom blocks
+        if (options.__i18n) {
+          try {
+            var localeMessages = options.i18n && options.i18n.messages ? options.i18n.messages : {};
+            options.__i18n.forEach(function (resource) {
+              localeMessages = merge(localeMessages, JSON.parse(resource));
+            });
+            Object.keys(localeMessages).forEach(function (locale) {
+              options.i18n.mergeLocaleMessage(locale, localeMessages[locale]);
+            });
+          } catch (e) {
+            if (true) {
+              error("Cannot parse locale messages via custom blocks.", e);
+            }
+          }
+        }
+        this._i18n = options.i18n;
+        this._i18nWatcher = this._i18n.watchI18nData();
+      } else if (isPlainObject(options.i18n)) {
+        var rootI18n = this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n
+          ? this.$root.$i18n
+          : null;
+        // component local i18n
+        if (rootI18n) {
+          options.i18n.root = this.$root;
+          options.i18n.formatter = rootI18n.formatter;
+          options.i18n.fallbackLocale = rootI18n.fallbackLocale;
+          options.i18n.formatFallbackMessages = rootI18n.formatFallbackMessages;
+          options.i18n.silentTranslationWarn = rootI18n.silentTranslationWarn;
+          options.i18n.silentFallbackWarn = rootI18n.silentFallbackWarn;
+          options.i18n.pluralizationRules = rootI18n.pluralizationRules;
+          options.i18n.preserveDirectiveContent = rootI18n.preserveDirectiveContent;
+        }
+
+        // init locale messages via custom blocks
+        if (options.__i18n) {
+          try {
+            var localeMessages$1 = options.i18n && options.i18n.messages ? options.i18n.messages : {};
+            options.__i18n.forEach(function (resource) {
+              localeMessages$1 = merge(localeMessages$1, JSON.parse(resource));
+            });
+            options.i18n.messages = localeMessages$1;
+          } catch (e) {
+            if (true) {
+              warn("Cannot parse locale messages via custom blocks.", e);
+            }
+          }
+        }
+
+        var ref = options.i18n;
+        var sharedMessages = ref.sharedMessages;
+        if (sharedMessages && isPlainObject(sharedMessages)) {
+          options.i18n.messages = merge(options.i18n.messages, sharedMessages);
+        }
+
+        this._i18n = new VueI18n(options.i18n);
+        this._i18nWatcher = this._i18n.watchI18nData();
+
+        if (options.i18n.sync === undefined || !!options.i18n.sync) {
+          this._localeWatcher = this.$i18n.watchLocale();
+        }
+
+        if (rootI18n) {
+          rootI18n.onComponentInstanceCreated(this._i18n);
+        }
+      } else {
+        if (true) {
+          warn("Cannot be interpreted 'i18n' option.");
+        }
+      }
+    } else if (this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n) {
+      // root i18n
+      this._i18n = this.$root.$i18n;
+    } else if (options.parent && options.parent.$i18n && options.parent.$i18n instanceof VueI18n) {
+      // parent i18n
+      this._i18n = options.parent.$i18n;
+    }
+  },
+
+  beforeMount: function beforeMount () {
+    var options = this.$options;
+    options.i18n = options.i18n || (options.__i18n ? {} : null);
+
+    if (options.i18n) {
+      if (options.i18n instanceof VueI18n) {
+        // init locale messages via custom blocks
+        this._i18n.subscribeDataChanging(this);
+        this._subscribing = true;
+      } else if (isPlainObject(options.i18n)) {
+        this._i18n.subscribeDataChanging(this);
+        this._subscribing = true;
+      } else {
+        if (true) {
+          warn("Cannot be interpreted 'i18n' option.");
+        }
+      }
+    } else if (this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n) {
+      this._i18n.subscribeDataChanging(this);
+      this._subscribing = true;
+    } else if (options.parent && options.parent.$i18n && options.parent.$i18n instanceof VueI18n) {
+      this._i18n.subscribeDataChanging(this);
+      this._subscribing = true;
+    }
+  },
+
+  beforeDestroy: function beforeDestroy () {
+    if (!this._i18n) { return }
+
+    var self = this;
+    this.$nextTick(function () {
+      if (self._subscribing) {
+        self._i18n.unsubscribeDataChanging(self);
+        delete self._subscribing;
+      }
+
+      if (self._i18nWatcher) {
+        self._i18nWatcher();
+        self._i18n.destroyVM();
+        delete self._i18nWatcher;
+      }
+
+      if (self._localeWatcher) {
+        self._localeWatcher();
+        delete self._localeWatcher;
+      }
+    });
+  }
+};
+
+/*  */
+
+var interpolationComponent = {
+  name: 'i18n',
+  functional: true,
+  props: {
+    tag: {
+      type: [String, Boolean, Object],
+      default: 'span'
+    },
+    path: {
+      type: String,
+      required: true
+    },
+    locale: {
+      type: String
+    },
+    places: {
+      type: [Array, Object]
+    }
+  },
+  render: function render (h, ref) {
+    var data = ref.data;
+    var parent = ref.parent;
+    var props = ref.props;
+    var slots = ref.slots;
+
+    var $i18n = parent.$i18n;
+    if (!$i18n) {
+      if (true) {
+        warn('Cannot find VueI18n instance!');
+      }
+      return
+    }
+
+    var path = props.path;
+    var locale = props.locale;
+    var places = props.places;
+    var params = slots();
+    var children = $i18n.i(
+      path,
+      locale,
+      onlyHasDefaultPlace(params) || places
+        ? useLegacyPlaces(params.default, places)
+        : params
+    );
+
+    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
+    return tag ? h(tag, data, children) : children
+  }
+};
+
+function onlyHasDefaultPlace (params) {
+  var prop;
+  for (prop in params) {
+    if (prop !== 'default') { return false }
+  }
+  return Boolean(prop)
+}
+
+function useLegacyPlaces (children, places) {
+  var params = places ? createParamsFromPlaces(places) : {};
+
+  if (!children) { return params }
+
+  // Filter empty text nodes
+  children = children.filter(function (child) {
+    return child.tag || child.text.trim() !== ''
+  });
+
+  var everyPlace = children.every(vnodeHasPlaceAttribute);
+  if ( true && everyPlace) {
+    warn('`place` attribute is deprecated in next major version. Please switch to Vue slots.');
+  }
+
+  return children.reduce(
+    everyPlace ? assignChildPlace : assignChildIndex,
+    params
+  )
+}
+
+function createParamsFromPlaces (places) {
+  if (true) {
+    warn('`places` prop is deprecated in next major version. Please switch to Vue slots.');
+  }
+
+  return Array.isArray(places)
+    ? places.reduce(assignChildIndex, {})
+    : Object.assign({}, places)
+}
+
+function assignChildPlace (params, child) {
+  if (child.data && child.data.attrs && child.data.attrs.place) {
+    params[child.data.attrs.place] = child;
+  }
+  return params
+}
+
+function assignChildIndex (params, child, index) {
+  params[index] = child;
+  return params
+}
+
+function vnodeHasPlaceAttribute (vnode) {
+  return Boolean(vnode.data && vnode.data.attrs && vnode.data.attrs.place)
+}
+
+/*  */
+
+var numberComponent = {
+  name: 'i18n-n',
+  functional: true,
+  props: {
+    tag: {
+      type: [String, Boolean, Object],
+      default: 'span'
+    },
+    value: {
+      type: Number,
+      required: true
+    },
+    format: {
+      type: [String, Object]
+    },
+    locale: {
+      type: String
+    }
+  },
+  render: function render (h, ref) {
+    var props = ref.props;
+    var parent = ref.parent;
+    var data = ref.data;
+
+    var i18n = parent.$i18n;
+
+    if (!i18n) {
+      if (true) {
+        warn('Cannot find VueI18n instance!');
+      }
+      return null
+    }
+
+    var key = null;
+    var options = null;
+
+    if (isString(props.format)) {
+      key = props.format;
+    } else if (isObject(props.format)) {
+      if (props.format.key) {
+        key = props.format.key;
+      }
+
+      // Filter out number format options only
+      options = Object.keys(props.format).reduce(function (acc, prop) {
+        var obj;
+
+        if (includes(numberFormatKeys, prop)) {
+          return Object.assign({}, acc, ( obj = {}, obj[prop] = props.format[prop], obj ))
+        }
+        return acc
+      }, null);
+    }
+
+    var locale = props.locale || i18n.locale;
+    var parts = i18n._ntp(props.value, locale, key, options);
+
+    var values = parts.map(function (part, index) {
+      var obj;
+
+      var slot = data.scopedSlots && data.scopedSlots[part.type];
+      return slot ? slot(( obj = {}, obj[part.type] = part.value, obj.index = index, obj.parts = parts, obj )) : part.value
+    });
+
+    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
+    return tag
+      ? h(tag, {
+        attrs: data.attrs,
+        'class': data['class'],
+        staticClass: data.staticClass
+      }, values)
+      : values
+  }
+};
+
+/*  */
+
+function bind (el, binding, vnode) {
+  if (!assert(el, vnode)) { return }
+
+  t(el, binding, vnode);
+}
+
+function update (el, binding, vnode, oldVNode) {
+  if (!assert(el, vnode)) { return }
+
+  var i18n = vnode.context.$i18n;
+  if (localeEqual(el, vnode) &&
+    (looseEqual(binding.value, binding.oldValue) &&
+     looseEqual(el._localeMessage, i18n.getLocaleMessage(i18n.locale)))) { return }
+
+  t(el, binding, vnode);
+}
+
+function unbind (el, binding, vnode, oldVNode) {
+  var vm = vnode.context;
+  if (!vm) {
+    warn('Vue instance does not exists in VNode context');
+    return
+  }
+
+  var i18n = vnode.context.$i18n || {};
+  if (!binding.modifiers.preserve && !i18n.preserveDirectiveContent) {
+    el.textContent = '';
+  }
+  el._vt = undefined;
+  delete el['_vt'];
+  el._locale = undefined;
+  delete el['_locale'];
+  el._localeMessage = undefined;
+  delete el['_localeMessage'];
+}
+
+function assert (el, vnode) {
+  var vm = vnode.context;
+  if (!vm) {
+    warn('Vue instance does not exists in VNode context');
+    return false
+  }
+
+  if (!vm.$i18n) {
+    warn('VueI18n instance does not exists in Vue instance');
+    return false
+  }
+
+  return true
+}
+
+function localeEqual (el, vnode) {
+  var vm = vnode.context;
+  return el._locale === vm.$i18n.locale
+}
+
+function t (el, binding, vnode) {
+  var ref$1, ref$2;
+
+  var value = binding.value;
+
+  var ref = parseValue(value);
+  var path = ref.path;
+  var locale = ref.locale;
+  var args = ref.args;
+  var choice = ref.choice;
+  if (!path && !locale && !args) {
+    warn('value type not supported');
+    return
+  }
+
+  if (!path) {
+    warn('`path` is required in v-t directive');
+    return
+  }
+
+  var vm = vnode.context;
+  if (choice != null) {
+    el._vt = el.textContent = (ref$1 = vm.$i18n).tc.apply(ref$1, [ path, choice ].concat( makeParams(locale, args) ));
+  } else {
+    el._vt = el.textContent = (ref$2 = vm.$i18n).t.apply(ref$2, [ path ].concat( makeParams(locale, args) ));
+  }
+  el._locale = vm.$i18n.locale;
+  el._localeMessage = vm.$i18n.getLocaleMessage(vm.$i18n.locale);
+}
+
+function parseValue (value) {
+  var path;
+  var locale;
+  var args;
+  var choice;
+
+  if (isString(value)) {
+    path = value;
+  } else if (isPlainObject(value)) {
+    path = value.path;
+    locale = value.locale;
+    args = value.args;
+    choice = value.choice;
+  }
+
+  return { path: path, locale: locale, args: args, choice: choice }
+}
+
+function makeParams (locale, args) {
+  var params = [];
+
+  locale && params.push(locale);
+  if (args && (Array.isArray(args) || isPlainObject(args))) {
+    params.push(args);
+  }
+
+  return params
+}
+
+var Vue;
+
+function install (_Vue) {
+  /* istanbul ignore if */
+  if ( true && install.installed && _Vue === Vue) {
+    warn('already installed.');
+    return
+  }
+  install.installed = true;
+
+  Vue = _Vue;
+
+  var version = (Vue.version && Number(Vue.version.split('.')[0])) || -1;
+  /* istanbul ignore if */
+  if ( true && version < 2) {
+    warn(("vue-i18n (" + (install.version) + ") need to use Vue 2.0 or later (Vue: " + (Vue.version) + ")."));
+    return
+  }
+
+  extend(Vue);
+  Vue.mixin(mixin);
+  Vue.directive('t', { bind: bind, update: update, unbind: unbind });
+  Vue.component(interpolationComponent.name, interpolationComponent);
+  Vue.component(numberComponent.name, numberComponent);
+
+  // use simple mergeStrategies to prevent i18n instance lose '__proto__'
+  var strats = Vue.config.optionMergeStrategies;
+  strats.i18n = function (parentVal, childVal) {
+    return childVal === undefined
+      ? parentVal
+      : childVal
+  };
+}
+
+/*  */
+
+var BaseFormatter = function BaseFormatter () {
+  this._caches = Object.create(null);
+};
+
+BaseFormatter.prototype.interpolate = function interpolate (message, values) {
+  if (!values) {
+    return [message]
+  }
+  var tokens = this._caches[message];
+  if (!tokens) {
+    tokens = parse(message);
+    this._caches[message] = tokens;
+  }
+  return compile(tokens, values)
+};
+
+
+
+var RE_TOKEN_LIST_VALUE = /^(?:\d)+/;
+var RE_TOKEN_NAMED_VALUE = /^(?:\w)+/;
+
+function parse (format) {
+  var tokens = [];
+  var position = 0;
+
+  var text = '';
+  while (position < format.length) {
+    var char = format[position++];
+    if (char === '{') {
+      if (text) {
+        tokens.push({ type: 'text', value: text });
+      }
+
+      text = '';
+      var sub = '';
+      char = format[position++];
+      while (char !== undefined && char !== '}') {
+        sub += char;
+        char = format[position++];
+      }
+      var isClosed = char === '}';
+
+      var type = RE_TOKEN_LIST_VALUE.test(sub)
+        ? 'list'
+        : isClosed && RE_TOKEN_NAMED_VALUE.test(sub)
+          ? 'named'
+          : 'unknown';
+      tokens.push({ value: sub, type: type });
+    } else if (char === '%') {
+      // when found rails i18n syntax, skip text capture
+      if (format[(position)] !== '{') {
+        text += char;
+      }
+    } else {
+      text += char;
+    }
+  }
+
+  text && tokens.push({ type: 'text', value: text });
+
+  return tokens
+}
+
+function compile (tokens, values) {
+  var compiled = [];
+  var index = 0;
+
+  var mode = Array.isArray(values)
+    ? 'list'
+    : isObject(values)
+      ? 'named'
+      : 'unknown';
+  if (mode === 'unknown') { return compiled }
+
+  while (index < tokens.length) {
+    var token = tokens[index];
+    switch (token.type) {
+      case 'text':
+        compiled.push(token.value);
+        break
+      case 'list':
+        compiled.push(values[parseInt(token.value, 10)]);
+        break
+      case 'named':
+        if (mode === 'named') {
+          compiled.push((values)[token.value]);
+        } else {
+          if (true) {
+            warn(("Type of token '" + (token.type) + "' and format of value '" + mode + "' don't match!"));
+          }
+        }
+        break
+      case 'unknown':
+        if (true) {
+          warn("Detect 'unknown' type of token!");
+        }
+        break
+    }
+    index++;
+  }
+
+  return compiled
+}
+
+/*  */
+
+/**
+ *  Path parser
+ *  - Inspired:
+ *    Vue.js Path parser
+ */
+
+// actions
+var APPEND = 0;
+var PUSH = 1;
+var INC_SUB_PATH_DEPTH = 2;
+var PUSH_SUB_PATH = 3;
+
+// states
+var BEFORE_PATH = 0;
+var IN_PATH = 1;
+var BEFORE_IDENT = 2;
+var IN_IDENT = 3;
+var IN_SUB_PATH = 4;
+var IN_SINGLE_QUOTE = 5;
+var IN_DOUBLE_QUOTE = 6;
+var AFTER_PATH = 7;
+var ERROR = 8;
+
+var pathStateMachine = [];
+
+pathStateMachine[BEFORE_PATH] = {
+  'ws': [BEFORE_PATH],
+  'ident': [IN_IDENT, APPEND],
+  '[': [IN_SUB_PATH],
+  'eof': [AFTER_PATH]
+};
+
+pathStateMachine[IN_PATH] = {
+  'ws': [IN_PATH],
+  '.': [BEFORE_IDENT],
+  '[': [IN_SUB_PATH],
+  'eof': [AFTER_PATH]
+};
+
+pathStateMachine[BEFORE_IDENT] = {
+  'ws': [BEFORE_IDENT],
+  'ident': [IN_IDENT, APPEND],
+  '0': [IN_IDENT, APPEND],
+  'number': [IN_IDENT, APPEND]
+};
+
+pathStateMachine[IN_IDENT] = {
+  'ident': [IN_IDENT, APPEND],
+  '0': [IN_IDENT, APPEND],
+  'number': [IN_IDENT, APPEND],
+  'ws': [IN_PATH, PUSH],
+  '.': [BEFORE_IDENT, PUSH],
+  '[': [IN_SUB_PATH, PUSH],
+  'eof': [AFTER_PATH, PUSH]
+};
+
+pathStateMachine[IN_SUB_PATH] = {
+  "'": [IN_SINGLE_QUOTE, APPEND],
+  '"': [IN_DOUBLE_QUOTE, APPEND],
+  '[': [IN_SUB_PATH, INC_SUB_PATH_DEPTH],
+  ']': [IN_PATH, PUSH_SUB_PATH],
+  'eof': ERROR,
+  'else': [IN_SUB_PATH, APPEND]
+};
+
+pathStateMachine[IN_SINGLE_QUOTE] = {
+  "'": [IN_SUB_PATH, APPEND],
+  'eof': ERROR,
+  'else': [IN_SINGLE_QUOTE, APPEND]
+};
+
+pathStateMachine[IN_DOUBLE_QUOTE] = {
+  '"': [IN_SUB_PATH, APPEND],
+  'eof': ERROR,
+  'else': [IN_DOUBLE_QUOTE, APPEND]
+};
+
+/**
+ * Check if an expression is a literal value.
+ */
+
+var literalValueRE = /^\s?(?:true|false|-?[\d.]+|'[^']*'|"[^"]*")\s?$/;
+function isLiteral (exp) {
+  return literalValueRE.test(exp)
+}
+
+/**
+ * Strip quotes from a string
+ */
+
+function stripQuotes (str) {
+  var a = str.charCodeAt(0);
+  var b = str.charCodeAt(str.length - 1);
+  return a === b && (a === 0x22 || a === 0x27)
+    ? str.slice(1, -1)
+    : str
+}
+
+/**
+ * Determine the type of a character in a keypath.
+ */
+
+function getPathCharType (ch) {
+  if (ch === undefined || ch === null) { return 'eof' }
+
+  var code = ch.charCodeAt(0);
+
+  switch (code) {
+    case 0x5B: // [
+    case 0x5D: // ]
+    case 0x2E: // .
+    case 0x22: // "
+    case 0x27: // '
+      return ch
+
+    case 0x5F: // _
+    case 0x24: // $
+    case 0x2D: // -
+      return 'ident'
+
+    case 0x09: // Tab
+    case 0x0A: // Newline
+    case 0x0D: // Return
+    case 0xA0:  // No-break space
+    case 0xFEFF:  // Byte Order Mark
+    case 0x2028:  // Line Separator
+    case 0x2029:  // Paragraph Separator
+      return 'ws'
+  }
+
+  return 'ident'
+}
+
+/**
+ * Format a subPath, return its plain form if it is
+ * a literal string or number. Otherwise prepend the
+ * dynamic indicator (*).
+ */
+
+function formatSubPath (path) {
+  var trimmed = path.trim();
+  // invalid leading 0
+  if (path.charAt(0) === '0' && isNaN(path)) { return false }
+
+  return isLiteral(trimmed) ? stripQuotes(trimmed) : '*' + trimmed
+}
+
+/**
+ * Parse a string path into an array of segments
+ */
+
+function parse$1 (path) {
+  var keys = [];
+  var index = -1;
+  var mode = BEFORE_PATH;
+  var subPathDepth = 0;
+  var c;
+  var key;
+  var newChar;
+  var type;
+  var transition;
+  var action;
+  var typeMap;
+  var actions = [];
+
+  actions[PUSH] = function () {
+    if (key !== undefined) {
+      keys.push(key);
+      key = undefined;
+    }
+  };
+
+  actions[APPEND] = function () {
+    if (key === undefined) {
+      key = newChar;
+    } else {
+      key += newChar;
+    }
+  };
+
+  actions[INC_SUB_PATH_DEPTH] = function () {
+    actions[APPEND]();
+    subPathDepth++;
+  };
+
+  actions[PUSH_SUB_PATH] = function () {
+    if (subPathDepth > 0) {
+      subPathDepth--;
+      mode = IN_SUB_PATH;
+      actions[APPEND]();
+    } else {
+      subPathDepth = 0;
+      if (key === undefined) { return false }
+      key = formatSubPath(key);
+      if (key === false) {
+        return false
+      } else {
+        actions[PUSH]();
+      }
+    }
+  };
+
+  function maybeUnescapeQuote () {
+    var nextChar = path[index + 1];
+    if ((mode === IN_SINGLE_QUOTE && nextChar === "'") ||
+      (mode === IN_DOUBLE_QUOTE && nextChar === '"')) {
+      index++;
+      newChar = '\\' + nextChar;
+      actions[APPEND]();
+      return true
+    }
+  }
+
+  while (mode !== null) {
+    index++;
+    c = path[index];
+
+    if (c === '\\' && maybeUnescapeQuote()) {
+      continue
+    }
+
+    type = getPathCharType(c);
+    typeMap = pathStateMachine[mode];
+    transition = typeMap[type] || typeMap['else'] || ERROR;
+
+    if (transition === ERROR) {
+      return // parse error
+    }
+
+    mode = transition[0];
+    action = actions[transition[1]];
+    if (action) {
+      newChar = transition[2];
+      newChar = newChar === undefined
+        ? c
+        : newChar;
+      if (action() === false) {
+        return
+      }
+    }
+
+    if (mode === AFTER_PATH) {
+      return keys
+    }
+  }
+}
+
+
+
+
+
+var I18nPath = function I18nPath () {
+  this._cache = Object.create(null);
+};
+
+/**
+ * External parse that check for a cache hit first
+ */
+I18nPath.prototype.parsePath = function parsePath (path) {
+  var hit = this._cache[path];
+  if (!hit) {
+    hit = parse$1(path);
+    if (hit) {
+      this._cache[path] = hit;
+    }
+  }
+  return hit || []
+};
+
+/**
+ * Get path value from path string
+ */
+I18nPath.prototype.getPathValue = function getPathValue (obj, path) {
+  if (!isObject(obj)) { return null }
+
+  var paths = this.parsePath(path);
+  if (paths.length === 0) {
+    return null
+  } else {
+    var length = paths.length;
+    var last = obj;
+    var i = 0;
+    while (i < length) {
+      var value = last[paths[i]];
+      if (value === undefined) {
+        return null
+      }
+      last = value;
+      i++;
+    }
+
+    return last
+  }
+};
+
+/*  */
+
+
+
+var htmlTagMatcher = /<\/?[\w\s="/.':;#-\/]+>/;
+var linkKeyMatcher = /(?:@(?:\.[a-z]+)?:(?:[\w\-_|.]+|\([\w\-_|.]+\)))/g;
+var linkKeyPrefixMatcher = /^@(?:\.([a-z]+))?:/;
+var bracketsMatcher = /[()]/g;
+var defaultModifiers = {
+  'upper': function (str) { return str.toLocaleUpperCase(); },
+  'lower': function (str) { return str.toLocaleLowerCase(); },
+  'capitalize': function (str) { return ("" + (str.charAt(0).toLocaleUpperCase()) + (str.substr(1))); }
+};
+
+var defaultFormatter = new BaseFormatter();
+
+var VueI18n = function VueI18n (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #290
+  /* istanbul ignore if */
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  var locale = options.locale || 'en-US';
+  var fallbackLocale = options.fallbackLocale === false
+    ? false
+    : options.fallbackLocale || 'en-US';
+  var messages = options.messages || {};
+  var dateTimeFormats = options.dateTimeFormats || {};
+  var numberFormats = options.numberFormats || {};
+
+  this._vm = null;
+  this._formatter = options.formatter || defaultFormatter;
+  this._modifiers = options.modifiers || {};
+  this._missing = options.missing || null;
+  this._root = options.root || null;
+  this._sync = options.sync === undefined ? true : !!options.sync;
+  this._fallbackRoot = options.fallbackRoot === undefined
+    ? true
+    : !!options.fallbackRoot;
+  this._formatFallbackMessages = options.formatFallbackMessages === undefined
+    ? false
+    : !!options.formatFallbackMessages;
+  this._silentTranslationWarn = options.silentTranslationWarn === undefined
+    ? false
+    : options.silentTranslationWarn;
+  this._silentFallbackWarn = options.silentFallbackWarn === undefined
+    ? false
+    : !!options.silentFallbackWarn;
+  this._dateTimeFormatters = {};
+  this._numberFormatters = {};
+  this._path = new I18nPath();
+  this._dataListeners = [];
+  this._componentInstanceCreatedListener = options.componentInstanceCreatedListener || null;
+  this._preserveDirectiveContent = options.preserveDirectiveContent === undefined
+    ? false
+    : !!options.preserveDirectiveContent;
+  this.pluralizationRules = options.pluralizationRules || {};
+  this._warnHtmlInMessage = options.warnHtmlInMessage || 'off';
+  this._postTranslation = options.postTranslation || null;
+  this._escapeParameterHtml = options.escapeParameterHtml || false;
+
+  /**
+   * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
+   * @param choicesLength {number} an overall amount of available choices
+   * @returns a final choice index
+  */
+  this.getChoiceIndex = function (choice, choicesLength) {
+    var thisPrototype = Object.getPrototypeOf(this$1);
+    if (thisPrototype && thisPrototype.getChoiceIndex) {
+      var prototypeGetChoiceIndex = (thisPrototype.getChoiceIndex);
+      return (prototypeGetChoiceIndex).call(this$1, choice, choicesLength)
+    }
+
+    // Default (old) getChoiceIndex implementation - english-compatible
+    var defaultImpl = function (_choice, _choicesLength) {
+      _choice = Math.abs(_choice);
+
+      if (_choicesLength === 2) {
+        return _choice
+          ? _choice > 1
+            ? 1
+            : 0
+          : 1
+      }
+
+      return _choice ? Math.min(_choice, 2) : 0
+    };
+
+    if (this$1.locale in this$1.pluralizationRules) {
+      return this$1.pluralizationRules[this$1.locale].apply(this$1, [choice, choicesLength])
+    } else {
+      return defaultImpl(choice, choicesLength)
+    }
+  };
+
+
+  this._exist = function (message, key) {
+    if (!message || !key) { return false }
+    if (!isNull(this$1._path.getPathValue(message, key))) { return true }
+    // fallback for flat key
+    if (message[key]) { return true }
+    return false
+  };
+
+  if (this._warnHtmlInMessage === 'warn' || this._warnHtmlInMessage === 'error') {
+    Object.keys(messages).forEach(function (locale) {
+      this$1._checkLocaleMessage(locale, this$1._warnHtmlInMessage, messages[locale]);
+    });
+  }
+
+  this._initVM({
+    locale: locale,
+    fallbackLocale: fallbackLocale,
+    messages: messages,
+    dateTimeFormats: dateTimeFormats,
+    numberFormats: numberFormats
+  });
+};
+
+var prototypeAccessors = { vm: { configurable: true },messages: { configurable: true },dateTimeFormats: { configurable: true },numberFormats: { configurable: true },availableLocales: { configurable: true },locale: { configurable: true },fallbackLocale: { configurable: true },formatFallbackMessages: { configurable: true },missing: { configurable: true },formatter: { configurable: true },silentTranslationWarn: { configurable: true },silentFallbackWarn: { configurable: true },preserveDirectiveContent: { configurable: true },warnHtmlInMessage: { configurable: true },postTranslation: { configurable: true } };
+
+VueI18n.prototype._checkLocaleMessage = function _checkLocaleMessage (locale, level, message) {
+  var paths = [];
+
+  var fn = function (level, locale, message, paths) {
+    if (isPlainObject(message)) {
+      Object.keys(message).forEach(function (key) {
+        var val = message[key];
+        if (isPlainObject(val)) {
+          paths.push(key);
+          paths.push('.');
+          fn(level, locale, val, paths);
+          paths.pop();
+          paths.pop();
+        } else {
+          paths.push(key);
+          fn(level, locale, val, paths);
+          paths.pop();
+        }
+      });
+    } else if (isArray(message)) {
+      message.forEach(function (item, index) {
+        if (isPlainObject(item)) {
+          paths.push(("[" + index + "]"));
+          paths.push('.');
+          fn(level, locale, item, paths);
+          paths.pop();
+          paths.pop();
+        } else {
+          paths.push(("[" + index + "]"));
+          fn(level, locale, item, paths);
+          paths.pop();
+        }
+      });
+    } else if (isString(message)) {
+      var ret = htmlTagMatcher.test(message);
+      if (ret) {
+        var msg = "Detected HTML in message '" + message + "' of keypath '" + (paths.join('')) + "' at '" + locale + "'. Consider component interpolation with '<i18n>' to avoid XSS. See https://bit.ly/2ZqJzkp";
+        if (level === 'warn') {
+          warn(msg);
+        } else if (level === 'error') {
+          error(msg);
+        }
+      }
+    }
+  };
+
+  fn(level, locale, message, paths);
+};
+
+VueI18n.prototype._initVM = function _initVM (data) {
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  this._vm = new Vue({ data: data });
+  Vue.config.silent = silent;
+};
+
+VueI18n.prototype.destroyVM = function destroyVM () {
+  this._vm.$destroy();
+};
+
+VueI18n.prototype.subscribeDataChanging = function subscribeDataChanging (vm) {
+  this._dataListeners.push(vm);
+};
+
+VueI18n.prototype.unsubscribeDataChanging = function unsubscribeDataChanging (vm) {
+  remove(this._dataListeners, vm);
+};
+
+VueI18n.prototype.watchI18nData = function watchI18nData () {
+  var self = this;
+  return this._vm.$watch('$data', function () {
+    var i = self._dataListeners.length;
+    while (i--) {
+      Vue.nextTick(function () {
+        self._dataListeners[i] && self._dataListeners[i].$forceUpdate();
+      });
+    }
+  }, { deep: true })
+};
+
+VueI18n.prototype.watchLocale = function watchLocale () {
+  /* istanbul ignore if */
+  if (!this._sync || !this._root) { return null }
+  var target = this._vm;
+  return this._root.$i18n.vm.$watch('locale', function (val) {
+    target.$set(target, 'locale', val);
+    target.$forceUpdate();
+  }, { immediate: true })
+};
+
+VueI18n.prototype.onComponentInstanceCreated = function onComponentInstanceCreated (newI18n) {
+  if (this._componentInstanceCreatedListener) {
+    this._componentInstanceCreatedListener(newI18n, this);
+  }
+};
+
+prototypeAccessors.vm.get = function () { return this._vm };
+
+prototypeAccessors.messages.get = function () { return looseClone(this._getMessages()) };
+prototypeAccessors.dateTimeFormats.get = function () { return looseClone(this._getDateTimeFormats()) };
+prototypeAccessors.numberFormats.get = function () { return looseClone(this._getNumberFormats()) };
+prototypeAccessors.availableLocales.get = function () { return Object.keys(this.messages).sort() };
+
+prototypeAccessors.locale.get = function () { return this._vm.locale };
+prototypeAccessors.locale.set = function (locale) {
+  this._vm.$set(this._vm, 'locale', locale);
+};
+
+prototypeAccessors.fallbackLocale.get = function () { return this._vm.fallbackLocale };
+prototypeAccessors.fallbackLocale.set = function (locale) {
+  this._localeChainCache = {};
+  this._vm.$set(this._vm, 'fallbackLocale', locale);
+};
+
+prototypeAccessors.formatFallbackMessages.get = function () { return this._formatFallbackMessages };
+prototypeAccessors.formatFallbackMessages.set = function (fallback) { this._formatFallbackMessages = fallback; };
+
+prototypeAccessors.missing.get = function () { return this._missing };
+prototypeAccessors.missing.set = function (handler) { this._missing = handler; };
+
+prototypeAccessors.formatter.get = function () { return this._formatter };
+prototypeAccessors.formatter.set = function (formatter) { this._formatter = formatter; };
+
+prototypeAccessors.silentTranslationWarn.get = function () { return this._silentTranslationWarn };
+prototypeAccessors.silentTranslationWarn.set = function (silent) { this._silentTranslationWarn = silent; };
+
+prototypeAccessors.silentFallbackWarn.get = function () { return this._silentFallbackWarn };
+prototypeAccessors.silentFallbackWarn.set = function (silent) { this._silentFallbackWarn = silent; };
+
+prototypeAccessors.preserveDirectiveContent.get = function () { return this._preserveDirectiveContent };
+prototypeAccessors.preserveDirectiveContent.set = function (preserve) { this._preserveDirectiveContent = preserve; };
+
+prototypeAccessors.warnHtmlInMessage.get = function () { return this._warnHtmlInMessage };
+prototypeAccessors.warnHtmlInMessage.set = function (level) {
+    var this$1 = this;
+
+  var orgLevel = this._warnHtmlInMessage;
+  this._warnHtmlInMessage = level;
+  if (orgLevel !== level && (level === 'warn' || level === 'error')) {
+    var messages = this._getMessages();
+    Object.keys(messages).forEach(function (locale) {
+      this$1._checkLocaleMessage(locale, this$1._warnHtmlInMessage, messages[locale]);
+    });
+  }
+};
+
+prototypeAccessors.postTranslation.get = function () { return this._postTranslation };
+prototypeAccessors.postTranslation.set = function (handler) { this._postTranslation = handler; };
+
+VueI18n.prototype._getMessages = function _getMessages () { return this._vm.messages };
+VueI18n.prototype._getDateTimeFormats = function _getDateTimeFormats () { return this._vm.dateTimeFormats };
+VueI18n.prototype._getNumberFormats = function _getNumberFormats () { return this._vm.numberFormats };
+
+VueI18n.prototype._warnDefault = function _warnDefault (locale, key, result, vm, values, interpolateMode) {
+  if (!isNull(result)) { return result }
+  if (this._missing) {
+    var missingRet = this._missing.apply(null, [locale, key, vm, values]);
+    if (isString(missingRet)) {
+      return missingRet
+    }
+  } else {
+    if ( true && !this._isSilentTranslationWarn(key)) {
+      warn(
+        "Cannot translate the value of keypath '" + key + "'. " +
+        'Use the value of keypath as default.'
+      );
+    }
+  }
+
+  if (this._formatFallbackMessages) {
+    var parsedArgs = parseArgs.apply(void 0, values);
+    return this._render(key, interpolateMode, parsedArgs.params, key)
+  } else {
+    return key
+  }
+};
+
+VueI18n.prototype._isFallbackRoot = function _isFallbackRoot (val) {
+  return !val && !isNull(this._root) && this._fallbackRoot
+};
+
+VueI18n.prototype._isSilentFallbackWarn = function _isSilentFallbackWarn (key) {
+  return this._silentFallbackWarn instanceof RegExp
+    ? this._silentFallbackWarn.test(key)
+    : this._silentFallbackWarn
+};
+
+VueI18n.prototype._isSilentFallback = function _isSilentFallback (locale, key) {
+  return this._isSilentFallbackWarn(key) && (this._isFallbackRoot() || locale !== this.fallbackLocale)
+};
+
+VueI18n.prototype._isSilentTranslationWarn = function _isSilentTranslationWarn (key) {
+  return this._silentTranslationWarn instanceof RegExp
+    ? this._silentTranslationWarn.test(key)
+    : this._silentTranslationWarn
+};
+
+VueI18n.prototype._interpolate = function _interpolate (
+  locale,
+  message,
+  key,
+  host,
+  interpolateMode,
+  values,
+  visitedLinkStack
+) {
+  if (!message) { return null }
+
+  var pathRet = this._path.getPathValue(message, key);
+  if (isArray(pathRet) || isPlainObject(pathRet)) { return pathRet }
+
+  var ret;
+  if (isNull(pathRet)) {
+    /* istanbul ignore else */
+    if (isPlainObject(message)) {
+      ret = message[key];
+      if (!(isString(ret) || isFunction(ret))) {
+        if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallback(locale, key)) {
+          warn(("Value of key '" + key + "' is not a string or function !"));
+        }
+        return null
+      }
+    } else {
+      return null
+    }
+  } else {
+    /* istanbul ignore else */
+    if (isString(pathRet) || isFunction(pathRet)) {
+      ret = pathRet;
+    } else {
+      if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallback(locale, key)) {
+        warn(("Value of key '" + key + "' is not a string or function!"));
+      }
+      return null
+    }
+  }
+
+  // Check for the existence of links within the translated string
+  if (isString(ret) && (ret.indexOf('@:') >= 0 || ret.indexOf('@.') >= 0)) {
+    ret = this._link(locale, message, ret, host, 'raw', values, visitedLinkStack);
+  }
+
+  return this._render(ret, interpolateMode, values, key)
+};
+
+VueI18n.prototype._link = function _link (
+  locale,
+  message,
+  str,
+  host,
+  interpolateMode,
+  values,
+  visitedLinkStack
+) {
+  var ret = str;
+
+  // Match all the links within the local
+  // We are going to replace each of
+  // them with its translation
+  var matches = ret.match(linkKeyMatcher);
+  for (var idx in matches) {
+    // ie compatible: filter custom array
+    // prototype method
+    if (!matches.hasOwnProperty(idx)) {
+      continue
+    }
+    var link = matches[idx];
+    var linkKeyPrefixMatches = link.match(linkKeyPrefixMatcher);
+    var linkPrefix = linkKeyPrefixMatches[0];
+      var formatterName = linkKeyPrefixMatches[1];
+
+    // Remove the leading @:, @.case: and the brackets
+    var linkPlaceholder = link.replace(linkPrefix, '').replace(bracketsMatcher, '');
+
+    if (includes(visitedLinkStack, linkPlaceholder)) {
+      if (true) {
+        warn(("Circular reference found. \"" + link + "\" is already visited in the chain of " + (visitedLinkStack.reverse().join(' <- '))));
+      }
+      return ret
+    }
+    visitedLinkStack.push(linkPlaceholder);
+
+    // Translate the link
+    var translated = this._interpolate(
+      locale, message, linkPlaceholder, host,
+      interpolateMode === 'raw' ? 'string' : interpolateMode,
+      interpolateMode === 'raw' ? undefined : values,
+      visitedLinkStack
+    );
+
+    if (this._isFallbackRoot(translated)) {
+      if ( true && !this._isSilentTranslationWarn(linkPlaceholder)) {
+        warn(("Fall back to translate the link placeholder '" + linkPlaceholder + "' with root locale."));
+      }
+      /* istanbul ignore if */
+      if (!this._root) { throw Error('unexpected error') }
+      var root = this._root.$i18n;
+      translated = root._translate(
+        root._getMessages(), root.locale, root.fallbackLocale,
+        linkPlaceholder, host, interpolateMode, values
+      );
+    }
+    translated = this._warnDefault(
+      locale, linkPlaceholder, translated, host,
+      isArray(values) ? values : [values],
+      interpolateMode
+    );
+
+    if (this._modifiers.hasOwnProperty(formatterName)) {
+      translated = this._modifiers[formatterName](translated);
+    } else if (defaultModifiers.hasOwnProperty(formatterName)) {
+      translated = defaultModifiers[formatterName](translated);
+    }
+
+    visitedLinkStack.pop();
+
+    // Replace the link with the translated
+    ret = !translated ? ret : ret.replace(link, translated);
+  }
+
+  return ret
+};
+
+VueI18n.prototype._createMessageContext = function _createMessageContext (values) {
+  var _list = isArray(values) ? values : [];
+  var _named = isObject(values) ? values : {};
+  var list = function (index) { return _list[index]; };
+  var named = function (key) { return _named[key]; };
+  return {
+    list: list,
+    named: named
+  }
+};
+
+VueI18n.prototype._render = function _render (message, interpolateMode, values, path) {
+  if (isFunction(message)) {
+    return message(this._createMessageContext(values))
+  }
+
+  var ret = this._formatter.interpolate(message, values, path);
+
+  // If the custom formatter refuses to work - apply the default one
+  if (!ret) {
+    ret = defaultFormatter.interpolate(message, values, path);
+  }
+
+  // if interpolateMode is **not** 'string' ('row'),
+  // return the compiled data (e.g. ['foo', VNode, 'bar']) with formatter
+  return interpolateMode === 'string' && !isString(ret) ? ret.join('') : ret
+};
+
+VueI18n.prototype._appendItemToChain = function _appendItemToChain (chain, item, blocks) {
+  var follow = false;
+  if (!includes(chain, item)) {
+    follow = true;
+    if (item) {
+      follow = item[item.length - 1] !== '!';
+      item = item.replace(/!/g, '');
+      chain.push(item);
+      if (blocks && blocks[item]) {
+        follow = blocks[item];
+      }
+    }
+  }
+  return follow
+};
+
+VueI18n.prototype._appendLocaleToChain = function _appendLocaleToChain (chain, locale, blocks) {
+  var follow;
+  var tokens = locale.split('-');
+  do {
+    var item = tokens.join('-');
+    follow = this._appendItemToChain(chain, item, blocks);
+    tokens.splice(-1, 1);
+  } while (tokens.length && (follow === true))
+  return follow
+};
+
+VueI18n.prototype._appendBlockToChain = function _appendBlockToChain (chain, block, blocks) {
+  var follow = true;
+  for (var i = 0; (i < block.length) && (isBoolean(follow)); i++) {
+    var locale = block[i];
+    if (isString(locale)) {
+      follow = this._appendLocaleToChain(chain, locale, blocks);
+    }
+  }
+  return follow
+};
+
+VueI18n.prototype._getLocaleChain = function _getLocaleChain (start, fallbackLocale) {
+  if (start === '') { return [] }
+
+  if (!this._localeChainCache) {
+    this._localeChainCache = {};
+  }
+
+  var chain = this._localeChainCache[start];
+  if (!chain) {
+    if (!fallbackLocale) {
+      fallbackLocale = this.fallbackLocale;
+    }
+    chain = [];
+
+    // first block defined by start
+    var block = [start];
+
+    // while any intervening block found
+    while (isArray(block)) {
+      block = this._appendBlockToChain(
+        chain,
+        block,
+        fallbackLocale
+      );
+    }
+
+    // last block defined by default
+    var defaults;
+    if (isArray(fallbackLocale)) {
+      defaults = fallbackLocale;
+    } else if (isObject(fallbackLocale)) {
+      /* $FlowFixMe */
+      if (fallbackLocale['default']) {
+        defaults = fallbackLocale['default'];
+      } else {
+        defaults = null;
+      }
+    } else {
+      defaults = fallbackLocale;
+    }
+
+    // convert defaults to array
+    if (isString(defaults)) {
+      block = [defaults];
+    } else {
+      block = defaults;
+    }
+    if (block) {
+      this._appendBlockToChain(
+        chain,
+        block,
+        null
+      );
+    }
+    this._localeChainCache[start] = chain;
+  }
+  return chain
+};
+
+VueI18n.prototype._translate = function _translate (
+  messages,
+  locale,
+  fallback,
+  key,
+  host,
+  interpolateMode,
+  args
+) {
+  var chain = this._getLocaleChain(locale, fallback);
+  var res;
+  for (var i = 0; i < chain.length; i++) {
+    var step = chain[i];
+    res =
+      this._interpolate(step, messages[step], key, host, interpolateMode, args, [key]);
+    if (!isNull(res)) {
+      if (step !== locale && "development" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+        warn(("Fall back to translate the keypath '" + key + "' with '" + step + "' locale."));
+      }
+      return res
+    }
+  }
+  return null
+};
+
+VueI18n.prototype._t = function _t (key, _locale, messages, host) {
+    var ref;
+
+    var values = [], len = arguments.length - 4;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 4 ];
+  if (!key) { return '' }
+
+  var parsedArgs = parseArgs.apply(void 0, values);
+  if(this._escapeParameterHtml) {
+    parsedArgs.params = escapeParams(parsedArgs.params);
+  }
+
+  var locale = parsedArgs.locale || _locale;
+
+  var ret = this._translate(
+    messages, locale, this.fallbackLocale, key,
+    host, 'string', parsedArgs.params
+  );
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+      warn(("Fall back to translate the keypath '" + key + "' with root locale."));
+    }
+    /* istanbul ignore if */
+    if (!this._root) { throw Error('unexpected error') }
+    return (ref = this._root).$t.apply(ref, [ key ].concat( values ))
+  } else {
+    ret = this._warnDefault(locale, key, ret, host, values, 'string');
+    if (this._postTranslation && ret !== null && ret !== undefined) {
+      ret = this._postTranslation(ret, key);
+    }
+    return ret
+  }
+};
+
+VueI18n.prototype.t = function t (key) {
+    var ref;
+
+    var values = [], len = arguments.length - 1;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 1 ];
+  return (ref = this)._t.apply(ref, [ key, this.locale, this._getMessages(), null ].concat( values ))
+};
+
+VueI18n.prototype._i = function _i (key, locale, messages, host, values) {
+  var ret =
+    this._translate(messages, locale, this.fallbackLocale, key, host, 'raw', values);
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key)) {
+      warn(("Fall back to interpolate the keypath '" + key + "' with root locale."));
+    }
+    if (!this._root) { throw Error('unexpected error') }
+    return this._root.$i18n.i(key, locale, values)
+  } else {
+    return this._warnDefault(locale, key, ret, host, [values], 'raw')
+  }
+};
+
+VueI18n.prototype.i = function i (key, locale, values) {
+  /* istanbul ignore if */
+  if (!key) { return '' }
+
+  if (!isString(locale)) {
+    locale = this.locale;
+  }
+
+  return this._i(key, locale, this._getMessages(), null, values)
+};
+
+VueI18n.prototype._tc = function _tc (
+  key,
+  _locale,
+  messages,
+  host,
+  choice
+) {
+    var ref;
+
+    var values = [], len = arguments.length - 5;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 5 ];
+  if (!key) { return '' }
+  if (choice === undefined) {
+    choice = 1;
+  }
+
+  var predefined = { 'count': choice, 'n': choice };
+  var parsedArgs = parseArgs.apply(void 0, values);
+  parsedArgs.params = Object.assign(predefined, parsedArgs.params);
+  values = parsedArgs.locale === null ? [parsedArgs.params] : [parsedArgs.locale, parsedArgs.params];
+  return this.fetchChoice((ref = this)._t.apply(ref, [ key, _locale, messages, host ].concat( values )), choice)
+};
+
+VueI18n.prototype.fetchChoice = function fetchChoice (message, choice) {
+  /* istanbul ignore if */
+  if (!message || !isString(message)) { return null }
+  var choices = message.split('|');
+
+  choice = this.getChoiceIndex(choice, choices.length);
+  if (!choices[choice]) { return message }
+  return choices[choice].trim()
+};
+
+VueI18n.prototype.tc = function tc (key, choice) {
+    var ref;
+
+    var values = [], len = arguments.length - 2;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 2 ];
+  return (ref = this)._tc.apply(ref, [ key, this.locale, this._getMessages(), null, choice ].concat( values ))
+};
+
+VueI18n.prototype._te = function _te (key, locale, messages) {
+    var args = [], len = arguments.length - 3;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 3 ];
+
+  var _locale = parseArgs.apply(void 0, args).locale || locale;
+  return this._exist(messages[_locale], key)
+};
+
+VueI18n.prototype.te = function te (key, locale) {
+  return this._te(key, this.locale, this._getMessages(), locale)
+};
+
+VueI18n.prototype.getLocaleMessage = function getLocaleMessage (locale) {
+  return looseClone(this._vm.messages[locale] || {})
+};
+
+VueI18n.prototype.setLocaleMessage = function setLocaleMessage (locale, message) {
+  if (this._warnHtmlInMessage === 'warn' || this._warnHtmlInMessage === 'error') {
+    this._checkLocaleMessage(locale, this._warnHtmlInMessage, message);
+  }
+  this._vm.$set(this._vm.messages, locale, message);
+};
+
+VueI18n.prototype.mergeLocaleMessage = function mergeLocaleMessage (locale, message) {
+  if (this._warnHtmlInMessage === 'warn' || this._warnHtmlInMessage === 'error') {
+    this._checkLocaleMessage(locale, this._warnHtmlInMessage, message);
+  }
+  this._vm.$set(this._vm.messages, locale, merge(
+    typeof this._vm.messages[locale] !== 'undefined' && Object.keys(this._vm.messages[locale]).length
+      ? this._vm.messages[locale]
+      : {},
+    message
+  ));
+};
+
+VueI18n.prototype.getDateTimeFormat = function getDateTimeFormat (locale) {
+  return looseClone(this._vm.dateTimeFormats[locale] || {})
+};
+
+VueI18n.prototype.setDateTimeFormat = function setDateTimeFormat (locale, format) {
+  this._vm.$set(this._vm.dateTimeFormats, locale, format);
+  this._clearDateTimeFormat(locale, format);
+};
+
+VueI18n.prototype.mergeDateTimeFormat = function mergeDateTimeFormat (locale, format) {
+  this._vm.$set(this._vm.dateTimeFormats, locale, merge(this._vm.dateTimeFormats[locale] || {}, format));
+  this._clearDateTimeFormat(locale, format);
+};
+
+VueI18n.prototype._clearDateTimeFormat = function _clearDateTimeFormat (locale, format) {
+  for (var key in format) {
+    var id = locale + "__" + key;
+
+    if (!this._dateTimeFormatters.hasOwnProperty(id)) {
+      continue
+    }
+
+    delete this._dateTimeFormatters[id];
+  }
+};
+
+VueI18n.prototype._localizeDateTime = function _localizeDateTime (
+  value,
+  locale,
+  fallback,
+  dateTimeFormats,
+  key
+) {
+  var _locale = locale;
+  var formats = dateTimeFormats[_locale];
+
+  var chain = this._getLocaleChain(locale, fallback);
+  for (var i = 0; i < chain.length; i++) {
+    var current = _locale;
+    var step = chain[i];
+    formats = dateTimeFormats[step];
+    _locale = step;
+    // fallback locale
+    if (isNull(formats) || isNull(formats[key])) {
+      if (step !== locale && "development" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+        warn(("Fall back to '" + step + "' datetime formats from '" + current + "' datetime formats."));
+      }
+    } else {
+      break
+    }
+  }
+
+  if (isNull(formats) || isNull(formats[key])) {
+    return null
+  } else {
+    var format = formats[key];
+    var id = _locale + "__" + key;
+    var formatter = this._dateTimeFormatters[id];
+    if (!formatter) {
+      formatter = this._dateTimeFormatters[id] = new Intl.DateTimeFormat(_locale, format);
+    }
+    return formatter.format(value)
+  }
+};
+
+VueI18n.prototype._d = function _d (value, locale, key) {
+  /* istanbul ignore if */
+  if ( true && !VueI18n.availabilities.dateTimeFormat) {
+    warn('Cannot format a Date value due to not supported Intl.DateTimeFormat.');
+    return ''
+  }
+
+  if (!key) {
+    return new Intl.DateTimeFormat(locale).format(value)
+  }
+
+  var ret =
+    this._localizeDateTime(value, locale, this.fallbackLocale, this._getDateTimeFormats(), key);
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+      warn(("Fall back to datetime localization of root: key '" + key + "'."));
+    }
+    /* istanbul ignore if */
+    if (!this._root) { throw Error('unexpected error') }
+    return this._root.$i18n.d(value, key, locale)
+  } else {
+    return ret || ''
+  }
+};
+
+VueI18n.prototype.d = function d (value) {
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+  var locale = this.locale;
+  var key = null;
+
+  if (args.length === 1) {
+    if (isString(args[0])) {
+      key = args[0];
+    } else if (isObject(args[0])) {
+      if (args[0].locale) {
+        locale = args[0].locale;
+      }
+      if (args[0].key) {
+        key = args[0].key;
+      }
+    }
+  } else if (args.length === 2) {
+    if (isString(args[0])) {
+      key = args[0];
+    }
+    if (isString(args[1])) {
+      locale = args[1];
+    }
+  }
+
+  return this._d(value, locale, key)
+};
+
+VueI18n.prototype.getNumberFormat = function getNumberFormat (locale) {
+  return looseClone(this._vm.numberFormats[locale] || {})
+};
+
+VueI18n.prototype.setNumberFormat = function setNumberFormat (locale, format) {
+  this._vm.$set(this._vm.numberFormats, locale, format);
+  this._clearNumberFormat(locale, format);
+};
+
+VueI18n.prototype.mergeNumberFormat = function mergeNumberFormat (locale, format) {
+  this._vm.$set(this._vm.numberFormats, locale, merge(this._vm.numberFormats[locale] || {}, format));
+  this._clearNumberFormat(locale, format);
+};
+
+VueI18n.prototype._clearNumberFormat = function _clearNumberFormat (locale, format) {
+  for (var key in format) {
+    var id = locale + "__" + key;
+
+    if (!this._numberFormatters.hasOwnProperty(id)) {
+      continue
+    }
+
+    delete this._numberFormatters[id];
+  }
+};
+
+VueI18n.prototype._getNumberFormatter = function _getNumberFormatter (
+  value,
+  locale,
+  fallback,
+  numberFormats,
+  key,
+  options
+) {
+  var _locale = locale;
+  var formats = numberFormats[_locale];
+
+  var chain = this._getLocaleChain(locale, fallback);
+  for (var i = 0; i < chain.length; i++) {
+    var current = _locale;
+    var step = chain[i];
+    formats = numberFormats[step];
+    _locale = step;
+    // fallback locale
+    if (isNull(formats) || isNull(formats[key])) {
+      if (step !== locale && "development" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+        warn(("Fall back to '" + step + "' number formats from '" + current + "' number formats."));
+      }
+    } else {
+      break
+    }
+  }
+
+  if (isNull(formats) || isNull(formats[key])) {
+    return null
+  } else {
+    var format = formats[key];
+
+    var formatter;
+    if (options) {
+      // If options specified - create one time number formatter
+      formatter = new Intl.NumberFormat(_locale, Object.assign({}, format, options));
+    } else {
+      var id = _locale + "__" + key;
+      formatter = this._numberFormatters[id];
+      if (!formatter) {
+        formatter = this._numberFormatters[id] = new Intl.NumberFormat(_locale, format);
+      }
+    }
+    return formatter
+  }
+};
+
+VueI18n.prototype._n = function _n (value, locale, key, options) {
+  /* istanbul ignore if */
+  if (!VueI18n.availabilities.numberFormat) {
+    if (true) {
+      warn('Cannot format a Number value due to not supported Intl.NumberFormat.');
+    }
+    return ''
+  }
+
+  if (!key) {
+    var nf = !options ? new Intl.NumberFormat(locale) : new Intl.NumberFormat(locale, options);
+    return nf.format(value)
+  }
+
+  var formatter = this._getNumberFormatter(value, locale, this.fallbackLocale, this._getNumberFormats(), key, options);
+  var ret = formatter && formatter.format(value);
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+      warn(("Fall back to number localization of root: key '" + key + "'."));
+    }
+    /* istanbul ignore if */
+    if (!this._root) { throw Error('unexpected error') }
+    return this._root.$i18n.n(value, Object.assign({}, { key: key, locale: locale }, options))
+  } else {
+    return ret || ''
+  }
+};
+
+VueI18n.prototype.n = function n (value) {
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+  var locale = this.locale;
+  var key = null;
+  var options = null;
+
+  if (args.length === 1) {
+    if (isString(args[0])) {
+      key = args[0];
+    } else if (isObject(args[0])) {
+      if (args[0].locale) {
+        locale = args[0].locale;
+      }
+      if (args[0].key) {
+        key = args[0].key;
+      }
+
+      // Filter out number format options only
+      options = Object.keys(args[0]).reduce(function (acc, key) {
+          var obj;
+
+        if (includes(numberFormatKeys, key)) {
+          return Object.assign({}, acc, ( obj = {}, obj[key] = args[0][key], obj ))
+        }
+        return acc
+      }, null);
+    }
+  } else if (args.length === 2) {
+    if (isString(args[0])) {
+      key = args[0];
+    }
+    if (isString(args[1])) {
+      locale = args[1];
+    }
+  }
+
+  return this._n(value, locale, key, options)
+};
+
+VueI18n.prototype._ntp = function _ntp (value, locale, key, options) {
+  /* istanbul ignore if */
+  if (!VueI18n.availabilities.numberFormat) {
+    if (true) {
+      warn('Cannot format to parts a Number value due to not supported Intl.NumberFormat.');
+    }
+    return []
+  }
+
+  if (!key) {
+    var nf = !options ? new Intl.NumberFormat(locale) : new Intl.NumberFormat(locale, options);
+    return nf.formatToParts(value)
+  }
+
+  var formatter = this._getNumberFormatter(value, locale, this.fallbackLocale, this._getNumberFormats(), key, options);
+  var ret = formatter && formatter.formatToParts(value);
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key)) {
+      warn(("Fall back to format number to parts of root: key '" + key + "' ."));
+    }
+    /* istanbul ignore if */
+    if (!this._root) { throw Error('unexpected error') }
+    return this._root.$i18n._ntp(value, locale, key, options)
+  } else {
+    return ret || []
+  }
+};
+
+Object.defineProperties( VueI18n.prototype, prototypeAccessors );
+
+var availabilities;
+// $FlowFixMe
+Object.defineProperty(VueI18n, 'availabilities', {
+  get: function get () {
+    if (!availabilities) {
+      var intlDefined = typeof Intl !== 'undefined';
+      availabilities = {
+        dateTimeFormat: intlDefined && typeof Intl.DateTimeFormat !== 'undefined',
+        numberFormat: intlDefined && typeof Intl.NumberFormat !== 'undefined'
+      };
+    }
+
+    return availabilities
+  }
+});
+
+VueI18n.install = install;
+VueI18n.version = '8.22.4';
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VueI18n);
+
 
 /***/ }),
 

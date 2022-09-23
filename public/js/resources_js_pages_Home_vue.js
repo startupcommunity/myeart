@@ -1,4 +1,3 @@
-"use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_pages_Home_vue"],{
 
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Home.vue?vue&type=script&lang=js&":
@@ -7,12 +6,19 @@
   \******************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//data
+function data() {
+  return {};
+}
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'home'
+  name: 'home',
+  data: data
 });
 
 /***/ }),
@@ -23,6 +29,7 @@ __webpack_require__.r(__webpack_exports__);
   \*****************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "render": () => (/* binding */ render),
@@ -63,13 +70,30 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "login-form-logo"
-  }, [_c("div", {
-    staticClass: "img-logo"
+    staticClass: "w-100 d-flex justify-content-center"
+  }, [_c("img", {
+    staticClass: "img-fluid",
+    staticStyle: {
+      "margin-bottom": "50px"
+    },
+    attrs: {
+      src: __webpack_require__(/*! ../../img/Logo_Myeart.svg */ "./resources/img/Logo_Myeart.svg"),
+      alt: "Responsive image"
+    }
   })]);
 }];
 render._withStripped = true;
 
+
+/***/ }),
+
+/***/ "./resources/img/Logo_Myeart.svg":
+/*!***************************************!*\
+  !*** ./resources/img/Logo_Myeart.svg ***!
+  \***************************************/
+/***/ ((module) => {
+
+module.exports = "/images/Logo_Myeart.svg?1077f933b5283e2278319a4f1e21c881";
 
 /***/ }),
 
@@ -79,6 +103,7 @@ render._withStripped = true;
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -117,6 +142,7 @@ component.options.__file = "resources/js/pages/Home.vue"
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -132,6 +158,7 @@ __webpack_require__.r(__webpack_exports__);
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_b3c5cf30___WEBPACK_IMPORTED_MODULE_0__.render),

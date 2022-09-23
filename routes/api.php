@@ -25,5 +25,7 @@ Route::middleware('auth:api')->get('/paises', [PaisesController::class, 'getAll'
 Route::middleware('auth:api')->get('/artistics', [ArtisticActivitysController::class, 'getAll']);
 Route::middleware('auth:api')->put('/registerPerfil', [UserInformationsController::class, 'create']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    $user = $request->user();
+    $user->perfil = $user->perfil();
+    return $user;
 });

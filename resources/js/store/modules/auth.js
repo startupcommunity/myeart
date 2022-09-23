@@ -3,7 +3,8 @@ import JwtService from "../../common/jwt.service";
 import Errors from './../../modules/errors';
 
 const state = {
-    access_token: ( JwtService.getUser() ? JSON.parse(JwtService.getUser()).access_token : '') ,
+    access_token: ( JwtService.getUser() ? JSON.parse(JwtService.getUser()).access_token : ''),
+    perfil_info: ( JwtService.getUser() ? JSON.parse(JwtService.getUser()) : {}),
     status: '',
     hasLoadedOnce: false,
     errors: new Errors()
@@ -11,6 +12,7 @@ const state = {
 
 const getters = {
     isAuthenticated: state => !!state.access_token,
+    isPerfilCreated: state => !!state.perfil_info,
     authStatus: state => state.status,
     authErrors: state => state.errors,
 }
@@ -50,7 +52,6 @@ const actions = {
             Vue.axios.post(actionUrl, data)
                 .then((resp) => {
                     let access_token = 'Bearer ' + resp.data.access_token;
-                    console.log(resp.data);
                     JwtService.setUser(resp.data);
 
                     ApiService.setHeader();
@@ -69,7 +70,8 @@ const actions = {
         })
     },
     authLogout: ({commit, dispatch}) => {
-        Cookies.remove('access_token');
+        JwtService.unsetUser();
+        ApiService.init();
         return new Promise((resolve, reject) => {
             Vue.axios.post('/api/logout')
                 .then((resp) => {
@@ -97,7 +99,7 @@ const mutations = {
         let errors=err.errors?err.errors:{};
         
         if(err.error=="invalid_grant"){
-            errors.invalid_credentials=['The user credentials were incorrect.'];
+            errors.invalid_credentials=['Usuario o contraseña incorrectos.'];
         }
 
         state.status = 'error';

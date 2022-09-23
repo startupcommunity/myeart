@@ -7,7 +7,6 @@ export const getUser = () => {
 
 export const setUser = ( user ) => {
     Cookies.set(ID_API_TOKEN, JSON.stringify(user), { expires: user.expires_in });
-    console.log(Cookies.get(ID_API_TOKEN));
 };
 
 export const unsetUser = () => {

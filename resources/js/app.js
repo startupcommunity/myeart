@@ -8,7 +8,6 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
 import ApiService from './api/api.service';
 import Vuelidate from 'vuelidate';
-
 import jwtService from './common/jwt.service';
 
 import App from './App.vue';
@@ -20,7 +19,11 @@ import vuetify  from './plugins/vuetify'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import loadingOverlayComponent from './components/loadingOverlay';
-import Notifications from 'vue-notification'
+import Notifications from 'vue-notification';
+
+import VueI18n from 'vue-i18n';
+import { en } from './lang/en';
+import { es } from './lang/es';
 
 Vue.use(Notifications);
 Vue.use(Vuelidate);
@@ -29,6 +32,15 @@ Vue.use(VueRouter);
 Vue.use(VueFormWizard);
 Vue.component('loading-overlay-original', Loading);
 Vue.component('loading-overlay', loadingOverlayComponent);
+
+Vue.use(VueI18n);
+const i18n = new VueI18n({
+    locale: 'es',
+    fallbackLocale: 'es',
+    messages: {
+        en, es
+    }
+})
 
 const router = new VueRouter({
     mode: 'history',
@@ -46,12 +58,15 @@ import { store } from './store/store';
 const app = new Vue({
     el: '#app',
     router: router,
-    created(){
+    async beforeCreate(){
+        console.log(this.$router.currentRoute);
         if (this.$store.getters.isAuthenticated) {
-            this.$store.dispatch('userRequest');
+            await this.$store.dispatch('userRequest');
+            console.log(this.$route.path );
         }
     },
     store,
     vuetify,
+    i18n,
     render: h => h(App),
 });

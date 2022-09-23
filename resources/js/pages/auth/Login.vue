@@ -88,6 +88,9 @@
         methods: {
             login
         },
+        beforeDestroy(){
+            this.authErrors.clear();
+        },
         computed:{
             authErrors,
             apiStateFormLoading,

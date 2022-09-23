@@ -92,6 +92,9 @@ function statusEvents() {
   methods: {
     register: register
   },
+  beforeDestroy: function beforeDestroy() {
+    this.authErrors.clear();
+  },
   computed: _objectSpread({
     authErrors: authErrors,
     apiStateFormLoading: apiStateFormLoading

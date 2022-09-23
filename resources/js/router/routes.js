@@ -11,7 +11,7 @@ const ifNotAuthenticated = (to, from, next) => {
         next();
         return
     }
-    next('/dashboard')
+    next('/')
 }
 
 const ifAuthenticated = (to, from, next) => {
@@ -19,7 +19,7 @@ const ifAuthenticated = (to, from, next) => {
         next();
         return
     }
-    next('/')
+    next('/dashboard')
 }
 
 export const routes = [
@@ -42,15 +42,18 @@ export const routes = [
         beforeEnter: ifNotAuthenticated,
     },
     {
-        name: 'perfil',
-        path: '/perfil',
-        component: Perfil,
-    },
-
-    {
         name: 'dashboard',
         path: '/',
         component: Dashboard,
         beforeEnter: ifAuthenticated,
+    },
+    {
+        name: 'perfil',
+        path: '/perfil',
+        component: Perfil,
+        beforeEnter: ifAuthenticated,
+        meta:{
+            title: 'perfil'
+        }
     },
 ]

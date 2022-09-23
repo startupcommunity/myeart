@@ -5,7 +5,7 @@
             <div class="row" style="margin:0px;padding:0px;">
                 <div class="col-12 d-none d-lg-flex justify-content-md-end" v-if="indexForm == 0">
                     <div class="login-form-logo d-flex justify-content-center" style="width: 544px;margin-right: 12rem;" >
-                        <img src="../../../../public/img/Logo_Myeart.svg" style="width: 50%;height: 180px;" alt="">
+                        <img src="../../../img/Logo_Myeart.svg" style="width: 50%;height: 180px;" alt="">
                     </div>
                 </div>
                 <div class="col-12 d-flex justify-content-md-end  justify-content-xs-center" style="margin:0px;padding:0px;"> 
@@ -148,15 +148,15 @@
                                             single-line
                                         ></v-select>
 
-                                        <v-btn block color="primary" v-on:click="tabChange()">
+                                        <v-btn block color="primary"  v-on:click="perfil == 2 ? tabChange() : (completed = true)">
                                             Siguiente
                                         </v-btn>
                                         <br />
-                                        <v-btn block color="dark" v-on:click="tabChange()">
+                                        <v-btn block color="dark"  v-on:click="perfil == 2 ? tabChange() : (completed = true)">
                                             Omitir paso
                                         </v-btn>
                                     </tab-content>
-                                    <tab-content icon=" ">
+                                    <tab-content icon=" " v-if="perfil == 2">
                                         <div class="login-icon">
                                             <div v-on:click="beforeChanged()" style="color:#FFF;cursor:pointer;">
                                                 <i class="fas fa-arrow-left"></i>
@@ -164,9 +164,10 @@
                                         </div>
 
                                         <div class="login-form-logo" style="height:auto;">
-                                            <h1>¿Perteneces a algún grupo o colectivos de arte?</h1>
+                                            <h1>¿Perteneces a algún grupo o colectivos de arte?
+                                            </h1>
                                         </div>
-
+                                        
                                         <v-form
                                             ref="form"
                                             v-model="valid"
@@ -177,6 +178,9 @@
                                                 label="Asociación de arte"
                                                 prepend-icon="mdi-palette"
                                                 required
+                                                :error-messages="errorMessage($v.asociacion_arte)"
+                                                @input="$v.asociacion_arte.$touch()"
+                                                @blur="$v.asociacion_arte.$touch()"
                                             ></v-text-field>
 
                                             <v-text-field
@@ -184,6 +188,8 @@
                                                 label="Consejería o ayuntamiento"
                                                 prepend-icon="mdi-home-outline"
                                                 required
+                                                @input="$v.consejeria_ayuntamiento.$touch()"
+                                                @blur="$v.consejeria_ayuntamiento.$touch()"
                                             ></v-text-field>
 
                                             <v-text-field
@@ -191,6 +197,8 @@
                                                 label="Galería de Arte"
                                                 prepend-icon="mdi-image-outline"
                                                 required
+                                                @input="$v.galeria.$touch()"
+                                                @blur="$v.galeria.$touch()"
                                             ></v-text-field>
 
                                             <v-text-field
@@ -198,6 +206,8 @@
                                                 label="Asociación de turismo o cultura"
                                                 prepend-icon="mdi-web"
                                                 required
+                                                @input="$v.asociacion_turismo.$touch()"
+                                                @blur="$v.asociacion_turismo.$touch()"
                                             ></v-text-field>
 
                                             <v-btn block color="primary" v-on:click="perfil == 2 ? tabChange() : (completed = true)">
@@ -287,8 +297,8 @@
                                 <div class="login-form-logo" style="height:auto;">
                                     <h4>{{ perfilUsers.name }}</h4>
                                 </div>
-                                <div class="login-form-logo" style="height:auto;">
-                                    <h5>Galería milenaria</h5>
+                                <div class="login-form-logo" style="height:auto;" v-if="perfil == 2">
+                                    <h5>Artista</h5>
                                 </div>
                                 <br />
                                 <div style="text-align:center;">
@@ -314,7 +324,9 @@
 </template>
 
 <script>
+    import { errorMessage,hasError } from '../../helpers/funciones';
     import { mapState } from 'vuex';
+    import perfilUser from '../../validations/auth/perfil';
     //data
     function data(){
         return {
@@ -370,6 +382,34 @@
             if(value) this.perfil = value;
         }
     }
+    function resetForm(){
+        this.valid = true;
+        this.indexForm= 0;
+        this.perfil= 2;
+
+        //tab 1
+        this.image= null;
+        this.srcImage= './img/avatar.png';
+        this.activePicker= null;
+        this.date= null;
+        this.dateFormatted= null;
+        this.menu= false;
+        this.select_sexo= { state: 'Seleccione opción', abbr: '' };
+        this.select_pais= { state: 'Seleccione opción', abbr: '' };
+        this.select_idioma= { state: 'Seleccione opción', abbr: '' };
+
+        //tab 2
+        this.asociacion_arte= '';
+        this.consejeria_ayuntamiento= '';
+        this.galeria= '';
+        this.asociacion_turismo= '';
+
+        //tab 3
+        this.artistic_selected= [];
+
+        //finally
+        this.$v.$reset();
+    }
     function submit(){
         const { perfil, image, date,asociacion_arte,consejeria_ayuntamiento,galeria,asociacion_turismo } = this;
         const sexo = this.select_sexo.abbr;
@@ -384,6 +424,7 @@
                 text: 'Su perfil se ha registrado',
                 type: "success"
             });
+            this.resetForm();
             this.$router.push('/dashboard')
         })
     }
@@ -397,7 +438,10 @@
         }
     }
     async function mounted(){
-        this.$store.dispatch('paisesRequest');
+        await this.$store.dispatch('paisesRequest');
+        if(this.perfilUsers.perfil){
+            this.$router.push({ name: 'dashboard' });
+        }
     }
     //computed
     function perfilUsers(){
@@ -432,6 +476,10 @@
         name:'perfil',
         data,
         mounted,
+        validations: perfilUser,
+        beforeDestroy(){
+            this.resetForm();
+        },
         methods:{
             tabChange,
             preview_image,
@@ -439,7 +487,10 @@
             beforeChanged,
             submit,
             formatDate,
-            parseDate
+            parseDate,
+            errorMessage,
+            hasError,
+            resetForm
         },
         computed:{
             perfilUsers,
@@ -510,10 +561,6 @@
         .v-input__slot{
             flex-direction: row-reverse!important;
         }
-    }   
-    .theme--dark.v-btn.v-btn--has-bg {
-        background-color: transparent;
-        border: 2px solid #FFFFFF;
     }
     .v-label{
         margin-bottom: 0px;

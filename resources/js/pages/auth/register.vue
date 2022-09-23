@@ -126,6 +126,9 @@
         methods:{
             register
         },
+        beforeDestroy(){
+            this.authErrors.clear();
+        },
         computed:{
             authErrors,
             apiStateFormLoading,

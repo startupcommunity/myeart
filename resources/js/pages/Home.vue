@@ -3,10 +3,9 @@
         <div class="wrap-login p-2 ">
             <div class="container-login">
                 <form class="login-form validate-form">
-					<div class="login-form-logo">
-						<div class="img-logo"></div>
+					<div class="w-100 d-flex justify-content-center">
+                        <img src="../../img/Logo_Myeart.svg" style="margin-bottom: 50px;" class="img-fluid" alt="Responsive image" />
                     </div>
-
                     <div class="container-login-form-btn">
                         <router-link exact-active-class="active" to="/login" class="btn btn-secundary register-form-btn">Iniciar sesión</router-link>
 					</div>
@@ -24,7 +23,14 @@
 </template>
 
 <script>
+    //data
+    function data(){
+        return {
+            
+        }
+    }
     export default {
-        name:'home'
+        name:'home',
+        data
     }
 </script>

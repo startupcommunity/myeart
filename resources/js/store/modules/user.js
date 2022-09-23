@@ -20,7 +20,7 @@ const actions = {
             .catch((err) => {
                 commit('userError');
                 // if resp is unauthorized, logout, to
-                //dispatch('authLogout')
+                dispatch('authLogout')
             })
     },
 }

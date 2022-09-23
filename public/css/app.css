@@ -10018,7 +10018,6 @@ html, body {
   height: 200px;
 }
 .home-login .wrap-login .container-login .login-form-logo .img-logo {
-  background: url("/img/Logo_Myeart.svg") no-repeat center;
   width: 60%;
   height: 200px;
 }
@@ -10176,6 +10175,9 @@ html, body {
     justify-content: center !important;
   }
   .home-login .wrap-login .container-login {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 20px 10px 40px rgba(255, 255, 255, 0.05);
+    border-radius: 40px 40px 0px 0px;
     width: 100%;
     margin-right: 0px !important;
     background: transparent;

@@ -29,7 +29,7 @@ const actions = {
             .catch((err) => {
                 commit('paisesError');
                 // if resp is unauthorized, logout, to
-                //dispatch('authLogout')
+                dispatch('authLogout')
             })
     },
     paisesRequest: ({commit, dispatch}) => {
@@ -42,7 +42,7 @@ const actions = {
             .catch((err) => {
                 commit('paisesError');
                 // if resp is unauthorized, logout, to
-                //dispatch('authLogout')
+                dispatch('authLogout')
             })
     },
     registerPerfil: ({commit, dispatch}, payload) => {
