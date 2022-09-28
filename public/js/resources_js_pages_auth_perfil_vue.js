@@ -472,7 +472,7 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.$router.push("/dashboard");
+        return _vm.$router.push("/");
       }
     }
   }, [_vm._v("Definir en otro momento")])])])]), _vm._v(" "), _c("tab-content", {

@@ -3,6 +3,74 @@
     .text-black{
         color:#000;
     }
+    
+    .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        overflow-x: hidden;
+        transition: 0.5s;
+
+        background-image: url('/img/image_movil.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center center;
+        background-size: cover;
+
+        border-radius: 0px 0px 100px 0px;
+    }
+        
+    .sidenav a {
+        padding: 20px 32px 12px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #FFF;
+        display: block;
+        transition: 0.3s;
+        text-align: center;
+    }
+
+    .sidenav_body{
+        text-align: center;
+        padding-top: 20px;
+        height: 80%;
+    }
+
+    .sidenav_footer {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+        
+    .sidenav a:hover {
+        color: $primary;
+    }
+
+    .sidenav a:focus {
+        color: $primary;
+    }
+    
+    .sidenav_header{
+        background: #FFF;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        .closebtn{
+            margin-left: 10px;
+            font-size: 20px;
+            color: $primary;
+        }
+    }
+
+
+    .header-info{
+        background: #FFF;
+        height: 50px;
+    }
+    
     /* -----------------------------------------------------------------------------
 
     # Header Styles
@@ -899,7 +967,7 @@
         .property-slider{
             display: flex;
             flex-wrap: nowrap;
-            overflow-x: hidden;
+            overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             -ms-overflow-style: -ms-autohiding-scrollbar; 
             transform: rotate(0deg);
@@ -997,5 +1065,11 @@
         padding-top: 4rem;
         padding-bottom: 4rem;
         color:#FFF;
+    }
+
+    @media (max-width: 576px){
+        .center-mobile {
+            text-align: center;
+        }
     }
 }

@@ -33,7 +33,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'app-header'
+  name: 'app-header',
+  methods: {
+    openNav: function openNav() {
+      document.getElementById("mySidenav").style.display = "block";
+      document.getElementById("mySidenav").style.width = "80%";
+    },
+    closeNav: function closeNav() {
+      document.getElementById("mySidenav").style.display = "none";
+      document.getElementById("mySidenav").style.width = "0";
+    }
+  }
 });
 
 /***/ }),
@@ -79,19 +89,86 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", [_c("div", {
+  return _c("div", [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "top-header-area",
     attrs: {
       id: "sticker"
     }
   }, [_c("div", {
+    staticClass: "sidenav",
+    attrs: {
+      id: "mySidenav"
+    }
+  }, [_c("div", {
+    staticClass: "sidenav_header"
+  }, [_c("button", {
+    staticClass: "closebtn",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.closeNav();
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-arrow-left"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "sidenav_body"
+  }, [_c("div", {
+    staticClass: "w-100 d-flex justify-content-center"
+  }, [_c("label", {
+    staticStyle: {
+      border: "2px solid #B2794C",
+      padding: "5px",
+      "border-radius": "50%"
+    }
+  }, [_c("v-avatar", {
+    attrs: {
+      size: "120"
+    }
+  }, [_c("v-img", {
+    attrs: {
+      src: "./img/avatar.png",
+      "lazy-src": "./img/avatar.png"
+    },
+    on: {
+      error: function error($event) {
+        "URL ON ERROR";
+      }
+    },
+    scopedSlots: _vm._u([{
+      key: "placeholder",
+      fn: function fn() {
+        return [_c("v-progress-circular", {
+          staticStyle: {
+            "margin-top": "40px"
+          },
+          attrs: {
+            indeterminate: "",
+            color: "custm_theme_6"
+          }
+        })];
+      },
+      proxy: true
+    }])
+  })], 1)], 1)]), _vm._v(" "), _c("span", [_vm._v("Artista/Fotografia")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("a", {
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("OBRAS")]), _vm._v(" "), _c("a", {
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("ARTISTAS")]), _vm._v(" "), _c("a", {
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("EVENTOS")]), _vm._v(" "), _c("a", {
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("MI COMUNIDAD")])]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c("div", {
     staticClass: "container"
   }, [_c("div", {
     staticClass: "row"
@@ -100,20 +177,93 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "main-menu-wrap"
   }, [_c("div", {
+    staticClass: "d-flex"
+  }, [_c("div", {
+    staticClass: "flex-fill d-block d-md-none d-lg-none"
+  }, [_c("div", {
+    staticClass: "w-100 d-flex justify-content-center",
+    staticStyle: {
+      height: "100%",
+      "font-size": "20px",
+      "padding-top": "10px"
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-bars",
+    on: {
+      click: function click($event) {
+        return _vm.openNav();
+      }
+    }
+  })])]), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5)])])])])])]), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7), _vm._v(" "), _vm._m(8), _vm._v(" "), _vm._m(9), _vm._v(" "), _vm._m(10), _vm._v(" "), _vm._m(11), _vm._v(" "), _vm._m(12), _vm._v(" "), _vm._m(13)]);
+};
+
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "d-flex align-items-center header-info"
+  }, [_c("div", {
+    staticClass: "flex-grow-1 text-center text-dark"
+  }, [_c("img", {
+    attrs: {
+      src: "img/shipping.png",
+      alt: ""
+    }
+  }), _vm._v(" "), _c("b", [_vm._v("ENVÍOS GRATIS A TODO EL MUNDO")])]), _vm._v(" "), _c("div", {
+    staticClass: "text-end text-primary"
+  }, [_c("b", {
+    staticStyle: {
+      "padding-right": "5px"
+    }
+  }, [_vm._v("ESPAÑOL")])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("a", {
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("SUBIR OBRA "), _c("i", {
+    staticClass: "fa-solid fa-arrow-up-from-bracket"
+  })]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "sidenav_footer"
+  }, [_c("a", {
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("CERRAR SESIÓN")])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "flex-fill d-flex justify-content-center"
+  }, [_c("div", {
     staticClass: "site-logo"
   }, [_c("a", {
     attrs: {
       href: "index.html"
     }
   }, [_c("img", {
-    staticStyle: {
-      width: "220px"
-    },
     attrs: {
       src: "/images/Logo_Myeart.svg",
       alt: ""
     }
-  })])]), _vm._v(" "), _c("nav", {
+  })])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "flex-fill d-none d-md-block d-lg-block"
+  }, [_c("nav", {
     staticClass: "main-menu"
   }, [_c("ul", [_c("li", {
     staticClass: "current-list-item"
@@ -161,16 +311,34 @@ var staticRenderFns = [function () {
       background: "transparent",
       "border-color": "#FFF"
     }
-  }, [_vm._v("CERRAR SESIÓN")])])])])]), _vm._v(" "), _c("a", {
-    staticClass: "mobile-show search-bar-icon",
-    attrs: {
-      href: "#"
+  }, [_vm._v("CERRAR SESIÓN")])])])])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "flex-fill d-block d-md-none d-lg-none"
+  }, [_c("div", {
+    staticClass: "w-100 d-flex justify-content-center",
+    staticStyle: {
+      height: "100%",
+      "font-size": "20px",
+      "padding-top": "10px"
     }
+  }, [_c("div", {
+    staticClass: "flex-fill"
   }, [_c("i", {
-    staticClass: "fas fa-search"
+    staticClass: "fa-regular fa-user"
   })]), _vm._v(" "), _c("div", {
-    staticClass: "mobile-menu"
-  })])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex-fill"
+  }, [_c("i", {
+    staticClass: "fa-solid fa-cart-shopping"
+  })])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
     staticClass: "hero-area hero-bg"
   }, [_c("div", {
     staticClass: "container"
@@ -225,7 +393,12 @@ var staticRenderFns = [function () {
     attrs: {
       href: "#"
     }
-  }, [_vm._v("Action")])])])])])])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Action")])])])])])])])])])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
     staticClass: "section"
   }, [_c("div", {
     staticClass: "container"
@@ -641,7 +814,12 @@ var staticRenderFns = [function () {
     }
   })]), _vm._v(" "), _c("h5", [_c("i", {
     staticClass: "fa-regular fa-heart"
-  })])])])])])])])])])])])])])]), _vm._v(" "), _c("div", {
+  })])])])])])])])])])])])])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
     staticClass: "user-section"
   }, [_c("div", {
     staticClass: "container"
@@ -660,7 +838,10 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "property-slider-wrap"
   }, [_c("div", {
-    staticClass: "property-slider"
+    staticClass: "property-slider",
+    staticStyle: {
+      "padding-bottom": "20px"
+    }
   }, [_c("div", {
     staticClass: "property-item"
   }, [_c("div", {
@@ -851,7 +1032,12 @@ var staticRenderFns = [function () {
     staticClass: "col-md-12 text-center"
   }, [_c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
-  }, [_vm._v("SEGUIR")])])])])])])])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("SEGUIR")])])])])])])])])])])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
     staticClass: "section"
   }, [_c("div", {
     staticClass: "container"
@@ -866,7 +1052,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-sm-12 col-md-4 col-lg-4",
+    staticClass: "col-sm-12 col-md-4 col-lg-4 d-flex justify-content-center",
     staticStyle: {
       "padding-left": "5px",
       "padding-right": "5px"
@@ -942,7 +1128,7 @@ var staticRenderFns = [function () {
       color: "#CCCCCC"
     }
   }, [_vm._v("10 comentarios")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-sm-12 col-md-4 col-lg-4",
+    staticClass: "col-sm-12 col-md-4 col-lg-4 d-flex justify-content-center",
     staticStyle: {
       "padding-left": "5px",
       "padding-right": "5px"
@@ -1018,7 +1204,7 @@ var staticRenderFns = [function () {
       color: "#CCCCCC"
     }
   }, [_vm._v("10 comentarios")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-sm-12 col-md-4 col-lg-4",
+    staticClass: "col-sm-12 col-md-4 col-lg-4 d-flex justify-content-center",
     staticStyle: {
       "padding-left": "5px",
       "padding-right": "5px"
@@ -1097,7 +1283,12 @@ var staticRenderFns = [function () {
     staticClass: "col-12 text-center"
   }, [_c("button", {
     staticClass: "btn btn-dark btn-lg"
-  }, [_vm._v("\n                        VER MAS\n                    ")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        VER MAS\n                    ")])])])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
     staticClass: "section"
   }, [_c("div", {
     staticClass: "container"
@@ -1229,7 +1420,12 @@ var staticRenderFns = [function () {
     staticClass: "col-12 text-center"
   }, [_c("button", {
     staticClass: "btn btn-dark btn-lg"
-  }, [_vm._v("\n                        VER MAS\n                    ")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        VER MAS\n                    ")])])])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
     staticClass: "search-section"
   }, [_c("div", {
     staticClass: "container text-center"
@@ -1240,15 +1436,13 @@ var staticRenderFns = [function () {
   }, [_vm._v("El newsletter para grandes artistas")]), _vm._v(" "), _c("div", {
     staticClass: "hero-btns d-flex justify-content-center"
   }, [_c("div", {
-    staticClass: "input-group",
-    staticStyle: {
-      width: "50%"
-    }
+    staticClass: "input-group"
   }, [_c("input", {
     staticClass: "form-control",
     staticStyle: {
       height: "60px",
-      "border-radius": "0px"
+      "border-radius": "0px",
+      opacity: "0.5"
     },
     attrs: {
       type: "text",
@@ -1269,14 +1463,19 @@ var staticRenderFns = [function () {
     staticStyle: {
       "margin-top": "20px"
     }
-  }, [_vm._v("100% arte, 0% spam, lo prometemos.")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("100% arte, 0% spam, lo prometemos.")])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
     staticClass: "section-dark"
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {
     staticClass: "row justify-content-md-center"
   }, [_c("div", {
-    staticClass: "col col-lg-3"
+    staticClass: "col-lg-3 col-sm-12 col-xs-12"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
   }, [_c("img", {
@@ -1294,7 +1493,7 @@ var staticRenderFns = [function () {
   }, [_vm._v("PAGO SEGURO")]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center"
   }, [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")])]), _vm._v(" "), _c("div", {
-    staticClass: "col col-lg-3 text-center"
+    staticClass: "col-lg-3 text-center col-sm-12 col-xs-12"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
   }, [_c("img", {
@@ -1312,7 +1511,7 @@ var staticRenderFns = [function () {
   }, [_vm._v("ARTISTAS VERIFICADOS")]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center"
   }, [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")])]), _vm._v(" "), _c("div", {
-    staticClass: "col col-lg-3"
+    staticClass: "col-lg-3 col-sm-12 col-xs-12"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
   }, [_c("img", {
@@ -1330,7 +1529,7 @@ var staticRenderFns = [function () {
   }, [_vm._v("OBRAS ORIGINALES")]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center"
   }, [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")])]), _vm._v(" "), _c("div", {
-    staticClass: "col col-lg-3"
+    staticClass: "col-lg-3 col-sm-12 col-xs-12"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
   }, [_c("img", {
@@ -1347,7 +1546,12 @@ var staticRenderFns = [function () {
     staticClass: "text-white text-center"
   }, [_vm._v("SOPORTE 24 HORAS")]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center"
-  }, [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")])])])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
     staticClass: "container-fluid bg-white text-dark footer pt-5 wow fadeIn",
     attrs: {
       "data-wow-delay": "0.1s"
@@ -1357,7 +1561,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "row g-5 justify-content-md-center"
   }, [_c("div", {
-    staticClass: "col-lg-2 col-md-6"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile"
   }, [_c("img", {
     staticStyle: {
       width: "220px"
@@ -1367,7 +1571,7 @@ var staticRenderFns = [function () {
       alt: ""
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2 col-md-6"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile"
   }, [_c("h5", {
     staticClass: "text-dark mb-2"
   }, [_vm._v("AYUDA NOSOTROS")]), _vm._v(" "), _c("p", {
@@ -1383,7 +1587,7 @@ var staticRenderFns = [function () {
       "margin-bottom": "1px"
     }
   }, [_vm._v("Pregunta Frecuentes")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2 col-md-6"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile"
   }, [_c("h5", {
     staticClass: "text-dark mb-2"
   }, [_vm._v("POLÍTICAS")]), _vm._v(" "), _c("p", {
@@ -1403,7 +1607,7 @@ var staticRenderFns = [function () {
       "margin-bottom": "1px"
     }
   }, [_vm._v("Soporte")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2 col-md-6"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile"
   }, [_c("h5", {
     staticClass: "text-dark mb-2"
   }, [_vm._v("CONTACTO")]), _vm._v(" "), _c("p", {
@@ -1478,7 +1682,7 @@ var staticRenderFns = [function () {
       src: "images/icon-comerce/GooglePay.png",
       alt: "Responsive image"
     }
-  })])])])])])])]);
+  })])])])])])]);
 }];
 render._withStripped = true;
 

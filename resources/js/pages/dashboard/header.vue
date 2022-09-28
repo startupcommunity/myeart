@@ -1,37 +1,99 @@
 <template>
     <div>
+        <div class="d-flex align-items-center header-info">
+            <div class="flex-grow-1 text-center text-dark">
+                <img src="img/shipping.png" alt="" /> <b>ENVÍOS GRATIS A TODO EL MUNDO</b>
+            </div>
+            <div class="text-end text-primary">
+                <b style="padding-right:5px">ESPAÑOL</b>
+            </div>
+        </div>
         <!-- header -->
         <div class="top-header-area" id="sticker">
+            <div id="mySidenav" class="sidenav">
+                <div class="sidenav_header">
+                    <button href="#" class="closebtn" v-on:click="closeNav()"><i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+                <div class="sidenav_body">
+                    <div class="w-100 d-flex justify-content-center">
+                        <label style="border: 2px solid #B2794C;padding: 5px;border-radius: 50%;">
+                            <v-avatar size="120">
+                                <v-img
+                                    :src="'./img/avatar.png'"
+                                    :lazy-src="'./img/avatar.png'"
+                                    @error="'URL ON ERROR'"
+                                >
+                                    <!-- ALSO, YOU CAN USE A LOADING ANIMATION -->
+                                    <template v-slot:placeholder>  
+                                        <v-progress-circular
+                                            style="margin-top:40px"
+                                            indeterminate
+                                            color="custm_theme_6"
+                                        ></v-progress-circular> 
+                                    </template>
+                                </v-img>
+                            </v-avatar>
+                        </label>
+                    </div>
+                    <span>Artista/Fotografia</span>
+                    <a href="#">SUBIR OBRA <i class="fa-solid fa-arrow-up-from-bracket"></i></a>
+                    <a href="#">OBRAS</a>
+                    <a href="#">ARTISTAS</a>
+                    <a href="#">EVENTOS</a>
+                    <a href="#">MI COMUNIDAD</a>
+                </div>
+                <div class="sidenav_footer">
+                    <a href="#">CERRAR SESIÓN</a>
+                </div>
+            </div>
+            
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 text-center">
                         <div class="main-menu-wrap">
-                            <!-- logo -->
-                            <div class="site-logo">
-                                <a href="index.html">
-                                    <img src="/images/Logo_Myeart.svg" alt="" style="width: 220px;" >
-                                </a>
-                            </div>
-                            <!-- logo -->
-
-                            <!-- menu start -->
-                            <nav class="main-menu">
-                                <ul>
-                                    <li class="current-list-item"><a href="#">OBRAS</a></li>
-                                    <li><a href="about.html">ARTISTAS</a></li>
-                                    <li><a href="news.html">EVENTOS</a></li>
-                                    <li><a href="contact.html">MI COMUNIDAD</a></li>
-                                    <li>
-                                        <div class="header-icons">
-                                            <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-user" style="margin-right:5px;"></i> ldalvarado</a>
-                                            <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart" style="margin-right:5px;"></i> 00.00</a>
-                                            <button class="btn btn-secondary text-white" style="background:transparent;border-color:#FFF">CERRAR SESIÓN</button>
+                            <div class="d-flex">
+                                <div class="flex-fill d-block d-md-none d-lg-none">
+                                    <div class="w-100 d-flex justify-content-center" style="height:100%;font-size: 20px;padding-top:10px;">
+                                        <i class="fa-solid fa-bars" v-on:click="openNav()"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-fill d-flex justify-content-center">
+                                    <!-- logo -->
+                                    <div class="site-logo">
+                                        <a href="index.html">
+                                            <img src="/images/Logo_Myeart.svg" alt=""  >
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="flex-fill d-none d-md-block d-lg-block">
+                                    <!-- menu start -->
+                                    <nav class="main-menu">
+                                        <ul>
+                                            <li class="current-list-item"><a href="#">OBRAS</a></li>
+                                            <li><a href="about.html">ARTISTAS</a></li>
+                                            <li><a href="news.html">EVENTOS</a></li>
+                                            <li><a href="contact.html">MI COMUNIDAD</a></li>
+                                            <li>
+                                                <div class="header-icons">
+                                                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-user" style="margin-right:5px;"></i> ldalvarado</a>
+                                                    <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart" style="margin-right:5px;"></i> 00.00</a>
+                                                    <button class="btn btn-secondary text-white" style="background:transparent;border-color:#FFF">CERRAR SESIÓN</button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="flex-fill d-block d-md-none d-lg-none">
+                                    <div class="w-100 d-flex justify-content-center" style="height:100%;font-size: 20px;padding-top:10px;">
+                                        <div class="flex-fill">
+                                            <i class="fa-regular fa-user"></i>
                                         </div>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-                            <div class="mobile-menu"></div>
+                                        <div class="flex-fill">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- menu end -->
                         </div>
                     </div>
@@ -282,7 +344,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="property-slider-wrap">
-                            <div class="property-slider">
+                            <div class="property-slider" style="padding-bottom:20px;">
                                 <div class="property-item">
                                     <div class="card" style="width:18rem;">
                                         <div class="card-body">
@@ -406,7 +468,7 @@
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12 col-md-4 col-lg-4" style="padding-left:5px;padding-right:5px;"> 
+                    <div class="col-sm-12 col-md-4 col-lg-4 d-flex justify-content-center" style="padding-left:5px;padding-right:5px;"> 
                         <div class="card" style="max-width: 22rem;border-radius:0px;border:0px;">
                             <div class="d-flex align-items-center">
                                 <div>
@@ -442,7 +504,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4" style="padding-left:5px;padding-right:5px;"> 
+                    <div class="col-sm-12 col-md-4 col-lg-4 d-flex justify-content-center" style="padding-left:5px;padding-right:5px;"> 
                         <div class="card" style="max-width: 22rem;border-radius:0px;border:0px;">
                             <div class="d-flex align-items-center">
                                 <div>
@@ -478,7 +540,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4" style="padding-left:5px;padding-right:5px;"> 
+                    <div class="col-sm-12 col-md-4 col-lg-4 d-flex justify-content-center" style="padding-left:5px;padding-right:5px;"> 
                         <div class="card" style="max-width: 22rem;border-radius:0px;border:0px;">
                             <div class="d-flex align-items-center">
                                 <div>
@@ -598,8 +660,8 @@
             <div class="container text-center">
                 <h2 style="font-size: 48px;">El newsletter para grandes artistas</h2>
                 <div class="hero-btns d-flex justify-content-center">
-                    <div class="input-group" style="width:50%">
-                        <input type="text" style="height:60px;border-radius:0px;" class="form-control" aria-label="Text input with dropdown button">
+                    <div class="input-group">
+                        <input type="text" style="height:60px;border-radius:0px;opacity: 0.5;" class="form-control" aria-label="Text input with dropdown button">
                         <div class="input-group-append">
                             <button style="padding-left: 20px;padding-right: 20px;" class="btn btn-dark " type="button">SUSCRÍBETE</button>
                         </div>
@@ -611,28 +673,28 @@
         <div class="section-dark">
             <div class="container">
                 <div class="row justify-content-md-center">
-                    <div class="col col-lg-3">
+                    <div class="col-lg-3 col-sm-12 col-xs-12">
                         <div class="w-100 d-flex justify-content-center">
                             <img src="images/icon/shiel1.png" class="img-thumbnail" style="border: none;margin-bottom: 20px;background: transparent;" />
                         </div>
                         <h6 class="text-white text-center">PAGO SEGURO</h6>
                         <h6 class="text-white text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h6>
                     </div>
-                    <div class="col col-lg-3 text-center">
+                    <div class="col-lg-3 text-center col-sm-12 col-xs-12">
                         <div class="w-100 d-flex justify-content-center">
                             <img src="images/icon/shiel2.png" class="img-thumbnail" style="border: none;margin-bottom: 20px;background: transparent;" />
                         </div>
                         <h6 class="text-white text-center">ARTISTAS VERIFICADOS</h6>
                         <h6 class="text-white text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h6>
                     </div>
-                    <div class="col col-lg-3">
+                    <div class="col-lg-3 col-sm-12 col-xs-12">
                         <div class="w-100 d-flex justify-content-center">
                             <img src="images/icon/pintaje.png" class="img-thumbnail" style="border: none;margin-bottom: 20px;background: transparent;" />
                         </div>
                         <h6 class="text-white text-center">OBRAS ORIGINALES</h6>
                         <h6 class="text-white text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h6>
                     </div>
-                    <div class="col col-lg-3">
+                    <div class="col-lg-3 col-sm-12 col-xs-12">
                         <div class="w-100 d-flex justify-content-center">
                             <img src="images/icon/music.png" class="img-thumbnail" style="border: none;margin-bottom: 20px;background: transparent;" />
                         </div>
@@ -646,23 +708,23 @@
         <div class="container-fluid bg-white text-dark footer pt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="d-flex justify-content-center">
                 <div class="row g-5  justify-content-md-center">
-                    <div class="col-lg-2 col-md-6">
+                    <div class="col-lg-2 col-md-6 col-sm-12 center-mobile">
                         <img src="/images/myHeartBlack.png" alt="" style="width: 220px;" >
                     </div>
-                    <div class="col-lg-2 col-md-6">
+                    <div class="col-lg-2 col-md-6 col-sm-12 center-mobile">
                         <h5 class="text-dark mb-2">AYUDA NOSOTROS</h5>
                         <p style="margin-bottom:1px;">Quienes</p>
                         <p style="margin-bottom:1px;">Somos</p>
                         <p style="margin-bottom:1px;">Pregunta Frecuentes</p>
                     </div>
-                    <div class="col-lg-2 col-md-6">
+                    <div class="col-lg-2 col-md-6 col-sm-12 center-mobile">
                         <h5 class="text-dark mb-2">POLÍTICAS</h5>
                         <p style="margin-bottom:1px;">Politicas de Envio</p>
                         <p style="margin-bottom:1px;">Politicas de Privacidad</p>
                         <p style="margin-bottom:1px;">Terminos y Condiciones</p>
                         <p style="margin-bottom:1px;">Soporte</p>
                     </div>
-                    <div class="col-lg-2 col-md-6">
+                    <div class="col-lg-2 col-md-6 col-sm-12 center-mobile">
                         <h5 class="text-dark mb-2">CONTACTO</h5>
                         <p style="margin-bottom:1px;">Call Us: 344-755-111</p>
                         <p style="margin-bottom:1px;">support@aazztech.com</p>
@@ -695,6 +757,16 @@
 
 <script>
     export default {
-        name:'app-header'
+        name:'app-header',
+        methods:{
+            openNav(){
+                document.getElementById("mySidenav").style.display = "block";
+                document.getElementById("mySidenav").style.width = "80%";
+            },
+            closeNav(){
+                document.getElementById("mySidenav").style.display = "none";
+                document.getElementById("mySidenav").style.width = "0";
+            }
+        }
     }
 </script>

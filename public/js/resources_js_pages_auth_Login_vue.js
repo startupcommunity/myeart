@@ -49,7 +49,7 @@ function login() {
       type: "success"
     });
 
-    _this.$router.push('/dashboard');
+    _this.$router.push('/');
   });
 } //computed
 
