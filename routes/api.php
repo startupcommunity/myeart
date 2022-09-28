@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PaisesController;
 use App\Http\Controllers\ArtisticActivitysController;
 use App\Http\Controllers\UserInformationsController;
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,3 +30,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     $user->perfil = $user->perfil();
     return $user;
 });
+
+Route::middleware('auth:api')->get('/users', [UserInformationsController::class, 'getAll']);
+Route::middleware('auth:api')->get('/user-detail/{id}', [UserInformationsController::class, 'getUser']);
+Route::middleware('auth:api')->post('/addOrUpdateUser', [UserInformationsController::class, 'addOrUpdateUser']);
+Route::middleware('auth:api')->delete('/deleteUser/{id}', [UserInformationsController::class, 'deleteUser']);

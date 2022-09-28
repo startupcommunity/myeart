@@ -2574,20 +2574,15 @@ var app = new Vue({
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log(_this.$router.currentRoute);
-
               if (!_this.$store.getters.isAuthenticated) {
-                _context.next = 5;
+                _context.next = 3;
                 break;
               }
 
-              _context.next = 4;
+              _context.next = 3;
               return _this.$store.dispatch('userRequest');
 
-            case 4:
-              console.log(_this.$route.path);
-
-            case 5:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -2617,7 +2612,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "API_URL": () => (/* binding */ API_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var API_URL = 'https://test.myeart.org/';
+var API_URL = 'http://127.0.0.1:8000/';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (API_URL);
 
 /***/ }),
@@ -4538,12 +4533,12 @@ var ifAuthenticated = function ifAuthenticated(to, from, next) {
     return;
   }
 
-  next('/dashboard');
+  next('/home');
 };
 
 var routes = [{
   name: 'home',
-  path: '/',
+  path: '/home',
   component: Home,
   beforeEnter: ifNotAuthenticated
 }, {

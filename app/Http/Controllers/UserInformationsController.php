@@ -6,6 +6,7 @@ use App\Models\UserInformations;
 use Illuminate\Http\Request;
 use DB;
 use Validator;
+use App\Models\User;
 class UserInformationsController extends Controller
 {
     /**
@@ -78,6 +79,71 @@ class UserInformationsController extends Controller
             DB::rollBack();
             return response()->json($e,422);
         }
+    }
+
+    public function getAll(Request $request){
+        $user = $request->user();
+        $users = User::select("users.*", DB::raw('DATE_FORMAT(users.created_at, "%Y-%m-%d %H:%i") as created_up'), DB::raw('DATE_FORMAT(users.updated_at, "%Y-%m-%d %H:%i") as updated_up'))->
+        where("id","!=",$user->id)->get();
+        return $users;
+    }
+
+    public function getUser($id){
+        $user = User::where('id',$id)->first();
+        return $user;
+    }
+
+    public function addOrUpdateUser(Request $request){
+        $validator;
+
+        if($request->id){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:80',
+                'username' => 'required|string|max:50',
+                'email' => 'required|email',
+                'password' => 'nullable|min:6',
+            ]);
+        }else{
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:80',
+                'username' => 'required|string|max:50|unique:users',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6',
+            ]);
+        }
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = new User();
+        if($request->id){
+            $user = User::where('id',$request->id)->first();
+        }
+        $user->username = $request->username;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if($request->password){$user->password = bcrypt( $request->password );}
+        $user->save();
+
+        if($request->id){
+            return response()->json([
+                'message' => 'Se actualizo el usuario'
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'Se registro el usuario'
+            ], 200);
+        }
+    }
+    public function deleteUser($id){
+        $user = User::where('id',$id)->first();
+        $user->delete();
+        return response()->json([
+            'message' => 'Registro eliminado'
+        ], 200);;
     }
     /**
      * Get validation rules.

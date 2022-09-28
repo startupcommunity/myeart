@@ -19,13 +19,13 @@ const ifAuthenticated = (to, from, next) => {
         next();
         return
     }
-    next('/dashboard')
+    next('/home');
 }
 
 export const routes = [
     {
         name: 'home',
-        path: '/',
+        path: '/home',
         component: Home,
         beforeEnter: ifNotAuthenticated,
     },

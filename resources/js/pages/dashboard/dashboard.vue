@@ -1,9 +1,15 @@
 <template>
-    <h1>LOGEADO</h1>
+    <div class="dashboard">
+        <AppHeader></AppHeader>
+    </div>
 </template>
 
 <script>
-export default {
-    name:'dashboard'
-}
+    import AppHeader from './header'
+    export default {
+        name:'dashboard',
+        components:{
+            AppHeader
+        }
+    }
 </script>
