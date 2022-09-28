@@ -66,7 +66,7 @@
                 text: 'Logeado con exito',
                 type: "success"
             });
-            this.$router.push('/dashboard')
+            this.$router.push('/')
         })
     }
     //computed

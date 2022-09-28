@@ -51,7 +51,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-12" style="text-align: end;">
-                                                <label for="" style="border-bottom: 2px solid #FFF;cursor:pointer;" v-on:click="$router.push('/dashboard')">Definir en otro momento</label>
+                                                <label for="" style="border-bottom: 2px solid #FFF;cursor:pointer;" v-on:click="$router.push('/')">Definir en otro momento</label>
                                             </div>
                                         </div>
                                     </tab-content>
