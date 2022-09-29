@@ -2,7 +2,7 @@
     <div>
         <div class="d-flex align-items-center header-info">
             <div class="flex-grow-1 text-center text-dark">
-                <img src="img/shipping.png" alt="" /> <b>ENVÍOS GRATIS A TODO EL MUNDO</b>
+                <img src="img/shipping.png" alt="" style="width: 42px;height: 42px;"/> <b>ENVÍOS GRATIS A TODO EL MUNDO</b>
             </div>
             <div class="text-end text-primary">
                 <b style="padding-right:5px">ESPAÑOL</b>
@@ -22,6 +22,8 @@
                                     :src="'./img/avatar.png'"
                                     :lazy-src="'./img/avatar.png'"
                                     @error="'URL ON ERROR'"
+                                    width="118px"
+                                    height="118px"
                                 >
                                     <!-- ALSO, YOU CAN USE A LOADING ANIMATION -->
                                     <template v-slot:placeholder>  
@@ -47,7 +49,7 @@
                 </div>
             </div>
             
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 text-center">
                         <div class="main-menu-wrap">
@@ -68,16 +70,16 @@
                                 <div class="flex-fill d-none d-md-block d-lg-block">
                                     <!-- menu start -->
                                     <nav class="main-menu">
-                                        <ul>
+                                        <ul style="text-align:left">
                                             <li class="current-list-item"><a href="#">OBRAS</a></li>
                                             <li><a href="about.html">ARTISTAS</a></li>
                                             <li><a href="news.html">EVENTOS</a></li>
                                             <li><a href="contact.html">MI COMUNIDAD</a></li>
                                             <li>
                                                 <div class="header-icons">
-                                                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-user" style="margin-right:5px;"></i> ldalvarado</a>
+                                                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-user" style="margin-right:5px;"></i> {{ perfilUsers.username }}</a>
                                                     <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart" style="margin-right:5px;"></i> 00.00</a>
-                                                    <button class="btn btn-secondary text-white" style="background:transparent;border-color:#FFF">CERRAR SESIÓN</button>
+                                                    <button class="btn btn-primary text-white" style="margin-right: 32px;">SUBIR OBRA</button>
                                                 </div>
                                             </li>
                                         </ul>
@@ -107,7 +109,7 @@
                     <div class="col-lg-9 offset-lg-2 text-center">
                         <div class="hero-text">
                             <div class="hero-text-tablecell">
-                                <h2 style="font-size: 48px;">El <span class="text-primary">arte</span> que todos llevamos dentro</h2>
+                                <h2>El <span class="text-primary">arte</span> que todos llevamos dentro</h2>
                                 <div class="hero-btns d-flex justify-content-center">
                                     <div class="input-group" style="width:80%">
                                         <input type="text" style="height:50px" class="form-control" aria-label="Text input with dropdown button">
@@ -136,12 +138,11 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="property-slider-wrap">
-                            <div class="property-slider">
-                                <!-- .item -->
+                            <div id="slider-publish" class="property-slider">
                                 <div class="property-item">
                                     <div class="card"  style="width: 28rem;border-radius:0px;border:0px;">
                                         <img src="images/img_2.png" class="card-img-top" style="border-radius:0px;">
@@ -344,19 +345,17 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="property-slider-wrap">
-                            <div class="property-slider" style="padding-bottom:20px;">
+                            <div id="slider-user" class="property-slider">
                                 <div class="property-item">
-                                    <div class="card" style="width:18rem;">
+                                    <div class="card card-especial" style="width:238px;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
+                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
                                                 </div>
                                                 <div class="col-md-12 text-center">
-                                                    <h5 class="text-black">Inés Alfonzo</h5>
+                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
                                                     <span class="text-primary">Pintora</span>
-                                                </div>
-                                                <div class="col-md-12 text-center">
                                                     <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
                                                 </div>
                                                 <div class="col-md-12 text-center">
@@ -367,17 +366,15 @@
                                     </div>
                                 </div>
                                 <div class="property-item">
-                                    <div class="card" style="width:18rem;">
+                                    <div class="card card-especial" style="width:238px;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
+                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
                                                 </div>
                                                 <div class="col-md-12 text-center">
-                                                    <h5 class="text-black">Inés Alfonzo</h5>
+                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
                                                     <span class="text-primary">Pintora</span>
-                                                </div>
-                                                <div class="col-md-12 text-center">
                                                     <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
                                                 </div>
                                                 <div class="col-md-12 text-center">
@@ -388,17 +385,15 @@
                                     </div>
                                 </div>
                                 <div class="property-item">
-                                    <div class="card" style="width:18rem;">
+                                    <div class="card card-especial" style="width:238px;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
+                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
                                                 </div>
                                                 <div class="col-md-12 text-center">
-                                                    <h5 class="text-black">Inés Alfonzo</h5>
+                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
                                                     <span class="text-primary">Pintora</span>
-                                                </div>
-                                                <div class="col-md-12 text-center">
                                                     <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
                                                 </div>
                                                 <div class="col-md-12 text-center">
@@ -409,17 +404,15 @@
                                     </div>
                                 </div>
                                 <div class="property-item">
-                                    <div class="card" style="width:18rem;">
+                                    <div class="card card-especial" style="width:238px;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
+                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
                                                 </div>
                                                 <div class="col-md-12 text-center">
-                                                    <h5 class="text-black">Inés Alfonzo</h5>
+                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
                                                     <span class="text-primary">Pintora</span>
-                                                </div>
-                                                <div class="col-md-12 text-center">
                                                     <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
                                                 </div>
                                                 <div class="col-md-12 text-center">
@@ -430,17 +423,53 @@
                                     </div>
                                 </div>
                                 <div class="property-item">
-                                    <div class="card" style="width:18rem;">
+                                    <div class="card card-especial" style="width:238px;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
+                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
                                                 </div>
                                                 <div class="col-md-12 text-center">
-                                                    <h5 class="text-black">Inés Alfonzo</h5>
+                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
                                                     <span class="text-primary">Pintora</span>
+                                                    <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
                                                 </div>
                                                 <div class="col-md-12 text-center">
+                                                    <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="property-item">
+                                    <div class="card card-especial" style="width:238px;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12 d-flex justify-content-center">
+                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                                </div>
+                                                <div class="col-md-12 text-center">
+                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
+                                                    <span class="text-primary">Pintora</span>
+                                                    <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
+                                                </div>
+                                                <div class="col-md-12 text-center">
+                                                    <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="property-item">
+                                    <div class="card card-especial" style="width:238px;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12 d-flex justify-content-center">
+                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                                </div>
+                                                <div class="col-md-12 text-center">
+                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
+                                                    <span class="text-primary">Pintora</span>
                                                     <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
                                                 </div>
                                                 <div class="col-md-12 text-center">
@@ -756,8 +785,62 @@
 </template>
 
 <script>
+    import { tns } from "tiny-slider/src/tiny-slider";
+
+    function mounted(){
+        var slider = tns({
+            container: '#slider-user',
+            mode: 'carousel',
+            speed: 700,
+            gutter: 30,
+            items: 3,
+            autoplay: true,
+            controls: false,
+            mouseDrag: true,
+            autoplayButtonOutput: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                700: {
+                    items: 2
+                },
+                900: {
+                    items: 4
+                }
+            }
+        });
+
+        var slider = tns({
+            container: '#slider-publish',
+            mode: 'carousel',
+            speed: 700,
+            gutter: 30,
+            items: 3,
+            autoplay: true,
+            controls: false,
+            mouseDrag: true,
+            autoplayButtonOutput: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                700: {
+                    items: 2
+                },
+                900: {
+                    items: 3
+                }
+            }
+        });
+    }
+
+    function perfilUsers() {
+        return this.$store.getters.getProfile;
+    }
     export default {
         name:'app-header',
+        mounted,
         methods:{
             openNav(){
                 document.getElementById("mySidenav").style.display = "block";
@@ -767,6 +850,9 @@
                 document.getElementById("mySidenav").style.display = "none";
                 document.getElementById("mySidenav").style.width = "0";
             }
+        },
+        computed:{
+            perfilUsers,
         }
     }
 </script>
