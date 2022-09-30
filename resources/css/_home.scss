@@ -1,7 +1,32 @@
 .dashboard{
     font-style: normal;
+    font-family: 'Montserrat';
+
     .text-black{
         color:#000;
+    }
+
+    .controls {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: absolute;
+        left: 0;
+        width: 100%;    
+        top: 50%;
+        transform: translatey(-50%);
+        display: flex;
+        align-items: center;    
+        justify-content: space-between;
+        color: #FFFFFF;
+        font-size: 22px;
+        &:focus {
+            outline: none;
+        }
+    
+        li:hover {
+            cursor: pointer;        
+        }
     }
     
     .sidenav {
@@ -132,10 +157,8 @@
 
         font-style: normal;
         font-weight: 700;
-        font-size: 13px;
-        line-height: 16px;
-        /* identical to box height */
-
+        font-size: 10px;
+        line-height: 12px;
         letter-spacing: 0.37em;
 
         color: #FFFFFF;
@@ -265,14 +288,7 @@
     }
     
     nav.main-menu ul li.current-list-item > a {
-        color: #F28123;
-        font-style: normal;
-        font-weight: 700;
-        font-size: 13px;
-        line-height: 16px;
-        /* identical to box height */
-
-        letter-spacing: 0.37em;
+        color: #F28123;   
     }
     
     nav.main-menu li:hover > a {
@@ -1022,6 +1038,7 @@
                 text-align: center;
             }
         }
+        padding: 1.5rem .75rem;
     }
 
     .user-section{

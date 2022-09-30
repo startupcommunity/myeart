@@ -49,7 +49,7 @@
                 </div>
             </div>
             
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 text-center">
                         <div class="main-menu-wrap">
@@ -138,184 +138,194 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="property-slider-wrap">
-                            <div id="slider-publish" class="property-slider">
-                                <div class="property-item">
-                                    <div class="card"  style="width: 28rem;border-radius:0px;border:0px;">
-                                        <img src="images/img_2.png" class="card-img-top" style="border-radius:0px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-7" style="padding-right: 5px;padding-left: 5px;">
-                                                    <h5>Customer focused context sensitive encoding</h5>
-                                                    <div class="d-flex justify-content-end">
-                                                        <div class="flex-fill">
-                                                            <a href="#" class="text-primary">Arte Abstracto</a>
-                                                        </div>
-                                                        <div class="flex-fill" style="margin-left:10px;">
-                                                            <a href="#" class="text-primary">Pintura</a>
-                                                        </div>
-                                                        <div class="flex-fill" style="margin-left:10px;">
-                                                            <a href="#" class="text-primary">Óleo</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-5" style="padding-right: 5px;padding-left: 5px;">
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <div class="flex-fill">
-                                                            <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
-                                                        </div>
-                                                        <div class="flex-fill text-center">
-                                                            Inés carraspo
-                                                            <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12" style="border-top: 1px solid #000000;">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-fill">
-                                                            <h5>692.000,00 €</h5>
-                                                        </div>
-                                                        <div class="flex-fill d-flex justify-content-end" style="color:#CCCCCC;">
-                                                            <h5><i class="fa-regular fa-bookmark" style="margin-right:10px;"></i></h5>
-                                                            <h5><i class="fa-regular fa-heart"></i></h5>
+                            <ul class="controls" id="customize-controls-publish" aria-label="Carousel Navigation" tabindex="0" style="color: #000000">
+                                <li class="prev" data-controls="prev" aria-controls="customize" tabindex="-1">
+                                    <i class="fas fa-angle-left"></i>
+                                </li>
+                                <li class="next" data-controls="next" aria-controls="customize" tabindex="-1">
+                                    <i class="fas fa-angle-right"></i>          
+                                </li>
+                            </ul>
+                            <div class="container" style="padding-left:30px;padding-right:40px;">
+                                <div id="slider-publish" class="property-slider">
+                                    <div class="property-item">
+                                        <div class="card"  style="width: 28rem;border-radius:0px;border:0px;">
+                                            <img src="images/img_2.png" class="card-img-top" style="border-radius:0px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-7" style="padding-right: 5px;padding-left: 5px;">
+                                                        <h5>Customer focused context sensitive encoding</h5>
+                                                        <div class="d-flex justify-content-end">
+                                                            <div class="flex-fill">
+                                                                <a href="#" class="text-primary">Arte Abstracto</a>
+                                                            </div>
+                                                            <div class="flex-fill" style="margin-left:10px;">
+                                                                <a href="#" class="text-primary">Pintura</a>
+                                                            </div>
+                                                            <div class="flex-fill" style="margin-left:10px;">
+                                                                <a href="#" class="text-primary">Óleo</a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="property-item">
-                                    <div class="card"  style="width: 28rem;border-radius:0px;border:0px;">
-                                        <img src="images/img_2.png" class="card-img-top" style="border-radius:0px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-7" style="padding-right: 5px;padding-left: 5px;">
-                                                    <h5>Customer focused context sensitive encoding</h5>
-                                                    <div class="d-flex justify-content-end">
-                                                        <div class="flex-fill">
-                                                            <a href="#" class="text-primary">Arte Abstracto</a>
-                                                        </div>
-                                                        <div class="flex-fill" style="margin-left:10px;">
-                                                            <a href="#" class="text-primary">Pintura</a>
-                                                        </div>
-                                                        <div class="flex-fill" style="margin-left:10px;">
-                                                            <a href="#" class="text-primary">Óleo</a>
+                                                    <div class="col-md-5" style="padding-right: 5px;padding-left: 5px;">
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="flex-fill">
+                                                                <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
+                                                            </div>
+                                                            <div class="flex-fill text-center">
+                                                                Inés carraspo
+                                                                <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-5" style="padding-right: 5px;padding-left: 5px;">
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <div class="flex-fill">
-                                                            <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
-                                                        </div>
-                                                        <div class="flex-fill text-center">
-                                                            Inés carraspo
-                                                            <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12" style="border-top: 1px solid #000000;">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-fill">
-                                                            <h5>692.000,00 €</h5>
-                                                        </div>
-                                                        <div class="flex-fill d-flex justify-content-end" style="color:#CCCCCC;">
-                                                            <h5><i class="fa-regular fa-bookmark" style="margin-right:10px;"></i></h5>
-                                                            <h5><i class="fa-regular fa-heart"></i></h5>
+                                                    <div class="col-md-12" style="border-top: 1px solid #000000;">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-fill">
+                                                                <h5>692.000,00 €</h5>
+                                                            </div>
+                                                            <div class="flex-fill d-flex justify-content-end" style="color:#CCCCCC;">
+                                                                <h5><i class="fa-regular fa-bookmark" style="margin-right:10px;"></i></h5>
+                                                                <h5><i class="fa-regular fa-heart"></i></h5>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="property-item">
-                                    <div class="card"  style="width: 28rem;border-radius:0px;border:0px;">
-                                        <img src="images/img_2.png" class="card-img-top" style="border-radius:0px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-7" style="padding-right: 5px;padding-left: 5px;">
-                                                    <h5>Customer focused context sensitive encoding</h5>
-                                                    <div class="d-flex justify-content-end">
-                                                        <div class="flex-fill">
-                                                            <a href="#" class="text-primary">Arte Abstracto</a>
-                                                        </div>
-                                                        <div class="flex-fill" style="margin-left:10px;">
-                                                            <a href="#" class="text-primary">Pintura</a>
-                                                        </div>
-                                                        <div class="flex-fill" style="margin-left:10px;">
-                                                            <a href="#" class="text-primary">Óleo</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-5" style="padding-right: 5px;padding-left: 5px;">
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <div class="flex-fill">
-                                                            <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
-                                                        </div>
-                                                        <div class="flex-fill text-center">
-                                                            Inés carraspo
-                                                            <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                    <div class="property-item">
+                                        <div class="card"  style="width: 28rem;border-radius:0px;border:0px;">
+                                            <img src="images/img_2.png" class="card-img-top" style="border-radius:0px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-7" style="padding-right: 5px;padding-left: 5px;">
+                                                        <h5>Customer focused context sensitive encoding</h5>
+                                                        <div class="d-flex justify-content-end">
+                                                            <div class="flex-fill">
+                                                                <a href="#" class="text-primary">Arte Abstracto</a>
+                                                            </div>
+                                                            <div class="flex-fill" style="margin-left:10px;">
+                                                                <a href="#" class="text-primary">Pintura</a>
+                                                            </div>
+                                                            <div class="flex-fill" style="margin-left:10px;">
+                                                                <a href="#" class="text-primary">Óleo</a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12" style="border-top: 1px solid #000000;">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-fill">
-                                                            <h5>692.000,00 €</h5>
+                                                    <div class="col-md-5" style="padding-right: 5px;padding-left: 5px;">
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="flex-fill">
+                                                                <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
+                                                            </div>
+                                                            <div class="flex-fill text-center">
+                                                                Inés carraspo
+                                                                <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="flex-fill d-flex justify-content-end" style="color:#CCCCCC;">
-                                                            <h5><i class="fa-regular fa-bookmark" style="margin-right:10px;"></i></h5>
-                                                            <h5><i class="fa-regular fa-heart"></i></h5>
+                                                    </div>
+                                                    <div class="col-md-12" style="border-top: 1px solid #000000;">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-fill">
+                                                                <h5>692.000,00 €</h5>
+                                                            </div>
+                                                            <div class="flex-fill d-flex justify-content-end" style="color:#CCCCCC;">
+                                                                <h5><i class="fa-regular fa-bookmark" style="margin-right:10px;"></i></h5>
+                                                                <h5><i class="fa-regular fa-heart"></i></h5>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="property-item">
-                                    <div class="card"  style="width: 28rem;border-radius:0px;border:0px;">
-                                        <img src="images/img_2.png" class="card-img-top" style="border-radius:0px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-7" style="padding-right: 5px;padding-left: 5px;">
-                                                    <h5>Customer focused context sensitive encoding</h5>
-                                                    <div class="d-flex justify-content-end">
-                                                        <div class="flex-fill">
-                                                            <a href="#" class="text-primary">Arte Abstracto</a>
+                                    <div class="property-item">
+                                        <div class="card"  style="width: 28rem;border-radius:0px;border:0px;">
+                                            <img src="images/img_2.png" class="card-img-top" style="border-radius:0px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-7" style="padding-right: 5px;padding-left: 5px;">
+                                                        <h5>Customer focused context sensitive encoding</h5>
+                                                        <div class="d-flex justify-content-end">
+                                                            <div class="flex-fill">
+                                                                <a href="#" class="text-primary">Arte Abstracto</a>
+                                                            </div>
+                                                            <div class="flex-fill" style="margin-left:10px;">
+                                                                <a href="#" class="text-primary">Pintura</a>
+                                                            </div>
+                                                            <div class="flex-fill" style="margin-left:10px;">
+                                                                <a href="#" class="text-primary">Óleo</a>
+                                                            </div>
                                                         </div>
-                                                        <div class="flex-fill" style="margin-left:10px;">
-                                                            <a href="#" class="text-primary">Pintura</a>
+                                                    </div>
+                                                    <div class="col-md-5" style="padding-right: 5px;padding-left: 5px;">
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="flex-fill">
+                                                                <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
+                                                            </div>
+                                                            <div class="flex-fill text-center">
+                                                                Inés carraspo
+                                                                <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="flex-fill" style="margin-left:10px;">
-                                                            <a href="#" class="text-primary">Óleo</a>
+                                                    </div>
+                                                    <div class="col-md-12" style="border-top: 1px solid #000000;">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-fill">
+                                                                <h5>692.000,00 €</h5>
+                                                            </div>
+                                                            <div class="flex-fill d-flex justify-content-end" style="color:#CCCCCC;">
+                                                                <h5><i class="fa-regular fa-bookmark" style="margin-right:10px;"></i></h5>
+                                                                <h5><i class="fa-regular fa-heart"></i></h5>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-5" style="padding-right: 5px;padding-left: 5px;">
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <div class="flex-fill">
-                                                            <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
-                                                        </div>
-                                                        <div class="flex-fill text-center">
-                                                            Inés carraspo
-                                                            <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="property-item">
+                                        <div class="card"  style="width: 28rem;border-radius:0px;border:0px;">
+                                            <img src="images/img_2.png" class="card-img-top" style="border-radius:0px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-7" style="padding-right: 5px;padding-left: 5px;">
+                                                        <h5>Customer focused context sensitive encoding</h5>
+                                                        <div class="d-flex justify-content-end">
+                                                            <div class="flex-fill">
+                                                                <a href="#" class="text-primary">Arte Abstracto</a>
+                                                            </div>
+                                                            <div class="flex-fill" style="margin-left:10px;">
+                                                                <a href="#" class="text-primary">Pintura</a>
+                                                            </div>
+                                                            <div class="flex-fill" style="margin-left:10px;">
+                                                                <a href="#" class="text-primary">Óleo</a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12" style="border-top: 1px solid #000000;">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-fill">
-                                                            <h5>692.000,00 €</h5>
+                                                    <div class="col-md-5" style="padding-right: 5px;padding-left: 5px;">
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="flex-fill">
+                                                                <img src="images/avatar.png" class="img-thumbnail" style="border: none;" />
+                                                            </div>
+                                                            <div class="flex-fill text-center">
+                                                                Inés carraspo
+                                                                <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="flex-fill d-flex justify-content-end" style="color:#CCCCCC;">
-                                                            <h5><i class="fa-regular fa-bookmark" style="margin-right:10px;"></i></h5>
-                                                            <h5><i class="fa-regular fa-heart"></i></h5>
+                                                    </div>
+                                                    <div class="col-md-12" style="border-top: 1px solid #000000;">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-fill">
+                                                                <h5>692.000,00 €</h5>
+                                                            </div>
+                                                            <div class="flex-fill d-flex justify-content-end" style="color:#CCCCCC;">
+                                                                <h5><i class="fa-regular fa-bookmark" style="margin-right:10px;"></i></h5>
+                                                                <h5><i class="fa-regular fa-heart"></i></h5>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -345,135 +355,145 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="property-slider-wrap">
-                            <div id="slider-user" class="property-slider">
-                                <div class="property-item">
-                                    <div class="card card-especial" style="width:238px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
-                                                    <span class="text-primary">Pintora</span>
-                                                    <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="property-item">
-                                    <div class="card card-especial" style="width:238px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
-                                                    <span class="text-primary">Pintora</span>
-                                                    <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                            <ul class="controls" id="customize-controls" aria-label="Carousel Navigation" tabindex="0">
+                                <li class="prev" data-controls="prev" aria-controls="customize" tabindex="-1">
+                                    <i class="fas fa-angle-left"></i>
+                                </li>
+                                <li class="next" data-controls="next" aria-controls="customize" tabindex="-1">
+                                    <i class="fas fa-angle-right"></i>          
+                                </li>
+                            </ul>
+                            <div class="container" style="padding-left:30px;padding-right:40px;">
+                                <div id="slider-user" class="property-slider">
+                                    <div class="property-item">
+                                        <div class="card card-especial" style="width:238px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 d-flex justify-content-center">
+                                                        <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <h5 class="text-black mb-0">Inés Alfonzo</h5>
+                                                        <span class="text-primary">Pintora</span>
+                                                        <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="property-item">
-                                    <div class="card card-especial" style="width:238px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
-                                                    <span class="text-primary">Pintora</span>
-                                                    <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="property-item">
-                                    <div class="card card-especial" style="width:238px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
-                                                    <span class="text-primary">Pintora</span>
-                                                    <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                    <div class="property-item">
+                                        <div class="card card-especial" style="width:238px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 d-flex justify-content-center">
+                                                        <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <h5 class="text-black mb-0">Inés Alfonzo</h5>
+                                                        <span class="text-primary">Pintora</span>
+                                                        <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="property-item">
-                                    <div class="card card-especial" style="width:238px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
-                                                    <span class="text-primary">Pintora</span>
-                                                    <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="property-item">
-                                    <div class="card card-especial" style="width:238px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
-                                                    <span class="text-primary">Pintora</span>
-                                                    <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
-                                                </div>
-                                                <div class="col-md-12 text-center">
-                                                    <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                    <div class="property-item">
+                                        <div class="card card-especial" style="width:238px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 d-flex justify-content-center">
+                                                        <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <h5 class="text-black mb-0">Inés Alfonzo</h5>
+                                                        <span class="text-primary">Pintora</span>
+                                                        <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="property-item">
-                                    <div class="card card-especial" style="width:238px;">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12 d-flex justify-content-center">
-                                                    <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                    <div class="property-item">
+                                        <div class="card card-especial" style="width:238px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 d-flex justify-content-center">
+                                                        <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <h5 class="text-black mb-0">Inés Alfonzo</h5>
+                                                        <span class="text-primary">Pintora</span>
+                                                        <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-12 text-center">
-                                                    <h5 class="text-black mb-0">Inés Alfonzo</h5>
-                                                    <span class="text-primary">Pintora</span>
-                                                    <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="property-item">
+                                        <div class="card card-especial" style="width:238px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 d-flex justify-content-center">
+                                                        <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <h5 class="text-black mb-0">Inés Alfonzo</h5>
+                                                        <span class="text-primary">Pintora</span>
+                                                        <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-12 text-center">
-                                                    <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="property-item">
+                                        <div class="card card-especial" style="width:238px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 d-flex justify-content-center">
+                                                        <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <h5 class="text-black mb-0">Inés Alfonzo</h5>
+                                                        <span class="text-primary">Pintora</span>
+                                                        <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="property-item">
+                                        <div class="card card-especial" style="width:238px;">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 d-flex justify-content-center">
+                                                        <img src="images/avatar_artista.png" class="img-thumbnail" style="border: none;" />
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <h5 class="text-black mb-0">Inés Alfonzo</h5>
+                                                        <span class="text-primary">Pintora</span>
+                                                        <p class="text-black" style="font-style:italic;">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et elementum nisl. Maecenas accumsan...”</p>
+                                                    </div>
+                                                    <div class="col-md-12 text-center">
+                                                        <button class="btn btn-primary btn-block btn-sm">SEGUIR</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -781,7 +801,6 @@
             </div>
         </div>
     </div>
-    
 </template>
 
 <script>
@@ -795,9 +814,9 @@
             gutter: 30,
             items: 3,
             autoplay: true,
-            controls: false,
             mouseDrag: true,
             autoplayButtonOutput: false,
+            controlsContainer: "#customize-controls",
             responsive: {
                 0: {
                     items: 1
@@ -818,9 +837,10 @@
             gutter: 30,
             items: 3,
             autoplay: true,
-            controls: false,
             mouseDrag: true,
             autoplayButtonOutput: false,
+            center: true,
+            controlsContainer: "#customize-controls-publish",
             responsive: {
                 0: {
                     items: 1
@@ -828,9 +848,6 @@
                 700: {
                     items: 2
                 },
-                900: {
-                    items: 3
-                }
             }
         });
     }

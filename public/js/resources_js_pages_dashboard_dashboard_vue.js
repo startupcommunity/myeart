@@ -43,9 +43,9 @@ function mounted() {
     gutter: 30,
     items: 3,
     autoplay: true,
-    controls: false,
     mouseDrag: true,
     autoplayButtonOutput: false,
+    controlsContainer: "#customize-controls",
     responsive: {
       0: {
         items: 1
@@ -65,18 +65,16 @@ function mounted() {
     gutter: 30,
     items: 3,
     autoplay: true,
-    controls: false,
     mouseDrag: true,
     autoplayButtonOutput: false,
+    center: true,
+    controlsContainer: "#customize-controls-publish",
     responsive: {
       0: {
         items: 1
       },
       700: {
         items: 2
-      },
-      900: {
-        items: 3
       }
     }
   });
@@ -229,7 +227,7 @@ var render = function render() {
       href: "#"
     }
   }, [_vm._v("MI COMUNIDAD")])]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c("div", {
-    staticClass: "container-fluid"
+    staticClass: "container"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -492,13 +490,47 @@ var staticRenderFns = [function () {
   }, [_c("h2", {
     staticClass: "font-weight-bold text-primary heading"
   }, [_vm._v("\n                        ¿Aún no te decides?\n                    ")]), _vm._v(" "), _c("span", [_vm._v("Echa un vistazo a las últimas publicaciones...")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container-fluid"
+    staticClass: "container"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-12"
   }, [_c("div", {
     staticClass: "property-slider-wrap"
+  }, [_c("ul", {
+    staticClass: "controls",
+    staticStyle: {
+      color: "#000000"
+    },
+    attrs: {
+      id: "customize-controls-publish",
+      "aria-label": "Carousel Navigation",
+      tabindex: "0"
+    }
+  }, [_c("li", {
+    staticClass: "prev",
+    attrs: {
+      "data-controls": "prev",
+      "aria-controls": "customize",
+      tabindex: "-1"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-angle-left"
+  })]), _vm._v(" "), _c("li", {
+    staticClass: "next",
+    attrs: {
+      "data-controls": "next",
+      "aria-controls": "customize",
+      tabindex: "-1"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-angle-right"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "container",
+    staticStyle: {
+      "padding-left": "30px",
+      "padding-right": "40px"
+    }
   }, [_c("div", {
     staticClass: "property-slider",
     attrs: {
@@ -580,7 +612,7 @@ var staticRenderFns = [function () {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "flex-fill text-center"
-  }, [_vm._v("\n                                                        Inés carraspo\n                                                        "), _c("button", {
+  }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("SEGUIR")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12",
@@ -679,7 +711,7 @@ var staticRenderFns = [function () {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "flex-fill text-center"
-  }, [_vm._v("\n                                                        Inés carraspo\n                                                        "), _c("button", {
+  }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("SEGUIR")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12",
@@ -778,7 +810,7 @@ var staticRenderFns = [function () {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "flex-fill text-center"
-  }, [_vm._v("\n                                                        Inés carraspo\n                                                        "), _c("button", {
+  }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("SEGUIR")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12",
@@ -877,7 +909,7 @@ var staticRenderFns = [function () {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "flex-fill text-center"
-  }, [_vm._v("\n                                                        Inés carraspo\n                                                        "), _c("button", {
+  }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("SEGUIR")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12",
@@ -900,7 +932,7 @@ var staticRenderFns = [function () {
     }
   })]), _vm._v(" "), _c("h5", [_c("i", {
     staticClass: "fa-regular fa-heart"
-  })])])])])])])])])])])])])])]);
+  })])])])])])])])])])])])])])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -923,6 +955,37 @@ var staticRenderFns = [function () {
     staticClass: "col-12"
   }, [_c("div", {
     staticClass: "property-slider-wrap"
+  }, [_c("ul", {
+    staticClass: "controls",
+    attrs: {
+      id: "customize-controls",
+      "aria-label": "Carousel Navigation",
+      tabindex: "0"
+    }
+  }, [_c("li", {
+    staticClass: "prev",
+    attrs: {
+      "data-controls": "prev",
+      "aria-controls": "customize",
+      tabindex: "-1"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-angle-left"
+  })]), _vm._v(" "), _c("li", {
+    staticClass: "next",
+    attrs: {
+      "data-controls": "next",
+      "aria-controls": "customize",
+      tabindex: "-1"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-angle-right"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "container",
+    staticStyle: {
+      "padding-left": "30px",
+      "padding-right": "40px"
+    }
   }, [_c("div", {
     staticClass: "property-slider",
     attrs: {
@@ -1180,7 +1243,7 @@ var staticRenderFns = [function () {
     staticClass: "col-md-12 text-center"
   }, [_c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
-  }, [_vm._v("SEGUIR")])])])])])])])])])])])]);
+  }, [_vm._v("SEGUIR")])])])])])])])])])])])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
