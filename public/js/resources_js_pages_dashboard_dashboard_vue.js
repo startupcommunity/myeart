@@ -33,6 +33,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tiny-slider/src/tiny-slider */ "./node_modules/tiny-slider/src/tiny-slider.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 function mounted() {
@@ -111,6 +119,10 @@ function logout() {
   });
 }
 
+function apiStateFormLoading() {
+  return this.status === 'loading';
+}
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'app-header',
   mounted: mounted,
@@ -125,9 +137,14 @@ function logout() {
       document.getElementById("mySidenav").style.width = "0";
     }
   },
-  computed: {
-    perfilUsers: perfilUsers
-  }
+  computed: _objectSpread({
+    perfilUsers: perfilUsers,
+    apiStateFormLoading: apiStateFormLoading
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)({
+    status: function status(state) {
+      return state.user.status;
+    }
+  }))
 });
 
 /***/ }),
@@ -173,7 +190,13 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_vm._m(0), _vm._v(" "), _c("div", {
+  return _c("div", [_c("loading-overlay", {
+    attrs: {
+      active: _vm.apiStateFormLoading,
+      "is-full-page": true,
+      loader: "bars"
+    }
+  }), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "top-header-area",
     attrs: {
       id: "sticker"
@@ -326,7 +349,7 @@ var render = function render() {
         return _vm.logout.apply(null, arguments);
       }
     }
-  }, [_vm._v("Cerrar sesión")])])])]), _vm._v(" "), _vm._m(8)])])])])]), _vm._v(" "), _vm._m(9)])])])])])]), _vm._v(" "), _vm._m(10), _vm._v(" "), _vm._m(11), _vm._v(" "), _vm._m(12), _vm._v(" "), _vm._m(13), _vm._v(" "), _vm._m(14), _vm._v(" "), _vm._m(15), _vm._v(" "), _vm._m(16), _vm._v(" "), _vm._m(17)]);
+  }, [_vm._v("Cerrar sesión")])])])]), _vm._v(" "), _vm._m(8)])])])])]), _vm._v(" "), _vm._m(9)])])])])])]), _vm._v(" "), _vm._m(10), _vm._v(" "), _vm._m(11), _vm._v(" "), _vm._m(12), _vm._v(" "), _vm._m(13), _vm._v(" "), _vm._m(14), _vm._v(" "), _vm._m(15), _vm._v(" "), _vm._m(16), _vm._v(" "), _vm._m(17)], 1);
 };
 
 var staticRenderFns = [function () {

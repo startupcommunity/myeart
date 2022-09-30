@@ -169,7 +169,6 @@
         background-color: transparent;
         color: #FFF;
         width: 220px;
-        padding: 15px 15px;
         margin: 0;
         left: 0;
         top: 50px;
@@ -186,7 +185,7 @@
     
     nav.main-menu ul ul.sub-menu li {
         display: block;
-        text-align: left;
+        text-align: center;
     }
     
     nav.main-menu ul ul.sub-menu li a {
@@ -488,8 +487,11 @@
         transition: 0.3s;
     }
     
-    ul.sub-menu li:hover a {
-        color: #F28123;
+    ul.sub-menu li:hover {
+        background:rgb(141, 141, 141);
+        opacity: 1;
+        color: #fff ;
+        opacity: 0.7;
     }
     
     .single-tof-box {
@@ -716,10 +718,6 @@
         -webkit-transition: 0.3s;
         -o-transition: 0.3s;
         transition: 0.3s;
-    }
-    
-    ul.sub-menu li:hover a {
-        color: #F28123 !important;
     }
     
     .sidebar-section ul li a {

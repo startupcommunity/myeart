@@ -1,5 +1,6 @@
 <template>
     <div>
+        <loading-overlay :active="apiStateFormLoading" :is-full-page="true" loader="bars"/>
         <div class="d-flex align-items-center header-info">
             <div class="flex-grow-1 text-center text-dark">
                 <img src="img/shipping.png" alt="" style="width: 42px;height: 42px;"/> <b>ENVÍOS GRATIS A TODO EL MUNDO</b>
@@ -835,7 +836,7 @@
 
 <script>
     import { tns } from "tiny-slider/src/tiny-slider";
-
+    import { mapState } from 'vuex';
     function mounted(){
         var slider1 = tns({
             container: '#slider-user',
@@ -912,6 +913,10 @@
             this.$router.push('/home')
         })
     }
+
+    function apiStateFormLoading(){
+        return this.status === 'loading';
+    }
     export default {
         name:'app-header',
         mounted,
@@ -928,6 +933,10 @@
         },
         computed:{
             perfilUsers,
+            apiStateFormLoading,
+            ...mapState({
+                status: state=> state.user.status,
+            })
         }
     }
 </script>

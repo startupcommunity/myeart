@@ -403,7 +403,6 @@
   background-color: transparent;
   color: #FFF;
   width: 220px;
-  padding: 15px 15px;
   margin: 0;
   left: 0;
   top: 50px;
@@ -416,7 +415,7 @@
 }
 .dashboard nav.main-menu ul ul.sub-menu li {
   display: block;
-  text-align: left;
+  text-align: center;
 }
 .dashboard nav.main-menu ul ul.sub-menu li a {
   color: #FFF;
@@ -637,8 +636,11 @@
 .dashboard ul.sub-menu a {
   transition: 0.3s;
 }
-.dashboard ul.sub-menu li:hover a {
-  color: #F28123;
+.dashboard ul.sub-menu li:hover {
+  background: rgb(141, 141, 141);
+  opacity: 1;
+  color: #fff;
+  opacity: 0.7;
 }
 .dashboard .single-tof-box {
   transition: 0.3s;
@@ -774,9 +776,6 @@
 }
 .dashboard ul.sub-menu li a {
   transition: 0.3s;
-}
-.dashboard ul.sub-menu li:hover a {
-  color: #F28123 !important;
 }
 .dashboard .sidebar-section ul li a {
   transition: 0.3s;

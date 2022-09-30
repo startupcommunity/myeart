@@ -26,13 +26,11 @@
                         <input v-model="user.password" type="password" placeholder="Contraseña" class="input100" />
                         <span class="focus-input100 password-input"></span>
                     </div>
-
                     <div class="container-login-form-btn">
 						<button :to="{ name: 'register' }" class="btn btn-primary login-form-btn" type="submit">
 							Iniciar sesión
 						</button>
 					</div>
-
                     <div class="container-login-form-btn">
 						<button class="btn btn-primary google-form-btn">
 							Entrar Con <img src="../../../../public/img/image 31.png" width="70px" style="margin-top:4px"/>
@@ -60,7 +58,8 @@
     function login () {
         const { email, password, remember } = this.user;
         this.$store.dispatch('authRequest', { email, password, remember })
-        .then(() => {
+        .then(async () => {
+            await this.$store.dispatch('userRequest');
             this.$notify({
                 group: 'container',
                 text: 'Logeado con exito',
