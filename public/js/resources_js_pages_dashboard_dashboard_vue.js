@@ -36,7 +36,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function mounted() {
-  var slider = (0,tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)({
+  var slider1 = (0,tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)({
     container: '#slider-user',
     mode: 'carousel',
     speed: 700,
@@ -58,7 +58,7 @@ function mounted() {
       }
     }
   });
-  var slider = (0,tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)({
+  var slider2 = (0,tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)({
     container: '#slider-publish',
     mode: 'carousel',
     speed: 700,
@@ -78,16 +78,44 @@ function mounted() {
       }
     }
   });
+  var slider3 = (0,tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)({
+    container: '#slider-comunidad',
+    mode: 'carousel',
+    speed: 700,
+    gutter: 30,
+    items: 3,
+    autoplay: true,
+    mouseDrag: true,
+    autoplayButtonOutput: false,
+    controlsContainer: "#customize-controls-comunidad",
+    responsive: {
+      0: {
+        items: 1
+      },
+      700: {
+        items: 2
+      }
+    }
+  });
 }
 
 function perfilUsers() {
   return this.$store.getters.getProfile;
 }
 
+function logout() {
+  var _this = this;
+
+  this.$store.dispatch('authLogout').then(function () {
+    _this.$router.push('/home');
+  });
+}
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'app-header',
   mounted: mounted,
   methods: {
+    logout: logout,
     openNav: function openNav() {
       document.getElementById("mySidenav").style.display = "block";
       document.getElementById("mySidenav").style.width = "80%";
@@ -226,7 +254,19 @@ var render = function render() {
     attrs: {
       href: "#"
     }
-  }, [_vm._v("MI COMUNIDAD")])]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("MI COMUNIDAD")])]), _vm._v(" "), _c("div", {
+    staticClass: "sidenav_footer"
+  }, [_c("a", {
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.logout.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("CERRAR SESIÓN")])])]), _vm._v(" "), _c("div", {
     staticClass: "container"
   }, [_c("div", {
     staticClass: "row"
@@ -252,7 +292,7 @@ var render = function render() {
         return _vm.openNav();
       }
     }
-  })])]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
+  })])]), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
     staticClass: "flex-fill d-none d-md-block d-lg-block"
   }, [_c("nav", {
     staticClass: "main-menu"
@@ -260,7 +300,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "left"
     }
-  }, [_vm._m(4), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
+  }, [_vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
     staticClass: "header-icons"
@@ -274,7 +314,19 @@ var render = function render() {
     staticStyle: {
       "margin-right": "5px"
     }
-  }), _vm._v(" " + _vm._s(_vm.perfilUsers.username))])]), _vm._v(" "), _vm._m(8)]), _vm._v(" "), _vm._m(9)])])])])]), _vm._v(" "), _vm._m(10)])])])])])]), _vm._v(" "), _vm._m(11), _vm._v(" "), _vm._m(12), _vm._v(" "), _vm._m(13), _vm._v(" "), _vm._m(14), _vm._v(" "), _vm._m(15), _vm._v(" "), _vm._m(16), _vm._v(" "), _vm._m(17), _vm._v(" "), _vm._m(18)]);
+  }), _vm._v(" " + _vm._s(_vm.perfilUsers.username))])]), _vm._v(" "), _c("ul", {
+    staticClass: "sub-menu"
+  }, [_vm._m(7), _vm._v(" "), _c("li", [_c("a", {
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.logout.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("Cerrar sesión")])])])]), _vm._v(" "), _vm._m(8)])])])])]), _vm._v(" "), _vm._m(9)])])])])])]), _vm._v(" "), _vm._m(10), _vm._v(" "), _vm._m(11), _vm._v(" "), _vm._m(12), _vm._v(" "), _vm._m(13), _vm._v(" "), _vm._m(14), _vm._v(" "), _vm._m(15), _vm._v(" "), _vm._m(16), _vm._v(" "), _vm._m(17)]);
 };
 
 var staticRenderFns = [function () {
@@ -312,17 +364,6 @@ var staticRenderFns = [function () {
   }, [_vm._v("SUBIR OBRA "), _c("i", {
     staticClass: "fa-solid fa-arrow-up-from-bracket"
   })]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "sidenav_footer"
-  }, [_c("a", {
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("CERRAR SESIÓN")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -383,17 +424,11 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("ul", {
-    staticClass: "sub-menu"
-  }, [_c("li", [_c("a", {
+  return _c("li", [_c("a", {
     attrs: {
-      href: "shop.html"
+      href: "#"
     }
-  }, [_vm._v("Ver perfil")])]), _vm._v(" "), _c("li", [_c("a", {
-    attrs: {
-      href: "checkout.html"
-    }
-  }, [_vm._v("Cerrar sesión")])])]);
+  }, [_vm._v("Ver perfil")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -501,19 +536,28 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "section"
   }, [_c("div", {
-    staticClass: "container"
+    staticClass: "container",
+    staticStyle: {
+      "padding-bottom": "0px"
+    }
   }, [_c("div", {
-    staticClass: "row mb-5 align-items-center"
+    staticClass: "row align-items-center"
   }, [_c("div", {
     staticClass: "col-lg-6"
   }, [_c("h2", {
-    staticClass: "font-weight-bold text-primary heading"
+    staticClass: "font-weight-bold text-dark heading"
   }, [_vm._v("\n                        ¿Aún no te decides?\n                    ")]), _vm._v(" "), _c("span", [_vm._v("Echa un vistazo a las últimas publicaciones...")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container"
+    staticClass: "container",
+    staticStyle: {
+      "padding-top": "0px"
+    }
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-12"
+    staticClass: "col-12",
+    staticStyle: {
+      "padding-top": "0px"
+    }
   }, [_c("div", {
     staticClass: "property-slider-wrap"
   }, [_c("ul", {
@@ -560,7 +604,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "card",
     staticStyle: {
-      width: "28rem",
+      width: "27rem",
       "border-radius": "0px",
       border: "0px"
     }
@@ -582,30 +626,28 @@ var staticRenderFns = [function () {
       "padding-right": "5px",
       "padding-left": "5px"
     }
-  }, [_c("h5", [_vm._v("Customer focused context sensitive encoding")]), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-end"
+  }, [_c("h6", {
+    staticStyle: {
+      "margin-bottom": "0px"
+    }
+  }, [_c("b", [_vm._v("Customer focused context sensitive encoding")])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex flex-row"
   }, [_c("div", {
-    staticClass: "flex-fill"
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
       href: "#"
     }
   }, [_vm._v("Arte Abstracto")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill",
-    staticStyle: {
-      "margin-left": "10px"
-    }
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
       href: "#"
     }
   }, [_vm._v("Pintura")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill",
-    staticStyle: {
-      "margin-left": "10px"
-    }
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
@@ -630,7 +672,10 @@ var staticRenderFns = [function () {
       src: "images/avatar.png"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill text-center"
+    staticClass: "flex-fill text-center",
+    staticStyle: {
+      "font-size": "14px"
+    }
   }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("SEGUIR")])])])]), _vm._v(" "), _c("div", {
@@ -659,7 +704,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "card",
     staticStyle: {
-      width: "28rem",
+      width: "27rem",
       "border-radius": "0px",
       border: "0px"
     }
@@ -681,30 +726,28 @@ var staticRenderFns = [function () {
       "padding-right": "5px",
       "padding-left": "5px"
     }
-  }, [_c("h5", [_vm._v("Customer focused context sensitive encoding")]), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-end"
+  }, [_c("h6", {
+    staticStyle: {
+      "margin-bottom": "0px"
+    }
+  }, [_c("b", [_vm._v("Customer focused context sensitive encoding")])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex flex-row"
   }, [_c("div", {
-    staticClass: "flex-fill"
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
       href: "#"
     }
   }, [_vm._v("Arte Abstracto")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill",
-    staticStyle: {
-      "margin-left": "10px"
-    }
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
       href: "#"
     }
   }, [_vm._v("Pintura")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill",
-    staticStyle: {
-      "margin-left": "10px"
-    }
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
@@ -729,7 +772,10 @@ var staticRenderFns = [function () {
       src: "images/avatar.png"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill text-center"
+    staticClass: "flex-fill text-center",
+    staticStyle: {
+      "font-size": "14px"
+    }
   }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("SEGUIR")])])])]), _vm._v(" "), _c("div", {
@@ -758,7 +804,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "card",
     staticStyle: {
-      width: "28rem",
+      width: "27rem",
       "border-radius": "0px",
       border: "0px"
     }
@@ -780,30 +826,28 @@ var staticRenderFns = [function () {
       "padding-right": "5px",
       "padding-left": "5px"
     }
-  }, [_c("h5", [_vm._v("Customer focused context sensitive encoding")]), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-end"
+  }, [_c("h6", {
+    staticStyle: {
+      "margin-bottom": "0px"
+    }
+  }, [_c("b", [_vm._v("Customer focused context sensitive encoding")])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex flex-row"
   }, [_c("div", {
-    staticClass: "flex-fill"
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
       href: "#"
     }
   }, [_vm._v("Arte Abstracto")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill",
-    staticStyle: {
-      "margin-left": "10px"
-    }
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
       href: "#"
     }
   }, [_vm._v("Pintura")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill",
-    staticStyle: {
-      "margin-left": "10px"
-    }
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
@@ -828,7 +872,10 @@ var staticRenderFns = [function () {
       src: "images/avatar.png"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill text-center"
+    staticClass: "flex-fill text-center",
+    staticStyle: {
+      "font-size": "14px"
+    }
   }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("SEGUIR")])])])]), _vm._v(" "), _c("div", {
@@ -857,7 +904,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "card",
     staticStyle: {
-      width: "28rem",
+      width: "27rem",
       "border-radius": "0px",
       border: "0px"
     }
@@ -879,30 +926,28 @@ var staticRenderFns = [function () {
       "padding-right": "5px",
       "padding-left": "5px"
     }
-  }, [_c("h5", [_vm._v("Customer focused context sensitive encoding")]), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-end"
+  }, [_c("h6", {
+    staticStyle: {
+      "margin-bottom": "0px"
+    }
+  }, [_c("b", [_vm._v("Customer focused context sensitive encoding")])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex flex-row"
   }, [_c("div", {
-    staticClass: "flex-fill"
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
       href: "#"
     }
   }, [_vm._v("Arte Abstracto")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill",
-    staticStyle: {
-      "margin-left": "10px"
-    }
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
       href: "#"
     }
   }, [_vm._v("Pintura")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill",
-    staticStyle: {
-      "margin-left": "10px"
-    }
+    staticClass: "p-2"
   }, [_c("a", {
     staticClass: "text-primary",
     attrs: {
@@ -927,7 +972,10 @@ var staticRenderFns = [function () {
       src: "images/avatar.png"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill text-center"
+    staticClass: "flex-fill text-center",
+    staticStyle: {
+      "font-size": "14px"
+    }
   }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("SEGUIR")])])])]), _vm._v(" "), _c("div", {
@@ -959,19 +1007,28 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "user-section"
   }, [_c("div", {
-    staticClass: "container"
+    staticClass: "container",
+    staticStyle: {
+      "padding-bottom": "0px"
+    }
   }, [_c("div", {
-    staticClass: "row mb-5 align-items-center"
+    staticClass: "row align-items-center"
   }, [_c("div", {
     staticClass: "col-lg-6"
   }, [_c("h2", {
     staticClass: "font-weight-bold text-white heading"
   }, [_vm._v("\n                        Artistas que quizás te puedan interesar...\n                    ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container"
+    staticClass: "container",
+    staticStyle: {
+      "padding-top": "0px"
+    }
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-12"
+    staticClass: "col-12",
+    staticStyle: {
+      "padding-top": "0px"
+    }
   }, [_c("div", {
     staticClass: "property-slider-wrap"
   }, [_c("ul", {
@@ -1270,27 +1327,75 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "section"
   }, [_c("div", {
-    staticClass: "container"
+    staticClass: "container",
+    staticStyle: {
+      "padding-bottom": "0px"
+    }
   }, [_c("div", {
-    staticClass: "row mb-5 align-items-center"
+    staticClass: "row align-items-center"
   }, [_c("div", {
     staticClass: "col-lg-6"
   }, [_c("h2", {
     staticClass: "font-weight-bold text-black heading"
   }, [_vm._v("\n                        Mi comunidad\n                    ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container"
+    staticClass: "container",
+    staticStyle: {
+      "padding-top": "0px"
+    }
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-sm-12 col-md-4 col-lg-4 d-flex justify-content-center",
+    staticClass: "col-12",
     staticStyle: {
-      "padding-left": "5px",
-      "padding-right": "5px"
+      "padding-top": "0px"
     }
+  }, [_c("div", {
+    staticClass: "property-slider-wrap"
+  }, [_c("ul", {
+    staticClass: "controls",
+    staticStyle: {
+      color: "#000000"
+    },
+    attrs: {
+      id: "customize-controls-comunidad",
+      "aria-label": "Carousel Navigation",
+      tabindex: "0"
+    }
+  }, [_c("li", {
+    staticClass: "prev",
+    attrs: {
+      "data-controls": "prev",
+      "aria-controls": "customize",
+      tabindex: "-1"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-angle-left"
+  })]), _vm._v(" "), _c("li", {
+    staticClass: "next",
+    attrs: {
+      "data-controls": "next",
+      "aria-controls": "customize",
+      tabindex: "-1"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-angle-right"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "container",
+    staticStyle: {
+      "padding-left": "30px",
+      "padding-right": "40px"
+    }
+  }, [_c("div", {
+    staticClass: "property-slider",
+    attrs: {
+      id: "slider-comunidad"
+    }
+  }, [_c("div", {
+    staticClass: "property-item"
   }, [_c("div", {
     staticClass: "card",
     staticStyle: {
-      "max-width": "22rem",
+      "max-width": "30rem",
       "border-radius": "0px",
       border: "0px"
     }
@@ -1358,15 +1463,11 @@ var staticRenderFns = [function () {
       color: "#CCCCCC"
     }
   }, [_vm._v("10 comentarios")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-sm-12 col-md-4 col-lg-4 d-flex justify-content-center",
-    staticStyle: {
-      "padding-left": "5px",
-      "padding-right": "5px"
-    }
+    staticClass: "property-item"
   }, [_c("div", {
     staticClass: "card",
     staticStyle: {
-      "max-width": "22rem",
+      "max-width": "30rem",
       "border-radius": "0px",
       border: "0px"
     }
@@ -1434,15 +1535,11 @@ var staticRenderFns = [function () {
       color: "#CCCCCC"
     }
   }, [_vm._v("10 comentarios")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-sm-12 col-md-4 col-lg-4 d-flex justify-content-center",
-    staticStyle: {
-      "padding-left": "5px",
-      "padding-right": "5px"
-    }
+    staticClass: "property-item"
   }, [_c("div", {
     staticClass: "card",
     staticStyle: {
-      "max-width": "22rem",
+      "max-width": "30rem",
       "border-radius": "0px",
       border: "0px"
     }
@@ -1509,7 +1606,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       color: "#CCCCCC"
     }
-  }, [_vm._v("10 comentarios")])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("10 comentarios")])])])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 text-center"
   }, [_c("button", {
     staticClass: "btn btn-dark btn-lg"
@@ -1521,17 +1618,26 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "section"
   }, [_c("div", {
-    staticClass: "container"
+    staticClass: "container",
+    staticStyle: {
+      "padding-bottom": "0px"
+    }
   }, [_c("div", {
-    staticClass: "row mb-5 align-items-center"
+    staticClass: "row align-items-center"
   }, [_c("div", {
     staticClass: "col-lg-6"
   }, [_c("h2", {
     staticClass: "font-weight-bold text-black heading"
   }, [_vm._v("\n                        Últimas noticias en el mundo del arte...\n                    ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container"
+    staticClass: "container",
+    staticStyle: {
+      "padding-top": "0px"
+    }
   }, [_c("div", {
-    staticClass: "row"
+    staticClass: "row",
+    staticStyle: {
+      "padding-top": "0px"
+    }
   }, [_c("div", {
     staticClass: "col-sm-6 col-lg-6",
     staticStyle: {
@@ -1541,7 +1647,6 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "card",
     staticStyle: {
-      "border-radius": "0px",
       border: "0px"
     }
   }, [_c("div", {
@@ -1598,7 +1703,6 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "card",
     staticStyle: {
-      "border-radius": "0px",
       border: "0px"
     }
   }, [_c("div", {

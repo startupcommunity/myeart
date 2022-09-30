@@ -998,9 +998,21 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.dashboard .tns-item {
+  padding-top: 0px !important;
+}
+.dashboard .card:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+}
 .dashboard .property-item {
   /*flex: 0 0 auto;*/
   padding: 1.5rem 0.75rem;
+}
+.dashboard .property-item .card {
+  padding: 5px;
+}
+.dashboard .property-item .card a {
+  font-size: 12px;
 }
 .dashboard .property-item .card-especial h2 {
   font-style: normal;
@@ -1016,6 +1028,9 @@
   line-height: 164.4%;
   /* or 20px */
   text-align: center;
+}
+.dashboard .tns-nav {
+  height: 0px;
 }
 .dashboard .user-section {
   background-image: url("/images/background-user.png");
