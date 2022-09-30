@@ -74,13 +74,27 @@
                                             <li class="current-list-item"><a href="#">OBRAS</a></li>
                                             <li><a href="about.html">ARTISTAS</a></li>
                                             <li><a href="news.html">EVENTOS</a></li>
-                                            <li><a href="contact.html">MI COMUNIDAD</a></li>
+                                            <li><a href="contact.html">MI COMUNIDAD</a>
+                                                
+                                            </li>
                                             <li>
-                                                <div class="header-icons">
-                                                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-user" style="margin-right:5px;"></i> {{ perfilUsers.username }}</a>
-                                                    <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart" style="margin-right:5px;"></i> 00.00</a>
-                                                    <button class="btn btn-primary text-white" style="margin-right: 32px;">SUBIR OBRA</button>
-                                                </div>
+                                                <ul>
+                                                    <li class="menu-items-sub">
+                                                        <div class="header-icons">
+                                                            <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-user" style="margin-right:5px;"></i> {{ perfilUsers.username }}</a>
+                                                        </div>
+                                                        <ul class="sub-menu">
+                                                            <li><a href="shop.html">Ver perfil</a></li>
+                                                            <li><a href="checkout.html">Cerrar sesión</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <div class="header-icons">
+                                                            <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart" style="margin-right:5px;"></i> 00.00</a>
+                                                            <button class="btn btn-primary text-white" style="margin-right: 32px;">SUBIR OBRA</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
                                             </li>
                                         </ul>
                                     </nav>

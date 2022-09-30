@@ -260,7 +260,9 @@ var render = function render() {
     staticStyle: {
       "text-align": "left"
     }
-  }, [_vm._m(4), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7), _vm._v(" "), _c("li", [_c("div", {
+  }, [_vm._m(4), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
+    staticClass: "menu-items-sub"
+  }, [_c("div", {
     staticClass: "header-icons"
   }, [_c("a", {
     staticClass: "mobile-hide search-bar-icon",
@@ -272,12 +274,7 @@ var render = function render() {
     staticStyle: {
       "margin-right": "5px"
     }
-  }), _vm._v(" " + _vm._s(_vm.perfilUsers.username))]), _vm._v(" "), _vm._m(8), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary text-white",
-    staticStyle: {
-      "margin-right": "32px"
-    }
-  }, [_vm._v("SUBIR OBRA")])])])])])]), _vm._v(" "), _vm._m(9)])])])])])]), _vm._v(" "), _vm._m(10), _vm._v(" "), _vm._m(11), _vm._v(" "), _vm._m(12), _vm._v(" "), _vm._m(13), _vm._v(" "), _vm._m(14), _vm._v(" "), _vm._m(15), _vm._v(" "), _vm._m(16), _vm._v(" "), _vm._m(17)]);
+  }), _vm._v(" " + _vm._s(_vm.perfilUsers.username))])]), _vm._v(" "), _vm._m(8)]), _vm._v(" "), _vm._m(9)])])])])]), _vm._v(" "), _vm._m(10)])])])])])]), _vm._v(" "), _vm._m(11), _vm._v(" "), _vm._m(12), _vm._v(" "), _vm._m(13), _vm._v(" "), _vm._m(14), _vm._v(" "), _vm._m(15), _vm._v(" "), _vm._m(16), _vm._v(" "), _vm._m(17), _vm._v(" "), _vm._m(18)]);
 };
 
 var staticRenderFns = [function () {
@@ -386,7 +383,24 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("a", {
+  return _c("ul", {
+    staticClass: "sub-menu"
+  }, [_c("li", [_c("a", {
+    attrs: {
+      href: "shop.html"
+    }
+  }, [_vm._v("Ver perfil")])]), _vm._v(" "), _c("li", [_c("a", {
+    attrs: {
+      href: "checkout.html"
+    }
+  }, [_vm._v("Cerrar sesión")])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("li", [_c("div", {
+    staticClass: "header-icons"
+  }, [_c("a", {
     staticClass: "shopping-cart",
     attrs: {
       href: "cart.html"
@@ -396,7 +410,12 @@ var staticRenderFns = [function () {
     staticStyle: {
       "margin-right": "5px"
     }
-  }), _vm._v(" 00.00")]);
+  }), _vm._v(" 00.00")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary text-white",
+    staticStyle: {
+      "margin-right": "32px"
+    }
+  }, [_vm._v("SUBIR OBRA")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;

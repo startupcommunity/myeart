@@ -400,12 +400,14 @@
 }
 .dashboard nav.main-menu ul ul.sub-menu {
   position: absolute;
-  background-color: #fff;
+  background-color: transparent;
+  color: #FFF;
   width: 220px;
   padding: 15px 15px;
   margin: 0;
   left: 0;
   top: 50px;
+  border: 1px solid;
   border-radius: 3px;
   transition: 0.3s;
   opacity: 0;
@@ -417,12 +419,12 @@
   text-align: left;
 }
 .dashboard nav.main-menu ul ul.sub-menu li a {
-  color: #555;
+  color: #FFF;
   font-weight: 600;
   padding: 7px 10px;
   font-size: 13px;
 }
-.dashboard nav.main-menu ul > li:hover ul {
+.dashboard nav.main-menu ul > li .menu-items-sub:hover ul {
   opacity: 1;
   visibility: visible;
 }
@@ -490,7 +492,7 @@
   display: block;
 }
 .dashboard nav.main-menu ul ul.sub-menu li a {
-  color: #555;
+  color: #FFF;
   padding: 8px;
   font-size: 13px;
   font-weight: 600;
