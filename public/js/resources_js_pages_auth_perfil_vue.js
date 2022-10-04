@@ -1137,7 +1137,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var isValidFile = function isValidFile(value) {
   if (!value) return false;
-  if (value.type) return value.type.startsWith('image');else return value != '';
+  if (value.type) return value.type.startsWith("image");else return value != "";
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
@@ -1197,7 +1197,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".vue-form-wizard.xs .wizard-navigation .wizard-progress-with-circle {\n  position: relative;\n  top: 15px;\n  height: 4px;\n  background: #373737;\n}\n.vue-form-wizard.xs .wizard-icon-circle {\n  width: 20px;\n  height: 20px;\n  font-size: 16px;\n}\n.vue-form-wizard.xs .wizard-icon-circle {\n  width: 20px;\n  height: 20px;\n  font-size: 16px;\n  background: rgb(178, 121, 76);\n  border-color: rgb(178, 121, 76);\n}\n.wizard-navigation {\n  display: flex;\n  flex-direction: column-reverse !important;\n}\n.vue-form-wizard.xs .wizard-navigation .wizard-progress-with-circle {\n  top: -9px;\n}\n.wizard-card-footer {\n  position: fixed;\n  bottom: 12px; /* set whatever bottom margin you want */\n  width: 100%;\n}\n.vue-form-wizard .wizard-header {\n  display: none;\n}\n.vue-form-wizard .wizard-tab-content {\n  padding: 0px;\n  padding-bottom: 20px;\n}\n@media (max-width: 576px) {\n  /*.vue-form-wizard .wizard-nav-pills {\n      top: 21rem;\n  }\n  .vue-form-wizard.xs .wizard-navigation .wizard-progress-with-circle {\n      top: 22rem;\n  }*/\n}\n.input_reverse .v-input__slot {\n  flex-direction: row-reverse !important;\n}\n.v-label {\n  margin-bottom: 0px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".vue-form-wizard.xs .wizard-navigation .wizard-progress-with-circle {\n  position: relative;\n  top: 15px;\n  height: 4px;\n  background: #373737;\n}\n.vue-form-wizard.xs .wizard-icon-circle {\n  width: 20px;\n  height: 20px;\n  font-size: 16px;\n  background: rgb(178, 121, 76);\n  border-color: rgb(178, 121, 76);\n}\n.wizard-navigation {\n  display: flex;\n  flex-direction: column-reverse !important;\n}\n.vue-form-wizard.xs .wizard-navigation .wizard-progress-with-circle {\n  top: -9px;\n}\n.wizard-card-footer {\n  position: fixed;\n  bottom: 12px; /* set whatever bottom margin you want */\n  width: 100%;\n}\n.vue-form-wizard .wizard-header {\n  display: none;\n}\n.vue-form-wizard .wizard-tab-content {\n  padding: 0px;\n  padding-bottom: 20px;\n}\n@media (max-width: 576px) {\n  /*.vue-form-wizard .wizard-nav-pills {\n      top: 21rem;\n  }\n  .vue-form-wizard.xs .wizard-navigation .wizard-progress-with-circle {\n      top: 22rem;\n  }*/\n}\n.input_reverse .v-input__slot {\n  flex-direction: row-reverse !important;\n}\n.v-label {\n  margin-bottom: 0px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

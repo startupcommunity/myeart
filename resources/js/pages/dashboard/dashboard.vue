@@ -1,15 +1,15 @@
 <template>
     <div class="dashboard">
-        <AppHeader></AppHeader>
+        <Landing />
     </div>
 </template>
 
 <script>
-    import AppHeader from './header'
+    import Landing from '../landing/Landing.vue'
     export default {
         name:'dashboard',
         components:{
-            AppHeader
+            Landing
         }
     }
 </script>

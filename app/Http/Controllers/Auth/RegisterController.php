@@ -18,7 +18,8 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), $this->rules());
-        
+
+        // return $validator->fails();
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
@@ -29,7 +30,7 @@ class RegisterController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->password = bcrypt( $request->password );
+        $user->password = bcrypt($request->password);
         $user->save();
 
         return (new LoginController())->login($request);
@@ -46,7 +47,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:80',
             'username' => 'required|string|max:50|unique:users',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6|confirmed',
+            'password' => 'required|confirmed|min:6',
         ];
     }
 

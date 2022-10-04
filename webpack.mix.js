@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,8 +11,11 @@ const mix = require('laravel-mix');
  |
  */
 
- mix.js('resources/js/app.js', 'public/js')
- .vue()
- .sass('resources/css/app.scss', 'public/css', [
-     //
- ]);
+mix.js("resources/js/app.js", "public/js")
+    .vue()
+    .sass("resources/css/app.scss", "public/css", [
+        //
+    ]);
+
+// imagenes del perfil del usuario
+mix.copy("resources/img/profile", "public/img/profile");
