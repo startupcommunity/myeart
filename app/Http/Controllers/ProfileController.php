@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateOrUpdateUserRequest;
 use App\Utils\AppStorage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 
 class ProfileController extends Controller
 {
@@ -41,17 +44,17 @@ class ProfileController extends Controller
 
             if (!$updated) {
                 return response()->json([
-                    'message' => 'No se pudo actualizar la foto'
+                    'message' => Lang::get('No se pudo actualizar la foto')
                 ], 500);
             }
 
             return response()->json([
-                'message' => 'Foto de portada actualizada'
+                'message' => Lang::get('Foto de portada actualizada')
             ], 200);
         }
 
         return response()->json([
-            'message' => 'La imagen cargada no es válida'
+            'message' => Lang::get('La imagen cargada no es válida')
         ], 500);
     }
 
@@ -88,17 +91,50 @@ class ProfileController extends Controller
 
             if (!$updated) {
                 return response()->json([
-                    'message' => 'No se pudo actualizar la foto'
+                    'message' => Lang::get('No se pudo actualizar la foto')
                 ], 500);
             }
 
             return response()->json([
-                'message' => 'Foto de perfil actualizada'
+                'message' => Lang::get('Foto de perfil actualizada')
             ], 200);
         }
 
         return response()->json([
-            'message' => 'La imagen cargada no es válida'
+            'message' => Lang::get('La imagen cargada no es válida')
+        ], 500);
+    }
+
+    /**
+     * Actualiza los datos del usuario logueado
+     *
+     * @param CreateOrUpdateUserRequest $request        los datos validados
+     * @return JsonResponse
+     */
+    public function updateProfile(CreateOrUpdateUserRequest $request): JsonResponse
+    {
+        $db = DB::transaction(function () use ($request) {
+            $data = $request->all();
+            $user = auth()->user();
+            $profile = $user->profile;
+
+            $user->update(['name' => $data['name']]);
+            return $profile->update([
+                'country' => $data['country'] == 'null' ? null : $data['country'],
+                'sexo' => $data['sexo'] == 'undefined' ? $profile->sexo : $data['sexo'],
+                'lang' => $data['lang'] == 'undefined' ? $profile->lang : $data['lang'],
+                'fecha_nacimiento' => $data['fecha_nacimiento'],
+            ]);
+        });
+
+        if ($db) {
+            return response()->json([
+                'message' => Lang::get('Datos actualizados con éxito'),
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => Lang::get('Error al actualizar los datos')
         ], 500);
     }
 }

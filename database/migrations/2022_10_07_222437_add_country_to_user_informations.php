@@ -14,7 +14,7 @@ class AddCountryToUserInformations extends Migration
     public function up()
     {
         Schema::table('user_informations', function (Blueprint $table) {
-            $table->string('country', 10)->nullable()->after('lang');
+            $table->unsignedInteger('country')->nullable()->after('lang');
         });
     }
 

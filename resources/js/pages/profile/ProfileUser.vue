@@ -5,12 +5,15 @@
             :is-full-page="true"
             loader="bars"
         />
+
+        <!-- pre y header -->
         <PreHeader />
         <Header />
+        <!-- /pre y header -->
 
         <!-- sección hero -->
         <div
-            class="relative z-[1] h-[30rem] bg-no-repeat bg-cover bg-center"
+            class="relative z-[1] h-96 sm:h-[30rem] bg-no-repeat bg-cover bg-center"
             :class="!userProfile.front_photo ? 'bg-hero-profile-bg' : ''"
             :style="{
                 'background-image': userProfile.front_photo ? frontPhoto : '',
@@ -20,7 +23,9 @@
                 class="container-fluid py-0 px-4 sm:px-0 absolute -bottom-8 sm:-bottom-12"
             >
                 <div class="">
-                    <div class="flex flex-row items-center">
+                    <div
+                        class="flex flex-row items-center justify-center sm:justify-between"
+                    >
                         <div class="relative w-2/5 flex justify-center">
                             <img
                                 :src="
@@ -29,26 +34,26 @@
                                         : '/img/avatar.png'
                                 "
                                 alt="profile-photo-myaert"
-                                class="rounded-full md:w-56 md:h-56"
+                                class="border rounded-full w-52 h-52 sm:w-56 sm:h-56"
                             />
                             <div
-                                class="absolute sm:bottom-16 bottom-8 sm:pl-52 pl-32"
+                                class="absolute sm:bottom-16 bottom-6 sm:pl-52 pl-44"
                             >
                                 <button
-                                    class="rounded-full bg-white hover:bg-gray-100 px-2 py-1 text-primary text-2xl"
+                                    class="border rounded-full bg-white hover:bg-gray-100 px-2 py-1 text-primary text-2xl"
                                     @click.stop="
-                                        showModalEditProfilePhoto = true
+                                        dialogProfilePhoto = true
                                     "
                                 >
                                     <i class="fas fa-camera"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="w-3/5 flex justify-end">
+                        <div class="w-3/5 justify-end hidden sm:flex">
                             <button
                                 class="font-bold sm:text-lg text-sm lg:mr-28 text-white"
                                 type="button"
-                                @click.stop="showModalEditFrontPhoto = true"
+                                @click.stop="dialogFrontPhoto = true"
                             >
                                 <i class="fas fa-camera"></i> Editar portada
                             </button>
@@ -59,20 +64,126 @@
         </div>
         <!-- /sección hero -->
 
-        <!-- sección tabs -->
-        <div class="container-fluid bg-gray-200 py-0 px-0">
-            <div class="">
+        <!-- tabs responsiva mobile -->
+        <div class="flex flex-col justify-center items-center sm:hidden">
+            <div class="mt-12">
+                <v-btn
+                    class="text-primary font-bold"
+                    depressed
+                    text
+                    @click="editDataProfile = !editDataProfile"
+                >
+                    <i class="fa-solid fa-pen"></i> Editar perfil
+                </v-btn>
+            </div>
+            <!-- botonera -->
+            <div
+                class="flex flex-wrap justify-center items-center mt-6 text-primary text-[10px] gap-2"
+            >
+                <!-- <div class=""> -->
+                <div>
+                    <button
+                        type="button"
+                        class="flex flex-col items-center justify-start space-y-2"
+                        @click="loadSectionProfile('personal-data')"
+                    >
+                        <i class="fa fa-user fa-2x text-primary"></i>
+                        <span class="tracking-tight font-bold">
+                            Datos <br />
+                            Personales
+                        </span>
+                    </button>
+                </div>
+                <div>
+                    <button
+                        type="button"
+                        class="flex flex-col items-center justify-start space-y-2"
+                        @click="loadSectionProfile('obras')"
+                    >
+                        <i class="fas fa-palette text-primary fa-2x"></i>
+                        <span class="tracking-tight font-bold">
+                            Mis <br />
+                            Obras
+                        </span>
+                    </button>
+                </div>
+                <div>
+                    <button
+                        type="button"
+                        class="flex flex-col items-center justify-start space-y-2"
+                        @click="loadSectionProfile('pedidos')"
+                    >
+                        <i class="fas fa-shopping-cart text-primary fa-2x"></i>
+                        <span class="tracking-tight font-bold">
+                            Mis <br />
+                            Pedidos
+                        </span>
+                    </button>
+                </div>
+                <div>
+                    <button
+                        type="button"
+                        class="flex flex-col items-center justify-start space-y-2"
+                        @click="loadSectionProfile('direcciones')"
+                    >
+                        <i class="fas fa-location-arrow text-primary fa-2x"></i>
+                        <span class="tracking-tight font-bold">
+                            Mis <br />
+                            Direcciones
+                        </span>
+                    </button>
+                </div>
+                <div>
+                    <button
+                        type="button"
+                        class="flex flex-col items-center justify-start space-y-2"
+                        @click="loadSectionProfile('pagos')"
+                    >
+                        <i class="fas fa-money-check text-primary fa-2x"></i>
+                        <span class="tracking-tight font-bold">
+                            Métodos de <br />
+                            Pago
+                        </span>
+                    </button>
+                </div>
+                <div>
+                    <button
+                        type="button"
+                        class="flex flex-col items-center justify-start space-y-2"
+                        @click="loadSectionProfile('seguridad')"
+                    >
+                        <i class="fas fa-shield text-primary fa-2x"></i>
+                        <span class="tracking-tight font-bold">
+                            Privacidad <br />y Seguridad
+                        </span>
+                    </button>
+                </div>
+                <!-- </div> -->
+            </div>
+            <!-- /botonera -->
+
+            <!-- div border -->
+            <div class="w-4/5 mx-o border-t-2 border-primary my-8"></div>
+            <!-- /div border -->
+        </div>
+        <!-- /tabs responsiva mobile -->
+
+        <!-- sección tabs table++ -->
+        <div class="container-fluid bg-white sm:bg-gray-200 py-0 px-0">
+            <div>
                 <div class="flex flex-row items-center">
-                    <div class="w-2/5 bg-gray-200 px-12 py-20 h-screen">
+                    <div
+                        class="w-2/5 bg-gray-200 px-12 py-20 h-screen hidden sm:block"
+                    >
                         <h3
-                            class="text-4xl tracking-tight text-gray-900 text-center"
+                            class="text-3xl sm:text-lg md:text-3xl tracking-tight text-gray-900 text-center"
                         >
                             <b class="font-black"> {{ userProfile.name }} </b>
                         </h3>
 
                         <!-- botonera -->
                         <div class="flex justify-center mt-12">
-                            <div class="text-gray-800 text-lg">
+                            <div class="text-gray-800 sm:text-xs md:text-sm lg:text-lg">
                                 <div
                                     class="flex flex-wrap gap-4 items-center justify-start py-6"
                                 >
@@ -184,24 +295,30 @@
 
                     <!-- sección datos personales -->
                     <div
-                        class="w-3/5 bg-white px-12 py-20 h-screen animate-fade-in-down"
+                        class="w-full sm:w-3/5 bg-white px-12 sm:py-20 h-screen animate-fade-in-down"
                         id="personal-data"
                         v-show="true"
                     >
-                        <div class="flex justify-start items-center">
+                        <div class="flex justify-center items-center">
                             <div class="w-full sm:w-4/5">
                                 <p
-                                    class="font-extrabold text-4xl tracking-tight uppercase text-gray-900"
+                                    class="font-extrabold text-3xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
                                 >
-                                    Datos <br />personales
+                                    Datos personales
                                 </p>
                                 <div
-                                    class="pt-6 border-t-2 border-gray-900 w-100"
+                                    class="pt-6 border-t-2 border-gray-900 w-100 hidden sm:block"
                                 ></div>
                             </div>
-                            <div class="sm:ml-8">
-                                <v-btn class="text-primary" depressed text>
-                                    <i class="fa-solid fa-pen"></i> Editar perfil
+                            <div class="sm:ml-8 hidden sm:block">
+                                <v-btn
+                                    class="text-primary"
+                                    depressed
+                                    text
+                                    @click="editDataProfile = !editDataProfile"
+                                >
+                                    <i class="fa-solid fa-pen"></i> Editar
+                                    perfil
                                 </v-btn>
                             </div>
                         </div>
@@ -249,7 +366,7 @@
                                                 "
                                                 no-title
                                                 @input="menuPickerOne = false"
-                                                :max="dateMax"
+                                                :max="dateMaxPicker"
                                             ></v-date-picker>
                                         </v-menu>
                                     </v-col>
@@ -257,7 +374,7 @@
                                         <v-select
                                             name="sexo"
                                             v-model="userProfile.profile.sexo"
-                                            :items="listGenre"
+                                            :items="listGenre()"
                                             item-text="state"
                                             item-value="abbr"
                                             label="Sexo"
@@ -281,7 +398,7 @@
                                     <v-col cols="12" sm="6">
                                         <v-select
                                             v-model="userProfile.profile.lang"
-                                            :items="listLang"
+                                            :items="listLang()"
                                             item-text="state"
                                             item-value="abbr"
                                             label="Idioma"
@@ -289,13 +406,15 @@
                                             name="lang"
                                         ></v-select>
                                     </v-col>
-                                    <v-col cols="12">
-                                        <button
+                                    <v-col cols="12" v-if="editDataProfile">
+                                        <v-btn
+                                            class="text-primary"
+                                            outlined
                                             type="submit"
-                                            class="text-primary hover:text-gray-800 border px-3 py-2.5 border-gray-800"
                                         >
+                                            <i class="fa-solid fa-save"></i>
                                             Actualizar datos
-                                        </button>
+                                        </v-btn>
                                     </v-col>
                                 </v-row>
                             </v-form>
@@ -310,7 +429,7 @@
                         v-show="false"
                     >
                         <h3
-                            class="font-black text-4xl tracking-tight uppercase text-gray-900"
+                            class="font-black text-3xl tracking-tight uppercase text-gray-900"
                         >
                             Obras
                         </h3>
@@ -320,7 +439,7 @@
                 </div>
             </div>
         </div>
-        <!-- sección tabs -->
+        <!-- sección tabs table++ -->
 
         <!-- El Newletter para grandes artistas -->
         <Newletter />
@@ -336,14 +455,14 @@
 
         <!-- modal de edición de foto de portada -->
         <ModalFrontPhoto
-            :showModal="showModalEditFrontPhoto"
-            @close-modal-edit-front-photo="showModalEditFrontPhoto = false"
+            :showModal="dialogFrontPhoto"
+            @close-modal-edit-front-photo="dialogFrontPhoto = false"
         />
 
         <!-- modal de edición de foto de perfil -->
         <ModalProfilePhoto
-            :showModal="showModalEditProfilePhoto"
-            @close-modal-edit-profile-photo="showModalEditProfilePhoto = false"
+            :showModal="dialogProfilePhoto"
+            @close-modal-edit-profile-photo="dialogProfilePhoto = false"
         />
     </div>
 </template>
@@ -360,6 +479,11 @@ import Footer from "../landing/Footer.vue";
 import ModalFrontPhoto from "./ModalFrontPhoto.vue";
 import ModalProfilePhoto from "./ModalProfilePhoto.vue";
 
+// mixins
+import getDataMixin from "../../mixins/getDataMixin";
+import utilMixin from "../../mixins/utilMixin";
+import requestErrorsMixin from "../../mixins/requestErrorsMixin";
+
 // secciones como tabs
 const SECTIONS = {
     "personal-data": "personal-data",
@@ -372,6 +496,7 @@ const SECTIONS = {
 
 export default {
     name: "ProfileUser",
+    mixins: [getDataMixin, utilMixin, requestErrorsMixin],
     components: {
         Header,
         PreHeader,
@@ -383,19 +508,15 @@ export default {
     },
     data() {
         return {
-            profile: {
-                date: "",
-            },
             menuPickerOne: false,
-            countries: [],
-            showModalEditFrontPhoto: false,
-            showModalEditProfilePhoto: false,
+            editDataProfile: false,
+            dialogFrontPhoto: false,
+            dialogProfilePhoto: false,
         };
     },
     mounted() {
+        // ubicado en mixin
         this.getCountries();
-        console.log(this.$store.state.user);
-        // console.log(this.getProfile);
     },
     methods: {
         /**
@@ -423,33 +544,41 @@ export default {
         },
 
         /**
-         * Obtener los paises para el select del perfil del usuario
+         * Actualiza los datos del usuario
+         * tales como: nombre, fecha de nacimiento,
+         * sexo, idioma, pais
          */
-        getCountries() {
+        updateUser() {
+            // datos para el backend
+            const formData = new FormData();
+            formData.append("_method", "PUT");
+            formData.append("name", this.userProfile.name);
+            formData.append(
+                "fecha_nacimiento",
+                this.userProfile.profile.fecha_nacimiento
+            );
+            formData.append("sexo", this.userProfile.profile.sexo.abbr);
+            formData.append("lang", this.userProfile.profile.lang.abbr);
+            formData.append("country", this.userProfile.profile.country);
+
+            // request
             Vue.axios
-                .get("/api/paises")
+                .post("/api/profile/update-profile", formData)
                 .then((resp) => {
-                    this.countries = resp.data;
+                    if (resp.status === 200) {
+                        this.$notify({
+                            group: "container",
+                            text: resp.data.message,
+                            type: "success",
+                        });
+
+                        // reload user
+                        this.$store.dispatch("userRequest");
+                    }
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch((error) => {
+                    this.showRequestErrors(error);
                 });
-        },
-
-        updateUser(event) {
-            const target = event.target;
-            let data = {};
-
-            for (let input of target) {
-                console.log(input.name == "fullname");
-                if (input.name == "fullname") data.name = input.value;
-                if (input.name == "fecha_nac") data.fecha_nac = input.value;
-                if (input.name == "sexo") data.sexo = input.value;
-                if (input.name == "lang") data.lang = input.value;
-                if (input.name == "country") data.country = input.value;
-            }
-
-            console.log(data);
         },
     },
     computed: {
@@ -472,34 +601,6 @@ export default {
         }),
 
         /**
-         * Path para las fotos de portadas
-         */
-        pathFrontPhoto() {
-            const path = document.head.querySelector(
-                'meta[name="front-photo"]'
-            );
-            if (path) {
-                return path.content;
-            }
-
-            return "/";
-        },
-
-        /**
-         * Path para las fotos de perfil
-         */
-        pathProfilePhoto() {
-            const path = document.head.querySelector(
-                'meta[name="profile-photo"]'
-            );
-            if (path) {
-                return path.content;
-            }
-
-            return "/";
-        },
-
-        /**
          * Foto de portada del usuario
          */
         frontPhoto() {
@@ -513,39 +614,6 @@ export default {
          */
         profilePhoto() {
             return `${this.pathProfilePhoto + this.userProfile.profile_photo}`;
-        },
-
-        /**
-         * Listado de genero para el usuario
-         */
-        listGenre() {
-            return [
-                { state: "Seleccione sexo", abbr: "" },
-                { state: "Hombre", abbr: 1 },
-                { state: "Mujer", abbr: 2 },
-                { state: "Otro", abbr: 3 },
-            ];
-        },
-
-        /**
-         * Lista de idiomas permitidos
-         */
-        listLang() {
-            return [
-                { state: "Seleccione idioma", abbr: "" },
-                { state: "Español", abbr: "es" },
-                { state: "Ingles", abbr: "en" },
-            ];
-        },
-
-        /**
-         * Fecha máxima permitida para el picker de fecha de nacimiento
-         */
-        dateMax() {
-            const date = new Date(
-                Date.now() - new Date().getTimezoneOffset() * 60000
-            );
-            return date.toISOString().substr(0, 10);
         },
     },
 };

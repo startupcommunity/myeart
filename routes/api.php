@@ -37,5 +37,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::group(['prefix' => 'profile'], function () {
         Route::put('/update-front-photo', [ProfileController::class, 'updateFrontPhoto'])->name('updateFrontPhoto');
         Route::put('/update-profile-photo', [ProfileController::class, 'updateProfilePhoto'])->name('updateProfilePhoto');
+        Route::put('/update-profile', [ProfileController::class, 'updateProfile'])->name('updateProfile');
     });
 });
