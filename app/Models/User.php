@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_photo',
+        'front_photo',
     ];
 
     /**
@@ -48,7 +50,28 @@ class User extends Authenticatable
         return $this->belongsToMany(Artistic_activitys::class);
     }
 
-    public function perfil(){
-        return $this->hasMany(UserInformations::class, 'user_id', 'id')->first();
+    public function profile()
+    {
+        return $this->hasOne(UserInformations::class, 'user_id');
+    }
+
+    /**
+     * Determina si el usuario tiene foto de perfil
+     * @luisandev
+     * @return boolean      true si posee
+     */
+    public function hasAProfilePhoto(): bool
+    {
+        return !is_null($this->profile_photo);
+    }
+
+    /**
+     * Determina si el usuario tiene foto de portada
+     * @luisandev
+     * @return boolean      true si posee
+     */
+    public function hasAFrontPhoto(): bool
+    {
+        return !is_null($this->front_photo);
     }
 }

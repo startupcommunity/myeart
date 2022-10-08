@@ -229,7 +229,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .email-input::after {
     content: "\f0e0";
 }

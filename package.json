@@ -31,6 +31,7 @@
         "neo-async": "^2.6.2",
         "tiny-slider": "^2.9.4",
         "vue": "^2.6.12",
+        "vue-anka-cropper": "^1.1.0",
         "vue-axios": "^3.4.1",
         "vue-events": "^3.1.0",
         "vue-form-wizard": "^0.8.4",

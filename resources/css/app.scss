@@ -1,5 +1,5 @@
 // Bootstrap
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 @import "variables";
 @import "login";
 @import "home";
@@ -7,18 +7,20 @@
 @import "~bootstrap/scss/bootstrap";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css");
-@import '~vuetify/dist/vuetify.min.css';
+@import "~vuetify/dist/vuetify.min.css";
+@import "anka-cropper";
+@import "custom";
 
 // tailwind
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html, body{
-    height:100%;
-    margin:0;
+html,
+body {
+    height: 100%;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
 }
-

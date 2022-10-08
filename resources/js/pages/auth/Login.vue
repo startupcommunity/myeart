@@ -103,7 +103,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .user-input::after {
         content: "\f007";
     }
