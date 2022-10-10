@@ -325,6 +325,7 @@
                         <div>
                             <v-form
                                 @submit.prevent="updateUser"
+                                v-show="loadProfile"
                             >
                                 <v-row>
                                     <v-col cols="12">
@@ -518,6 +519,9 @@ export default {
         // ubicado en mixin
         this.getCountries();
     },
+    updated() {
+        this.loadProfile = this.isProfileLoaded;
+    },
     methods: {
         /**
          * Muestra la sección seleccionada
@@ -598,6 +602,7 @@ export default {
          */
         ...mapGetters({
             userProfile: "getProfile",
+            isProfileLoaded: "isProfileLoaded",
         }),
 
         /**
@@ -614,14 +619,6 @@ export default {
          */
         profilePhoto() {
             return `${this.pathProfilePhoto + this.userProfile.profile_photo}`;
-        },
-    },
-
-    watch: {
-        async userProfile(val) {
-            if (await val.profile) {
-                this.loadProfile = true;
-            }
         },
     },
 };

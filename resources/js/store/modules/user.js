@@ -23,6 +23,7 @@ const actions = {
         Vue.axios
             .get("/api/user")
             .then(async (resp) => {
+                console.log(resp.data);
                 await commit("userSuccess", resp.data);
             })
             .catch((err) => {
