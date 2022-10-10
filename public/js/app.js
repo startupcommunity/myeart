@@ -4080,13 +4080,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-pen"
-  }), _vm._v(" Editar\n                                perfil\n                            ")])], 1)]), _vm._v(" "), _c("div", [_c("v-form", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.loadProfile,
-      expression: "loadProfile"
-    }],
+  }), _vm._v(" Editar\n                                perfil\n                            ")])], 1)]), _vm._v(" "), _c("div", [_vm.loadProfile ? _c("v-form", {
     on: {
       submit: function submit($event) {
         $event.preventDefault();
@@ -4142,7 +4136,7 @@ var render = function render() {
           }
         }, "v-text-field", attrs, false), on))];
       }
-    }]),
+    }], null, false, 3915255395),
     model: {
       value: _vm.menuPickerOne,
       callback: function callback($$v) {
@@ -4243,7 +4237,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-save"
-  }), _vm._v("\n                                        Actualizar datos\n                                    ")])], 1) : _vm._e()], 1)], 1)], 1)]), _vm._v(" "), _c("div", {
+  }), _vm._v("\n                                        Actualizar datos\n                                    ")])], 1) : _vm._e()], 1)], 1) : _vm._e()], 1)]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -7055,11 +7049,10 @@ var actions = {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(resp.data);
-                _context.next = 3;
+                _context.next = 2;
                 return commit("userSuccess", resp.data);
 
-              case 3:
+              case 2:
               case "end":
                 return _context.stop();
             }
