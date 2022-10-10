@@ -3,7 +3,12 @@ import Vue from "vue";
 const state = {
     status: "",
     profile: {
-        profile: {},
+        profile: {
+            fecha_nacimiento: "",
+            sexo: "",
+            lang: "",
+            country: "",
+        },
     },
 };
 
@@ -17,8 +22,8 @@ const actions = {
         commit("userRequest");
         Vue.axios
             .get("/api/user")
-            .then((resp) => {
-                commit("userSuccess", resp.data);
+            .then(async (resp) => {
+                await commit("userSuccess", resp.data);
             })
             .catch((err) => {
                 commit("userError");
@@ -32,8 +37,8 @@ const mutations = {
     userRequest: (state) => {
         state.status = "loading";
     },
-    userSuccess: (state, resp) => {
-        Vue.set(state, "profile", resp);
+    userSuccess: async (state, resp) => {
+        await Vue.set(state, "profile", resp);
         state.status = "success";
     },
     userError: (state) => {
