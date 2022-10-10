@@ -41,9 +41,7 @@
                             >
                                 <button
                                     class="border rounded-full bg-white hover:bg-gray-100 px-2 py-1 text-primary text-2xl"
-                                    @click.stop="
-                                        dialogProfilePhoto = true
-                                    "
+                                    @click.stop="dialogProfilePhoto = true"
                                 >
                                     <i class="fas fa-camera"></i>
                                 </button>
@@ -183,7 +181,9 @@
 
                         <!-- botonera -->
                         <div class="flex justify-center mt-12">
-                            <div class="text-gray-800 sm:text-xs md:text-sm lg:text-lg">
+                            <div
+                                class="text-gray-800 sm:text-xs md:text-sm lg:text-lg"
+                            >
                                 <div
                                     class="flex flex-wrap gap-4 items-center justify-start py-6"
                                 >
@@ -325,7 +325,7 @@
                         <div>
                             <v-form
                                 @submit.prevent="updateUser"
-                                v-if="status == 'success'"
+                                v-if="loadProfile"
                             >
                                 <v-row>
                                     <v-col cols="12">
@@ -512,6 +512,7 @@ export default {
             editDataProfile: false,
             dialogFrontPhoto: false,
             dialogProfilePhoto: false,
+            loadProfile: false,
         };
     },
     mounted() {
@@ -614,6 +615,14 @@ export default {
          */
         profilePhoto() {
             return `${this.pathProfilePhoto + this.userProfile.profile_photo}`;
+        },
+    },
+
+    watch: {
+        async userProfile(val) {
+            if (await val.profile) {
+                this.loadProfile = true;
+            }
         },
     },
 };
