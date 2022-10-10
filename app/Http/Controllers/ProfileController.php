@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateOrUpdateUserRequest;
+use App\Models\UserInformations;
 use App\Utils\AppStorage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -116,15 +117,13 @@ class ProfileController extends Controller
         $db = DB::transaction(function () use ($request) {
             $data = $request->all();
             $user = auth()->user();
-            $profile = $user->profile;
 
+            // actualizar user
             $user->update(['name' => $data['name']]);
-            return $profile->update([
-                'country' => $data['country'] == 'null' ? null : $data['country'],
-                'sexo' => $data['sexo'] == 'undefined' ? $profile->sexo : $data['sexo'],
-                'lang' => $data['lang'] == 'undefined' ? $profile->lang : $data['lang'],
-                'fecha_nacimiento' => $data['fecha_nacimiento'],
-            ]);
+
+            // actualizar datos del perfil
+            $dataProfile = collect($data)->except(['_method', 'name'])->toArray();
+            return UserInformations::updateOrCreate(['user_id' => $user->id], $dataProfile);
         });
 
         if ($db) {

@@ -26,6 +26,7 @@ class CreateOrUpdateUserRequest extends FormRequest
         return [
             'name' => 'required|string',
             'fecha_nacimiento' => 'required|string',
+            'pais_id' => 'required',
         ];
     }
 
@@ -34,6 +35,7 @@ class CreateOrUpdateUserRequest extends FormRequest
         return [
             'name.required' => 'el campo nombre no debe estar vacio',
             'fecha_nacimiento.required' => 'el campo fecha de nacimiento no debe estar vacio',
+            'pais_id.required' => 'el campo país no debe estar vacio',
         ];
     }
 }

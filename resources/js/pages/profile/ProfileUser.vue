@@ -325,7 +325,6 @@
                         <div>
                             <v-form
                                 @submit.prevent="updateUser"
-                                v-if="loadProfile"
                             >
                                 <v-row>
                                     <v-col cols="12">
@@ -384,12 +383,12 @@
                                     <v-col cols="12" sm="6">
                                         <v-autocomplete
                                             v-model="
-                                                userProfile.profile.country
+                                                userProfile.profile.pais_id
                                             "
                                             :items="countries.data"
                                             auto-select-first
                                             clearable
-                                            name="country"
+                                            name="pais_id"
                                             label="País"
                                             item-text="nombre"
                                             item-value="id"
@@ -512,15 +511,11 @@ export default {
             editDataProfile: false,
             dialogFrontPhoto: false,
             dialogProfilePhoto: false,
-            loadProfile: false,
         };
     },
     mounted() {
         // ubicado en mixin
         this.getCountries();
-    },
-    updated() {
-        this.loadProfile = this.isProfileLoaded;
     },
     methods: {
         /**
@@ -553,21 +548,21 @@ export default {
          * sexo, idioma, pais
          */
         updateUser() {
-            // datos para el backend
-            const formData = new FormData();
-            formData.append("_method", "PUT");
-            formData.append("name", this.userProfile.name);
-            formData.append(
-                "fecha_nacimiento",
-                this.userProfile.profile.fecha_nacimiento
-            );
-            formData.append("sexo", this.userProfile.profile.sexo.abbr);
-            formData.append("lang", this.userProfile.profile.lang.abbr);
-            formData.append("country", this.userProfile.profile.country);
+
+            // datos
+            const profile = this.userProfile.profile;
+            const data = {
+                _method: "put",
+                name: this.userProfile.name,
+                sexo: profile.sexo ? profile.sexo.abbr : null,
+                lang: profile.lang ? profile.lang.abbr : null,
+                pais_id: profile.pais_id ? profile.pais_id : null,
+                fecha_nacimiento: profile.fecha_nacimiento ? profile.fecha_nacimiento : null,
+            };
 
             // request
             Vue.axios
-                .post("/api/profile/update-profile", formData)
+                .post("/api/profile/update-profile", data)
                 .then((resp) => {
                     if (resp.status === 200) {
                         this.$notify({

@@ -2720,16 +2720,12 @@ var SECTIONS = {
       menuPickerOne: false,
       editDataProfile: false,
       dialogFrontPhoto: false,
-      dialogProfilePhoto: false,
-      loadProfile: false
+      dialogProfilePhoto: false
     };
   },
   mounted: function mounted() {
     // ubicado en mixin
     this.getCountries();
-  },
-  updated: function updated() {
-    this.loadProfile = this.isProfileLoaded;
   },
   methods: {
     /**
@@ -2764,16 +2760,18 @@ var SECTIONS = {
     updateUser: function updateUser() {
       var _this = this;
 
-      // datos para el backend
-      var formData = new FormData();
-      formData.append("_method", "PUT");
-      formData.append("name", this.userProfile.name);
-      formData.append("fecha_nacimiento", this.userProfile.profile.fecha_nacimiento);
-      formData.append("sexo", this.userProfile.profile.sexo.abbr);
-      formData.append("lang", this.userProfile.profile.lang.abbr);
-      formData.append("country", this.userProfile.profile.country); // request
+      // datos
+      var profile = this.userProfile.profile;
+      var data = {
+        _method: "put",
+        name: this.userProfile.name,
+        sexo: profile.sexo ? profile.sexo.abbr : null,
+        lang: profile.lang ? profile.lang.abbr : null,
+        pais_id: profile.pais_id ? profile.pais_id : null,
+        fecha_nacimiento: profile.fecha_nacimiento ? profile.fecha_nacimiento : null
+      }; // request
 
-      Vue.axios.post("/api/profile/update-profile", formData).then(function (resp) {
+      Vue.axios.post("/api/profile/update-profile", data).then(function (resp) {
         if (resp.status === 200) {
           _this.$notify({
             group: "container",
@@ -4080,7 +4078,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-pen"
-  }), _vm._v(" Editar\n                                perfil\n                            ")])], 1)]), _vm._v(" "), _c("div", [_vm.loadProfile ? _c("v-form", {
+  }), _vm._v(" Editar\n                                perfil\n                            ")])], 1)]), _vm._v(" "), _c("div", [_c("v-form", {
     on: {
       submit: function submit($event) {
         $event.preventDefault();
@@ -4136,7 +4134,7 @@ var render = function render() {
           }
         }, "v-text-field", attrs, false), on))];
       }
-    }], null, false, 3915255395),
+    }]),
     model: {
       value: _vm.menuPickerOne,
       callback: function callback($$v) {
@@ -4192,17 +4190,17 @@ var render = function render() {
       items: _vm.countries.data,
       "auto-select-first": "",
       clearable: "",
-      name: "country",
+      name: "pais_id",
       label: "País",
       "item-text": "nombre",
       "item-value": "id"
     },
     model: {
-      value: _vm.userProfile.profile.country,
+      value: _vm.userProfile.profile.pais_id,
       callback: function callback($$v) {
-        _vm.$set(_vm.userProfile.profile, "country", $$v);
+        _vm.$set(_vm.userProfile.profile, "pais_id", $$v);
       },
-      expression: "\n                                            userProfile.profile.country\n                                        "
+      expression: "\n                                            userProfile.profile.pais_id\n                                        "
     }
   })], 1), _vm._v(" "), _c("v-col", {
     attrs: {
@@ -4237,7 +4235,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-save"
-  }), _vm._v("\n                                        Actualizar datos\n                                    ")])], 1) : _vm._e()], 1)], 1) : _vm._e()], 1)]), _vm._v(" "), _c("div", {
+  }), _vm._v("\n                                        Actualizar datos\n                                    ")])], 1) : _vm._e()], 1)], 1)], 1)]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -7022,12 +7020,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = {
   status: "",
   profile: {
-    profile: {
-      fecha_nacimiento: "",
-      sexo: "",
-      lang: "",
-      country: ""
-    }
+    profile: {}
   }
 };
 var getters = {

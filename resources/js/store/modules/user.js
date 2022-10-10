@@ -3,12 +3,7 @@ import Vue from "vue";
 const state = {
     status: "",
     profile: {
-        profile: {
-            fecha_nacimiento: "",
-            sexo: "",
-            lang: "",
-            country: "",
-        },
+        profile: {},
     },
 };
 
