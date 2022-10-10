@@ -7037,8 +7037,8 @@ var mutations = {
     state.status = 'loading';
   },
   userSuccess: function userSuccess(state, resp) {
-    state.status = 'success';
     vue__WEBPACK_IMPORTED_MODULE_0__["default"].set(state, 'profile', resp);
+    state.status = 'success';
   },
   userError: function userError(state) {
     state.status = 'error';
