@@ -325,7 +325,6 @@
                         <div>
                             <v-form
                                 @submit.prevent="updateUser"
-                                v-if="loadProfile"
                             >
                                 <v-row>
                                     <v-col cols="12">

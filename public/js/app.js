@@ -4113,7 +4113,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-pen"
-  }), _vm._v(" Editar\n                                perfil\n                            ")])], 1)]), _vm._v(" "), _c("div", [_vm.loadProfile ? _c("v-form", {
+  }), _vm._v(" Editar\n                                perfil\n                            ")])], 1)]), _vm._v(" "), _c("div", [_c("v-form", {
     on: {
       submit: function submit($event) {
         $event.preventDefault();
@@ -4169,7 +4169,7 @@ var render = function render() {
           }
         }, "v-text-field", attrs, false), on))];
       }
-    }], null, false, 3915255395),
+    }]),
     model: {
       value: _vm.menuPickerOne,
       callback: function callback($$v) {
@@ -4270,7 +4270,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-save"
-  }), _vm._v("\n                                        Actualizar datos\n                                    ")])], 1) : _vm._e()], 1)], 1) : _vm._e()], 1)]), _vm._v(" "), _c("div", {
+  }), _vm._v("\n                                        Actualizar datos\n                                    ")])], 1) : _vm._e()], 1)], 1)], 1)]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -7045,8 +7045,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 
 var state = {
-  status: '',
-  profile: {}
+  status: "",
+  profile: {
+    profile: {}
+  }
 };
 var getters = {
   getProfile: function getProfile(state) {
@@ -7060,26 +7062,26 @@ var actions = {
   userRequest: function userRequest(_ref) {
     var commit = _ref.commit,
         dispatch = _ref.dispatch;
-    commit('userRequest');
-    vue__WEBPACK_IMPORTED_MODULE_0__["default"].axios.get('/api/user').then(function (resp) {
-      commit('userSuccess', resp.data);
+    commit("userRequest");
+    vue__WEBPACK_IMPORTED_MODULE_0__["default"].axios.get("/api/user").then(function (resp) {
+      commit("userSuccess", resp.data);
     })["catch"](function (err) {
-      commit('userError'); // if resp is unauthorized, logout, to
+      commit("userError"); // if resp is unauthorized, logout, to
 
-      dispatch('authLogout');
+      dispatch("authLogout");
     });
   }
 };
 var mutations = {
   userRequest: function userRequest(state) {
-    state.status = 'loading';
+    state.status = "loading";
   },
   userSuccess: function userSuccess(state, resp) {
-    vue__WEBPACK_IMPORTED_MODULE_0__["default"].set(state, 'profile', resp);
-    state.status = 'success';
+    vue__WEBPACK_IMPORTED_MODULE_0__["default"].set(state, "profile", resp);
+    state.status = "success";
   },
   userError: function userError(state) {
-    state.status = 'error';
+    state.status = "error";
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
