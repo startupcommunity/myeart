@@ -325,7 +325,7 @@
                         <div>
                             <v-form
                                 @submit.prevent="updateUser"
-                                v-if="userProfile.profile"
+                                v-if="status == 'success'"
                             >
                                 <v-row>
                                     <v-col cols="12">

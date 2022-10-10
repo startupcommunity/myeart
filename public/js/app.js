@@ -4075,7 +4075,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-pen"
-  }), _vm._v(" Editar\n                                perfil\n                            ")])], 1)]), _vm._v(" "), _c("div", [_vm.userProfile.profile ? _c("v-form", {
+  }), _vm._v(" Editar\n                                perfil\n                            ")])], 1)]), _vm._v(" "), _c("div", [_vm.status == "success" ? _c("v-form", {
     on: {
       submit: function submit($event) {
         $event.preventDefault();
