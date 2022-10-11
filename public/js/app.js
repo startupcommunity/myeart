@@ -3496,7 +3496,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "main-menu-wrap"
   }, [_c("div", {
-    staticClass: "d-flex"
+    staticClass: "flex justify-center items-center"
   }, [_c("div", {
     staticClass: "flex-fill d-block d-md-none d-lg-none"
   }, [_c("div", {
@@ -3533,23 +3533,18 @@ var render = function render() {
   }, [_c("nav", {
     staticClass: "main-menu"
   }, [_c("ul", {
-    staticStyle: {
-      "text-align": "left"
-    }
+    staticClass: "text-left"
   }, [_vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
     staticClass: "header-icons"
   }, [_c("a", {
-    staticClass: "mobile-hide search-bar-icon",
+    staticClass: "mobile-hide search-bar-icon uppercase hover:no-underline",
     attrs: {
       href: "#"
     }
   }, [_c("i", {
-    staticClass: "fas fa-user",
-    staticStyle: {
-      "margin-right": "5px"
-    }
+    staticClass: "fas fa-user mr-1"
   }), _vm._v("\n                                                        " + _vm._s(_vm.perfilUsers.username) + "\n                                                    ")])]), _vm._v(" "), _c("ul", {
     staticClass: "sub-menu"
   }, [_c("li", [_c("router-link", {
@@ -3589,9 +3584,7 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("li", {
-    staticClass: "current-list-item"
-  }, [_c("a", {
+  return _c("li", [_c("a", {
     attrs: {
       href: "#"
     }
@@ -3602,7 +3595,7 @@ var staticRenderFns = [function () {
 
   return _c("li", [_c("a", {
     attrs: {
-      href: "about.html"
+      href: "#"
     }
   }, [_vm._v("ARTISTAS")])]);
 }, function () {
@@ -3611,7 +3604,7 @@ var staticRenderFns = [function () {
 
   return _c("li", [_c("a", {
     attrs: {
-      href: "news.html"
+      href: "#"
     }
   }, [_vm._v("EVENTOS")])]);
 }, function () {
@@ -3620,9 +3613,9 @@ var staticRenderFns = [function () {
 
   return _c("li", [_c("a", {
     attrs: {
-      href: "contact.html"
+      href: "#"
     }
-  }, [_vm._v("\n                                            MI COMUNIDAD\n                                        ")])]);
+  }, [_vm._v("MI COMUNIDAD")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -3630,20 +3623,14 @@ var staticRenderFns = [function () {
   return _c("li", [_c("div", {
     staticClass: "header-icons"
   }, [_c("a", {
-    staticClass: "shopping-cart",
+    staticClass: "shopping-cart hover:no-underline",
     attrs: {
-      href: "cart.html"
+      href: "#"
     }
   }, [_c("i", {
-    staticClass: "fas fa-shopping-cart",
-    staticStyle: {
-      "margin-right": "5px"
-    }
+    staticClass: "fas fa-shopping-cart mr-1"
   }), _vm._v("\n                                                        00.00\n                                                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary text-white",
-    staticStyle: {
-      "margin-right": "32px"
-    }
+    staticClass: "btn btn-primary text-white px-3"
   }, [_vm._v("\n                                                        SUBIR OBRA\n                                                    ")])])]);
 }, function () {
   var _vm = this,

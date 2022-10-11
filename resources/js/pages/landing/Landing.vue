@@ -21,11 +21,11 @@
                     <div class="col-lg-9 offset-lg-2 text-center">
                         <div class="hero-text">
                             <div class="hero-text-tablecell">
-                                <h2>
+                                <h1 class="text-white lg:text-2xl">
                                     El
                                     <span class="text-primary">arte</span> que
                                     todos llevamos dentro
-                                </h2>
+                                </h1>
                                 <div
                                     class="hero-btns d-flex justify-content-center"
                                 >

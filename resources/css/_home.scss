@@ -200,6 +200,7 @@
     nav.main-menu ul > li .menu-items-sub:hover ul {
         opacity: 1;
         visibility: visible;
+        text-decoration: none;
     }
 
     nav.main-menu ul li:last-child a {
@@ -293,10 +294,12 @@
 
     nav.main-menu ul li.current-list-item > a {
         color: #f28123;
+        text-decoration: none;
     }
 
     nav.main-menu li:hover > a {
         color: #f28123;
+        text-decoration: none;
     }
 
     nav.main-menu li a {

@@ -53,7 +53,7 @@
             <div class="row">
                 <div class="col-lg-12 col-sm-12 text-center">
                     <div class="main-menu-wrap">
-                        <div class="d-flex">
+                        <div class="flex justify-center items-center">
                             <div class="flex-fill d-block d-md-none d-lg-none">
                                 <div
                                     class="w-100 d-flex justify-content-center"
@@ -85,34 +85,29 @@
                             <div class="flex-fill d-none d-md-block d-lg-block">
                                 <!-- menu start -->
                                 <nav class="main-menu">
-                                    <ul style="text-align: left">
-                                        <li class="current-list-item">
+                                    <ul class="text-left">
+                                        <li>
                                             <a href="#">OBRAS</a>
                                         </li>
                                         <li>
-                                            <a href="about.html">ARTISTAS</a>
+                                            <a href="#">ARTISTAS</a>
                                         </li>
                                         <li>
-                                            <a href="news.html">EVENTOS</a>
+                                            <a href="#">EVENTOS</a>
                                         </li>
                                         <li>
-                                            <a href="contact.html">
-                                                MI COMUNIDAD
-                                            </a>
+                                            <a href="#">MI COMUNIDAD</a>
                                         </li>
                                         <li>
                                             <ul>
                                                 <li class="menu-items-sub">
                                                     <div class="header-icons">
                                                         <a
-                                                            class="mobile-hide search-bar-icon"
+                                                            class="mobile-hide search-bar-icon uppercase hover:no-underline"
                                                             href="#"
                                                         >
                                                             <i
-                                                                class="fas fa-user"
-                                                                style="
-                                                                    margin-right: 5px;
-                                                                "
+                                                                class="fas fa-user mr-1"
                                                             ></i>
                                                             {{
                                                                 perfilUsers.username
@@ -147,22 +142,16 @@
                                                 <li>
                                                     <div class="header-icons">
                                                         <a
-                                                            class="shopping-cart"
-                                                            href="cart.html"
+                                                            class="shopping-cart hover:no-underline"
+                                                            href="#"
                                                         >
                                                             <i
-                                                                class="fas fa-shopping-cart"
-                                                                style="
-                                                                    margin-right: 5px;
-                                                                "
+                                                                class="fas fa-shopping-cart mr-1"
                                                             ></i>
                                                             00.00
                                                         </a>
                                                         <button
-                                                            class="btn btn-primary text-white"
-                                                            style="
-                                                                margin-right: 32px;
-                                                            "
+                                                            class="btn btn-primary text-white px-3"
                                                         >
                                                             SUBIR OBRA
                                                         </button>

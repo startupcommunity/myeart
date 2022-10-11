@@ -203,7 +203,9 @@ var staticRenderFns = [function () {
     staticClass: "hero-text"
   }, [_c("div", {
     staticClass: "hero-text-tablecell"
-  }, [_c("h2", [_vm._v("\n                                El\n                                "), _c("span", {
+  }, [_c("h1", {
+    staticClass: "text-white lg:text-2xl"
+  }, [_vm._v("\n                                El\n                                "), _c("span", {
     staticClass: "text-primary"
   }, [_vm._v("arte")]), _vm._v(" que\n                                todos llevamos dentro\n                            ")]), _vm._v(" "), _c("div", {
     staticClass: "hero-btns d-flex justify-content-center"
