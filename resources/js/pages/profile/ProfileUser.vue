@@ -26,7 +26,10 @@
                     <div
                         class="flex flex-row items-center justify-center sm:justify-between"
                     >
-                        <div class="relative w-2/5 flex justify-center">
+                        <div class="w-1/3 block sm:hidden"></div>
+                        <div
+                            class="relative w-full sm:w-2/5 flex justify-center px-2 sm:px-0"
+                        >
                             <img
                                 :src="
                                     userProfile.profile_photo
@@ -34,7 +37,7 @@
                                         : '/img/avatar.png'
                                 "
                                 alt="profile-photo-myaert"
-                                class="border rounded-full w-52 h-52 sm:w-56 sm:h-56"
+                                class="rounded-full w-48 h-48 sm:w-56 sm:h-56"
                             />
                             <div
                                 class="absolute sm:bottom-16 bottom-6 sm:pl-52 pl-44"
@@ -47,9 +50,9 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="w-3/5 justify-end hidden sm:flex">
+                        <div class="w-1/3 sm:w-3/5 justify-end flex">
                             <button
-                                class="font-bold sm:text-lg text-sm lg:mr-28 text-white"
+                                class="font-bold text-xs sm:text-lg lg:mr-28 text-white"
                                 type="button"
                                 @click.stop="dialogFrontPhoto = true"
                             >
@@ -63,107 +66,10 @@
         <!-- /sección hero -->
 
         <!-- tabs responsiva mobile -->
-        <div class="flex flex-col justify-center items-center sm:hidden">
-            <div class="mt-12">
-                <v-btn
-                    class="text-primary font-bold"
-                    depressed
-                    text
-                    @click="editDataProfile = !editDataProfile"
-                >
-                    <i class="fa-solid fa-pen"></i> Editar perfil
-                </v-btn>
-            </div>
-            <!-- botonera -->
-            <div
-                class="flex flex-wrap justify-center items-center mt-6 text-primary text-[10px] gap-2"
-            >
-                <!-- <div class=""> -->
-                <div>
-                    <button
-                        type="button"
-                        class="flex flex-col items-center justify-start space-y-2"
-                        @click="loadSectionProfile('personal-data')"
-                    >
-                        <i class="fa fa-user fa-2x text-primary"></i>
-                        <span class="tracking-tight font-bold">
-                            Datos <br />
-                            Personales
-                        </span>
-                    </button>
-                </div>
-                <div>
-                    <button
-                        type="button"
-                        class="flex flex-col items-center justify-start space-y-2"
-                        @click="loadSectionProfile('obras')"
-                    >
-                        <i class="fas fa-palette text-primary fa-2x"></i>
-                        <span class="tracking-tight font-bold">
-                            Mis <br />
-                            Obras
-                        </span>
-                    </button>
-                </div>
-                <div>
-                    <button
-                        type="button"
-                        class="flex flex-col items-center justify-start space-y-2"
-                        @click="loadSectionProfile('pedidos')"
-                    >
-                        <i class="fas fa-shopping-cart text-primary fa-2x"></i>
-                        <span class="tracking-tight font-bold">
-                            Mis <br />
-                            Pedidos
-                        </span>
-                    </button>
-                </div>
-                <div>
-                    <button
-                        type="button"
-                        class="flex flex-col items-center justify-start space-y-2"
-                        @click="loadSectionProfile('direcciones')"
-                    >
-                        <i class="fas fa-location-arrow text-primary fa-2x"></i>
-                        <span class="tracking-tight font-bold">
-                            Mis <br />
-                            Direcciones
-                        </span>
-                    </button>
-                </div>
-                <div>
-                    <button
-                        type="button"
-                        class="flex flex-col items-center justify-start space-y-2"
-                        @click="loadSectionProfile('pagos')"
-                    >
-                        <i class="fas fa-money-check text-primary fa-2x"></i>
-                        <span class="tracking-tight font-bold">
-                            Métodos de <br />
-                            Pago
-                        </span>
-                    </button>
-                </div>
-                <div>
-                    <button
-                        type="button"
-                        class="flex flex-col items-center justify-start space-y-2"
-                        @click="loadSectionProfile('seguridad')"
-                    >
-                        <i class="fas fa-shield text-primary fa-2x"></i>
-                        <span class="tracking-tight font-bold">
-                            Privacidad <br />y Seguridad
-                        </span>
-                    </button>
-                </div>
-                <!-- </div> -->
-            </div>
-            <!-- /botonera -->
-
-            <!-- div border -->
-            <div class="w-4/5 mx-o border-t-2 border-primary my-8"></div>
-            <!-- /div border -->
-        </div>
+        <MobileKeypad
+            @loadSectionProfile="loadSectionProfile"
+            @editDataProfile="editDataProfile = !editDataProfile"
+        />
         <!-- /tabs responsiva mobile -->
 
         <!-- sección tabs table++ -->
@@ -171,7 +77,7 @@
             <div>
                 <div class="flex flex-row items-center">
                     <div
-                        class="w-2/5 bg-gray-200 px-12 py-20 h-screen hidden sm:block"
+                        class="w-2/5 bg-gray-200 px-12 py-20 h-full sm:h-screen hidden sm:block"
                     >
                         <h3
                             class="text-3xl sm:text-lg md:text-3xl tracking-tight text-gray-900 text-center"
@@ -295,12 +201,12 @@
 
                     <!-- sección datos personales -->
                     <div
-                        class="w-full sm:w-3/5 bg-white px-12 sm:py-20 h-screen animate-fade-in-down"
+                        class="w-full sm:w-3/5 bg-white px-12 pb-8 sm:py-20 h-full sm:h-screen animate-fade-in-down"
                         id="personal-data"
                         v-show="true"
                     >
                         <div class="flex justify-center items-center">
-                            <div class="w-full sm:w-4/5">
+                            <div class="w-full sm:w-4/5 py-0 sm:py-8">
                                 <p
                                     class="font-extrabold text-3xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
                                 >
@@ -323,9 +229,7 @@
                             </div>
                         </div>
                         <div>
-                            <v-form
-                                @submit.prevent="updateUser"
-                            >
+                            <v-form @submit.prevent="updateUser">
                                 <v-row>
                                     <v-col cols="12">
                                         <v-text-field
@@ -422,18 +326,7 @@
                     <!-- /sección datos personales -->
 
                     <!-- sección obras -->
-                    <div
-                        class="w-3/5 bg-white px-12 py-20 h-screen animate-fade-in-down"
-                        id="obras"
-                        v-show="false"
-                    >
-                        <h3
-                            class="font-black text-3xl tracking-tight uppercase text-gray-900"
-                        >
-                            Obras
-                        </h3>
-                        <div class="mt-4 py-6 border-t border-gray-900"></div>
-                    </div>
+                    <Artwork :showSection="showSectionArtwork" />
                     <!-- /sección obras -->
                 </div>
             </div>
@@ -483,6 +376,10 @@ import getDataMixin from "../../mixins/getDataMixin";
 import utilMixin from "../../mixins/utilMixin";
 import requestErrorsMixin from "../../mixins/requestErrorsMixin";
 
+// secciones
+import Artwork from "./sections/Artwork.vue";
+import MobileKeypad from "./sections/MobileKeypad.vue";
+
 // secciones como tabs
 const SECTIONS = {
     "personal-data": "personal-data",
@@ -504,6 +401,8 @@ export default {
         Footer,
         ModalFrontPhoto,
         ModalProfilePhoto,
+        Artwork,
+        MobileKeypad,
     },
     data() {
         return {
@@ -511,6 +410,7 @@ export default {
             editDataProfile: false,
             dialogFrontPhoto: false,
             dialogProfilePhoto: false,
+            showSectionArtwork: false,
         };
     },
     mounted() {
@@ -539,6 +439,11 @@ export default {
                 }
 
                 section.style.display = "block";
+
+                // obras
+                id == SECTIONS.obras
+                    ? (this.showSectionArtwork = true)
+                    : (this.showSectionArtwork = false);
             }
         },
 
@@ -548,7 +453,6 @@ export default {
          * sexo, idioma, pais
          */
         updateUser() {
-
             // datos
             const profile = this.userProfile.profile;
             const data = {
@@ -557,11 +461,13 @@ export default {
                 sexo: profile.sexo ? profile.sexo.abbr : null,
                 lang: profile.lang ? profile.lang.abbr : null,
                 pais_id: profile.pais_id ? profile.pais_id : null,
-                fecha_nacimiento: profile.fecha_nacimiento ? profile.fecha_nacimiento : null,
+                fecha_nacimiento: profile.fecha_nacimiento
+                    ? profile.fecha_nacimiento
+                    : null,
             };
 
             // request
-            Vue.axios
+            this.axios
                 .post("/api/profile/update-profile", data)
                 .then((resp) => {
                     if (resp.status === 200) {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PaisesController;
 use App\Http\Controllers\ArtisticActivitysController;
+use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserInformationsController;
 
@@ -38,5 +39,11 @@ Route::middleware(['auth:api'])->group(function () {
         Route::put('/update-front-photo', [ProfileController::class, 'updateFrontPhoto'])->name('updateFrontPhoto');
         Route::put('/update-profile-photo', [ProfileController::class, 'updateProfilePhoto'])->name('updateProfilePhoto');
         Route::put('/update-profile', [ProfileController::class, 'updateProfile'])->name('updateProfile');
+    });
+
+    // obras
+    Route::group(['prefix' => 'artworks'], function () {
+        Route::get('/', [ArtworkController::class, 'getArtworks'])->name('getArtworks');
+        Route::delete('/delete/{id}', [ArtworkController::class, 'deleteArtworks'])->name('deleteArtworks');
     });
 });

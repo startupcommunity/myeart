@@ -12,12 +12,14 @@ module.exports = {
             },
             animation: {
                 "fade-in-both":
-                    "fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both",
+                    "fade-in-both 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both",
                 "fade-in-down": "fade-in-down 0.4s ease-in",
                 "slide-in-blurred-top":
                     "slide-in-blurred-top 1.2s cubic-bezier(0.230, 1.000, 0.320, 1.000) both",
                 "swing-in-top-fwd":
                     "swing-in-top-fwd 1s cubic-bezier(0.175, 0.885, 0.320, 1.275) both",
+                "shadow-drop-center":
+                    "shadow-drop-center .4s cubic-bezier(.25,.46,.45,.94) both",
             },
             keyframes: {
                 "fade-in-both": {
@@ -76,6 +78,16 @@ module.exports = {
                         "-webkit-transform-origin": "top",
                         "transform-origin": "top",
                         opacity: 1,
+                    },
+                },
+                "shadow-drop-center": {
+                    "0%": {
+                        transform: "translateZ(0)",
+                        "box-shadow": "0 0 0 0 transparent",
+                    },
+                    "100%": {
+                        transform: "translateZ(50px)",
+                        "box-shadow": "0 0 20px 0 rgba(0,0,0,.35)",
                     },
                 },
             },

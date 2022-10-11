@@ -26,6 +26,10 @@ import VueI18n from "vue-i18n";
 import { en } from "./lang/en";
 import { es } from "./lang/es";
 
+// swalert
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 // global mixin
 import "./mixins/globalMixin";
 
@@ -34,6 +38,7 @@ Vue.use(Vuelidate);
 Vue.use(VueEvents);
 Vue.use(VueRouter);
 Vue.use(VueFormWizard);
+Vue.use(VueSweetalert2);
 Vue.component("loading-overlay-original", Loading);
 Vue.component("loading-overlay", loadingOverlayComponent);
 

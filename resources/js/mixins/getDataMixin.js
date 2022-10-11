@@ -45,4 +45,18 @@ export default {
             ];
         },
     },
+
+    computed: {
+        /**
+         * Estado de las obras (state) validos
+         * @returns Object
+         */
+        STATEARTWORK() {
+            return {
+                published: 1,
+                sold: 2,
+                draft: 3,
+            };
+        },
+    },
 };

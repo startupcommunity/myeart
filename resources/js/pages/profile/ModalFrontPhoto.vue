@@ -1,9 +1,9 @@
 <template>
     <div>
         <v-row justify="center">
-            <v-dialog v-model="showModal" persistent width="1000">
-                <v-card class="bg-gray-one">
-                    <v-card-title>
+            <v-dialog v-model="showModal" persistent width="800">
+                <v-card class="bg-gray-one mt-12">
+                    <v-card-title class="hidden sm:block">
                         <div class="flex justify-end">
                             <button type="button" @click="$emit('close-modal-edit-front-photo')">
                                 <i class="fa fa-times text-primary"></i>
@@ -69,8 +69,8 @@ export default {
                 aspectRatio: 2,
                 closeOnSave: false,
                 cropArea: "box",
-                croppedHeight: 1200,
-                croppedWidth: 1200,
+                croppedHeight: 800,
+                croppedWidth: 800,
                 cropperHeight: false,
                 dropareaMessage: "Arrastre la imagen aquí",
                 frameLineDash: [5, 3],
@@ -81,12 +81,12 @@ export default {
                 handleSize: 5,
                 handleStrokeColor: "rgba(255, 255, 255, 255)",
                 layoutBreakpoint: 850,
-                maxCropperHeight: 800,
+                maxCropperHeight: 600,
                 maxFileSize: 80000000000,
                 overlayFill: "rgba(0, 0, 0, 0.5)",
                 previewOnDrag: false,
-                previewQuality: 1,
-                resultQuality: 1,
+                previewQuality: 0.65,
+                resultQuality: 0.8,
                 resultMimeType: "image/jpeg",
                 selectButtonLabel: "Seleccionar del ordenador",
                 showPreview: false,

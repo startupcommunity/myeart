@@ -2,7 +2,7 @@
     <div>
         <v-row justify="center">
             <v-dialog v-model="showModal" persistent width="600">
-                <v-card class="bg-gray-one">
+                <v-card class="bg-gray-one mt-14">
                     <v-card-title>
                         <div class="flex justify-end">
                             <button

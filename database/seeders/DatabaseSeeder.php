@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Artistic_activitys;
+use App\Models\Paises;
 use Illuminate\Database\Seeder;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,36 +18,50 @@ class DatabaseSeeder extends Seeder
     {
         //\App\Models\User::factory(1)->create();
 
-        DB::table('artistic_activitys')->insert([
-            'nombre' => 'LITERATURA',
-            'icon' => 'notebook-outline',
-            'descripcion' => 'LITERATURA',
-            'activo' => '1',
-            'created_at' => date('Y-m-d H:m:s'),
-           	'updated_at' => date('Y-m-d H:m:s')
-        ]);
+        if (Artistic_activitys::count() == 0) {
+            DB::table('artistic_activitys')->insert([
+                'nombre' => 'LITERATURA',
+                'icon' => 'notebook-outline',
+                'descripcion' => 'LITERATURA',
+                'activo' => '1',
+                'created_at' => date('Y-m-d H:m:s'),
+                'updated_at' => date('Y-m-d H:m:s')
+            ]);
 
-        DB::table('artistic_activitys')->insert([
-            'nombre' => 'PINTURA',
-            'icon' => 'palette',
-            'descripcion' => 'PINTURA',
-            'activo' => '1',
-            'created_at' => date('Y-m-d H:m:s'),
-           	'updated_at' => date('Y-m-d H:m:s')
-        ]);
+            DB::table('artistic_activitys')->insert([
+                'nombre' => 'PINTURA',
+                'icon' => 'palette',
+                'descripcion' => 'PINTURA',
+                'activo' => '1',
+                'created_at' => date('Y-m-d H:m:s'),
+                'updated_at' => date('Y-m-d H:m:s')
+            ]);
+        }
 
-        DB::table('paises')->insert([
-            'nombre' => 'VENEZUELA',
-            'activo' => '1',
-            'created_at' => date('Y-m-d H:m:s'),
-           	'updated_at' => date('Y-m-d H:m:s')
-        ]);
+        if (Paises::count() == 0) {
+            DB::table('paises')->insert([
+                [
+                    'nombre' => 'VENEZUELA',
+                    'activo' => '1',
+                    'created_at' => date('Y-m-d H:m:s'),
+                    'updated_at' => date('Y-m-d H:m:s')
+                ], [
+                    'nombre' => 'EEUU',
+                    'activo' => '1',
+                    'created_at' => date('Y-m-d H:m:s'),
+                    'updated_at' => date('Y-m-d H:m:s')
+                ]
+            ]);
+        }
 
-        DB::table('paises')->insert([
-            'nombre' => 'EEUU',
-            'activo' => '1',
-            'created_at' => date('Y-m-d H:m:s'),
-           	'updated_at' => date('Y-m-d H:m:s')
+        // ------------
+        // seeders
+        // ------------
+        $this->call([
+            CategorySeeder::class,
+            StyleSeeder::class,
+            TechniqueSeeder::class,
+            ArtworkSeeder::class
         ]);
     }
 }
