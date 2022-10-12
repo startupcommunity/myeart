@@ -41,6 +41,7 @@
                                     :hide-buttons="true"
                                     @on-change="handleTabChange"
                                 >
+                                    <!-- definir perfil -->
                                     <tab-content icon=" ">
                                         <div class="login-icon">
                                             <router-link
@@ -60,18 +61,18 @@
                                         >
                                             <h1>
                                                 Define tu usuario
-                                                <b class="text-primary"
-                                                    >Myeart</b
-                                                >
+                                                <b class="text-primary">
+                                                    Myeart
+                                                </b>
                                             </h1>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-12">
-                                                <label for=""
-                                                    >Cual es tu perfil de
-                                                    usuario:</label
-                                                >
+                                                <label for="">
+                                                    Cual es tu perfil de
+                                                    usuario:
+                                                </label>
                                             </div>
                                             <div class="col-sm-12 col-md-6">
                                                 <div
@@ -115,20 +116,20 @@
                                                     v-on:click="
                                                         $router.push('/')
                                                     "
-                                                    >Definir en otro
-                                                    momento</label
                                                 >
+                                                    Definir en otro momento
+                                                </label>
                                             </div>
                                         </div>
                                     </tab-content>
+                                    <!-- /definir perfil -->
+
+                                    <!-- perfil usuario-->
                                     <tab-content icon=" ">
                                         <div class="login-icon">
                                             <div
-                                                v-on:click="beforeChanged()"
-                                                style="
-                                                    color: #fff;
-                                                    cursor: pointer;
-                                                "
+                                                @click="beforeChanged()"
+                                                class="text-white cursor-pointer"
                                             >
                                                 <i
                                                     class="fas fa-arrow-left"
@@ -142,9 +143,9 @@
                                         >
                                             <h1>
                                                 Completa tu perfil
-                                                <b class="text-primary"
-                                                    >Myeart</b
-                                                >
+                                                <b class="text-primary">
+                                                    Myeart
+                                                </b>
                                             </h1>
                                         </div>
 
@@ -223,15 +224,7 @@
                                                 v-model="date"
                                                 no-title
                                                 @input="menu1 = false"
-                                                :max="
-                                                    new Date(
-                                                        Date.now() -
-                                                            new Date().getTimezoneOffset() *
-                                                                60000
-                                                    )
-                                                        .toISOString()
-                                                        .substr(0, 10)
-                                                "
+                                                :max="dateMaxPicker"
                                             ></v-date-picker>
                                         </v-menu>
                                         <v-select
@@ -293,6 +286,9 @@
                                             Omitir paso
                                         </v-btn>
                                     </tab-content>
+                                    <!-- /perfil usuario-->
+
+                                    <!-- perfil artista-->
                                     <tab-content icon=" " v-if="perfil == 2">
                                         <div class="login-icon">
                                             <div
@@ -403,6 +399,9 @@
                                             </v-btn>
                                         </v-form>
                                     </tab-content>
+                                    <!-- /perfil artista -->
+
+                                    <!-- perfil artista -->
                                     <tab-content icon=" " v-if="perfil == 2">
                                         <div class="login-icon">
                                             <div
@@ -592,6 +591,8 @@
 import { errorMessage, hasError } from "../../helpers/funciones";
 import { mapState } from "vuex";
 import perfilUser from "../../validations/auth/perfil";
+import utilMixin from "../../mixins/utilMixin";
+
 //data
 function data() {
     return {
@@ -711,7 +712,7 @@ function submit() {
                 type: "success",
             });
             this.resetForm();
-            this.$router.push("/dashboard");
+            this.$router.push("/");
         });
 }
 function preview_image() {
@@ -720,12 +721,6 @@ function preview_image() {
 async function handleTabChange(preview, next) {
     this.indexForm = next;
     if (this.indexForm === 1) {
-    }
-}
-async function mounted() {
-    await this.$store.dispatch("paisesRequest");
-    if (this.perfilUsers.perfil) {
-        this.$router.push({ name: "dashboard" });
     }
 }
 //computed
@@ -759,8 +754,16 @@ function apiStateFormLoading() {
 }
 export default {
     name: "perfil",
+    mixins: [utilMixin],
     data,
-    mounted,
+    async mounted() {
+        await this.$store.dispatch("paisesRequest");
+        if (this.perfilUsers.perfil) {
+            this.$router.push({ name: "dashboard" });
+        }
+
+        this.$vuetify.theme.dark = true;
+    },
     validations: perfilUser,
     beforeDestroy() {
         this.resetForm();

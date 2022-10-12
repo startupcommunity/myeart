@@ -184,7 +184,9 @@ var render = function render() {
       "is-full-page": true,
       loader: "bars"
     }
-  }), _vm._v(" "), _c("PreHeader"), _vm._v(" "), _c("Header"), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("Newletter"), _vm._v(" "), _c("ExtraInfo"), _vm._v(" "), _c("AppFooter")], 1);
+  }), _vm._v(" "), _c("PreHeader"), _vm._v(" "), _c("Header"), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
+    staticClass: "container border-t border-gray-700 mb-4"
+  }), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("Newletter"), _vm._v(" "), _c("ExtraInfo"), _vm._v(" "), _c("AppFooter")], 1);
 };
 
 var staticRenderFns = [function () {
@@ -192,7 +194,7 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "hero-area hero-bg"
+    staticClass: "h-[30rem] sm:h-[48rem] relative z-[1] hero-area hero-bg"
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {
@@ -226,13 +228,8 @@ var staticRenderFns = [function () {
   }), _vm._v(" "), _c("div", {
     staticClass: "input-group-append"
   }, [_c("button", {
-    staticClass: "btn btn-primary dropdown-toggle",
-    staticStyle: {
-      "padding-left": "20px",
-      "padding-right": "20px"
-    },
+    staticClass: "btn btn-primary px-5 dropdown-toggle",
     attrs: {
-      type: "button",
       "data-toggle": "dropdown",
       "aria-haspopup": "true",
       "aria-expanded": "false"
@@ -244,7 +241,7 @@ var staticRenderFns = [function () {
     attrs: {
       href: "#"
     }
-  }, [_vm._v("Action")])])])])])])])])])])]);
+  }, [_vm._v("\n                                                Action\n                                            ")])])])])])])])])])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -252,35 +249,25 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "section"
   }, [_c("div", {
-    staticClass: "container",
-    staticStyle: {
-      "padding-bottom": "0px"
-    }
+    staticClass: "container"
   }, [_c("div", {
     staticClass: "row align-items-center"
   }, [_c("div", {
-    staticClass: "col-lg-6"
+    staticClass: "col-12 sm:text-start"
   }, [_c("h2", {
-    staticClass: "font-weight-bold text-dark heading"
-  }, [_vm._v("\n                        ¿Aún no te decides?\n                    ")]), _vm._v(" "), _c("span", [_vm._v("Echa un vistazo a las últimas\n                        publicaciones...")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container",
-    staticStyle: {
-      "padding-top": "0px"
-    }
+    staticClass: "font-extrabold text-gray-900 text-lg lg:text-3xl xl:text-4xl"
+  }, [_vm._v("\n                        ¿Aún no te decides?\n                    ")]), _vm._v(" "), _c("p", {
+    staticClass: "py-2 text-sm sm:text-base"
+  }, [_vm._v("\n                        Echa un vistazo a las últimas publicaciones...\n                    ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "container-fluid"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-12",
-    staticStyle: {
-      "padding-top": "0px"
-    }
+    staticClass: "col-12"
   }, [_c("div", {
-    staticClass: "property-slider-wrap"
+    staticClass: "property-slider-wrap sm:px-4"
   }, [_c("ul", {
-    staticClass: "controls",
-    staticStyle: {
-      color: "#000000"
-    },
+    staticClass: "controls text-dark",
     attrs: {
       id: "customize-controls-publish",
       "aria-label": "Carousel Navigation",
@@ -305,11 +292,7 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "fas fa-angle-right"
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "container",
-    staticStyle: {
-      "padding-left": "30px",
-      "padding-right": "40px"
-    }
+    staticClass: "container px-10"
   }, [_c("div", {
     staticClass: "property-slider",
     attrs: {
@@ -318,17 +301,9 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "property-item"
   }, [_c("div", {
-    staticClass: "card",
-    staticStyle: {
-      width: "27rem",
-      "border-radius": "0px",
-      border: "0px"
-    }
+    staticClass: "card border-0 w-full sm:max-w-xl"
   }, [_c("img", {
-    staticClass: "card-img-top",
-    staticStyle: {
-      "border-radius": "0px"
-    },
+    staticClass: "card-img-top border-0 rounded-none",
     attrs: {
       src: "images/img_2.png"
     }
@@ -346,7 +321,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       "margin-bottom": "0px"
     }
-  }, [_c("b", [_vm._v("Customer\n                                                            focused context\n                                                            sensitive\n                                                            encoding")])]), _vm._v(" "), _c("div", {
+  }, [_c("b", [_vm._v("\n                                                            Customer focused\n                                                            context\n                                                            sensitive\n                                                            encoding\n                                                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "d-flex flex-row"
   }, [_c("div", {
     staticClass: "p-2"
@@ -381,54 +356,31 @@ var staticRenderFns = [function () {
     staticClass: "flex-fill"
   }, [_c("img", {
     staticClass: "img-thumbnail",
-    staticStyle: {
-      border: "none"
-    },
     attrs: {
-      src: "images/avatar.png"
+      src: "/images/avatar.png"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill text-center",
-    staticStyle: {
-      "font-size": "14px"
-    }
-  }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
+    staticClass: "flex-fill text-center text-sm text-nowrap"
+  }, [_vm._v("\n                                                            Inés Alfonso\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("\n                                                                SEGUIR\n                                                            ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-12",
-    staticStyle: {
-      "border-top": "1px"
-    }
+    staticClass: "col-md-12 border-t-2 border-gray-800"
   }, [_c("div", {
     staticClass: "d-flex align-items-center"
   }, [_c("div", {
     staticClass: "flex-fill"
   }, [_c("h5", [_vm._v("\n                                                                692.000,00 €\n                                                            ")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill d-flex justify-content-end",
-    staticStyle: {
-      color: "#cccccc"
-    }
+    staticClass: "flex-fill d-flex justify-content-end gap-3 text-gray-400"
   }, [_c("h5", [_c("i", {
-    staticClass: "fa-regular fa-bookmark",
-    staticStyle: {
-      "margin-right": "10px"
-    }
+    staticClass: "fa-regular fa-bookmark"
   })]), _vm._v(" "), _c("h5", [_c("i", {
     staticClass: "fa-regular fa-heart"
   })])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "property-item"
   }, [_c("div", {
-    staticClass: "card",
-    staticStyle: {
-      width: "27rem",
-      "border-radius": "0px",
-      border: "0px"
-    }
+    staticClass: "card border-0 w-full sm:max-w-xl"
   }, [_c("img", {
-    staticClass: "card-img-top",
-    staticStyle: {
-      "border-radius": "0px"
-    },
+    staticClass: "card-img-top border-0 rounded-none",
     attrs: {
       src: "images/img_2.png"
     }
@@ -446,7 +398,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       "margin-bottom": "0px"
     }
-  }, [_c("b", [_vm._v("Customer\n                                                            focused context\n                                                            sensitive\n                                                            encoding")])]), _vm._v(" "), _c("div", {
+  }, [_c("b", [_vm._v("\n                                                            Customer focused\n                                                            context\n                                                            sensitive\n                                                            encoding\n                                                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "d-flex flex-row"
   }, [_c("div", {
     staticClass: "p-2"
@@ -481,54 +433,31 @@ var staticRenderFns = [function () {
     staticClass: "flex-fill"
   }, [_c("img", {
     staticClass: "img-thumbnail",
-    staticStyle: {
-      border: "none"
-    },
     attrs: {
-      src: "images/avatar.png"
+      src: "/images/avatar.png"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill text-center",
-    staticStyle: {
-      "font-size": "14px"
-    }
-  }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
+    staticClass: "flex-fill text-center text-sm text-nowrap"
+  }, [_vm._v("\n                                                            Inés Alfonso\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("\n                                                                SEGUIR\n                                                            ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-12",
-    staticStyle: {
-      "border-top": "1px"
-    }
+    staticClass: "col-md-12 border-t-2 border-gray-800"
   }, [_c("div", {
     staticClass: "d-flex align-items-center"
   }, [_c("div", {
     staticClass: "flex-fill"
   }, [_c("h5", [_vm._v("\n                                                                692.000,00 €\n                                                            ")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill d-flex justify-content-end",
-    staticStyle: {
-      color: "#cccccc"
-    }
+    staticClass: "flex-fill d-flex justify-content-end gap-3 text-gray-400"
   }, [_c("h5", [_c("i", {
-    staticClass: "fa-regular fa-bookmark",
-    staticStyle: {
-      "margin-right": "10px"
-    }
+    staticClass: "fa-regular fa-bookmark"
   })]), _vm._v(" "), _c("h5", [_c("i", {
     staticClass: "fa-regular fa-heart"
   })])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "property-item"
   }, [_c("div", {
-    staticClass: "card",
-    staticStyle: {
-      width: "27rem",
-      "border-radius": "0px",
-      border: "0px"
-    }
+    staticClass: "card border-0 w-full sm:max-w-xl"
   }, [_c("img", {
-    staticClass: "card-img-top",
-    staticStyle: {
-      "border-radius": "0px"
-    },
+    staticClass: "card-img-top border-0 rounded-none",
     attrs: {
       src: "images/img_2.png"
     }
@@ -546,7 +475,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       "margin-bottom": "0px"
     }
-  }, [_c("b", [_vm._v("Customer\n                                                            focused context\n                                                            sensitive\n                                                            encoding")])]), _vm._v(" "), _c("div", {
+  }, [_c("b", [_vm._v("\n                                                            Customer focused\n                                                            context\n                                                            sensitive\n                                                            encoding\n                                                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "d-flex flex-row"
   }, [_c("div", {
     staticClass: "p-2"
@@ -581,54 +510,31 @@ var staticRenderFns = [function () {
     staticClass: "flex-fill"
   }, [_c("img", {
     staticClass: "img-thumbnail",
-    staticStyle: {
-      border: "none"
-    },
     attrs: {
-      src: "images/avatar.png"
+      src: "/images/avatar.png"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill text-center",
-    staticStyle: {
-      "font-size": "14px"
-    }
-  }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
+    staticClass: "flex-fill text-center text-sm text-nowrap"
+  }, [_vm._v("\n                                                            Inés Alfonso\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("\n                                                                SEGUIR\n                                                            ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-12",
-    staticStyle: {
-      "border-top": "1px"
-    }
+    staticClass: "col-md-12 border-t-2 border-gray-800"
   }, [_c("div", {
     staticClass: "d-flex align-items-center"
   }, [_c("div", {
     staticClass: "flex-fill"
   }, [_c("h5", [_vm._v("\n                                                                692.000,00 €\n                                                            ")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill d-flex justify-content-end",
-    staticStyle: {
-      color: "#cccccc"
-    }
+    staticClass: "flex-fill d-flex justify-content-end gap-3 text-gray-400"
   }, [_c("h5", [_c("i", {
-    staticClass: "fa-regular fa-bookmark",
-    staticStyle: {
-      "margin-right": "10px"
-    }
+    staticClass: "fa-regular fa-bookmark"
   })]), _vm._v(" "), _c("h5", [_c("i", {
     staticClass: "fa-regular fa-heart"
   })])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "property-item"
   }, [_c("div", {
-    staticClass: "card",
-    staticStyle: {
-      width: "27rem",
-      "border-radius": "0px",
-      border: "0px"
-    }
+    staticClass: "card border-0 w-full sm:max-w-xl"
   }, [_c("img", {
-    staticClass: "card-img-top",
-    staticStyle: {
-      "border-radius": "0px"
-    },
+    staticClass: "card-img-top border-0 rounded-none",
     attrs: {
       src: "images/img_2.png"
     }
@@ -646,7 +552,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       "margin-bottom": "0px"
     }
-  }, [_c("b", [_vm._v("Customer\n                                                            focused context\n                                                            sensitive\n                                                            encoding")])]), _vm._v(" "), _c("div", {
+  }, [_c("b", [_vm._v("\n                                                            Customer focused\n                                                            context\n                                                            sensitive\n                                                            encoding\n                                                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "d-flex flex-row"
   }, [_c("div", {
     staticClass: "p-2"
@@ -681,38 +587,100 @@ var staticRenderFns = [function () {
     staticClass: "flex-fill"
   }, [_c("img", {
     staticClass: "img-thumbnail",
-    staticStyle: {
-      border: "none"
-    },
     attrs: {
-      src: "images/avatar.png"
+      src: "/images/avatar.png"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill text-center",
-    staticStyle: {
-      "font-size": "14px"
-    }
-  }, [_vm._v("\n                                                            Inés carraspo\n                                                            "), _c("button", {
+    staticClass: "flex-fill text-center text-sm text-nowrap"
+  }, [_vm._v("\n                                                            Inés Alfonso\n                                                            "), _c("button", {
     staticClass: "btn btn-primary btn-block btn-sm"
   }, [_vm._v("\n                                                                SEGUIR\n                                                            ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-12",
-    staticStyle: {
-      "border-top": "1px"
-    }
+    staticClass: "col-md-12 border-t-2 border-gray-800"
   }, [_c("div", {
     staticClass: "d-flex align-items-center"
   }, [_c("div", {
     staticClass: "flex-fill"
   }, [_c("h5", [_vm._v("\n                                                                692.000,00 €\n                                                            ")])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill d-flex justify-content-end",
-    staticStyle: {
-      color: "#cccccc"
-    }
+    staticClass: "flex-fill d-flex justify-content-end gap-3 text-gray-400"
   }, [_c("h5", [_c("i", {
-    staticClass: "fa-regular fa-bookmark",
-    staticStyle: {
-      "margin-right": "10px"
+    staticClass: "fa-regular fa-bookmark"
+  })]), _vm._v(" "), _c("h5", [_c("i", {
+    staticClass: "fa-regular fa-heart"
+  })])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "property-item"
+  }, [_c("div", {
+    staticClass: "card border-0 w-full sm:max-w-xl"
+  }, [_c("img", {
+    staticClass: "card-img-top border-0 rounded-none",
+    attrs: {
+      src: "images/img_2.png"
     }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-7",
+    staticStyle: {
+      "padding-right": "5px",
+      "padding-left": "5px"
+    }
+  }, [_c("h6", {
+    staticStyle: {
+      "margin-bottom": "0px"
+    }
+  }, [_c("b", [_vm._v("\n                                                            Customer focused\n                                                            context\n                                                            sensitive\n                                                            encoding\n                                                        ")])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex flex-row"
+  }, [_c("div", {
+    staticClass: "p-2"
+  }, [_c("a", {
+    staticClass: "text-primary",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Arte\n                                                                Abstracto")])]), _vm._v(" "), _c("div", {
+    staticClass: "p-2"
+  }, [_c("a", {
+    staticClass: "text-primary",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Pintura")])]), _vm._v(" "), _c("div", {
+    staticClass: "p-2"
+  }, [_c("a", {
+    staticClass: "text-primary",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Óleo")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-5",
+    staticStyle: {
+      "padding-right": "5px",
+      "padding-left": "5px"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-center align-items-center"
+  }, [_c("div", {
+    staticClass: "flex-fill"
+  }, [_c("img", {
+    staticClass: "img-thumbnail",
+    attrs: {
+      src: "/images/avatar.png"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "flex-fill text-center text-sm text-nowrap"
+  }, [_vm._v("\n                                                            Inés Alfonso\n                                                            "), _c("button", {
+    staticClass: "btn btn-primary btn-block btn-sm"
+  }, [_vm._v("\n                                                                SEGUIR\n                                                            ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12 border-t-2 border-gray-800"
+  }, [_c("div", {
+    staticClass: "d-flex align-items-center"
+  }, [_c("div", {
+    staticClass: "flex-fill"
+  }, [_c("h5", [_vm._v("\n                                                                692.000,00 €\n                                                            ")])]), _vm._v(" "), _c("div", {
+    staticClass: "flex-fill d-flex justify-content-end gap-3 text-gray-400"
+  }, [_c("h5", [_c("i", {
+    staticClass: "fa-regular fa-bookmark"
   })]), _vm._v(" "), _c("h5", [_c("i", {
     staticClass: "fa-regular fa-heart"
   })])])])])])])])])])])])])])])]);
@@ -730,21 +698,15 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "row align-items-center"
   }, [_c("div", {
-    staticClass: "col-lg-6"
+    staticClass: "col-lg-12"
   }, [_c("h2", {
-    staticClass: "font-weight-bold text-white heading"
+    staticClass: "font-extrabold text-white text-lg lg:text-3xl xl:text-4xl mb-6"
   }, [_vm._v("\n                        Artistas que quizás te puedan interesar...\n                    ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container",
-    staticStyle: {
-      "padding-top": "0px"
-    }
+    staticClass: "container-fluid"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-12",
-    staticStyle: {
-      "padding-top": "0px"
-    }
+    staticClass: "col-12"
   }, [_c("div", {
     staticClass: "property-slider-wrap"
   }, [_c("ul", {
@@ -1043,28 +1005,19 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "section"
   }, [_c("div", {
-    staticClass: "container",
-    staticStyle: {
-      "padding-bottom": "0px"
-    }
+    staticClass: "container"
   }, [_c("div", {
     staticClass: "row align-items-center"
   }, [_c("div", {
-    staticClass: "col-lg-6"
+    staticClass: "col-lg-12"
   }, [_c("h2", {
-    staticClass: "font-weight-bold text-black heading"
+    staticClass: "font-extrabold text-gray-900 text-lg lg:text-3xl xl:text-4xl mb-6"
   }, [_vm._v("\n                        Mi comunidad\n                    ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container",
-    staticStyle: {
-      "padding-top": "0px"
-    }
+    staticClass: "container-fluid"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-12",
-    staticStyle: {
-      "padding-top": "0px"
-    }
+    staticClass: "col-12"
   }, [_c("div", {
     staticClass: "property-slider-wrap"
   }, [_c("ul", {
@@ -1325,46 +1278,30 @@ var staticRenderFns = [function () {
   }, [_vm._v("10\n                                                        comentarios")])])])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 text-center"
   }, [_c("button", {
-    staticClass: "btn btn-dark btn-lg"
-  }, [_vm._v("VER MAS")])])])])]);
+    staticClass: "bg-gray-700 text-gray-100 py-4 px-7 rounded-lg hover:animate-shadow-and-color-app"
+  }, [_vm._v("\n                        VER MAS\n                    ")])])])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "section"
+    staticClass: "pb-12"
   }, [_c("div", {
-    staticClass: "container",
-    staticStyle: {
-      "padding-bottom": "0px"
-    }
+    staticClass: "container"
   }, [_c("div", {
     staticClass: "row align-items-center"
   }, [_c("div", {
-    staticClass: "col-lg-6"
+    staticClass: "col-lg-12"
   }, [_c("h2", {
-    staticClass: "font-weight-bold text-black heading"
+    staticClass: "font-extrabold text-gray-900 text-lg lg:text-3xl xl:text-4xl mb-6"
   }, [_vm._v("\n                        Últimas noticias en el mundo del arte...\n                    ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container",
-    staticStyle: {
-      "padding-top": "0px"
-    }
+    staticClass: "container"
   }, [_c("div", {
-    staticClass: "row",
-    staticStyle: {
-      "padding-top": "0px"
-    }
+    staticClass: "row align-items-stretch"
   }, [_c("div", {
-    staticClass: "col-sm-6 col-lg-6",
-    staticStyle: {
-      "padding-left": "5px",
-      "padding-right": "5px"
-    }
+    staticClass: "col-sm-6 col-lg-4"
   }, [_c("div", {
-    staticClass: "card",
-    staticStyle: {
-      border: "0px"
-    }
+    staticClass: "card border-0"
   }, [_c("div", {
     staticClass: "card-body"
   }, [_c("div", {
@@ -1410,17 +1347,29 @@ var staticRenderFns = [function () {
     staticClass: "text-black"
   }, [_vm._v("\n                                        Lorem ipsum dolor sit amet,\n                                        consectetur adipiscing elit.\n                                        Maecenas auctor, lectus nec ornare\n                                        rutrum, magna risus lacinia risus,\n                                        nec tempus eros magna et erat.\n                                        Pellentesque molestie arcu turpis,\n                                        eu consequat enim auctor vel. Nullam\n                                        eget lacus libero. Quisque sit amet\n                                        venenatis sapien, tempor posuere\n                                        ligula. Mauris convallis lorem vitae\n                                        nunc varius aliquet. Donec neque\n                                        justo, varius a lacus euismod,\n                                        aliquet pellentesque sapien. Vivamus\n                                        pulvinar nisl vel orci placerat\n                                        vehicula. Nam velit quam, elementum\n                                        eget viverra in, rhoncus vitae\n                                        magna...\n                                        "), _c("span", {
     staticClass: "text-primary"
-  }, [_vm._v("Seguir leyendo")])])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-sm-6 col-lg-6",
-    staticStyle: {
-      "padding-left": "5px",
-      "padding-right": "5px"
-    }
+  }, [_vm._v("Seguir leyendo")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12 text-xs sm:text-lg"
   }, [_c("div", {
-    staticClass: "card",
-    staticStyle: {
-      border: "0px"
+    staticClass: "flex flex-wrap justify-between items-center"
+  }, [_c("div", {
+    staticClass: "flex flex-row justify-start items-center"
+  }, [_c("img", {
+    staticClass: "img-thumbnail border-0",
+    attrs: {
+      src: "/images/avatar.png"
     }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "mt-3"
+  }, [_c("p", {
+    staticClass: "font-bold text-gray-900"
+  }, [_vm._v("\n                                                    Ana Maria Simon\n                                                    "), _c("br"), _vm._v(" "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("\n                                                        Escultora\n                                                    ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "text-gray-400 flex flex-col justify-end text-right -space-y-4"
+  }, [_c("p", [_vm._v("25 de mayo 2022")]), _vm._v(" "), _c("p", [_vm._v("Madrid, España")])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-6 col-lg-4"
+  }, [_c("div", {
+    staticClass: "card border-0"
   }, [_c("div", {
     staticClass: "card-body"
   }, [_c("div", {
@@ -1466,11 +1415,234 @@ var staticRenderFns = [function () {
     staticClass: "text-black"
   }, [_vm._v("\n                                        Lorem ipsum dolor sit amet,\n                                        consectetur adipiscing elit.\n                                        Maecenas auctor, lectus nec ornare\n                                        rutrum, magna risus lacinia risus,\n                                        nec tempus eros magna et erat.\n                                        Pellentesque molestie arcu turpis,\n                                        eu consequat enim auctor vel. Nullam\n                                        eget lacus libero. Quisque sit amet\n                                        venenatis sapien, tempor posuere\n                                        ligula. Mauris convallis lorem vitae\n                                        nunc varius aliquet. Donec neque\n                                        justo, varius a lacus euismod,\n                                        aliquet pellentesque sapien. Vivamus\n                                        pulvinar nisl vel orci placerat\n                                        vehicula. Nam velit quam, elementum\n                                        eget viverra in, rhoncus vitae\n                                        magna...\n                                        "), _c("span", {
     staticClass: "text-primary"
-  }, [_vm._v("Seguir leyendo")])])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Seguir leyendo")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12 text-xs sm:text-lg"
+  }, [_c("div", {
+    staticClass: "flex flex-wrap justify-between items-center"
+  }, [_c("div", {
+    staticClass: "flex flex-row justify-start items-center"
+  }, [_c("img", {
+    staticClass: "img-thumbnail border-0",
+    attrs: {
+      src: "/images/avatar.png"
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "mt-3"
+  }, [_c("p", {
+    staticClass: "font-bold text-gray-900"
+  }, [_vm._v("\n                                                    Ana Maria Simon\n                                                    "), _c("br"), _vm._v(" "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("\n                                                        Escultora\n                                                    ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "text-gray-400 flex flex-col justify-end text-right -space-y-4"
+  }, [_c("p", [_vm._v("25 de mayo 2022")]), _vm._v(" "), _c("p", [_vm._v("Madrid, España")])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-6 col-lg-4"
+  }, [_c("div", {
+    staticClass: "card border-0"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12 ultima-info",
+    staticStyle: {
+      "background-image": "url('/images/ultima_informacion.png')"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end",
+    staticStyle: {
+      height: "20%"
+    }
+  }, [_c("h6", {
+    staticStyle: {
+      color: "#cccccc"
+    }
+  }, [_c("i", {
+    staticClass: "fa-regular fa-heart",
+    staticStyle: {
+      "margin-right": "10px"
+    }
+  })]), _vm._v(" "), _c("h6", {
+    staticStyle: {
+      color: "#cccccc"
+    }
+  }, [_c("i", {
+    staticClass: "fa-regular fa-bookmark",
+    staticStyle: {
+      "margin-right": "10px"
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex align-items-end",
+    staticStyle: {
+      height: "80%"
+    }
+  }, [_c("h5", {
+    staticClass: "text-white"
+  }, [_vm._v("\n                                            TENDENCIAS EN LA ESCULTURA EN EL\n                                            2022\n                                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("p", {
+    staticClass: "text-black"
+  }, [_vm._v("\n                                        Lorem ipsum dolor sit amet,\n                                        consectetur adipiscing elit.\n                                        Maecenas auctor, lectus nec ornare\n                                        rutrum, magna risus lacinia risus,\n                                        nec tempus eros magna et erat.\n                                        Pellentesque molestie arcu turpis,\n                                        eu consequat enim auctor vel. Nullam\n                                        eget lacus libero. Quisque sit amet\n                                        venenatis sapien, tempor posuere\n                                        ligula. Mauris convallis lorem vitae\n                                        nunc varius aliquet. Donec neque\n                                        justo, varius a lacus euismod,\n                                        aliquet pellentesque sapien. Vivamus\n                                        pulvinar nisl vel orci placerat\n                                        vehicula. Nam velit quam, elementum\n                                        eget viverra in, rhoncus vitae\n                                        magna...\n                                        "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("Seguir leyendo")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12 text-xs sm:text-lg"
+  }, [_c("div", {
+    staticClass: "flex flex-wrap justify-between items-center"
+  }, [_c("div", {
+    staticClass: "flex flex-row justify-start items-center"
+  }, [_c("img", {
+    staticClass: "img-thumbnail border-0",
+    attrs: {
+      src: "/images/avatar.png"
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "mt-3"
+  }, [_c("p", {
+    staticClass: "font-bold text-gray-900"
+  }, [_vm._v("\n                                                    Ana Maria Simon\n                                                    "), _c("br"), _vm._v(" "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("\n                                                        Escultora\n                                                    ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "text-gray-400 flex flex-col justify-end text-right -space-y-4"
+  }, [_c("p", [_vm._v("25 de mayo 2022")]), _vm._v(" "), _c("p", [_vm._v("Madrid, España")])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-6 col-lg-4"
+  }, [_c("div", {
+    staticClass: "card border-0"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12 ultima-info",
+    staticStyle: {
+      "background-image": "url('/images/ultima_informacion.png')"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end",
+    staticStyle: {
+      height: "20%"
+    }
+  }, [_c("h6", {
+    staticStyle: {
+      color: "#cccccc"
+    }
+  }, [_c("i", {
+    staticClass: "fa-regular fa-heart",
+    staticStyle: {
+      "margin-right": "10px"
+    }
+  })]), _vm._v(" "), _c("h6", {
+    staticStyle: {
+      color: "#cccccc"
+    }
+  }, [_c("i", {
+    staticClass: "fa-regular fa-bookmark",
+    staticStyle: {
+      "margin-right": "10px"
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex align-items-end",
+    staticStyle: {
+      height: "80%"
+    }
+  }, [_c("h5", {
+    staticClass: "text-white"
+  }, [_vm._v("\n                                            TENDENCIAS EN LA ESCULTURA EN EL\n                                            2022\n                                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("p", {
+    staticClass: "text-black"
+  }, [_vm._v("\n                                        Lorem ipsum dolor sit amet,\n                                        consectetur adipiscing elit.\n                                        Maecenas auctor, lectus nec ornare\n                                        rutrum, magna risus lacinia risus,\n                                        nec tempus eros magna et erat.\n                                        Pellentesque molestie arcu turpis,\n                                        eu consequat enim auctor vel. Nullam\n                                        eget lacus libero. Quisque sit amet\n                                        venenatis sapien, tempor posuere\n                                        ligula. Mauris convallis lorem vitae\n                                        nunc varius aliquet. Donec neque\n                                        justo, varius a lacus euismod,\n                                        aliquet pellentesque sapien. Vivamus\n                                        pulvinar nisl vel orci placerat\n                                        vehicula. Nam velit quam, elementum\n                                        eget viverra in, rhoncus vitae\n                                        magna...\n                                        "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("Seguir leyendo")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12 text-xs sm:text-lg"
+  }, [_c("div", {
+    staticClass: "flex flex-wrap justify-between items-center"
+  }, [_c("div", {
+    staticClass: "flex flex-row justify-start items-center"
+  }, [_c("img", {
+    staticClass: "img-thumbnail border-0",
+    attrs: {
+      src: "/images/avatar.png"
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "mt-3"
+  }, [_c("p", {
+    staticClass: "font-bold text-gray-900"
+  }, [_vm._v("\n                                                    Ana Maria Simon\n                                                    "), _c("br"), _vm._v(" "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("\n                                                        Escultora\n                                                    ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "text-gray-400 flex flex-col justify-end text-right -space-y-4"
+  }, [_c("p", [_vm._v("25 de mayo 2022")]), _vm._v(" "), _c("p", [_vm._v("Madrid, España")])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-6 col-lg-8"
+  }, [_c("div", {
+    staticClass: "card border-0"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12 ultima-info",
+    staticStyle: {
+      "background-image": "url('/images/ultima_informacion.png')"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end",
+    staticStyle: {
+      height: "20%"
+    }
+  }, [_c("h6", {
+    staticStyle: {
+      color: "#cccccc"
+    }
+  }, [_c("i", {
+    staticClass: "fa-regular fa-heart",
+    staticStyle: {
+      "margin-right": "10px"
+    }
+  })]), _vm._v(" "), _c("h6", {
+    staticStyle: {
+      color: "#cccccc"
+    }
+  }, [_c("i", {
+    staticClass: "fa-regular fa-bookmark",
+    staticStyle: {
+      "margin-right": "10px"
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex align-items-end",
+    staticStyle: {
+      height: "80%"
+    }
+  }, [_c("h5", {
+    staticClass: "text-white"
+  }, [_vm._v("\n                                            TENDENCIAS EN LA ESCULTURA EN EL\n                                            2022\n                                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("p", {
+    staticClass: "text-black"
+  }, [_vm._v("\n                                        Lorem ipsum dolor sit amet,\n                                        consectetur adipiscing elit.\n                                        Maecenas auctor, lectus nec ornare\n                                        rutrum, magna risus lacinia risus,\n                                        nec tempus eros magna et erat.\n                                        Pellentesque molestie arcu turpis,\n                                        eu consequat enim auctor vel. Nullam\n                                        eget lacus libero. Quisque sit amet\n                                        venenatis sapien, tempor posuere\n                                        ligula. Mauris convallis lorem vitae\n                                        nunc varius aliquet. Donec neque\n                                        justo, varius a lacus euismod,\n                                        aliquet pellentesque sapien. Vivamus\n                                        pulvinar nisl vel orci placerat\n                                        vehicula. Nam velit quam, elementum\n                                        eget viverra in, rhoncus vitae\n                                        magna...\n                                        "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("Seguir leyendo")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12 text-xs sm:text-lg"
+  }, [_c("div", {
+    staticClass: "flex flex-wrap justify-between items-center"
+  }, [_c("div", {
+    staticClass: "flex flex-row justify-start items-center"
+  }, [_c("img", {
+    staticClass: "img-thumbnail border-0",
+    attrs: {
+      src: "/images/avatar.png"
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "mt-3"
+  }, [_c("p", {
+    staticClass: "font-bold text-gray-900"
+  }, [_vm._v("\n                                                    Ana Maria Simon\n                                                    "), _c("br"), _vm._v(" "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("\n                                                        Escultora\n                                                    ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "text-gray-400 flex flex-col justify-end text-right -space-y-4"
+  }, [_c("p", [_vm._v("25 de mayo 2022")]), _vm._v(" "), _c("p", [_vm._v("Madrid, España")])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 text-center"
   }, [_c("button", {
-    staticClass: "btn btn-dark btn-lg"
-  }, [_vm._v("VER MAS")])])])])]);
+    staticClass: "bg-gray-700 text-gray-100 py-4 px-7 rounded-lg hover:animate-shadow-and-color-app"
+  }, [_vm._v("\n                        VER MAS\n                    ")])])])])]);
 }];
 render._withStripped = true;
 

@@ -416,6 +416,9 @@ export default {
     mounted() {
         // ubicado en mixin
         this.getCountries();
+
+        // desactivar modo oscuro
+        this.$vuetify.theme.dark = false;
     },
     methods: {
         /**

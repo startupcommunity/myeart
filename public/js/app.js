@@ -2296,7 +2296,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'NewLetter'
+  name: "NewLetter"
 });
 
 /***/ }),
@@ -2755,7 +2755,9 @@ var SECTIONS = {
   },
   mounted: function mounted() {
     // ubicado en mixin
-    this.getCountries();
+    this.getCountries(); // desactivar modo oscuro
+
+    this.$vuetify.theme.dark = false;
   },
   methods: {
     /**
@@ -3241,7 +3243,7 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "container-fluid bg-white text-dark footer py-5 wow fadeIn",
+    staticClass: "container-fluid bg-white text-dark footer py-12 wow fadeIn",
     attrs: {
       "data-wow-delay": "0.1s"
     }
@@ -3250,19 +3252,17 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "row g-5 justify-content-md-center"
   }, [_c("div", {
-    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 text-center"
   }, [_c("img", {
-    staticStyle: {
-      width: "220px"
-    },
+    staticClass: "w-56 mx-auto",
     attrs: {
       src: "/images/myHeartBlack.png",
-      alt: ""
+      alt: "myHeartBlack"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
   }, [_c("h5", {
-    staticClass: "text-dark mb-2"
+    staticClass: "text-dark mb-2 font-extrabold"
   }, [_vm._v("AYUDA NOSOTROS")]), _vm._v(" "), _c("p", {
     staticStyle: {
       "margin-bottom": "1px"
@@ -3276,9 +3276,9 @@ var staticRenderFns = [function () {
       "margin-bottom": "1px"
     }
   }, [_vm._v("Pregunta Frecuentes")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
   }, [_c("h5", {
-    staticClass: "text-dark mb-2"
+    staticClass: "text-dark mb-2 font-extrabold"
   }, [_vm._v("POLÍTICAS")]), _vm._v(" "), _c("p", {
     staticStyle: {
       "margin-bottom": "1px"
@@ -3296,9 +3296,9 @@ var staticRenderFns = [function () {
       "margin-bottom": "1px"
     }
   }, [_vm._v("Soporte")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
   }, [_c("h5", {
-    staticClass: "text-dark mb-2"
+    staticClass: "text-dark mb-2 font-extrabold"
   }, [_vm._v("CONTACTO")]), _vm._v(" "), _c("p", {
     staticStyle: {
       "margin-bottom": "1px"
@@ -3320,7 +3320,7 @@ var staticRenderFns = [function () {
   }, [_c("img", {
     staticClass: "img-fluid",
     attrs: {
-      src: "images/icon-comerce/VisaClassic.png",
+      src: "/images/icon-comerce/VisaClassic.png",
       alt: "Responsive image"
     }
   })]), _vm._v(" "), _c("div", {
@@ -3332,7 +3332,7 @@ var staticRenderFns = [function () {
   }, [_c("img", {
     staticClass: "img-fluid",
     attrs: {
-      src: "images/icon-comerce/MastercardFull.png",
+      src: "/images/icon-comerce/MastercardFull.png",
       alt: "Responsive image"
     }
   })]), _vm._v(" "), _c("div", {
@@ -3344,7 +3344,7 @@ var staticRenderFns = [function () {
   }, [_c("img", {
     staticClass: "img-fluid",
     attrs: {
-      src: "images/icon-comerce/Paypal.png",
+      src: "/images/icon-comerce/Paypal.png",
       alt: "Responsive image"
     }
   })]), _vm._v(" "), _c("div", {
@@ -3356,7 +3356,7 @@ var staticRenderFns = [function () {
   }, [_c("img", {
     staticClass: "img-fluid",
     attrs: {
-      src: "images/icon-comerce/StorePay.png",
+      src: "/images/icon-comerce/StorePay.png",
       alt: "Responsive image"
     }
   })]), _vm._v(" "), _c("div", {
@@ -3368,7 +3368,7 @@ var staticRenderFns = [function () {
   }, [_c("img", {
     staticClass: "img-fluid",
     attrs: {
-      src: "images/icon-comerce/GooglePay.png",
+      src: "/images/icon-comerce/GooglePay.png",
       alt: "Responsive image"
     }
   })])])])])])]);
@@ -3500,14 +3500,9 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex-fill d-block d-md-none d-lg-none"
   }, [_c("div", {
-    staticClass: "w-100 d-flex justify-content-center",
-    staticStyle: {
-      height: "100%",
-      "font-size": "20px",
-      "padding-top": "10px"
-    }
+    staticClass: "w-100 d-flex justify-content-center -mt-4 sm:-mt-0"
   }, [_c("i", {
-    staticClass: "fa-solid fa-bars",
+    staticClass: "fa-solid fa-bars text-white",
     on: {
       click: function click($event) {
         return _vm.openNav();
@@ -3531,7 +3526,7 @@ var render = function render() {
   })])], 1)]), _vm._v(" "), _c("div", {
     staticClass: "flex-fill d-none d-md-block d-lg-block"
   }, [_c("nav", {
-    staticClass: "main-menu"
+    staticClass: "main-menu lg:mr-10 xl:mr-32"
   }, [_c("ul", {
     staticClass: "text-left"
   }, [_vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
@@ -3630,7 +3625,7 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "fas fa-shopping-cart mr-1"
   }), _vm._v("\n                                                        00.00\n                                                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary text-white px-3"
+    staticClass: "btn btn-primary text-white px-3 py-2 rounded-lg"
   }, [_vm._v("\n                                                        SUBIR OBRA\n                                                    ")])])]);
 }, function () {
   var _vm = this,
@@ -3639,20 +3634,15 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "flex-fill d-block d-md-none d-lg-none"
   }, [_c("div", {
-    staticClass: "w-100 d-flex justify-content-center",
-    staticStyle: {
-      height: "100%",
-      "font-size": "20px",
-      "padding-top": "10px"
-    }
+    staticClass: "w-100 d-flex justify-content-center -mt-4"
   }, [_c("div", {
     staticClass: "flex-fill"
   }, [_c("i", {
-    staticClass: "fa-regular fa-user"
+    staticClass: "fa-regular fa-user text-white"
   })]), _vm._v(" "), _c("div", {
     staticClass: "flex-fill"
   }, [_c("i", {
-    staticClass: "fa-solid fa-cart-shopping"
+    staticClass: "fa-solid fa-cart-shopping text-white"
   })])])]);
 }];
 render._withStripped = true;
@@ -3684,24 +3674,17 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "search-section"
+    staticClass: "search-section py-10"
   }, [_c("div", {
     staticClass: "container text-center"
   }, [_c("h2", {
-    staticStyle: {
-      "font-size": "48px"
-    }
-  }, [_vm._v("El newsletter para grandes artistas")]), _vm._v(" "), _c("div", {
+    staticClass: "font-extrabold text-white text-lg lg:text-3xl xl:text-4xl"
+  }, [_vm._v("\n            El newsletter para grandes artistas\n        ")]), _vm._v(" "), _c("div", {
     staticClass: "hero-btns d-flex justify-content-center"
   }, [_c("div", {
     staticClass: "input-group"
   }, [_c("input", {
-    staticClass: "form-control",
-    staticStyle: {
-      height: "60px",
-      "border-radius": "0px",
-      opacity: "0.5"
-    },
+    staticClass: "form-control h-14",
     attrs: {
       type: "text",
       "aria-label": "Text input with dropdown button"
@@ -3709,18 +3692,9 @@ var staticRenderFns = [function () {
   }), _vm._v(" "), _c("div", {
     staticClass: "input-group-append"
   }, [_c("button", {
-    staticClass: "btn btn-dark",
-    staticStyle: {
-      "padding-left": "20px",
-      "padding-right": "20px"
-    },
-    attrs: {
-      type: "button"
-    }
-  }, [_vm._v("\n                        SUSCRÍBETE\n                    ")])])])]), _vm._v(" "), _c("h5", {
-    staticStyle: {
-      "margin-top": "20px"
-    }
+    staticClass: "btn btn-dark px-5"
+  }, [_vm._v("SUSCRÍBETE")])])])]), _vm._v(" "), _c("h5", {
+    staticClass: "mt-5 text-white font-light tracking-wider"
   }, [_vm._v("100% arte, 0% spam, lo prometemos.")])])]);
 }];
 render._withStripped = true;
@@ -7506,7 +7480,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+ // utils
 
+function showRequestValidations(request) {
+  if (request.response.data.errors) {
+    var errors = request.response.data.errors;
+    var mjsErrors = "";
+
+    for (var error in errors) {
+      mjsErrors += errors[error][0] + "\n";
+    }
+
+    this.$notify({
+      title: 'Aviso!',
+      text: mjsErrors,
+      group: "container",
+      type: "warning",
+      duration: 6000
+    });
+  }
+}
+
+;
 var state = {
   status: "",
   paises: [],
@@ -7577,13 +7572,12 @@ var actions = {
     return new Promise(function (resolve, reject) {
       commit("userInformationRequest");
       vue__WEBPACK_IMPORTED_MODULE_0__["default"].axios.post(actionUrl, formData).then(function (resp) {
-        commit("userInformationSuccess", resp); //dispatch('userRequest');
-
+        commit("userInformationSuccess", resp);
+        dispatch("userRequest");
         resolve(resp);
       })["catch"](function (err) {
         console.log(err);
-        commit("userInformationError"); // if resp is unauthorized, logout, to
-        //dispatch('authLogout')
+        commit("userInformationError", err);
       });
     });
   }
@@ -7610,7 +7604,9 @@ var mutations = {
     state.status = "success";
   },
   userInformationError: function userInformationError(state) {
+    var resp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     state.status = "error";
+    showRequestValidations(resp);
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({

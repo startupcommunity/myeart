@@ -54,21 +54,20 @@
                 <div class="col-lg-12 col-sm-12 text-center">
                     <div class="main-menu-wrap">
                         <div class="flex justify-center items-center">
+
+                            <!-- solo mobile -->
                             <div class="flex-fill d-block d-md-none d-lg-none">
                                 <div
-                                    class="w-100 d-flex justify-content-center"
-                                    style="
-                                        height: 100%;
-                                        font-size: 20px;
-                                        padding-top: 10px;
-                                    "
+                                    class="w-100 d-flex justify-content-center -mt-4 sm:-mt-0"
                                 >
                                     <i
-                                        class="fa-solid fa-bars"
+                                        class="fa-solid fa-bars text-white"
                                         v-on:click="openNav()"
                                     ></i>
                                 </div>
                             </div>
+
+                            <!-- all responsive -->
                             <div
                                 class="flex-fill d-flex justify-content-center"
                             >
@@ -82,9 +81,11 @@
                                     </router-link>
                                 </div>
                             </div>
+
+                            <!-- solo escritorio -->
                             <div class="flex-fill d-none d-md-block d-lg-block">
                                 <!-- menu start -->
-                                <nav class="main-menu">
+                                <nav class="main-menu lg:mr-10 xl:mr-32">
                                     <ul class="text-left">
                                         <li>
                                             <a href="#">OBRAS</a>
@@ -98,6 +99,8 @@
                                         <li>
                                             <a href="#">MI COMUNIDAD</a>
                                         </li>
+
+                                        <!-- area del perfil -->
                                         <li>
                                             <ul>
                                                 <li class="menu-items-sub">
@@ -151,7 +154,7 @@
                                                             00.00
                                                         </a>
                                                         <button
-                                                            class="btn btn-primary text-white px-3"
+                                                            class="btn btn-primary text-white px-3 py-2 rounded-lg"
                                                         >
                                                             SUBIR OBRA
                                                         </button>
@@ -162,21 +165,20 @@
                                     </ul>
                                 </nav>
                             </div>
+
+                            <!-- solo mobile -->
                             <div class="flex-fill d-block d-md-none d-lg-none">
                                 <div
-                                    class="w-100 d-flex justify-content-center"
-                                    style="
-                                        height: 100%;
-                                        font-size: 20px;
-                                        padding-top: 10px;
-                                    "
+                                    class="w-100 d-flex justify-content-center -mt-4"
                                 >
                                     <div class="flex-fill">
-                                        <i class="fa-regular fa-user"></i>
+                                        <i
+                                            class="fa-regular fa-user text-white"
+                                        ></i>
                                     </div>
                                     <div class="flex-fill">
                                         <i
-                                            class="fa-solid fa-cart-shopping"
+                                            class="fa-solid fa-cart-shopping text-white"
                                         ></i>
                                     </div>
                                 </div>

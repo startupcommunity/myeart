@@ -1,5 +1,24 @@
 import Vue from "vue";
 
+// utils
+function showRequestValidations(request) {
+    if (request.response.data.errors) {
+        const errors = request.response.data.errors;
+        let mjsErrors = "";
+        for (const error in errors) {
+            mjsErrors += errors[error][0] + "\n";
+        }
+
+        this.$notify({
+            title: 'Aviso!',
+            text: mjsErrors,
+            group: "container",
+            type: "warning",
+            duration: 6000
+        });
+    }
+};
+
 const state = {
     status: "",
     paises: [],
@@ -73,14 +92,12 @@ const actions = {
                 .post(actionUrl, formData)
                 .then((resp) => {
                     commit("userInformationSuccess", resp);
-                    //dispatch('userRequest');
+                    dispatch("userRequest");
                     resolve(resp);
                 })
                 .catch((err) => {
                     console.log(err);
-                    commit("userInformationError");
-                    // if resp is unauthorized, logout, to
-                    //dispatch('authLogout')
+                    commit("userInformationError", err);
                 });
         });
     },
@@ -107,8 +124,9 @@ const mutations = {
     userInformationSuccess: (state, resp) => {
         state.status = "success";
     },
-    userInformationError: (state) => {
+    userInformationError: (state, resp = null) => {
         state.status = "error";
+        showRequestValidations(resp);
     },
 };
 

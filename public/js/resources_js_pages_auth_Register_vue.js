@@ -316,29 +316,44 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 password-input"
-  })]), _vm._v(" "), _c("v-checkbox", {
-    attrs: {
-      "hide-details": ""
-    },
-    model: {
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "flex items-center"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
       value: _vm.accept,
-      callback: function callback($$v) {
-        _vm.accept = $$v;
-      },
       expression: "accept"
+    }],
+    staticClass: "w-4 h-4 text-app-brown-1 focus:bg-app-brown-1 bg-app-brown-1 rounded border-app-brown-1 focus:ring-app-brown-1 focus:ring-2",
+    attrs: {
+      id: "default-checkbox-one",
+      type: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.accept) ? _vm._i(_vm.accept, null) > -1 : _vm.accept
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.accept,
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false;
+
+        if (Array.isArray($$a)) {
+          var $$v = null,
+              $$i = _vm._i($$a, $$v);
+
+          if ($$el.checked) {
+            $$i < 0 && (_vm.accept = $$a.concat([$$v]));
+          } else {
+            $$i > -1 && (_vm.accept = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.accept = $$c;
+        }
+      }
     }
-  }, [_c("template", {
-    slot: "label"
-  }, [_c("label", {
-    staticStyle: {
-      "margin-bottom": "0px",
-      "padding-bottom": "0px"
-    }
-  }, [_vm._v("Acepto los\n                            "), _c("b", {
-    staticStyle: {
-      "border-bottom": "2px solid #fff"
-    }
-  }, [_vm._v("Términos y Condiciones")])])])], 2), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
     staticClass: "container-login-form-btn"
   }, [_c("button", {
     staticClass: "btn btn-primary login-form-btn",
@@ -348,10 +363,22 @@ var render = function render() {
     on: {
       click: _vm.register
     }
-  }, [_vm._v("\n                        Registrate\n                    ")])]), _vm._v(" "), _vm._m(0)], 1)])])], 1);
+  }, [_vm._v("\n                        Registrate\n                    ")])]), _vm._v(" "), _vm._m(1)])])])], 1);
 };
 
 var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("label", {
+    staticClass: "ml-2 mt-2 text-base font-semibold text-gray-900 dark:text-gray-300",
+    attrs: {
+      "for": "default-checkbox-one"
+    }
+  }, [_vm._v("\n                        Acepto los\n                        "), _c("b", {
+    staticClass: "border-b border-white"
+  }, [_vm._v("\n                            Términos y Condiciones\n                        ")])]);
+}, function () {
   var _vm = this,
       _c = _vm._self._c;
 

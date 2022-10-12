@@ -102,17 +102,32 @@
                         <span class="focus-input100 password-input"></span>
                     </div>
 
-                    <v-checkbox v-model="accept" hide-details>
-                        <template slot="label">
-                            <label
-                                style="margin-bottom: 0px; padding-bottom: 0px"
-                                >Acepto los
-                                <b style="border-bottom: 2px solid #fff"
-                                    >Términos y Condiciones</b
-                                ></label
-                            >
-                        </template>
-                    </v-checkbox>
+                    <div class="flex items-center">
+                        <input
+                            id="default-checkbox-one"
+                            type="checkbox"
+                            class="w-4 h-4 text-app-brown-1 focus:bg-app-brown-1 bg-app-brown-1 rounded border-app-brown-1 focus:ring-app-brown-1 focus:ring-2"
+                            v-model="accept"
+                        />
+                        <label
+                            for="default-checkbox-one"
+                            class="ml-2 mt-2 text-base font-semibold text-gray-900 dark:text-gray-300"
+                        >
+                            Acepto los
+                            <b class="border-b border-white">
+                                Términos y Condiciones
+                            </b>
+                        </label>
+                    </div>
+                    <!-- <div>
+                        <v-checkbox
+                            v-model="accept"
+                            label="Acepto los Términos y Condiciones"
+                            color="orange darken-3"
+                            value="orange darken-3"
+                            hide-details
+                        ></v-checkbox>
+                    </div> -->
 
                     <br />
 

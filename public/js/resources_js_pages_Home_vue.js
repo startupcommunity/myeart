@@ -11,14 +11,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//data
-function data() {
-  return {};
-}
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'home',
-  data: data
+  name: "Home"
 });
 
 /***/ }),
@@ -55,14 +49,14 @@ var render = function render() {
       "exact-active-class": "active",
       to: "/login"
     }
-  }, [_vm._v("Iniciar sesión")])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        Iniciar sesión\n                    ")])], 1), _vm._v(" "), _c("div", {
     staticClass: "container-login-form-btn"
   }, [_c("router-link", {
-    staticClass: "btn btn-primary login-form-btn",
+    staticClass: "btn btn-primary btn-block text-white btn-lg",
     attrs: {
       to: "/register"
     }
-  }, [_vm._v("\n\t\t\t\t\t\t\tRegistrate\n                        ")])], 1)])])])]);
+  }, [_vm._v("\n                        Regístrate\n                    ")])], 1)])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -72,12 +66,9 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "w-100 d-flex justify-content-center"
   }, [_c("img", {
-    staticClass: "img-fluid",
-    staticStyle: {
-      "margin-bottom": "50px"
-    },
+    staticClass: "img-fluid mb-12",
     attrs: {
-      src: __webpack_require__(/*! ../../img/Logo_Myeart.svg */ "./resources/img/Logo_Myeart.svg"),
+      src: __webpack_require__(/*! ./../../img/Logo_Myeart.svg */ "./resources/img/Logo_Myeart.svg"),
       alt: "Responsive image"
     }
   })]);
