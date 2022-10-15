@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-full sm:w-3/5 bg-white px-12 sm:py-20 h-full sm:h-screen animate-fade-in-down"
+        class="w-full sm:w-3/5 bg-white px-12 sm:pt-20 h-full sm:h-screen animate-fade-in-down"
         id="obras"
         v-show="showSection"
     >
@@ -48,16 +48,19 @@
             </div>
         </div>
         <div class="py-6 w-full sm:w-3/5">
-            <v-btn outlined block class="uppercase font-bold tracking-wide">
+            <router-link
+                class="uppercase btn btn-outline-dark btn-lg btn-block"
+                :to="{ name: 'createArtwork' }"
+            >
                 <i class="fas fa-plus"></i>
                 Subir obra
-            </v-btn>
+            </router-link>
         </div>
 
         <!-- obras -->
         <div class="py-6 w-full">
             <div
-                class="flex flex-wrap sm:overflow-y-auto h-full sm:h-[30rem] lg:h-[36rem] items-stretch"
+                class="flex flex-wrap sm:overflow-y-auto h-full sm:h-48 lg:h-80 2xl:h-96 items-stretch"
             >
                 <LoadingTailwind
                     v-if="loading"
@@ -71,7 +74,7 @@
                 >
                     <div class="rounded-md shadow-md w-full">
                         <img
-                            :src="art.galery[0].picture"
+                            :src="setPathGallery(art)"
                             :alt="art.title"
                             class="object-cover object-center w-full rounded-t-md h-72"
                         />
@@ -85,8 +88,17 @@
                                     {{ art.title }}
                                 </h3>
                                 <p class="text-primary">
-                                    {{ art.dimension }} {{ art.category.name }}
-                                    {{ art.techniques[0].name }}
+                                    {{ art.dimension }}
+                                    {{
+                                        art.categories.length
+                                            ? art.categories[0].name
+                                            : ""
+                                    }}
+                                    {{
+                                        art.techniques.length
+                                            ? art.techniques[0].name
+                                            : ""
+                                    }}
                                 </p>
                                 <div
                                     class="w-full border-t-2 border-gray-800 my-4"
@@ -179,6 +191,19 @@ export default {
         },
 
         /**
+         * Path completo de galeria
+         */
+        setPathGallery(artwork) {
+            if (!artwork.gallery.length) return "/";
+
+            const front_page = artwork.gallery.filter(
+                (pic) => pic.front_page === 1
+            );
+
+            return `${this.pathArtworkGallery + front_page[0].picture}`;
+        },
+
+        /**
          * Elimina de form saft una obra del usuario
          *
          * @params id Number
@@ -226,3 +251,11 @@ export default {
     },
 };
 </script>
+<style scoped>
+.v-application a {
+    color: #0f0f0f !important;
+}
+.v-application a:hover {
+    color: #fefefe !important;
+}
+</style>

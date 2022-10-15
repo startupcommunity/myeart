@@ -12,6 +12,7 @@
     {{--  paths  --}}
     <meta name="front-photo" content="{{ config('storage.front_photo') }}" />
     <meta name="profile-photo" content="{{ config('storage.profile_photo') }}" />
+    <meta name="artwork-gallery" content="{{ config('storage.artwork_gallery') }}" />
 
     <!-- CDNs de Font-Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">

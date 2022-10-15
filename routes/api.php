@@ -7,7 +7,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PaisesController;
 use App\Http\Controllers\ArtisticActivitysController;
 use App\Http\Controllers\ArtworkController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StyleController;
+use App\Http\Controllers\TechniqueController;
 use App\Http\Controllers\UserInformationsController;
 
 Route::post('/login', [LoginController::class, 'login']);
@@ -45,5 +48,21 @@ Route::middleware(['auth:api'])->group(function () {
     Route::group(['prefix' => 'artworks'], function () {
         Route::get('/', [ArtworkController::class, 'getArtworks'])->name('getArtworks');
         Route::delete('/delete/{id}', [ArtworkController::class, 'deleteArtworks'])->name('deleteArtworks');
+        Route::post('/create', [ArtworkController::class, 'save'])->name('saveArtwork');
+    });
+
+    // categorías
+    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/', [CategoryController::class, 'getCategories'])->name('getCategories');
+    });
+
+    // estilos
+    Route::group(['prefix' => 'styles'], function () {
+        Route::get('/', [StyleController::class, 'getStyles'])->name('getStyles');
+    });
+
+    // Técnicas
+    Route::group(['prefix' => 'techniques'], function () {
+        Route::get('/', [TechniqueController::class, 'getTechniques'])->name('getTechniques');
     });
 });

@@ -14,17 +14,17 @@ export default {
         showRequestErrors(request) {
             if (request.response.data.errors) {
                 const errors = request.response.data.errors;
-                let mjsErrors = "";
+                let mjsErrors = [];
                 for (const error in errors) {
-                    mjsErrors += errors[error][0] + "\n";
+                    mjsErrors.push(errors[error][0]);
                 }
 
                 this.$notify({
-                    title: 'Aviso!',
-                    text: mjsErrors,
+                    title: "Aviso!",
+                    text: mjsErrors.join('<br/>'),
                     group: "container",
                     type: "warning",
-                    duration: 6000
+                    duration: 6000,
                 });
             }
         },

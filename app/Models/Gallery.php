@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Galery extends Model
+class Gallery extends Model
 {
     /**
      * The table associated with the model.

@@ -6,7 +6,7 @@ use App\Enums\ArtworkStateEnum;
 use App\Models\Artwork;
 use App\Models\ArtworkStyle;
 use App\Models\ArtworkTechnique;
-use App\Models\Galery;
+use App\Models\Gallery;
 use Illuminate\Database\Seeder;
 
 class ArtworkSeeder extends Seeder
@@ -67,7 +67,7 @@ class ArtworkSeeder extends Seeder
         // ---------
         // galeria
         // ---------
-        Galery::insert([
+        Gallery::insert([
             [
                 'artwork_id' => 1,
                 'picture' => 'https://cdn.pixabay.com/photo/2022/08/22/10/01/tree-7403295_960_720.jpg',

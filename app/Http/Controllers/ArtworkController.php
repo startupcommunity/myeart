@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Factories\ArtworkFactory;
+use App\Http\Requests\CreateArtworkRequest;
 use App\Querys\ArtworkDB;
+use App\Utils\ResponseJson;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ArtworkController extends Controller
 {
+    public $artworkfactory;
+    private $resp;
+
+    public function __construct(ArtworkFactory $artworkfactory, ResponseJson $resp)
+    {
+        $this->artworkfactory = $artworkfactory;
+        $this->resp = $resp;
+    }
     /**
      * Devuelve las obras del usuario logueado
      *
@@ -35,5 +45,29 @@ class ArtworkController extends Controller
         }
 
         return response()->json($res, 500);
+    }
+
+    /**
+     * Publica o guarda como borrador una obra del usuario
+     *
+     * @param CreateArtworkRequest $request
+     * @return JsonResponse
+     */
+    public function save(CreateArtworkRequest $request): JsonResponse
+    {
+        $data = $request->all();
+        $hasFiles = isset($data['gallery']);
+
+        // guardar y crear obra
+        $artwork = $this->artworkfactory->saveSyncArtwork($data);
+
+        // guardar y crear galeria
+        !$hasFiles ?: $this->artworkfactory->uploadGalleryFiles($artwork, $data['gallery']);
+
+        if (!$artwork) {
+            return $this->resp->json('error al guardar los datos', 500);
+        }
+
+        return $this->resp->json($artwork, 200);
     }
 }

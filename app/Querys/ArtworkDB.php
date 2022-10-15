@@ -14,7 +14,7 @@ class ArtworkDB
     public static function getUserArtworks(): Collection
     {
         $userID = auth()->user()->id;
-        $data = Artwork::with(['category', 'styles', 'techniques', 'galery', 'user'])
+        $data = Artwork::with(['categories', 'styles', 'techniques', 'gallery', 'user'])
             ->where('user_id', $userID)
             ->get();
 

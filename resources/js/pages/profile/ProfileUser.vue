@@ -77,7 +77,7 @@
             <div>
                 <div class="flex flex-row items-center">
                     <div
-                        class="w-2/5 bg-gray-200 px-12 py-20 h-full sm:h-screen hidden sm:block"
+                        class="w-2/5 bg-gray-200 px-12 pt-20 h-full sm:h-screen hidden sm:block"
                     >
                         <h3
                             class="text-3xl sm:text-lg md:text-3xl tracking-tight text-gray-900 text-center"

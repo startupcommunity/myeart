@@ -38,5 +38,20 @@ vue.mixin({
 
             return "/";
         },
+
+        /**
+         * Path para la galeria de obras del usuario
+         * @returns string
+         */
+        pathArtworkGallery() {
+            const path = document.head.querySelector(
+                'meta[name="artwork-gallery"]'
+            );
+            if (path) {
+                return path.content;
+            }
+
+            return "/";
+        },
     },
 });

@@ -1,10 +1,17 @@
 // imports
 const Home = () => import("../pages/Home.vue");
-const Register = () => import("../pages/auth/register.vue");
-const Login = () => import("../pages/auth/Login.vue");
-const Perfil = () => import("../pages/auth/perfil.vue");
 const Dashboard = () => import("../pages/dashboard/dashboard.vue");
+
+// registro
+const Register = () => import("../pages/auth/register.vue");
+const Perfil = () => import("../pages/auth/perfil.vue");
+const Login = () => import("../pages/auth/Login.vue");
+
+// perfil usuario
 import ProfileUser from "../pages/profile/ProfileUser.vue";
+
+// obras
+import CreateArtwork from "../pages/artwork/CreateArtwork.vue";
 
 // store
 import { store } from "../store/store";
@@ -62,6 +69,12 @@ export const routes = [
         name: "userProfile",
         path: "/usuario/perfil/:id",
         component: ProfileUser,
+        beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "createArtwork",
+        path: "/obras/crear",
+        component: CreateArtwork,
         beforeEnter: ifAuthenticated,
     },
 ];

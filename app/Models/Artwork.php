@@ -22,16 +22,6 @@ class Artwork extends Model
     protected $guarded = [];
 
     /**
-     * devuelve la categoría relacionada
-     *
-     * @return BelongsTo
-     */
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    /**
      * Devuelve el usuario perteneciente
      *
      * @return BelongsTo
@@ -48,7 +38,7 @@ class Artwork extends Model
      */
     public function styles(): BelongsToMany
     {
-        return $this->belongsToMany(Style::class, 'artwork_styles', 'style_id', 'artwork_id');
+        return $this->belongsToMany(Style::class, 'artwork_styles');
     }
 
     /**
@@ -58,7 +48,17 @@ class Artwork extends Model
      */
     public function techniques(): BelongsToMany
     {
-        return $this->belongsToMany(Technique::class, 'artwork_techniques', 'technique_id', 'artwork_id');
+        return $this->belongsToMany(Technique::class, 'artwork_techniques');
+    }
+
+    /**
+     * devuelve las categorías relacionadas
+     *
+     * @return BelongsToMany
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'artwork_categories');
     }
 
     /**
@@ -66,8 +66,8 @@ class Artwork extends Model
      *
      * @return HasMany
      */
-    public function galery(): HasMany
+    public function gallery(): HasMany
     {
-        return $this->hasMany(Galery::class);
+        return $this->hasMany(Gallery::class);
     }
 }

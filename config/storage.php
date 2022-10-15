@@ -15,6 +15,9 @@ return [
   // path para las fotos de perfil - linkeados
   'profile_photo' => env('APP_URL') . 'storage/img/profile/profile/',
 
+  // path publico para la galeria de imagenes
+  'artwork_gallery' => env('APP_URL') . 'storage/img/artwork/gallery/',
+
   // archivos ubicados en el storage/public
   'public' => [
 
@@ -23,5 +26,8 @@ return [
 
     // foto de perfil del usuario
     'profile_photo' => 'public/img/profile/profile/',
+
+    // galeria de imagenes de obras
+    'artwork_gallery' => 'public/img/artwork/gallery/',
   ]
 ];

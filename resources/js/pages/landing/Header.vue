@@ -54,7 +54,6 @@
                 <div class="col-lg-12 col-sm-12 text-center">
                     <div class="main-menu-wrap">
                         <div class="flex justify-center items-center">
-
                             <!-- solo mobile -->
                             <div class="flex-fill d-block d-md-none d-lg-none">
                                 <div
@@ -118,7 +117,7 @@
                                                         </a>
                                                     </div>
                                                     <ul class="sub-menu">
-                                                        <li>
+                                                        <li class="bg-zinc-900">
                                                             <router-link
                                                                 :to="{
                                                                     name: 'userProfile',
@@ -130,7 +129,7 @@
                                                                 Perfil
                                                             </router-link>
                                                         </li>
-                                                        <li>
+                                                        <li class="bg-zinc-900">
                                                             <a
                                                                 href="#"
                                                                 @click.prevent="
@@ -155,6 +154,9 @@
                                                         </a>
                                                         <button
                                                             class="btn btn-primary text-white px-3 py-2 rounded-lg"
+                                                            v-if="
+                                                                !isPathObrasCreate
+                                                            "
                                                         >
                                                             SUBIR OBRA
                                                         </button>
@@ -212,6 +214,10 @@ export default {
     computed: {
         perfilUsers() {
             return this.$store.getters.getProfile;
+        },
+
+        isPathObrasCreate() {
+            return this.$route.path == "/obras/crear";
         },
     },
 };
