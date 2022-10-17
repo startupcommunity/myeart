@@ -54,4 +54,22 @@ vue.mixin({
             return "/";
         },
     },
+
+    methods: {
+        /**
+         * Cliente axios para consumo de endpoints para la api
+         *
+         * @param {Object} param
+         * @returns Promise
+         */
+        request({ endpoint, data = {}, headers = {}, method = "get" }) {
+            if (method == "get") {
+                return this.axios.get(endpoint);
+            }
+
+            if (method == "post" || method == "POST") {
+                return this.axios.post(endpoint, data, headers);
+            }
+        },
+    },
 });

@@ -8041,6 +8041,31 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].mixin({
 
       return "/";
     }
+  },
+  methods: {
+    /**
+     * Cliente axios para consumo de endpoints para la api
+     *
+     * @param {Object} param
+     * @returns Promise
+     */
+    request: function request(_ref) {
+      var endpoint = _ref.endpoint,
+          _ref$data = _ref.data,
+          data = _ref$data === void 0 ? {} : _ref$data,
+          _ref$headers = _ref.headers,
+          headers = _ref$headers === void 0 ? {} : _ref$headers,
+          _ref$method = _ref.method,
+          method = _ref$method === void 0 ? "get" : _ref$method;
+
+      if (method == "get") {
+        return this.axios.get(endpoint);
+      }
+
+      if (method == "post" || method == "POST") {
+        return this.axios.post(endpoint, data, headers);
+      }
+    }
   }
 });
 
