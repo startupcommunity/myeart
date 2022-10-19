@@ -4,17 +4,12 @@
  *  de la galeria de obras del usuario
  */
 
-const MAX_FILES_ALLOWED = 4;
+const MAX_FILES_ALLOWED = 10;
 
 export default {
     data() {
         return {
-            previewFiles: {
-                one: "",
-                two: "",
-                three: "",
-                four: "",
-            },
+            previewFiles: [],
             uploadedFiles: [],
             dropzoneFile: true,
             dragover: false,
@@ -52,20 +47,20 @@ export default {
             ];
             const arrayFiles = Object.values(files);
             let validUploadFiles = [];
+            let invalidFiles = [];
 
             arrayFiles.forEach((file) => {
                 if (validFiles.includes(file.type)) {
                     validUploadFiles.push(file);
+                } else {
+                    invalidFiles.push(file);
                 }
             });
 
-            if (!validUploadFiles.length) {
-                this.dropzoneFile = true;
-                this.uploadedFiles = [];
-                this.resetPreviewFiles();
+            if (invalidFiles.length) {
                 return this.$notify({
                     title: "Aviso!",
-                    text: "Los archivos seleccionados son inválidos",
+                    text: "Uno o mas archivos son inválidos, verifique!",
                     group: "container",
                     type: "warning",
                     duration: 6000,
@@ -81,13 +76,11 @@ export default {
          * - carga la vista previa de imagenes
          */
         addFilesToUploadFiles(files) {
-            this.uploadedFiles = [];
-
             // archivos validos
             files.forEach((file) => this.uploadedFiles.push(file));
 
-            // limite de hasta 4 archivos
-            this.limitFilesToFour();
+            // limite de hasta 10 archivos
+            this.limitFiles();
 
             // carga vista previa
             this.loadPreviewFile();
@@ -97,12 +90,12 @@ export default {
          * Limita los archivos cargados a solo 4
          * solo esta permitido subir max 4 archivos
          */
-        limitFilesToFour() {
+        limitFiles() {
             if (this.uploadedFiles.length > MAX_FILES_ALLOWED) {
                 this.uploadedFiles.splice(MAX_FILES_ALLOWED);
                 this.$notify({
                     title: "Aviso!",
-                    text: `Solo se tomarán en cuenta las primeras ${MAX_FILES_ALLOWED} imágenes`,
+                    text: `Solo puede cargar un máximo de ${MAX_FILES_ALLOWED} imágenes`,
                     group: "container",
                     type: "info",
                     duration: 6000,
@@ -116,25 +109,13 @@ export default {
          * la posición de cada una, incluyendo la de portada
          */
         loadPreviewFile() {
-            this.resetPreviewFiles();
-            this.dropzoneFile = false;
-
+            this.previewFiles = [];
             this.uploadedFiles.forEach((file, index) => {
-                if (index === 0) {
-                    this.previewFiles.one = URL.createObjectURL(file);
-                }
-
-                if (index === 1) {
-                    this.previewFiles.two = URL.createObjectURL(file);
-                }
-
-                if (index === 2) {
-                    this.previewFiles.three = URL.createObjectURL(file);
-                }
-
-                if (index === 3) {
-                    this.previewFiles.four = URL.createObjectURL(file);
-                }
+                const objectUrl = URL.createObjectURL(file);
+                this.previewFiles.push({
+                    id: index,
+                    file: objectUrl,
+                });
             });
         },
 
@@ -143,10 +124,7 @@ export default {
          * esto antes después de cargar la propiedad uploadedFiles
          */
         resetPreviewFiles() {
-            this.previewFiles.one = "";
-            this.previewFiles.two = "";
-            this.previewFiles.three = "";
-            this.previewFiles.four = "";
+            this.previewFiles = [];
         },
 
         /**
@@ -158,11 +136,11 @@ export default {
             // eliminar
             this.uploadedFiles.splice(index, 1);
 
+            // reset de las vistas previas
+            this.resetPreviewFiles();
+
             // recargar las vistas previas
             this.loadPreviewFile();
-
-            // mostrar o no la zona para cargar files
-            this.dropzoneFile = this.uploadedFiles.length === 0;
         },
 
         /**
@@ -170,8 +148,8 @@ export default {
          */
         resetUpload() {
             this.resetPreviewFiles();
-            this.dropzoneFile = true;
             this.uploadedFiles = [];
+            this.dropzoneFile = true;
         },
     },
 };

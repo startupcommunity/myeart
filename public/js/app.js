@@ -3587,6 +3587,7 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "flex justify-center items-center w-full",
+    "class": _vm.previewFiles.length ? "md:h-60" : "md:h-[444px]",
     on: {
       drop: function drop($event) {
         $event.preventDefault();
@@ -3612,7 +3613,7 @@ var render = function render() {
       value: _vm.dropzoneFile,
       expression: "dropzoneFile"
     }],
-    staticClass: "flex flex-col justify-center items-center w-full h-72 bg-gray-200 rounded-sm border border-gray-300 cursor-pointer hover:bg-gray-300",
+    staticClass: "flex flex-col justify-center items-center bg-gray-100 cursor-pointer rounded-sm border border-gray-200 hover:bg-gray-200 w-full h-full",
     attrs: {
       "for": "dropzone-file"
     }
@@ -3640,137 +3641,38 @@ var render = function render() {
         return _vm.getFiles($event);
       }
     }
-  })]), _vm._v(" "), _c("div", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.previewFiles.one,
-      expression: "previewFiles.one"
-    }],
-    staticClass: "relative h-full w-full"
-  }, [_c("img", {
-    staticClass: "w-full object-cover object-center h-72 rounded-md",
-    attrs: {
-      src: _vm.previewFiles.one,
-      alt: "file-1",
-      id: "file-1"
-    }
-  }), _vm._v(" "), _c("button", {
-    staticClass: "absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        $event.stopPropagation();
-        return _vm.deleteFile(0);
+  })])]), _vm._v(" "), _vm.previewFiles.length ? _c("div", {
+    staticClass: "overflow-x-auto flex md:pt-4"
+  }, _vm._l(_vm.previewFiles, function (file) {
+    return _c("div", {
+      key: file.id,
+      staticClass: "flex-shrink-0 w-1/2 xl:w-1/4 h-24 lg:h-40 bg-gray-200 rounded-sm border border-gray-300 animate-swing-in-top-fwd"
+    }, [_c("div", {
+      staticClass: "relative h-full w-full"
+    }, [_c("img", {
+      staticClass: "w-full object-cover object-center h-full rounded-md",
+      attrs: {
+        src: file.file,
+        alt: file + "-" + file.id,
+        id: file.id
       }
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-times text-red-700"
-  })])])])]), _vm._v(" "), _c("v-col", {
-    attrs: {
-      cols: "4"
-    }
-  }, [_c("div", {
-    staticClass: "w-full h-24 lg:h-40 bg-gray-200 rounded-sm border border-gray-300"
-  }, [_c("div", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.previewFiles.two,
-      expression: "previewFiles.two"
-    }],
-    staticClass: "relative h-full w-full"
-  }, [_c("img", {
-    staticClass: "w-full object-cover object-center h-full rounded-md",
-    attrs: {
-      src: _vm.previewFiles.two,
-      alt: "file-2",
-      id: "file-2"
-    }
-  }), _vm._v(" "), _c("button", {
-    staticClass: "absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        $event.stopPropagation();
-        return _vm.deleteFile(1);
+    }), _vm._v(" "), _c("button", {
+      staticClass: "absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold",
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          $event.stopPropagation();
+          return _vm.deleteFile(file.id);
+        }
       }
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-times text-red-700"
-  })])])])]), _vm._v(" "), _c("v-col", {
-    attrs: {
-      cols: "4"
-    }
-  }, [_c("div", {
-    staticClass: "w-full h-24 lg:h-40 bg-gray-200 rounded-sm border border-gray-300"
-  }, [_c("div", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.previewFiles.three,
-      expression: "previewFiles.three"
-    }],
-    staticClass: "relative h-full w-full"
-  }, [_c("img", {
-    staticClass: "w-full object-cover object-center h-full rounded-md",
-    attrs: {
-      src: _vm.previewFiles.three,
-      alt: "file-3",
-      id: "file-3"
-    }
-  }), _vm._v(" "), _c("button", {
-    staticClass: "absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        $event.stopPropagation();
-        return _vm.deleteFile(2);
-      }
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-times text-red-700"
-  })])])])]), _vm._v(" "), _c("v-col", {
-    attrs: {
-      cols: "4"
-    }
-  }, [_c("div", {
-    staticClass: "w-full h-24 lg:h-40 bg-gray-200 rounded-sm border border-gray-300"
-  }, [_c("div", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.previewFiles.four,
-      expression: "previewFiles.four"
-    }],
-    staticClass: "relative h-full w-full"
-  }, [_c("img", {
-    staticClass: "w-full object-cover object-center h-full rounded-md",
-    attrs: {
-      src: _vm.previewFiles.four,
-      alt: "file-4",
-      id: "file-4"
-    }
-  }), _vm._v(" "), _c("button", {
-    staticClass: "absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        $event.stopPropagation();
-        return _vm.deleteFile(3);
-      }
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-times text-red-700"
-  })])])])])], 1)], 1), _vm._v(" "), _c("v-col", {
+    }, [_c("i", {
+      staticClass: "fas fa-times text-red-700"
+    })]), _vm._v(" "), _c("span", {
+      staticClass: "absolute top-2 left-2 text-xs sm:text-sm xl:text-base sm:top-3 sm:left-3 bg-gray-100 rounded-3xl text-green-700 font-bold px-3 py-1"
+    }, [_vm._v("\n                                                " + _vm._s(file.id === 0 ? "Portada" : "") + "\n                                            ")])])]);
+  }), 0) : _vm._e()])], 1)], 1), _vm._v(" "), _c("v-col", {
     attrs: {
       cols: "12",
       md: "6"
@@ -8538,16 +8440,11 @@ __webpack_require__.r(__webpack_exports__);
  * que son de utilidad para subir y validar las imagenes
  *  de la galeria de obras del usuario
  */
-var MAX_FILES_ALLOWED = 4;
+var MAX_FILES_ALLOWED = 10;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      previewFiles: {
-        one: "",
-        two: "",
-        three: "",
-        four: ""
-      },
+      previewFiles: [],
       uploadedFiles: [],
       dropzoneFile: true,
       dragover: false
@@ -8580,19 +8477,19 @@ var MAX_FILES_ALLOWED = 4;
       var validFiles = ["image/png", "image/jpeg", "image/svg+xml", "image/gif"];
       var arrayFiles = Object.values(files);
       var validUploadFiles = [];
+      var invalidFiles = [];
       arrayFiles.forEach(function (file) {
         if (validFiles.includes(file.type)) {
           validUploadFiles.push(file);
+        } else {
+          invalidFiles.push(file);
         }
       });
 
-      if (!validUploadFiles.length) {
-        this.dropzoneFile = true;
-        this.uploadedFiles = [];
-        this.resetPreviewFiles();
+      if (invalidFiles.length) {
         return this.$notify({
           title: "Aviso!",
-          text: "Los archivos seleccionados son inválidos",
+          text: "Uno o mas archivos son inválidos, verifique!",
           group: "container",
           type: "warning",
           duration: 6000
@@ -8610,13 +8507,12 @@ var MAX_FILES_ALLOWED = 4;
     addFilesToUploadFiles: function addFilesToUploadFiles(files) {
       var _this = this;
 
-      this.uploadedFiles = []; // archivos validos
-
+      // archivos validos
       files.forEach(function (file) {
         return _this.uploadedFiles.push(file);
-      }); // limite de hasta 4 archivos
+      }); // limite de hasta 10 archivos
 
-      this.limitFilesToFour(); // carga vista previa
+      this.limitFiles(); // carga vista previa
 
       this.loadPreviewFile();
     },
@@ -8625,12 +8521,12 @@ var MAX_FILES_ALLOWED = 4;
      * Limita los archivos cargados a solo 4
      * solo esta permitido subir max 4 archivos
      */
-    limitFilesToFour: function limitFilesToFour() {
+    limitFiles: function limitFiles() {
       if (this.uploadedFiles.length > MAX_FILES_ALLOWED) {
         this.uploadedFiles.splice(MAX_FILES_ALLOWED);
         this.$notify({
           title: "Aviso!",
-          text: "Solo se tomar\xE1n en cuenta las primeras ".concat(MAX_FILES_ALLOWED, " im\xE1genes"),
+          text: "Solo puede cargar un m\xE1ximo de ".concat(MAX_FILES_ALLOWED, " im\xE1genes"),
           group: "container",
           type: "info",
           duration: 6000
@@ -8646,24 +8542,14 @@ var MAX_FILES_ALLOWED = 4;
     loadPreviewFile: function loadPreviewFile() {
       var _this2 = this;
 
-      this.resetPreviewFiles();
-      this.dropzoneFile = false;
+      this.previewFiles = [];
       this.uploadedFiles.forEach(function (file, index) {
-        if (index === 0) {
-          _this2.previewFiles.one = URL.createObjectURL(file);
-        }
+        var objectUrl = URL.createObjectURL(file);
 
-        if (index === 1) {
-          _this2.previewFiles.two = URL.createObjectURL(file);
-        }
-
-        if (index === 2) {
-          _this2.previewFiles.three = URL.createObjectURL(file);
-        }
-
-        if (index === 3) {
-          _this2.previewFiles.four = URL.createObjectURL(file);
-        }
+        _this2.previewFiles.push({
+          id: index,
+          file: objectUrl
+        });
       });
     },
 
@@ -8672,10 +8558,7 @@ var MAX_FILES_ALLOWED = 4;
      * esto antes después de cargar la propiedad uploadedFiles
      */
     resetPreviewFiles: function resetPreviewFiles() {
-      this.previewFiles.one = "";
-      this.previewFiles.two = "";
-      this.previewFiles.three = "";
-      this.previewFiles.four = "";
+      this.previewFiles = [];
     },
 
     /**
@@ -8685,11 +8568,11 @@ var MAX_FILES_ALLOWED = 4;
      */
     deleteFile: function deleteFile(index) {
       // eliminar
-      this.uploadedFiles.splice(index, 1); // recargar las vistas previas
+      this.uploadedFiles.splice(index, 1); // reset de las vistas previas
 
-      this.loadPreviewFile(); // mostrar o no la zona para cargar files
+      this.resetPreviewFiles(); // recargar las vistas previas
 
-      this.dropzoneFile = this.uploadedFiles.length === 0;
+      this.loadPreviewFile();
     },
 
     /**
@@ -8697,8 +8580,8 @@ var MAX_FILES_ALLOWED = 4;
      */
     resetUpload: function resetUpload() {
       this.resetPreviewFiles();
-      this.dropzoneFile = true;
       this.uploadedFiles = [];
+      this.dropzoneFile = true;
     }
   }
 });

@@ -21,8 +21,14 @@
                         <v-col cols="12" md="6">
                             <v-row>
                                 <v-col cols="12" class="-mb-3">
+                                    <!-- drop area -->
                                     <div
                                         class="flex justify-center items-center w-full"
+                                        :class="
+                                            previewFiles.length
+                                                ? 'md:h-60'
+                                                : 'md:h-[444px]'
+                                        "
                                         @drop.prevent="onDrop($event)"
                                         @dragover.prevent="dragover = true"
                                         @dragenter.prevent="dragover = true"
@@ -31,7 +37,7 @@
                                         <label
                                             for="dropzone-file"
                                             v-show="dropzoneFile"
-                                            class="flex flex-col justify-center items-center w-full h-72 bg-gray-200 rounded-sm border border-gray-300 cursor-pointer hover:bg-gray-300"
+                                            class="flex flex-col justify-center items-center bg-gray-100 cursor-pointer rounded-sm border border-gray-200 hover:bg-gray-200 w-full h-full"
                                         >
                                             <div
                                                 class="flex flex-col justify-center items-center pt-5 pb-6"
@@ -64,105 +70,50 @@
                                                 @change="getFiles($event)"
                                             />
                                         </label>
-                                        <div
-                                            class="relative h-full w-full"
-                                            v-show="previewFiles.one"
-                                        >
-                                            <img
-                                                :src="previewFiles.one"
-                                                class="w-full object-cover object-center h-72 rounded-md"
-                                                alt="file-1"
-                                                id="file-1"
-                                            />
-                                            <button
-                                                class="absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold"
-                                                type="button"
-                                                @click.stop="deleteFile(0)"
-                                            >
-                                                <i
-                                                    class="fas fa-times text-red-700"
-                                                ></i>
-                                            </button>
-                                        </div>
                                     </div>
-                                </v-col>
-                                <v-col cols="4">
+                                    <!-- /drop area -->
+
+                                    <!-- preview area -->
                                     <div
-                                        class="w-full h-24 lg:h-40 bg-gray-200 rounded-sm border border-gray-300"
+                                        v-if="previewFiles.length"
+                                        class="overflow-x-auto flex md:pt-4"
                                     >
                                         <div
-                                            class="relative h-full w-full"
-                                            v-show="previewFiles.two"
+                                            v-for="file in previewFiles"
+                                            :key="file.id"
+                                            class="flex-shrink-0 w-1/2 xl:w-1/4 h-24 lg:h-40 bg-gray-200 rounded-sm border border-gray-300 animate-swing-in-top-fwd"
                                         >
-                                            <img
-                                                :src="previewFiles.two"
-                                                class="w-full object-cover object-center h-full rounded-md"
-                                                alt="file-2"
-                                                id="file-2"
-                                            />
-                                            <button
-                                                class="absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold"
-                                                type="button"
-                                                @click.stop="deleteFile(1)"
-                                            >
-                                                <i
-                                                    class="fas fa-times text-red-700"
-                                                ></i>
-                                            </button>
+                                            <div class="relative h-full w-full">
+                                                <img
+                                                    :src="file.file"
+                                                    class="w-full object-cover object-center h-full rounded-md"
+                                                    :alt="file + '-' + file.id"
+                                                    :id="file.id"
+                                                />
+                                                <button
+                                                    class="absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold"
+                                                    type="button"
+                                                    @click.stop="
+                                                        deleteFile(file.id)
+                                                    "
+                                                >
+                                                    <i
+                                                        class="fas fa-times text-red-700"
+                                                    ></i>
+                                                </button>
+                                                <span
+                                                    class="absolute top-2 left-2 text-xs sm:text-sm xl:text-base sm:top-3 sm:left-3 bg-gray-100 rounded-3xl text-green-700 font-bold px-3 py-1"
+                                                >
+                                                    {{
+                                                        file.id === 0
+                                                            ? "Portada"
+                                                            : ""
+                                                    }}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </v-col>
-                                <v-col cols="4">
-                                    <div
-                                        class="w-full h-24 lg:h-40 bg-gray-200 rounded-sm border border-gray-300"
-                                    >
-                                        <div
-                                            class="relative h-full w-full"
-                                            v-show="previewFiles.three"
-                                        >
-                                            <img
-                                                :src="previewFiles.three"
-                                                class="w-full object-cover object-center h-full rounded-md"
-                                                alt="file-3"
-                                                id="file-3"
-                                            />
-                                            <button
-                                                class="absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold"
-                                                type="button"
-                                                @click.stop="deleteFile(2)"
-                                            >
-                                                <i
-                                                    class="fas fa-times text-red-700"
-                                                ></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col cols="4">
-                                    <div
-                                        class="w-full h-24 lg:h-40 bg-gray-200 rounded-sm border border-gray-300"
-                                    >
-                                        <div
-                                            class="relative h-full w-full"
-                                            v-show="previewFiles.four"
-                                        >
-                                            <img
-                                                :src="previewFiles.four"
-                                                class="w-full object-cover object-center h-full rounded-md"
-                                                alt="file-4"
-                                                id="file-4"
-                                            />
-                                            <button
-                                                class="absolute top-2 right-2 text-xs sm:text-lg sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 border-2 border-red-600 bg-gray-50 rounded-lg hover:bg-gray-200 font-bold"
-                                                type="button"
-                                                @click.stop="deleteFile(3)"
-                                            >
-                                                <i
-                                                    class="fas fa-times text-red-700"
-                                                ></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <!-- /preview area -->
                                 </v-col>
                             </v-row>
                         </v-col>
