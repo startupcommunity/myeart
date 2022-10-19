@@ -385,41 +385,7 @@
     </div>
 </template>
 <script>
-import { tns } from "tiny-slider";
 export default {
     name: "Community",
-    // mounted() {
-    //     tns({
-    //         container: "#slider-comunidad",
-    //         mode: "carousel",
-    //         speed: 800,
-    //         gutter: 20,
-    //         items: 4,
-    //         autoplay: true,
-    //         mouseDrag: true,
-    //         autoplayButtonOutput: false,
-    //         autoplayHoverPause: true,
-    //         lazyload: true,
-    //         controls: false,
-    //         responsive: {
-    //             0: {
-    //                 items: 1,
-    //                 edgePadding: 30,
-    //             },
-    //             500: {
-    //                 items: 2,
-    //                 edgePadding: 30,
-    //             },
-    //             700: {
-    //                 items: 3,
-    //                 edgePadding: 30,
-    //             },
-    //             900: {
-    //                 items: 4,
-    //                 edgePadding: 0,
-    //             },
-    //         },
-    //     });
-    // },
 };
 </script>

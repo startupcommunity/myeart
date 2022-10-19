@@ -276,11 +276,11 @@
 import { mapState, mapGetters } from "vuex";
 
 // componentes
-import ExtraInfo from "../landing/ExtraInfo.vue";
-import Header from "../landing/Header.vue";
-import Newletter from "../landing/Newletter.vue";
-import PreHeader from "../landing/PreHeader.vue";
-import Footer from "../landing/Footer.vue";
+import ExtraInfo from "../landing/sections/ExtraInfo.vue";
+import Header from "../landing/sections/Header.vue";
+import Newletter from "../landing/sections/Newletter.vue";
+import PreHeader from "../landing/sections/PreHeader.vue";
+import Footer from "../landing/sections/Footer.vue";
 import ModalFrontPhoto from "./ModalFrontPhoto.vue";
 import ModalProfilePhoto from "./ModalProfilePhoto.vue";
 

@@ -461,11 +461,11 @@
     </div>
 </template>
 <script>
-import Header from "../landing/Header.vue";
-import PreHeader from "../landing/PreHeader.vue";
-import Newletter from "../landing/Newletter.vue";
-import ExtraInfo from "../landing/ExtraInfo.vue";
-import Footer from "../landing/Footer.vue";
+import Header from "../landing/sections/Header.vue";
+import PreHeader from "../landing/sections/PreHeader.vue";
+import Newletter from "../landing/sections/Newletter.vue";
+import ExtraInfo from "../landing/sections/ExtraInfo.vue";
+import Footer from "../landing/sections/Footer.vue";
 
 // mixin
 import createRules from "./utils/createRulesMixin";
