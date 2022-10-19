@@ -19,3 +19,6 @@ mix.js("resources/js/app.js", "public/js")
 
 // imagenes del perfil del usuario
 mix.copy("resources/img/profile", "public/img/profile");
+
+// home
+mix.copy("resources/img/home", "public/img/home");

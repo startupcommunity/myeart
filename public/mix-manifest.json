@@ -1,5 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/img/profile/hero-profile.webp": "/img/profile/hero-profile.webp"
+    "/img/profile/hero-profile.webp": "/img/profile/hero-profile.webp",
+    "/img/home/mobile-newsletter.png": "/img/home/mobile-newsletter.png",
+    "/img/home/newsletter.png": "/img/home/newsletter.png",
+    "/img/home/Rectangle 7.png": "/img/home/Rectangle 7.png"
 }

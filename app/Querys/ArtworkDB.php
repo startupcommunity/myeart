@@ -16,6 +16,7 @@ class ArtworkDB
         $userID = auth()->user()->id;
         $data = Artwork::with(['categories', 'styles', 'techniques', 'gallery', 'user'])
             ->where('user_id', $userID)
+            ->orderBy('id', 'Desc')
             ->get();
 
         return $data;

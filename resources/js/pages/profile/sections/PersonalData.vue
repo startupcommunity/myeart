@@ -1,21 +1,22 @@
 <template>
     <div
-        class="w-full sm:w-3/5 bg-white px-12 pb-8 sm:pb-0 sm:pt-20 h-full sm:h-screen animate-fade-in-down"
-        id="personal-data"
+        class="w-full sm:w-3/5 bg-white px-5 sm:px-12 pb-8 sm:pb-0 sm:pt-20 h-full sm:h-screen animate-fade-in-down"
+        id="personal"
         v-show="showSection"
     >
         <div class="flex justify-center items-center">
-            <div class="w-full sm:w-4/5 py-0 sm:py-8">
-                <p
-                    class="font-extrabold text-3xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
+            <div class="w-2/4 sm:w-4/5 py-0 sm:py-8">
+                <h3
+                    class="font-extrabold text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
                 >
                     Datos personales
-                </p>
+                </h3>
                 <div
-                    class="pt-6 border-t-2 border-gray-900 w-100 hidden sm:block"
+                    class="mt-6 border-t border-gray-900 w-100 hidden sm:block"
                 ></div>
             </div>
-            <div class="sm:ml-8 hidden sm:block">
+            <!-- only escritorio -->
+            <div class="w-2/4 sm:w-auto ml-0 sm:ml-8 hidden sm:block">
                 <v-btn
                     class="text-primary"
                     depressed
@@ -25,8 +26,24 @@
                     <i class="fa-solid fa-pen"></i> Editar perfil
                 </v-btn>
             </div>
+
+            <!-- only mobile -->
+            <div class="w-2/4 sm:w-auto ml-0 sm:ml-8 block sm:hidden">
+                <v-btn
+                    class="text-primary py-4"
+                    outlined
+                    :loading="loadingFormProfile"
+                    :disabled="loadingFormProfile || !editDataProfile"
+                    @click.prevent="updateUser()"
+                    x-small
+                    block
+                >
+                    <i class="fa-solid fa-save"></i>
+                    Actualizar datos
+                </v-btn>
+            </div>
         </div>
-        <div>
+        <div class="mt-6">
             <v-form @submit.prevent="updateUser()">
                 <v-row>
                     <v-col cols="12">
@@ -104,7 +121,11 @@
                             :disabled="!editDataProfile"
                         ></v-select>
                     </v-col>
-                    <v-col cols="12" v-if="editDataProfile">
+                    <v-col
+                        cols="12"
+                        v-if="editDataProfile"
+                        class="hidden sm:block"
+                    >
                         <v-btn
                             class="text-primary"
                             outlined

@@ -1,14 +1,17 @@
 <template>
     <div
-        class="w-full sm:w-3/5 bg-white px-12 sm:pt-20 h-full sm:h-screen animate-fade-in-down"
+        class="w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:pt-20 h-full sm:h-screen animate-fade-in-down"
         id="obras"
         v-show="showSection"
     >
-        <h3 class="font-black text-3xl tracking-tight uppercase text-gray-900">
-            Obras
+        <h3
+            class="font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
+        >
+            <span class="text-center block sm:hidden"> Mis Obras </span>
+            <span class="text-left hidden sm:block"> Obras </span>
         </h3>
-        <div class="mt-4 py-4 border-t border-gray-900"></div>
-        <div class="flex flex-wrap">
+        <div class="mt-4 py-4 border-t border-gray-900 hidden sm:block"></div>
+        <div class="flex flex-wrap mt-4 sm:mt-0">
             <div
                 class="lg:border-r-2 lg:border-gray-800 lg:pr-4 w-full lg:w-auto"
             >
@@ -76,29 +79,21 @@
                         <img
                             :src="setPathGallery(art)"
                             :alt="art.title"
-                            class="object-cover object-center w-full rounded-t-md h-72"
+                            class="object-cover object-center w-full h-72"
                         />
                         <div
-                            class="flex flex-col justify-between p-6 space-y-8 bg-gray-100"
+                            class="flex flex-col justify-between space-y-8 bg-gray-50"
                         >
                             <div class="space-y-2">
                                 <h3
-                                    class="text-3xl font-semibold tracking-wide text-gray-900"
+                                    class="text-xl font-semibold tracking-wide text-gray-900 pt-3"
                                 >
                                     {{ art.title }}
                                 </h3>
                                 <p class="text-primary">
                                     {{ art.dimension }}
-                                    {{
-                                        art.categories.length
-                                            ? art.categories[0].name
-                                            : ""
-                                    }}
-                                    {{
-                                        art.techniques.length
-                                            ? art.techniques[0].name
-                                            : ""
-                                    }}
+                                    {{ setCategoryName(art.categories) }}
+                                    {{ setTechniqueName(art.techniques) }}
                                 </p>
                                 <div
                                     class="w-full border-t-2 border-gray-800 my-4"
@@ -108,19 +103,21 @@
                                 </p>
                             </div>
                             <div class="flex flex-wrap py-4">
-                                <div class="w-full xl:w-1/2 mb-4 xl:px-4">
+                                <div class="w-full xl:w-1/2 mb-4 xl:pr-2">
                                     <v-btn
                                         outlined
                                         block
+                                        large
                                         class="uppercase font-bold tracking-wide"
                                     >
                                         Editar
                                     </v-btn>
                                 </div>
-                                <div class="w-full xl:w-1/2 mb-4 xl:px-4">
+                                <div class="w-full xl:w-1/2 mb-4 xl:pl-2">
                                     <v-btn
                                         outlined
                                         block
+                                        large
                                         class="uppercase font-bold tracking-wide"
                                         @click.stop="deleteArtwork(art.id)"
                                     >
@@ -130,6 +127,16 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="w-full text-center" v-if="remainingArtworks.length">
+                    <button
+                        class="w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
+                        type="button"
+                        @click.stop="showMoreArtworks()"
+                    >
+                        Ver más
+                    </button>
                 </div>
             </div>
         </div>
@@ -143,21 +150,32 @@ import LoadingTailwind from "./../../../components/LoadingTailwind.vue";
 // mixin
 import getDataMixin from "./../../../mixins/getDataMixin";
 
+// cantidad de obras a mostrar
+let counterArtworks = 3;
+
 export default {
     name: "Artwork",
+    components: { LoadingTailwind },
+    mixins: [getDataMixin],
     props: {
         showSection: {
             type: Boolean,
         },
     },
-    components: { LoadingTailwind },
-    mixins: [getDataMixin],
     data() {
         return {
             artworks: [],
             originalArtworks: [],
+            remainingArtworks: [],
             symbol: "€",
             loading: false,
+            loadState: [
+                {
+                    published: false,
+                    sold: false,
+                    draft: false,
+                },
+            ],
         };
     },
     methods: {
@@ -168,14 +186,23 @@ export default {
             this.loading = true;
             this.axios
                 .get("/api/artworks")
-                .then((resp) => {
+                .then(async (resp) => {
                     if (resp.status === 200) {
-                        this.artworks = resp.data;
-                        this.originalArtworks = resp.data;
+                        // datos originales
+                        this.originalArtworks = await JSON.parse(
+                            JSON.stringify(resp.data)
+                        );
+
+                        // cargar y solo mostrar 3
+                        this.artworks = await resp.data;
+                        const remaining = this.artworks.splice(counterArtworks);
+
+                        // obras restantes
+                        this.loadRemainingArtworks(remaining);
                     }
                 })
                 .catch((error) => console.log(error))
-                .finally((res) => (this.loading = false));
+                .finally(() => (this.loading = false));
         },
 
         /**
@@ -184,10 +211,30 @@ export default {
          * @param Number state
          */
         filterToState(state) {
+            counterArtworks = 3;
             const artworks = this.originalArtworks.filter(
                 (art) => art.state === state
             );
+
             this.artworks = artworks;
+            const remaining = this.artworks.splice(counterArtworks);
+
+            this.loadRemainingArtworks(remaining);
+            this.changeStateArtwork(state);
+        },
+
+        /**
+         * Cambia el valor de un estado según el
+         * estado recibido, esto para manipular
+         * los filtro para cada caso especifico
+         *
+         * STATEARTWORK: ubicado en mixin
+         */
+        changeStateArtwork(state = 0) {
+            const states = this.loadState[0];
+            states.draft = this.STATEARTWORK.draft === state;
+            states.published = this.STATEARTWORK.published === state;
+            states.sold = this.STATEARTWORK.sold === state;
         },
 
         /**
@@ -201,6 +248,61 @@ export default {
             );
 
             return `${this.pathArtworkGallery + front_page[0].picture}`;
+        },
+
+        /**
+         * Setear el nombre de una categoría de una obra
+         */
+        setCategoryName(categories) {
+            return categories.length ? categories[0].name : "";
+        },
+
+        /**
+         * Setear el nombre de una técnica de una obra
+         */
+        setTechniqueName(techniques) {
+            return techniques.length ? techniques[0].name : "";
+        },
+
+        /**
+         * Va mostrando en cantidad($count) las obras cargadas
+         * - solo para mobile
+         */
+        showMoreArtworks(count = 3) {
+            // counter de obras +3
+            counterArtworks += count;
+
+            // obras originales
+            const originalData = JSON.parse(
+                JSON.stringify(this.originalArtworks)
+            );
+
+            // estado seleccionado
+            // si huno algún filtro seleccionado
+            const states = this.loadState[0];
+            if (states.published || states.sold || states.draft) {
+                const state = states.published ? 1 : states.sold ? 2 : 3;
+                const data = originalData.filter((art) => art.state === state);
+                const remaining = data.splice(counterArtworks);
+                this.artworks = data;
+
+                this.loadRemainingArtworks(remaining);
+                return;
+            }
+
+            // si no el proceso ocurre general - sin filtros
+            const remaining = originalData.splice(counterArtworks);
+            this.artworks = originalData;
+
+            this.loadRemainingArtworks(remaining);
+        },
+
+        /**
+         * Cargar las obras restantes cada vez que se actualiza
+         * la lista de obras por medio de algún evento
+         */
+        loadRemainingArtworks(remaining) {
+            this.remainingArtworks = remaining;
         },
 
         /**
@@ -241,10 +343,19 @@ export default {
                     }
                 });
         },
+
+        resetData() {
+            this.artworks = [];
+            this.originalArtworks = [];
+            this.remainingArtworks = [];
+            counterArtworks = 3;
+        },
     },
     watch: {
         showSection(val) {
             if (val) {
+                this.changeStateArtwork();
+                this.resetData();
                 this.getArtworks();
             }
         },

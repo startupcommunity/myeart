@@ -2880,7 +2880,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  // secciones como tabs
 
 var SECTIONS = {
-  "personal-data": "personal-data",
+  personal: "personal",
   obras: "obras",
   pedidos: "pedidos",
   direcciones: "direcciones",
@@ -2906,14 +2906,21 @@ var SECTIONS = {
       editDataProfile: false,
       dialogFrontPhoto: false,
       dialogProfilePhoto: false,
-      showSectionArtwork: false,
-      showSectionPersonalData: false
+      // secciones
+      sections: {
+        personal: false,
+        artwork: false,
+        order: false,
+        direction: false,
+        payment: false,
+        security: false
+      }
     };
   },
   mounted: function mounted() {
     // desactivar modo oscuro
     this.$vuetify.theme.dark = false;
-    this.showSectionPersonalData = true;
+    this.sections.personal = true;
   },
   methods: {
     /**
@@ -2924,7 +2931,7 @@ var SECTIONS = {
      *
      * @param id        ID de la sección a mostrar
      */
-    loadSectionProfile: function loadSectionProfile(id) {
+    loadSection: function loadSection(id) {
       var section = document.getElementById(id);
 
       if (section) {
@@ -2937,9 +2944,16 @@ var SECTIONS = {
         } // mostrar o ocultar
 
 
-        id == SECTIONS.obras ? this.showSectionArtwork = true : this.showSectionArtwork = false;
-        id == SECTIONS["personal-data"] ? this.showSectionPersonalData = true : this.showSectionPersonalData = false;
+        this.showOrHideSection(id);
       }
+    },
+
+    /**
+     * Mostrar u ocultar secciones
+     */
+    showOrHideSection: function showOrHideSection(id) {
+      this.sections.personal = id == SECTIONS.personal;
+      this.sections.artwork = id == SECTIONS.obras;
     }
   },
   computed: _objectSpread(_objectSpread(_objectSpread({
@@ -2984,27 +2998,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_LoadingTailwind_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../../components/LoadingTailwind.vue */ "./resources/js/components/LoadingTailwind.vue");
 /* harmony import */ var _mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../../mixins/getDataMixin */ "./resources/js/mixins/getDataMixin.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 // componentes
  // mixin
 
+ // cantidad de obras a mostrar
 
+var counterArtworks = 3;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Artwork",
+  components: {
+    LoadingTailwind: _components_LoadingTailwind_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mixins: [_mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
     showSection: {
       type: Boolean
     }
   },
-  components: {
-    LoadingTailwind: _components_LoadingTailwind_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  mixins: [_mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       artworks: [],
       originalArtworks: [],
+      remainingArtworks: [],
       symbol: "€",
-      loading: false
+      loading: false,
+      loadState: [{
+        published: false,
+        sold: false,
+        draft: false
+      }]
     };
   },
   methods: {
@@ -3015,14 +3045,46 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loading = true;
-      this.axios.get("/api/artworks").then(function (resp) {
-        if (resp.status === 200) {
-          _this.artworks = resp.data;
-          _this.originalArtworks = resp.data;
-        }
-      })["catch"](function (error) {
+      this.axios.get("/api/artworks").then( /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(resp) {
+          var remaining;
+          return _regeneratorRuntime().wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  if (!(resp.status === 200)) {
+                    _context.next = 9;
+                    break;
+                  }
+
+                  _context.next = 3;
+                  return JSON.parse(JSON.stringify(resp.data));
+
+                case 3:
+                  _this.originalArtworks = _context.sent;
+                  _context.next = 6;
+                  return resp.data;
+
+                case 6:
+                  _this.artworks = _context.sent;
+                  remaining = _this.artworks.splice(counterArtworks); // obras restantes
+
+                  _this.loadRemainingArtworks(remaining);
+
+                case 9:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }())["catch"](function (error) {
         return console.log(error);
-      })["finally"](function (res) {
+      })["finally"](function () {
         return _this.loading = false;
       });
     },
@@ -3033,10 +3095,29 @@ __webpack_require__.r(__webpack_exports__);
      * @param Number state
      */
     filterToState: function filterToState(state) {
+      counterArtworks = 3;
       var artworks = this.originalArtworks.filter(function (art) {
         return art.state === state;
       });
       this.artworks = artworks;
+      var remaining = this.artworks.splice(counterArtworks);
+      this.loadRemainingArtworks(remaining);
+      this.changeStateArtwork(state);
+    },
+
+    /**
+     * Cambia el valor de un estado según el
+     * estado recibido, esto para manipular
+     * los filtro para cada caso especifico
+     *
+     * STATEARTWORK: ubicado en mixin
+     */
+    changeStateArtwork: function changeStateArtwork() {
+      var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var states = this.loadState[0];
+      states.draft = this.STATEARTWORK.draft === state;
+      states.published = this.STATEARTWORK.published === state;
+      states.sold = this.STATEARTWORK.sold === state;
     },
 
     /**
@@ -3048,6 +3129,61 @@ __webpack_require__.r(__webpack_exports__);
         return pic.front_page === 1;
       });
       return "".concat(this.pathArtworkGallery + front_page[0].picture);
+    },
+
+    /**
+     * Setear el nombre de una categoría de una obra
+     */
+    setCategoryName: function setCategoryName(categories) {
+      return categories.length ? categories[0].name : "";
+    },
+
+    /**
+     * Setear el nombre de una técnica de una obra
+     */
+    setTechniqueName: function setTechniqueName(techniques) {
+      return techniques.length ? techniques[0].name : "";
+    },
+
+    /**
+     * Va mostrando en cantidad($count) las obras cargadas
+     * - solo para mobile
+     */
+    showMoreArtworks: function showMoreArtworks() {
+      var count = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
+      // counter de obras +3
+      counterArtworks += count; // obras originales
+
+      var originalData = JSON.parse(JSON.stringify(this.originalArtworks)); // estado seleccionado
+      // si huno algún filtro seleccionado
+
+      var states = this.loadState[0];
+
+      if (states.published || states.sold || states.draft) {
+        var state = states.published ? 1 : states.sold ? 2 : 3;
+        var data = originalData.filter(function (art) {
+          return art.state === state;
+        });
+
+        var _remaining = data.splice(counterArtworks);
+
+        this.artworks = data;
+        this.loadRemainingArtworks(_remaining);
+        return;
+      } // si no el proceso ocurre general - sin filtros
+
+
+      var remaining = originalData.splice(counterArtworks);
+      this.artworks = originalData;
+      this.loadRemainingArtworks(remaining);
+    },
+
+    /**
+     * Cargar las obras restantes cada vez que se actualiza
+     * la lista de obras por medio de algún evento
+     */
+    loadRemainingArtworks: function loadRemainingArtworks(remaining) {
+      this.remainingArtworks = remaining;
     },
 
     /**
@@ -3089,11 +3225,19 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    resetData: function resetData() {
+      this.artworks = [];
+      this.originalArtworks = [];
+      this.remainingArtworks = [];
+      counterArtworks = 3;
     }
   },
   watch: {
     showSection: function showSection(val) {
       if (val) {
+        this.changeStateArtwork();
+        this.resetData();
         this.getArtworks();
       }
     }
@@ -3114,7 +3258,54 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "MobileKeypad"
+  name: "MobileKeypad",
+  data: function data() {
+    return {
+      // secciones
+      sections: [{
+        personal: false,
+        obras: false,
+        pedidos: false,
+        direcciones: false,
+        pagos: false,
+        seguridad: false
+      }],
+      // original secciones
+      original: [{
+        personal: false,
+        obras: false,
+        pedidos: false,
+        direcciones: false,
+        pagos: false,
+        seguridad: false
+      }],
+      // id de secciones
+      mobileSection: {
+        personal: "personal",
+        obras: "obras",
+        pedidos: "pedidos",
+        direcciones: "direcciones",
+        pagos: "pagos",
+        seguridad: "seguridad"
+      }
+    };
+  },
+  methods: {
+    /**
+     * Emitir evento para cambiar entre secciones
+     * y cambiar clase activa de cada botón de activación
+     * de la sección que corresponda
+     */
+    changeEmitAndClass: function changeEmitAndClass(id) {
+      // emit
+      this.$emit("loadSection", id); // ocultar y mostrar secciones
+
+      this.sections = JSON.parse(JSON.stringify(this.original));
+      this.sections.map(function (section) {
+        return section[id] = true;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -3930,80 +4121,60 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {
-    staticClass: "row justify-content-md-center"
+    staticClass: "row justify-content-md-center sm:mt-4"
   }, [_c("div", {
-    staticClass: "col-lg-3 col-sm-12 col-xs-12"
+    staticClass: "col-lg-3 col-sm-12 col-xs-12 mb-8 md:mb-0"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
   }, [_c("img", {
-    staticClass: "img-thumbnail",
-    staticStyle: {
-      border: "none",
-      "margin-bottom": "20px",
-      background: "transparent"
-    },
+    staticClass: "img-thumbnail border-0 mb-5 bg-transparent",
     attrs: {
       src: "/images/icon/shiel1.png"
     }
   })]), _vm._v(" "), _c("h6", {
-    staticClass: "text-white text-center"
-  }, [_vm._v("PAGO SEGURO")]), _vm._v(" "), _c("h6", {
-    staticClass: "text-white text-center"
-  }, [_vm._v("\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-3 text-center col-sm-12 col-xs-12"
+    staticClass: "text-white text-center text-sm"
+  }, [_vm._v("PAGO SEGURO")]), _vm._v(" "), _c("p", {
+    staticClass: "text-white text-center text-xs sm:text-sm"
+  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v(" consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-3 col-sm-12 col-xs-12 mb-8 md:mb-0"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
   }, [_c("img", {
-    staticClass: "img-thumbnail",
-    staticStyle: {
-      border: "none",
-      "margin-bottom": "20px",
-      background: "transparent"
-    },
+    staticClass: "img-thumbnail border-0 mb-5 bg-transparent",
     attrs: {
       src: "/images/icon/shiel2.png"
     }
   })]), _vm._v(" "), _c("h6", {
-    staticClass: "text-white text-center"
+    staticClass: "text-white text-center text-sm"
   }, [_vm._v("ARTISTAS VERIFICADOS")]), _vm._v(" "), _c("h6", {
-    staticClass: "text-white text-center"
-  }, [_vm._v("\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-3 col-sm-12 col-xs-12"
+    staticClass: "text-white text-center text-xs sm:text-sm"
+  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v(" consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-3 col-sm-12 col-xs-12 mb-8 md:mb-0"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
   }, [_c("img", {
-    staticClass: "img-thumbnail",
-    staticStyle: {
-      border: "none",
-      "margin-bottom": "20px",
-      background: "transparent"
-    },
+    staticClass: "img-thumbnail border-0 mb-5 bg-transparent",
     attrs: {
       src: "/images/icon/pintaje.png"
     }
   })]), _vm._v(" "), _c("h6", {
-    staticClass: "text-white text-center"
+    staticClass: "text-white text-center text-sm"
   }, [_vm._v("OBRAS ORIGINALES")]), _vm._v(" "), _c("h6", {
-    staticClass: "text-white text-center"
-  }, [_vm._v("\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
+    staticClass: "text-white text-center text-xs sm:text-sm"
+  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v(" consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-3 col-sm-12 col-xs-12"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
   }, [_c("img", {
-    staticClass: "img-thumbnail",
-    staticStyle: {
-      border: "none",
-      "margin-bottom": "20px",
-      background: "transparent"
-    },
+    staticClass: "img-thumbnail border-0 mb-5 bg-transparent",
     attrs: {
       src: "/images/icon/music.png"
     }
   })]), _vm._v(" "), _c("h6", {
-    staticClass: "text-white text-center"
+    staticClass: "text-white text-center text-sm"
   }, [_vm._v("SOPORTE 24 HORAS")]), _vm._v(" "), _c("h6", {
-    staticClass: "text-white text-center"
-  }, [_vm._v("\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n                ")])])])])]);
+    staticClass: "text-white text-center text-xs sm:text-sm"
+  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v(" consectetur adipiscing elit.\n                ")])])])])]);
 }];
 render._withStripped = true;
 
@@ -4034,18 +4205,18 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "container-fluid bg-white text-dark footer py-12 wow fadeIn",
+    staticClass: "container bg-white text-dark footer py-12 wow fadeIn",
     attrs: {
       "data-wow-delay": "0.1s"
     }
   }, [_c("div", {
-    staticClass: "d-flex justify-content-center py-5"
+    staticClass: "d-flex justify-content-center sm:py-5"
   }, [_c("div", {
     staticClass: "row g-5 justify-content-md-center"
   }, [_c("div", {
     staticClass: "col-lg-2 col-md-6 col-sm-12 text-center"
   }, [_c("img", {
-    staticClass: "w-56 mx-auto",
+    staticClass: "w-40 sm:w-56 mx-auto",
     attrs: {
       src: "/images/myHeartBlack.png",
       alt: "myHeartBlack"
@@ -4053,116 +4224,80 @@ var staticRenderFns = [function () {
   })]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
   }, [_c("h5", {
-    staticClass: "text-dark mb-2 font-extrabold"
-  }, [_vm._v("AYUDA NOSOTROS")]), _vm._v(" "), _c("p", {
-    staticStyle: {
-      "margin-bottom": "1px"
-    }
-  }, [_vm._v("Quienes")]), _vm._v(" "), _c("p", {
-    staticStyle: {
-      "margin-bottom": "1px"
-    }
-  }, [_vm._v("Somos")]), _vm._v(" "), _c("p", {
-    staticStyle: {
-      "margin-bottom": "1px"
-    }
-  }, [_vm._v("Pregunta Frecuentes")])]), _vm._v(" "), _c("div", {
+    staticClass: "text-gray-900 mb-2 font-black"
+  }, [_vm._v("\n                    AYUDA NOSOTROS\n                ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 font-light uppercase text-xs leading-relaxed"
+  }, [_vm._v("\n                    Quienes\n                ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 font-light uppercase text-xs leading-relaxed"
+  }, [_vm._v("\n                    Somos\n                ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 font-light uppercase text-xs leading-relaxed"
+  }, [_vm._v("\n                    Pregunta Frecuentes\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
   }, [_c("h5", {
-    staticClass: "text-dark mb-2 font-extrabold"
+    staticClass: "text-gray-900 mb-2 font-black"
   }, [_vm._v("POLÍTICAS")]), _vm._v(" "), _c("p", {
-    staticStyle: {
-      "margin-bottom": "1px"
-    }
-  }, [_vm._v("Politicas de Envio")]), _vm._v(" "), _c("p", {
-    staticStyle: {
-      "margin-bottom": "1px"
-    }
-  }, [_vm._v("Politicas de Privacidad")]), _vm._v(" "), _c("p", {
-    staticStyle: {
-      "margin-bottom": "1px"
-    }
-  }, [_vm._v("Terminos y Condiciones")]), _vm._v(" "), _c("p", {
-    staticStyle: {
-      "margin-bottom": "1px"
-    }
-  }, [_vm._v("Soporte")])]), _vm._v(" "), _c("div", {
+    staticClass: "mb-1 font-light uppercase text-xs leading-relaxed"
+  }, [_vm._v("\n                    Politicas de Envio\n                ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 font-light uppercase text-xs leading-relaxed"
+  }, [_vm._v("\n                    Politicas de Privacidad\n                ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 font-light uppercase text-xs leading-relaxed"
+  }, [_vm._v("\n                    Terminos y Condiciones\n                ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 font-light uppercase text-xs leading-relaxed"
+  }, [_vm._v("\n                    Soporte\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
   }, [_c("h5", {
-    staticClass: "text-dark mb-2 font-extrabold"
+    staticClass: "text-gray-900 mb-2 font-black"
   }, [_vm._v("CONTACTO")]), _vm._v(" "), _c("p", {
-    staticStyle: {
-      "margin-bottom": "1px"
-    }
-  }, [_vm._v("Call Us: 344-755-111")]), _vm._v(" "), _c("p", {
-    staticStyle: {
-      "margin-bottom": "1px"
-    }
-  }, [_vm._v("support@aazztech.com")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2 col-md-6 d-flex align-items-center"
+    staticClass: "mb-1 font-light uppercase text-xs leading-relaxed"
+  }, [_vm._v("\n                    Call Us: 344-755-111\n                ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 font-light uppercase text-xs leading-relaxed"
+  }, [_vm._v("\n                    support@aazztech.com\n                ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-4 col-md-6 d-flex align-items-center md:-mt-10"
   }, [_c("div", {
-    staticClass: "row"
+    staticClass: "flex flex-wrap justify-center items-center"
   }, [_c("div", {
-    staticClass: "col",
-    staticStyle: {
-      "padding-left": "2px",
-      "padding-right": "2px"
-    }
+    staticClass: "w-2/6 md:w-1/5 px-1"
   }, [_c("img", {
-    staticClass: "img-fluid",
+    staticClass: "w-20 md:w-48",
     attrs: {
       src: "/images/icon-comerce/VisaClassic.png",
       alt: "Responsive image"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "col",
-    staticStyle: {
-      "padding-left": "2px",
-      "padding-right": "2px"
-    }
+    staticClass: "w-2/6 md:w-1/5 px-1"
   }, [_c("img", {
-    staticClass: "img-fluid",
+    staticClass: "w-20 md:w-48",
     attrs: {
       src: "/images/icon-comerce/MastercardFull.png",
       alt: "Responsive image"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "col",
-    staticStyle: {
-      "padding-left": "2px",
-      "padding-right": "2px"
-    }
+    staticClass: "w-2/6 md:w-1/5 px-1"
   }, [_c("img", {
-    staticClass: "img-fluid",
+    staticClass: "w-20 md:w-48",
     attrs: {
       src: "/images/icon-comerce/Paypal.png",
       alt: "Responsive image"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "col",
-    staticStyle: {
-      "padding-left": "2px",
-      "padding-right": "2px"
-    }
+    staticClass: "flex justify-center items-center md:w-2/5"
+  }, [_c("div", {
+    staticClass: "px-1"
   }, [_c("img", {
-    staticClass: "img-fluid",
+    staticClass: "w-auto md:w-48",
     attrs: {
       src: "/images/icon-comerce/StorePay.png",
       alt: "Responsive image"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "col",
-    staticStyle: {
-      "padding-left": "2px",
-      "padding-right": "2px"
-    }
+    staticClass: "px-1"
   }, [_c("img", {
-    staticClass: "img-fluid",
+    staticClass: "w-auto md:w-48",
     attrs: {
       src: "/images/icon-comerce/GooglePay.png",
       alt: "Responsive image"
     }
-  })])])])])])]);
+  })])])])])])])]);
 }];
 render._withStripped = true;
 
@@ -4360,7 +4495,24 @@ var render = function render() {
     staticClass: "header-icons"
   }, [_vm._m(5), _vm._v(" "), !_vm.isPathObrasCreate ? _c("button", {
     staticClass: "btn btn-primary text-white px-3 py-2 rounded-lg"
-  }, [_vm._v("\n                                                        SUBIR OBRA\n                                                    ")]) : _vm._e()])])])])])])]), _vm._v(" "), _vm._m(6)])])])])])]);
+  }, [_vm._v("\n                                                        SUBIR OBRA\n                                                    ")]) : _vm._e()])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex-fill d-block d-md-none d-lg-none"
+  }, [_c("div", {
+    staticClass: "w-100 d-flex justify-content-center -mt-4"
+  }, [_c("div", {
+    staticClass: "flex-fill"
+  }, [_c("router-link", {
+    attrs: {
+      to: {
+        name: "userProfile",
+        params: {
+          id: _vm.perfilUsers.id
+        }
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-regular fa-user text-white"
+  })])], 1), _vm._v(" "), _vm._m(6)])])])])])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -4427,18 +4579,10 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "flex-fill d-block d-md-none d-lg-none"
-  }, [_c("div", {
-    staticClass: "w-100 d-flex justify-content-center -mt-4"
-  }, [_c("div", {
-    staticClass: "flex-fill"
-  }, [_c("i", {
-    staticClass: "fa-regular fa-user text-white"
-  })]), _vm._v(" "), _c("div", {
     staticClass: "flex-fill"
   }, [_c("i", {
     staticClass: "fa-solid fa-cart-shopping text-white"
-  })])])]);
+  })]);
 }];
 render._withStripped = true;
 
@@ -4469,15 +4613,15 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "search-section py-10"
+    staticClass: "lg:py-28 bg-mobile-newsletter md:bg-newsletter bg-cover bg-no-repeat bg-center"
   }, [_c("div", {
-    staticClass: "container text-center"
+    staticClass: "container py-6 sm:py-0"
   }, [_c("h2", {
-    staticClass: "font-extrabold text-white text-lg lg:text-3xl xl:text-4xl"
+    staticClass: "font-black text-xl lg:text-3xl leading-10 text-white text-center"
   }, [_vm._v("\n            El newsletter para grandes artistas\n        ")]), _vm._v(" "), _c("div", {
-    staticClass: "hero-btns d-flex justify-content-center"
+    staticClass: "flex justify-center items-center"
   }, [_c("div", {
-    staticClass: "input-group"
+    staticClass: "input-group w-full lg:w-1/2 py-8"
   }, [_c("input", {
     staticClass: "form-control h-14",
     attrs: {
@@ -4487,9 +4631,9 @@ var staticRenderFns = [function () {
   }), _vm._v(" "), _c("div", {
     staticClass: "input-group-append"
   }, [_c("button", {
-    staticClass: "btn btn-dark px-5"
+    staticClass: "btn btn-dark px-5 text-gray-200"
   }, [_vm._v("SUSCRÍBETE")])])])]), _vm._v(" "), _c("h5", {
-    staticClass: "mt-5 text-white font-light tracking-wider"
+    staticClass: "text-white font-light tracking-wider text-sm text-center uppercase"
   }, [_vm._v("100% arte, 0% spam, lo prometemos.")])])]);
 }];
 render._withStripped = true;
@@ -4815,9 +4959,11 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-camera"
-  }), _vm._v(" Editar portada\n                        ")])])])])])]), _vm._v(" "), _c("MobileKeypad", {
+  }), _vm._v(" Editar portada\n                        ")])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-gray-900 bg-opacity-60"
+  })]), _vm._v(" "), _c("MobileKeypad", {
     on: {
-      loadSectionProfile: _vm.loadSectionProfile,
+      loadSection: _vm.loadSection,
       editDataProfile: function editDataProfile($event) {
         _vm.editDataProfile = !_vm.editDataProfile;
       }
@@ -4844,13 +4990,14 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.loadSectionProfile("personal-data");
+        return _vm.loadSection("personal");
       }
     }
   }, [_c("i", {
     staticClass: "fa fa-user text-primary"
   }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight uppercase font-bold"
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.personal ? "font-black" : "font-light"
   }, [_vm._v("\n                                        Datos personales\n                                    ")])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
   }, [_c("button", {
@@ -4859,13 +5006,14 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.loadSectionProfile("obras");
+        return _vm.loadSection("obras");
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-palette text-primary"
   }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight uppercase font-bold"
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.artwork ? "font-black" : "font-light"
   }, [_vm._v("\n                                        Mis obras\n                                    ")])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
   }, [_c("button", {
@@ -4874,13 +5022,14 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.loadSectionProfile("pedidos");
+        return _vm.loadSection("pedidos");
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-shopping-cart text-primary"
   }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight uppercase font-bold"
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.order ? "font-black" : "font-light"
   }, [_vm._v("\n                                        Mis Pedidos\n                                    ")])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
   }, [_c("button", {
@@ -4889,13 +5038,14 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.loadSectionProfile("direcciones");
+        return _vm.loadSection("direcciones");
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-location-arrow text-primary"
   }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight uppercase font-bold"
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.direction ? "font-black" : "font-light"
   }, [_vm._v("\n                                        Mis Direcciones\n                                    ")])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
   }, [_c("button", {
@@ -4904,13 +5054,14 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.loadSectionProfile("pagos");
+        return _vm.loadSection("pagos");
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-money-check text-primary"
   }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight uppercase font-bold"
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.payment ? "font-black" : "font-light"
   }, [_vm._v("\n                                        Métodos de pago\n                                    ")])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
   }, [_c("button", {
@@ -4919,17 +5070,18 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.loadSectionProfile("seguridad");
+        return _vm.loadSection("seguridad");
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-shield text-primary"
   }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight uppercase font-bold"
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.security ? "font-black" : "font-light"
   }, [_vm._v("\n                                        Privacidad y seguridad\n                                    ")])])])])])]), _vm._v(" "), _c("PersonalData", {
     attrs: {
       editDataProfile: _vm.editDataProfile,
-      showSection: _vm.showSectionPersonalData
+      showSection: _vm.sections.personal
     },
     on: {
       editDataProfilePersonal: function editDataProfilePersonal($event) {
@@ -4938,7 +5090,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("Artwork", {
     attrs: {
-      showSection: _vm.showSectionArtwork
+      showSection: _vm.sections.artwork
     }
   })], 1)])]), _vm._v(" "), _c("Newletter"), _vm._v(" "), _c("ExtraInfo"), _vm._v(" "), _c("Footer"), _vm._v(" "), _c("ModalFrontPhoto", {
     attrs: {
@@ -4990,16 +5142,14 @@ var render = function render() {
       value: _vm.showSection,
       expression: "showSection"
     }],
-    staticClass: "w-full sm:w-3/5 bg-white px-12 sm:pt-20 h-full sm:h-screen animate-fade-in-down",
+    staticClass: "w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:pt-20 h-full sm:h-screen animate-fade-in-down",
     attrs: {
       id: "obras"
     }
-  }, [_c("h3", {
-    staticClass: "font-black text-3xl tracking-tight uppercase text-gray-900"
-  }, [_vm._v("\n        Obras\n    ")]), _vm._v(" "), _c("div", {
-    staticClass: "mt-4 py-4 border-t border-gray-900"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "mt-4 py-4 border-t border-gray-900 hidden sm:block"
   }), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-wrap"
+    staticClass: "flex flex-wrap mt-4 sm:mt-0"
   }, [_c("div", {
     staticClass: "lg:border-r-2 lg:border-gray-800 lg:pr-4 w-full lg:w-auto"
   }, [_c("v-btn", {
@@ -5071,40 +5221,42 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "rounded-md shadow-md w-full"
     }, [_c("img", {
-      staticClass: "object-cover object-center w-full rounded-t-md h-72",
+      staticClass: "object-cover object-center w-full h-72",
       attrs: {
         src: _vm.setPathGallery(art),
         alt: art.title
       }
     }), _vm._v(" "), _c("div", {
-      staticClass: "flex flex-col justify-between p-6 space-y-8 bg-gray-100"
+      staticClass: "flex flex-col justify-between space-y-8 bg-gray-50"
     }, [_c("div", {
       staticClass: "space-y-2"
     }, [_c("h3", {
-      staticClass: "text-3xl font-semibold tracking-wide text-gray-900"
+      staticClass: "text-xl font-semibold tracking-wide text-gray-900 pt-3"
     }, [_vm._v("\n                                " + _vm._s(art.title) + "\n                            ")]), _vm._v(" "), _c("p", {
       staticClass: "text-primary"
-    }, [_vm._v("\n                                " + _vm._s(art.dimension) + "\n                                " + _vm._s(art.categories.length ? art.categories[0].name : "") + "\n                                " + _vm._s(art.techniques.length ? art.techniques[0].name : "") + "\n                            ")]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                " + _vm._s(art.dimension) + "\n                                " + _vm._s(_vm.setCategoryName(art.categories)) + "\n                                " + _vm._s(_vm.setTechniqueName(art.techniques)) + "\n                            ")]), _vm._v(" "), _c("div", {
       staticClass: "w-full border-t-2 border-gray-800 my-4"
     }), _vm._v(" "), _c("p", {
       staticClass: "text-gray-900"
     }, [_vm._v("\n                                " + _vm._s(art.price) + " " + _vm._s(_vm.symbol) + "\n                            ")])]), _vm._v(" "), _c("div", {
       staticClass: "flex flex-wrap py-4"
     }, [_c("div", {
-      staticClass: "w-full xl:w-1/2 mb-4 xl:px-4"
+      staticClass: "w-full xl:w-1/2 mb-4 xl:pr-2"
     }, [_c("v-btn", {
       staticClass: "uppercase font-bold tracking-wide",
       attrs: {
         outlined: "",
-        block: ""
+        block: "",
+        large: ""
       }
     }, [_vm._v("\n                                    Editar\n                                ")])], 1), _vm._v(" "), _c("div", {
-      staticClass: "w-full xl:w-1/2 mb-4 xl:px-4"
+      staticClass: "w-full xl:w-1/2 mb-4 xl:pl-2"
     }, [_c("v-btn", {
       staticClass: "uppercase font-bold tracking-wide",
       attrs: {
         outlined: "",
-        block: ""
+        block: "",
+        large: ""
       },
       on: {
         click: function click($event) {
@@ -5113,10 +5265,34 @@ var render = function render() {
         }
       }
     }, [_vm._v("\n                                    Eliminar\n                                ")])], 1)])])])]);
-  })], 2)])]);
+  }), _vm._v(" "), _vm.remainingArtworks.length ? _c("div", {
+    staticClass: "w-full text-center"
+  }, [_c("button", {
+    staticClass: "w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.showMoreArtworks();
+      }
+    }
+  }, [_vm._v("\n                    Ver más\n                ")])]) : _vm._e()], 2)])]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("h3", {
+    staticClass: "font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
+  }, [_c("span", {
+    staticClass: "text-center block sm:hidden"
+  }, [_vm._v(" Mis Obras ")]), _vm._v(" "), _c("span", {
+    staticClass: "text-left hidden sm:block"
+  }, [_vm._v(" Obras ")])]);
+}];
 render._withStripped = true;
 
 
@@ -5164,119 +5340,95 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.$emit("loadSectionProfile", "personal-data");
+        return _vm.changeEmitAndClass(_vm.mobileSection.personal);
       }
     }
   }, [_c("i", {
     staticClass: "fa fa-user fa-2x text-primary"
-  }), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("div", [_c("button", {
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].personal ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Datos "), _c("br"), _vm._v("\n                    Personales\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
     },
     on: {
       click: function click($event) {
-        return _vm.$emit("loadSectionProfile", "obras");
+        return _vm.changeEmitAndClass(_vm.mobileSection.obras);
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-palette text-primary fa-2x"
-  }), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", [_c("button", {
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].obras ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Obras\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
     },
     on: {
       click: function click($event) {
-        return _vm.$emit("loadSectionProfile", "pedidos");
+        return _vm.changeEmitAndClass(_vm.mobileSection.pedidos);
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-shopping-cart text-primary fa-2x"
-  }), _vm._v(" "), _vm._m(2)])]), _vm._v(" "), _c("div", [_c("button", {
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].pedidos ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Pedidos\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
     },
     on: {
       click: function click($event) {
-        return _vm.$emit("loadSectionProfile", "direcciones");
+        return _vm.changeEmitAndClass(_vm.mobileSection.direcciones);
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-location-arrow text-primary fa-2x"
-  }), _vm._v(" "), _vm._m(3)])]), _vm._v(" "), _c("div", [_c("button", {
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].direcciones ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Direcciones\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
     },
     on: {
       click: function click($event) {
-        return _vm.$emit("loadSectionProfile", "pagos");
+        return _vm.changeEmitAndClass(_vm.mobileSection.pagos);
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-money-check text-primary fa-2x"
-  }), _vm._v(" "), _vm._m(4)])]), _vm._v(" "), _c("div", [_c("button", {
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].pagos ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Métodos de "), _c("br"), _vm._v("\n                    Pago\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
     },
     on: {
       click: function click($event) {
-        return _vm.$emit("loadSectionProfile", "seguridad");
+        return _vm.changeEmitAndClass(_vm.mobileSection.seguridad);
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-shield text-primary fa-2x"
-  }), _vm._v(" "), _vm._m(5)])])]), _vm._v(" "), _c("div", {
-    staticClass: "w-4/5 mx-o border-t-2 border-primary my-8"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].seguridad ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Privacidad "), _c("br"), _vm._v("y Seguridad\n                ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "w-11/12 border-t-2 border-primary my-8"
   })]);
 };
 
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("span", {
-    staticClass: "tracking-tight font-bold"
-  }, [_vm._v("\n                    Datos "), _c("br"), _vm._v("\n                    Personales\n                ")]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("span", {
-    staticClass: "tracking-tight font-bold"
-  }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Obras\n                ")]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("span", {
-    staticClass: "tracking-tight font-bold"
-  }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Pedidos\n                ")]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("span", {
-    staticClass: "tracking-tight font-bold"
-  }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Direcciones\n                ")]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("span", {
-    staticClass: "tracking-tight font-bold"
-  }, [_vm._v("\n                    Métodos de "), _c("br"), _vm._v("\n                    Pago\n                ")]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("span", {
-    staticClass: "tracking-tight font-bold"
-  }, [_vm._v("\n                    Privacidad "), _c("br"), _vm._v("y Seguridad\n                ")]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -5305,14 +5457,14 @@ var render = function render() {
       value: _vm.showSection,
       expression: "showSection"
     }],
-    staticClass: "w-full sm:w-3/5 bg-white px-12 pb-8 sm:pb-0 sm:pt-20 h-full sm:h-screen animate-fade-in-down",
+    staticClass: "w-full sm:w-3/5 bg-white px-5 sm:px-12 pb-8 sm:pb-0 sm:pt-20 h-full sm:h-screen animate-fade-in-down",
     attrs: {
-      id: "personal-data"
+      id: "personal"
     }
   }, [_c("div", {
     staticClass: "flex justify-center items-center"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "sm:ml-8 hidden sm:block"
+    staticClass: "w-2/4 sm:w-auto ml-0 sm:ml-8 hidden sm:block"
   }, [_c("v-btn", {
     staticClass: "text-primary",
     attrs: {
@@ -5326,7 +5478,28 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-pen"
-  }), _vm._v(" Editar perfil\n            ")])], 1)]), _vm._v(" "), _c("div", [_c("v-form", {
+  }), _vm._v(" Editar perfil\n            ")])], 1), _vm._v(" "), _c("div", {
+    staticClass: "w-2/4 sm:w-auto ml-0 sm:ml-8 block sm:hidden"
+  }, [_c("v-btn", {
+    staticClass: "text-primary py-4",
+    attrs: {
+      outlined: "",
+      loading: _vm.loadingFormProfile,
+      disabled: _vm.loadingFormProfile || !_vm.editDataProfile,
+      "x-small": "",
+      block: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.updateUser();
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-save"
+  }), _vm._v("\n                Actualizar datos\n            ")])], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "mt-6"
+  }, [_c("v-form", {
     on: {
       submit: function submit($event) {
         $event.preventDefault();
@@ -5477,6 +5650,7 @@ var render = function render() {
       expression: "userProfile.profile.lang"
     }
   })], 1), _vm._v(" "), _vm.editDataProfile ? _c("v-col", {
+    staticClass: "hidden sm:block",
     attrs: {
       cols: "12"
     }
@@ -5498,11 +5672,11 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "w-full sm:w-4/5 py-0 sm:py-8"
-  }, [_c("p", {
-    staticClass: "font-extrabold text-3xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
+    staticClass: "w-2/4 sm:w-4/5 py-0 sm:py-8"
+  }, [_c("h3", {
+    staticClass: "font-extrabold text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
   }, [_vm._v("\n                Datos personales\n            ")]), _vm._v(" "), _c("div", {
-    staticClass: "pt-6 border-t-2 border-gray-900 w-100 hidden sm:block"
+    staticClass: "mt-6 border-t border-gray-900 w-100 hidden sm:block"
   })]);
 }];
 render._withStripped = true;

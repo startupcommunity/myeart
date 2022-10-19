@@ -62,12 +62,15 @@
                     </div>
                 </div>
             </div>
+            <div
+                class="absolute top-0 bottom-auto pb-24 inset-x-0 bg-gray-900 bg-opacity-60"
+            ></div>
         </div>
         <!-- /sección hero -->
 
         <!-- tabs responsiva mobile -->
         <MobileKeypad
-            @loadSectionProfile="loadSectionProfile"
+            @loadSection="loadSection"
             @editDataProfile="editDataProfile = !editDataProfile"
         />
         <!-- /tabs responsiva mobile -->
@@ -85,7 +88,7 @@
                             <b class="font-black"> {{ userProfile.name }} </b>
                         </h3>
 
-                        <!-- botonera -->
+                        <!-- botonera escritorio -->
                         <div class="flex justify-center mt-12">
                             <div
                                 class="text-gray-800 sm:text-xs md:text-sm lg:text-lg"
@@ -95,13 +98,16 @@
                                 >
                                     <button
                                         type="button"
-                                        @click="
-                                            loadSectionProfile('personal-data')
-                                        "
+                                        @click="loadSection('personal')"
                                     >
                                         <i class="fa fa-user text-primary"></i>
                                         <span
-                                            class="tracking-tight uppercase font-bold"
+                                            class="tracking-tight uppercase"
+                                            :class="
+                                                sections.personal
+                                                    ? 'font-black'
+                                                    : 'font-light'
+                                            "
                                         >
                                             Datos personales
                                         </span>
@@ -112,13 +118,18 @@
                                 >
                                     <button
                                         type="button"
-                                        @click="loadSectionProfile('obras')"
+                                        @click="loadSection('obras')"
                                     >
                                         <i
                                             class="fas fa-palette text-primary"
                                         ></i>
                                         <span
-                                            class="tracking-tight uppercase font-bold"
+                                            class="tracking-tight uppercase"
+                                            :class="
+                                                sections.artwork
+                                                    ? 'font-black'
+                                                    : 'font-light'
+                                            "
                                         >
                                             Mis obras
                                         </span>
@@ -129,13 +140,18 @@
                                 >
                                     <button
                                         type="button"
-                                        @click="loadSectionProfile('pedidos')"
+                                        @click="loadSection('pedidos')"
                                     >
                                         <i
                                             class="fas fa-shopping-cart text-primary"
                                         ></i>
                                         <span
-                                            class="tracking-tight uppercase font-bold"
+                                            class="tracking-tight uppercase"
+                                            :class="
+                                                sections.order
+                                                    ? 'font-black'
+                                                    : 'font-light'
+                                            "
                                         >
                                             Mis Pedidos
                                         </span>
@@ -146,15 +162,18 @@
                                 >
                                     <button
                                         type="button"
-                                        @click="
-                                            loadSectionProfile('direcciones')
-                                        "
+                                        @click="loadSection('direcciones')"
                                     >
                                         <i
                                             class="fas fa-location-arrow text-primary"
                                         ></i>
                                         <span
-                                            class="tracking-tight uppercase font-bold"
+                                            class="tracking-tight uppercase"
+                                            :class="
+                                                sections.direction
+                                                    ? 'font-black'
+                                                    : 'font-light'
+                                            "
                                         >
                                             Mis Direcciones
                                         </span>
@@ -165,13 +184,18 @@
                                 >
                                     <button
                                         type="button"
-                                        @click="loadSectionProfile('pagos')"
+                                        @click="loadSection('pagos')"
                                     >
                                         <i
                                             class="fas fa-money-check text-primary"
                                         ></i>
                                         <span
-                                            class="tracking-tight uppercase font-bold"
+                                            class="tracking-tight uppercase"
+                                            :class="
+                                                sections.payment
+                                                    ? 'font-black'
+                                                    : 'font-light'
+                                            "
                                         >
                                             Métodos de pago
                                         </span>
@@ -182,13 +206,18 @@
                                 >
                                     <button
                                         type="button"
-                                        @click="loadSectionProfile('seguridad')"
+                                        @click="loadSection('seguridad')"
                                     >
                                         <i
                                             class="fas fa-shield text-primary"
                                         ></i>
                                         <span
-                                            class="tracking-tight uppercase font-bold"
+                                            class="tracking-tight uppercase"
+                                            :class="
+                                                sections.security
+                                                    ? 'font-black'
+                                                    : 'font-light'
+                                            "
                                         >
                                             Privacidad y seguridad
                                         </span>
@@ -196,13 +225,13 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /botonera -->
+                        <!-- /botonera escritorio -->
                     </div>
 
                     <!-- sección datos personales -->
                     <PersonalData
                         :editDataProfile="editDataProfile"
-                        :showSection="showSectionPersonalData"
+                        :showSection="sections.personal"
                         @editDataProfilePersonal="
                             editDataProfile = !editDataProfile
                         "
@@ -210,7 +239,7 @@
                     <!-- /sección datos personales -->
 
                     <!-- sección obras -->
-                    <Artwork :showSection="showSectionArtwork" />
+                    <Artwork :showSection="sections.artwork" />
                     <!-- /sección obras -->
                 </div>
             </div>
@@ -262,7 +291,7 @@ import PersonalData from "./sections/PersonalData.vue";
 
 // secciones como tabs
 const SECTIONS = {
-    "personal-data": "personal-data",
+    personal: "personal",
     obras: "obras",
     pedidos: "pedidos",
     direcciones: "direcciones",
@@ -289,14 +318,22 @@ export default {
             editDataProfile: false,
             dialogFrontPhoto: false,
             dialogProfilePhoto: false,
-            showSectionArtwork: false,
-            showSectionPersonalData: false,
+
+            // secciones
+            sections: {
+                personal: false,
+                artwork: false,
+                order: false,
+                direction: false,
+                payment: false,
+                security: false,
+            },
         };
     },
     mounted() {
         // desactivar modo oscuro
         this.$vuetify.theme.dark = false;
-        this.showSectionPersonalData = true;
+        this.sections.personal = true;
     },
     methods: {
         /**
@@ -307,7 +344,7 @@ export default {
          *
          * @param id        ID de la sección a mostrar
          */
-        loadSectionProfile(id) {
+        loadSection(id) {
             const section = document.getElementById(id);
 
             if (section) {
@@ -320,13 +357,16 @@ export default {
                 }
 
                 // mostrar o ocultar
-                id == SECTIONS.obras
-                    ? (this.showSectionArtwork = true)
-                    : (this.showSectionArtwork = false);
-                id == SECTIONS["personal-data"]
-                    ? (this.showSectionPersonalData = true)
-                    : (this.showSectionPersonalData = false);
+                this.showOrHideSection(id);
             }
+        },
+
+        /**
+         * Mostrar u ocultar secciones
+         */
+        showOrHideSection(id) {
+            this.sections.personal = id == SECTIONS.personal;
+            this.sections.artwork = id == SECTIONS.obras;
         },
     },
     computed: {

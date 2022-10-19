@@ -6,9 +6,26 @@ module.exports = {
         "./resources/**/*.vue",
     ],
     theme: {
+        fontWeight: {
+            "extra-light": 100,
+            thin: 200,
+            light: 300,
+            normal: 400,
+            medium: 500,
+            semibold: 600,
+            bold: 700,
+            "extra-bold": 800,
+            black: 900,
+            "extra-black": 1000,
+            "super-black": 1100,
+            "ultra-black": 1200,
+        },
         extend: {
             backgroundImage: {
                 "hero-profile-bg": "url('/img/profile/hero-profile.webp')",
+                newsletter: "url('/img/home/newsletter.png')",
+                "mobile-newsletter": "url('/img/home/mobile-newsletter.png')",
+                "last-info": "url('/images/ultima_informacion.png')",
             },
             animation: {
                 "fade-in-both":

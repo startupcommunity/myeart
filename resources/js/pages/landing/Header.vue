@@ -174,9 +174,18 @@
                                     class="w-100 d-flex justify-content-center -mt-4"
                                 >
                                     <div class="flex-fill">
-                                        <i
-                                            class="fa-regular fa-user text-white"
-                                        ></i>
+                                        <router-link
+                                            :to="{
+                                                name: 'userProfile',
+                                                params: {
+                                                    id: perfilUsers.id,
+                                                },
+                                            }"
+                                        >
+                                            <i
+                                                class="fa-regular fa-user text-white"
+                                            ></i>
+                                        </router-link>
                                     </div>
                                     <div class="flex-fill">
                                         <i

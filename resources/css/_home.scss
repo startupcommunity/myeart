@@ -1015,6 +1015,12 @@
         padding-bottom: 4rem;
         color: #000;
     }
+
+    .base-section {
+        background: #fff;
+        color: #000;
+    }
+
     .property-slider-wrap,
     .img-property-slide-wrap {
         position: relative;
@@ -1034,16 +1040,10 @@
     .tns-item {
         padding-top: 0px !important;
     }
-    .card:hover {
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
-            rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
-            rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
-    }
     .property-item {
         /*flex: 0 0 auto;*/
         //margin-left: 20px;
         .card {
-            padding: 5px;
             a {
                 font-size: 12px;
             }
@@ -1084,9 +1084,6 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-
-        padding-top: 4rem;
-        padding-bottom: 4rem;
     }
 
     .ultima-info {
@@ -1100,21 +1097,6 @@
         background-size: cover;
     }
 
-    .search-section {
-        background-image: url("/images/search.png");
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-        background-attachment: fixed;
-
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-
-        padding-top: 4rem;
-        padding-bottom: 4rem;
-    }
     .section-dark {
         background: #2e2d2c;
         padding-top: 4rem;
