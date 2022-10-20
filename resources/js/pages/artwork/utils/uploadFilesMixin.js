@@ -13,6 +13,7 @@ export default {
             uploadedFiles: [],
             dropzoneFile: true,
             dragover: false,
+            isFront: false,
         };
     },
     methods: {
@@ -52,6 +53,13 @@ export default {
             arrayFiles.forEach((file) => {
                 if (validFiles.includes(file.type)) {
                     validUploadFiles.push(file);
+
+                    // unicamente para editar las imagenes
+                    if (this.isFront) {
+                        const files = this.uploadedFiles.length;
+                        const data = { file, front: files ? 0 : 1 };
+                        this.addFileToUploadFilesWithFront(data);
+                    }
                 } else {
                     invalidFiles.push(file);
                 }
@@ -67,7 +75,7 @@ export default {
                 });
             }
 
-            this.addFilesToUploadFiles(validUploadFiles);
+            this.isFront ? null : this.addFilesToUploadFiles(validUploadFiles);
         },
 
         /**
@@ -84,6 +92,23 @@ export default {
 
             // carga vista previa
             this.loadPreviewFile();
+        },
+
+        /**
+         * Cargar una imagen a la propiedad uploadFiles
+         * y cargar la vista previa indicando la foto de portada
+         *
+         * @param {File} file
+         */
+        addFileToUploadFilesWithFront(file) {
+            // archivos validos
+            this.uploadedFiles.push(file);
+
+            // limite de hasta 10 archivos
+            this.limitFiles();
+
+            // carga vista previa
+            this.loadPreviewFileWithFront();
         },
 
         /**
@@ -120,6 +145,28 @@ export default {
         },
 
         /**
+         * Mostrar las imagenes previamente cargadas
+         * esto para indicarle al usuario como quedara
+         * la posición de cada una, incluyendo la de portada
+         *
+         * indicando también la foto de portada recibida
+         */
+        loadPreviewFileWithFront() {
+            this.previewFiles = [];
+            this.uploadedFiles.forEach((file, index) => {
+                const objectUrl = URL.createObjectURL(file.file);
+                this.previewFiles.push({
+                    id: index,
+                    file: objectUrl,
+                    front: file.front,
+                });
+            });
+
+            // ordenar por foto de portada
+            this.previewFiles.sort((a, b) => b.front - a.front);
+        },
+
+        /**
          * Elimina todas las preview de imagenes cargadas
          * esto antes después de cargar la propiedad uploadedFiles
          */
@@ -140,7 +187,9 @@ export default {
             this.resetPreviewFiles();
 
             // recargar las vistas previas
-            this.loadPreviewFile();
+            this.isFront
+                ? this.loadPreviewFileWithFront()
+                : this.loadPreviewFile();
         },
 
         /**

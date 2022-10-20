@@ -363,7 +363,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "pb-12"
   }, [_c("div", {
-    staticClass: "container"
+    staticClass: "container sm:max-w-full sm:ml-[6%]"
   }, [_c("div", {
     staticClass: "row align-items-center"
   }, [_c("div", {
@@ -371,7 +371,7 @@ var staticRenderFns = [function () {
   }, [_c("h2", {
     staticClass: "font-black text-xl lg:text-3xl leading-10"
   }, [_vm._v("\n                    Últimas noticias en el mundo del arte...\n                ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container hidden md:block"
+    staticClass: "container sm:ml-[6%] -mt-4 hidden md:block"
   }, [_c("div", {
     staticClass: "row align-items-stretch"
   }, [_c("div", {
@@ -898,7 +898,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "sm:py-12"
   }, [_c("div", {
-    staticClass: "container mb-2 sm:mb-8"
+    staticClass: "container sm:max-w-full sm:ml-[6%] mb-2 sm:mb-8"
   }, [_c("div", {
     staticClass: "row align-items-center"
   }, [_c("div", {
@@ -906,7 +906,7 @@ var staticRenderFns = [function () {
   }, [_c("h2", {
     staticClass: "font-black text-xl lg:text-3xl leading-10"
   }, [_vm._v("\n                    Mi comunidad\n                ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container"
+    staticClass: "container sm:ml-[6%] -mt-4"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -1226,7 +1226,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "sm:py-12 rounded-t-3xl sm:rounded-t-none -mt-10 bg-white"
   }, [_c("div", {
-    staticClass: "container"
+    staticClass: "container sm:max-w-full sm:ml-[6%]"
   }, [_c("div", {
     staticClass: "row align-items-center"
   }, [_c("div", {
@@ -1236,7 +1236,7 @@ var staticRenderFns = [function () {
   }, [_vm._v("\n                    ¿Aún no te decides?\n                ")]), _vm._v(" "), _c("p", {
     staticClass: "py-2 text-sm sm:text-base leading-7 font-normal"
   }, [_vm._v("\n                    Echa un vistazo a las últimas publicaciones...\n                ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container sm:max-w-full sm:ml-[9%] -mt-4"
+    staticClass: "container sm:max-w-full sm:ml-[6%] -mt-4"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -1770,7 +1770,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "user-section sm:py-12"
   }, [_c("div", {
-    staticClass: "container mb-4 sm:mb-8"
+    staticClass: "container sm:max-w-full sm:ml-[6%] mb-4 sm:mb-8"
   }, [_c("div", {
     staticClass: "row align-items-center"
   }, [_c("div", {
@@ -1778,7 +1778,7 @@ var staticRenderFns = [function () {
   }, [_c("h2", {
     staticClass: "font-black text-xl lg:text-3xl leading-10 text-white"
   }, [_vm._v("\n                    Artistas que quizás te puedan interesar...\n                ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "container sm:max-w-full sm:ml-[9%] -mt-4"
+    staticClass: "container sm:max-w-full sm:ml-[6%] -mt-4"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {

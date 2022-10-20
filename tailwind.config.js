@@ -39,6 +39,8 @@ module.exports = {
                     "shadow-drop-center .4s cubic-bezier(.25,.46,.45,.94) both",
                 "shadow-and-color-app":
                     "shadow-and-color-app .4s cubic-bezier(.25,.46,.45,.94) both",
+                "bg-gray-light":
+                    "bg-gray-light .4s cubic-bezier(.25,.46,.45,.94) both",
             },
             keyframes: {
                 "fade-in-both": {
@@ -118,6 +120,16 @@ module.exports = {
                         transform: "translateZ(50px)",
                         "box-shadow": "0 0 10px 0 rgba(0,0,0,.35)",
                         "background-color": "#B2794C",
+                    },
+                },
+                "bg-gray-light": {
+                    "0%": {
+                        transform: "translateZ(0)",
+                        "box-shadow": "0 0 0 0 transparent",
+                    },
+                    "100%": {
+                        transform: "translateZ(50px)",
+                        "background-color": "#eeeeee",
                     },
                 },
             },

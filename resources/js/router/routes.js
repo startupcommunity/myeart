@@ -12,6 +12,7 @@ import ProfileUser from "../pages/profile/ProfileUser.vue";
 
 // obras
 import CreateArtwork from "../pages/artwork/CreateArtwork.vue";
+import EditArtwork from "../pages/artwork/EditArtwork.vue";
 
 // store
 import { store } from "../store/store";
@@ -67,7 +68,7 @@ export const routes = [
     },
     {
         name: "userProfile",
-        path: "/usuario/perfil/:id",
+        path: "/usuario/perfil/:id/:section?",
         component: ProfileUser,
         beforeEnter: ifAuthenticated,
     },
@@ -75,6 +76,12 @@ export const routes = [
         name: "createArtwork",
         path: "/obras/crear",
         component: CreateArtwork,
+        beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "editArtwork",
+        path: "/obras/editar/:id",
+        component: EditArtwork,
         beforeEnter: ifAuthenticated,
     },
 ];

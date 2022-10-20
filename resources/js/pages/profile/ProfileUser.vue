@@ -334,6 +334,8 @@ export default {
         // desactivar modo oscuro
         this.$vuetify.theme.dark = false;
         this.sections.personal = true;
+
+        this.loadSectionForParameter();
     },
     methods: {
         /**
@@ -358,6 +360,16 @@ export default {
 
                 // mostrar o ocultar
                 this.showOrHideSection(id);
+            }
+        },
+
+        /**
+         * cargar una sección de la pagina si se indica
+         * por parámetros de ruta
+         */
+        loadSectionForParameter() {
+            if (this.$route.params.section) {
+                this.loadSection(this.$route.params.section);
             }
         },
 

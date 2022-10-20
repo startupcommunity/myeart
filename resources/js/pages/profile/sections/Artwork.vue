@@ -102,16 +102,22 @@
                                     {{ art.price }} {{ symbol }}
                                 </p>
                             </div>
-                            <div class="flex flex-wrap py-4">
+                            <div
+                                class="flex flex-wrap py-4 justify-between items-center"
+                            >
                                 <div class="w-full xl:w-1/2 mb-4 xl:pr-2">
-                                    <v-btn
-                                        outlined
-                                        block
-                                        large
-                                        class="uppercase font-bold tracking-wide"
+                                    <router-link
+                                        class="uppercase font-bold tracking-wide border-[1.5px] border-gray-900 text-center px-9 h-11 flex min-w-full max-w-none justify-center items-center hover:animate-bg-gray-light text-black rounded-sm"
+                                        id="btn-edit"
+                                        :to="{
+                                            name: 'editArtwork',
+                                            params: {
+                                                id: art.id,
+                                            },
+                                        }"
                                     >
                                         Editar
-                                    </v-btn>
+                                    </router-link>
                                 </div>
                                 <div class="w-full xl:w-1/2 mb-4 xl:pl-2">
                                     <v-btn
@@ -368,5 +374,14 @@ export default {
 }
 .v-application a:hover {
     color: #fefefe !important;
+}
+
+#btn-edit {
+    color: #0f0f0f !important;
+}
+
+#btn-edit:hover {
+    color: #0f0f0f !important;
+    text-decoration: none;
 }
 </style>

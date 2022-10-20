@@ -1,7 +1,7 @@
 <template>
     <div class="sm:py-12 rounded-t-3xl sm:rounded-t-none -mt-10 bg-white">
         <!-- title -->
-        <div class="container">
+        <div class="container sm:max-w-full sm:ml-[6%]">
             <div class="row align-items-center">
                 <div class="col-12 sm:text-start">
                     <h2 class="font-black text-xl lg:text-3xl leading-10">
@@ -15,7 +15,7 @@
         </div>
 
         <!-- content -->
-        <div class="container sm:max-w-full sm:ml-[9%] -mt-4">
+        <div class="container sm:max-w-full sm:ml-[6%] -mt-4">
             <div class="row">
                 <div class="col-12">
                     <div>

@@ -47,8 +47,11 @@ Route::middleware(['auth:api'])->group(function () {
     // obras
     Route::group(['prefix' => 'artworks'], function () {
         Route::get('/', [ArtworkController::class, 'getArtworks'])->name('getArtworks');
+        Route::get('/image/{id}', [ArtworkController::class, 'getImage'])->name('getImage');
+        Route::get('/edit/{id}', [ArtworkController::class, 'editArtworks'])->name('editArtworks');
         Route::delete('/delete/{id}', [ArtworkController::class, 'deleteArtworks'])->name('deleteArtworks');
         Route::post('/create', [ArtworkController::class, 'save'])->name('saveArtwork');
+        Route::put('/update/{id}', [ArtworkController::class, 'update'])->name('update');
     });
 
     // categorías

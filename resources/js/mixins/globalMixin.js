@@ -10,6 +10,11 @@
 import vue from "vue";
 
 vue.mixin({
+    data() {
+        return {
+            globalLoading: false,
+        };
+    },
     computed: {
         /**
          * Path para las fotos de portadas
@@ -53,23 +58,21 @@ vue.mixin({
 
             return "/";
         },
-    },
 
-    methods: {
         /**
-         * Cliente axios para consumo de endpoints para la api
+         * Endpoints para consumir la API rest
          *
-         * @param {Object} param
-         * @returns Promise
+         * @returns
          */
-        request({ endpoint, data = {}, headers = {}, method = "get" }) {
-            if (method == "get") {
-                return this.axios.get(endpoint);
-            }
-
-            if (method == "post" || method == "POST") {
-                return this.axios.post(endpoint, data, headers);
-            }
+        ep() {
+            return {
+                artworks: {
+                    save: "/api/artworks/create",
+                    edit: "/api/artworks/edit/",
+                    update: "/api/artworks/update/",
+                    getImage: "/api/artworks/image/",
+                },
+            };
         },
     },
 });

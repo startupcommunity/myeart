@@ -71,5 +71,42 @@ export default {
 
             return "fas fa-info";
         },
+
+        /**
+         * Devuelve una fecha en el formato indicado
+         * @param {String} string
+         * @param {String} format
+         * @returns
+         */
+        dateFormat(string, format = "Y-m-d") {
+            const date = new Date(string);
+
+            return (
+                date.getFullYear() +
+                "-" +
+                (date.getMonth() + 1) +
+                "-" +
+                date.getDate()
+            );
+        },
+
+        /**
+         * Devuelve un archivo file en formato entendible para el front
+         */
+        async getFileImage(path, { id, picture }) {
+            return await fetch(path).then(async (response) => {
+                const contentType = response.headers.get("content-type");
+                const blob = await response.blob();
+                const file = new File([blob], picture, {
+                    contentType,
+                });
+
+                // obtener datos de la imagen
+                const endpoint = this.ep.artworks.getImage + id;
+                const image = await this.axios.get(endpoint);
+                const data = await image.data;
+                return { file, front: data.front_page };
+            });
+        },
     },
 };
