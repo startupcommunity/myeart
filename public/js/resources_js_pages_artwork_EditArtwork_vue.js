@@ -311,7 +311,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var files = this.uploadedFiles;
 
       if (form.title && form.description && form.dimension && form.price && form.date_created && form.location && form.shipping && form.categories.length && form.styles.length && form.techniques.length && files.length) {
-        form.state = 1;
+        if (form.state == this.STATEARTWORK.draft) {
+          form.state = this.STATEARTWORK.published;
+        }
       }
     }
   },

@@ -644,7 +644,9 @@ export default {
                 form.techniques.length &&
                 files.length
             ) {
-                form.state = 1;
+                if (form.state == this.STATEARTWORK.draft) {
+                    form.state = this.STATEARTWORK.published;
+                }
             }
         },
     },
