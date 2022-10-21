@@ -880,23 +880,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var id, picture;
+        var id, picture, config;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 id = _ref.id, picture = _ref.picture;
-                _context2.next = 3;
-                return fetch(path).then( /*#__PURE__*/function () {
+                config = {
+                  responseType: 'blob'
+                };
+                _context2.next = 4;
+                return _this.axios(path, config).then( /*#__PURE__*/function () {
                   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(response) {
                     var contentType, blob, file, endpoint, image, data;
                     return _regeneratorRuntime().wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            contentType = response.headers.get("content-type");
+                            contentType = response.headers['content-type'];
                             _context.next = 3;
-                            return response.blob();
+                            return response.data;
 
                           case 3:
                             blob = _context.sent;
@@ -933,10 +936,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   };
                 }());
 
-              case 3:
+              case 4:
                 return _context2.abrupt("return", _context2.sent);
 
-              case 4:
+              case 5:
               case "end":
                 return _context2.stop();
             }

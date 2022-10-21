@@ -94,9 +94,10 @@ export default {
          * Devuelve un archivo file en formato entendible para el front
          */
         async getFileImage(path, { id, picture }) {
-            return await fetch(path).then(async (response) => {
-                const contentType = response.headers.get("content-type");
-                const blob = await response.blob();
+            const config = { responseType: 'blob' };
+            return await this.axios(path, config).then(async (response) => {
+                const contentType = response.headers['content-type'];
+                const blob = await response.data;
                 const file = new File([blob], picture, {
                     contentType,
                 });
