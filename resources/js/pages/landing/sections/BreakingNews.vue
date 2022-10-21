@@ -1,6 +1,6 @@
 <template>
     <div class="pb-12">
-        <div class="container sm:max-w-full sm:ml-[6%]">
+        <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <h2
@@ -13,7 +13,7 @@
         </div>
 
         <!-- version escritorio -->
-        <div class="container sm:ml-[6%] -mt-4 hidden md:block">
+        <div class="container hidden md:block">
             <div class="row align-items-stretch">
                 <div class="col-sm-6 col-lg-4">
                     <div class="card border-0">

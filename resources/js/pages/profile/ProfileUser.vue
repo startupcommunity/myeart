@@ -76,20 +76,22 @@
         <!-- /tabs responsiva mobile -->
 
         <!-- sección tabs table++ -->
-        <div class="container-fluid bg-white sm:bg-gray-200 py-0 px-0">
+        <div class="container-fluid py-0 px-0">
             <div>
-                <div class="flex flex-row items-center">
+                <div class="flex flex-row items-start bg-gray-200">
+
+                    <!-- menu sidebar -->
                     <div
-                        class="w-2/5 bg-gray-200 px-12 pt-20 h-full sm:h-screen hidden sm:block"
+                        class="w-2/5 bg-gray-200 px-12 py-20 min-h-full hidden sm:block"
                     >
                         <h3
-                            class="text-3xl sm:text-lg md:text-3xl tracking-tight text-gray-900 text-center"
+                            class="text-3xl sm:text-lg md:text-3xl tracking-tight text-gray-900 text-center pb-8"
                         >
                             <b class="font-black"> {{ userProfile.name }} </b>
                         </h3>
 
                         <!-- botonera escritorio -->
-                        <div class="flex justify-center mt-12">
+                        <div class="flex justify-center">
                             <div
                                 class="text-gray-800 sm:text-xs md:text-sm lg:text-lg"
                             >
@@ -227,6 +229,7 @@
                         </div>
                         <!-- /botonera escritorio -->
                     </div>
+                    <!-- /menu sidebar -->
 
                     <!-- sección datos personales -->
                     <PersonalData

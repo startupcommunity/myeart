@@ -75,4 +75,16 @@ vue.mixin({
             };
         },
     },
+    methods: {
+        /**
+         * Muestra una notificacion al usuario
+         */
+        noty(text, type = "success") {
+            this.$notify({
+                group: "container",
+                type,
+                text,
+            });
+        },
+    },
 });

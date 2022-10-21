@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-full sm:w-3/5 bg-white px-5 sm:px-12 pb-8 sm:pb-0 sm:pt-20 h-full sm:h-screen animate-fade-in-down"
+        class="w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 sm:min-h-[43rem] animate-fade-in-down"
         id="personal"
         v-show="showSection"
     >
@@ -43,7 +43,7 @@
                 </v-btn>
             </div>
         </div>
-        <div class="mt-6">
+        <div class="py-10 sm:px-5">
             <v-form @submit.prevent="updateUser()">
                 <v-row>
                     <v-col cols="12">

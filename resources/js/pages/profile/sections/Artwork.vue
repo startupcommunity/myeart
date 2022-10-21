@@ -1,152 +1,163 @@
 <template>
     <div
-        class="w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:pt-20 h-full sm:h-screen animate-fade-in-down"
+        class="w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 sm:min-h-[43rem] h-full animate-fade-in-down"
         id="obras"
         v-show="showSection"
     >
-        <h3
-            class="font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
-        >
-            <span class="text-center block sm:hidden"> Mis Obras </span>
-            <span class="text-left hidden sm:block"> Obras </span>
-        </h3>
-        <div class="mt-4 py-4 border-t border-gray-900 hidden sm:block"></div>
-        <div class="flex flex-wrap mt-4 sm:mt-0">
+        <div class="sm:px-5">
+            <h3
+                class="font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
+            >
+                <span class="text-center block sm:hidden"> Mis Obras </span>
+                <span class="text-left hidden sm:block"> Obras </span>
+            </h3>
             <div
-                class="lg:border-r-2 lg:border-gray-800 lg:pr-4 w-full lg:w-auto"
-            >
-                <v-btn
-                    text
-                    depressed
-                    block
-                    class="uppercase font-bold tracking-wide"
-                    @click.stop="filterToState(STATEARTWORK.published)"
-                >
-                    Publicadas
-                </v-btn>
-            </div>
-            <div
-                class="lg:border-r-2 lg:border-gray-800 lg:px-4 w-full lg:w-auto"
-            >
-                <v-btn
-                    text
-                    depressed
-                    block
-                    class="uppercase font-bold tracking-wide"
-                    @click.stop="filterToState(STATEARTWORK.sold)"
-                >
-                    Vendidas
-                </v-btn>
-            </div>
-            <div class="w-full lg:w-auto lg:px-4">
-                <v-btn
-                    text
-                    depressed
-                    block
-                    class="uppercase font-bold tracking-wide"
-                    @click.stop="filterToState(STATEARTWORK.draft)"
-                >
-                    Borradores
-                </v-btn>
-            </div>
-        </div>
-        <div class="py-6 w-full sm:w-3/5">
-            <router-link
-                class="uppercase btn btn-outline-dark btn-lg btn-block"
-                :to="{ name: 'createArtwork' }"
-            >
-                <i class="fas fa-plus"></i>
-                Subir obra
-            </router-link>
-        </div>
-
-        <!-- obras -->
-        <div class="py-6 w-full">
-            <div
-                class="flex flex-wrap sm:overflow-y-auto h-full sm:h-48 lg:h-80 2xl:h-96 items-stretch"
-            >
-                <LoadingTailwind
-                    v-if="loading"
-                    css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
-                />
+                class="mt-4 py-4 border-t border-gray-900 hidden sm:block"
+            ></div>
+            <div class="flex flex-wrap mt-4 sm:mt-0">
                 <div
-                    v-for="art in artworks"
-                    :key="art.id"
-                    class="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
-                    v-else
+                    class="lg:border-r-2 lg:border-gray-800 lg:pr-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
                 >
-                    <div class="rounded-md shadow-md w-full">
-                        <img
-                            :src="setPathGallery(art)"
-                            :alt="art.title"
-                            class="object-cover object-center w-full h-72"
-                        />
-                        <div
-                            class="flex flex-col justify-between space-y-8 bg-gray-50"
-                        >
-                            <div class="space-y-2">
-                                <h3
-                                    class="text-xl font-semibold tracking-wide text-gray-900 pt-3"
-                                >
-                                    {{ art.title }}
-                                </h3>
-                                <p class="text-primary">
-                                    {{ art.dimension }}
-                                    {{ setCategoryName(art.categories) }}
-                                    {{ setTechniqueName(art.techniques) }}
-                                </p>
-                                <div
-                                    class="w-full border-t-2 border-gray-800 my-4"
-                                ></div>
-                                <p class="text-gray-900">
-                                    {{ art.price }} {{ symbol }}
-                                </p>
-                            </div>
+                    <v-btn
+                        text
+                        depressed
+                        block
+                        class="uppercase tracking-wide"
+                        :class="stateActivePub ? 'font-bold' : 'font-light'"
+                        @click.stop="filterToState(STATEARTWORK.published)"
+                    >
+                        Publicadas
+                    </v-btn>
+                </div>
+                <div
+                    class="lg:border-r-2 lg:border-gray-800 lg:px-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
+                >
+                    <v-btn
+                        text
+                        depressed
+                        block
+                        class="uppercase tracking-wide"
+                        :class="stateActiveSold ? 'font-bold' : 'font-light'"
+                        @click.stop="filterToState(STATEARTWORK.sold)"
+                    >
+                        Vendidas
+                    </v-btn>
+                </div>
+                <div
+                    class="w-full lg:w-auto lg:px-4 border-b border-b-gray-300 lg:border-b-0"
+                >
+                    <v-btn
+                        text
+                        depressed
+                        block
+                        class="uppercase tracking-wide"
+                        :class="stateActiveDraft ? 'font-bold' : 'font-light'"
+                        @click.stop="filterToState(STATEARTWORK.draft)"
+                    >
+                        Borradores
+                    </v-btn>
+                </div>
+            </div>
+            <div class="py-6 w-full sm:w-3/5">
+                <router-link
+                    class="uppercase btn btn-outline-dark btn-lg btn-block"
+                    :to="{ name: 'createArtwork' }"
+                >
+                    <i class="fas fa-plus"></i>
+                    Subir obra
+                </router-link>
+            </div>
+
+            <!-- obras -->
+            <div class="py-6 w-full">
+                <div class="flex flex-wrap h-full items-stretch">
+                    <LoadingTailwind
+                        v-if="loading"
+                        css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
+                    />
+                    <div
+                        v-for="(art, index) in artworks"
+                        :key="art.id"
+                        class="w-full md:w-1/2 mb-10 animate-swing-in-top-fwd"
+                        :class="index % 2 == 0 ? 'sm:pr-8' : ''"
+                        v-else
+                    >
+                        <div class="rounded-md shadow-md w-full">
+                            <img
+                                :src="setPathGallery(art)"
+                                :alt="art.title"
+                                class="object-cover object-center w-full h-72"
+                            />
                             <div
-                                class="flex flex-wrap py-4 justify-between items-center"
+                                class="flex flex-col justify-between space-y-8 bg-gray-50"
                             >
-                                <div class="w-full xl:w-1/2 mb-4 xl:pr-2">
-                                    <router-link
-                                        class="uppercase font-bold tracking-wide border-[1.5px] border-gray-900 text-center px-9 h-11 flex min-w-full max-w-none justify-center items-center hover:animate-bg-gray-light text-black rounded-sm"
-                                        id="btn-edit"
-                                        :to="{
-                                            name: 'editArtwork',
-                                            params: {
-                                                id: art.id,
-                                            },
-                                        }"
+                                <div class="space-y-2">
+                                    <h3
+                                        class="text-xl font-semibold tracking-wide text-gray-900 pt-3"
                                     >
-                                        Editar
-                                    </router-link>
+                                        {{ art.title }}
+                                    </h3>
+                                    <p class="text-primary">
+                                        {{ art.dimension }}
+                                        {{ setCategoryName(art.categories) }}
+                                        {{ setTechniqueName(art.techniques) }}
+                                    </p>
+                                    <div
+                                        class="w-full border-t-2 border-gray-800 my-4"
+                                    ></div>
+                                    <p class="text-gray-900">
+                                        {{ art.price }} {{ symbol }}
+                                    </p>
                                 </div>
-                                <div class="w-full xl:w-1/2 mb-4 xl:pl-2">
-                                    <v-btn
-                                        outlined
-                                        block
-                                        large
-                                        class="uppercase font-bold tracking-wide"
-                                        @click.stop="deleteArtwork(art.id)"
-                                    >
-                                        Eliminar
-                                    </v-btn>
+                                <div
+                                    class="flex flex-wrap py-4 justify-between items-center"
+                                >
+                                    <div class="w-full xl:w-1/2 mb-4 xl:pr-2">
+                                        <router-link
+                                            class="uppercase font-bold tracking-wide border-[1.5px] border-gray-900 text-center px-9 h-11 flex min-w-full max-w-none justify-center items-center hover:animate-bg-gray-light text-black rounded-sm"
+                                            id="btn-edit"
+                                            :to="{
+                                                name: 'editArtwork',
+                                                params: {
+                                                    id: art.id,
+                                                },
+                                            }"
+                                        >
+                                            Editar
+                                        </router-link>
+                                    </div>
+                                    <div class="w-full xl:w-1/2 mb-4 xl:pl-2">
+                                        <v-btn
+                                            outlined
+                                            block
+                                            large
+                                            class="uppercase font-bold tracking-wide"
+                                            @click.stop="deleteArtwork(art.id)"
+                                        >
+                                            Eliminar
+                                        </v-btn>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="w-full text-center" v-if="remainingArtworks.length">
-                    <button
-                        class="w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
-                        type="button"
-                        @click.stop="showMoreArtworks()"
+                    <div
+                        class="w-full text-center"
+                        v-if="remainingArtworks.length"
                     >
-                        Ver más
-                    </button>
+                        <button
+                            class="w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
+                            type="button"
+                            @click.stop="showMoreArtworks(SHOW_ARTWORKS)"
+                        >
+                            Ver más
+                        </button>
+                    </div>
                 </div>
             </div>
+            <!-- /obras -->
         </div>
-        <!-- /obras -->
     </div>
 </template>
 <script>
@@ -156,8 +167,8 @@ import LoadingTailwind from "./../../../components/LoadingTailwind.vue";
 // mixin
 import getDataMixin from "./../../../mixins/getDataMixin";
 
-// cantidad de obras a mostrar
-let counterArtworks = 3;
+// cantidad de obras en aumento
+let counterArtworks = 4;
 
 export default {
     name: "Artwork",
@@ -170,11 +181,14 @@ export default {
     },
     data() {
         return {
+            symbol: "€",
+            loading: false,
+            stateActivePub: false,
+            stateActiveSold: false,
+            stateActiveDraft: false,
             artworks: [],
             originalArtworks: [],
             remainingArtworks: [],
-            symbol: "€",
-            loading: false,
             loadState: [
                 {
                     published: false,
@@ -217,11 +231,19 @@ export default {
          * @param Number state
          */
         filterToState(state) {
-            counterArtworks = 3;
+            counterArtworks = 4;
+
+            // activar la clase según el state
+            this.stateActivePub = state === this.STATEARTWORK.published;
+            this.stateActiveSold = state === this.STATEARTWORK.sold;
+            this.stateActiveDraft = state === this.STATEARTWORK.draft;
+
+            // filtrar por estado
             const artworks = this.originalArtworks.filter(
                 (art) => art.state === state
             );
 
+            // tomar las restantes
             this.artworks = artworks;
             const remaining = this.artworks.splice(counterArtworks);
 
@@ -274,7 +296,7 @@ export default {
          * Va mostrando en cantidad($count) las obras cargadas
          * - solo para mobile
          */
-        showMoreArtworks(count = 3) {
+        showMoreArtworks(count) {
             // counter de obras +3
             counterArtworks += count;
 
@@ -354,7 +376,7 @@ export default {
             this.artworks = [];
             this.originalArtworks = [];
             this.remainingArtworks = [];
-            counterArtworks = 3;
+            counterArtworks = this.SHOW_ARTWORKS;
         },
     },
     watch: {

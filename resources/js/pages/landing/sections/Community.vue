@@ -1,6 +1,6 @@
 <template>
     <div class="sm:py-12">
-        <div class="container sm:max-w-full sm:ml-[6%] mb-2 sm:mb-8">
+        <div class="container mb-2 sm:mb-8">
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <h2 class="font-black text-xl lg:text-3xl leading-10">
@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-        <div class="container sm:ml-[6%] -mt-4">
+        <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="flex flex-wrap justify-center mb-5">

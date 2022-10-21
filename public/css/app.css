@@ -12218,6 +12218,10 @@ video {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
+.my-auto{
+  margin-top: auto;
+  margin-bottom: auto;
+}
 .mt-3{
   margin-top: 0.75rem;
 }
@@ -12308,6 +12312,15 @@ video {
 .ml-0{
   margin-left: 0px;
 }
+.mb-auto{
+  margin-bottom: auto;
+}
+.mb-20{
+  margin-bottom: 5rem;
+}
+.mb-56{
+  margin-bottom: 14rem;
+}
 .block{
   display: block;
 }
@@ -12368,8 +12381,30 @@ video {
 .h-11{
   height: 2.75rem;
 }
+.h-min{
+  height: -moz-min-content;
+  height: min-content;
+}
 .min-h-screen{
   min-height: 100vh;
+}
+.min-h-max{
+  min-height: -moz-max-content;
+  min-height: max-content;
+}
+.min-h-fit{
+  min-height: -moz-fit-content;
+  min-height: fit-content;
+}
+.min-h-min{
+  min-height: -moz-min-content;
+  min-height: min-content;
+}
+.min-h-full{
+  min-height: 100%;
+}
+.min-h-\[43rem\]{
+  min-height: 43rem;
 }
 .w-5{
   width: 1.25rem;
@@ -12427,6 +12462,15 @@ video {
 }
 .w-2\/4{
   width: 50%;
+}
+.w-10\/12{
+  width: 83.333333%;
+}
+.w-\[88\%\]{
+  width: 88%;
+}
+.w-\[90\%\]{
+  width: 90%;
 }
 .min-w-full{
   min-width: 100%;
@@ -12641,6 +12685,22 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
+.border-b-gray-800{
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(31 41 55 / var(--tw-border-opacity));
+}
+.border-b-gray-400{
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+.border-b-gray-200{
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+.border-b-gray-300{
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -12795,6 +12855,14 @@ video {
   padding-left: 2.25rem;
   padding-right: 2.25rem;
 }
+.py-20{
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+.py-10{
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
 .pt-8{
   padding-top: 2rem;
 }
@@ -12839,6 +12907,12 @@ video {
 }
 .pt-3{
   padding-top: 0.75rem;
+}
+.pr-4{
+  padding-right: 1rem;
+}
+.pr-8{
+  padding-right: 2rem;
 }
 .text-left{
   text-align: left;
@@ -13100,9 +13174,6 @@ body {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(178 121 76 / var(--tw-ring-opacity));
 }
-.disabled\:opacity-50:disabled{
-  opacity: 0.5;
-}
 @media (prefers-color-scheme: dark){
   .dark\:border-gray-700{
     --tw-border-opacity: 1;
@@ -13173,12 +13244,6 @@ body {
   .sm\:ml-8{
     margin-left: 2rem;
   }
-  .sm\:ml-\[8\%\]{
-    margin-left: 8%;
-  }
-  .sm\:ml-\[6\%\]{
-    margin-left: 6%;
-  }
   .sm\:block{
     display: block;
   }
@@ -13205,6 +13270,9 @@ body {
   }
   .sm\:max-h-\[750px\]{
     max-height: 750px;
+  }
+  .sm\:min-h-\[43rem\]{
+    min-height: 43rem;
   }
   .sm\:w-auto{
     width: auto;
@@ -13317,6 +13385,22 @@ body {
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
+  .sm\:py-20{
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  .sm\:py-10{
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+  .sm\:px-20{
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  .sm\:px-5{
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
   .sm\:pt-0{
     padding-top: 0px;
   }
@@ -13328,6 +13412,27 @@ body {
   }
   .sm\:pb-0{
     padding-bottom: 0px;
+  }
+  .sm\:pb-32{
+    padding-bottom: 8rem;
+  }
+  .sm\:pb-40{
+    padding-bottom: 10rem;
+  }
+  .sm\:pb-44{
+    padding-bottom: 11rem;
+  }
+  .sm\:pb-52{
+    padding-bottom: 13rem;
+  }
+  .sm\:pb-72{
+    padding-bottom: 18rem;
+  }
+  .sm\:pb-80{
+    padding-bottom: 20rem;
+  }
+  .sm\:pr-8{
+    padding-right: 2rem;
   }
   .sm\:text-left{
     text-align: left;
@@ -13364,6 +13469,9 @@ body {
   }
   .md\:-mt-10{
     margin-top: -2.5rem;
+  }
+  .md\:-mr-60{
+    margin-right: -15rem;
   }
   .md\:block{
     display: block;
@@ -13446,6 +13554,9 @@ body {
   }
   .lg\:border-r-2{
     border-right-width: 2px;
+  }
+  .lg\:border-b-0{
+    border-bottom-width: 0px;
   }
   .lg\:border-gray-800{
     --tw-border-opacity: 1;

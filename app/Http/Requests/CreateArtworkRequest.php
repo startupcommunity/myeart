@@ -24,10 +24,10 @@ class CreateArtworkRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=> 'required|string|max:100',
-            'description'=> 'required|string|max:230',
+            'title'=> 'required_if:state,1|string|max:100',
+            'description'=> 'required_if:state,1|string|max:230',
             'dimension'=> 'nullable|string|max:100',
-            'price'=> 'required|numeric|max:999999999999',
+            'price'=> 'required_if:state,1|numeric|max:999999999999',
             'date_created'=> 'nullable|string|max:10',
             'location'=> 'nullable|string|max:100',
             'shipping'=> 'nullable|string|max:100',

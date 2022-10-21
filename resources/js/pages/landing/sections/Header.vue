@@ -1,5 +1,6 @@
 <template>
     <div class="top-header-area" id="sticker">
+        <!-- menu mobile -->
         <div id="mySidenav" class="sidenav">
             <div class="sidenav_header">
                 <button href="#" class="closebtn" v-on:click="closeNav()">
@@ -35,10 +36,10 @@
                         </v-avatar>
                     </label>
                 </div>
-                <span>Artista/Fotografía</span>
-                <a href="#">
+                <p class="text-white">Artista/Fotografía</p>
+                <button @click="closeAndGo('obras')" class="text-white text-2xl">
                     SUBIR OBRA <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                </a>
+                </button>
                 <a href="#">OBRAS</a>
                 <a href="#">ARTISTAS</a>
                 <a href="#">EVENTOS</a>
@@ -48,6 +49,7 @@
                 <a href="#" @click.prevent="logout">CERRAR SESIÓN</a>
             </div>
         </div>
+        <!-- /menu mobile -->
 
         <div class="container-fluid">
             <div class="row">
@@ -157,6 +159,11 @@
                                                             v-if="
                                                                 !isPathObrasCreate
                                                             "
+                                                            @click.stop="
+                                                                $router.push(
+                                                                    `/obras/crear`
+                                                                )
+                                                            "
                                                         >
                                                             SUBIR OBRA
                                                         </button>
@@ -218,6 +225,12 @@ export default {
         closeNav() {
             document.getElementById("mySidenav").style.display = "none";
             document.getElementById("mySidenav").style.width = "0";
+        },
+        closeAndGo(val) {
+            if (val == "obras") {
+                this.$router.push("/obras/crear");
+            }
+            this.closeNav();
         },
     },
     computed: {

@@ -4,6 +4,7 @@
  *  de la galeria de obras del usuario
  */
 
+// cantidad de imagenes permitidos
 const MAX_FILES_ALLOWED = 10;
 
 export default {
@@ -13,6 +14,9 @@ export default {
             uploadedFiles: [],
             dropzoneFile: true,
             dragover: false,
+
+             // utilizada para verificar la imagen de portada
+            //  unicamente para el editar
             isFront: false,
         };
     },

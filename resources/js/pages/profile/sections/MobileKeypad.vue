@@ -125,7 +125,7 @@
         <!-- /botonera -->
 
         <!-- div border -->
-        <div class="w-11/12 border-t-2 border-primary my-8"></div>
+        <div class="w-[90%] border-t-2 border-primary my-8"></div>
         <!-- /div border -->
     </div>
 </template>

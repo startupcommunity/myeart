@@ -1,6 +1,10 @@
 <template>
     <div class="dashboard">
-        <loading-overlay :active="loading" :is-full-page="true" loader="bars" />
+        <loading-overlay
+            :active="globalLoading"
+            :is-full-page="true"
+            loader="bars"
+        />
         <PreHeader />
         <div class="bg-zinc-900 pb-32">
             <Header class="mt-5" />
@@ -412,6 +416,7 @@
     </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import Header from "../landing/sections/Header.vue";
 import PreHeader from "../landing/sections/PreHeader.vue";
 import Newletter from "../landing/sections/Newletter.vue";
@@ -453,7 +458,6 @@ export default {
             formIsValid: true,
             menuPicker: false,
             isDraft: 3,
-            loading: false,
         };
     },
     mounted() {
@@ -468,8 +472,11 @@ export default {
          * Guardar, publicar o borrador de la obra creada
          */
         saveArtwork() {
-            if (!this.$refs.artworkForm.validate()) return;
-            this.loading = true;
+            if (this.isDraft === 1) {
+                if (!this.$refs.artworkForm.validate()) return;
+            }
+
+            this.globalLoading = true;
 
             const data = new FormData();
             data.append("title", this.form.title);
@@ -500,54 +507,32 @@ export default {
                 })
                 .then((resp) => {
                     if (resp.status === 200) {
-                        const text =
-                            this.isDraft === 3
-                                ? "Obra guardada como borrador"
-                                : "Obra publicada con éxito";
-                        this.$notify({
-                            group: "container",
-                            type: "success",
-                            text,
-                        });
+                        // mensaje
+                        const draftMsj = "Obra guardada como borrador";
+                        const publishMsj = "Obra publicada con éxito";
+                        const text = this.isDraft === 3 ? draftMsj : publishMsj;
+                        this.noty(text);
 
-                        this.resetForm();
+                        // redireccion
+                        this.$router.push(
+                            `/usuario/perfil/${this.userProfile.id}/obras`
+                        );
                     }
                 })
                 .catch((error) => {
                     this.showRequestErrors(error);
                 })
-                .finally(() => (this.loading = false));
+                .finally(() => (this.globalLoading = false));
         },
+    },
 
+    computed: {
         /**
-         * Volver a valores de inicio
-         * en todo el formulario incluyendo
-         * los archivos cargados
+         * Acceder a los getters necesarios
          */
-        resetForm() {
-            this.form = {
-                title: "",
-                description: "",
-                dimension: "",
-                price: "",
-                date_created: "",
-                location: "",
-                shipping: "",
-                categories: [],
-                styles: [],
-                techniques: [],
-            };
-
-            this.formIsValid = true;
-            this.menuPicker = false;
-            this.isDraft = 3;
-
-            // reset el formulario
-            this.$refs.artworkForm.resetValidation();
-
-            // mixin
-            this.resetUpload();
-        },
+        ...mapGetters({
+            userProfile: "getProfile",
+        }),
     },
 };
 </script>

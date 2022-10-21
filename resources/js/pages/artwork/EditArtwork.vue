@@ -445,6 +445,7 @@ export default {
                 styles: [],
                 techniques: [],
                 gallery: [],
+                state: "",
             },
             formIsValid: true,
             menuPicker: false,
@@ -505,36 +506,43 @@ export default {
                     });
                 })
                 .catch((error) => console.log(error))
-                .finally(() => (this.globalLoading = false));
+                .finally(() => {
+                    this.globalLoading = false;
+                    this.$refs.artworkForm.resetValidation();
+                    this.mapFields();
+                });
+        },
+
+        /**
+         * ajusta las propiedades del formulario a un mapeo
+         * entendible por el usuario
+         */
+        mapFields() {
+            const form = this.form;
+            form.title = form.title == "null" ? "" : form.title;
+            form.description =
+                form.description == "null" ? "" : form.description;
+            form.dimension = form.dimension == "null" ? "" : form.dimension;
+            form.price = form.price == "null" ? "" : form.price;
+            form.shipping = form.shipping == "null" ? "" : form.shipping;
         },
 
         /**
          * Guardar, publicar o borrador de la obra creada
          */
-        updateArtwork() {
-            if (!this.$refs.artworkForm.validate()) return;
+        async updateArtwork() {
+            if (this.form.state === 1) {
+                if (!this.$refs.artworkForm.validate()) return;
+            }
+
+            // loading
             this.globalLoading = true;
 
-            const data = new FormData();
-            data.append("_method", "PUT");
-            data.append("title", this.form.title);
-            data.append("description", this.form.description);
-            data.append("dimension", this.form.dimension);
-            data.append("price", this.form.price);
-            data.append("date_created", this.form.date_created);
-            data.append("location", this.form.location);
-            data.append("shipping", this.form.shipping);
-            data.append("state", this.form.state);
+            // cambiar estado
+            this.changeState();
 
-            // data sync
-            const categories = this.form.categories;
-            const styles = this.form.styles;
-            const techniques = this.form.techniques;
-            const files = this.uploadedFiles;
-            categories.forEach((cat) => data.append(`categories[]`, cat));
-            styles.forEach((sty) => data.append(`styles[]`, sty));
-            techniques.forEach((tech) => data.append(`techniques[]`, tech));
-            files.forEach((file) => data.append(`gallery[]`, file.file));
+            // cargar datos
+            const data = await this.loadFormData();
 
             // request
             this.axios
@@ -545,15 +553,12 @@ export default {
                 })
                 .then((resp) => {
                     if (resp.status === 200) {
-                        const text =
-                            this.isDraft === 3
-                                ? "Obra guardada como borrador"
-                                : "Obra publicada con éxito";
-                        this.$notify({
-                            group: "container",
-                            type: "success",
-                            text,
-                        });
+                        // mensaje
+                        const state = this.form.state;
+                        const draftMsj = "Obra guardada como borrador";
+                        const publishMsj = "Obra publicada con éxito";
+                        const text = state === 3 ? draftMsj : publishMsj;
+                        this.noty(text);
 
                         this.$router.push(
                             `/usuario/perfil/${this.userProfile.id}/obras`
@@ -585,6 +590,62 @@ export default {
                         this.updateArtwork();
                     }
                 });
+        },
+
+        /**
+         * Cargar los datos para ser enviados al backend
+         */
+        loadFormData() {
+            const form = this.form;
+            const categories = form.categories;
+            const styles = form.styles;
+            const techniques = form.techniques;
+            const files = this.uploadedFiles;
+
+            const data = new FormData();
+            data.append("_method", "PUT");
+            data.append("title", form.title);
+            data.append("description", form.description);
+            data.append("dimension", form.dimension);
+            data.append("price", form.price);
+            data.append("date_created", form.date_created);
+            data.append("location", form.location);
+            data.append("shipping", form.shipping);
+            data.append("state", form.state);
+
+            // data sync
+            categories.forEach((cat) => data.append(`categories[]`, cat));
+            styles.forEach((sty) => data.append(`styles[]`, sty));
+            techniques.forEach((tech) => data.append(`techniques[]`, tech));
+            files.forEach((file) => data.append(`gallery[]`, file.file));
+
+            return data;
+        },
+
+        /**
+         * Cambia el estado de la obra si todos los campos
+         * estas llenos
+         *
+         * - estado publicado
+         */
+        changeState() {
+            const form = this.form;
+            const files = this.uploadedFiles;
+            if (
+                form.title &&
+                form.description &&
+                form.dimension &&
+                form.price &&
+                form.date_created &&
+                form.location &&
+                form.shipping &&
+                form.categories.length &&
+                form.styles.length &&
+                form.techniques.length &&
+                files.length
+            ) {
+                form.state = 1;
+            }
         },
     },
 

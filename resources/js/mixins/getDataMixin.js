@@ -12,6 +12,9 @@ export default {
 
             // técnicas disponibles
             techniques: [],
+
+            // cantidad de obras standard a mostrar
+            SHOW_ARTWORKS: 4,
         };
     },
     methods: {

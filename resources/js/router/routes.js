@@ -1,21 +1,8 @@
-// imports
-const Home = () => import("../pages/Home.vue");
-const Dashboard = () => import("../pages/dashboard/dashboard.vue");
-
-// registro
-const Register = () => import("../pages/auth/register.vue");
-const Perfil = () => import("../pages/auth/perfil.vue");
-const Login = () => import("../pages/auth/Login.vue");
-
-// perfil usuario
-import ProfileUser from "../pages/profile/ProfileUser.vue";
-
-// obras
-import CreateArtwork from "../pages/artwork/CreateArtwork.vue";
-import EditArtwork from "../pages/artwork/EditArtwork.vue";
+const importPage = (page) => () => import(`../pages/${page}.vue`);
 
 // store
 import { store } from "../store/store";
+
 const ifNotAuthenticated = (to, from, next) => {
     if (!store.getters.isAuthenticated) {
         next();
@@ -36,31 +23,31 @@ export const routes = [
     {
         name: "home",
         path: "/home",
-        component: Home,
+        component: importPage('Home'),
         beforeEnter: ifNotAuthenticated,
     },
     {
         name: "login",
         path: "/login",
-        component: Login,
+        component: importPage('auth/Login'),
         beforeEnter: ifNotAuthenticated,
     },
     {
         name: "register",
         path: "/register",
-        component: Register,
+        component: importPage('auth/register'),
         beforeEnter: ifNotAuthenticated,
     },
     {
         name: "dashboard",
         path: "/",
-        component: Dashboard,
+        component: importPage('dashboard/dashboard'),
         beforeEnter: ifAuthenticated,
     },
     {
         name: "perfil",
         path: "/perfil",
-        component: Perfil,
+        component: importPage('auth/perfil'),
         beforeEnter: ifAuthenticated,
         meta: {
             title: "perfil",
@@ -69,19 +56,19 @@ export const routes = [
     {
         name: "userProfile",
         path: "/usuario/perfil/:id/:section?",
-        component: ProfileUser,
+        component: importPage("profile/ProfileUser"),
         beforeEnter: ifAuthenticated,
     },
     {
         name: "createArtwork",
         path: "/obras/crear",
-        component: CreateArtwork,
+        component: importPage('artwork/CreateArtwork'),
         beforeEnter: ifAuthenticated,
     },
     {
         name: "editArtwork",
         path: "/obras/editar/:id",
-        component: EditArtwork,
+        component: importPage('artwork/EditArtwork'),
         beforeEnter: ifAuthenticated,
     },
 ];

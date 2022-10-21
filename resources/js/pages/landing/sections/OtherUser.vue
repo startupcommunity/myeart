@@ -1,6 +1,6 @@
 <template>
     <div class="user-section sm:py-12">
-        <div class="container sm:max-w-full sm:ml-[6%] mb-4 sm:mb-8">
+        <div class="container mb-4 sm:mb-8">
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <h2
@@ -12,8 +12,8 @@
             </div>
         </div>
 
-        <div class="container sm:max-w-full sm:ml-[6%] -mt-4">
-            <div class="row">
+        <div class="container">
+            <div class="row md:-mr-60">
                 <div class="col-12">
                     <div>
                         <div id="slider-user" class="mb-5">
