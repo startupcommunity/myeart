@@ -2,6 +2,7 @@
 
 namespace App\Querys;
 
+use App\Enums\ArtworkStateEnum;
 use App\Models\Artwork;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -20,6 +21,17 @@ class ArtworkDB
             ->get();
 
         return $data;
+    }
+
+    /**
+     * Devuelve todas las obras publicadas de los usuarios
+     */
+    public static function getPublishArtworks(): Collection
+    {
+        return Artwork::with(['categories', 'styles', 'techniques', 'gallery', 'user'])
+            ->where('state', ArtworkStateEnum::PUBLISHED)
+            ->orderBy('id', 'Desc')
+            ->get();
     }
 
     /**

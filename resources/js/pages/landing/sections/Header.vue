@@ -27,7 +27,6 @@
                                 <!-- ALSO, YOU CAN USE A LOADING ANIMATION -->
                                 <template v-slot:placeholder>
                                     <v-progress-circular
-                                        style="margin-top: 40px"
                                         indeterminate
                                         color="custm_theme_6"
                                     ></v-progress-circular>
@@ -57,9 +56,9 @@
                     <div class="main-menu-wrap">
                         <div class="flex justify-center items-center">
                             <!-- solo mobile -->
-                            <div class="flex-fill d-block d-md-none d-lg-none">
+                            <div class="flex-fill block lg:hidden">
                                 <div
-                                    class="w-100 d-flex justify-content-center -mt-4 sm:-mt-0"
+                                    class="w-100 d-flex justify-content-center -mt-4 xl:-mt-0"
                                 >
                                     <i
                                         class="fa-solid fa-bars text-white"
@@ -84,10 +83,10 @@
                             </div>
 
                             <!-- solo escritorio -->
-                            <div class="flex-fill d-none d-md-block d-lg-block">
+                            <div class="flex-fill hidden lg:block">
                                 <!-- menu start -->
-                                <nav class="main-menu lg:mr-10 xl:mr-32">
-                                    <ul class="text-left">
+                                <nav class="main-menu lg:mr-8 xl:mr-32">
+                                    <ul class="text-left text-[9px] xl:text-xs">
                                         <li>
                                             <a href="#">OBRAS</a>
                                         </li>
@@ -176,7 +175,7 @@
                             </div>
 
                             <!-- solo mobile -->
-                            <div class="flex-fill d-block d-md-none d-lg-none">
+                            <div class="flex-fill block lg:hidden">
                                 <div
                                     class="w-100 d-flex justify-content-center -mt-4"
                                 >

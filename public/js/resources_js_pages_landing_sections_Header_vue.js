@@ -118,9 +118,6 @@ var render = function render() {
       key: "placeholder",
       fn: function fn() {
         return [_c("v-progress-circular", {
-          staticStyle: {
-            "margin-top": "40px"
-          },
           attrs: {
             indeterminate: "",
             color: "custm_theme_6"
@@ -179,9 +176,9 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex justify-center items-center"
   }, [_c("div", {
-    staticClass: "flex-fill d-block d-md-none d-lg-none"
+    staticClass: "flex-fill block lg:hidden"
   }, [_c("div", {
-    staticClass: "w-100 d-flex justify-content-center -mt-4 sm:-mt-0"
+    staticClass: "w-100 d-flex justify-content-center -mt-4 xl:-mt-0"
   }, [_c("i", {
     staticClass: "fa-solid fa-bars text-white",
     on: {
@@ -205,11 +202,11 @@ var render = function render() {
       alt: "my-eart"
     }
   })])], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill d-none d-md-block d-lg-block"
+    staticClass: "flex-fill hidden lg:block"
   }, [_c("nav", {
-    staticClass: "main-menu lg:mr-10 xl:mr-32"
+    staticClass: "main-menu lg:mr-8 xl:mr-32"
   }, [_c("ul", {
-    staticClass: "text-left"
+    staticClass: "text-left text-[9px] xl:text-xs"
   }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
@@ -257,7 +254,7 @@ var render = function render() {
       }
     }
   }, [_vm._v("\n                                                        SUBIR OBRA\n                                                    ")]) : _vm._e()])])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "flex-fill d-block d-md-none d-lg-none"
+    staticClass: "flex-fill block lg:hidden"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center -mt-4"
   }, [_c("div", {

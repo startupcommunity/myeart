@@ -13,6 +13,7 @@ vue.mixin({
     data() {
         return {
             globalLoading: false,
+            euro: "€",
         };
     },
     computed: {
@@ -71,6 +72,7 @@ vue.mixin({
                     edit: "/api/artworks/edit/",
                     update: "/api/artworks/update/",
                     getImage: "/api/artworks/image/",
+                    getPublish: "/api/artworks/publish",
                 },
             };
         },

@@ -71,4 +71,10 @@ export const routes = [
         component: importPage('artwork/EditArtwork'),
         beforeEnter: ifAuthenticated,
     },
+    {
+        name: "listArtwork",
+        path: "/obras",
+        component: importPage('artwork/ListArtwork'),
+        beforeEnter: ifAuthenticated,
+    },
 ];

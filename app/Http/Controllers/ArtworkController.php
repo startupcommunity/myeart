@@ -139,4 +139,17 @@ class ArtworkController extends Controller
 
         return $this->resp->json($image, 200);
     }
+
+    /**
+     * Obtiene todas las obras publicadas
+     * de todos los usuarios
+     *
+     * @return JsonResponse
+     */
+    public function getPublish(): JsonResponse
+    {
+        $data = ArtworkDB::getPublishArtworks();
+
+        return $this->resp->json($data, 200);
+    }
 }
