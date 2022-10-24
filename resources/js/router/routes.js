@@ -77,4 +77,10 @@ export const routes = [
         component: importPage('artwork/ListArtwork'),
         beforeEnter: ifAuthenticated,
     },
+    {
+        name: "showSlugArtwork",
+        path: "/obra/:slug",
+        // component: importPage('artwork/ListArtwork'),
+        beforeEnter: ifNotAuthenticated,
+    },
 ];

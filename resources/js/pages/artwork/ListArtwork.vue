@@ -12,21 +12,7 @@
         <!-- /pre y header -->
 
         <!-- sección hero -->
-        <div
-            class="relative z-[1] h-96 sm:h-[30rem] bg-no-repeat bg-cover bg-center"
-            :class="'bg-hero-profile-bg'"
-        >
-            <div class="absolute bottom-[40%] left-[35%] sm:left-[46%]">
-                <h1
-                    class="font-black tracking-widest text-white text-3xl uppercase"
-                >
-                    Pintura
-                </h1>
-            </div>
-            <div
-                class="absolute top-0 bottom-auto pb-24 md:pb-20 lg:pb-24 inset-x-0 bg-gray-900 bg-opacity-60"
-            ></div>
-        </div>
+        <HeroList />
         <!-- /sección hero -->
 
         <!-- content -->
@@ -42,15 +28,37 @@
                         </h3>
                         <div class="my-4 w-full border-t border-gray-900"></div>
 
-                        <!-- categorías seleccionadas -->
-                        <div>
-                            <i class="fas fa-palette">
-                                <span
-                                    class="uppercase text-zinc-900 tracking-widest text-xs"
+                        <!-- categorías -->
+                        <div class="my-4">
+                            <v-chip-group
+                                v-model="filters.categories"
+                                column
+                                multiple
+                                show-arrows
+                                center-active
+                                class="mx-auto"
+                            >
+                                <v-chip
+                                    label
+                                    filter
+                                    outlined
+                                    v-for="cat in categories"
+                                    :key="cat.id"
+                                    :value="cat.id"
+                                    class="border-o"
+                                    small
                                 >
-                                    pinturas
-                                </span>
-                            </i>
+                                    <span
+                                        class="font-medium text-gray-900 text-xs tracking-tighter"
+                                    >
+                                        <i
+                                            class="text-primary"
+                                            :class="setIcon(cat.name)"
+                                        ></i>
+                                        {{ cat.name }}
+                                    </span>
+                                </v-chip>
+                            </v-chip-group>
                         </div>
 
                         <!-- estilo -->
@@ -203,7 +211,7 @@
                                     Largo
                                 </label>
                                 <v-slider
-                                    v-model="filters.leength"
+                                    v-model="filters.large"
                                     min="0"
                                     max="500"
                                     color="#b2794c"
@@ -269,6 +277,8 @@
                                 </label>
                                 <v-select
                                     :items="sortBy"
+                                    item-text="text"
+                                    item-value="val"
                                     class="pl-2"
                                     v-model="filters.sortBy"
                                 ></v-select>
@@ -280,101 +290,16 @@
                         <div class="my-4">
                             <div class="flex flex-wrap h-full items-stretch">
                                 <LoadingTailwind
-                                    v-if="loadingArtwork"
+                                    v-if="loadArtworkPublished"
                                     css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
                                 />
-                                <div
-                                    v-for="(art, index) in artworks"
-                                    :key="art.id"
-                                    class="w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd"
+                                <CardArtwork
+                                    v-for="(artwork, index) in artworkPublished"
+                                    :artwork="artwork"
+                                    :key="artwork.id"
                                     :class="index % 1 == 0 ? 'sm:px-4' : ''"
                                     v-else
-                                >
-                                    <div
-                                        class="rounded-md w-full hover:animate-shadow-drop-center"
-                                    >
-                                        <img
-                                            :src="setPathGallery(art)"
-                                            :alt="art.title"
-                                            class="object-cover object-center w-full h-72"
-                                        />
-                                        <div
-                                            class="flex flex-col justify-between space-y-8 bg-gray-50"
-                                        >
-                                            <div class="space-y-2">
-                                                <h3
-                                                    class="text-xl md:text-base xl:text-xl font-semibold tracking-wide text-gray-900 pt-3"
-                                                >
-                                                    {{ art.title }}
-                                                </h3>
-                                                <p class="text-primary">
-                                                    {{ art.dimension }}
-                                                    {{
-                                                        setCategoryName(
-                                                            art.categories
-                                                        )
-                                                    }}
-                                                    {{
-                                                        setTechniqueName(
-                                                            art.techniques
-                                                        )
-                                                    }}
-                                                </p>
-                                                <div
-                                                    class="flex justify-start items-center"
-                                                >
-                                                    <img
-                                                        :src="
-                                                            getProfilePhoto(
-                                                                art.user
-                                                            ) ??
-                                                            '/img/avatar.png'
-                                                        "
-                                                        class="img-thumbnail border w-14 h-14 rounded-full"
-                                                        alt="profile-picture"
-                                                    />
-                                                    <div
-                                                        class="flex flex-col pl-2"
-                                                    >
-                                                        <span class="py-0">
-                                                            {{ art.user?.name }}
-                                                        </span>
-                                                        <button
-                                                            class="btn btn-primary btn-sm text-xs px-4 uppercase w-20"
-                                                        >
-                                                            Seguir
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="w-full border-t border-gray-800 my-4"
-                                                ></div>
-                                                <div
-                                                    class="flex justify-between items-center pb-4 px-2"
-                                                >
-                                                    <div
-                                                        class="text-gray-900 font-black"
-                                                    >
-                                                        {{ art.price }}
-                                                        {{ euro }}
-                                                    </div>
-                                                    <div class="text-gray-400">
-                                                        <button class="px-2">
-                                                            <i
-                                                                class="fa-regular fa-bookmark"
-                                                            ></i>
-                                                        </button>
-                                                        <button>
-                                                            <i
-                                                                class="fa-regular fa-heart text-red-800"
-                                                            ></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                />
                             </div>
 
                             <!-- mostrar mas resultados -->
@@ -403,37 +328,45 @@ import { mapGetters } from "vuex";
 import Header from "../landing/sections/Header.vue";
 import PreHeader from "../landing/sections/PreHeader.vue";
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
+import HeroList from "./sections/HeroList.vue";
+import CardArtwork from "./sections/CardArtwork.vue";
 
 // mixin
 import getDataMixin from "../../mixins/getDataMixin";
 import utilMixin from "../../mixins/utilMixin";
-
-// cantidad de obras en aumento
-let countShowArt = 12;
+import listArtworkMixin from "./utils/listArtworkMixin";
 
 export default {
-    components: { PreHeader, Header, LoadingTailwind },
-    mixins: [getDataMixin, utilMixin],
+    components: { PreHeader, Header, LoadingTailwind, HeroList, CardArtwork },
+    mixins: [getDataMixin, utilMixin, listArtworkMixin],
     name: "ListArtwork",
     data() {
         return {
-            artworks: [],
-            originalArtworks: [],
-            remainingArtworks: [],
             filters: {
                 categories: [],
                 techniques: [],
                 styles: [],
                 price: 5000,
                 width: 250,
-                leength: 250,
+                large: 250,
                 weight: 50,
                 sortBy: "",
             },
 
-            sortBy: ["MAS RECIENTE", "DESTACADA", "PRECIO"],
-
-            loadingArtwork: false,
+            sortBy: [
+                {
+                    val: 1,
+                    text: "MAS RECIENTE",
+                },
+                {
+                    val: 2,
+                    text: "DESTACADA",
+                },
+                {
+                    val: 3,
+                    text: "PRECIO",
+                },
+            ],
         };
     },
     mounted() {
@@ -441,8 +374,7 @@ export default {
         this.getCategories();
         this.getStyles();
         this.getTechniques();
-
-        this.getArtworks();
+        this.getArtworkPublished();
     },
     computed: {
         /**
@@ -452,71 +384,26 @@ export default {
             userProfile: "getProfile",
         }),
     },
+    watch: {
+        filters: {
+            handler(val) {
+                this.getFilterArtworkPublished();
+            },
+            deep: true,
+        },
+    },
     methods: {
-        /**
-         * Path completo de la foto de portada
-         */
-        setPathGallery(artwork) {
-            if (!artwork.gallery.length) return "/";
-
-            const front_page = artwork.gallery.filter(
-                (pic) => pic.front_page === 1
-            );
-
-            return `${this.pathArtworkGallery + front_page[0].picture}`;
-        },
-
-        /**
-         * Setear el nombre de una categoría de una obra
-         */
-        setCategoryName(categories) {
-            return categories.length ? categories[0].name : "";
-        },
-
-        /**
-         * Setear el nombre de una técnica de una obra
-         */
-        setTechniqueName(techniques) {
-            return techniques.length ? techniques[0].name : "";
-        },
-
-        /**
-         * Devuelve el path completo de la foto de perfil del usuario
-         */
-        getProfilePhoto(user = null) {
-            if (!user || !user?.profile_photo) return null;
-
-            return `${this.pathProfilePhoto + user.profile_photo}`;
-        },
-
-        /**
-         * devuelve las obras de todos los usuarios
-         */
-        getArtworks() {
-            this.loadingArtwork = true;
+        getFilterArtworkPublished() {
+            this.loadArtworkPublished = true;
             this.axios
-                .get(this.ep.artworks.getPublish)
-                .then(async (resp) => {
+                .post(this.ep.artworks.filterPublished, this.filters)
+                .then((resp) => {
                     if (resp.status === 200) {
-                        // obras originales
-                        this.originalArtworks = await JSON.parse(
-                            JSON.stringify(resp.data)
-                        );
-
-                        // obras mostradas
-                        this.artworks = await resp.data;
-
-                        // guardar las restantes
-                        // solo mostrar countShowArt
-                        this.remainingArtworks =
-                            this.artworks.splice(countShowArt);
-
-                        // obras restantes
-                        // this.loadRemainingArtworks(remaining);
+                        this.artworkPublished = resp.data;
                     }
                 })
                 .catch((error) => console.log(error))
-                .finally(() => (this.loadingArtwork = false));
+                .finally(() => (this.loadArtworkPublished = false));
         },
     },
 };

@@ -1861,7 +1861,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 id = _ref.id, picture = _ref.picture;
                 config = {
-                  responseType: 'blob'
+                  responseType: "blob"
                 };
                 _context2.next = 4;
                 return _this.axios(path, config).then( /*#__PURE__*/function () {
@@ -1871,7 +1871,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            contentType = response.headers['content-type'];
+                            contentType = response.headers["content-type"];
                             _context.next = 3;
                             return response.data;
 
@@ -1920,6 +1920,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+
+    /**
+     * Copia en el portapapeles el texto indicado
+     *
+     * @param {String} text      texto a ser copiado
+     */
+    copyToClipboard: function copyToClipboard(text) {
+      // opción 1 - execCommand
+      if (!navigator.clipboard) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text; // Avoid scrolling to bottom
+
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        return this.noty("Copiado al portapapeles");
+      } // opción 2 - navigator
+
+
+      navigator.clipboard.writeText(text).then(function () {
+        console.log("Async: Copying to clipboard was successful!");
+      }, function (err) {
+        console.error("Async: Could not copy text: ", err);
+      });
+      this.noty("Copiado al portapapeles");
     }
   }
 });

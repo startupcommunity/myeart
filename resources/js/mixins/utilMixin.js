@@ -94,9 +94,9 @@ export default {
          * Devuelve un archivo file en formato entendible para el front
          */
         async getFileImage(path, { id, picture }) {
-            const config = { responseType: 'blob' };
+            const config = { responseType: "blob" };
             return await this.axios(path, config).then(async (response) => {
-                const contentType = response.headers['content-type'];
+                const contentType = response.headers["content-type"];
                 const blob = await response.data;
                 const file = new File([blob], picture, {
                     contentType,
@@ -108,6 +108,44 @@ export default {
                 const data = await image.data;
                 return { file, front: data.front_page };
             });
+        },
+
+        /**
+         * Copia en el portapapeles el texto indicado
+         *
+         * @param {String} text      texto a ser copiado
+         */
+        copyToClipboard(text) {
+            // opción 1 - execCommand
+            if (!navigator.clipboard) {
+                let textArea = document.createElement("textarea");
+                textArea.value = text;
+
+                // Avoid scrolling to bottom
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                textArea.style.position = "fixed";
+
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textArea);
+
+                return this.noty("Copiado al portapapeles");
+            }
+
+            // opción 2 - navigator
+            navigator.clipboard.writeText(text).then(
+                function () {
+                    console.log("Async: Copying to clipboard was successful!");
+                },
+                function (err) {
+                    console.error("Async: Could not copy text: ", err);
+                }
+            );
+
+            this.noty("Copiado al portapapeles");
         },
     },
 };

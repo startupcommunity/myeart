@@ -26,6 +26,8 @@ module.exports = {
                 newsletter: "url('/img/home/newsletter.png')",
                 "mobile-newsletter": "url('/img/home/mobile-newsletter.png')",
                 "last-info": "url('/images/ultima_informacion.png')",
+                "categories-pintura":
+                    "url('/img/artwork/categories/pintura.webp')",
             },
             animation: {
                 "fade-in-both":

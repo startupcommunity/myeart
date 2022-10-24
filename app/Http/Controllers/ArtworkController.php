@@ -9,6 +9,7 @@ use App\Models\Gallery;
 use App\Querys\ArtworkDB;
 use App\Utils\ResponseJson;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ArtworkController extends Controller
 {
@@ -151,5 +152,59 @@ class ArtworkController extends Controller
         $data = ArtworkDB::getPublishArtworks();
 
         return $this->resp->json($data, 200);
+    }
+
+    /**
+     * Marca como me gusta una obra concreta
+     * con el usuario logueado
+     *
+     * @param integer $id           id de la obra
+     * @return JsonResponse
+     */
+    public function liked(int $id): JsonResponse
+    {
+        $resp = ArtworkDB::liked($id);
+
+        if (!$resp) {
+            return $this->resp->json('Error al procesar la información', 500);
+        }
+
+        return $this->resp->json($resp, 200);
+    }
+
+    /**
+     * Elimina un me gusta de una obra concreta
+     * con el usuario logueado
+     *
+     * @param integer $id           id de la obra
+     * @return JsonResponse
+     */
+    public function disliked(int $id): JsonResponse
+    {
+        $resp = ArtworkDB::disliked($id);
+
+        if (!$resp) {
+            return $this->resp->json('Error al eliminar la información', 500);
+        }
+
+        return $this->resp->json($resp, 200);
+    }
+
+    /**
+     * Devuelve las obras filtradas publicadas hasta la fecha
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function filterArtworksPublished(Request $request): JsonResponse
+    {
+        $filters = $request->all();
+        $resp = ArtworkDB::filterPublished($filters);
+
+        if (!$resp) {
+            return $this->resp->json('Error al obtener la información', 500);
+        }
+
+        return $this->resp->json($resp, 200);
     }
 }

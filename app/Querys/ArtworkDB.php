@@ -4,6 +4,7 @@ namespace App\Querys;
 
 use App\Enums\ArtworkStateEnum;
 use App\Models\Artwork;
+use App\Models\ArtworkLike;
 use Illuminate\Database\Eloquent\Collection;
 
 class ArtworkDB
@@ -28,7 +29,7 @@ class ArtworkDB
      */
     public static function getPublishArtworks(): Collection
     {
-        return Artwork::with(['categories', 'styles', 'techniques', 'gallery', 'user'])
+        return Artwork::with(['categories', 'styles', 'techniques', 'gallery', 'user', 'likes'])
             ->where('state', ArtworkStateEnum::PUBLISHED)
             ->orderBy('id', 'Desc')
             ->get();
@@ -60,5 +61,64 @@ class ArtworkDB
         }
 
         return false;
+    }
+
+    /**
+     * Marca una obra como "me gustada" por el usuario logueado
+     *
+     * @param integer $id           id de la obra
+     * @return boolean
+     */
+    public static function liked(int $id): bool
+    {
+        $artwork = self::getArtwork($id);
+        $user = auth()->user();
+
+        $created = $artwork->likes()->create(['user_id' => $user->id]);
+
+        return is_object($created);
+    }
+
+    /**
+     * elimina una obra como "me gustada" por el usuario logueado
+     *
+     * @param integer $id           id de la obra
+     * @return boolean
+     */
+    public static function disliked(int $id): bool
+    {
+        $user = auth()->user();
+        $liked = ArtworkLike::where('artwork_id', $id)->where('user_id', $user->id);
+
+        return $liked->delete();
+    }
+
+    /**
+     * Filtrar las obras publicadas de todos los usuarios
+     *
+     * @param array $filters            Filtros
+     * @return Collection
+     */
+    public static function filterPublished(array $filters): Collection
+    {
+        $data = Artwork::with(['categories', 'styles', 'techniques', 'gallery', 'user', 'likes'])
+            ->where('state', ArtworkStateEnum::PUBLISHED);
+
+        // mas reciente
+        if ($filters['sortBy'] == 1) {
+            $data->orderBy('id', 'Desc');
+        }
+
+        // destacada
+        if ($filters['sortBy'] == 2) {
+            $data->withCount('likes')->orderBy('likes_count', 'desc');
+        }
+
+        // precio
+        if ($filters['sortBy'] == 3) {
+            $data->orderBy('price', 'Desc');
+        }
+
+        return $data->get();
     }
 }

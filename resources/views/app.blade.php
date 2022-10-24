@@ -9,6 +9,9 @@
     {{--  title  --}}
     <title>MY HEARTS</title>
 
+    {{--  path secure rul  --}}
+    <meta name="secure-url" content="{{ secure_url('/') }}" />
+
     {{--  paths  --}}
     <meta name="front-photo" content="{{ config('storage.front_photo') }}" />
     <meta name="profile-photo" content="{{ config('storage.profile_photo') }}" />

@@ -50,8 +50,12 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/publish', [ArtworkController::class, 'getPublish'])->name('getAllArtworks');
         Route::get('/image/{id}', [ArtworkController::class, 'getImage'])->name('getImage');
         Route::get('/edit/{id}', [ArtworkController::class, 'editArtworks'])->name('editArtworks');
+        Route::get('/show/{slug}', [ArtworkController::class, 'slugArtworks'])->name('slugArtworks');
         Route::delete('/delete/{id}', [ArtworkController::class, 'deleteArtworks'])->name('deleteArtworks');
+        Route::post('/filterPublished', [ArtworkController::class, 'filterArtworksPublished'])->name('filterArtworksPublished');
         Route::post('/create', [ArtworkController::class, 'save'])->name('saveArtwork');
+        Route::post('/liked/{id}', [ArtworkController::class, 'liked'])->name('likedArtworks');
+        Route::post('/disliked/{id}', [ArtworkController::class, 'disliked'])->name('dislikedArtworks');
         Route::put('/update/{id}', [ArtworkController::class, 'update'])->name('update');
     });
 

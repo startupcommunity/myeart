@@ -61,18 +61,40 @@ vue.mixin({
         },
 
         /**
+         * Path de la url de la app
+         * @returns string
+         */
+        secureUrl() {
+            const path = document.head.querySelector('meta[name="secure-url"]');
+            if (path) {
+                return path.content;
+            }
+
+            return "/";
+        },
+
+        /**
          * Endpoints para consumir la API rest
          *
-         * @returns
+         * Todas las rutas que terminan en '/'
+         * reciben uno o mas parámetros
+         *
+         * @returns string
          */
         ep() {
+            const api = "/api";
+
             return {
                 artworks: {
-                    save: "/api/artworks/create",
-                    edit: "/api/artworks/edit/",
-                    update: "/api/artworks/update/",
-                    getImage: "/api/artworks/image/",
-                    getPublish: "/api/artworks/publish",
+                    save: api + "/artworks/create",
+                    edit: api + "/artworks/edit/",
+                    update: api + "/artworks/update/",
+                    getImage: api + "/artworks/image/",
+                    getPublish: api + "/artworks/publish",
+                    liked: api + "/artworks/liked/",
+                    disliked: api + "/artworks/disliked/",
+                    slug: api + "/artworks/show/",
+                    filterPublished: api + "/artworks/filterPublished",
                 },
             };
         },
