@@ -7,11 +7,11 @@ export default {
             // categorías cargadas de obras
             categories: [],
 
-            // estilos para las obras
-            styles: [],
+            // sub categorías de las categorías
+            subCategories: [],
 
-            // técnicas disponibles
-            techniques: [],
+            // sub sub categorías o etiquetas de las categorías
+            subLabels: [],
 
             // cantidad de obras standard a mostrar
             SHOW_ARTWORKS: 4,
@@ -47,31 +47,36 @@ export default {
         },
 
         /**
-         *Obtiene los estilos disponibles
+         * Devuelve las subcategorias de una categoría
+         *
+         * @param {Int} id      id el la categoría
          */
-        getStyles() {
+        getSubCategories(id) {
             this.axios
-                .get("/api/styles")
-                .then(async (resp) => {
-                    this.styles = await resp.data;
+                .get(this.ep.global.subcategories + id)
+                .then((resp) => {
+                    this.subCategories = resp.data;
                 })
-                .catch((err) => {
-                    console.log(err);
-                });
+                .catch((error) => console.error(error));
         },
 
         /**
-         *Obtiene las técnicas disponibles
+         * Devuelve las subsubcategories o etiquetas de una categoría
+         *
+         * @param {Int} category_id         id el la categoría
+         * @param {Int} sub_category_id      id el la subcategoria
          */
-        getTechniques() {
+        getSubLabels(category_id, sub_category_id) {
+            const ep = `${
+                this.ep.global.labels + category_id
+            }/${sub_category_id}`;
+
             this.axios
-                .get("/api/techniques")
-                .then(async (resp) => {
-                    this.techniques = await resp.data;
+                .get(ep)
+                .then((resp) => {
+                    this.subLabels = resp.data;
                 })
-                .catch((err) => {
-                    console.log(err);
-                });
+                .catch((error) => console.error(error));
         },
 
         /**

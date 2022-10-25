@@ -21,6 +21,7 @@ class ArtworkController extends Controller
         $this->artworkfactory = $artworkfactory;
         $this->resp = $resp;
     }
+
     /**
      * Devuelve las obras del usuario logueado
      *

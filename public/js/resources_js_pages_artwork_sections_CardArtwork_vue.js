@@ -302,6 +302,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return "fas fa-plus";
       }
 
+      if (name == "Libros") {
+        return "fas fa-book-reader";
+      }
+
       return "fas fa-info";
     },
 

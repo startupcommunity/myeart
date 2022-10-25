@@ -14,17 +14,18 @@ class StyleSeeder extends Seeder
      */
     public function run()
     {
-        if (Style::count() == 0) {
-            Style::insert([
-                ['name' => 'Realismo'],
-                ['name' => 'Renacentismo'],
-                ['name' => 'Expresionismo'],
-                ['name' => 'Abstracto'],
-                ['name' => 'Clásico'],
-                ['name' => 'Puntillismo'],
-                ['name' => 'Cubismo'],
-                ['name' => 'Otros'],
-            ]);
-        }
+        // no esta en uso
+        // if (Style::count() == 0) {
+        //     Style::insert([
+        //         ['name' => 'Realismo'],
+        //         ['name' => 'Renacentismo'],
+        //         ['name' => 'Expresionismo'],
+        //         ['name' => 'Abstracto'],
+        //         ['name' => 'Clásico'],
+        //         ['name' => 'Puntillismo'],
+        //         ['name' => 'Cubismo'],
+        //         ['name' => 'Otros'],
+        //     ]);
+        // }
     }
 }

@@ -1504,10 +1504,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       countries: [],
       // categorías cargadas de obras
       categories: [],
-      // estilos para las obras
-      styles: [],
-      // técnicas disponibles
-      techniques: [],
+      // sub categorías de las categorías
+      subCategories: [],
+      // sub sub categorías o etiquetas de las categorías
+      subLabels: [],
       // cantidad de obras standard a mostrar
       SHOW_ARTWORKS: 4
     };
@@ -1582,70 +1582,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
 
     /**
-     *Obtiene los estilos disponibles
+     * Devuelve las subcategorias de una categoría
+     *
+     * @param {Int} id      id el la categoría
      */
-    getStyles: function getStyles() {
+    getSubCategories: function getSubCategories(id) {
       var _this3 = this;
 
-      this.axios.get("/api/styles").then( /*#__PURE__*/function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(resp) {
-          return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  _context3.next = 2;
-                  return resp.data;
-
-                case 2:
-                  _this3.styles = _context3.sent;
-
-                case 3:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3);
-        }));
-
-        return function (_x3) {
-          return _ref3.apply(this, arguments);
-        };
-      }())["catch"](function (err) {
-        console.log(err);
+      this.axios.get(this.ep.global.subcategories + id).then(function (resp) {
+        _this3.subCategories = resp.data;
+      })["catch"](function (error) {
+        return console.error(error);
       });
     },
 
     /**
-     *Obtiene las técnicas disponibles
+     * Devuelve las subsubcategories o etiquetas de una categoría
+     *
+     * @param {Int} category_id         id el la categoría
+     * @param {Int} sub_category_id      id el la subcategoria
      */
-    getTechniques: function getTechniques() {
+    getSubLabels: function getSubLabels(category_id, sub_category_id) {
       var _this4 = this;
 
-      this.axios.get("/api/techniques").then( /*#__PURE__*/function () {
-        var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(resp) {
-          return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-            while (1) {
-              switch (_context4.prev = _context4.next) {
-                case 0:
-                  _context4.next = 2;
-                  return resp.data;
-
-                case 2:
-                  _this4.techniques = _context4.sent;
-
-                case 3:
-                case "end":
-                  return _context4.stop();
-              }
-            }
-          }, _callee4);
-        }));
-
-        return function (_x4) {
-          return _ref4.apply(this, arguments);
-        };
-      }())["catch"](function (err) {
-        console.log(err);
+      var ep = "".concat(this.ep.global.labels + category_id, "/").concat(sub_category_id);
+      this.axios.get(ep).then(function (resp) {
+        _this4.subLabels = resp.data;
+      })["catch"](function (error) {
+        return console.error(error);
       });
     },
 
@@ -1994,6 +1958,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return "fas fa-plus";
       }
 
+      if (name == "Libros") {
+        return "fas fa-book-reader";
+      }
+
       return "fas fa-info";
     },
 
@@ -2150,7 +2118,7 @@ var ONLY_POSITIVE = /^[+]?([1-9][0-9]*(?:[\.][0-9]*)?|0*\.0*[1-9][0-9]*)(?:[eE][
       dimensionRules: [function (v) {
         return !!v || "Las dimensiones son requeridas";
       }, function (v) {
-        return v.length <= 100 || "Las dimensiones no deben tener mas de 100 caracteres";
+        return v.length <= 1000 || "Las dimensiones no deben tener mas de 1000 caracteres";
       }],
       priceRules: [function (v) {
         return !!v || "El precio es requerido";

@@ -324,7 +324,6 @@
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import Header from "../landing/sections/Header.vue";
 import PreHeader from "../landing/sections/PreHeader.vue";
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
@@ -376,14 +375,6 @@ export default {
         this.getTechniques();
         this.getArtworkPublished();
     },
-    computed: {
-        /**
-         * Acceder a los getters necesarios
-         */
-        ...mapGetters({
-            userProfile: "getProfile",
-        }),
-    },
     watch: {
         filters: {
             handler(val) {
@@ -393,6 +384,10 @@ export default {
         },
     },
     methods: {
+        /**
+         * Filtra las obras publicadas según los elementos
+         * del DOM modificados o seleccionados
+         */
         getFilterArtworkPublished() {
             this.loadArtworkPublished = true;
             this.axios

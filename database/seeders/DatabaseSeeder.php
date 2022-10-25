@@ -59,8 +59,9 @@ class DatabaseSeeder extends Seeder
         // ------------
         $this->call([
             CategorySeeder::class,
-            StyleSeeder::class,
-            TechniqueSeeder::class,
+            SubSubCategorySeeder::class,
+            // StyleSeeder::class,
+            // TechniqueSeeder::class,
             ArtworkSeeder::class
         ]);
     }

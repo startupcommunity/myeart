@@ -9,8 +9,8 @@ use App\Http\Controllers\ArtisticActivitysController;
 use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StyleController;
-use App\Http\Controllers\TechniqueController;
+use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SubSubCategoryController;
 use App\Http\Controllers\UserInformationsController;
 
 Route::post('/login', [LoginController::class, 'login']);
@@ -64,13 +64,22 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/', [CategoryController::class, 'getCategories'])->name('getCategories');
     });
 
-    // estilos
-    Route::group(['prefix' => 'styles'], function () {
-        Route::get('/', [StyleController::class, 'getStyles'])->name('getStyles');
+    // subcategorias
+    Route::group(['prefix' => 'subcategories'], function () {
+
+        /**
+         * @param id id de la categoría que pertenece
+         */
+        Route::get('/{id}', [SubCategoryController::class, 'getSubcategories'])->name('getSubcategories');
     });
 
-    // Técnicas
-    Route::group(['prefix' => 'techniques'], function () {
-        Route::get('/', [TechniqueController::class, 'getTechniques'])->name('getTechniques');
+    // etiquetas o sub sub categorías
+    Route::group(['prefix' => 'labels'], function () {
+
+        /**
+         * @param category_id id de la categoría que pertenece
+         * @param sub_category_id id de la categoría que pertenece
+         */
+        Route::get('/{category_id}/{sub_category_id}', [SubSubCategoryController::class, 'getLabels'])->name('getLabels');
     });
 });

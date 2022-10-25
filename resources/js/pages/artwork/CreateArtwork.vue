@@ -30,8 +30,8 @@
                                         class="flex justify-center items-center w-full"
                                         :class="
                                             previewFiles.length
-                                                ? 'md:h-60'
-                                                : 'md:h-[444px]'
+                                                ? 'md:h-72'
+                                                : 'md:h-[480px]'
                                         "
                                         @drop.prevent="onDrop($event)"
                                         @dragover.prevent="dragover = true"
@@ -85,7 +85,7 @@
                                         <div
                                             v-for="file in previewFiles"
                                             :key="file.id"
-                                            class="flex-shrink-0 w-1/2 xl:w-1/4 h-24 lg:h-40 bg-gray-200 rounded-sm border border-gray-300 animate-swing-in-top-fwd"
+                                            class="flex-shrink-0 w-1/2 xl:w-1/4 h-32 lg:h-40 bg-gray-200 rounded-sm border border-gray-300 animate-swing-in-top-fwd"
                                         >
                                             <div class="relative h-full w-full">
                                                 <img
@@ -126,7 +126,7 @@
                         <!-- Datos principales -->
                         <!-- ----------------- -->
                         <v-col cols="12" md="6">
-                            <div class="flex flex-col space-y-4 sm:space-y-16">
+                            <div class="flex flex-col space-y-4 sm:space-y-4">
                                 <v-text-field
                                     v-model="form.title"
                                     :rules="titleRules"
@@ -156,16 +156,44 @@
                                     </template>
                                 </v-text-field>
                                 <v-text-field
-                                    v-model="form.dimension"
+                                    v-model="form.width"
                                     :rules="dimensionRules"
-                                    :counter="100"
+                                    :counter="1000"
                                     required
                                 >
                                     <template slot="label">
                                         <span
                                             class="font-black tracking-wide uppercase text-gray-900"
                                         >
-                                            Dimensiones
+                                            Ancho (cm)
+                                        </span>
+                                    </template>
+                                </v-text-field>
+                                <v-text-field
+                                    v-model="form.large"
+                                    :rules="dimensionRules"
+                                    :counter="1000"
+                                    required
+                                >
+                                    <template slot="label">
+                                        <span
+                                            class="font-black tracking-wide uppercase text-gray-900"
+                                        >
+                                            Largo (cm)
+                                        </span>
+                                    </template>
+                                </v-text-field>
+                                <v-text-field
+                                    v-model="form.weight"
+                                    :rules="dimensionRules"
+                                    :counter="1000"
+                                    required
+                                >
+                                    <template slot="label">
+                                        <span
+                                            class="font-black tracking-wide uppercase text-gray-900"
+                                        >
+                                            Peso (kg)
                                         </span>
                                     </template>
                                 </v-text-field>
@@ -200,7 +228,7 @@
                                 </h2>
                             </div>
                         </v-col>
-                        <v-col cols="12" md="6">
+                        <v-col cols="12" md="4">
                             <div class="flex flex-col space-y-4 sm:space-y-28">
                                 <v-menu
                                     v-model="menuPicker"
@@ -264,110 +292,22 @@
                                 </v-text-field>
                             </div>
                         </v-col>
-                        <v-col cols="12" md="6">
-                            <div class="flex flex-col space-y-10">
-                                <div>
-                                    <label>
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Categoría
-                                        </span>
-                                    </label>
-                                    <v-chip-group
-                                        v-model="form.categories"
-                                        column
-                                        multiple
-                                        show-arrows
-                                        center-active
-                                        class="mx-auto"
-                                    >
-                                        <v-chip
-                                            label
-                                            filter
-                                            outlined
-                                            large
-                                            v-for="cat in categories"
-                                            :key="cat.id"
-                                            :value="cat.id"
-                                            class="border-o"
-                                        >
-                                            <span
-                                                class="font-medium text-gray-900 text-xl tracking-tighter"
-                                            >
-                                                <i
-                                                    class="text-primary"
-                                                    :class="setIcon(cat.name)"
-                                                ></i>
-                                                {{ cat.name }}
-                                            </span>
-                                        </v-chip>
-                                    </v-chip-group>
-                                </div>
-                                <div>
-                                    <label>
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Estilo
-                                        </span>
-                                    </label>
-                                    <v-chip-group
-                                        v-model="form.styles"
-                                        column
-                                        multiple
-                                        show-arrows
-                                        center-active
-                                        class="mx-auto"
-                                    >
-                                        <v-chip
-                                            filter
-                                            outlined
-                                            v-for="style in styles"
-                                            :key="style.id"
-                                            :value="style.id"
-                                            class="border-o"
-                                        >
-                                            <span
-                                                class="font-medium text-gray-900 text-xl tracking-tighter"
-                                            >
-                                                {{ style.name }}
-                                            </span>
-                                        </v-chip>
-                                    </v-chip-group>
-                                </div>
-                                <div>
-                                    <label>
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Técnica
-                                        </span>
-                                    </label>
-                                    <v-chip-group
-                                        v-model="form.techniques"
-                                        column
-                                        multiple
-                                        show-arrows
-                                        center-active
-                                        class="mx-auto"
-                                    >
-                                        <v-chip
-                                            filter
-                                            outlined
-                                            v-for="tech in techniques"
-                                            :key="tech.id"
-                                            :value="tech.id"
-                                            class="border-o"
-                                        >
-                                            <span
-                                                class="font-medium text-gray-900 text-xl tracking-tighter"
-                                            >
-                                                {{ tech.name }}
-                                            </span>
-                                        </v-chip>
-                                    </v-chip-group>
-                                </div>
+                        <v-col cols="12" md="8">
+                            <Category
+                                v-for="(cat, index) in form.categories"
+                                :key="index"
+                                :cat="cat"
+                                :form="form"
+                                :index="index"
+                                :dataCategories="categories"
+                            />
+
+                            <div class="py-4 flex justify-center items-center">
+                                <v-btn outlined @click="addNewCategory">
+                                    <i class="fas fa-plus">
+                                        Agregar categoría
+                                    </i>
+                                </v-btn>
                             </div>
                         </v-col>
 
@@ -422,6 +362,7 @@ import PreHeader from "../landing/sections/PreHeader.vue";
 import Newletter from "../landing/sections/Newletter.vue";
 import ExtraInfo from "../landing/sections/ExtraInfo.vue";
 import Footer from "../landing/sections/Footer.vue";
+import Category from "./sections/Category.vue";
 
 // mixin
 import createRules from "./utils/createRulesMixin";
@@ -431,7 +372,7 @@ import getDataMixin from "../../mixins/getDataMixin";
 import requestErrorsMixin from "../../mixins/requestErrorsMixin";
 
 export default {
-    components: { Header, PreHeader, Newletter, ExtraInfo, Footer },
+    components: { Header, PreHeader, Newletter, ExtraInfo, Footer, Category },
     name: "CreateArtwork",
     mixins: [
         createRules,
@@ -439,21 +380,26 @@ export default {
         getDataMixin,
         requestErrorsMixin,
         uploadFilesMixin,
-        getDataMixin,
     ],
     data() {
         return {
             form: {
                 title: "",
                 description: "",
-                dimension: "",
+                width: "",
+                large: "",
+                weight: "",
                 price: "",
                 date_created: "",
                 location: "",
                 shipping: "",
-                categories: [],
-                styles: [],
-                techniques: [],
+                categories: [
+                    {
+                        category: "",
+                        sub_category: "",
+                        labels: [],
+                    },
+                ],
             },
             formIsValid: true,
             menuPicker: false,
@@ -464,10 +410,29 @@ export default {
         // mixin
         this.form.date_created = this.actualDate;
         this.getCategories();
-        this.getStyles();
-        this.getTechniques();
+    },
+    computed: {
+        /**
+         * Acceder a los getters necesarios
+         */
+        ...mapGetters({
+            userProfile: "getProfile",
+        }),
     },
     methods: {
+        /**
+         * Agrega una nuevo objeto de categorías
+         */
+        addNewCategory() {
+            const data = {
+                category: "",
+                sub_category: "",
+                labels: [],
+            };
+
+            this.form.categories.push(data);
+        },
+
         /**
          * Guardar, publicar o borrador de la obra creada
          */
@@ -490,17 +455,13 @@ export default {
 
             // data sync
             const categories = this.form.categories;
-            const styles = this.form.styles;
-            const techniques = this.form.techniques;
             const files = this.uploadedFiles;
             categories.forEach((cat) => data.append(`categories[]`, cat));
-            styles.forEach((sty) => data.append(`styles[]`, sty));
-            techniques.forEach((tech) => data.append(`techniques[]`, tech));
             files.forEach((file) => data.append(`gallery[]`, file));
 
             // request
             this.axios
-                .post("/api/artworks/create", data, {
+                .post(this.ep.artworks.save, data, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
@@ -519,20 +480,9 @@ export default {
                         );
                     }
                 })
-                .catch((error) => {
-                    this.showRequestErrors(error);
-                })
+                .catch((error) => this.showRequestErrors(error))
                 .finally(() => (this.globalLoading = false));
         },
-    },
-
-    computed: {
-        /**
-         * Acceder a los getters necesarios
-         */
-        ...mapGetters({
-            userProfile: "getProfile",
-        }),
     },
 };
 </script>

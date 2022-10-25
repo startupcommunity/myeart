@@ -69,6 +69,10 @@ export default {
                 return "fas fa-plus";
             }
 
+            if (name == "Libros") {
+                return "fas fa-book-reader";
+            }
+
             return "fas fa-info";
         },
 

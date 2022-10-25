@@ -14,18 +14,19 @@ class TechniqueSeeder extends Seeder
      */
     public function run()
     {
-        if (Technique::count() == 0) {
-            Technique::insert([
-                ['name' => 'Óleo'],
-                ['name' => 'Acuarela'],
-                ['name' => 'Pastel'],
-                ['name' => 'Aerografía'],
-                ['name' => 'Acrílico'],
-                ['name' => 'Tinta CHina'],
-                ['name' => 'Técnica Mixta'],
-                ['name' => 'Gouache'],
-                ['name' => 'Otros'],
-            ]);
-        }
+        // no esta en uso
+        // if (Technique::count() == 0) {
+        //     Technique::insert([
+        //         ['name' => 'Óleo'],
+        //         ['name' => 'Acuarela'],
+        //         ['name' => 'Pastel'],
+        //         ['name' => 'Aerografía'],
+        //         ['name' => 'Acrílico'],
+        //         ['name' => 'Tinta CHina'],
+        //         ['name' => 'Técnica Mixta'],
+        //         ['name' => 'Gouache'],
+        //         ['name' => 'Otros'],
+        //     ]);
+        // }
     }
 }

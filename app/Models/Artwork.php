@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-
 class Artwork extends Model
 {
     use SoftDeletes;
@@ -44,26 +43,6 @@ class Artwork extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Devuelve los estilos asignados
-     *
-     * @return BelongsToMany
-     */
-    public function styles(): BelongsToMany
-    {
-        return $this->belongsToMany(Style::class, 'artwork_styles');
-    }
-
-    /**
-     * Devuelve las técnicas asignadas
-     *
-     * @return BelongsToMany
-     */
-    public function techniques(): BelongsToMany
-    {
-        return $this->belongsToMany(Technique::class, 'artwork_techniques');
     }
 
     /**

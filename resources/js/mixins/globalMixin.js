@@ -96,6 +96,11 @@ vue.mixin({
                     slug: api + "/artworks/show/",
                     filterPublished: api + "/artworks/filterPublished",
                 },
+
+                global: {
+                    subcategories: `${api}/subcategories/`,
+                    labels: `${api}/labels/`,
+                },
             };
         },
     },

@@ -32,7 +32,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _landing_sections_Header_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../landing/sections/Header.vue */ "./resources/js/pages/landing/sections/Header.vue");
 /* harmony import */ var _landing_sections_PreHeader_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../landing/sections/PreHeader.vue */ "./resources/js/pages/landing/sections/PreHeader.vue");
 /* harmony import */ var _components_LoadingTailwind_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/LoadingTailwind.vue */ "./resources/js/components/LoadingTailwind.vue");
@@ -41,13 +40,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../mixins/getDataMixin */ "./resources/js/mixins/getDataMixin.js");
 /* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
 /* harmony import */ var _utils_listArtworkMixin__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./utils/listArtworkMixin */ "./resources/js/pages/artwork/utils/listArtworkMixin.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
 
 
 
@@ -98,9 +90,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getTechniques();
     this.getArtworkPublished();
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_8__.mapGetters)({
-    userProfile: "getProfile"
-  })),
   watch: {
     filters: {
       handler: function handler(val) {
@@ -110,6 +99,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
+    /**
+     * Filtra las obras publicadas según los elementos
+     * del DOM modificados o seleccionados
+     */
     getFilterArtworkPublished: function getFilterArtworkPublished() {
       var _this = this;
 
@@ -1166,10 +1159,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       countries: [],
       // categorías cargadas de obras
       categories: [],
-      // estilos para las obras
-      styles: [],
-      // técnicas disponibles
-      techniques: [],
+      // sub categorías de las categorías
+      subCategories: [],
+      // sub sub categorías o etiquetas de las categorías
+      subLabels: [],
       // cantidad de obras standard a mostrar
       SHOW_ARTWORKS: 4
     };
@@ -1244,70 +1237,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
 
     /**
-     *Obtiene los estilos disponibles
+     * Devuelve las subcategorias de una categoría
+     *
+     * @param {Int} id      id el la categoría
      */
-    getStyles: function getStyles() {
+    getSubCategories: function getSubCategories(id) {
       var _this3 = this;
 
-      this.axios.get("/api/styles").then( /*#__PURE__*/function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(resp) {
-          return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  _context3.next = 2;
-                  return resp.data;
-
-                case 2:
-                  _this3.styles = _context3.sent;
-
-                case 3:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3);
-        }));
-
-        return function (_x3) {
-          return _ref3.apply(this, arguments);
-        };
-      }())["catch"](function (err) {
-        console.log(err);
+      this.axios.get(this.ep.global.subcategories + id).then(function (resp) {
+        _this3.subCategories = resp.data;
+      })["catch"](function (error) {
+        return console.error(error);
       });
     },
 
     /**
-     *Obtiene las técnicas disponibles
+     * Devuelve las subsubcategories o etiquetas de una categoría
+     *
+     * @param {Int} category_id         id el la categoría
+     * @param {Int} sub_category_id      id el la subcategoria
      */
-    getTechniques: function getTechniques() {
+    getSubLabels: function getSubLabels(category_id, sub_category_id) {
       var _this4 = this;
 
-      this.axios.get("/api/techniques").then( /*#__PURE__*/function () {
-        var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(resp) {
-          return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-            while (1) {
-              switch (_context4.prev = _context4.next) {
-                case 0:
-                  _context4.next = 2;
-                  return resp.data;
-
-                case 2:
-                  _this4.techniques = _context4.sent;
-
-                case 3:
-                case "end":
-                  return _context4.stop();
-              }
-            }
-          }, _callee4);
-        }));
-
-        return function (_x4) {
-          return _ref4.apply(this, arguments);
-        };
-      }())["catch"](function (err) {
-        console.log(err);
+      var ep = "".concat(this.ep.global.labels + category_id, "/").concat(sub_category_id);
+      this.axios.get(ep).then(function (resp) {
+        _this4.subLabels = resp.data;
+      })["catch"](function (error) {
+        return console.error(error);
       });
     },
 
@@ -1609,6 +1566,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       if (name == "Otros") {
         return "fas fa-plus";
+      }
+
+      if (name == "Libros") {
+        return "fas fa-book-reader";
       }
 
       return "fas fa-info";
