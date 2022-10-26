@@ -110,21 +110,25 @@ class ArtworkFactory
 
       // datos de obras
       $dataArtwork = collect($data)->only([
-        'title', 'description', 'date_created', 'dimension', 'location', 'shipping', 'price', 'state'
+        'title', 'description', 'date_created', 'width', 'large', 'weight', 'location', 'shipping', 'price', 'state'
       ])->toArray();
 
       // datos extra
       $categories = isset($data['categories']) ? $data['categories'] : null;
-      $techniques = isset($data['techniques']) ? $data['techniques'] : null;
-      $styles = isset($data['styles']) ? $data['styles'] : null;
 
       // obra creada
       $artwork = $user->artworks()->create($dataArtwork);
 
-      // sync data
-      !$categories ?: $artwork->categories()->sync($categories);
-      !$styles ?: $artwork->styles()->sync($styles);
-      !$techniques ?: $artwork->techniques()->sync($techniques);
+      // attach data
+      if ($categories) {
+        foreach ($data['categories'] as $cat) {
+          $category = json_decode($cat);
+          $artwork->labels()->attach($category->sub_sub_category_id, [
+            'category_id' => $category->category_id,
+            'sub_category_id' => $category->sub_category_id
+          ]);
+        }
+      }
 
       return $artwork;
     });
@@ -132,28 +136,48 @@ class ArtworkFactory
     return $artwork;
   }
 
+  /**
+   * Actualiza una obra y sus relaciones
+   *
+   * @param array $data       los datos recibidos
+   * @param integer $id       el id de la obra
+   * @return object|null
+   */
   public function updateSyncArtwork(array $data, int $id): ?object
   {
     $db = DB::transaction(function () use ($data, $id) {
 
       // datos de obras
       $dataArtwork = collect($data)->only([
-        'title', 'description', 'date_created', 'dimension', 'location', 'shipping', 'price', 'state'
+        'title', 'description', 'date_created', 'width', 'large', 'weight', 'location', 'shipping', 'price', 'state'
       ])->toArray();
 
       // datos extra
       $categories = isset($data['categories']) ? $data['categories'] : [];
-      $techniques = isset($data['techniques']) ? $data['techniques'] : [];
-      $styles = isset($data['styles']) ? $data['styles'] : [];
 
       // obra actualizada
       $artwork = $this->artwork->findOrFail($id);
       $artwork->update($dataArtwork);
 
-      // sync data
-      $artwork->categories()->sync($categories);
-      $artwork->styles()->sync($styles);
-      $artwork->techniques()->sync($techniques);
+      // attach data
+      if ($categories) {
+        foreach ($data['categories'] as $cat) {
+          $category = json_decode($cat);
+
+          // eliminar por categoría o por etiquetas
+          $artwork->categories()->detach($category->category_id);
+          $artwork->labels()->detach($category->sub_sub_category_id);
+
+          // agregar las nuevas categorías
+          // siempre y cuando existan etiquetas
+          if ($category->sub_sub_category_id) {
+            $artwork->labels()->attach($category->sub_sub_category_id, [
+              'category_id' => $category->category_id,
+              'sub_category_id' => $category->sub_category_id
+            ]);
+          }
+        }
+      }
 
       return $artwork;
     });

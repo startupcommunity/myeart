@@ -453,11 +453,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getSubCategories: function getSubCategories(id) {
       var _this3 = this;
 
-      this.axios.get(this.ep.global.subcategories + id).then(function (resp) {
-        _this3.subCategories = resp.data;
-      })["catch"](function (error) {
-        return console.error(error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _this3.axios.get(_this3.ep.global.subcategories + id).then(function (resp) {
+                  _this3.subCategories = resp.data;
+                })["catch"](function (error) {
+                  return console.error(error);
+                });
+
+              case 2:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     },
 
     /**
@@ -469,12 +486,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getSubLabels: function getSubLabels(category_id, sub_category_id) {
       var _this4 = this;
 
-      var ep = "".concat(this.ep.global.labels + category_id, "/").concat(sub_category_id);
-      this.axios.get(ep).then(function (resp) {
-        _this4.subLabels = resp.data;
-      })["catch"](function (error) {
-        return console.error(error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var ep;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                ep = "".concat(_this4.ep.global.labels + category_id, "/").concat(sub_category_id);
+                _context4.next = 3;
+                return _this4.axios.get(ep).then(function (resp) {
+                  _this4.subLabels = resp.data;
+                })["catch"](function (error) {
+                  return console.error(error);
+                });
+
+              case 3:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     },
 
     /**

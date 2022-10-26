@@ -294,12 +294,12 @@
                         </v-col>
                         <v-col cols="12" md="8">
                             <Category
-                                v-for="(cat, index) in form.categories"
+                                v-for="(category, index) in form.categories"
                                 :key="index"
-                                :cat="cat"
-                                :form="form"
+                                :category="category"
                                 :index="index"
                                 :dataCategories="categories"
+                                @delete-category="deleteCategory"
                             />
 
                             <div class="py-4 flex justify-center items-center">
@@ -365,6 +365,7 @@ import Footer from "../landing/sections/Footer.vue";
 import Category from "./sections/Category.vue";
 
 // mixin
+import CommonMixin from "./utils/CommonMixin";
 import createRules from "./utils/createRulesMixin";
 import uploadFilesMixin from "./utils/uploadFilesMixin";
 import utilMixin from "../../mixins/utilMixin";
@@ -380,6 +381,7 @@ export default {
         getDataMixin,
         requestErrorsMixin,
         uploadFilesMixin,
+        CommonMixin,
     ],
     data() {
         return {
@@ -395,9 +397,9 @@ export default {
                 shipping: "",
                 categories: [
                     {
-                        category: "",
-                        sub_category: "",
-                        labels: [],
+                        category_id: "",
+                        sub_category_id: "",
+                        sub_sub_category_id: [],
                     },
                 ],
             },
@@ -421,19 +423,6 @@ export default {
     },
     methods: {
         /**
-         * Agrega una nuevo objeto de categorías
-         */
-        addNewCategory() {
-            const data = {
-                category: "",
-                sub_category: "",
-                labels: [],
-            };
-
-            this.form.categories.push(data);
-        },
-
-        /**
          * Guardar, publicar o borrador de la obra creada
          */
         saveArtwork() {
@@ -456,7 +445,9 @@ export default {
             // data sync
             const categories = this.form.categories;
             const files = this.uploadedFiles;
-            categories.forEach((cat) => data.append(`categories[]`, cat));
+            categories.forEach((cat) =>
+                data.append(`categories[]`, JSON.stringify(cat))
+            );
             files.forEach((file) => data.append(`gallery[]`, file));
 
             // request

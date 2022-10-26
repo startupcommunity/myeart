@@ -3,7 +3,7 @@
         <div class="flex flex-wrap">
             <div class="pr-2 w-3/6 lg:w-[30%]">
                 <v-select
-                    v-model="cat.category"
+                    v-model="category.category_id"
                     :items="dataCategories"
                     item-value="id"
                     item-text="name"
@@ -42,11 +42,11 @@
             </div>
             <div class="pr-2 w-3/6 lg:w-[30%]">
                 <v-select
-                    v-model="cat.sub_category"
+                    v-model="category.sub_category_id"
                     :items="subCategories"
                     item-value="id"
                     item-text="name"
-                    @change="loadLabels(index)"
+                    @change="loadLabels(category)"
                 >
                     <template slot="label">
                         <span
@@ -59,7 +59,7 @@
             </div>
             <div class="w-3/6 lg:w-[30%] pr-2">
                 <v-select
-                    v-model="cat.labels"
+                    v-model="category.sub_sub_category_id"
                     :items="subLabels"
                     item-value="id"
                     item-text="name"
@@ -76,7 +76,7 @@
             </div>
             <div class="w-3/6 lg:w-[10%]">
                 <v-btn
-                    @click.stop="deleteCategory(index)"
+                    @click.stop="$emit('delete-category', index)"
                     raised
                     text
                     class="mt-4"
@@ -85,6 +85,7 @@
                 </v-btn>
             </div>
         </div>
+        <loading-overlay :active="loading" :is-full-page="true" loader="bars" />
     </div>
 </template>
 <script>
@@ -93,10 +94,7 @@ import utilMixin from "../../../mixins/utilMixin";
 export default {
     mixins: [getDataMixin, utilMixin],
     props: {
-        cat: {
-            type: Object,
-        },
-        form: {
+        category: {
             type: Object,
         },
         index: {
@@ -107,27 +105,40 @@ export default {
             default: [],
         },
     },
+    data() {
+        return {
+            loading: false,
+        };
+    },
+    mounted() {
+        if (this.category.category_id) {
+            this.loadSubCat(this.category.category_id);
+        }
+
+        if (this.category.sub_category_id) {
+            this.loadLabels(this.category);
+        }
+    },
     methods: {
         /**
          * Cargar las subcategorias
          */
-        loadSubCat(category_id) {
-            this.getSubCategories(category_id);
+        async loadSubCat(category_id) {
+            this.loading = true;
+            const ready = this.getSubCategories(category_id);
+            ready.then(() => (this.loading = false));
         },
 
         /**
          * Cargar el tercer nivel, las etiquetas
          */
-        loadLabels(index) {
-            const data = this.form.categories[index];
-            this.getSubLabels(data.category, data.sub_category);
-        },
-
-        /**
-         * Elimina un objecto del array de categorías
-         */
-        deleteCategory(index) {
-            this.form.categories.splice(index, 1);
+        async loadLabels(cat) {
+            this.loading = true;
+            const ready = this.getSubLabels(
+                cat.category_id,
+                cat.sub_category_id
+            );
+            ready.then(() => (this.loading = false));
         },
     },
 };

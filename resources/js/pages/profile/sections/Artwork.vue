@@ -100,7 +100,7 @@
                                     <p class="text-primary">
                                         {{ art.dimension }}
                                         {{ setCategoryName(art.categories) }}
-                                        {{ setTechniqueName(art.techniques) }}
+                                        {{ setSubCategory(art.labels) }}
                                     </p>
                                     <div
                                         class="w-full border-t-2 border-gray-800 my-4"
@@ -288,8 +288,8 @@ export default {
         /**
          * Setear el nombre de una técnica de una obra
          */
-        setTechniqueName(techniques) {
-            return techniques.length ? techniques[0].name : "";
+        setSubCategory(labels) {
+            return labels.length ? labels[0].name : "";
         },
 
         /**
@@ -372,6 +372,9 @@ export default {
                 });
         },
 
+        /**
+         * Devuelve los datos al estado original
+         */
         resetData() {
             this.artworks = [];
             this.originalArtworks = [];

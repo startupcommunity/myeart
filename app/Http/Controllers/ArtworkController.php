@@ -83,7 +83,7 @@ class ArtworkController extends Controller
      */
     public function editArtworks(int $id): JsonResponse
     {
-        $artwork = Artwork::with(['categories', 'techniques', 'styles'])
+        $artwork = Artwork::with(['categories'])
             ->with(['gallery' => function ($q) {
                 return $q->orderBy('id', 'ASC');
             }])->findOrFail($id);
@@ -92,11 +92,7 @@ class ArtworkController extends Controller
             return $this->resp->json('error al obtener los datos', 500);
         }
 
-        $data = [
-            'artwork' => $artwork,
-        ];
-
-        return $this->resp->json($data, 200);
+        return $this->resp->json($artwork, 200);
     }
 
     /**
@@ -114,9 +110,9 @@ class ArtworkController extends Controller
 
         // Actualizar la obra
         $artwork = $this->artworkfactory->updateSyncArtwork($data, $id);
-        $gallery = $artwork->gallery;
 
         // guardar y crear galeria
+        $gallery = $artwork->gallery;
         !$hasFiles ?: $this->artworkfactory->updateGallery($data['gallery'], $gallery, $artwork);
 
         if (!$artwork) {

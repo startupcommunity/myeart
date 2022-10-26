@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+
 class Artwork extends Model
 {
     use SoftDeletes;
@@ -52,7 +53,17 @@ class Artwork extends Model
      */
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'artwork_categories');
+        return $this->belongsToMany(Category::class, 'artwork_categories')->withPivot(['sub_category_id', 'sub_sub_category_id']);
+    }
+
+    /**
+     * devuelve las etiquetas relacionadas a una categoría y a una subcategoria
+     *
+     * @return BelongsToMany
+     */
+    public function labels(): BelongsToMany
+    {
+        return $this->belongsToMany(SubSubCategory::class, 'artwork_categories', 'artwork_id', 'sub_sub_category_id');
     }
 
     /**

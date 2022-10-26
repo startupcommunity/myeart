@@ -23,9 +23,9 @@ export default {
             ],
             dimensionRules: [
                 (v) => !!v || "Las dimensiones son requeridas",
-                (v) =>
-                    v.length <= 1000 ||
-                    "Las dimensiones no deben tener mas de 1000 caracteres",
+                // (v) =>
+                //     v.length <= 1000 ||
+                //     "Las dimensiones no deben tener mas de 1000 caracteres",
             ],
             priceRules: [
                 (v) => !!v || "El precio es requerido",

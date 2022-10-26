@@ -820,8 +820,8 @@ var counterArtworks = 4;
     /**
      * Setear el nombre de una técnica de una obra
      */
-    setTechniqueName: function setTechniqueName(techniques) {
-      return techniques.length ? techniques[0].name : "";
+    setSubCategory: function setSubCategory(labels) {
+      return labels.length ? labels[0].name : "";
     },
 
     /**
@@ -904,6 +904,10 @@ var counterArtworks = 4;
         }
       });
     },
+
+    /**
+     * Devuelve los datos al estado original
+     */
     resetData: function resetData() {
       this.artworks = [];
       this.originalArtworks = [];
@@ -2265,7 +2269,7 @@ var render = function render() {
       staticClass: "text-xl font-semibold tracking-wide text-gray-900 pt-3"
     }, [_vm._v("\n                                    " + _vm._s(art.title) + "\n                                ")]), _vm._v(" "), _c("p", {
       staticClass: "text-primary"
-    }, [_vm._v("\n                                    " + _vm._s(art.dimension) + "\n                                    " + _vm._s(_vm.setCategoryName(art.categories)) + "\n                                    " + _vm._s(_vm.setTechniqueName(art.techniques)) + "\n                                ")]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                    " + _vm._s(art.dimension) + "\n                                    " + _vm._s(_vm.setCategoryName(art.categories)) + "\n                                    " + _vm._s(_vm.setSubCategory(art.labels)) + "\n                                ")]), _vm._v(" "), _c("div", {
       staticClass: "w-full border-t-2 border-gray-800 my-4"
     }), _vm._v(" "), _c("p", {
       staticClass: "text-gray-900"
@@ -2830,11 +2834,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getSubCategories: function getSubCategories(id) {
       var _this3 = this;
 
-      this.axios.get(this.ep.global.subcategories + id).then(function (resp) {
-        _this3.subCategories = resp.data;
-      })["catch"](function (error) {
-        return console.error(error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _this3.axios.get(_this3.ep.global.subcategories + id).then(function (resp) {
+                  _this3.subCategories = resp.data;
+                })["catch"](function (error) {
+                  return console.error(error);
+                });
+
+              case 2:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     },
 
     /**
@@ -2846,12 +2867,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getSubLabels: function getSubLabels(category_id, sub_category_id) {
       var _this4 = this;
 
-      var ep = "".concat(this.ep.global.labels + category_id, "/").concat(sub_category_id);
-      this.axios.get(ep).then(function (resp) {
-        _this4.subLabels = resp.data;
-      })["catch"](function (error) {
-        return console.error(error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var ep;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                ep = "".concat(_this4.ep.global.labels + category_id, "/").concat(sub_category_id);
+                _context4.next = 3;
+                return _this4.axios.get(ep).then(function (resp) {
+                  _this4.subLabels = resp.data;
+                })["catch"](function (error) {
+                  return console.error(error);
+                });
+
+              case 3:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     },
 
     /**

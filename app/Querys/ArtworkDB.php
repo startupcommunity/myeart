@@ -16,7 +16,7 @@ class ArtworkDB
     public static function getUserArtworks(): Collection
     {
         $userID = auth()->user()->id;
-        $data = Artwork::with(['categories', 'styles', 'techniques', 'gallery', 'user'])
+        $data = Artwork::with(['categories', 'labels', 'gallery', 'user'])
             ->where('user_id', $userID)
             ->orderBy('id', 'Desc')
             ->get();
@@ -29,7 +29,7 @@ class ArtworkDB
      */
     public static function getPublishArtworks(): Collection
     {
-        return Artwork::with(['categories', 'styles', 'techniques', 'gallery', 'user', 'likes'])
+        return Artwork::with(['categories', 'gallery', 'user', 'likes'])
             ->where('state', ArtworkStateEnum::PUBLISHED)
             ->orderBy('id', 'Desc')
             ->get();
@@ -101,7 +101,7 @@ class ArtworkDB
      */
     public static function filterPublished(array $filters): Collection
     {
-        $data = Artwork::with(['categories', 'styles', 'techniques', 'gallery', 'user', 'likes'])
+        $data = Artwork::with(['categories', 'gallery', 'user', 'likes'])
             ->where('state', ArtworkStateEnum::PUBLISHED);
 
         // mas reciente

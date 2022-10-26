@@ -51,8 +51,8 @@ export default {
          *
          * @param {Int} id      id el la categoría
          */
-        getSubCategories(id) {
-            this.axios
+        async getSubCategories(id) {
+            return await this.axios
                 .get(this.ep.global.subcategories + id)
                 .then((resp) => {
                     this.subCategories = resp.data;
@@ -66,12 +66,12 @@ export default {
          * @param {Int} category_id         id el la categoría
          * @param {Int} sub_category_id      id el la subcategoria
          */
-        getSubLabels(category_id, sub_category_id) {
+        async getSubLabels(category_id, sub_category_id) {
             const ep = `${
                 this.ep.global.labels + category_id
             }/${sub_category_id}`;
 
-            this.axios
+            return await this.axios
                 .get(ep)
                 .then((resp) => {
                     this.subLabels = resp.data;

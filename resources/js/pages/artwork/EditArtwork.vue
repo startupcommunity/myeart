@@ -124,7 +124,7 @@
                         <!-- Datos principales -->
                         <!-- ----------------- -->
                         <v-col cols="12" md="6">
-                            <div class="flex flex-col space-y-4 sm:space-y-16">
+                            <div class="flex flex-col space-y-4 sm:space-y-4">
                                 <v-text-field
                                     v-model="form.title"
                                     :rules="titleRules"
@@ -154,16 +154,44 @@
                                     </template>
                                 </v-text-field>
                                 <v-text-field
-                                    v-model="form.dimension"
+                                    v-model="form.width"
                                     :rules="dimensionRules"
-                                    :counter="100"
+                                    :counter="1000"
                                     required
                                 >
                                     <template slot="label">
                                         <span
                                             class="font-black tracking-wide uppercase text-gray-900"
                                         >
-                                            Dimensiones
+                                            Ancho (cm)
+                                        </span>
+                                    </template>
+                                </v-text-field>
+                                <v-text-field
+                                    v-model="form.large"
+                                    :rules="dimensionRules"
+                                    :counter="1000"
+                                    required
+                                >
+                                    <template slot="label">
+                                        <span
+                                            class="font-black tracking-wide uppercase text-gray-900"
+                                        >
+                                            Largo (cm)
+                                        </span>
+                                    </template>
+                                </v-text-field>
+                                <v-text-field
+                                    v-model="form.weight"
+                                    :rules="dimensionRules"
+                                    :counter="1000"
+                                    required
+                                >
+                                    <template slot="label">
+                                        <span
+                                            class="font-black tracking-wide uppercase text-gray-900"
+                                        >
+                                            Peso (kg)
                                         </span>
                                     </template>
                                 </v-text-field>
@@ -198,7 +226,7 @@
                                 </h2>
                             </div>
                         </v-col>
-                        <v-col cols="12" md="6">
+                        <v-col cols="12" md="4">
                             <div class="flex flex-col space-y-4 sm:space-y-28">
                                 <v-menu
                                     v-model="menuPicker"
@@ -262,110 +290,24 @@
                                 </v-text-field>
                             </div>
                         </v-col>
-                        <v-col cols="12" md="6">
-                            <div class="flex flex-col space-y-10">
-                                <div>
-                                    <label>
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Categoría
-                                        </span>
-                                    </label>
-                                    <v-chip-group
-                                        v-model="form.categories"
-                                        column
-                                        multiple
-                                        show-arrows
-                                        center-active
-                                        class="mx-auto"
-                                    >
-                                        <v-chip
-                                            label
-                                            filter
-                                            outlined
-                                            large
-                                            v-for="cat in categories"
-                                            :key="cat.id"
-                                            :value="cat.id"
-                                            class="border-o"
-                                        >
-                                            <span
-                                                class="font-medium text-gray-900 text-xl tracking-tighter"
-                                            >
-                                                <i
-                                                    class="text-primary"
-                                                    :class="setIcon(cat.name)"
-                                                ></i>
-                                                {{ cat.name }}
-                                            </span>
-                                        </v-chip>
-                                    </v-chip-group>
-                                </div>
-                                <div>
-                                    <label>
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Estilo
-                                        </span>
-                                    </label>
-                                    <v-chip-group
-                                        v-model="form.styles"
-                                        column
-                                        multiple
-                                        show-arrows
-                                        center-active
-                                        class="mx-auto"
-                                    >
-                                        <v-chip
-                                            filter
-                                            outlined
-                                            v-for="style in styles"
-                                            :key="style.id"
-                                            :value="style.id"
-                                            class="border-o"
-                                        >
-                                            <span
-                                                class="font-medium text-gray-900 text-xl tracking-tighter"
-                                            >
-                                                {{ style.name }}
-                                            </span>
-                                        </v-chip>
-                                    </v-chip-group>
-                                </div>
-                                <div>
-                                    <label>
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Técnica
-                                        </span>
-                                    </label>
-                                    <v-chip-group
-                                        v-model="form.techniques"
-                                        column
-                                        multiple
-                                        show-arrows
-                                        center-active
-                                        class="mx-auto"
-                                    >
-                                        <v-chip
-                                            filter
-                                            outlined
-                                            v-for="tech in techniques"
-                                            :key="tech.id"
-                                            :value="tech.id"
-                                            class="border-o"
-                                        >
-                                            <span
-                                                class="font-medium text-gray-900 text-xl tracking-tighter"
-                                            >
-                                                {{ tech.name }}
-                                            </span>
-                                        </v-chip>
-                                    </v-chip-group>
-                                </div>
+                        <v-col cols="12" md="8">
+                            <div v-if="form.categories.length">
+                                <Category
+                                    v-for="(category, index) in form.categories"
+                                    :key="category.key"
+                                    :category="category"
+                                    :index="index"
+                                    :dataCategories="categories"
+                                    @delete-category="deleteCategory"
+                                />
+                            </div>
+
+                            <div class="py-4 flex justify-center items-center">
+                                <v-btn outlined @click="addNewCategory">
+                                    <i class="fas fa-plus">
+                                        Agregar categoría
+                                    </i>
+                                </v-btn>
                             </div>
                         </v-col>
 
@@ -412,16 +354,18 @@ import PreHeader from "../landing/sections/PreHeader.vue";
 import Newletter from "../landing/sections/Newletter.vue";
 import ExtraInfo from "../landing/sections/ExtraInfo.vue";
 import Footer from "../landing/sections/Footer.vue";
+import Category from "./sections/Category.vue";
 
 // mixin
 import createRules from "./utils/createRulesMixin";
 import uploadFilesMixin from "./utils/uploadFilesMixin";
+import CommonMixin from "./utils/CommonMixin";
 import utilMixin from "../../mixins/utilMixin";
 import getDataMixin from "../../mixins/getDataMixin";
 import requestErrorsMixin from "../../mixins/requestErrorsMixin";
 
 export default {
-    components: { Header, PreHeader, Newletter, ExtraInfo, Footer },
+    components: { Header, PreHeader, Newletter, ExtraInfo, Footer, Category },
     name: "EditArtwork",
     mixins: [
         createRules,
@@ -430,20 +374,21 @@ export default {
         requestErrorsMixin,
         uploadFilesMixin,
         getDataMixin,
+        CommonMixin,
     ],
     data() {
         return {
             form: {
                 title: "",
                 description: "",
-                dimension: "",
+                width: "",
+                large: "",
+                weight: "",
                 price: "",
                 date_created: "",
                 location: "",
                 shipping: "",
                 categories: [],
-                styles: [],
-                techniques: [],
                 gallery: [],
                 state: "",
             },
@@ -455,11 +400,17 @@ export default {
     mounted() {
         // mixin
         this.getCategories();
-        this.getStyles();
-        this.getTechniques();
 
         // load data
         this.loadData();
+    },
+    computed: {
+        /**
+         * Acceder a los getters necesarios
+         */
+        ...mapGetters({
+            userProfile: "getProfile",
+        }),
     },
     methods: {
         /**
@@ -474,20 +425,18 @@ export default {
                 .get(this.ep.artworks.edit + id)
                 .then((resp) => {
                     // data
-                    const artwork = resp.data.artwork;
-                    const { categories, styles, techniques, gallery } = artwork;
-
-                    // cargar
-                    this.form = artwork;
+                    const artwork = resp.data;
+                    const { categories, gallery } = artwork;
 
                     // ----------------
                     // adaptar datos
                     // ----------------
-                    const dateFormat = this.dateFormat;
-                    this.form.date_created = dateFormat(artwork.date_created);
-                    this.form.categories = categories.map((cat) => cat.id);
-                    this.form.styles = styles.map((sty) => sty.id);
-                    this.form.techniques = techniques.map((sty) => sty.id);
+                    this.form = artwork;
+
+                    // ---------------------
+                    // adaptar categorías
+                    // ---------------------
+                    this.loadCategories(categories);
 
                     // galeria
                     gallery.forEach((picture) => {
@@ -518,13 +467,16 @@ export default {
          * entendible por el usuario
          */
         mapFields() {
-            const form = this.form;
-            form.title = form.title == "null" ? "" : form.title;
-            form.description =
-                form.description == "null" ? "" : form.description;
-            form.dimension = form.dimension == "null" ? "" : form.dimension;
-            form.price = form.price == "null" ? "" : form.price;
-            form.shipping = form.shipping == "null" ? "" : form.shipping;
+            const f = this.form;
+            const dateFormat = this.dateFormat;
+            f.title = f.title == "null" ? "" : f.title;
+            f.description = f.description == "null" ? "" : f.description;
+            f.width = f.width == "null" ? "" : f.width;
+            f.large = f.large == "null" ? "" : f.large;
+            f.weight = f.weight == "null" ? "" : f.large;
+            f.price = f.price == "null" ? "" : f.price;
+            f.shipping = f.shipping == "null" ? "" : f.shipping;
+            f.date_created = dateFormat(f.date_created);
         },
 
         /**
@@ -598,15 +550,15 @@ export default {
         loadFormData() {
             const form = this.form;
             const categories = form.categories;
-            const styles = form.styles;
-            const techniques = form.techniques;
             const files = this.uploadedFiles;
 
             const data = new FormData();
             data.append("_method", "PUT");
             data.append("title", form.title);
             data.append("description", form.description);
-            data.append("dimension", form.dimension);
+            data.append("width", form.width);
+            data.append("large", form.large);
+            data.append("weight", form.weight);
             data.append("price", form.price);
             data.append("date_created", form.date_created);
             data.append("location", form.location);
@@ -614,9 +566,9 @@ export default {
             data.append("state", form.state);
 
             // data sync
-            categories.forEach((cat) => data.append(`categories[]`, cat));
-            styles.forEach((sty) => data.append(`styles[]`, sty));
-            techniques.forEach((tech) => data.append(`techniques[]`, tech));
+            categories.forEach((cat) =>
+                data.append(`categories[]`, JSON.stringify(cat))
+            );
             files.forEach((file) => data.append(`gallery[]`, file.file));
 
             return data;
@@ -634,14 +586,14 @@ export default {
             if (
                 form.title &&
                 form.description &&
-                form.dimension &&
+                form.width &&
+                form.large &&
+                form.weight &&
                 form.price &&
                 form.date_created &&
                 form.location &&
                 form.shipping &&
                 form.categories.length &&
-                form.styles.length &&
-                form.techniques.length &&
                 files.length
             ) {
                 if (form.state == this.STATEARTWORK.draft) {
@@ -649,15 +601,26 @@ export default {
                 }
             }
         },
-    },
 
-    computed: {
         /**
-         * Acceder a los getters necesarios
+         * Carga las categorías
+         * sub categorías y etiquetas
          */
-        ...mapGetters({
-            userProfile: "getProfile",
-        }),
+        async loadCategories(data) {
+            this.form.categories = [];
+            const group = await data.group((cat) => cat.pivot.category_id);
+
+            for (const key in group) {
+                const cat = group[key];
+                const sub = cat.map((d) => d.pivot.sub_sub_category_id);
+                this.form.categories.push({
+                    category_id: parseInt(key),
+                    sub_category_id: cat[0].pivot.sub_category_id,
+                    sub_sub_category_id: sub,
+                    key,
+                });
+            }
+        },
     },
 };
 </script>
