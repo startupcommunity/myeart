@@ -435,7 +435,9 @@ export default {
             const data = new FormData();
             data.append("title", this.form.title);
             data.append("description", this.form.description);
-            data.append("dimension", this.form.dimension);
+            data.append("width", this.form.width);
+            data.append("large", this.form.large);
+            data.append("weight", this.form.weight);
             data.append("price", this.form.price);
             data.append("date_created", this.form.date_created);
             data.append("location", this.form.location);
