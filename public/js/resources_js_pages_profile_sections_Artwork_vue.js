@@ -279,6 +279,17 @@ var counterArtworks = 4;
       this.originalArtworks = [];
       this.remainingArtworks = [];
       counterArtworks = this.SHOW_ARTWORKS;
+    },
+
+    /**
+     * Devuelve las dimensiones de la obra
+     */
+    getDimensions: function getDimensions(artwork) {
+      var _artwork$width, _artwork$large;
+
+      var width = (_artwork$width = artwork.width) !== null && _artwork$width !== void 0 ? _artwork$width : 0;
+      var large = (_artwork$large = artwork.large) !== null && _artwork$large !== void 0 ? _artwork$large : 0;
+      return "".concat(width + "X" + large + " " + this.artSize);
     }
   },
   watch: {
@@ -446,7 +457,7 @@ var render = function render() {
       staticClass: "text-xl font-semibold tracking-wide text-gray-900 pt-3"
     }, [_vm._v("\n                                    " + _vm._s(art.title) + "\n                                ")]), _vm._v(" "), _c("p", {
       staticClass: "text-primary"
-    }, [_vm._v("\n                                    " + _vm._s(art.dimension) + "\n                                    " + _vm._s(_vm.setCategoryName(art.categories)) + "\n                                    " + _vm._s(_vm.setSubCategory(art.labels)) + "\n                                ")]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                    " + _vm._s(_vm.getDimensions(art)) + "\n                                    " + _vm._s(_vm.setCategoryName(art.categories)) + "\n                                    " + _vm._s(_vm.setSubCategory(art.labels)) + "\n                                ")]), _vm._v(" "), _c("div", {
       staticClass: "w-full border-t-2 border-gray-800 my-4"
     }), _vm._v(" "), _c("p", {
       staticClass: "text-gray-900"

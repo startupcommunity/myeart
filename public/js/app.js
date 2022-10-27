@@ -4388,7 +4388,9 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].mixin({
   data: function data() {
     return {
       globalLoading: false,
-      euro: "€"
+      euro: "€",
+      artSize: "cm",
+      ArtWeight: "kg"
     };
   },
   computed: {

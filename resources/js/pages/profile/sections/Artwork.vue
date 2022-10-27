@@ -98,7 +98,7 @@
                                         {{ art.title }}
                                     </h3>
                                     <p class="text-primary">
-                                        {{ art.dimension }}
+                                        {{ getDimensions(art) }}
                                         {{ setCategoryName(art.categories) }}
                                         {{ setSubCategory(art.labels) }}
                                     </p>
@@ -380,6 +380,15 @@ export default {
             this.originalArtworks = [];
             this.remainingArtworks = [];
             counterArtworks = this.SHOW_ARTWORKS;
+        },
+
+        /**
+         * Devuelve las dimensiones de la obra
+         */
+        getDimensions(artwork) {
+            const width = artwork.width ?? 0;
+            const large = artwork.large ?? 0;
+            return `${width + "X" + large + " " + this.artSize}`;
         },
     },
     watch: {

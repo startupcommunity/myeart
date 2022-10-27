@@ -14,6 +14,8 @@ vue.mixin({
         return {
             globalLoading: false,
             euro: "€",
+            artSize: "cm",
+            ArtWeight: "kg",
         };
     },
     computed: {
