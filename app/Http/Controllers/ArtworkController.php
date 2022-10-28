@@ -31,7 +31,7 @@ class ArtworkController extends Controller
     {
         $data = ArtworkDB::getUserArtworks();
 
-        return response()->json($data, 200);
+        return $this->resp->json($data, 200);
     }
 
     /**
@@ -42,13 +42,13 @@ class ArtworkController extends Controller
      */
     public function deleteArtworks(int $id): JsonResponse
     {
-        $res = ArtworkDB::softDelete($id);
+        $resp = ArtworkDB::softDelete($id);
 
-        if ($res) {
-            return response()->json($res, 200);
+        if (!$resp) {
+            return response()->json('No se puedo eliminar', 500);
         }
 
-        return response()->json($res, 500);
+        return $this->resp->json($resp, 200);
     }
 
     /**
@@ -131,8 +131,9 @@ class ArtworkController extends Controller
     public function getImage(int $id): JsonResponse
     {
         $image = Gallery::findOrFail($id);
+
         if (!$image) {
-            return $this->resp->json('error al guardar los datos', 500);
+            return $this->resp->json('Error al obtener la imagen', 500);
         }
 
         return $this->resp->json($image, 200);
@@ -195,8 +196,7 @@ class ArtworkController extends Controller
      */
     public function filterArtworksPublished(Request $request): JsonResponse
     {
-        $filters = $request->all();
-        $resp = ArtworkDB::filterPublished($filters);
+        $resp = ArtworkDB::filterPublished($request->all());
 
         if (!$resp) {
             return $this->resp->json('Error al obtener la información', 500);

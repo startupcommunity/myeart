@@ -1,18 +1,24 @@
-// cantidad de obras en aumento
-let countShowArt = 12;
+const COUNTER_ART_PUB = 6;
 
 export default {
     data() {
         return {
             // todas las obras publicadas
             artworkPublished: [],
-            originalArtworksPublished: [],
+            originalArtPub: [],
 
             // obras restantes
-            remainingArtworks: [],
+            remainingArt: [],
 
             // loading de carga
             loadArtworkPublished: false,
+
+            // mostrar o no el modal de opciones
+            // para filtrar, solo para mobile
+            showOptionModal: false,
+
+            // counter de obras
+            counter: COUNTER_ART_PUB,
 
             filters: {
                 category: 0,
@@ -50,35 +56,20 @@ export default {
         hasSubAndCategory() {
             return this.filters.category && this.filters.subcategory;
         },
+
+        /**
+         * si se puede mostrar el botón de ver mas resultados o no
+         *
+         * @returns
+         */
+        showBtnMore() {
+            return (
+                this.artworkPublished.length > this.SHOW_ARTWORKS &&
+                this.remainingArt.length
+            );
+        },
     },
     methods: {
-        /**
-         *Obtiene las obras publicadas de todos los usuarios
-         */
-        getArtworkPublished() {
-            this.loadArtworkPublished = true;
-            this.axios
-                .get(this.ep.artworks.getPublish)
-                .then(async (resp) => {
-                    // obras publicadas - originales
-                    this.originalArtworksPublished = await JSON.parse(
-                        JSON.stringify(resp.data)
-                    );
-
-                    // obras publicadas
-                    this.artworkPublished = await resp.data;
-
-                    // guardar las restantes
-                    // solo mostrar countShowArt
-                    this.remainingArtworks =
-                        this.artworkPublished.splice(countShowArt);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-                .finally(() => (this.loadArtworkPublished = false));
-        },
-
         /**
          * Filtra las obras publicadas según los filtros
          * del DOM seleccionados
@@ -89,11 +80,48 @@ export default {
                 .post(this.ep.artworks.filterPublished, this.filters)
                 .then((resp) => {
                     if (resp.status === 200) {
+                        this.counter = COUNTER_ART_PUB;
+
+                        // copia original - originales
+                        this.originalArtPub = JSON.parse(
+                            JSON.stringify(resp.data)
+                        );
+
+                        // mostrar al front
                         this.artworkPublished = resp.data;
+
+                        // carga las restantes
+                        const rmg = this.artworkPublished.splice(this.counter);
+                        this.loadRemainingArtworks(rmg);
                     }
                 })
                 .catch((error) => console.log(error))
                 .finally(() => (this.loadArtworkPublished = false));
+        },
+
+        /**
+         * Va mostrando la cantidad de ($count) las obras cargadas
+         */
+        showMoreArtworks(count) {
+            // counter
+            this.counter += count;
+
+            // obras originales
+            const originalData = this.originalArtPub;
+
+            // obtiene las obras restantes y acorta
+            const remaining = originalData.splice(this.counter);
+            this.artworkPublished = originalData;
+
+            this.loadRemainingArtworks(remaining);
+        },
+
+        /**
+         * Cargar las obras restantes cada vez que se actualiza
+         * la lista de obras por medio de algún evento
+         */
+        loadRemainingArtworks(remaining) {
+            this.remainingArt = remaining;
         },
 
         /**

@@ -1,41 +1,41 @@
 <template>
-    <main-layout :showHeader="false">
-        <!-- visible: md+ -->
-        <Header class="hidden md:block" />
-
-        <!-- visible mobile -->
-        <div class="bg-zinc-900 pb-32 block md:hidden">
-            <Header class="mt-5" />
-        </div>
-
-        <!-- sección hero -->
-        <!-- visible: md + -->
-        <HeroList
-            :category="filters.category"
-            :categories="categories"
-            class="hidden md:block"
-        />
-        <!-- /sección hero -->
-
-        <!-- content -->
-        <section class="bg-white">
-            <div class="container py-10 md:py-20">
-                <div class="flex flex-wrap justify-start items-start">
-                    <!-- filtros -->
-                    <div class="w-[30%] md:pr-10 hidden md:block">
+    <v-row justify="center">
+        <v-dialog
+            v-model="show"
+            max-width="300px"
+            persistent
+            scrollable
+            content-class="mt-80"
+        >
+            <v-card class="py-8">
+                <v-card-text>
+                    <div class="w-full">
                         <!-- categorías -->
                         <div>
                             <div>
-                                <h3
-                                    class="text-primary font-bold tracking-wide uppercase text-2xl"
-                                >
-                                    Categorías
-                                </h3>
+                                <div class="flex justify-between">
+                                    <h3
+                                        class="text-primary font-bold tracking-wide uppercase text-lg"
+                                    >
+                                        Categorías
+                                    </h3>
+                                    <v-btn
+                                        raised
+                                        text
+                                        outlined
+                                        small
+                                        @click="
+                                            $emit('close-dialog-options-filter')
+                                        "
+                                    >
+                                        Aceptar
+                                    </v-btn>
+                                </div>
                                 <div
                                     class="my-4 w-full border-t border-gray-900"
                                 ></div>
                                 <v-chip-group
-                                    v-model="filters.category"
+                                    v-model="options.category"
                                     column
                                     show-arrows
                                     center-active
@@ -63,11 +63,11 @@
                                 </v-chip-group>
                             </div>
                             <div
-                                v-if="filters.category"
+                                v-if="options.category"
                                 class="animate-fade-in-down"
                             >
                                 <h3
-                                    class="text-primary font-bold tracking-wide uppercase text-2xl"
+                                    class="text-primary font-bold tracking-wide uppercase text-lg"
                                 >
                                     SubCategorías
                                 </h3>
@@ -75,7 +75,7 @@
                                     class="my-4 w-full border-t border-gray-900"
                                 ></div>
                                 <v-chip-group
-                                    v-model="filters.subcategory"
+                                    v-model="options.subcategory"
                                     column
                                     show-arrows
                                     center-active
@@ -85,7 +85,7 @@
                                         label
                                         filter
                                         outlined
-                                        v-for="subcat in subCategories"
+                                        v-for="subcat in subcategories"
                                         :key="subcat.id"
                                         :value="subcat.id"
                                         class="border-o"
@@ -99,11 +99,11 @@
                                 </v-chip-group>
                             </div>
                             <div
-                                v-if="hasSubAndCategory"
+                                v-if="options.category && options.subcategory"
                                 class="animate-fade-in-down"
                             >
                                 <h3
-                                    class="text-primary font-bold tracking-wide uppercase text-2xl"
+                                    class="text-primary font-bold tracking-wide uppercase text-lg"
                                 >
                                     Etiquetas
                                 </h3>
@@ -111,8 +111,8 @@
                                     class="my-4 w-full border-t border-gray-900"
                                 ></div>
                                 <v-select
-                                    v-model="filters.label"
-                                    :items="subLabels"
+                                    v-model="options.label"
+                                    :items="sublabels"
                                     item-value="id"
                                     item-text="name"
                                 >
@@ -131,7 +131,7 @@
                         <!-- numéricos -->
                         <div class="py-2">
                             <h3
-                                class="text-primary font-bold tracking-wide uppercase text-2xl"
+                                class="text-primary font-bold tracking-wide uppercase text-lg"
                             >
                                 Filtros
                             </h3>
@@ -147,7 +147,7 @@
                                     Rango de precio
                                 </label>
                                 <v-slider
-                                    @change="filters.price = $event"
+                                    @change="options.price = $event"
                                     min="0"
                                     max="10000"
                                     color="#b2794c"
@@ -181,7 +181,7 @@
                                         Ancho
                                     </label>
                                     <v-slider
-                                        @change="filters.width = $event"
+                                        @change="options.width = $event"
                                         min="0"
                                         max="500"
                                         color="#b2794c"
@@ -207,7 +207,7 @@
                                         Largo
                                     </label>
                                     <v-slider
-                                        @change="filters.large = $event"
+                                        @change="options.large = $event"
                                         min="0"
                                         max="500"
                                         color="#b2794c"
@@ -234,7 +234,7 @@
                                     Peso
                                 </label>
                                 <v-slider
-                                    @change="filters.weight = $event"
+                                    @change="options.weight = $event"
                                     min="0"
                                     max="100"
                                     color="#b2794c"
@@ -253,162 +253,46 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /filtros -->
-
-                    <!-- resultados -->
-                    <div class="w-full md:w-[70%]">
-                        <div class="flex justify-between">
-                            <h3
-                                class="text-primary font-bold tracking-wide uppercase text-2xl"
-                            >
-                                Resultados
-                            </h3>
-                            <div class="block md:hidden">
-                                <v-btn
-                                    raised
-                                    text
-                                    @click="showOptionModal = !showOptionModal"
-                                >
-                                    Filtrar
-                                    <i class="fa-solid fa-list-check"></i>
-                                </v-btn>
-                            </div>
-                        </div>
-                        <div class="my-4 w-full border-t border-gray-900"></div>
-
-                        <!-- ordenar por -->
-                        <div class="flex justify-end">
-                            <div class="inline-flex items-center">
-                                <label
-                                    class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
-                                >
-                                    Ordenar por:
-                                </label>
-                                <v-select
-                                    :items="sortBy"
-                                    item-text="text"
-                                    item-value="val"
-                                    class="pl-2"
-                                    v-model="filters.sortBy"
-                                ></v-select>
-                            </div>
-                        </div>
-                        <!-- /ordenar por -->
-
-                        <!-- cards - obras -->
-                        <div class="my-4">
-                            <div class="flex flex-wrap h-full items-stretch">
-                                <LoadingTailwind
-                                    v-if="loadArtworkPublished"
-                                    css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
-                                />
-                                <CardArtwork
-                                    v-for="(artwork, index) in artworkPublished"
-                                    :artwork="artwork"
-                                    :key="artwork.id"
-                                    :class="index % 1 == 0 ? 'sm:px-4' : ''"
-                                    v-else
-                                />
-                            </div>
-
-                            <!-- mostrar mas resultados -->
-                            <div
-                                class="w-full text-center my-4"
-                                v-if="showBtnMore"
-                            >
-                                <button
-                                    class="w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
-                                    type="button"
-                                    @click.stop="
-                                        showMoreArtworks(SHOW_ARTWORKS)
-                                    "
-                                >
-                                    Ver más
-                                </button>
-                            </div>
-                            <!-- /mostrar mas resultados -->
-                        </div>
-                        <!-- /cards - obras -->
+                </v-card-text>
+                <v-card-actions>
+                    <div class="flex justify-end">
+                        <v-btn
+                            raised
+                            text
+                            outlined
+                            @click="$emit('close-dialog-options-filter')"
+                        >
+                            Aceptar
+                        </v-btn>
                     </div>
-                    <!-- /resultados -->
-                </div>
-            </div>
-        </section>
-        <!-- /content -->
-
-        <!-- modal de filtros para version mobile -->
-        <OptionsFilterModal
-            @close-dialog-options-filter="showOptionModal = !showOptionModal"
-            :show="showOptionModal"
-            :options="filters"
-            :categories="categories"
-            :subcategories="subCategories"
-            :sublabels="subLabels"
-        />
-    </main-layout>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </v-row>
 </template>
 <script>
-import MainLayout from "../layouts/MainLayout.vue";
-import Header from "../landing/sections/Header.vue";
-import HeroList from "./sections/HeroList.vue";
-import LoadingTailwind from "../../components/LoadingTailwind.vue";
-import CardArtwork from "./sections/CardArtwork.vue";
-import OptionsFilterModal from "./sections/OptionsFilterModal.vue";
-
-// mixin
-import getDataMixin from "../../mixins/getDataMixin";
-import utilMixin from "../../mixins/utilMixin";
-import listArtworkMixin from "./utils/listArtworkMixin";
-
+import utilMixin from "../../../mixins/utilMixin";
 export default {
-    name: "ListArtwork",
-    components: {
-        MainLayout,
-        Header,
-        HeroList,
-        LoadingTailwind,
-        CardArtwork,
-        OptionsFilterModal,
-    },
-    mixins: [getDataMixin, utilMixin, listArtworkMixin],
-    mounted() {
-        // @getDataMixin
-        this.getCategories();
-
-        // @listArtworkMixin
-        this.loadOneCategory();
-    },
-    watch: {
-        filters: {
-            handler(filter) {
-                // @getDataMixin
-                if (filter.category) {
-                    this.getSubCategories(filter.category);
-                }
-
-                // @getDataMixin
-                if (this.hasSubAndCategory) {
-                    this.getSubLabels(filter.category, filter.subcategory);
-                }
-
-                // @listArtworkMixin
-                this.getFilterArtworkPublished();
-            },
-            deep: true,
+    name: "OptionsFilterModal",
+    props: {
+        show: {
+            type: Boolean,
+            default: false,
         },
-
-        // cuando la subcategoria cambia
-        // se resetea el valor de la etiqueta
-        "filters.subcategory"() {
-            this.filters.label = 0;
+        options: {
+            type: Object,
+            Default: {},
+        },
+        categories: {
+            type: Array,
+        },
+        subcategories: {
+            type: Array,
+        },
+        sublabels: {
+            type: Array,
         },
     },
-    methods: {},
+    mixins: [utilMixin],
 };
 </script>
-<style>
-.v-slider--horizontal {
-    margin-left: 0px;
-    margin-right: 0px;
-}
-</style>

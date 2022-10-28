@@ -36,10 +36,13 @@
                     </label>
                 </div>
                 <p class="text-white">Artista/Fotografía</p>
-                <button @click="closeAndGo('obras')" class="text-white text-2xl">
+                <button
+                    @click="closeAndGo('obras')"
+                    class="text-white text-2xl"
+                >
                     SUBIR OBRA <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 </button>
-                <a href="#">OBRAS</a>
+                <router-link :to="{ name: 'listArtwork' }"> OBRAS </router-link>
                 <a href="#">ARTISTAS</a>
                 <a href="#">EVENTOS</a>
                 <a href="#">MI COMUNIDAD</a>
@@ -88,7 +91,11 @@
                                 <nav class="main-menu lg:mr-8 xl:mr-32">
                                     <ul class="text-left text-[9px] xl:text-xs">
                                         <li>
-                                            <a href="#">OBRAS</a>
+                                            <router-link
+                                                :to="{ name: 'listArtwork' }"
+                                            >
+                                                OBRAS
+                                            </router-link>
                                         </li>
                                         <li>
                                             <a href="#">ARTISTAS</a>

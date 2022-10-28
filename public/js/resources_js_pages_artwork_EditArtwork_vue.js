@@ -1433,11 +1433,13 @@ var render = function render() {
     }
   }, [_vm._v("\n                SUBIR OBRA "), _c("i", {
     staticClass: "fa-solid fa-arrow-up-from-bracket"
-  })]), _vm._v(" "), _c("a", {
+  })]), _vm._v(" "), _c("router-link", {
     attrs: {
-      href: "#"
+      to: {
+        name: "listArtwork"
+      }
     }
-  }, [_vm._v("OBRAS")]), _vm._v(" "), _c("a", {
+  }, [_vm._v(" OBRAS ")]), _vm._v(" "), _c("a", {
     attrs: {
       href: "#"
     }
@@ -1449,7 +1451,7 @@ var render = function render() {
     attrs: {
       href: "#"
     }
-  }, [_vm._v("MI COMUNIDAD")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("MI COMUNIDAD")])], 1), _vm._v(" "), _c("div", {
     staticClass: "sidenav_footer"
   }, [_c("a", {
     attrs: {
@@ -1503,7 +1505,13 @@ var render = function render() {
     staticClass: "main-menu lg:mr-8 xl:mr-32"
   }, [_c("ul", {
     staticClass: "text-left text-[9px] xl:text-xs"
-  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
+  }, [_c("li", [_c("router-link", {
+    attrs: {
+      to: {
+        name: "listArtwork"
+      }
+    }
+  }, [_vm._v("\n                                            OBRAS\n                                        ")])], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
     staticClass: "header-icons"
@@ -1541,7 +1549,7 @@ var render = function render() {
     }
   }, [_vm._v("\n                                                            Cerrar sesión\n                                                        ")])])])]), _vm._v(" "), _c("li", [_c("div", {
     staticClass: "header-icons"
-  }, [_vm._m(4), _vm._v(" "), !_vm.isPathObrasCreate ? _c("button", {
+  }, [_vm._m(3), _vm._v(" "), !_vm.isPathObrasCreate ? _c("button", {
     staticClass: "btn btn-primary text-white px-3 py-2 rounded-lg",
     on: {
       click: function click($event) {
@@ -1566,19 +1574,10 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-regular fa-user text-white"
-  })])], 1), _vm._v(" "), _vm._m(5)])])])])])])])]);
+  })])], 1), _vm._v(" "), _vm._m(4)])])])])])])])]);
 };
 
 var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("li", [_c("a", {
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("OBRAS")])]);
-}, function () {
   var _vm = this,
       _c = _vm._self._c;
 
