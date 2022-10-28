@@ -29,7 +29,7 @@ class ArtworkDB
      */
     public static function getPublishArtworks(): Collection
     {
-        return Artwork::with(['categories', 'gallery', 'user', 'likes'])
+        return Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])
             ->where('state', ArtworkStateEnum::PUBLISHED)
             ->orderBy('id', 'Desc')
             ->get();
@@ -101,23 +101,33 @@ class ArtworkDB
      */
     public static function filterPublished(array $filters): Collection
     {
-        $data = Artwork::with(['categories', 'gallery', 'user', 'likes'])
+        // query
+        $data = Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])
             ->where('state', ArtworkStateEnum::PUBLISHED);
+        $filter = (object) $filters;
 
-        // mas reciente
-        if ($filters['sortBy'] == 1) {
-            $data->orderBy('id', 'Desc');
-        }
+        // conditions
+        $hasCategory = property_exists($filter, 'category');
+        $hasCatAndSub = $hasCategory && property_exists($filter, 'subcategory');
+        $hasCatAndSubAndLabel = $hasCategory && $hasCatAndSub && property_exists($filter, 'label');
 
-        // destacada
-        if ($filters['sortBy'] == 2) {
-            $data->withCount('likes')->orderBy('likes_count', 'desc');
-        }
+        // orden
+        $data->sortByOption($filter->sortBy);
 
-        // precio
-        if ($filters['sortBy'] == 3) {
-            $data->orderBy('price', 'Desc');
-        }
+        // por categoría
+        !$hasCategory ?: $data->category($filter->category);
+
+        // por subcategoria
+        !$hasCatAndSub ?: $data->category($filter->category, $filter->subcategory);
+
+        // por etiqueta
+        !$hasCatAndSubAndLabel ?: $data->category($filter->category, $filter->subcategory, $filter->label);
+
+        // filtros numéricos
+        $data->weight($filter->weight)
+            ->width($filter->width)
+            ->large($filter->large)
+            ->price($filter->price);
 
         return $data->get();
     }

@@ -5,9 +5,9 @@
     >
         <div class="absolute w-full h-full flex justify-center items-center">
             <h1
-                class="font-black tracking-[0.3rem] text-white text-4xl uppercase"
+                class="font-black tracking-[0.3rem] text-white text-2xl sm:text-4xl uppercase text-center"
             >
-                Pintura
+                {{ objCategory ? objCategory.name : "" }}
             </h1>
         </div>
         <!-- <div
@@ -18,5 +18,23 @@
 <script>
 export default {
     name: "HeroList",
+    props: {
+        category: {
+            type: Number,
+            default: 0,
+            description: "la categoría seleccionada",
+        },
+        categories: {
+            type: Array,
+            default: [],
+            description: "el arreglo de todas las categorías disponibles",
+        },
+    },
+    computed: {
+        objCategory() {
+            if (!this.category) return;
+            return this.categories.find((cat) => cat.id === this.category);
+        },
+    },
 };
 </script>

@@ -46,26 +46,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     /**
      * Path completo de la foto de portada
      */
-    setPathGallery: function setPathGallery(artwork) {
+    getPathGallery: function getPathGallery(artwork) {
       if (!artwork.gallery.length) return "/";
       var front_page = artwork.gallery.filter(function (pic) {
         return pic.front_page === 1;
       });
       return "".concat(this.pathArtworkGallery + front_page[0].picture);
-    },
-
-    /**
-     * Setear el nombre de una categoría de una obra
-     */
-    setCategoryName: function setCategoryName(categories) {
-      return categories.length ? categories[0].name : "";
-    },
-
-    /**
-     * Setear el nombre de una técnica de una obra
-     */
-    setTechniqueName: function setTechniqueName(techniques) {
-      return techniques.length ? techniques[0].name : "";
     },
 
     /**
@@ -120,6 +106,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var route = "/obra/" + slug;
       var text = url + route;
       this.copyToClipboard(text);
+    },
+
+    /**
+     * Devuelve las dimensiones de la obra
+     */
+    getDimensions: function getDimensions(artwork) {
+      var _artwork$width, _artwork$large;
+
+      var width = (_artwork$width = artwork.width) !== null && _artwork$width !== void 0 ? _artwork$width : 0;
+      var large = (_artwork$large = artwork.large) !== null && _artwork$large !== void 0 ? _artwork$large : 0;
+      return "".concat(width + "X" + large + " " + this.artSize);
+    },
+
+    /**
+     * devuelve el nombre de una categoría de una obra
+     */
+    getCategoryName: function getCategoryName(categories) {
+      return categories.length ? categories[0].name : "";
+    },
+
+    /**
+     * devuelve el nombre de una sub categoría de una obra
+     */
+    getSubCategory: function getSubCategory(labels) {
+      return labels.length ? labels[0].name : "";
     }
   }
 });
@@ -150,7 +161,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "object-cover object-center w-full h-72",
     attrs: {
-      src: _vm.setPathGallery(_vm.artwork),
+      src: _vm.getPathGallery(_vm.artwork),
       alt: _vm.artwork.title
     }
   }), _vm._v(" "), _c("div", {
@@ -160,8 +171,8 @@ var render = function render() {
   }, [_c("h3", {
     staticClass: "text-xl md:text-base xl:text-xl font-semibold tracking-wide text-gray-900 pt-3"
   }, [_vm._v("\n                    " + _vm._s(_vm.artwork.title) + "\n                ")]), _vm._v(" "), _c("p", {
-    staticClass: "text-primary"
-  }, [_vm._v("\n                    " + _vm._s(_vm.artwork.dimension) + "\n                    " + _vm._s(_vm.setCategoryName(_vm.artwork.categories)) + "\n                    " + _vm._s(_vm.setTechniqueName(_vm.artwork.techniques)) + "\n                ")]), _vm._v(" "), _c("div", {
+    staticClass: "text-primary text-xs"
+  }, [_vm._v("\n                    " + _vm._s(_vm.getDimensions(_vm.artwork)) + "\n                    " + _vm._s(_vm.getCategoryName(_vm.artwork.categories)) + "\n                    " + _vm._s(_vm.getSubCategory(_vm.artwork.labels)) + "\n                ")]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-start items-center"
   }, [_c("img", {
     staticClass: "img-thumbnail border w-14 h-14 rounded-full",

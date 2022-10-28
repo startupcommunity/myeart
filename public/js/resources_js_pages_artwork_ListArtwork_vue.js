@@ -50,6 +50,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "ListArtwork",
   components: {
     PreHeader: _landing_sections_PreHeader_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     Header: _landing_sections_Header_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -58,66 +59,38 @@ __webpack_require__.r(__webpack_exports__);
     CardArtwork: _sections_CardArtwork_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   mixins: [_mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_5__["default"], _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_6__["default"], _utils_listArtworkMixin__WEBPACK_IMPORTED_MODULE_7__["default"]],
-  name: "ListArtwork",
-  data: function data() {
-    return {
-      filters: {
-        categories: [],
-        techniques: [],
-        styles: [],
-        price: 5000,
-        width: 250,
-        large: 250,
-        weight: 50,
-        sortBy: ""
-      },
-      sortBy: [{
-        val: 1,
-        text: "MAS RECIENTE"
-      }, {
-        val: 2,
-        text: "DESTACADA"
-      }, {
-        val: 3,
-        text: "PRECIO"
-      }]
-    };
-  },
   mounted: function mounted() {
-    // mixin
-    this.getCategories();
-    this.getStyles();
-    this.getTechniques();
+    // @getDataMixin
+    this.getCategories(); // @listArtworkMixin
+
+    this.loadOneCategory();
     this.getArtworkPublished();
   },
   watch: {
     filters: {
-      handler: function handler(val) {
+      handler: function handler(filter) {
+        // @getDataMixin
+        if (filter.category) {
+          this.getSubCategories(filter.category);
+        } // @getDataMixin
+
+
+        if (this.hasSubAndCategory) {
+          this.getSubLabels(filter.category, filter.subcategory);
+        } // @listArtworkMixin
+
+
         this.getFilterArtworkPublished();
       },
       deep: true
+    },
+    // cuando la subcategoria cambia
+    // se resetea el valor de la etiqueta
+    "filters.subcategory": function filtersSubcategory() {
+      this.filters.label = 0;
     }
   },
-  methods: {
-    /**
-     * Filtra las obras publicadas según los elementos
-     * del DOM modificados o seleccionados
-     */
-    getFilterArtworkPublished: function getFilterArtworkPublished() {
-      var _this = this;
-
-      this.loadArtworkPublished = true;
-      this.axios.post(this.ep.artworks.filterPublished, this.filters).then(function (resp) {
-        if (resp.status === 200) {
-          _this.artworkPublished = resp.data;
-        }
-      })["catch"](function (error) {
-        return console.log(error);
-      })["finally"](function () {
-        return _this.loadArtworkPublished = false;
-      });
-    }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -167,26 +140,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     /**
      * Path completo de la foto de portada
      */
-    setPathGallery: function setPathGallery(artwork) {
+    getPathGallery: function getPathGallery(artwork) {
       if (!artwork.gallery.length) return "/";
       var front_page = artwork.gallery.filter(function (pic) {
         return pic.front_page === 1;
       });
       return "".concat(this.pathArtworkGallery + front_page[0].picture);
-    },
-
-    /**
-     * Setear el nombre de una categoría de una obra
-     */
-    setCategoryName: function setCategoryName(categories) {
-      return categories.length ? categories[0].name : "";
-    },
-
-    /**
-     * Setear el nombre de una técnica de una obra
-     */
-    setTechniqueName: function setTechniqueName(techniques) {
-      return techniques.length ? techniques[0].name : "";
     },
 
     /**
@@ -241,6 +200,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var route = "/obra/" + slug;
       var text = url + route;
       this.copyToClipboard(text);
+    },
+
+    /**
+     * Devuelve las dimensiones de la obra
+     */
+    getDimensions: function getDimensions(artwork) {
+      var _artwork$width, _artwork$large;
+
+      var width = (_artwork$width = artwork.width) !== null && _artwork$width !== void 0 ? _artwork$width : 0;
+      var large = (_artwork$large = artwork.large) !== null && _artwork$large !== void 0 ? _artwork$large : 0;
+      return "".concat(width + "X" + large + " " + this.artSize);
+    },
+
+    /**
+     * devuelve el nombre de una categoría de una obra
+     */
+    getCategoryName: function getCategoryName(categories) {
+      return categories.length ? categories[0].name : "";
+    },
+
+    /**
+     * devuelve el nombre de una sub categoría de una obra
+     */
+    getSubCategory: function getSubCategory(labels) {
+      return labels.length ? labels[0].name : "";
     }
   }
 });
@@ -258,7 +242,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "HeroList"
+  name: "HeroList",
+  props: {
+    category: {
+      type: Number,
+      "default": 0,
+      description: "la categoría seleccionada"
+    },
+    categories: {
+      type: Array,
+      "default": [],
+      description: "el arreglo de todas las categorías disponibles"
+    }
+  },
+  computed: {
+    objCategory: function objCategory() {
+      var _this = this;
+
+      if (!this.category) return;
+      return this.categories.find(function (cat) {
+        return cat.id === _this.category;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -382,34 +388,36 @@ var render = function render() {
       "is-full-page": true,
       loader: "bars"
     }
-  }), _vm._v(" "), _c("pre-header"), _vm._v(" "), _c("Header"), _vm._v(" "), _c("HeroList"), _vm._v(" "), _c("section", {
+  }), _vm._v(" "), _c("pre-header"), _vm._v(" "), _c("Header"), _vm._v(" "), _c("HeroList", {
+    attrs: {
+      category: _vm.filters.category,
+      categories: _vm.categories
+    }
+  }), _vm._v(" "), _c("section", {
     staticClass: "bg-white"
   }, [_c("div", {
     staticClass: "container py-20"
   }, [_c("div", {
     staticClass: "flex flex-wrap justify-start items-start"
   }, [_c("div", {
-    staticClass: "w-[30%] pr-10"
-  }, [_c("h3", {
+    staticClass: "w-[30%] lg:pr-10"
+  }, [_c("div", [_c("div", [_c("h3", {
     staticClass: "text-primary font-bold tracking-wide uppercase text-2xl"
-  }, [_vm._v("\n                        Categorías\n                    ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                Categorías\n                            ")]), _vm._v(" "), _c("div", {
     staticClass: "my-4 w-full border-t border-gray-900"
-  }), _vm._v(" "), _c("div", {
-    staticClass: "my-4"
-  }, [_c("v-chip-group", {
-    staticClass: "mx-auto",
+  }), _vm._v(" "), _c("v-chip-group", {
+    staticClass: "mx-auto my-4",
     attrs: {
       column: "",
-      multiple: "",
       "show-arrows": "",
       "center-active": ""
     },
     model: {
-      value: _vm.filters.categories,
+      value: _vm.filters.category,
       callback: function callback($$v) {
-        _vm.$set(_vm.filters, "categories", $$v);
+        _vm.$set(_vm.filters, "category", $$v);
       },
-      expression: "filters.categories"
+      expression: "filters.category"
     }
   }, _vm._l(_vm.categories, function (cat) {
     return _c("v-chip", {
@@ -419,84 +427,81 @@ var render = function render() {
         label: "",
         filter: "",
         outlined: "",
-        value: cat.id,
-        small: ""
+        value: cat.id
       }
     }, [_c("span", {
       staticClass: "font-medium text-gray-900 text-xs tracking-tighter"
     }, [_c("i", {
       staticClass: "text-primary",
       "class": _vm.setIcon(cat.name)
-    }), _vm._v("\n                                    " + _vm._s(cat.name) + "\n                                ")])]);
-  }), 1)], 1), _vm._v(" "), _c("div", {
-    staticClass: "my-4"
-  }, [_c("label", {
-    staticClass: "uppercase text-zinc-900 tracking-widest text-xs font-bold"
-  }, [_vm._v("\n                            Estilo\n                        ")]), _vm._v(" "), _c("div", [_c("v-chip-group", {
-    staticClass: "mx-auto",
+    }), _vm._v("\n                                        " + _vm._s(cat.name) + "\n                                    ")])]);
+  }), 1)], 1), _vm._v(" "), _vm.filters.category ? _c("div", {
+    staticClass: "animate-fade-in-down"
+  }, [_c("h3", {
+    staticClass: "text-primary font-bold tracking-wide uppercase text-2xl"
+  }, [_vm._v("\n                                SubCategorías\n                            ")]), _vm._v(" "), _c("div", {
+    staticClass: "my-4 w-full border-t border-gray-900"
+  }), _vm._v(" "), _c("v-chip-group", {
+    staticClass: "mx-auto my-4",
     attrs: {
       column: "",
-      multiple: "",
       "show-arrows": "",
       "center-active": ""
     },
     model: {
-      value: _vm.filters.styles,
+      value: _vm.filters.subcategory,
       callback: function callback($$v) {
-        _vm.$set(_vm.filters, "styles", $$v);
+        _vm.$set(_vm.filters, "subcategory", $$v);
       },
-      expression: "filters.styles"
+      expression: "filters.subcategory"
     }
-  }, _vm._l(_vm.styles, function (style) {
+  }, _vm._l(_vm.subCategories, function (subcat) {
     return _c("v-chip", {
-      key: style.id,
+      key: subcat.id,
       staticClass: "border-o",
       attrs: {
+        label: "",
         filter: "",
         outlined: "",
-        value: style.id,
-        small: ""
+        value: subcat.id
       }
     }, [_c("span", {
       staticClass: "font-medium text-gray-900 text-xs tracking-tighter"
-    }, [_vm._v("\n                                        " + _vm._s(style.name) + "\n                                    ")])]);
-  }), 1)], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "my-4"
-  }, [_c("label", {
-    staticClass: "uppercase text-zinc-900 tracking-widest text-xs font-bold"
-  }, [_vm._v("\n                            Técnica\n                        ")]), _vm._v(" "), _c("div", [_c("v-chip-group", {
-    staticClass: "mx-auto",
+    }, [_vm._v("\n                                        " + _vm._s(subcat.name) + "\n                                    ")])]);
+  }), 1)], 1) : _vm._e(), _vm._v(" "), _vm.hasSubAndCategory ? _c("div", {
+    staticClass: "animate-fade-in-down"
+  }, [_c("h3", {
+    staticClass: "text-primary font-bold tracking-wide uppercase text-2xl"
+  }, [_vm._v("\n                                Etiquetas\n                            ")]), _vm._v(" "), _c("div", {
+    staticClass: "my-4 w-full border-t border-gray-900"
+  }), _vm._v(" "), _c("v-select", {
     attrs: {
-      column: "",
-      multiple: "",
-      "show-arrows": "",
-      "center-active": ""
+      items: _vm.subLabels,
+      "item-value": "id",
+      "item-text": "name"
     },
     model: {
-      value: _vm.filters.techniques,
+      value: _vm.filters.label,
       callback: function callback($$v) {
-        _vm.$set(_vm.filters, "techniques", $$v);
+        _vm.$set(_vm.filters, "label", $$v);
       },
-      expression: "filters.techniques"
+      expression: "filters.label"
     }
-  }, _vm._l(_vm.techniques, function (tech) {
-    return _c("v-chip", {
-      key: tech.id,
-      staticClass: "border-o",
-      attrs: {
-        filter: "",
-        outlined: "",
-        value: tech.id,
-        small: ""
-      }
-    }, [_c("span", {
-      staticClass: "font-medium text-gray-900 text-xs tracking-tighter"
-    }, [_vm._v("\n                                        " + _vm._s(tech.name) + "\n                                    ")])]);
-  }), 1)], 1)]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+  }, [_c("template", {
+    slot: "label"
+  }, [_c("span", {
+    staticClass: "font-black tracking-wide uppercase text-gray-900"
+  }, [_vm._v("\n                                        Etiquetas\n                                    ")])])], 2)], 1) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "py-2"
+  }, [_c("h3", {
+    staticClass: "text-primary font-bold tracking-wide uppercase text-2xl"
+  }, [_vm._v("\n                            Filtros\n                        ")]), _vm._v(" "), _c("div", {
+    staticClass: "my-4 w-full border-t border-gray-900"
+  }), _vm._v(" "), _c("div", {
     staticClass: "my-4"
   }, [_c("label", {
     staticClass: "uppercase text-zinc-900 tracking-widest text-xs font-bold"
-  }, [_vm._v("\n                            Rango de precio\n                        ")]), _vm._v(" "), _c("v-slider", {
+  }, [_vm._v("\n                                Rango de precio\n                            ")]), _vm._v(" "), _c("v-slider", {
     staticClass: "w-full",
     attrs: {
       min: "0",
@@ -506,12 +511,10 @@ var render = function render() {
       "thumb-label": "",
       "hide-details": ""
     },
-    model: {
-      value: _vm.filters.price,
-      callback: function callback($$v) {
-        _vm.$set(_vm.filters, "price", $$v);
-      },
-      expression: "filters.price"
+    on: {
+      change: function change($event) {
+        _vm.filters.price = $event;
+      }
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "flex flex-row justify-between -mt-2 text-xs"
@@ -519,9 +522,9 @@ var render = function render() {
     staticClass: "my-4"
   }, [_c("label", {
     staticClass: "uppercase text-zinc-900 tracking-widest text-xs font-bold"
-  }, [_vm._v("\n                            Tamaño\n                        ")]), _vm._v(" "), _c("div", [_c("label", {
+  }, [_vm._v("\n                                Tamaño\n                            ")]), _vm._v(" "), _c("div", [_c("label", {
     staticClass: "text-zinc-900 tracking-widest text-xs font-normal"
-  }, [_vm._v("\n                                Ancho\n                            ")]), _vm._v(" "), _c("v-slider", {
+  }, [_vm._v("\n                                    Ancho\n                                ")]), _vm._v(" "), _c("v-slider", {
     staticClass: "w-full",
     attrs: {
       min: "0",
@@ -531,18 +534,16 @@ var render = function render() {
       "thumb-label": "",
       "hide-details": ""
     },
-    model: {
-      value: _vm.filters.width,
-      callback: function callback($$v) {
-        _vm.$set(_vm.filters, "width", $$v);
-      },
-      expression: "filters.width"
+    on: {
+      change: function change($event) {
+        _vm.filters.width = $event;
+      }
     }
-  }), _vm._v(" "), _vm._m(1)], 1), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm._m(0)], 1), _vm._v(" "), _c("div", {
     staticClass: "my-4"
   }, [_c("label", {
     staticClass: "text-zinc-900 tracking-widest text-xs font-normal"
-  }, [_vm._v("\n                                Largo\n                            ")]), _vm._v(" "), _c("v-slider", {
+  }, [_vm._v("\n                                    Largo\n                                ")]), _vm._v(" "), _c("v-slider", {
     staticClass: "w-full",
     attrs: {
       min: "0",
@@ -552,18 +553,16 @@ var render = function render() {
       "thumb-label": "",
       "hide-details": ""
     },
-    model: {
-      value: _vm.filters.large,
-      callback: function callback($$v) {
-        _vm.$set(_vm.filters, "large", $$v);
-      },
-      expression: "filters.large"
+    on: {
+      change: function change($event) {
+        _vm.filters.large = $event;
+      }
     }
-  }), _vm._v(" "), _vm._m(2)], 1)]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm._m(1)], 1)]), _vm._v(" "), _c("div", {
     staticClass: "my-4"
   }, [_c("label", {
     staticClass: "uppercase text-zinc-900 tracking-widest text-xs font-bold"
-  }, [_vm._v("\n                            Peso\n                        ")]), _vm._v(" "), _c("v-slider", {
+  }, [_vm._v("\n                                Peso\n                            ")]), _vm._v(" "), _c("v-slider", {
     staticClass: "w-full",
     attrs: {
       min: "0",
@@ -573,14 +572,12 @@ var render = function render() {
       "thumb-label": "",
       "hide-details": ""
     },
-    model: {
-      value: _vm.filters.weight,
-      callback: function callback($$v) {
-        _vm.$set(_vm.filters, "weight", $$v);
-      },
-      expression: "filters.weight"
+    on: {
+      change: function change($event) {
+        _vm.filters.weight = $event;
+      }
     }
-  }), _vm._v(" "), _vm._m(3)], 1)]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm._m(2)], 1)])]), _vm._v(" "), _c("div", {
     staticClass: "w-[70%]"
   }, [_c("h3", {
     staticClass: "text-primary font-bold tracking-wide uppercase text-2xl"
@@ -622,7 +619,7 @@ var render = function render() {
         artwork: artwork
       }
     });
-  })], 2), _vm._v(" "), _c("div", {
+  })], 2), _vm._v(" "), _vm.artworkPublished.length ? _c("div", {
     staticClass: "w-full text-center my-4"
   }, [_c("button", {
     staticClass: "w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase",
@@ -634,19 +631,10 @@ var render = function render() {
         $event.stopPropagation();
       }
     }
-  }, [_vm._v("\n                                Ver más\n                            ")])])])])])])])], 1);
+  }, [_vm._v("\n                                Ver más\n                            ")])]) : _vm._e()])])])])])], 1);
 };
 
 var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", [_c("h3", {
-    staticClass: "text-primary font-bold tracking-wide uppercase text-2xl"
-  }, [_vm._v("\n                            Filtros\n                        ")]), _vm._v(" "), _c("div", {
-    staticClass: "my-4 w-full border-t border-gray-900"
-  })]);
-}, function () {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -697,7 +685,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "object-cover object-center w-full h-72",
     attrs: {
-      src: _vm.setPathGallery(_vm.artwork),
+      src: _vm.getPathGallery(_vm.artwork),
       alt: _vm.artwork.title
     }
   }), _vm._v(" "), _c("div", {
@@ -707,8 +695,8 @@ var render = function render() {
   }, [_c("h3", {
     staticClass: "text-xl md:text-base xl:text-xl font-semibold tracking-wide text-gray-900 pt-3"
   }, [_vm._v("\n                    " + _vm._s(_vm.artwork.title) + "\n                ")]), _vm._v(" "), _c("p", {
-    staticClass: "text-primary"
-  }, [_vm._v("\n                    " + _vm._s(_vm.artwork.dimension) + "\n                    " + _vm._s(_vm.setCategoryName(_vm.artwork.categories)) + "\n                    " + _vm._s(_vm.setTechniqueName(_vm.artwork.techniques)) + "\n                ")]), _vm._v(" "), _c("div", {
+    staticClass: "text-primary text-xs"
+  }, [_vm._v("\n                    " + _vm._s(_vm.getDimensions(_vm.artwork)) + "\n                    " + _vm._s(_vm.getCategoryName(_vm.artwork.categories)) + "\n                    " + _vm._s(_vm.getSubCategory(_vm.artwork.labels)) + "\n                ")]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-start items-center"
   }, [_c("img", {
     staticClass: "img-thumbnail border w-14 h-14 rounded-full",
@@ -783,19 +771,14 @@ var render = function render() {
   return _c("div", {
     staticClass: "relative w-full h-80 sm:h-[28rem] bg-no-repeat bg-cover bg-center",
     "class": "bg-categories-pintura"
-  }, [_vm._m(0)]);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
+  }, [_c("div", {
     staticClass: "absolute w-full h-full flex justify-center items-center"
   }, [_c("h1", {
-    staticClass: "font-black tracking-[0.3rem] text-white text-4xl uppercase"
-  }, [_vm._v("\n            Pintura\n        ")])]);
-}];
+    staticClass: "font-black tracking-[0.3rem] text-white text-2xl sm:text-4xl uppercase text-center"
+  }, [_vm._v("\n            " + _vm._s(_vm.objCategory ? _vm.objCategory.name : "") + "\n        ")])])]);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -1761,8 +1744,38 @@ var countShowArt = 12;
       // obras restantes
       remainingArtworks: [],
       // loading de carga
-      loadArtworkPublished: false
+      loadArtworkPublished: false,
+      filters: {
+        category: 0,
+        subcategory: 0,
+        label: 0,
+        price: 0,
+        width: 0,
+        large: 0,
+        weight: 0,
+        sortBy: ""
+      },
+      sortBy: [{
+        val: 1,
+        text: "MAS RECIENTE"
+      }, {
+        val: 2,
+        text: "DESTACADA"
+      }, {
+        val: 3,
+        text: "PRECIO"
+      }]
     };
+  },
+  computed: {
+    /**
+     * Verifica si hay una categoría y subcategoria seleccionada
+     *
+     * @returns
+     */
+    hasSubAndCategory: function hasSubAndCategory() {
+      return this.filters.category && this.filters.subcategory;
+    }
   },
   methods: {
     /**
@@ -1808,6 +1821,35 @@ var countShowArt = 12;
       })["finally"](function () {
         return _this.loadArtworkPublished = false;
       });
+    },
+
+    /**
+     * Filtra las obras publicadas según los filtros
+     * del DOM seleccionados
+     */
+    getFilterArtworkPublished: function getFilterArtworkPublished() {
+      var _this2 = this;
+
+      this.loadArtworkPublished = true;
+      this.axios.post(this.ep.artworks.filterPublished, this.filters).then(function (resp) {
+        if (resp.status === 200) {
+          _this2.artworkPublished = resp.data;
+        }
+      })["catch"](function (error) {
+        return console.log(error);
+      })["finally"](function () {
+        return _this2.loadArtworkPublished = false;
+      });
+    },
+
+    /**
+     * Carga la categoría literatura al filtro de búsqueda
+     * esto para cuando inicie el componente sea con una categoría
+     * marcada por defecto
+     */
+    loadOneCategory: function loadOneCategory() {
+      // 1 => literatura
+      this.filters.category = 1;
     }
   }
 });

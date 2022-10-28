@@ -12,7 +12,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "HeroList"
+  name: "HeroList",
+  props: {
+    category: {
+      type: Number,
+      "default": 0,
+      description: "la categoría seleccionada"
+    },
+    categories: {
+      type: Array,
+      "default": [],
+      description: "el arreglo de todas las categorías disponibles"
+    }
+  },
+  computed: {
+    objCategory: function objCategory() {
+      var _this = this;
+
+      if (!this.category) return;
+      return this.categories.find(function (cat) {
+        return cat.id === _this.category;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -35,19 +57,14 @@ var render = function render() {
   return _c("div", {
     staticClass: "relative w-full h-80 sm:h-[28rem] bg-no-repeat bg-cover bg-center",
     "class": "bg-categories-pintura"
-  }, [_vm._m(0)]);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
+  }, [_c("div", {
     staticClass: "absolute w-full h-full flex justify-center items-center"
   }, [_c("h1", {
-    staticClass: "font-black tracking-[0.3rem] text-white text-4xl uppercase"
-  }, [_vm._v("\n            Pintura\n        ")])]);
-}];
+    staticClass: "font-black tracking-[0.3rem] text-white text-2xl sm:text-4xl uppercase text-center"
+  }, [_vm._v("\n            " + _vm._s(_vm.objCategory ? _vm.objCategory.name : "") + "\n        ")])])]);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 

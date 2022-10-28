@@ -12,7 +12,7 @@
         <!-- /pre y header -->
 
         <!-- sección hero -->
-        <HeroList />
+        <HeroList :category="filters.category" :categories="categories" />
         <!-- /sección hero -->
 
         <!-- content -->
@@ -20,119 +20,114 @@
             <div class="container py-20">
                 <div class="flex flex-wrap justify-start items-start">
                     <!-- filtros -->
-                    <div class="w-[30%] pr-10">
-                        <h3
-                            class="text-primary font-bold tracking-wide uppercase text-2xl"
-                        >
-                            Categorías
-                        </h3>
-                        <div class="my-4 w-full border-t border-gray-900"></div>
-
+                    <div class="w-[30%] lg:pr-10">
                         <!-- categorías -->
-                        <div class="my-4">
-                            <v-chip-group
-                                v-model="filters.categories"
-                                column
-                                multiple
-                                show-arrows
-                                center-active
-                                class="mx-auto"
-                            >
-                                <v-chip
-                                    label
-                                    filter
-                                    outlined
-                                    v-for="cat in categories"
-                                    :key="cat.id"
-                                    :value="cat.id"
-                                    class="border-o"
-                                    small
-                                >
-                                    <span
-                                        class="font-medium text-gray-900 text-xs tracking-tighter"
-                                    >
-                                        <i
-                                            class="text-primary"
-                                            :class="setIcon(cat.name)"
-                                        ></i>
-                                        {{ cat.name }}
-                                    </span>
-                                </v-chip>
-                            </v-chip-group>
-                        </div>
-
-                        <!-- estilo -->
-                        <div class="my-4">
-                            <label
-                                class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
-                            >
-                                Estilo
-                            </label>
-                            <div>
-                                <v-chip-group
-                                    v-model="filters.styles"
-                                    column
-                                    multiple
-                                    show-arrows
-                                    center-active
-                                    class="mx-auto"
-                                >
-                                    <v-chip
-                                        filter
-                                        outlined
-                                        v-for="style in styles"
-                                        :key="style.id"
-                                        :value="style.id"
-                                        class="border-o"
-                                        small
-                                    >
-                                        <span
-                                            class="font-medium text-gray-900 text-xs tracking-tighter"
-                                        >
-                                            {{ style.name }}
-                                        </span>
-                                    </v-chip>
-                                </v-chip-group>
-                            </div>
-                        </div>
-
-                        <!-- técnica -->
-                        <div class="my-4">
-                            <label
-                                class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
-                            >
-                                Técnica
-                            </label>
-                            <div>
-                                <v-chip-group
-                                    v-model="filters.techniques"
-                                    column
-                                    multiple
-                                    show-arrows
-                                    center-active
-                                    class="mx-auto"
-                                >
-                                    <v-chip
-                                        filter
-                                        outlined
-                                        v-for="tech in techniques"
-                                        :key="tech.id"
-                                        :value="tech.id"
-                                        class="border-o"
-                                        small
-                                    >
-                                        <span
-                                            class="font-medium text-gray-900 text-xs tracking-tighter"
-                                        >
-                                            {{ tech.name }}
-                                        </span>
-                                    </v-chip>
-                                </v-chip-group>
-                            </div>
-                        </div>
-
-                        <!-- filtros numéricos -->
                         <div>
+                            <div>
+                                <h3
+                                    class="text-primary font-bold tracking-wide uppercase text-2xl"
+                                >
+                                    Categorías
+                                </h3>
+                                <div
+                                    class="my-4 w-full border-t border-gray-900"
+                                ></div>
+                                <v-chip-group
+                                    v-model="filters.category"
+                                    column
+                                    show-arrows
+                                    center-active
+                                    class="mx-auto my-4"
+                                >
+                                    <v-chip
+                                        label
+                                        filter
+                                        outlined
+                                        v-for="cat in categories"
+                                        :key="cat.id"
+                                        :value="cat.id"
+                                        class="border-o"
+                                    >
+                                        <span
+                                            class="font-medium text-gray-900 text-xs tracking-tighter"
+                                        >
+                                            <i
+                                                class="text-primary"
+                                                :class="setIcon(cat.name)"
+                                            ></i>
+                                            {{ cat.name }}
+                                        </span>
+                                    </v-chip>
+                                </v-chip-group>
+                            </div>
+                            <div
+                                v-if="filters.category"
+                                class="animate-fade-in-down"
+                            >
+                                <h3
+                                    class="text-primary font-bold tracking-wide uppercase text-2xl"
+                                >
+                                    SubCategorías
+                                </h3>
+                                <div
+                                    class="my-4 w-full border-t border-gray-900"
+                                ></div>
+                                <v-chip-group
+                                    v-model="filters.subcategory"
+                                    column
+                                    show-arrows
+                                    center-active
+                                    class="mx-auto my-4"
+                                >
+                                    <v-chip
+                                        label
+                                        filter
+                                        outlined
+                                        v-for="subcat in subCategories"
+                                        :key="subcat.id"
+                                        :value="subcat.id"
+                                        class="border-o"
+                                    >
+                                        <span
+                                            class="font-medium text-gray-900 text-xs tracking-tighter"
+                                        >
+                                            {{ subcat.name }}
+                                        </span>
+                                    </v-chip>
+                                </v-chip-group>
+                            </div>
+                            <div
+                                v-if="hasSubAndCategory"
+                                class="animate-fade-in-down"
+                            >
+                                <h3
+                                    class="text-primary font-bold tracking-wide uppercase text-2xl"
+                                >
+                                    Etiquetas
+                                </h3>
+                                <div
+                                    class="my-4 w-full border-t border-gray-900"
+                                ></div>
+                                <v-select
+                                    v-model="filters.label"
+                                    :items="subLabels"
+                                    item-value="id"
+                                    item-text="name"
+                                >
+                                    <template slot="label">
+                                        <span
+                                            class="font-black tracking-wide uppercase text-gray-900"
+                                        >
+                                            Etiquetas
+                                        </span>
+                                    </template>
+                                </v-select>
+                            </div>
+                        </div>
+                        <!-- categorías -->
+
+                        <!-- numéricos -->
+                        <div class="py-2">
                             <h3
                                 class="text-primary font-bold tracking-wide uppercase text-2xl"
                             >
@@ -141,79 +136,18 @@
                             <div
                                 class="my-4 w-full border-t border-gray-900"
                             ></div>
-                        </div>
 
-                        <!-- precios -->
-                        <div class="my-4">
-                            <label
-                                class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
-                            >
-                                Rango de precio
-                            </label>
-                            <v-slider
-                                v-model="filters.price"
-                                min="0"
-                                max="10000"
-                                color="#b2794c"
-                                thumb-color="#b2794c"
-                                thumb-label
-                                hide-details
-                                class="w-full"
-                            >
-                            </v-slider>
-                            <div
-                                class="flex flex-row justify-between -mt-2 text-xs"
-                            >
-                                <p>0 {{ euro }}</p>
-                                <p>+10,000 {{ euro }}</p>
-                            </div>
-                        </div>
-
-                        <!-- tamaño - dimensiones -->
-                        <div class="my-4">
-                            <label
-                                class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
-                            >
-                                Tamaño
-                            </label>
-
-                            <!-- ancho -->
-                            <div>
-                                <label
-                                    class="text-zinc-900 tracking-widest text-xs font-normal"
-                                >
-                                    Ancho
-                                </label>
-                                <v-slider
-                                    v-model="filters.width"
-                                    min="0"
-                                    max="500"
-                                    color="#b2794c"
-                                    thumb-color="#b2794c"
-                                    thumb-label
-                                    hide-details
-                                    class="w-full"
-                                >
-                                </v-slider>
-                                <div
-                                    class="flex flex-row justify-between -mt-2 text-xs"
-                                >
-                                    <p>0 cm</p>
-                                    <p>+500 cm</p>
-                                </div>
-                            </div>
-
-                            <!-- largo -->
+                            <!-- precios -->
                             <div class="my-4">
                                 <label
-                                    class="text-zinc-900 tracking-widest text-xs font-normal"
+                                    class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
                                 >
-                                    Largo
+                                    Rango de precio
                                 </label>
                                 <v-slider
-                                    v-model="filters.large"
+                                    @change="filters.price = $event"
                                     min="0"
-                                    max="500"
+                                    max="10000"
                                     color="#b2794c"
                                     thumb-color="#b2794c"
                                     thumb-label
@@ -224,35 +158,96 @@
                                 <div
                                     class="flex flex-row justify-between -mt-2 text-xs"
                                 >
-                                    <p>0 cm</p>
-                                    <p>+500 cm</p>
+                                    <p>0 {{ euro }}</p>
+                                    <p>+10,000 {{ euro }}</p>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- peso -->
-                        <div class="my-4">
-                            <label
-                                class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
-                            >
-                                Peso
-                            </label>
-                            <v-slider
-                                v-model="filters.weight"
-                                min="0"
-                                max="100"
-                                color="#b2794c"
-                                thumb-color="#b2794c"
-                                thumb-label
-                                hide-details
-                                class="w-full"
-                            >
-                            </v-slider>
-                            <div
-                                class="flex flex-row justify-between -mt-2 text-xs"
-                            >
-                                <p>0 kg</p>
-                                <p>100 kg</p>
+                            <!-- tamaño - dimensiones -->
+                            <div class="my-4">
+                                <label
+                                    class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
+                                >
+                                    Tamaño
+                                </label>
+
+                                <!-- ancho -->
+                                <div>
+                                    <label
+                                        class="text-zinc-900 tracking-widest text-xs font-normal"
+                                    >
+                                        Ancho
+                                    </label>
+                                    <v-slider
+                                        @change="filters.width = $event"
+                                        min="0"
+                                        max="500"
+                                        color="#b2794c"
+                                        thumb-color="#b2794c"
+                                        thumb-label
+                                        hide-details
+                                        class="w-full"
+                                    >
+                                    </v-slider>
+                                    <div
+                                        class="flex flex-row justify-between -mt-2 text-xs"
+                                    >
+                                        <p>0 cm</p>
+                                        <p>+500 cm</p>
+                                    </div>
+                                </div>
+
+                                <!-- largo -->
+                                <div class="my-4">
+                                    <label
+                                        class="text-zinc-900 tracking-widest text-xs font-normal"
+                                    >
+                                        Largo
+                                    </label>
+                                    <v-slider
+                                        @change="filters.large = $event"
+                                        min="0"
+                                        max="500"
+                                        color="#b2794c"
+                                        thumb-color="#b2794c"
+                                        thumb-label
+                                        hide-details
+                                        class="w-full"
+                                    >
+                                    </v-slider>
+                                    <div
+                                        class="flex flex-row justify-between -mt-2 text-xs"
+                                    >
+                                        <p>0 cm</p>
+                                        <p>+500 cm</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- peso -->
+                            <div class="my-4">
+                                <label
+                                    class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
+                                >
+                                    Peso
+                                </label>
+                                <v-slider
+                                    @change="filters.weight = $event"
+                                    min="0"
+                                    max="100"
+                                    color="#b2794c"
+                                    thumb-color="#b2794c"
+                                    thumb-label
+                                    hide-details
+                                    class="w-full"
+                                >
+                                </v-slider>
+                                <div
+                                    class="flex flex-row justify-between -mt-2 text-xs"
+                                >
+                                    <p>0 kg</p>
+                                    <p>100 kg</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -303,7 +298,10 @@
                             </div>
 
                             <!-- mostrar mas resultados -->
-                            <div class="w-full text-center my-4">
+                            <div
+                                class="w-full text-center my-4"
+                                v-if="artworkPublished.length"
+                            >
                                 <button
                                     class="w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
                                     type="button"
@@ -336,71 +334,43 @@ import utilMixin from "../../mixins/utilMixin";
 import listArtworkMixin from "./utils/listArtworkMixin";
 
 export default {
+    name: "ListArtwork",
     components: { PreHeader, Header, LoadingTailwind, HeroList, CardArtwork },
     mixins: [getDataMixin, utilMixin, listArtworkMixin],
-    name: "ListArtwork",
-    data() {
-        return {
-            filters: {
-                categories: [],
-                techniques: [],
-                styles: [],
-                price: 5000,
-                width: 250,
-                large: 250,
-                weight: 50,
-                sortBy: "",
-            },
-
-            sortBy: [
-                {
-                    val: 1,
-                    text: "MAS RECIENTE",
-                },
-                {
-                    val: 2,
-                    text: "DESTACADA",
-                },
-                {
-                    val: 3,
-                    text: "PRECIO",
-                },
-            ],
-        };
-    },
     mounted() {
-        // mixin
+        // @getDataMixin
         this.getCategories();
-        this.getStyles();
-        this.getTechniques();
+
+        // @listArtworkMixin
+        this.loadOneCategory();
         this.getArtworkPublished();
     },
     watch: {
         filters: {
-            handler(val) {
+            handler(filter) {
+                // @getDataMixin
+                if (filter.category) {
+                    this.getSubCategories(filter.category);
+                }
+
+                // @getDataMixin
+                if (this.hasSubAndCategory) {
+                    this.getSubLabels(filter.category, filter.subcategory);
+                }
+
+                // @listArtworkMixin
                 this.getFilterArtworkPublished();
             },
             deep: true,
         },
-    },
-    methods: {
-        /**
-         * Filtra las obras publicadas según los elementos
-         * del DOM modificados o seleccionados
-         */
-        getFilterArtworkPublished() {
-            this.loadArtworkPublished = true;
-            this.axios
-                .post(this.ep.artworks.filterPublished, this.filters)
-                .then((resp) => {
-                    if (resp.status === 200) {
-                        this.artworkPublished = resp.data;
-                    }
-                })
-                .catch((error) => console.log(error))
-                .finally(() => (this.loadArtworkPublished = false));
+
+        // cuando la subcategoria cambia
+        // se resetea el valor de la etiqueta
+        "filters.subcategory"() {
+            this.filters.label = 0;
         },
     },
+    methods: {},
 };
 </script>
 <style>

@@ -2,7 +2,7 @@
     <div class="w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd">
         <div class="rounded-md w-full hover:animate-shadow-drop-center">
             <img
-                :src="setPathGallery(artwork)"
+                :src="getPathGallery(artwork)"
                 :alt="artwork.title"
                 class="object-cover object-center w-full h-72"
             />
@@ -13,10 +13,10 @@
                     >
                         {{ artwork.title }}
                     </h3>
-                    <p class="text-primary">
-                        {{ artwork.dimension }}
-                        {{ setCategoryName(artwork.categories) }}
-                        {{ setTechniqueName(artwork.techniques) }}
+                    <p class="text-primary text-xs">
+                        {{ getDimensions(artwork) }}
+                        {{ getCategoryName(artwork.categories) }}
+                        {{ getSubCategory(artwork.labels) }}
                     </p>
                     <div class="flex justify-start items-center">
                         <img
@@ -105,7 +105,7 @@ export default {
         /**
          * Path completo de la foto de portada
          */
-        setPathGallery(artwork) {
+        getPathGallery(artwork) {
             if (!artwork.gallery.length) return "/";
 
             const front_page = artwork.gallery.filter(
@@ -113,20 +113,6 @@ export default {
             );
 
             return `${this.pathArtworkGallery + front_page[0].picture}`;
-        },
-
-        /**
-         * Setear el nombre de una categoría de una obra
-         */
-        setCategoryName(categories) {
-            return categories.length ? categories[0].name : "";
-        },
-
-        /**
-         * Setear el nombre de una técnica de una obra
-         */
-        setTechniqueName(techniques) {
-            return techniques.length ? techniques[0].name : "";
         },
 
         /**
@@ -178,6 +164,29 @@ export default {
             const route = "/obra/" + slug;
             const text = url + route;
             this.copyToClipboard(text);
+        },
+
+        /**
+         * Devuelve las dimensiones de la obra
+         */
+        getDimensions(artwork) {
+            const width = artwork.width ?? 0;
+            const large = artwork.large ?? 0;
+            return `${width + "X" + large + " " + this.artSize}`;
+        },
+
+        /**
+         * devuelve el nombre de una categoría de una obra
+         */
+        getCategoryName(categories) {
+            return categories.length ? categories[0].name : "";
+        },
+
+        /**
+         * devuelve el nombre de una sub categoría de una obra
+         */
+        getSubCategory(labels) {
+            return labels.length ? labels[0].name : "";
         },
     },
 };

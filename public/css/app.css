@@ -12852,9 +12852,6 @@ video {
 .pb-8{
   padding-bottom: 2rem;
 }
-.pr-10{
-  padding-right: 2.5rem;
-}
 .pl-2{
   padding-left: 0.5rem;
 }
@@ -12930,10 +12927,6 @@ video {
 .text-3xl{
   font-size: 1.875rem;
   line-height: 2.25rem;
-}
-.text-4xl{
-  font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 .text-\[9px\]{
   font-size: 9px;
@@ -13408,6 +13401,10 @@ body {
     font-size: 0.75rem;
     line-height: 1rem;
   }
+  .sm\:text-4xl{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
   .sm\:text-base{
     font-size: 1rem;
     line-height: 1.5rem;
@@ -13548,6 +13545,9 @@ body {
   .lg\:px-4{
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  .lg\:pr-10{
+    padding-right: 2.5rem;
   }
   .lg\:pb-24{
     padding-bottom: 6rem;
