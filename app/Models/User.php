@@ -67,6 +67,16 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve las direcciones de envío del usuario
+     *
+     * @return HasMany
+     */
+    public function shippingAddress(): HasMany
+    {
+        return $this->hasMany(ShippingAddress::class);
+    }
+
+    /**
      * Determina si el usuario tiene foto de perfil
      * @luisandev
      * @return boolean      true si posee

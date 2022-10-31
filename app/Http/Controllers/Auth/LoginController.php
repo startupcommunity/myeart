@@ -1,13 +1,13 @@
 <?php
- 
- namespace App\Http\Controllers\Auth;
 
- use App\Http\Controllers\Controller;
- use Illuminate\Http\Request;
- 
- use Illuminate\Support\Facades\DB;
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
 use Validator;
- 
+
 class LoginController extends Controller
 {
     /**
@@ -19,7 +19,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), $this->rules());
-   
+
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()

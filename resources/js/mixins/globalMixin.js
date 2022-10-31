@@ -99,6 +99,12 @@ vue.mixin({
                     filterPublished: api + "/artworks/filterPublished",
                 },
 
+                shippingAddress: {
+                    save: `${api}/shippingAddress/save`,
+                    update: `${api}/shippingAddress/update/`,
+                    getShippingAddress: `${api}/shippingAddress/getShippingAddress`,
+                },
+
                 global: {
                     subcategories: `${api}/subcategories/`,
                     labels: `${api}/labels/`,
@@ -110,11 +116,12 @@ vue.mixin({
         /**
          * Muestra una notificacion al usuario
          */
-        noty(text, type = "success") {
+        noty(text, type = "success", duration = 3000) {
             this.$notify({
                 group: "container",
                 type,
                 text,
+                duration,
             });
         },
     },

@@ -9,6 +9,7 @@ use App\Http\Controllers\ArtisticActivitysController;
 use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShippingAddressController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
 use App\Http\Controllers\UserInformationsController;
@@ -81,5 +82,12 @@ Route::middleware(['auth:api'])->group(function () {
          * @param sub_category_id id de la categoría que pertenece
          */
         Route::get('/{category_id}/{sub_category_id}', [SubSubCategoryController::class, 'getLabels'])->name('getLabels');
+    });
+
+    // dirección de envió
+    Route::group(['prefix' => 'shippingAddress'], function () {
+        Route::get('/getShippingAddress', [ShippingAddressController::class, 'getUserShippingAddress'])->name('getShippingAddress');
+        Route::post('/save', [ShippingAddressController::class, 'save'])->name('saveShippingAddress');
+        Route::put('/update/{id}', [ShippingAddressController::class, 'update'])->name('updateShippingAddress');
     });
 });

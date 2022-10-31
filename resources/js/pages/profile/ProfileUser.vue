@@ -79,7 +79,6 @@
         <div class="container-fluid py-0 px-0">
             <div>
                 <div class="flex flex-row items-start bg-gray-200">
-
                     <!-- menu sidebar -->
                     <div
                         class="w-2/5 bg-gray-200 px-12 py-20 min-h-full hidden sm:block"
@@ -244,6 +243,10 @@
                     <!-- sección obras -->
                     <Artwork :showSection="sections.artwork" />
                     <!-- /sección obras -->
+
+                    <!-- sección direcciones -->
+                    <Address :showSection="sections.direction" />
+                    <!-- /sección direcciones -->
                 </div>
             </div>
         </div>
@@ -291,6 +294,7 @@ import ModalProfilePhoto from "./ModalProfilePhoto.vue";
 import Artwork from "./sections/Artwork.vue";
 import MobileKeypad from "./sections/MobileKeypad.vue";
 import PersonalData from "./sections/PersonalData.vue";
+import Address from "./sections/Address.vue";
 
 // secciones como tabs
 const SECTIONS = {
@@ -312,9 +316,10 @@ export default {
         Footer,
         ModalFrontPhoto,
         ModalProfilePhoto,
-        Artwork,
         MobileKeypad,
+        Artwork,
         PersonalData,
+        Address,
     },
     data() {
         return {
@@ -382,6 +387,7 @@ export default {
         showOrHideSection(id) {
             this.sections.personal = id == SECTIONS.personal;
             this.sections.artwork = id == SECTIONS.obras;
+            this.sections.direction = id == SECTIONS.direcciones;
         },
     },
     computed: {
