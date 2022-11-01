@@ -30,6 +30,26 @@ class ShippingAddressFactory
   }
 
   /**
+   * actualizar los registros por default a 0
+   *
+   * @return boolean
+   */
+  public function activatedLastAddress(): bool
+  {
+    $user = auth()->user();
+
+    // seleccionar ultimo registro
+    $address = $user->shippingAddress()->latest()->first();
+
+    if (!$address) {
+      return false;
+    }
+
+    // activar el ultimo registro agregado
+    return $address->update(['default' => ShippingAddressEnum::ACTIVE]);
+  }
+
+  /**
    * Crea una nueva dirección de envió
    *
    * @param array $data
@@ -42,7 +62,7 @@ class ShippingAddressFactory
   }
 
   /**
-   * actualiza una nueva dirección de envió
+   * actualiza una dirección de envió
    *
    * @param array $data
    * @param int $id
@@ -53,5 +73,24 @@ class ShippingAddressFactory
     $address = $this->address->findOrFail($id);
 
     return $address->update($data);
+  }
+
+  /**
+   * Elimina una  dirección de envió
+   * aplica soft delete
+   *
+   * @param integer $id
+   * @return boolean
+   */
+  public function delete(int $id): bool
+  {
+    $address = $this->address->findOrFail($id);
+    $deleted = $address->delete();
+
+    if ($address->default === ShippingAddressEnum::ACTIVE) {
+      $this->activatedLastAddress();
+    }
+
+    return $deleted;
   }
 }

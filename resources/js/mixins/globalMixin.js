@@ -102,6 +102,7 @@ vue.mixin({
                 shippingAddress: {
                     save: `${api}/shippingAddress/save`,
                     update: `${api}/shippingAddress/update/`,
+                    delete: `${api}/shippingAddress/delete/`,
                     getShippingAddress: `${api}/shippingAddress/getShippingAddress`,
                 },
 
@@ -123,6 +124,32 @@ vue.mixin({
                 text,
                 duration,
             });
+        },
+
+        /**
+         * Muestra un dialog de confirmación para una acción concreta
+         *
+         * @returns new Promise
+         */
+        async confirmedDialog({
+            title = "¿Desea eliminar definitivamente?",
+            text = "Esta opción no se puede revertir.",
+            icon = "warning",
+            confirmButtonText = "Si, Eliminar",
+            cancelButtonText = "Cancelar",
+        } = {}) {
+            return await this.$swal
+                .fire({
+                    title,
+                    text,
+                    icon,
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText,
+                    cancelButtonText,
+                })
+                .then(async (result) => await result);
         },
     },
 });

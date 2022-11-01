@@ -89,5 +89,6 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/getShippingAddress', [ShippingAddressController::class, 'getUserShippingAddress'])->name('getShippingAddress');
         Route::post('/save', [ShippingAddressController::class, 'save'])->name('saveShippingAddress');
         Route::put('/update/{id}', [ShippingAddressController::class, 'update'])->name('updateShippingAddress');
+        Route::delete('/delete/{id}', [ShippingAddressController::class, 'delete'])->name('deleteShippingAddress');
     });
 });

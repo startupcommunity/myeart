@@ -901,10 +901,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getShippingAddress: function getShippingAddress() {
       var _this = this;
 
+      this.globalLoading = true;
       this.axios.get(this.ep.shippingAddress.getShippingAddress).then(function (resp) {
         _this.shippingAddress = resp.data;
       })["catch"](function (error) {
         return console.error(error);
+      })["finally"](function () {
+        return _this.globalLoading = false;
       });
     },
 
@@ -942,6 +945,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+
+    /**
+     * Eliminar una dirección
+     */
+    deleteAddress: function deleteAddress(id) {
+      var _this3 = this;
+
+      this.confirmedDialog().then(function (resp) {
+        var endpoint = _this3.ep.shippingAddress["delete"] + id;
+        var params = {
+          _method: "DELETE"
+        };
+
+        if (resp.isConfirmed) {
+          _this3.axios.post(endpoint, params).then(function (resp) {
+            if (resp.status === 200) {
+              _this3.noty("Eliminado con éxito");
+
+              _this3.getShippingAddress();
+            }
+          })["catch"](function (error) {
+            return console.error(error);
+          });
+        }
+      });
     }
   }
 });
@@ -3002,7 +3031,13 @@ var render = function render() {
     attrs: {
       id: "direcciones"
     }
-  }, [_c("div", {
+  }, [_c("loading-overlay", {
+    attrs: {
+      active: _vm.globalLoading,
+      "is-full-page": true,
+      loader: "bars"
+    }
+  }), _vm._v(" "), _c("div", {
     staticClass: "sm:px-5"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "mt-4 py-4 border-t border-gray-900 hidden sm:block"
@@ -3071,6 +3106,7 @@ var render = function render() {
       on: {
         click: function click($event) {
           $event.stopPropagation();
+          return _vm.deleteAddress(address.id);
         }
       }
     }, [_vm._v("\n                            Descartar\n                        ")])], 1)])]);

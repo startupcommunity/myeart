@@ -75,4 +75,21 @@ class ShippingAddressController extends Controller
 
         return $this->resp->json('Actualización correcta', 201);
     }
+
+    /**
+     * Elimina una dirección
+     *
+     * @param integer $id
+     * @return JsonResponse
+     */
+    public function delete(int $id): JsonResponse
+    {
+        // soft delete
+        $deleted = $this->shipping->delete($id);
+
+        // si hubo algún error
+        abort_if(!$deleted, 500, 'error al eliminar los datos');
+
+        return $this->resp->json('Eliminación correcta', 200);
+    }
 }

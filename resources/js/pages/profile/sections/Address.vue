@@ -4,6 +4,11 @@
         id="direcciones"
         v-show="showSection"
     >
+        <loading-overlay
+            :active="globalLoading"
+            :is-full-page="true"
+            loader="bars"
+        />
         <div class="sm:px-5">
             <h3
                 class="font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
@@ -72,7 +77,11 @@
                             <div
                                 class="border-r border-gray-600 h-8 my-0"
                             ></div>
-                            <v-btn depressed text @click.stop="">
+                            <v-btn
+                                depressed
+                                text
+                                @click.stop="deleteAddress(address.id)"
+                            >
                                 Descartar
                             </v-btn>
                         </div>
@@ -130,12 +139,14 @@ export default {
          * Obtiene las direcciones de envío del usuario
          */
         getShippingAddress() {
+            this.globalLoading = true;
             this.axios
                 .get(this.ep.shippingAddress.getShippingAddress)
                 .then((resp) => {
                     this.shippingAddress = resp.data;
                 })
-                .catch((error) => console.error(error));
+                .catch((error) => console.error(error))
+                .finally(() => (this.globalLoading = false));
         },
 
         /**
@@ -148,6 +159,27 @@ export default {
             this.address = await addr;
 
             this.showModalEdit = true;
+        },
+
+        /**
+         * Eliminar una dirección
+         */
+        deleteAddress(id) {
+            this.confirmedDialog().then((resp) => {
+                const endpoint = this.ep.shippingAddress.delete + id;
+                const params = { _method: "DELETE" };
+                if (resp.isConfirmed) {
+                    this.axios
+                        .post(endpoint, params)
+                        .then((resp) => {
+                            if (resp.status === 200) {
+                                this.noty("Eliminado con éxito");
+                                this.getShippingAddress();
+                            }
+                        })
+                        .catch((error) => console.error(error));
+                }
+            });
         },
     },
 };
