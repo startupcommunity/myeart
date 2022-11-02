@@ -58,6 +58,16 @@ class Artwork extends Model
     }
 
     /**
+     * devuelve las subcategorias relacionadas
+     *
+     * @return BelongsToMany
+     */
+    public function subcategories(): BelongsToMany
+    {
+        return $this->belongsToMany(SubCategory::class, 'artwork_categories', 'artwork_id', 'sub_category_id');
+    }
+
+    /**
      * devuelve las etiquetas relacionadas a una categoría y a una subcategoria
      *
      * @return BelongsToMany

@@ -79,8 +79,14 @@ export const routes = [
     },
     {
         name: "showSlugArtwork",
-        path: "/obra/:slug",
+        path: "/obras/:slug",
         // component: importPage('artwork/ListArtwork'),
         beforeEnter: ifNotAuthenticated,
+    },
+    {
+        name: "showArtwork",
+        path: "/obras/:id",
+        component: importPage('artwork/ShowArtwork'),
+        beforeEnter: ifAuthenticated,
     },
 ];

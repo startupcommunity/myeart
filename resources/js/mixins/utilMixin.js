@@ -151,5 +151,16 @@ export default {
 
             this.noty("Copiado al portapapeles");
         },
+
+        /**
+         * Comparte una obra públicamente
+         */
+        sharePublicArtwork(artwork) {
+            const url = this.secureUrl;
+            const slug = artwork.slug ?? "";
+            const route = "/obras/" + slug;
+            const text = url + route;
+            this.copyToClipboard(text);
+        },
     },
 };

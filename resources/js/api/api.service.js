@@ -17,6 +17,8 @@ const ApiService = {
         let user = JSON.parse(JwtService.getUser());
         Vue.axios.defaults.headers.common = {
             "X-Requested-With": "XMLHttpRequest",
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
             Authorization: `Bearer ${user.access_token}`,
         };
     },

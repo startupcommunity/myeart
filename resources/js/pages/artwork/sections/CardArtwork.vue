@@ -1,11 +1,20 @@
 <template>
     <div class="w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd">
         <div class="rounded-md w-full hover:animate-shadow-drop-center">
-            <img
-                :src="getPathGallery(artwork)"
-                :alt="artwork.title"
-                class="object-cover object-center w-full h-72"
-            />
+            <router-link
+                :to="{
+                    name: 'showArtwork',
+                    params: {
+                        id: artwork.id,
+                    },
+                }"
+            >
+                <img
+                    :src="getPathGallery(artwork)"
+                    :alt="artwork.title"
+                    class="object-cover object-center w-full h-72"
+                />
+            </router-link>
             <div class="flex flex-col justify-between space-y-8 bg-gray-50">
                 <div class="space-y-2">
                     <h3
@@ -22,7 +31,7 @@
                         <img
                             :src="
                                 getProfilePhoto(artwork.user) ??
-                                '/img/avatar.png'
+                                getURLDefaultProfilePhoto
                             "
                             class="img-thumbnail border w-14 h-14 rounded-full"
                             alt="profile-picture"
@@ -45,7 +54,10 @@
                             {{ euro }}
                         </div>
                         <div class="text-gray-400">
-                            <button class="px-2" @click.stop="share()">
+                            <button
+                                class="px-2"
+                                @click.stop="sharePublicArtwork(artwork)"
+                            >
                                 <i class="fa-regular fa-bookmark"></i>
                             </button>
                             <button @click.stop="likeOrDislike(artwork.id)">
@@ -153,17 +165,6 @@ export default {
                 })
                 .catch((error) => console.log(error))
                 .finally(() => (this.loadLiked = false));
-        },
-
-        /**
-         * Crea y copia un link al portapapeles
-         */
-        share() {
-            const url = this.secureUrl;
-            const slug = this.artwork.slug ?? "";
-            const route = "/obra/" + slug;
-            const text = url + route;
-            this.copyToClipboard(text);
         },
 
         /**

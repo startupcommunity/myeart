@@ -2365,6 +2365,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         console.error("Async: Could not copy text: ", err);
       });
       this.noty("Copiado al portapapeles");
+    },
+
+    /**
+     * Comparte una obra públicamente
+     */
+    sharePublicArtwork: function sharePublicArtwork(artwork) {
+      var _artwork$slug;
+
+      var url = this.secureUrl;
+      var slug = (_artwork$slug = artwork.slug) !== null && _artwork$slug !== void 0 ? _artwork$slug : "";
+      var route = "/obras/" + slug;
+      var text = url + route;
+      this.copyToClipboard(text);
     }
   }
 });

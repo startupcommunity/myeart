@@ -47,6 +47,19 @@ class ArtworkDB
     }
 
     /**
+     * Devuelve una obra con sus relaciones indicadas
+     *
+     * @param integer $id           el id de la obra
+     * @return Artwork
+     */
+    public static function getArtworkWithRelations(int $id): Artwork
+    {
+        $art =  self::getArtwork($id);
+
+        return $art->load(['categories', 'subcategories', 'labels', 'gallery', 'user' , 'likes']);
+    }
+
+    /**
      * Elimina una obra de forma soft para no ser visualizada por el usuario
      *
      * @param integer $id           id de la obra

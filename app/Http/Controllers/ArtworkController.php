@@ -20,6 +20,7 @@ class ArtworkController extends Controller
     {
         $this->artworkfactory = $artworkfactory;
         $this->resp = $resp;
+        // $this->authorizeResource(Artwork::class, 'id');
     }
 
     /**
@@ -29,6 +30,8 @@ class ArtworkController extends Controller
      */
     public function getArtworks(): JsonResponse
     {
+        $this->authorize('getArtworks', Artwork::class);
+
         $data = ArtworkDB::getUserArtworks();
 
         return $this->resp->json($data, 200);
@@ -201,6 +204,23 @@ class ArtworkController extends Controller
         if (!$resp) {
             return $this->resp->json('Error al obtener la información', 500);
         }
+
+        return $this->resp->json($resp, 200);
+    }
+
+    /**
+     * Devuelve los datos de una obra del usuario logueado
+     *
+     * @param integer $id
+     * @return JsonResponse
+     */
+    public function show(int $id): JsonResponse
+    {
+        $this->authorize('view', Artwork::class);
+
+        $resp = ArtworkDB::getArtworkWithRelations($id);
+
+        abort_if(!$resp, 500, 'error al obtener los datos');
 
         return $this->resp->json($resp, 200);
     }

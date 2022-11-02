@@ -1,9 +1,8 @@
 <template>
     <div class="dashboard">
-
         <!-- loading full page -->
         <loading-overlay
-            :active="globalLoading"
+            :active="loadingOverlay"
             :is-full-page="true"
             loader="bars"
         />
@@ -67,6 +66,11 @@ export default {
         headerClass: {
             type: String,
             default: "",
+        },
+
+        loadingOverlay: {
+            type: Boolean,
+            default: false,
         },
     },
 };

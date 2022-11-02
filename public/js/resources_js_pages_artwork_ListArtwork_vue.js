@@ -192,19 +192,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
 
     /**
-     * Crea y copia un link al portapapeles
-     */
-    share: function share() {
-      var _this$artwork$slug;
-
-      var url = this.secureUrl;
-      var slug = (_this$artwork$slug = this.artwork.slug) !== null && _this$artwork$slug !== void 0 ? _this$artwork$slug : "";
-      var route = "/obra/" + slug;
-      var text = url + route;
-      this.copyToClipboard(text);
-    },
-
-    /**
      * Devuelve las dimensiones de la obra
      */
     getDimensions: function getDimensions(artwork) {
@@ -466,6 +453,10 @@ __webpack_require__.r(__webpack_exports__);
     headerClass: {
       type: String,
       "default": ""
+    },
+    loadingOverlay: {
+      type: Boolean,
+      "default": false
     }
   }
 });
@@ -839,13 +830,22 @@ var render = function render() {
     staticClass: "w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd"
   }, [_c("div", {
     staticClass: "rounded-md w-full hover:animate-shadow-drop-center"
+  }, [_c("router-link", {
+    attrs: {
+      to: {
+        name: "showArtwork",
+        params: {
+          id: _vm.artwork.id
+        }
+      }
+    }
   }, [_c("img", {
     staticClass: "object-cover object-center w-full h-72",
     attrs: {
       src: _vm.getPathGallery(_vm.artwork),
       alt: _vm.artwork.title
     }
-  }), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-col justify-between space-y-8 bg-gray-50"
   }, [_c("div", {
     staticClass: "space-y-2"
@@ -858,7 +858,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "img-thumbnail border w-14 h-14 rounded-full",
     attrs: {
-      src: (_vm$getProfilePhoto = _vm.getProfilePhoto(_vm.artwork.user)) !== null && _vm$getProfilePhoto !== void 0 ? _vm$getProfilePhoto : "/img/avatar.png",
+      src: (_vm$getProfilePhoto = _vm.getProfilePhoto(_vm.artwork.user)) !== null && _vm$getProfilePhoto !== void 0 ? _vm$getProfilePhoto : _vm.getURLDefaultProfilePhoto,
       alt: "profile-picture"
     }
   }), _vm._v(" "), _c("div", {
@@ -880,7 +880,7 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.stopPropagation();
-        return _vm.share();
+        return _vm.sharePublicArtwork(_vm.artwork);
       }
     }
   }, [_c("i", {
@@ -895,7 +895,7 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa-regular fa-heart",
     "class": _vm.isLike ? "border rounded-full p-1 text-red-800" : ""
-  })])])])])])]), _vm._v(" "), _c("loading-overlay", {
+  })])])])])])], 1), _vm._v(" "), _c("loading-overlay", {
     attrs: {
       active: _vm.loadLiked,
       "is-full-page": true,
@@ -1807,7 +1807,7 @@ var render = function render() {
     staticClass: "dashboard"
   }, [_c("loading-overlay", {
     attrs: {
-      active: _vm.globalLoading,
+      active: _vm.loadingOverlay,
       "is-full-page": true,
       loader: "bars"
     }
@@ -2416,6 +2416,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         console.error("Async: Could not copy text: ", err);
       });
       this.noty("Copiado al portapapeles");
+    },
+
+    /**
+     * Comparte una obra públicamente
+     */
+    sharePublicArtwork: function sharePublicArtwork(artwork) {
+      var _artwork$slug;
+
+      var url = this.secureUrl;
+      var slug = (_artwork$slug = artwork.slug) !== null && _artwork$slug !== void 0 ? _artwork$slug : "";
+      var route = "/obras/" + slug;
+      var text = url + route;
+      this.copyToClipboard(text);
     }
   }
 });
