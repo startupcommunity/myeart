@@ -98,6 +98,16 @@ class Artwork extends Model
         return $this->hasMany(ArtworkLike::class);
     }
 
+    /**
+     * Devuelve las visitas de una obra
+     *
+     * @return HasMany
+     */
+    public function views(): HasMany
+    {
+        return $this->hasMany(ArtworkView::class);
+    }
+
     // -------------------------
     // ----- local scopes ------
     // -------------------------

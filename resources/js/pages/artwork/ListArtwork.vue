@@ -4,7 +4,7 @@
         <Header class="hidden md:block" />
 
         <!-- visible mobile -->
-        <div class="bg-zinc-900 pb-32 block md:hidden">
+        <div class="bg-zinc-900 pb-32 block md:hidden" v-if="!showOptionModal">
             <Header class="mt-5" />
         </div>
 
@@ -376,7 +376,7 @@ export default {
         this.getCategories();
 
         // @listArtworkMixin
-        this.loadOneCategory();
+        this.initArtworks();
     },
     watch: {
         filters: {

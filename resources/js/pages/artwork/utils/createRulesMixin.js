@@ -12,33 +12,31 @@ export default {
             titleRules: [
                 (v) => !!v || "El título es requerido",
                 (v) =>
-                    v.length <= 100 ||
+                    (v && v.length <= 100) ||
                     "El título no debe tener mas de 100 caracteres",
             ],
             descriptionRules: [
                 (v) => !!v || "La descripción es requerido",
                 (v) =>
-                    v.length <= 230 ||
+                    (v && v.length <= 230) ||
                     "La descripción no debe tener mas de 200 caracteres",
             ],
             dimensionRules: [
                 (v) => !!v || "Las dimensiones son requeridas",
-                // (v) =>
-                //     v.length <= 1000 ||
-                //     "Las dimensiones no deben tener mas de 1000 caracteres",
+                (v) =>
+                    (v && v.length <= 1000) ||
+                    "Las dimensiones no deben tener mas de 1000 caracteres",
             ],
             priceRules: [
                 (v) => !!v || "El precio es requerido",
                 (v) =>
-                    v.length <= 12 ||
+                    (v && v.length <= 12) ||
                     "El precio no debe tener mas de 10 caracteres",
-                // (v) =>
-                //     v.match(ONLY_POSITIVE) ||
-                //     "El precio debe ser un valor positivo",
+                (v) =>
+                    (v && ONLY_POSITIVE.test(v)) ||
+                    "El precio debe ser un valor positivo",
             ],
-            dateRules: [
-                (v) => !!v || "La fecha es requerida",
-            ],
+            dateRules: [(v) => !!v || "La fecha es requerida"],
         };
     },
 };

@@ -144,7 +144,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$getProfilePhoto, _vm$artwork$user;
+  var _vm$getProfilePhoto, _vm$artwork$user, _vm$artwork$price;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -202,7 +202,7 @@ var render = function render() {
     staticClass: "flex justify-between items-center pb-4 px-2"
   }, [_c("div", {
     staticClass: "text-gray-900 font-black"
-  }, [_vm._v("\n                        " + _vm._s(_vm.artwork.price) + "\n                        " + _vm._s(_vm.euro) + "\n                    ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        " + _vm._s((_vm$artwork$price = _vm.artwork.price) !== null && _vm$artwork$price !== void 0 ? _vm$artwork$price : 0) + "\n                        " + _vm._s(_vm.euro) + "\n                    ")]), _vm._v(" "), _c("div", {
     staticClass: "text-gray-400"
   }, [_c("button", {
     staticClass: "px-2",

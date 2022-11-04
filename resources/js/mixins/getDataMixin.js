@@ -47,6 +47,40 @@ export default {
         },
 
         /**
+         * Obras publicada del usuario
+         * opcional: ignora una obra concreta
+         */
+        async getUserArtworks(userID, ignoreArtworkID = null) {
+            const ep = this.ep.artworks.getUserPublish;
+            const endpoint = `${ep + userID}/${ignoreArtworkID}`;
+
+            return await this.axios
+                .get(endpoint)
+                .then(async (resp) => {
+                    if (resp.status !== 200) return false;
+                    return await resp.data;
+                })
+                .catch((error) => console.log(error));
+        },
+
+        /**
+         * Obras publicadas por categoría
+         * opcional: ignora un usuario en particular
+         */
+        async getPublishForCategory(categoryID, ignoreUserID = null) {
+            const ep = this.ep.artworks.getPublishForCategory;
+            const endpoint = `${ep + categoryID}/${ignoreUserID}`;
+
+            return await this.axios
+                .get(endpoint)
+                .then(async (resp) => {
+                    if (resp.status !== 200) return false;
+                    return await resp.data;
+                })
+                .catch((error) => console.log(error));
+        },
+
+        /**
          * Devuelve las subcategorias de una categoría
          *
          * @param {Int} id      id el la categoría

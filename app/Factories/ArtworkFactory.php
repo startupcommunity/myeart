@@ -184,4 +184,24 @@ class ArtworkFactory
 
     return $db;
   }
+
+  /**
+   * Agrega una visita a la obra por medio del usuario logueado
+   *
+   * @param Request $request
+   * @return boolean
+   */
+  public function addView($request): bool
+  {
+    $user = auth()->user();
+    $data = [
+      'user_id' => $user->id,
+      'ip' => $request->ip(),
+    ];
+
+    $artwork = $this->artwork->findOrFail($request->artwork_id);
+    $view = $artwork->views()->create($data);
+
+    return $view ? true : false;
+  }
 }

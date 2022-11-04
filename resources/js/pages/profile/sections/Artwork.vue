@@ -106,7 +106,7 @@
                                         class="w-full border-t-2 border-gray-800 my-4"
                                     ></div>
                                     <p class="text-gray-900">
-                                        {{ art.price }} {{ symbol }}
+                                        {{ art.price ?? 0 }} {{ symbol }}
                                     </p>
                                 </div>
                                 <div

@@ -125,13 +125,12 @@ export default {
         },
 
         /**
-         * Carga la categoría literatura al filtro de búsqueda
-         * esto para cuando inicie el componente sea con una categoría
-         * marcada por defecto
+         * Indica como debe ser la primera carga de obras
+         * según los filtros por defecto
          */
-        loadOneCategory() {
-            // 1 => literatura
-            this.filters.category = 1;
+        initArtworks() {
+            // 1 => mas reciente
+            this.filters.sortBy = 1;
         },
     },
 };

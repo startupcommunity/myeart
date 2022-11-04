@@ -98,7 +98,7 @@ class ArtworkDB
     {
         $art =  self::getArtwork($id);
 
-        return $art->load(['categories', 'subcategories', 'labels', 'gallery', 'user.profile', 'likes']);
+        return $art->load(['categories', 'subcategories', 'labels', 'gallery', 'user.profile', 'likes', 'views']);
     }
 
     /**

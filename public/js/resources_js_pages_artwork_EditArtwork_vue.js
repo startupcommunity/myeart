@@ -1831,34 +1831,164 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
 
     /**
+     * Obras publicada del usuario
+     * opcional: ignora una obra concreta
+     */
+    getUserArtworks: function getUserArtworks(userID) {
+      var _arguments = arguments,
+          _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var ignoreArtworkID, ep, endpoint;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                ignoreArtworkID = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : null;
+                ep = _this3.ep.artworks.getUserPublish;
+                endpoint = "".concat(ep + userID, "/").concat(ignoreArtworkID);
+                _context4.next = 5;
+                return _this3.axios.get(endpoint).then( /*#__PURE__*/function () {
+                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(resp) {
+                    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            if (!(resp.status !== 200)) {
+                              _context3.next = 2;
+                              break;
+                            }
+
+                            return _context3.abrupt("return", false);
+
+                          case 2:
+                            _context3.next = 4;
+                            return resp.data;
+
+                          case 4:
+                            return _context3.abrupt("return", _context3.sent);
+
+                          case 5:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
+
+                  return function (_x3) {
+                    return _ref3.apply(this, arguments);
+                  };
+                }())["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 5:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+
+    /**
+     * Obras publicadas por categoría
+     * opcional: ignora un usuario en particular
+     */
+    getPublishForCategory: function getPublishForCategory(categoryID) {
+      var _arguments2 = arguments,
+          _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+        var ignoreUserID, ep, endpoint;
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                ignoreUserID = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : null;
+                ep = _this4.ep.artworks.getPublishForCategory;
+                endpoint = "".concat(ep + categoryID, "/").concat(ignoreUserID);
+                _context6.next = 5;
+                return _this4.axios.get(endpoint).then( /*#__PURE__*/function () {
+                  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(resp) {
+                    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+                      while (1) {
+                        switch (_context5.prev = _context5.next) {
+                          case 0:
+                            if (!(resp.status !== 200)) {
+                              _context5.next = 2;
+                              break;
+                            }
+
+                            return _context5.abrupt("return", false);
+
+                          case 2:
+                            _context5.next = 4;
+                            return resp.data;
+
+                          case 4:
+                            return _context5.abrupt("return", _context5.sent);
+
+                          case 5:
+                          case "end":
+                            return _context5.stop();
+                        }
+                      }
+                    }, _callee5);
+                  }));
+
+                  return function (_x4) {
+                    return _ref4.apply(this, arguments);
+                  };
+                }())["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 5:
+                return _context6.abrupt("return", _context6.sent);
+
+              case 6:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+
+    /**
      * Devuelve las subcategorias de una categoría
      *
      * @param {Int} id      id el la categoría
      */
     getSubCategories: function getSubCategories(id) {
-      var _this3 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context3.next = 2;
-                return _this3.axios.get(_this3.ep.global.subcategories + id).then(function (resp) {
-                  _this3.subCategories = resp.data;
+                _context7.next = 2;
+                return _this5.axios.get(_this5.ep.global.subcategories + id).then(function (resp) {
+                  _this5.subCategories = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
 
               case 2:
-                return _context3.abrupt("return", _context3.sent);
+                return _context7.abrupt("return", _context7.sent);
 
               case 3:
               case "end":
-                return _context3.stop();
+                return _context7.stop();
             }
           }
-        }, _callee3);
+        }, _callee7);
       }))();
     },
 
@@ -1869,31 +1999,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * @param {Int} sub_category_id      id el la subcategoria
      */
     getSubLabels: function getSubLabels(category_id, sub_category_id) {
-      var _this4 = this;
+      var _this6 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
         var ep;
-        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        return _regeneratorRuntime().wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                ep = "".concat(_this4.ep.global.labels + category_id, "/").concat(sub_category_id);
-                _context4.next = 3;
-                return _this4.axios.get(ep).then(function (resp) {
-                  _this4.subLabels = resp.data;
+                ep = "".concat(_this6.ep.global.labels + category_id, "/").concat(sub_category_id);
+                _context8.next = 3;
+                return _this6.axios.get(ep).then(function (resp) {
+                  _this6.subLabels = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
 
               case 3:
-                return _context4.abrupt("return", _context4.sent);
+                return _context8.abrupt("return", _context8.sent);
 
               case 4:
               case "end":
-                return _context4.stop();
+                return _context8.stop();
             }
           }
-        }, _callee4);
+        }, _callee8);
       }))();
     },
 
@@ -2444,27 +2574,25 @@ var ONLY_POSITIVE = /^[+]?([1-9][0-9]*(?:[\.][0-9]*)?|0*\.0*[1-9][0-9]*)(?:[eE][
       titleRules: [function (v) {
         return !!v || "El título es requerido";
       }, function (v) {
-        return v.length <= 100 || "El título no debe tener mas de 100 caracteres";
+        return v && v.length <= 100 || "El título no debe tener mas de 100 caracteres";
       }],
       descriptionRules: [function (v) {
         return !!v || "La descripción es requerido";
       }, function (v) {
-        return v.length <= 230 || "La descripción no debe tener mas de 200 caracteres";
+        return v && v.length <= 230 || "La descripción no debe tener mas de 200 caracteres";
       }],
       dimensionRules: [function (v) {
         return !!v || "Las dimensiones son requeridas";
-      } // (v) =>
-      //     v.length <= 1000 ||
-      //     "Las dimensiones no deben tener mas de 1000 caracteres",
-      ],
+      }, function (v) {
+        return v && v.length <= 1000 || "Las dimensiones no deben tener mas de 1000 caracteres";
+      }],
       priceRules: [function (v) {
         return !!v || "El precio es requerido";
       }, function (v) {
-        return v.length <= 12 || "El precio no debe tener mas de 10 caracteres";
-      } // (v) =>
-      //     v.match(ONLY_POSITIVE) ||
-      //     "El precio debe ser un valor positivo",
-      ],
+        return v && v.length <= 12 || "El precio no debe tener mas de 10 caracteres";
+      }, function (v) {
+        return v && ONLY_POSITIVE.test(v) || "El precio debe ser un valor positivo";
+      }],
       dateRules: [function (v) {
         return !!v || "La fecha es requerida";
       }]

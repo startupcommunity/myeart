@@ -7,7 +7,7 @@
             <h1
                 class="font-black tracking-[0.3rem] text-white text-2xl sm:text-4xl uppercase text-center"
             >
-                {{ objCategory ? objCategory.name : "" }}
+                {{ objCategory ? objCategory.name : 'Obras' }}
             </h1>
         </div>
         <!-- <div
@@ -32,7 +32,7 @@ export default {
     },
     computed: {
         objCategory() {
-            if (!this.category) return;
+            if (!this.category) return null;
             return this.categories.find((cat) => cat.id === this.category);
         },
     },

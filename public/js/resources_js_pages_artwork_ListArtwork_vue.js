@@ -66,7 +66,7 @@ __webpack_require__.r(__webpack_exports__);
     // @getDataMixin
     this.getCategories(); // @listArtworkMixin
 
-    this.loadOneCategory();
+    this.initArtworks();
   },
   watch: {
     filters: {
@@ -256,7 +256,7 @@ __webpack_require__.r(__webpack_exports__);
     objCategory: function objCategory() {
       var _this = this;
 
-      if (!this.category) return;
+      if (!this.category) return null;
       return this.categories.find(function (cat) {
         return cat.id === _this.category;
       });
@@ -524,11 +524,11 @@ var render = function render() {
     }
   }, [_c("Header", {
     staticClass: "hidden md:block"
-  }), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), !_vm.showOptionModal ? _c("div", {
     staticClass: "bg-zinc-900 pb-32 block md:hidden"
   }, [_c("Header", {
     staticClass: "mt-5"
-  })], 1), _vm._v(" "), _c("HeroList", {
+  })], 1) : _vm._e(), _vm._v(" "), _c("HeroList", {
     staticClass: "hidden md:block",
     attrs: {
       category: _vm.filters.category,
@@ -829,7 +829,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$getProfilePhoto, _vm$artwork$user;
+  var _vm$getProfilePhoto, _vm$artwork$user, _vm$artwork$price;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -887,7 +887,7 @@ var render = function render() {
     staticClass: "flex justify-between items-center pb-4 px-2"
   }, [_c("div", {
     staticClass: "text-gray-900 font-black"
-  }, [_vm._v("\n                        " + _vm._s(_vm.artwork.price) + "\n                        " + _vm._s(_vm.euro) + "\n                    ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        " + _vm._s((_vm$artwork$price = _vm.artwork.price) !== null && _vm$artwork$price !== void 0 ? _vm$artwork$price : 0) + "\n                        " + _vm._s(_vm.euro) + "\n                    ")]), _vm._v(" "), _c("div", {
     staticClass: "text-gray-400"
   }, [_c("button", {
     staticClass: "px-2",
@@ -947,7 +947,7 @@ var render = function render() {
     staticClass: "absolute w-full h-full flex justify-center items-center"
   }, [_c("h1", {
     staticClass: "font-black tracking-[0.3rem] text-white text-2xl sm:text-4xl uppercase text-center"
-  }, [_vm._v("\n            " + _vm._s(_vm.objCategory ? _vm.objCategory.name : "") + "\n        ")])])]);
+  }, [_vm._v("\n            " + _vm._s(_vm.objCategory ? _vm.objCategory.name : "Obras") + "\n        ")])])]);
 };
 
 var staticRenderFns = [];
@@ -977,10 +977,11 @@ var render = function render() {
     }
   }, [_c("v-dialog", {
     attrs: {
-      "max-width": "300px",
       persistent: "",
-      scrollable: "",
-      "content-class": "mt-80"
+      fullscreen: "",
+      "hide-overlay": "",
+      transition: "dialog-bottom-transition",
+      "content-class": ""
     },
     model: {
       value: _vm.show,
@@ -989,10 +990,8 @@ var render = function render() {
       },
       expression: "show"
     }
-  }, [_c("v-card", {
-    staticClass: "py-8"
-  }, [_c("v-card-text", [_c("div", {
-    staticClass: "w-full"
+  }, [_c("v-card", [_c("v-card-text", [_c("div", {
+    staticClass: "w-full pt-20 pb-10"
   }, [_c("div", [_c("div", [_c("div", {
     staticClass: "flex justify-between"
   }, [_c("h3", {
@@ -1189,7 +1188,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "flex flex-row justify-between -mt-2 text-xs"
-  }, [_c("p", [_vm._v("0 kg")]), _vm._v(" "), _c("p", [_vm._v("100 kg")])])], 1)])])]), _vm._v(" "), _c("v-card-actions", [_c("div", {
+  }, [_c("p", [_vm._v("0 kg")]), _vm._v(" "), _c("p", [_vm._v("100 kg")])])], 1)]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-end"
   }, [_c("v-btn", {
     attrs: {
@@ -1202,7 +1201,7 @@ var render = function render() {
         return _vm.$emit("close-dialog-options-filter");
       }
     }
-  }, [_vm._v("\n                        Aceptar\n                    ")])], 1)])], 1)], 1)], 1);
+  }, [_vm._v("\n                            Aceptar\n                        ")])], 1)])])], 1)], 1)], 1);
 };
 
 var staticRenderFns = [];
@@ -1942,34 +1941,164 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
 
     /**
+     * Obras publicada del usuario
+     * opcional: ignora una obra concreta
+     */
+    getUserArtworks: function getUserArtworks(userID) {
+      var _arguments = arguments,
+          _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var ignoreArtworkID, ep, endpoint;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                ignoreArtworkID = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : null;
+                ep = _this3.ep.artworks.getUserPublish;
+                endpoint = "".concat(ep + userID, "/").concat(ignoreArtworkID);
+                _context4.next = 5;
+                return _this3.axios.get(endpoint).then( /*#__PURE__*/function () {
+                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(resp) {
+                    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            if (!(resp.status !== 200)) {
+                              _context3.next = 2;
+                              break;
+                            }
+
+                            return _context3.abrupt("return", false);
+
+                          case 2:
+                            _context3.next = 4;
+                            return resp.data;
+
+                          case 4:
+                            return _context3.abrupt("return", _context3.sent);
+
+                          case 5:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
+
+                  return function (_x3) {
+                    return _ref3.apply(this, arguments);
+                  };
+                }())["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 5:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+
+    /**
+     * Obras publicadas por categoría
+     * opcional: ignora un usuario en particular
+     */
+    getPublishForCategory: function getPublishForCategory(categoryID) {
+      var _arguments2 = arguments,
+          _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+        var ignoreUserID, ep, endpoint;
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                ignoreUserID = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : null;
+                ep = _this4.ep.artworks.getPublishForCategory;
+                endpoint = "".concat(ep + categoryID, "/").concat(ignoreUserID);
+                _context6.next = 5;
+                return _this4.axios.get(endpoint).then( /*#__PURE__*/function () {
+                  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(resp) {
+                    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+                      while (1) {
+                        switch (_context5.prev = _context5.next) {
+                          case 0:
+                            if (!(resp.status !== 200)) {
+                              _context5.next = 2;
+                              break;
+                            }
+
+                            return _context5.abrupt("return", false);
+
+                          case 2:
+                            _context5.next = 4;
+                            return resp.data;
+
+                          case 4:
+                            return _context5.abrupt("return", _context5.sent);
+
+                          case 5:
+                          case "end":
+                            return _context5.stop();
+                        }
+                      }
+                    }, _callee5);
+                  }));
+
+                  return function (_x4) {
+                    return _ref4.apply(this, arguments);
+                  };
+                }())["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 5:
+                return _context6.abrupt("return", _context6.sent);
+
+              case 6:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+
+    /**
      * Devuelve las subcategorias de una categoría
      *
      * @param {Int} id      id el la categoría
      */
     getSubCategories: function getSubCategories(id) {
-      var _this3 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context3.next = 2;
-                return _this3.axios.get(_this3.ep.global.subcategories + id).then(function (resp) {
-                  _this3.subCategories = resp.data;
+                _context7.next = 2;
+                return _this5.axios.get(_this5.ep.global.subcategories + id).then(function (resp) {
+                  _this5.subCategories = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
 
               case 2:
-                return _context3.abrupt("return", _context3.sent);
+                return _context7.abrupt("return", _context7.sent);
 
               case 3:
               case "end":
-                return _context3.stop();
+                return _context7.stop();
             }
           }
-        }, _callee3);
+        }, _callee7);
       }))();
     },
 
@@ -1980,31 +2109,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * @param {Int} sub_category_id      id el la subcategoria
      */
     getSubLabels: function getSubLabels(category_id, sub_category_id) {
-      var _this4 = this;
+      var _this6 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
         var ep;
-        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        return _regeneratorRuntime().wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                ep = "".concat(_this4.ep.global.labels + category_id, "/").concat(sub_category_id);
-                _context4.next = 3;
-                return _this4.axios.get(ep).then(function (resp) {
-                  _this4.subLabels = resp.data;
+                ep = "".concat(_this6.ep.global.labels + category_id, "/").concat(sub_category_id);
+                _context8.next = 3;
+                return _this6.axios.get(ep).then(function (resp) {
+                  _this6.subLabels = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
 
               case 3:
-                return _context4.abrupt("return", _context4.sent);
+                return _context8.abrupt("return", _context8.sent);
 
               case 4:
               case "end":
-                return _context4.stop();
+                return _context8.stop();
             }
           }
-        }, _callee4);
+        }, _callee8);
       }))();
     },
 
@@ -2568,13 +2697,12 @@ var COUNTER_ART_PUB = 6;
     },
 
     /**
-     * Carga la categoría literatura al filtro de búsqueda
-     * esto para cuando inicie el componente sea con una categoría
-     * marcada por defecto
+     * Indica como debe ser la primera carga de obras
+     * según los filtros por defecto
      */
-    loadOneCategory: function loadOneCategory() {
-      // 1 => literatura
-      this.filters.category = 1;
+    initArtworks: function initArtworks() {
+      // 1 => mas reciente
+      this.filters.sortBy = 1;
     }
   }
 });

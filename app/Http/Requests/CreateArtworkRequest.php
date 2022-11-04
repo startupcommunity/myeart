@@ -25,11 +25,11 @@ class CreateArtworkRequest extends FormRequest
     {
         return [
             'title'=> 'required_if:state,1|string|max:100',
-            'description'=> 'required_if:state,1|string|max:230',
-            'width'=> 'required_if:state,1|numeric|max:1000',
-            'large'=> 'required_if:state,1|numeric|max:1000',
-            'weight'=> 'required_if:state,1|numeric|max:1000',
-            'price'=> 'required_if:state,1|numeric|max:999999999999',
+            'description'=> 'required_if:state,1|nullable|string|max:230',
+            'width'=> 'required_if:state,1|nullable|numeric|max:1000',
+            'large'=> 'required_if:state,1|nullable|numeric|max:1000',
+            'weight'=> 'required_if:state,1|nullable|numeric|max:1000',
+            'price'=> 'required_if:state,1|nullable|numeric|max:999999999999',
             'date_created'=> 'nullable|string|max:10',
             'location'=> 'nullable|string|max:100',
             'shipping'=> 'nullable|string|max:100',

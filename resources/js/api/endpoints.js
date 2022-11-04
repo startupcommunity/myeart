@@ -18,6 +18,7 @@ const endpoints = {
         show: `${API}/artworks/show/`,
         slug: `${API}/artworks/slug/`,
         filterPublished: `${API}/artworks/filterPublished`,
+        addVisit: `${API}/artworks/addvisit`,
     },
 
     // direcciones del usuario

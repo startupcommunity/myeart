@@ -29,7 +29,7 @@ __webpack_require__.r(__webpack_exports__);
     objCategory: function objCategory() {
       var _this = this;
 
-      if (!this.category) return;
+      if (!this.category) return null;
       return this.categories.find(function (cat) {
         return cat.id === _this.category;
       });
@@ -61,7 +61,7 @@ var render = function render() {
     staticClass: "absolute w-full h-full flex justify-center items-center"
   }, [_c("h1", {
     staticClass: "font-black tracking-[0.3rem] text-white text-2xl sm:text-4xl uppercase text-center"
-  }, [_vm._v("\n            " + _vm._s(_vm.objCategory ? _vm.objCategory.name : "") + "\n        ")])])]);
+  }, [_vm._v("\n            " + _vm._s(_vm.objCategory ? _vm.objCategory.name : "Obras") + "\n        ")])])]);
 };
 
 var staticRenderFns = [];

@@ -54,7 +54,7 @@
                     <div class="w-full border-t border-gray-800 my-4"></div>
                     <div class="flex justify-between items-center pb-4 px-2">
                         <div class="text-gray-900 font-black">
-                            {{ artwork.price }}
+                            {{ artwork.price ?? 0 }}
                             {{ euro }}
                         </div>
                         <div class="text-gray-400">
@@ -64,7 +64,10 @@
                             >
                                 <i class="fa-regular fa-bookmark"></i>
                             </button>
-                            <button @click.stop="likeOrDislike(artwork.id)" class="hover:text-gray-700">
+                            <button
+                                @click.stop="likeOrDislike(artwork.id)"
+                                class="hover:text-gray-700"
+                            >
                                 <i
                                     class="fa-regular fa-heart"
                                     :class="isLike ? 'p-1 text-red-800' : ''"

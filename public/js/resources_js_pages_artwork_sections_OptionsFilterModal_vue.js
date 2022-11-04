@@ -60,10 +60,11 @@ var render = function render() {
     }
   }, [_c("v-dialog", {
     attrs: {
-      "max-width": "300px",
       persistent: "",
-      scrollable: "",
-      "content-class": "mt-80"
+      fullscreen: "",
+      "hide-overlay": "",
+      transition: "dialog-bottom-transition",
+      "content-class": ""
     },
     model: {
       value: _vm.show,
@@ -72,10 +73,8 @@ var render = function render() {
       },
       expression: "show"
     }
-  }, [_c("v-card", {
-    staticClass: "py-8"
-  }, [_c("v-card-text", [_c("div", {
-    staticClass: "w-full"
+  }, [_c("v-card", [_c("v-card-text", [_c("div", {
+    staticClass: "w-full pt-20 pb-10"
   }, [_c("div", [_c("div", [_c("div", {
     staticClass: "flex justify-between"
   }, [_c("h3", {
@@ -272,7 +271,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "flex flex-row justify-between -mt-2 text-xs"
-  }, [_c("p", [_vm._v("0 kg")]), _vm._v(" "), _c("p", [_vm._v("100 kg")])])], 1)])])]), _vm._v(" "), _c("v-card-actions", [_c("div", {
+  }, [_c("p", [_vm._v("0 kg")]), _vm._v(" "), _c("p", [_vm._v("100 kg")])])], 1)]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-end"
   }, [_c("v-btn", {
     attrs: {
@@ -285,7 +284,7 @@ var render = function render() {
         return _vm.$emit("close-dialog-options-filter");
       }
     }
-  }, [_vm._v("\n                        Aceptar\n                    ")])], 1)])], 1)], 1)], 1);
+  }, [_vm._v("\n                            Aceptar\n                        ")])], 1)])])], 1)], 1)], 1);
 };
 
 var staticRenderFns = [];

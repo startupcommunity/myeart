@@ -259,4 +259,21 @@ class ArtworkController extends Controller
 
         return $this->resp->json($resp, 200);
     }
+
+    /**
+     * Agrega una visita a la obra
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addView(Request $request): JsonResponse
+    {
+        $this->authorize('view', Artwork::class);
+
+        $resp = $this->artworkfactory->addView($request);
+
+        abort_if(!$resp, 'Error al guardar la visita', 500);
+
+        return $this->resp->json('visita agregada', 200);
+    }
 }

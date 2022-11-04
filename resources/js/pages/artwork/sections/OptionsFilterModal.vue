@@ -2,14 +2,15 @@
     <v-row justify="center">
         <v-dialog
             v-model="show"
-            max-width="300px"
             persistent
-            scrollable
-            content-class="mt-80"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+            content-class=""
         >
-            <v-card class="py-8">
+            <v-card>
                 <v-card-text>
-                    <div class="w-full">
+                    <div class="w-full pt-20 pb-10">
                         <!-- categorías -->
                         <div>
                             <div>
@@ -252,20 +253,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="flex justify-end">
+                            <v-btn
+                                raised
+                                text
+                                outlined
+                                @click="$emit('close-dialog-options-filter')"
+                            >
+                                Aceptar
+                            </v-btn>
+                        </div>
                     </div>
                 </v-card-text>
-                <v-card-actions>
-                    <div class="flex justify-end">
-                        <v-btn
-                            raised
-                            text
-                            outlined
-                            @click="$emit('close-dialog-options-filter')"
-                        >
-                            Aceptar
-                        </v-btn>
-                    </div>
-                </v-card-actions>
             </v-card>
         </v-dialog>
     </v-row>

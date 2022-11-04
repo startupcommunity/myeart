@@ -60,6 +60,11 @@ Route::group(['prefix' => 'artworks'], function () {
   Route::post('/create', [ArtworkController::class, 'save'])->name('saveArtwork');
 
   /**
+   * Agrega una visita a la obra
+   */
+  Route::post('/addvisit', [ArtworkController::class, 'addView'])->name('addView');
+
+  /**
    * Liked una obra, es decir, la marca con un me gusta
    * @param int $id   id de la obra
    */

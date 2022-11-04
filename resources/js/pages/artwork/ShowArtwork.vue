@@ -8,7 +8,7 @@
         <section class="bg-white">
             <div class="container py-20">
                 <div class="flex flex-wrap">
-                    <div class="w-full lg:w-2/4">
+                    <div class="w-full lg:w-2/4 mb-4 md:mb-0">
                         <div v-if="previewFiles.length">
                             <div class="h-96 w-full">
                                 <img
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full lg:w-2/4 px-7">
+                    <div class="w-full lg:w-2/4 md:px-7">
                         <div class="flex flex-row justify-between items-center">
                             <div>
                                 <h1
@@ -84,7 +84,8 @@
                                 Medida: {{ measures }}
                             </p>
                             <p class="text-primary text-base leading-8">
-                                0 views <i class="fa fa-eye text-primary"></i>
+                                {{ this.views }} views
+                                <i class="fa fa-eye text-primary"></i>
                             </p>
                         </div>
                         <p
@@ -265,7 +266,7 @@
                         </div>
                     </div>
                     <div
-                        class="w-full lg:w-[40%] px-7 lg:mt-10 h-80 lg:h-[30rem]"
+                        class="w-full lg:w-[40%] md:px-7 lg:mt-10 h-80 lg:h-[30rem]"
                     >
                         <img
                             :src="randomImage?.file"
@@ -341,88 +342,53 @@
         <!-- /sobre el artista -->
 
         <!-- mas obras del artista -->
-        <section class="bg-white">
-            <div class="container py-20">
-                <div class="w-full">
-                    <h2
-                        class="text-primary text-2xl leading-5 tracking-widest uppercase text-center"
-                    >
-                        Mas obras de {{ userArtwork?.name }}
-                    </h2>
-                </div>
-                <div class="py-10">
-                    <LoadingTailwind
-                        v-show="loadUserArtworks"
-                        css="w-full animate-swing-in-top-fwd"
-                    />
-                    <div id="slider-user-artworks">
-                        <CardArtwork
-                            v-for="art in userArtworks"
-                            :artwork="art"
-                            :showProfile="false"
-                            :key="art.id"
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
+        <ArtistArtworks
+            :user="this.artwork.user"
+            :ignoreArtworkID="this.artwork.id"
+        />
         <!-- /mas obras del artista -->
 
         <!-- otras obras -->
-        <section class="bg-gray-100">
-            <div class="container py-20">
-                <div class="w-full">
-                    <h2
-                        class="text-primary text-2xl leading-5 tracking-widest uppercase text-center"
-                    >
-                        Otras obras que te pueden interesar
-                    </h2>
-                </div>
-                <div class="py-10">
-                    <LoadingTailwind
-                        v-show="loadOtherArtworks"
-                        css="w-full animate-swing-in-top-fwd"
-                    />
-                    <div id="slider-other-artworks">
-                        <CardArtwork
-                            v-for="art in otherArtworks"
-                            :artwork="art"
-                            :showProfile="false"
-                            :key="art.id"
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
+        <OtherArtworks
+            :categoryID="this.artwork.categories[0]?.id"
+            :ignoreUser="this.artwork.user"
+        />
         <!-- /otras obras -->
     </main-layout>
 </template>
 <script>
-import { tns } from "tiny-slider";
 import { mapGetters } from "vuex";
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
 import utilMixin from "../../mixins/utilMixin";
 import Header from "../landing/sections/Header.vue";
 import MainLayout from "../layouts/MainLayout.vue";
 import CardArtwork from "./sections/CardArtwork.vue";
+import ArtistArtworks from "./sections/ArtistArtworks.vue";
+import OtherArtworks from "./sections/OtherArtworks.vue";
 
 export default {
     name: "ShowArtwork",
-    components: { MainLayout, Header, LoadingTailwind, CardArtwork },
+    components: {
+        MainLayout,
+        Header,
+        LoadingTailwind,
+        CardArtwork,
+        ArtistArtworks,
+        OtherArtworks,
+    },
     mixins: [utilMixin],
     data() {
         return {
+            views: 0,
+            isLike: false,
             previewFiles: [],
-            userArtworks: [],
-            otherArtworks: [],
             artwork: {
                 categories: [],
                 subcategories: [],
                 labels: [],
+                likes: [],
+                user: {},
             },
-            isLike: false,
-            loadUserArtworks: false,
-            loadOtherArtworks: false,
         };
     },
     mounted() {
@@ -492,6 +458,9 @@ export default {
         },
     },
     methods: {
+        /**
+         * Carga todos los datos de la obra
+         */
         loadData() {
             this.globalLoading = true;
             const id = this.$route.params.id;
@@ -499,85 +468,28 @@ export default {
             this.axios
                 .get(this.ep.artworks.show + id)
                 .then((resp) => {
-                    if (resp.status === 200) {
-                        // data
-                        const { gallery } = resp.data;
+                    if (resp.status !== 200) return false;
 
-                        // obra
-                        this.artwork = resp.data;
+                    // data
+                    const { gallery, views } = resp.data;
 
-                        // load galeria
-                        this.loadGallery(gallery);
+                    // obra
+                    this.artwork = resp.data;
 
-                        // si esta like por el usuario
-                        this.isLiked();
+                    // load galeria
+                    this.loadGallery(gallery);
 
-                        return true;
-                    }
+                    // si esta like por el usuario
+                    this.isLiked();
 
-                    return false;
-                })
+                    // cargar las views
+                    this.loadView(views);
 
-                // cargar o no las demás obras del usuario
-                .then((resp) => {
-                    if (resp) {
-                        this.getUserArtworks();
-                        this.getPublishForCategory();
-                    }
+                    // agregar una visita
+                    this.addView();
                 })
                 .catch((error) => console.error(error))
                 .finally(() => (this.globalLoading = false));
-        },
-
-        /**
-         * Obtener otras obras del autor de la obra seleccionada
-         * ignorando la obra actual mostrada
-         */
-        getUserArtworks() {
-            this.loadUserArtworks = true;
-            const userPublish = this.ep.artworks.getUserPublish;
-            const userID = this.userArtwork?.id;
-            const endpoint = `${userPublish + userID}/${this.artwork.id}`;
-
-            this.axios
-                .get(endpoint)
-                .then(async (resp) => {
-                    if (resp.status === 200) {
-                        return (this.userArtworks = await resp.data);
-                    }
-
-                    return false;
-                })
-                .then((resp) =>
-                    resp ? this.showTNS("#slider-user-artworks") : false
-                )
-                .catch((error) => console.log(error))
-                .finally(() => (this.loadUserArtworks = false));
-        },
-
-        /**
-         * Obtener otras obras del autor de la obra seleccionada
-         * ignorando la obra actual mostrada
-         */
-        getPublishForCategory() {
-            this.loadOtherArtworks = true;
-            const userPublish = this.ep.artworks.getPublishForCategory;
-            const categoryID = this.artwork.categories[0]?.id;
-            const userID = this.userArtwork?.id;
-            const endpoint = `${userPublish + categoryID}/${userID}`;
-
-            this.axios
-                .get(endpoint)
-                .then(async (resp) => {
-                    if (resp.status !== 200) return false;
-
-                    return (this.otherArtworks = await resp.data);
-                })
-                .then((resp) =>
-                    resp ? this.showTNS("#slider-other-artworks") : false
-                )
-                .catch((error) => console.log(error))
-                .finally(() => (this.loadOtherArtworks = false));
         },
 
         /**
@@ -645,44 +557,24 @@ export default {
         },
 
         /**
-         * Iniciar el carousel de obras del usuario
+         * Agrega la cantidad de visitas
          */
-        showTNS(id) {
-            tns({
-                container: id,
-                mode: "carousel",
-                speed: 800,
-                gutter: 20,
-                items: 5,
-                autoplay: true,
-                mouseDrag: true,
-                autoplayButtonOutput: false,
-                autoplayHoverPause: true,
-                lazyload: true,
-                controls: false,
-                responsive: {
-                    0: {
-                        items: 1,
-                        edgePadding: 50,
-                    },
-                    500: {
-                        items: 2,
-                        edgePadding: 30,
-                    },
-                    700: {
-                        items: 3,
-                        edgePadding: 30,
-                    },
-                    900: {
-                        items: 4,
-                        edgePadding: 30,
-                    },
-                    1200: {
-                        items: 5,
-                        edgePadding: 0,
-                    },
-                },
-            });
+        loadView(views) {
+            this.views = views.length;
+        },
+
+        /**
+         * Agrega una visita a la obra
+         */
+        addView() {
+            const data = {
+                artwork_id: this.artwork.id,
+            };
+
+            this.axios
+                .post(this.ep.artworks.addVisit, data)
+                .then(() => console.log("visita agregada con éxito"))
+                .catch((error) => console.log(error));
         },
     },
 };
