@@ -2215,7 +2215,9 @@ var render = function render() {
       ignoreDuplicates: true,
       closeOnClick: true
     }
-  }), _vm._v(" "), _c("router-view")], 1);
+  }), _vm._v(" "), _c("router-view", {
+    key: _vm.$route.path
+  })], 1);
 };
 
 var staticRenderFns = [];
@@ -2355,8 +2357,10 @@ var endpoints = {
     update: API + "/artworks/update/",
     getImage: API + "/artworks/image/",
     getPublish: API + "/artworks/publish",
-    liked: API + "/artworks/liked/",
-    disliked: API + "/artworks/disliked/",
+    getUserPublish: API + "/artworks/user/publish/",
+    getPublishForCategory: "".concat(API, "/artworks/publish/category/"),
+    liked: "".concat(API, "/artworks/liked/"),
+    disliked: "".concat(API, "/artworks/disliked/"),
     show: "".concat(API, "/artworks/show/"),
     slug: "".concat(API, "/artworks/slug/"),
     filterPublished: "".concat(API, "/artworks/filterPublished")
@@ -4824,12 +4828,13 @@ var routes = [{
   path: "/obras",
   component: importPage('artwork/ListArtwork'),
   beforeEnter: ifAuthenticated
-}, {
-  name: "showSlugArtwork",
-  path: "/obras/:slug",
-  // component: importPage('artwork/ListArtwork'),
-  beforeEnter: ifNotAuthenticated
-}, {
+}, // {
+//     name: "showSlugArtwork",
+//     path: "/obras/slug/:slug",
+//     // component: importPage('artwork/ListArtwork'),
+//     beforeEnter: ifNotAuthenticated,
+// },
+{
   name: "showArtwork",
   path: "/obras/:id",
   component: importPage('artwork/ShowArtwork'),

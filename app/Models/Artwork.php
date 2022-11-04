@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ArtworkStateEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -144,13 +145,25 @@ class Artwork extends Model
      * Devuelve la query filtrada por el precio de la obra
      *
      * @param  Builder $query
-     * @param  String $large
+     * @param  String $price
      * @return Builder
      */
     public function scopePrice($query, $price = null)
     {
         if (!$price) return $query;
         return $query->whereBetween('price', [0, $price]);
+    }
+
+
+    /**
+     * Devuelve la query filtrada las obras publicadas
+     *
+     * @param  Builder $query
+     * @return Builder
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('state', ArtworkStateEnum::PUBLISHED);
     }
 
     /**

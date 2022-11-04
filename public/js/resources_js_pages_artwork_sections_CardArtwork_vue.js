@@ -37,6 +37,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     artwork: {
       type: Object,
       "default": {}
+    },
+    showProfile: {
+      type: Boolean,
+      "default": true
+    },
+    routerLink: {
+      type: Boolean,
+      "default": true
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
@@ -145,7 +153,7 @@ var render = function render() {
     staticClass: "w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd"
   }, [_c("div", {
     staticClass: "rounded-md w-full hover:animate-shadow-drop-center"
-  }, [_c("router-link", {
+  }, [_vm.routerLink ? _c("router-link", {
     attrs: {
       to: {
         name: "showArtwork",
@@ -160,7 +168,7 @@ var render = function render() {
       src: _vm.getPathGallery(_vm.artwork),
       alt: _vm.artwork.title
     }
-  })]), _vm._v(" "), _c("div", {
+  })]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "flex flex-col justify-between space-y-8 bg-gray-50"
   }, [_c("div", {
     staticClass: "space-y-2"
@@ -169,6 +177,12 @@ var render = function render() {
   }, [_vm._v("\n                    " + _vm._s(_vm.artwork.title) + "\n                ")]), _vm._v(" "), _c("p", {
     staticClass: "text-primary text-xs"
   }, [_vm._v("\n                    " + _vm._s(_vm.getDimensions(_vm.artwork)) + "\n                    " + _vm._s(_vm.getCategoryName(_vm.artwork.categories)) + "\n                    " + _vm._s(_vm.getSubCategory(_vm.artwork.labels)) + "\n                ")]), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.showProfile,
+      expression: "showProfile"
+    }],
     staticClass: "flex justify-start items-center"
   }, [_c("img", {
     staticClass: "img-thumbnail border w-14 h-14 rounded-full",
@@ -201,6 +215,7 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa-regular fa-bookmark"
   })]), _vm._v(" "), _c("button", {
+    staticClass: "hover:text-gray-700",
     on: {
       click: function click($event) {
         $event.stopPropagation();
@@ -209,7 +224,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-regular fa-heart",
-    "class": _vm.isLike ? "border rounded-full p-1 text-red-800" : ""
+    "class": _vm.isLike ? "p-1 text-red-800" : ""
   })])])])])])], 1), _vm._v(" "), _c("loading-overlay", {
     attrs: {
       active: _vm.loadLiked,

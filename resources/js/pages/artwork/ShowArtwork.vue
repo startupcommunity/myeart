@@ -46,24 +46,24 @@
                                 </h1>
                             </div>
                             <div class="text-gray-400 flex justify-end">
-                                <button class="pr-4" @click.stop="">
+                                <button
+                                    class="pr-4 hover:text-gray-700"
+                                    @click.stop=""
+                                >
                                     <i class="fa-regular fa-bookmark fa-2x"></i>
                                 </button>
                                 <button
-                                    class="pr-4"
+                                    class="pr-4 hover:text-gray-700"
                                     @click.stop="likeOrDislike()"
                                 >
                                     <i
                                         class="fa-regular fa-heart fa-2x"
-                                        :class="
-                                            isLike
-                                                ? 'border rounded-full p-1 text-red-800'
-                                                : ''
-                                        "
+                                        :class="{ 'p-1 text-red-800': isLike }"
                                     ></i>
                                 </button>
                                 <button
                                     @click.stop="sharePublicArtwork(artwork)"
+                                    class="hover:text-gray-700"
                                 >
                                     <i
                                         class="fa-solid fa-share-nodes fa-2x"
@@ -277,27 +277,152 @@
             </div>
         </section>
         <!-- /sobre la obra -->
+
+        <!-- sobre el artista -->
+        <section class="bg-gray-100">
+            <div class="container py-20">
+                <div class="flex flex-wrap">
+                    <div class="w-full lg:w-[60%]">
+                        <div class="border-b border-zinc-900 pb-5">
+                            <h2
+                                class="text-primary text-2xl leading-5 tracking-widest uppercase"
+                            >
+                                Sobre el artista
+                            </h2>
+                        </div>
+                        <div class="mt-5">
+                            <div
+                                class="flex flex-wrap justify-center lg:justify-between w-full"
+                            >
+                                <div
+                                    class="w-full md:w-2/4 h-80 md:h-80 xl:h-80 2xl:h-[26rem] md:pr-10"
+                                >
+                                    <img
+                                        :src="
+                                            getProfilePhoto(artwork.user) ??
+                                            getURLDefaultProfilePhoto
+                                        "
+                                        class="border w-full h-full rounded-full object-cover object-center"
+                                        alt="profile-picture"
+                                    />
+                                </div>
+                                <div
+                                    class="md:w-2/4 h-full md:h-80 xl:h-80 2xl:h-[26rem] grid md:grid-cols-1 content-center md:content-between justify-items-center md:justify-items-start mx-auto"
+                                >
+                                    <div class="w-full">
+                                        <h3
+                                            class="font-bold text-2xl text-zinc-900 leading-7"
+                                        >
+                                            {{ userArtwork?.name }}
+                                        </h3>
+                                        <p
+                                            class="font-medium text-base text-gray-600"
+                                        >
+                                            {{
+                                                userArtwork?.profile?.bio ??
+                                                "Sin biografía"
+                                            }}
+                                        </p>
+                                    </div>
+                                    <div class="w-full">
+                                        <button
+                                            class="btn btn-primary btn-sm text-sm px-4 uppercase w-2/4 flex justify-center md:justify-start"
+                                        >
+                                            Seguir
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /sobre el artista -->
+
+        <!-- mas obras del artista -->
+        <section class="bg-white">
+            <div class="container py-20">
+                <div class="w-full">
+                    <h2
+                        class="text-primary text-2xl leading-5 tracking-widest uppercase text-center"
+                    >
+                        Mas obras de {{ userArtwork?.name }}
+                    </h2>
+                </div>
+                <div class="py-10">
+                    <LoadingTailwind
+                        v-show="loadUserArtworks"
+                        css="w-full animate-swing-in-top-fwd"
+                    />
+                    <div id="slider-user-artworks">
+                        <CardArtwork
+                            v-for="art in userArtworks"
+                            :artwork="art"
+                            :showProfile="false"
+                            :key="art.id"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /mas obras del artista -->
+
+        <!-- otras obras -->
+        <section class="bg-gray-100">
+            <div class="container py-20">
+                <div class="w-full">
+                    <h2
+                        class="text-primary text-2xl leading-5 tracking-widest uppercase text-center"
+                    >
+                        Otras obras que te pueden interesar
+                    </h2>
+                </div>
+                <div class="py-10">
+                    <LoadingTailwind
+                        v-show="loadOtherArtworks"
+                        css="w-full animate-swing-in-top-fwd"
+                    />
+                    <div id="slider-other-artworks">
+                        <CardArtwork
+                            v-for="art in otherArtworks"
+                            :artwork="art"
+                            :showProfile="false"
+                            :key="art.id"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /otras obras -->
     </main-layout>
 </template>
 <script>
+import { tns } from "tiny-slider";
 import { mapGetters } from "vuex";
+import LoadingTailwind from "../../components/LoadingTailwind.vue";
 import utilMixin from "../../mixins/utilMixin";
 import Header from "../landing/sections/Header.vue";
 import MainLayout from "../layouts/MainLayout.vue";
+import CardArtwork from "./sections/CardArtwork.vue";
 
 export default {
     name: "ShowArtwork",
-    components: { MainLayout, Header },
+    components: { MainLayout, Header, LoadingTailwind, CardArtwork },
     mixins: [utilMixin],
     data() {
         return {
             previewFiles: [],
+            userArtworks: [],
+            otherArtworks: [],
             artwork: {
                 categories: [],
                 subcategories: [],
                 labels: [],
             },
             isLike: false,
+            loadUserArtworks: false,
+            loadOtherArtworks: false,
         };
     },
     mounted() {
@@ -312,6 +437,13 @@ export default {
         ...mapGetters({
             user: "getProfile",
         }),
+
+        /**
+         * Devuelve el usuario o artista de la obra a mostrar
+         */
+        userArtwork() {
+            return this.artwork?.user;
+        },
 
         /**
          * Obtiene el string completo para la categoría y derivados
@@ -368,8 +500,6 @@ export default {
                 .get(this.ep.artworks.show + id)
                 .then((resp) => {
                     if (resp.status === 200) {
-                        console.log(resp);
-
                         // data
                         const { gallery } = resp.data;
 
@@ -381,10 +511,73 @@ export default {
 
                         // si esta like por el usuario
                         this.isLiked();
+
+                        return true;
+                    }
+
+                    return false;
+                })
+
+                // cargar o no las demás obras del usuario
+                .then((resp) => {
+                    if (resp) {
+                        this.getUserArtworks();
+                        this.getPublishForCategory();
                     }
                 })
                 .catch((error) => console.error(error))
                 .finally(() => (this.globalLoading = false));
+        },
+
+        /**
+         * Obtener otras obras del autor de la obra seleccionada
+         * ignorando la obra actual mostrada
+         */
+        getUserArtworks() {
+            this.loadUserArtworks = true;
+            const userPublish = this.ep.artworks.getUserPublish;
+            const userID = this.userArtwork?.id;
+            const endpoint = `${userPublish + userID}/${this.artwork.id}`;
+
+            this.axios
+                .get(endpoint)
+                .then(async (resp) => {
+                    if (resp.status === 200) {
+                        return (this.userArtworks = await resp.data);
+                    }
+
+                    return false;
+                })
+                .then((resp) =>
+                    resp ? this.showTNS("#slider-user-artworks") : false
+                )
+                .catch((error) => console.log(error))
+                .finally(() => (this.loadUserArtworks = false));
+        },
+
+        /**
+         * Obtener otras obras del autor de la obra seleccionada
+         * ignorando la obra actual mostrada
+         */
+        getPublishForCategory() {
+            this.loadOtherArtworks = true;
+            const userPublish = this.ep.artworks.getPublishForCategory;
+            const categoryID = this.artwork.categories[0]?.id;
+            const userID = this.userArtwork?.id;
+            const endpoint = `${userPublish + categoryID}/${userID}`;
+
+            this.axios
+                .get(endpoint)
+                .then(async (resp) => {
+                    if (resp.status !== 200) return false;
+
+                    return (this.otherArtworks = await resp.data);
+                })
+                .then((resp) =>
+                    resp ? this.showTNS("#slider-other-artworks") : false
+                )
+                .catch((error) => console.log(error))
+                .finally(() => (this.loadOtherArtworks = false));
         },
 
         /**
@@ -449,6 +642,47 @@ export default {
             this.isLike = this.artwork.likes.some(
                 (like) => like.user_id === this.user.id
             );
+        },
+
+        /**
+         * Iniciar el carousel de obras del usuario
+         */
+        showTNS(id) {
+            tns({
+                container: id,
+                mode: "carousel",
+                speed: 800,
+                gutter: 20,
+                items: 5,
+                autoplay: true,
+                mouseDrag: true,
+                autoplayButtonOutput: false,
+                autoplayHoverPause: true,
+                lazyload: true,
+                controls: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        edgePadding: 50,
+                    },
+                    500: {
+                        items: 2,
+                        edgePadding: 30,
+                    },
+                    700: {
+                        items: 3,
+                        edgePadding: 30,
+                    },
+                    900: {
+                        items: 4,
+                        edgePadding: 30,
+                    },
+                    1200: {
+                        items: 5,
+                        edgePadding: 0,
+                    },
+                },
+            });
         },
     },
 };

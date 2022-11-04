@@ -11,11 +11,12 @@ class ArtworkDB
 {
     /**
      * Devuelve las obras del usuario logueado
+     * o del usuario indicado por parámetro
      * junto a sus relaciones
      */
-    public static function getUserArtworks(): Collection
+    public static function getUserArtworks($userID = null): Collection
     {
-        $userID = auth()->user()->id;
+        $userID = !$userID ? auth()->user()->id : $userID;
         $data = Artwork::with(['categories', 'labels', 'gallery', 'user'])
             ->where('user_id', $userID)
             ->orderBy('id', 'Desc')
@@ -33,6 +34,47 @@ class ArtworkDB
             ->where('state', ArtworkStateEnum::PUBLISHED)
             ->orderBy('id', 'Desc')
             ->get();
+    }
+
+
+    /**
+     * Devuelve todas las obras publicadas del usuario indicado
+     * 
+     * @param Int $userID           id del usuario
+     * @param Int $artworkID        id de la obra a ignorar
+     */
+    public static function getPublishUserArtworks(int $userID, int $artworkID = null): Collection
+    {
+        $data = Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])
+            ->where('user_id', $userID)
+            ->published()
+            ->orderByDesc('id');
+
+        // ignora una la obra indicada en caso de existir
+        !$artworkID ?: $data->where('id', '<>', $artworkID);
+
+        return $data->get();
+    }
+
+    /**
+     * Devuelve las obras filtrada por una categoría
+     * se puede indicar el usuario si se requiere ignorar
+     * las obras de dicho usuario
+     *
+     * @param integer $categoryID        id de la categoría
+     * @param integer|null $userID       id del usuario a ignorar
+     */
+    public static function getPublishForCategory(int $categoryID, int $userID = null): Collection
+    {
+        $data = Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])
+            ->orderByDesc('id')
+            ->published()
+            ->category($categoryID);
+
+        // ignora el usuario indicada en caso de existir
+        !$userID ?: $data->where('user_id', '<>', $userID);
+
+        return $data->get();
     }
 
     /**
@@ -56,7 +98,7 @@ class ArtworkDB
     {
         $art =  self::getArtwork($id);
 
-        return $art->load(['categories', 'subcategories', 'labels', 'gallery', 'user' , 'likes']);
+        return $art->load(['categories', 'subcategories', 'labels', 'gallery', 'user.profile', 'likes']);
     }
 
     /**

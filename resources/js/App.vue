@@ -9,7 +9,7 @@
             :closeOnClick="true"
             class="mt-3 mr-3"
         />
-        <router-view></router-view>
+        <router-view :key="$route.path"></router-view>
     </v-app>
 </template>
 

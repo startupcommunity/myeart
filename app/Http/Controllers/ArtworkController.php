@@ -224,4 +224,39 @@ class ArtworkController extends Controller
 
         return $this->resp->json($resp, 200);
     }
+
+    /**
+     * Devuelve las obras del usuario indicado por
+     * parámetro que han sido publicadas
+     *
+     * @param integer $id                   id del usuario
+     * @param integer|null $artworkID       id de la obra a ignorar
+     * @return JsonResponse
+     */
+    public function getUserPublish(int $id, int $artworkID = null): JsonResponse
+    {
+        $this->authorize('view', Artwork::class);
+
+        $resp = ArtworkDB::getPublishUserArtworks($id, $artworkID);
+
+        return $this->resp->json($resp, 200);
+    }
+
+    /**
+     * Devuelve las obras filtrada por una categoría
+     * se puede indicar el usuario si se requiere ignorar
+     * las obras de dicho usuario
+     *
+     * @param integer $categoryID        id de la categoría
+     * @param integer|null $userID       id del usuario a ignorar
+     * @return JsonResponse
+     */
+    public function getPublishForCategory(int $categoryID, int $userID = null): JsonResponse
+    {
+        $this->authorize('view', Artwork::class);
+
+        $resp = ArtworkDB::getPublishForCategory($categoryID, $userID);
+
+        return $this->resp->json($resp, 200);
+    }
 }

@@ -7,7 +7,7 @@
     <meta name="csrf-token" value="{{ csrf_token() }}" />
 
     {{--  title  --}}
-    <title>MY HEARTS</title>
+    <title>{{ config('app.name') }}</title>
 
     {{--  path secure rul  --}}
     <meta name="secure-url" content="{{ secure_url('/') }}" />
@@ -18,7 +18,6 @@
     <meta name="artwork-gallery" content="{{ config('storage.artwork_gallery') }}" />
 
     <!-- CDNs de Font-Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
     <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
     <script src="{{ mix('js/app.js') }}" type="text/javascript" defer></script>
 </head>

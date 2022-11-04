@@ -8,6 +8,7 @@
                         id: artwork.id,
                     },
                 }"
+                v-if="routerLink"
             >
                 <img
                     :src="getPathGallery(artwork)"
@@ -27,7 +28,10 @@
                         {{ getCategoryName(artwork.categories) }}
                         {{ getSubCategory(artwork.labels) }}
                     </p>
-                    <div class="flex justify-start items-center">
+                    <div
+                        class="flex justify-start items-center"
+                        v-show="showProfile"
+                    >
                         <img
                             :src="
                                 getProfilePhoto(artwork.user) ??
@@ -60,14 +64,10 @@
                             >
                                 <i class="fa-regular fa-bookmark"></i>
                             </button>
-                            <button @click.stop="likeOrDislike(artwork.id)">
+                            <button @click.stop="likeOrDislike(artwork.id)" class="hover:text-gray-700">
                                 <i
                                     class="fa-regular fa-heart"
-                                    :class="
-                                        isLike
-                                            ? 'border rounded-full p-1 text-red-800'
-                                            : ''
-                                    "
+                                    :class="isLike ? 'p-1 text-red-800' : ''"
                                 ></i>
                             </button>
                         </div>
@@ -102,6 +102,14 @@ export default {
         artwork: {
             type: Object,
             default: {},
+        },
+        showProfile: {
+            type: Boolean,
+            default: true,
+        },
+        routerLink: {
+            type: Boolean,
+            default: true,
         },
     },
     computed: {

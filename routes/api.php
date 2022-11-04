@@ -6,7 +6,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PaisesController;
 use App\Http\Controllers\ArtisticActivitysController;
-use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShippingAddressController;
@@ -46,20 +45,7 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     // obras
-    Route::group(['prefix' => 'artworks'], function () {
-        Route::get('/', [ArtworkController::class, 'getArtworks'])->name('getArtworks');
-        Route::get('/publish', [ArtworkController::class, 'getPublish'])->name('getAllArtworks');
-        Route::get('/image/{id}', [ArtworkController::class, 'getImage'])->name('getImage');
-        Route::get('/edit/{id}', [ArtworkController::class, 'editArtworks'])->name('editArtworks');
-        Route::get('/show/{id}', [ArtworkController::class, 'show'])->name('showArtworks');
-        Route::get('/slug/{slug}', [ArtworkController::class, 'slug'])->name('showSlugArtworks');
-        Route::delete('/delete/{id}', [ArtworkController::class, 'deleteArtworks'])->name('deleteArtworks');
-        Route::post('/filterPublished', [ArtworkController::class, 'filterArtworksPublished'])->name('filterArtworksPublished');
-        Route::post('/create', [ArtworkController::class, 'save'])->name('saveArtwork');
-        Route::post('/liked/{id}', [ArtworkController::class, 'liked'])->name('likedArtworks');
-        Route::post('/disliked/{id}', [ArtworkController::class, 'disliked'])->name('dislikedArtworks');
-        Route::put('/update/{id}', [ArtworkController::class, 'update'])->name('update');
-    });
+    require __DIR__ . '/api/artwork.php';
 
     // categorías
     Route::group(['prefix' => 'categories'], function () {
