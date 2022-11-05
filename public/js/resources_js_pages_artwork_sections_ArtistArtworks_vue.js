@@ -584,7 +584,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getCategories: function getCategories() {
       var _this2 = this;
 
-      this.axios.get("/api/categories").then( /*#__PURE__*/function () {
+      this.axios.get(this.ep.global.categories).then( /*#__PURE__*/function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(resp) {
           return _regeneratorRuntime().wrap(function _callee2$(_context2) {
             while (1) {

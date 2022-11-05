@@ -96,9 +96,7 @@ class ArtworkFactory
   /**
    * Almacena los datos y relaciones de la obra
    * sync:
-   * categories
-   * techniques
-   * styles
+   * type => categorías
    *
    * @param array $data
    * @return object|null
@@ -113,19 +111,16 @@ class ArtworkFactory
         'title', 'description', 'date_created', 'width', 'large', 'weight', 'location', 'shipping', 'price', 'state'
       ])->toArray();
 
-      // datos extra
-      $categories = isset($data['categories']) ? $data['categories'] : null;
-
       // obra creada
       $artwork = $user->artworks()->create($dataArtwork);
 
-      // attach data
-      if ($categories) {
-        foreach ($data['categories'] as $cat) {
-          $category = json_decode($cat);
-          $artwork->labels()->attach($category->sub_sub_category_id, [
-            'category_id' => $category->category_id,
-            'sub_category_id' => $category->sub_category_id
+      // sync data
+      $type = json_decode($data['type']);
+      if ($type->category_id) {
+        foreach ($type->sub_category as $sub) {
+          $artwork->labels()->attach($sub->labels, [
+            'category_id' => $type->category_id,
+            'sub_category_id' => $sub->id
           ]);
         }
       }

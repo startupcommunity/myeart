@@ -344,6 +344,7 @@ export default {
         this.sections.personal = true;
 
         this.loadSectionForParameter();
+        globalThis.scrollTo(0, 0);
     },
     methods: {
         /**

@@ -34,7 +34,7 @@ class CreateArtworkRequest extends FormRequest
             'location'=> 'nullable|string|max:100',
             'shipping'=> 'nullable|string|max:100',
             'state'=> 'required|numeric|max:3',
-            'categories'=> 'nullable',
+            'type'=> 'nullable',
             'gallery'=> 'nullable',
         ];
     }

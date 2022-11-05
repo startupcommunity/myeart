@@ -2375,6 +2375,7 @@ var endpoints = {
   },
   // acceso global
   global: {
+    categories: "".concat(API, "/categories"),
     subcategories: "".concat(API, "/subcategories/"),
     labels: "".concat(API, "/labels/")
   }

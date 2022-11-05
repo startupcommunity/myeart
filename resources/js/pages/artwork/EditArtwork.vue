@@ -359,7 +359,6 @@ import Category from "./sections/Category.vue";
 // mixin
 import createRules from "./utils/createRulesMixin";
 import uploadFilesMixin from "./utils/uploadFilesMixin";
-import CommonMixin from "./utils/CommonMixin";
 import utilMixin from "../../mixins/utilMixin";
 import getDataMixin from "../../mixins/getDataMixin";
 import requestErrorsMixin from "../../mixins/requestErrorsMixin";
@@ -374,7 +373,6 @@ export default {
         requestErrorsMixin,
         uploadFilesMixin,
         getDataMixin,
-        CommonMixin,
     ],
     data() {
         return {

@@ -37,7 +37,7 @@ export default {
          */
         getCategories() {
             this.axios
-                .get("/api/categories")
+                .get(this.ep.global.categories)
                 .then(async (resp) => {
                     this.categories = await resp.data;
                 })

@@ -294,21 +294,9 @@
                         </v-col>
                         <v-col cols="12" md="8">
                             <Category
-                                v-for="(category, index) in form.categories"
-                                :key="index"
-                                :category="category"
-                                :index="index"
+                                :category="form.type"
                                 :dataCategories="categories"
-                                @delete-category="deleteCategory"
                             />
-
-                            <div class="py-4 flex justify-center items-center">
-                                <v-btn outlined @click="addNewCategory">
-                                    <i class="fas fa-plus">
-                                        Agregar categoría
-                                    </i>
-                                </v-btn>
-                            </div>
                         </v-col>
 
                         <!-- ------------------- -->
@@ -323,7 +311,6 @@
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
                                     type="submit"
                                     @click.stop="isDraft = 3"
-                                    :disabled="!formIsValid"
                                 >
                                     Guardar como borrador
                                 </button>
@@ -365,7 +352,6 @@ import Footer from "../landing/sections/Footer.vue";
 import Category from "./sections/Category.vue";
 
 // mixin
-import CommonMixin from "./utils/CommonMixin";
 import createRules from "./utils/createRulesMixin";
 import uploadFilesMixin from "./utils/uploadFilesMixin";
 import utilMixin from "../../mixins/utilMixin";
@@ -381,7 +367,6 @@ export default {
         getDataMixin,
         requestErrorsMixin,
         uploadFilesMixin,
-        CommonMixin,
     ],
     data() {
         return {
@@ -395,13 +380,10 @@ export default {
                 date_created: "",
                 location: "",
                 shipping: "",
-                categories: [
-                    {
-                        category_id: "",
-                        sub_category_id: "",
-                        sub_sub_category_id: [],
-                    },
-                ],
+                type: {
+                    category_id: "",
+                    sub_category: [],
+                },
             },
             formIsValid: true,
             menuPicker: false,
@@ -443,13 +425,10 @@ export default {
             data.append("location", this.form.location);
             data.append("shipping", this.form.shipping);
             data.append("state", this.isDraft);
+            data.append(`type`, JSON.stringify(this.form.type));
 
             // data sync
-            const categories = this.form.categories;
             const files = this.uploadedFiles;
-            categories.forEach((cat) =>
-                data.append(`categories[]`, JSON.stringify(cat))
-            );
             files.forEach((file) => data.append(`gallery[]`, file));
 
             // request

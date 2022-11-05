@@ -31,6 +31,7 @@ const endpoints = {
 
     // acceso global
     global: {
+        categories: `${API}/categories`,
         subcategories: `${API}/subcategories/`,
         labels: `${API}/labels/`,
     },

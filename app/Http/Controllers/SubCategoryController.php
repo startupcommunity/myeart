@@ -24,7 +24,7 @@ class SubCategoryController extends Controller
      */
     public function getSubcategories(int $id): JsonResponse
     {
-        $resp = SubCategory::where('category_id', $id)->get();
+        $resp = SubCategory::with('labels')->where('category_id', $id)->get();
 
         if (!$resp) {
             return $this->resp->json('Error al obtener la información', 500);
