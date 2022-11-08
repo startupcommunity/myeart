@@ -4600,6 +4600,14 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].mixin({
     },
 
     /**
+     * Devuelve la url de la imagen por defecto de una obra
+     * @returns string
+     */
+    getURLDefaultFrontArtwork: function getURLDefaultFrontArtwork() {
+      return "/img/artwork/default.webp";
+    },
+
+    /**
      * Endpoints para consumir la API rest
      *
      * Todas las rutas que terminan en '/'

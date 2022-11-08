@@ -269,13 +269,13 @@ export default {
          * Path completo de galeria
          */
         setPathGallery(artwork) {
-            if (!artwork.gallery.length) return "/";
+            if (!artwork.gallery.length) return this.getURLDefaultFrontArtwork;
 
             const front_page = artwork.gallery.filter(
                 (pic) => pic.front_page === 1
             );
 
-            return `${this.pathArtworkGallery + front_page[0].picture}`;
+            return `${this.pathArtworkGallery + front_page[0]?.picture}`;
         },
 
         /**

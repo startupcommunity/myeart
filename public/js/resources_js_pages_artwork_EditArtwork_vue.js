@@ -64,6 +64,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       form: {
+        id: "",
         title: "",
         description: "",
         width: "",
@@ -73,9 +74,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         date_created: "",
         location: "",
         shipping: "",
-        categories: [],
+        state: "",
         gallery: [],
-        state: ""
+        type: {
+          category_id: "",
+          sub_category: []
+        }
       },
       formIsValid: true,
       menuPicker: false,
@@ -83,13 +87,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    // mixin
+    // @getDataMixin
     this.getCategories(); // load data
 
     this.loadData();
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_11__.mapGetters)({
-    userProfile: "getProfile"
+    user: "getProfile"
   })),
   methods: {
     /**
@@ -112,32 +116,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   // data
                   var artwork = resp.data;
                   var categories = artwork.categories,
-                      gallery = artwork.gallery; // ----------------
-                  // adaptar datos
-                  // ----------------
+                      gallery = artwork.gallery; // datos
 
-                  _this.form = artwork; // ---------------------
-                  // adaptar categorías
-                  // ---------------------
+                  _this.form = artwork; // delete this.form.categories;
 
-                  _this.loadCategories(categories); // galeria
+                  _this.form.type = {
+                    category_id: "",
+                    sub_category: []
+                  }; // tipo
+
+                  _this.loadType(categories); // galeria
 
 
-                  gallery.forEach(function (picture) {
-                    var fullname = picture.picture;
-                    var path = "".concat(_this.pathArtworkGallery + fullname);
-
-                    var promise = _this.getFileImage(path, picture);
-
-                    promise.then(function (resp) {
-                      var data = {
-                        file: resp.file,
-                        front: resp.front
-                      };
-
-                      _this.addFileToUploadFilesWithFront(data);
-                    });
-                  });
+                  _this.loadGallery(gallery);
                 })["catch"](function (error) {
                   return console.log(error);
                 })["finally"](function () {
@@ -180,67 +171,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     updateArtwork: function updateArtwork() {
       var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var data;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (!(_this2.form.state === 1)) {
-                  _context2.next = 3;
-                  break;
-                }
-
-                if (_this2.$refs.artworkForm.validate()) {
-                  _context2.next = 3;
-                  break;
-                }
-
-                return _context2.abrupt("return");
-
-              case 3:
-                // loading
-                _this2.globalLoading = true; // cambiar estado
-
-                _this2.changeState(); // cargar datos
+      if (this.form.state === 1) {
+        if (!this.$refs.artworkForm.validate()) return;
+      } // loading
 
 
-                _context2.next = 7;
-                return _this2.loadFormData();
+      this.globalLoading = true; // cambiar estado
 
-              case 7:
-                data = _context2.sent;
+      this.changeState(); // cargar datos
 
-                // request
-                _this2.axios.post(_this2.ep.artworks.update + _this2.form.id, data, {
-                  headers: {
-                    "Content-Type": "multipart/form-data"
-                  }
-                }).then(function (resp) {
-                  if (resp.status === 200) {
-                    // mensaje
-                    var state = _this2.form.state;
-                    var draftMsj = "Obra guardada como borrador";
-                    var publishMsj = "Obra publicada con éxito";
-                    var text = state === 3 ? draftMsj : publishMsj;
+      var data = this.loadFormData(); // request
 
-                    _this2.noty(text);
+      this.axios.post(this.ep.artworks.update + this.form.id, data, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function (resp) {
+        if (resp.status === 200) {
+          // mensaje
+          var state = _this2.form.state;
+          var draftMsj = "Obra guardada como borrador";
+          var publishMsj = "Obra publicada con éxito";
+          var text = state === 3 ? draftMsj : publishMsj;
 
-                    _this2.$router.push("/usuario/perfil/".concat(_this2.userProfile.id, "/obras"));
-                  }
-                })["catch"](function (error) {
-                  _this2.showRequestErrors(error);
-                })["finally"](function () {
-                  return _this2.globalLoading = false;
-                });
+          _this2.noty(text);
 
-              case 9:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
+          _this2.$router.push("/usuario/perfil/".concat(_this2.user.id, "/obras"));
+        }
+      })["catch"](function (error) {
+        return _this2.showRequestErrors(error);
+      })["finally"](function () {
+        return _this2.globalLoading = false;
+      });
     },
 
     /**
@@ -269,7 +231,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      */
     loadFormData: function loadFormData() {
       var form = this.form;
-      var categories = form.categories;
       var files = this.uploadedFiles;
       var data = new FormData();
       data.append("_method", "PUT");
@@ -282,11 +243,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       data.append("date_created", form.date_created);
       data.append("location", form.location);
       data.append("shipping", form.shipping);
-      data.append("state", form.state); // data sync
+      data.append("state", form.state);
+      data.append("type", JSON.stringify(this.form.type)); // data sync
 
-      categories.forEach(function (cat) {
-        return data.append("categories[]", JSON.stringify(cat));
-      });
       files.forEach(function (file) {
         return data.append("gallery[]", file.file);
       });
@@ -303,7 +262,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var form = this.form;
       var files = this.uploadedFiles;
 
-      if (form.title && form.description && form.width && form.large && form.weight && form.price && form.date_created && form.location && form.shipping && form.categories.length && files.length) {
+      if (form.title && form.description && form.width && form.large && form.weight && form.price && form.date_created && form.location && form.shipping && form.type && files.length) {
         if (form.state == this.STATEARTWORK.draft) {
           form.state = this.STATEARTWORK.published;
         }
@@ -314,45 +273,76 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * Carga las categorías
      * sub categorías y etiquetas
      */
-    loadCategories: function loadCategories(data) {
+    loadType: function loadType(data) {
       var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var group, key, cat, sub;
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var group, key, cat, defaultData, index;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _this4.form.categories = [];
-                _context3.next = 3;
+                _context2.next = 2;
                 return data.group(function (cat) {
-                  return cat.pivot.category_id;
+                  return cat.pivot.sub_category_id;
                 });
 
-              case 3:
-                group = _context3.sent;
+              case 2:
+                group = _context2.sent;
+                _this4.form.type.category_id = data[0].id;
 
                 for (key in group) {
                   cat = group[key];
-                  sub = cat.map(function (d) {
-                    return d.pivot.sub_sub_category_id;
-                  });
 
-                  _this4.form.categories.push({
-                    category_id: parseInt(key),
-                    sub_category_id: cat[0].pivot.sub_category_id,
-                    sub_sub_category_id: sub,
-                    key: key
+                  _this4.form.type.sub_category.push({
+                    id: cat[0].pivot.sub_category_id,
+                    labels: cat.map(function (d) {
+                      return d.pivot.sub_sub_category_id;
+                    })
                   });
-                }
+                } // se agrega un objecto vacio por default
+                // esto para que no ocurra ningún error al
+                // momento de modificar las etiquetas
 
-              case 5:
+
+                defaultData = {
+                  id: 0,
+                  labels: []
+                };
+                index = _this4.form.type.sub_category.length;
+
+                _this4.form.type.sub_category.splice(index, 0, defaultData);
+
+              case 8:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3);
+        }, _callee2);
       }))();
+    },
+
+    /**
+     * Cargar las imagenes en el componente uploadFIle
+     */
+    loadGallery: function loadGallery(gallery) {
+      var _this5 = this;
+
+      gallery.forEach(function (picture) {
+        var fullname = picture.picture;
+        var path = "".concat(_this5.pathArtworkGallery + fullname);
+
+        var promise = _this5.getFileImage(path, picture);
+
+        promise.then(function (resp) {
+          var data = {
+            file: resp.file,
+            front: resp.front
+          };
+
+          _this5.addFileToUploadFilesWithFront(data);
+        });
+      });
     }
   }
 });
@@ -382,19 +372,23 @@ __webpack_require__.r(__webpack_exports__);
     dataCategories: {
       type: Array,
       "default": []
+    },
+    edit: {
+      type: Boolean,
+      "default": false,
+      description: ""
     }
   },
   data: function data() {
     return {
-      loading: false
+      loading: false,
+      changeCat: false
     };
   },
-  mounted: function mounted() {// if (this.category.category_id) {
-    //     this.loadSubCat(this.category.category_id);
-    // }
-    // if (this.category.sub_category_id) {
-    //     this.loadLabels(this.category);
-    // }
+  mounted: function mounted() {
+    if (this.category.category_id) {
+      this.loadSubCat(this.category.category_id, false);
+    }
   },
   methods: {
     /**
@@ -403,15 +397,17 @@ __webpack_require__.r(__webpack_exports__);
     loadSubCat: function loadSubCat(category_id) {
       var _this = this;
 
+      var reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      if (reset) this.resetSubCategory();
+
       if (!category_id) {
-        this.category.category_id = "";
-        this.resetSubCategory();
+        this.category.category_id = ""; // @getDataMixin
+
         this.subCategories = [];
         return;
       }
 
       this.loading = true;
-      this.resetSubCategory();
       var ready = this.getSubCategories(category_id);
       ready.then(function () {
         return _this.loading = false;
@@ -455,6 +451,25 @@ __webpack_require__.r(__webpack_exports__);
      */
     resetSubCategory: function resetSubCategory() {
       this.category.sub_category = [];
+    },
+
+    /**
+     * Carga el v-model con los labels correspondientes
+     * encontrando por medio del id de ambos arrays
+     *
+     * PD: esto solo funciona para la version editar
+     */
+    getSubIndex: function getSubIndex(subID) {
+      // intenta encontrar el index si fue seleccionado la etiqueta
+      // en dicha sub categoría
+      var index = this.category.sub_category.findIndex(function (sub) {
+        return sub.id == subID;
+      });
+      var defaultIndex = this.category.sub_category.length - 1; // en caso de no existir se retorna el
+      // index por default creado al momento de cargar
+      // el array de etiquetas
+
+      return index === -1 ? defaultIndex : index;
     }
   }
 });
@@ -940,30 +955,13 @@ var render = function render() {
       cols: "12",
       md: "8"
     }
-  }, [_vm.form.categories.length ? _c("div", _vm._l(_vm.form.categories, function (category, index) {
-    return _c("Category", {
-      key: category.key,
-      attrs: {
-        category: category,
-        index: index,
-        dataCategories: _vm.categories
-      },
-      on: {
-        "delete-category": _vm.deleteCategory
-      }
-    });
-  }), 1) : _vm._e(), _vm._v(" "), _c("div", {
-    staticClass: "py-4 flex justify-center items-center"
-  }, [_c("v-btn", {
+  }, [_vm.form.type.category_id ? _c("Category", {
     attrs: {
-      outlined: ""
-    },
-    on: {
-      click: _vm.addNewCategory
+      category: _vm.form.type,
+      dataCategories: _vm.categories,
+      edit: true
     }
-  }, [_c("i", {
-    staticClass: "fas fa-plus"
-  }, [_vm._v("\n                                    Agregar categoría\n                                ")])])], 1)]), _vm._v(" "), _c("v-col", {
+  }) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
     attrs: {
       cols: "12"
     }
@@ -1034,6 +1032,11 @@ var render = function render() {
         large: "",
         color: "#B2794C",
         value: item.id
+      },
+      on: {
+        change: function change($event) {
+          _vm.changeCat = true;
+        }
       }
     }, [_c("span", {
       staticClass: "font-black tracking-wide uppercase text-gray-900"
@@ -1049,7 +1052,37 @@ var render = function render() {
       staticClass: "border-b border-zinc-900 py-4 mb-4 w-full md:w-4/5"
     }, [_c("h4", {
       staticClass: "font-black tracking-wide uppercase text-gray-900"
-    }, [_vm._v("\n                    " + _vm._s(sub.name) + "\n                ")])]), _vm._v(" "), _c("v-chip-group", {
+    }, [_vm._v("\n                    " + _vm._s(sub.name) + "\n                ")])]), _vm._v(" "), _vm.edit && !_vm.changeCat ? _c("v-chip-group", {
+      attrs: {
+        multiple: "",
+        column: ""
+      },
+      on: {
+        change: function change($event) {
+          return _vm.addSubCategoryAndLabel($event, sub.id);
+        }
+      },
+      model: {
+        value: _vm.category.sub_category[_vm.getSubIndex(sub.id)].labels,
+        callback: function callback($$v) {
+          _vm.$set(_vm.category.sub_category[_vm.getSubIndex(sub.id)], "labels", $$v);
+        },
+        expression: "category.sub_category[getSubIndex(sub.id)].labels"
+      }
+    }, _vm._l(sub.labels, function (label) {
+      return _c("v-chip", {
+        key: label.id,
+        attrs: {
+          filter: "",
+          outlined: "",
+          color: "#B2794C",
+          value: label.id,
+          small: ""
+        }
+      }, [_c("span", {
+        staticClass: "font-black tracking-wide uppercase text-gray-900"
+      }, [_vm._v("\n                        " + _vm._s(label.name) + "\n                    ")])]);
+    }), 1) : _c("v-chip-group", {
       attrs: {
         multiple: "",
         column: ""
@@ -1713,6 +1746,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       SHOW_ARTWORKS: 4
     };
   },
+  computed: {
+    /**
+     * Estado de las obras (state) validos
+     * @returns Object
+     */
+    STATEARTWORK: function STATEARTWORK() {
+      return {
+        published: 1,
+        sold: 2,
+        draft: 3
+      };
+    }
+  },
   methods: {
     /**
      * Obtener los paises para el select del perfil del usuario
@@ -1730,7 +1776,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return resp.data;
 
                 case 2:
-                  _this.countries = _context.sent;
+                  return _context.abrupt("return", _this.countries = _context.sent);
 
                 case 3:
                 case "end":
@@ -1744,7 +1790,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return _ref.apply(this, arguments);
         };
       }())["catch"](function (err) {
-        console.log(err);
+        return console.log(err);
       });
     },
 
@@ -1764,7 +1810,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return resp.data;
 
                 case 2:
-                  _this2.categories = _context2.sent;
+                  return _context2.abrupt("return", _this2.categories = _context2.sent);
 
                 case 3:
                 case "end":
@@ -1778,7 +1824,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return _ref2.apply(this, arguments);
         };
       }())["catch"](function (err) {
-        console.log(err);
+        return console.log(err);
       });
     },
 
@@ -1927,7 +1973,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context7.next = 2;
                 return _this5.axios.get(_this5.ep.global.subcategories + id).then(function (resp) {
-                  _this5.subCategories = resp.data;
+                  return _this5.subCategories = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
@@ -1962,7 +2008,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 ep = "".concat(_this6.ep.global.labels + category_id, "/").concat(sub_category_id);
                 _context8.next = 3;
                 return _this6.axios.get(ep).then(function (resp) {
-                  _this6.subLabels = resp.data;
+                  return _this6.subLabels = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
@@ -2177,19 +2223,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         val: "Zaragoza"
       }];
     }
-  },
-  computed: {
-    /**
-     * Estado de las obras (state) validos
-     * @returns Object
-     */
-    STATEARTWORK: function STATEARTWORK() {
-      return {
-        published: 1,
-        sold: 2,
-        draft: 3
-      };
-    }
   }
 });
 
@@ -2218,6 +2251,8 @@ __webpack_require__.r(__webpack_exports__);
      * @param {Object} request      datos recibidos del backend
      */
     showRequestErrors: function showRequestErrors(request) {
+      console.log(request);
+
       if (request.response.data.errors) {
         var errors = request.response.data.errors;
         var mjsErrors = [];
@@ -2228,7 +2263,7 @@ __webpack_require__.r(__webpack_exports__);
 
         this.$notify({
           title: "Aviso!",
-          text: mjsErrors.join('<br/>'),
+          text: mjsErrors.join("<br/>"),
           group: "container",
           type: "warning",
           duration: 6000

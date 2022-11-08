@@ -18,6 +18,7 @@
                         v-for="item in dataCategories"
                         :key="item.id"
                         :value="item.id"
+                        @change="changeCat = true"
                     >
                         <span
                             class="font-black tracking-wide uppercase text-gray-900"
@@ -43,7 +44,35 @@
                         {{ sub.name }}
                     </h4>
                 </div>
+
+                <!-- para el editar -->
                 <v-chip-group
+                    v-if="edit && !changeCat"
+                    multiple
+                    column
+                    @change="addSubCategoryAndLabel($event, sub.id)"
+                    v-model="category.sub_category[getSubIndex(sub.id)].labels"
+                >
+                    <v-chip
+                        filter
+                        outlined
+                        color="#B2794C"
+                        v-for="label in sub.labels"
+                        :key="label.id"
+                        :value="label.id"
+                        small
+                    >
+                        <span
+                            class="font-black tracking-wide uppercase text-gray-900"
+                        >
+                            {{ label.name }}
+                        </span>
+                    </v-chip>
+                </v-chip-group>
+
+                <!-- para el crear -->
+                <v-chip-group
+                    v-else
                     multiple
                     column
                     @change="addSubCategoryAndLabel($event, sub.id)"
@@ -82,35 +111,39 @@ export default {
             type: Array,
             default: [],
         },
+        edit: {
+            type: Boolean,
+            default: false,
+            description: "",
+        },
     },
     data() {
         return {
             loading: false,
+            changeCat: false,
         };
     },
     mounted() {
-        // if (this.category.category_id) {
-        //     this.loadSubCat(this.category.category_id);
-        // }
-
-        // if (this.category.sub_category_id) {
-        //     this.loadLabels(this.category);
-        // }
+        if (this.category.category_id) {
+            this.loadSubCat(this.category.category_id, false);
+        }
     },
     methods: {
         /**
          * Cargar las subcategorias y los labels
          */
-        loadSubCat(category_id) {
+        loadSubCat(category_id, reset = true) {
+            if (reset) this.resetSubCategory();
+
             if (!category_id) {
                 this.category.category_id = "";
-                this.resetSubCategory();
+
+                // @getDataMixin
                 this.subCategories = [];
                 return;
             }
 
             this.loading = true;
-            this.resetSubCategory();
             const ready = this.getSubCategories(category_id);
             ready.then(() => (this.loading = false));
         },
@@ -149,6 +182,27 @@ export default {
          */
         resetSubCategory() {
             this.category.sub_category = [];
+        },
+
+        /**
+         * Carga el v-model con los labels correspondientes
+         * encontrando por medio del id de ambos arrays
+         *
+         * PD: esto solo funciona para la version editar
+         */
+        getSubIndex(subID) {
+            // intenta encontrar el index si fue seleccionado la etiqueta
+            // en dicha sub categoría
+            const index = this.category.sub_category.findIndex(
+                (sub) => sub.id == subID
+            );
+
+            const defaultIndex = this.category.sub_category.length - 1;
+
+            // en caso de no existir se retorna el
+            // index por default creado al momento de cargar
+            // el array de etiquetas
+            return index === -1 ? defaultIndex : index;
         },
     },
 };

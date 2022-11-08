@@ -151,11 +151,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * Path completo de la foto de portada
      */
     getPathGallery: function getPathGallery(artwork) {
-      if (!artwork.gallery.length) return "/";
+      var _front_page$;
+
+      if (!artwork.gallery.length) return this.getURLDefaultFrontArtwork;
       var front_page = artwork.gallery.filter(function (pic) {
         return pic.front_page === 1;
       });
-      return "".concat(this.pathArtworkGallery + front_page[0].picture);
+      return "".concat(this.pathArtworkGallery + ((_front_page$ = front_page[0]) === null || _front_page$ === void 0 ? void 0 : _front_page$.picture));
     },
 
     /**
@@ -290,13 +292,16 @@ __webpack_require__.r(__webpack_exports__);
       Default: {}
     },
     categories: {
-      type: Array
+      type: Array,
+      "default": []
     },
     subcategories: {
-      type: Array
+      type: Array,
+      "default": []
     },
-    sublabels: {
-      type: Array
+    labels: {
+      type: Array,
+      "default": []
     }
   },
   mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]]
@@ -565,9 +570,9 @@ var render = function render() {
       key: cat.id,
       staticClass: "border-o",
       attrs: {
-        label: "",
         filter: "",
         outlined: "",
+        color: "#B2794C",
         value: cat.id
       }
     }, [_c("span", {
@@ -601,9 +606,9 @@ var render = function render() {
       key: subcat.id,
       staticClass: "border-o",
       attrs: {
-        label: "",
         filter: "",
         outlined: "",
+        color: "#B2794C",
         value: subcat.id
       }
     }, [_c("span", {
@@ -615,11 +620,12 @@ var render = function render() {
     staticClass: "text-primary font-bold tracking-wide uppercase text-2xl"
   }, [_vm._v("\n                                Etiquetas\n                            ")]), _vm._v(" "), _c("div", {
     staticClass: "my-4 w-full border-t border-gray-900"
-  }), _vm._v(" "), _c("v-select", {
+  }), _vm._v(" "), _c("v-chip-group", {
+    staticClass: "mx-auto my-4",
     attrs: {
-      items: _vm.subLabels,
-      "item-value": "id",
-      "item-text": "name"
+      column: "",
+      "show-arrows": "",
+      "center-active": ""
     },
     model: {
       value: _vm.filters.label,
@@ -628,11 +634,20 @@ var render = function render() {
       },
       expression: "filters.label"
     }
-  }, [_c("template", {
-    slot: "label"
-  }, [_c("span", {
-    staticClass: "font-black tracking-wide uppercase text-gray-900"
-  }, [_vm._v("\n                                        Etiquetas\n                                    ")])])], 2)], 1) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, _vm._l(_vm.subLabels, function (label) {
+    return _c("v-chip", {
+      key: label.id,
+      staticClass: "border-o",
+      attrs: {
+        filter: "",
+        outlined: "",
+        color: "#B2794C",
+        value: label.id
+      }
+    }, [_c("span", {
+      staticClass: "font-medium text-gray-900 text-xs tracking-tighter"
+    }, [_vm._v("\n                                        " + _vm._s(label.name) + "\n                                    ")])]);
+  }), 1)], 1) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "py-2"
   }, [_c("h3", {
     staticClass: "text-primary font-bold tracking-wide uppercase text-2xl"
@@ -801,7 +816,7 @@ var render = function render() {
       options: _vm.filters,
       categories: _vm.categories,
       subcategories: _vm.subCategories,
-      sublabels: _vm.subLabels
+      labels: _vm.subLabels
     },
     on: {
       "close-dialog-options-filter": function closeDialogOptionsFilter($event) {
@@ -1029,9 +1044,9 @@ var render = function render() {
       key: cat.id,
       staticClass: "border-o",
       attrs: {
-        label: "",
         filter: "",
         outlined: "",
+        color: "#B2794C",
         value: cat.id
       }
     }, [_c("span", {
@@ -1065,9 +1080,9 @@ var render = function render() {
       key: subcat.id,
       staticClass: "border-o",
       attrs: {
-        label: "",
         filter: "",
         outlined: "",
+        color: "#B2794C",
         value: subcat.id
       }
     }, [_c("span", {
@@ -1079,11 +1094,12 @@ var render = function render() {
     staticClass: "text-primary font-bold tracking-wide uppercase text-lg"
   }, [_vm._v("\n                                Etiquetas\n                            ")]), _vm._v(" "), _c("div", {
     staticClass: "my-4 w-full border-t border-gray-900"
-  }), _vm._v(" "), _c("v-select", {
+  }), _vm._v(" "), _c("v-chip-group", {
+    staticClass: "mx-auto my-4",
     attrs: {
-      items: _vm.sublabels,
-      "item-value": "id",
-      "item-text": "name"
+      column: "",
+      "show-arrows": "",
+      "center-active": ""
     },
     model: {
       value: _vm.options.label,
@@ -1092,11 +1108,20 @@ var render = function render() {
       },
       expression: "options.label"
     }
-  }, [_c("template", {
-    slot: "label"
-  }, [_c("span", {
-    staticClass: "font-black tracking-wide uppercase text-gray-900"
-  }, [_vm._v("\n                                        Etiquetas\n                                    ")])])], 2)], 1) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, _vm._l(_vm.labels, function (label) {
+    return _c("v-chip", {
+      key: label.id,
+      staticClass: "border-o",
+      attrs: {
+        filter: "",
+        outlined: "",
+        color: "#B2794C",
+        value: label.id
+      }
+    }, [_c("span", {
+      staticClass: "font-medium text-gray-900 text-xs tracking-tighter"
+    }, [_vm._v("\n                                        " + _vm._s(label.name) + "\n                                    ")])]);
+  }), 1)], 1) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "py-2"
   }, [_c("h3", {
     staticClass: "text-primary font-bold tracking-wide uppercase text-lg"
@@ -1871,6 +1896,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       SHOW_ARTWORKS: 4
     };
   },
+  computed: {
+    /**
+     * Estado de las obras (state) validos
+     * @returns Object
+     */
+    STATEARTWORK: function STATEARTWORK() {
+      return {
+        published: 1,
+        sold: 2,
+        draft: 3
+      };
+    }
+  },
   methods: {
     /**
      * Obtener los paises para el select del perfil del usuario
@@ -1888,7 +1926,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return resp.data;
 
                 case 2:
-                  _this.countries = _context.sent;
+                  return _context.abrupt("return", _this.countries = _context.sent);
 
                 case 3:
                 case "end":
@@ -1902,7 +1940,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return _ref.apply(this, arguments);
         };
       }())["catch"](function (err) {
-        console.log(err);
+        return console.log(err);
       });
     },
 
@@ -1922,7 +1960,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return resp.data;
 
                 case 2:
-                  _this2.categories = _context2.sent;
+                  return _context2.abrupt("return", _this2.categories = _context2.sent);
 
                 case 3:
                 case "end":
@@ -1936,7 +1974,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return _ref2.apply(this, arguments);
         };
       }())["catch"](function (err) {
-        console.log(err);
+        return console.log(err);
       });
     },
 
@@ -2085,7 +2123,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context7.next = 2;
                 return _this5.axios.get(_this5.ep.global.subcategories + id).then(function (resp) {
-                  _this5.subCategories = resp.data;
+                  return _this5.subCategories = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
@@ -2120,7 +2158,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 ep = "".concat(_this6.ep.global.labels + category_id, "/").concat(sub_category_id);
                 _context8.next = 3;
                 return _this6.axios.get(ep).then(function (resp) {
-                  _this6.subLabels = resp.data;
+                  return _this6.subLabels = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
@@ -2334,19 +2372,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Zaragoza",
         val: "Zaragoza"
       }];
-    }
-  },
-  computed: {
-    /**
-     * Estado de las obras (state) validos
-     * @returns Object
-     */
-    STATEARTWORK: function STATEARTWORK() {
-      return {
-        published: 1,
-        sold: 2,
-        draft: 3
-      };
     }
   }
 });

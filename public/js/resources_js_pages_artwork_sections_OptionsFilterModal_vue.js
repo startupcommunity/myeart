@@ -25,13 +25,16 @@ __webpack_require__.r(__webpack_exports__);
       Default: {}
     },
     categories: {
-      type: Array
+      type: Array,
+      "default": []
     },
     subcategories: {
-      type: Array
+      type: Array,
+      "default": []
     },
-    sublabels: {
-      type: Array
+    labels: {
+      type: Array,
+      "default": []
     }
   },
   mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]]
@@ -112,9 +115,9 @@ var render = function render() {
       key: cat.id,
       staticClass: "border-o",
       attrs: {
-        label: "",
         filter: "",
         outlined: "",
+        color: "#B2794C",
         value: cat.id
       }
     }, [_c("span", {
@@ -148,9 +151,9 @@ var render = function render() {
       key: subcat.id,
       staticClass: "border-o",
       attrs: {
-        label: "",
         filter: "",
         outlined: "",
+        color: "#B2794C",
         value: subcat.id
       }
     }, [_c("span", {
@@ -162,11 +165,12 @@ var render = function render() {
     staticClass: "text-primary font-bold tracking-wide uppercase text-lg"
   }, [_vm._v("\n                                Etiquetas\n                            ")]), _vm._v(" "), _c("div", {
     staticClass: "my-4 w-full border-t border-gray-900"
-  }), _vm._v(" "), _c("v-select", {
+  }), _vm._v(" "), _c("v-chip-group", {
+    staticClass: "mx-auto my-4",
     attrs: {
-      items: _vm.sublabels,
-      "item-value": "id",
-      "item-text": "name"
+      column: "",
+      "show-arrows": "",
+      "center-active": ""
     },
     model: {
       value: _vm.options.label,
@@ -175,11 +179,20 @@ var render = function render() {
       },
       expression: "options.label"
     }
-  }, [_c("template", {
-    slot: "label"
-  }, [_c("span", {
-    staticClass: "font-black tracking-wide uppercase text-gray-900"
-  }, [_vm._v("\n                                        Etiquetas\n                                    ")])])], 2)], 1) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, _vm._l(_vm.labels, function (label) {
+    return _c("v-chip", {
+      key: label.id,
+      staticClass: "border-o",
+      attrs: {
+        filter: "",
+        outlined: "",
+        color: "#B2794C",
+        value: label.id
+      }
+    }, [_c("span", {
+      staticClass: "font-medium text-gray-900 text-xs tracking-tighter"
+    }, [_vm._v("\n                                        " + _vm._s(label.name) + "\n                                    ")])]);
+  }), 1)], 1) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "py-2"
   }, [_c("h3", {
     staticClass: "text-primary font-bold tracking-wide uppercase text-lg"

@@ -12,6 +12,7 @@ export default {
          * @param {Object} request      datos recibidos del backend
          */
         showRequestErrors(request) {
+            console.log(request);
             if (request.response.data.errors) {
                 const errors = request.response.data.errors;
                 let mjsErrors = [];
@@ -21,7 +22,7 @@ export default {
 
                 this.$notify({
                     title: "Aviso!",
-                    text: mjsErrors.join('<br/>'),
+                    text: mjsErrors.join("<br/>"),
                     group: "container",
                     type: "warning",
                     duration: 6000,

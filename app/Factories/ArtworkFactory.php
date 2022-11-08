@@ -114,7 +114,7 @@ class ArtworkFactory
       // obra creada
       $artwork = $user->artworks()->create($dataArtwork);
 
-      // sync data
+      // attach data
       $type = json_decode($data['type']);
       if ($type->category_id) {
         foreach ($type->sub_category as $sub) {
@@ -147,32 +147,46 @@ class ArtworkFactory
         'title', 'description', 'date_created', 'width', 'large', 'weight', 'location', 'shipping', 'price', 'state'
       ])->toArray();
 
-      // datos extra
-      $categories = isset($data['categories']) ? $data['categories'] : [];
-
       // obra actualizada
       $artwork = $this->artwork->findOrFail($id);
       $artwork->update($dataArtwork);
 
       // attach data
-      if ($categories) {
-        foreach ($data['categories'] as $cat) {
-          $category = json_decode($cat);
+      // eliminar o separa por categoría o por etiquetas
+      $artwork->categories()->detach();
+      $artwork->labels()->detach();
+      $type = json_decode($data['type']);
 
-          // eliminar por categoría o por etiquetas
-          $artwork->categories()->detach($category->category_id);
-          $artwork->labels()->detach($category->sub_sub_category_id);
-
-          // agregar las nuevas categorías
-          // siempre y cuando existan etiquetas
-          if ($category->sub_sub_category_id) {
-            $artwork->labels()->attach($category->sub_sub_category_id, [
-              'category_id' => $category->category_id,
-              'sub_category_id' => $category->sub_category_id
-            ]);
-          }
+      // si indico alguna categoría
+      // se guarda de nuevo
+      if ($type->category_id) {
+        foreach ($type->sub_category as $sub) {
+          $artwork->labels()->attach($sub->labels, [
+            'category_id' => $type->category_id,
+            'sub_category_id' => $sub->id
+          ]);
         }
       }
+
+      // attach data
+      // if ($categories) {
+      //   foreach ($data['categories'] as $cat) {
+      //     $category = json_decode($cat);
+
+      //     // eliminar por categoría o por etiquetas
+      //     $artwork->categories()->detach($category->category_id);
+      //     $artwork->labels()->detach($category->sub_sub_category_id);
+
+      //     // agregar las nuevas categorías
+      //     // siempre y cuando existan etiquetas
+      //     if ($category->sub_sub_category_id) {
+      //       $artwork->labels()->attach($category->sub_sub_category_id, [
+      //         'category_id' => $category->category_id,
+      //         'sub_category_id' => $category->sub_category_id
+      //       ]);
+      //     }
+      //   }
+      // }
 
       return $artwork;
     });

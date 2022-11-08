@@ -42,9 +42,9 @@
                                     class="mx-auto my-4"
                                 >
                                     <v-chip
-                                        label
                                         filter
                                         outlined
+                                        color="#B2794C"
                                         v-for="cat in categories"
                                         :key="cat.id"
                                         :value="cat.id"
@@ -82,9 +82,9 @@
                                     class="mx-auto my-4"
                                 >
                                     <v-chip
-                                        label
                                         filter
                                         outlined
+                                        color="#B2794C"
                                         v-for="subcat in subCategories"
                                         :key="subcat.id"
                                         :value="subcat.id"
@@ -110,20 +110,29 @@
                                 <div
                                     class="my-4 w-full border-t border-gray-900"
                                 ></div>
-                                <v-select
+                                <v-chip-group
                                     v-model="filters.label"
-                                    :items="subLabels"
-                                    item-value="id"
-                                    item-text="name"
+                                    column
+                                    show-arrows
+                                    center-active
+                                    class="mx-auto my-4"
                                 >
-                                    <template slot="label">
+                                    <v-chip
+                                        filter
+                                        outlined
+                                        color="#B2794C"
+                                        v-for="label in subLabels"
+                                        :key="label.id"
+                                        :value="label.id"
+                                        class="border-o"
+                                    >
                                         <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
+                                            class="font-medium text-gray-900 text-xs tracking-tighter"
                                         >
-                                            Etiquetas
+                                            {{ label.name }}
                                         </span>
-                                    </template>
-                                </v-select>
+                                    </v-chip>
+                                </v-chip-group>
                             </div>
                         </div>
                         <!-- categorías -->
@@ -343,7 +352,7 @@
             :options="filters"
             :categories="categories"
             :subcategories="subCategories"
-            :sublabels="subLabels"
+            :labels="subLabels"
         />
     </main-layout>
 </template>

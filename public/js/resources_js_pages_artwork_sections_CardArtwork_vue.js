@@ -55,11 +55,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * Path completo de la foto de portada
      */
     getPathGallery: function getPathGallery(artwork) {
-      if (!artwork.gallery.length) return "/";
+      var _front_page$;
+
+      if (!artwork.gallery.length) return this.getURLDefaultFrontArtwork;
       var front_page = artwork.gallery.filter(function (pic) {
         return pic.front_page === 1;
       });
-      return "".concat(this.pathArtworkGallery + front_page[0].picture);
+      return "".concat(this.pathArtworkGallery + ((_front_page$ = front_page[0]) === null || _front_page$ === void 0 ? void 0 : _front_page$.picture));
     },
 
     /**

@@ -169,11 +169,13 @@ var counterArtworks = 4;
      * Path completo de galeria
      */
     setPathGallery: function setPathGallery(artwork) {
-      if (!artwork.gallery.length) return "/";
+      var _front_page$;
+
+      if (!artwork.gallery.length) return this.getURLDefaultFrontArtwork;
       var front_page = artwork.gallery.filter(function (pic) {
         return pic.front_page === 1;
       });
-      return "".concat(this.pathArtworkGallery + front_page[0].picture);
+      return "".concat(this.pathArtworkGallery + ((_front_page$ = front_page[0]) === null || _front_page$ === void 0 ? void 0 : _front_page$.picture));
     },
 
     /**
@@ -560,6 +562,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       SHOW_ARTWORKS: 4
     };
   },
+  computed: {
+    /**
+     * Estado de las obras (state) validos
+     * @returns Object
+     */
+    STATEARTWORK: function STATEARTWORK() {
+      return {
+        published: 1,
+        sold: 2,
+        draft: 3
+      };
+    }
+  },
   methods: {
     /**
      * Obtener los paises para el select del perfil del usuario
@@ -577,7 +592,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return resp.data;
 
                 case 2:
-                  _this.countries = _context.sent;
+                  return _context.abrupt("return", _this.countries = _context.sent);
 
                 case 3:
                 case "end":
@@ -591,7 +606,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return _ref.apply(this, arguments);
         };
       }())["catch"](function (err) {
-        console.log(err);
+        return console.log(err);
       });
     },
 
@@ -611,7 +626,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return resp.data;
 
                 case 2:
-                  _this2.categories = _context2.sent;
+                  return _context2.abrupt("return", _this2.categories = _context2.sent);
 
                 case 3:
                 case "end":
@@ -625,7 +640,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return _ref2.apply(this, arguments);
         };
       }())["catch"](function (err) {
-        console.log(err);
+        return console.log(err);
       });
     },
 
@@ -774,7 +789,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context7.next = 2;
                 return _this5.axios.get(_this5.ep.global.subcategories + id).then(function (resp) {
-                  _this5.subCategories = resp.data;
+                  return _this5.subCategories = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
@@ -809,7 +824,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 ep = "".concat(_this6.ep.global.labels + category_id, "/").concat(sub_category_id);
                 _context8.next = 3;
                 return _this6.axios.get(ep).then(function (resp) {
-                  _this6.subLabels = resp.data;
+                  return _this6.subLabels = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
@@ -1023,19 +1038,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Zaragoza",
         val: "Zaragoza"
       }];
-    }
-  },
-  computed: {
-    /**
-     * Estado de las obras (state) validos
-     * @returns Object
-     */
-    STATEARTWORK: function STATEARTWORK() {
-      return {
-        published: 1,
-        sold: 2,
-        draft: 3
-      };
     }
   }
 });

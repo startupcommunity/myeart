@@ -386,6 +386,8 @@ __webpack_require__.r(__webpack_exports__);
      * @param {Object} request      datos recibidos del backend
      */
     showRequestErrors: function showRequestErrors(request) {
+      console.log(request);
+
       if (request.response.data.errors) {
         var errors = request.response.data.errors;
         var mjsErrors = [];
@@ -396,7 +398,7 @@ __webpack_require__.r(__webpack_exports__);
 
         this.$notify({
           title: "Aviso!",
-          text: mjsErrors.join('<br/>'),
+          text: mjsErrors.join("<br/>"),
           group: "container",
           type: "warning",
           duration: 6000

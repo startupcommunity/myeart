@@ -17,6 +17,19 @@ export default {
             SHOW_ARTWORKS: 4,
         };
     },
+    computed: {
+        /**
+         * Estado de las obras (state) validos
+         * @returns Object
+         */
+        STATEARTWORK() {
+            return {
+                published: 1,
+                sold: 2,
+                draft: 3,
+            };
+        },
+    },
     methods: {
         /**
          * Obtener los paises para el select del perfil del usuario
@@ -24,12 +37,8 @@ export default {
         getCountries() {
             this.axios
                 .get("/api/paises")
-                .then(async (resp) => {
-                    this.countries = await resp.data;
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+                .then(async (resp) => (this.countries = await resp.data))
+                .catch((err) => console.log(err));
         },
 
         /**
@@ -38,12 +47,8 @@ export default {
         getCategories() {
             this.axios
                 .get(this.ep.global.categories)
-                .then(async (resp) => {
-                    this.categories = await resp.data;
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+                .then(async (resp) => (this.categories = await resp.data))
+                .catch((err) => console.log(err));
         },
 
         /**
@@ -88,9 +93,7 @@ export default {
         async getSubCategories(id) {
             return await this.axios
                 .get(this.ep.global.subcategories + id)
-                .then((resp) => {
-                    this.subCategories = resp.data;
-                })
+                .then((resp) => (this.subCategories = resp.data))
                 .catch((error) => console.error(error));
         },
 
@@ -107,9 +110,7 @@ export default {
 
             return await this.axios
                 .get(ep)
-                .then((resp) => {
-                    this.subLabels = resp.data;
-                })
+                .then((resp) => (this.subLabels = resp.data))
                 .catch((error) => console.error(error));
         },
 
@@ -200,20 +201,6 @@ export default {
                 { text: "Zamora", val: "Zamora" },
                 { text: "Zaragoza", val: "Zaragoza" },
             ];
-        },
-    },
-
-    computed: {
-        /**
-         * Estado de las obras (state) validos
-         * @returns Object
-         */
-        STATEARTWORK() {
-            return {
-                published: 1,
-                sold: 2,
-                draft: 3,
-            };
         },
     },
 };

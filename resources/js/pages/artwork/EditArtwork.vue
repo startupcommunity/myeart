@@ -291,24 +291,12 @@
                             </div>
                         </v-col>
                         <v-col cols="12" md="8">
-                            <div v-if="form.categories.length">
-                                <Category
-                                    v-for="(category, index) in form.categories"
-                                    :key="category.key"
-                                    :category="category"
-                                    :index="index"
-                                    :dataCategories="categories"
-                                    @delete-category="deleteCategory"
-                                />
-                            </div>
-
-                            <div class="py-4 flex justify-center items-center">
-                                <v-btn outlined @click="addNewCategory">
-                                    <i class="fas fa-plus">
-                                        Agregar categoría
-                                    </i>
-                                </v-btn>
-                            </div>
+                            <Category
+                                :category="form.type"
+                                :dataCategories="categories"
+                                :edit="true"
+                                v-if="form.type.category_id"
+                            />
                         </v-col>
 
                         <!-- ------------------- -->
@@ -377,6 +365,7 @@ export default {
     data() {
         return {
             form: {
+                id: "",
                 title: "",
                 description: "",
                 width: "",
@@ -386,9 +375,12 @@ export default {
                 date_created: "",
                 location: "",
                 shipping: "",
-                categories: [],
-                gallery: [],
                 state: "",
+                gallery: [],
+                type: {
+                    category_id: "",
+                    sub_category: [],
+                },
             },
             formIsValid: true,
             menuPicker: false,
@@ -396,7 +388,7 @@ export default {
         };
     },
     mounted() {
-        // mixin
+        // @getDataMixin
         this.getCategories();
 
         // load data
@@ -407,7 +399,7 @@ export default {
          * Acceder a los getters necesarios
          */
         ...mapGetters({
-            userProfile: "getProfile",
+            user: "getProfile",
         }),
     },
     methods: {
@@ -426,31 +418,19 @@ export default {
                     const artwork = resp.data;
                     const { categories, gallery } = artwork;
 
-                    // ----------------
-                    // adaptar datos
-                    // ----------------
+                    // datos
                     this.form = artwork;
+                    // delete this.form.categories;
+                    this.form.type = {
+                        category_id: "",
+                        sub_category: [],
+                    };
 
-                    // ---------------------
-                    // adaptar categorías
-                    // ---------------------
-                    this.loadCategories(categories);
+                    // tipo
+                    this.loadType(categories);
 
                     // galeria
-                    gallery.forEach((picture) => {
-                        const fullname = picture.picture;
-                        const path = `${this.pathArtworkGallery + fullname}`;
-                        const promise = this.getFileImage(path, picture);
-
-                        promise.then((resp) => {
-                            const data = {
-                                file: resp.file,
-                                front: resp.front,
-                            };
-
-                            this.addFileToUploadFilesWithFront(data);
-                        });
-                    });
+                    this.loadGallery(gallery);
                 })
                 .catch((error) => console.log(error))
                 .finally(() => {
@@ -480,7 +460,7 @@ export default {
         /**
          * Guardar, publicar o borrador de la obra creada
          */
-        async updateArtwork() {
+        updateArtwork() {
             if (this.form.state === 1) {
                 if (!this.$refs.artworkForm.validate()) return;
             }
@@ -492,7 +472,7 @@ export default {
             this.changeState();
 
             // cargar datos
-            const data = await this.loadFormData();
+            const data = this.loadFormData();
 
             // request
             this.axios
@@ -511,13 +491,11 @@ export default {
                         this.noty(text);
 
                         this.$router.push(
-                            `/usuario/perfil/${this.userProfile.id}/obras`
+                            `/usuario/perfil/${this.user.id}/obras`
                         );
                     }
                 })
-                .catch((error) => {
-                    this.showRequestErrors(error);
-                })
+                .catch((error) => this.showRequestErrors(error))
                 .finally(() => (this.globalLoading = false));
         },
 
@@ -547,7 +525,6 @@ export default {
          */
         loadFormData() {
             const form = this.form;
-            const categories = form.categories;
             const files = this.uploadedFiles;
 
             const data = new FormData();
@@ -562,11 +539,9 @@ export default {
             data.append("location", form.location);
             data.append("shipping", form.shipping);
             data.append("state", form.state);
+            data.append(`type`, JSON.stringify(this.form.type));
 
             // data sync
-            categories.forEach((cat) =>
-                data.append(`categories[]`, JSON.stringify(cat))
-            );
             files.forEach((file) => data.append(`gallery[]`, file.file));
 
             return data;
@@ -591,7 +566,7 @@ export default {
                 form.date_created &&
                 form.location &&
                 form.shipping &&
-                form.categories.length &&
+                form.type &&
                 files.length
             ) {
                 if (form.state == this.STATEARTWORK.draft) {
@@ -604,20 +579,45 @@ export default {
          * Carga las categorías
          * sub categorías y etiquetas
          */
-        async loadCategories(data) {
-            this.form.categories = [];
-            const group = await data.group((cat) => cat.pivot.category_id);
+        async loadType(data) {
+            const group = await data.group((cat) => cat.pivot.sub_category_id);
+            this.form.type.category_id = data[0].id;
 
             for (const key in group) {
                 const cat = group[key];
-                const sub = cat.map((d) => d.pivot.sub_sub_category_id);
-                this.form.categories.push({
-                    category_id: parseInt(key),
-                    sub_category_id: cat[0].pivot.sub_category_id,
-                    sub_sub_category_id: sub,
-                    key,
+
+                this.form.type.sub_category.push({
+                    id: cat[0].pivot.sub_category_id,
+                    labels: cat.map((d) => d.pivot.sub_sub_category_id),
                 });
             }
+
+            // se agrega un objecto vacio por default
+            // esto para que no ocurra ningún error al
+            // momento de modificar las etiquetas
+            const defaultData = { id: 0, labels: [] };
+            const index = this.form.type.sub_category.length;
+            this.form.type.sub_category.splice(index, 0, defaultData);
+        },
+
+        /**
+         * Cargar las imagenes en el componente uploadFIle
+         */
+        loadGallery(gallery) {
+            gallery.forEach((picture) => {
+                const fullname = picture.picture;
+                const path = `${this.pathArtworkGallery + fullname}`;
+                const promise = this.getFileImage(path, picture);
+
+                promise.then((resp) => {
+                    const data = {
+                        file: resp.file,
+                        front: resp.front,
+                    };
+
+                    this.addFileToUploadFilesWithFront(data);
+                });
+            });
         },
     },
 };

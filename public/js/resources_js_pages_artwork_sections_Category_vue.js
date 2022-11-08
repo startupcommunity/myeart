@@ -24,19 +24,23 @@ __webpack_require__.r(__webpack_exports__);
     dataCategories: {
       type: Array,
       "default": []
+    },
+    edit: {
+      type: Boolean,
+      "default": false,
+      description: ""
     }
   },
   data: function data() {
     return {
-      loading: false
+      loading: false,
+      changeCat: false
     };
   },
-  mounted: function mounted() {// if (this.category.category_id) {
-    //     this.loadSubCat(this.category.category_id);
-    // }
-    // if (this.category.sub_category_id) {
-    //     this.loadLabels(this.category);
-    // }
+  mounted: function mounted() {
+    if (this.category.category_id) {
+      this.loadSubCat(this.category.category_id, false);
+    }
   },
   methods: {
     /**
@@ -45,15 +49,17 @@ __webpack_require__.r(__webpack_exports__);
     loadSubCat: function loadSubCat(category_id) {
       var _this = this;
 
+      var reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      if (reset) this.resetSubCategory();
+
       if (!category_id) {
-        this.category.category_id = "";
-        this.resetSubCategory();
+        this.category.category_id = ""; // @getDataMixin
+
         this.subCategories = [];
         return;
       }
 
       this.loading = true;
-      this.resetSubCategory();
       var ready = this.getSubCategories(category_id);
       ready.then(function () {
         return _this.loading = false;
@@ -97,6 +103,25 @@ __webpack_require__.r(__webpack_exports__);
      */
     resetSubCategory: function resetSubCategory() {
       this.category.sub_category = [];
+    },
+
+    /**
+     * Carga el v-model con los labels correspondientes
+     * encontrando por medio del id de ambos arrays
+     *
+     * PD: esto solo funciona para la version editar
+     */
+    getSubIndex: function getSubIndex(subID) {
+      // intenta encontrar el index si fue seleccionado la etiqueta
+      // en dicha sub categoría
+      var index = this.category.sub_category.findIndex(function (sub) {
+        return sub.id == subID;
+      });
+      var defaultIndex = this.category.sub_category.length - 1; // en caso de no existir se retorna el
+      // index por default creado al momento de cargar
+      // el array de etiquetas
+
+      return index === -1 ? defaultIndex : index;
     }
   }
 });
@@ -151,6 +176,11 @@ var render = function render() {
         large: "",
         color: "#B2794C",
         value: item.id
+      },
+      on: {
+        change: function change($event) {
+          _vm.changeCat = true;
+        }
       }
     }, [_c("span", {
       staticClass: "font-black tracking-wide uppercase text-gray-900"
@@ -166,7 +196,37 @@ var render = function render() {
       staticClass: "border-b border-zinc-900 py-4 mb-4 w-full md:w-4/5"
     }, [_c("h4", {
       staticClass: "font-black tracking-wide uppercase text-gray-900"
-    }, [_vm._v("\n                    " + _vm._s(sub.name) + "\n                ")])]), _vm._v(" "), _c("v-chip-group", {
+    }, [_vm._v("\n                    " + _vm._s(sub.name) + "\n                ")])]), _vm._v(" "), _vm.edit && !_vm.changeCat ? _c("v-chip-group", {
+      attrs: {
+        multiple: "",
+        column: ""
+      },
+      on: {
+        change: function change($event) {
+          return _vm.addSubCategoryAndLabel($event, sub.id);
+        }
+      },
+      model: {
+        value: _vm.category.sub_category[_vm.getSubIndex(sub.id)].labels,
+        callback: function callback($$v) {
+          _vm.$set(_vm.category.sub_category[_vm.getSubIndex(sub.id)], "labels", $$v);
+        },
+        expression: "category.sub_category[getSubIndex(sub.id)].labels"
+      }
+    }, _vm._l(sub.labels, function (label) {
+      return _c("v-chip", {
+        key: label.id,
+        attrs: {
+          filter: "",
+          outlined: "",
+          color: "#B2794C",
+          value: label.id,
+          small: ""
+        }
+      }, [_c("span", {
+        staticClass: "font-black tracking-wide uppercase text-gray-900"
+      }, [_vm._v("\n                        " + _vm._s(label.name) + "\n                    ")])]);
+    }), 1) : _c("v-chip-group", {
       attrs: {
         multiple: "",
         column: ""
@@ -238,6 +298,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       SHOW_ARTWORKS: 4
     };
   },
+  computed: {
+    /**
+     * Estado de las obras (state) validos
+     * @returns Object
+     */
+    STATEARTWORK: function STATEARTWORK() {
+      return {
+        published: 1,
+        sold: 2,
+        draft: 3
+      };
+    }
+  },
   methods: {
     /**
      * Obtener los paises para el select del perfil del usuario
@@ -255,7 +328,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return resp.data;
 
                 case 2:
-                  _this.countries = _context.sent;
+                  return _context.abrupt("return", _this.countries = _context.sent);
 
                 case 3:
                 case "end":
@@ -269,7 +342,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return _ref.apply(this, arguments);
         };
       }())["catch"](function (err) {
-        console.log(err);
+        return console.log(err);
       });
     },
 
@@ -289,7 +362,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return resp.data;
 
                 case 2:
-                  _this2.categories = _context2.sent;
+                  return _context2.abrupt("return", _this2.categories = _context2.sent);
 
                 case 3:
                 case "end":
@@ -303,7 +376,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return _ref2.apply(this, arguments);
         };
       }())["catch"](function (err) {
-        console.log(err);
+        return console.log(err);
       });
     },
 
@@ -452,7 +525,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context7.next = 2;
                 return _this5.axios.get(_this5.ep.global.subcategories + id).then(function (resp) {
-                  _this5.subCategories = resp.data;
+                  return _this5.subCategories = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
@@ -487,7 +560,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 ep = "".concat(_this6.ep.global.labels + category_id, "/").concat(sub_category_id);
                 _context8.next = 3;
                 return _this6.axios.get(ep).then(function (resp) {
-                  _this6.subLabels = resp.data;
+                  return _this6.subLabels = resp.data;
                 })["catch"](function (error) {
                   return console.error(error);
                 });
@@ -701,19 +774,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Zaragoza",
         val: "Zaragoza"
       }];
-    }
-  },
-  computed: {
-    /**
-     * Estado de las obras (state) validos
-     * @returns Object
-     */
-    STATEARTWORK: function STATEARTWORK() {
-      return {
-        published: 1,
-        sold: 2,
-        draft: 3
-      };
     }
   }
 });

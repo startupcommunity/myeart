@@ -122,6 +122,12 @@ vue.mixin({
         getURLDefaultProfilePhoto: () => "/img/avatar.png",
 
         /**
+         * Devuelve la url de la imagen por defecto de una obra
+         * @returns string
+         */
+        getURLDefaultFrontArtwork: () => "/img/artwork/default.webp",
+
+        /**
          * Endpoints para consumir la API rest
          *
          * Todas las rutas que terminan en '/'
