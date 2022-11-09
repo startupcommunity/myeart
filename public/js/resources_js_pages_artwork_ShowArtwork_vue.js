@@ -1142,13 +1142,15 @@ var render = function render() {
   }), 0)])]), _vm._v(" "), _c("div", {
     staticClass: "w-full lg:w-[30%] md:px-7"
   }, [_c("div", {
-    staticClass: "flex justify-between items-start"
-  }, [_c("h1", {
+    staticClass: "flex justify-between"
+  }, [_c("div", [_c("h1", {
     staticClass: "text-xl lg:text-5xl font-bold text-zinc-900 lg:-mt-3"
-  }, [_vm._v("\n                            " + _vm._s(_vm.artwork.title) + "\n                        ")]), _vm._v(" "), _c("div", {
-    staticClass: "text-gray-400 flex justify-end items-start lg:-mr-20"
+  }, [_vm._v("\n                                " + _vm._s(_vm.artwork.title) + "\n                            ")])]), _vm._v(" "), _c("div", {
+    staticClass: "text-gray-400 lg:-mr-20"
+  }, [_c("div", {
+    staticClass: "flex justify-end items-start space-x-3"
   }, [_c("button", {
-    staticClass: "pr-4 hover:text-gray-700",
+    staticClass: "hover:text-gray-700",
     on: {
       click: function click($event) {
         $event.stopPropagation();
@@ -1159,7 +1161,7 @@ var render = function render() {
   })]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-col items-center"
   }, [_c("button", {
-    staticClass: "pr-4 hover:text-gray-700",
+    staticClass: "hover:text-gray-700",
     on: {
       click: function click($event) {
         $event.stopPropagation();
@@ -1172,8 +1174,8 @@ var render = function render() {
       "text-red-800": _vm.isLike
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "text-zinc-800 -ml-3"
-  }, [_vm._v("\n                                    " + _vm._s(_vm.likes) + "\n                                ")])]), _vm._v(" "), _c("button", {
+    staticClass: "text-zinc-800"
+  }, [_vm._v("\n                                        " + _vm._s(_vm.likes) + "\n                                    ")])]), _vm._v(" "), _c("button", {
     staticClass: "hover:text-gray-700",
     on: {
       click: function click($event) {
@@ -1183,7 +1185,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-share-nodes fa-2x"
-  })])])]), _vm._v(" "), _c("p", {
+  })])])])]), _vm._v(" "), _c("p", {
     staticClass: "text-base text-gray-600 pt-2 font-normal"
   }, [_vm._v("\n                        " + _vm._s(_vm.artwork.description) + "\n                    ")]), _vm._v(" "), _c("p", {
     staticClass: "text-primary text-sm leading-4"

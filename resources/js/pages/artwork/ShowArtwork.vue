@@ -51,43 +51,51 @@
                         </div>
                     </div>
                     <div class="w-full lg:w-[30%] md:px-7">
-                        <div class="flex justify-between items-start">
-                            <h1
-                                class="text-xl lg:text-5xl font-bold text-zinc-900 lg:-mt-3"
-                            >
-                                {{ artwork.title }}
-                            </h1>
-                            <div
-                                class="text-gray-400 flex justify-end items-start lg:-mr-20"
-                            >
-                                <button
-                                    class="pr-4 hover:text-gray-700"
-                                    @click.stop=""
+                        <div class="flex justify-between">
+                            <div>
+                                <h1
+                                    class="text-xl lg:text-5xl font-bold text-zinc-900 lg:-mt-3"
                                 >
-                                    <i class="fa-regular fa-bookmark fa-2x"></i>
-                                </button>
-                                <div class="flex flex-col items-center">
+                                    {{ artwork.title }}
+                                </h1>
+                            </div>
+                            <div class="text-gray-400 lg:-mr-20">
+                                <div class="flex justify-end items-start space-x-3">
                                     <button
-                                        class="pr-4 hover:text-gray-700"
-                                        @click.stop="likeOrDislike()"
+                                        class="hover:text-gray-700"
+                                        @click.stop=""
                                     >
                                         <i
-                                            class="fa-regular fa-heart fa-2x"
-                                            :class="{ 'text-red-800': isLike }"
+                                            class="fa-regular fa-bookmark fa-2x"
                                         ></i>
                                     </button>
-                                    <div class="text-zinc-800 -ml-3">
-                                        {{ likes }}
+                                    <div class="flex flex-col items-center">
+                                        <button
+                                            class="hover:text-gray-700"
+                                            @click.stop="likeOrDislike()"
+                                        >
+                                            <i
+                                                class="fa-regular fa-heart fa-2x"
+                                                :class="{
+                                                    'text-red-800': isLike,
+                                                }"
+                                            ></i>
+                                        </button>
+                                        <div class="text-zinc-800">
+                                            {{ likes }}
+                                        </div>
                                     </div>
+                                    <button
+                                        @click.stop="
+                                            sharePublicArtwork(artwork)
+                                        "
+                                        class="hover:text-gray-700"
+                                    >
+                                        <i
+                                            class="fa-solid fa-share-nodes fa-2x"
+                                        ></i>
+                                    </button>
                                 </div>
-                                <button
-                                    @click.stop="sharePublicArtwork(artwork)"
-                                    class="hover:text-gray-700"
-                                >
-                                    <i
-                                        class="fa-solid fa-share-nodes fa-2x"
-                                    ></i>
-                                </button>
                             </div>
                         </div>
                         <p class="text-base text-gray-600 pt-2 font-normal">
@@ -288,7 +296,9 @@
                         class="w-full lg:w-[30%] lg:px-7 lg:mt-10 h-80 lg:h-[30rem]"
                     >
                         <img
-                            :src="randomImage?.file ?? getURLDefaultFrontArtwork"
+                            :src="
+                                randomImage?.file ?? getURLDefaultFrontArtwork
+                            "
                             class="w-full h-full object-cover object-center rounded-sm"
                             :alt="randomImage?.file ?? 'default-picture'"
                         />
