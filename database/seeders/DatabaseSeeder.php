@@ -62,7 +62,8 @@ class DatabaseSeeder extends Seeder
             SubSubCategorySeeder::class,
             // StyleSeeder::class,
             // TechniqueSeeder::class,
-            ArtworkSeeder::class
+            // ArtworkSeeder::class,
+            ArtistArtworkSeeder::class,
         ]);
     }
 }

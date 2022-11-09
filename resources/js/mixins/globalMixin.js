@@ -57,6 +57,26 @@ vue.mixin({
                 })
                 .then(async (result) => await result);
         },
+
+        /**
+         * Ir directamente a una sección indicada
+         *  dentro de la pagina
+         *
+         * @param {String} id
+         */
+        toScrollTo(id = null, setTop = 0) {
+            // encontrar el elemento por el id
+            let ele = { top: setTop };
+            if (id) {
+                const el = document.getElementById(id);
+                ele = el ? el.getBoundingClientRect() : ele;
+            }
+
+            // en caso de recibir el parámetro, se asigna el mismo
+            const top = setTop > 0 ? setTop : ele.top;
+
+            globalThis.scrollTo({ top, behavior: "smooth" });
+        },
     },
     computed: {
         /**

@@ -89,7 +89,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     /**
      * Devuelve el usuario o artista de la obra a mostrar
      */
-    userArtwork: function userArtwork() {
+    artUser: function artUser() {
       var _this$artwork;
 
       return (_this$artwork = this.artwork) === null || _this$artwork === void 0 ? void 0 : _this$artwork.user;
@@ -457,6 +457,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       loadLiked: false,
+      loadFollow: false,
       isLike: false
     };
   },
@@ -477,9 +478,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": true
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
     user: "getProfile"
-  })),
+  })), {}, {
+    /**
+     * Comprueba si el usuario puede seguir al artista
+     *
+     * NO es posible autoseguirse
+     */
+    canFollowArtist: function canFollowArtist() {
+      var _this$artwork$user;
+
+      return this.user.id !== ((_this$artwork$user = this.artwork.user) === null || _this$artwork$user === void 0 ? void 0 : _this$artwork$user.id);
+    },
+    isFollowingArtist: function isFollowingArtist() {
+      var artist = this.artwork.user;
+      return this.user.following_artists.some(function (follow) {
+        return follow.following_id === artist.id;
+      });
+    }
+  }),
   methods: {
     /**
      * Path completo de la foto de portada
@@ -558,6 +576,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      */
     getSubCategory: function getSubCategory(labels) {
       return labels.length ? labels[0].name : "";
+    },
+
+    /**
+     * Seguir a un artista
+     */
+    followArtist: function followArtist() {
+      var _this$artwork$user2,
+          _this3 = this;
+
+      if (!this.canFollowArtist) {
+        this.noty("No es posible autoseguirte", "error");
+        return;
+      }
+
+      if (this.isFollowingArtist) {
+        this.noty("Ya se sigue a este artista", "error");
+        return;
+      }
+
+      var id = (_this$artwork$user2 = this.artwork.user) === null || _this$artwork$user2 === void 0 ? void 0 : _this$artwork$user2.id;
+      var data = {
+        following_id: id
+      };
+      this.loadFollow = true;
+      this.axios.post(this.ep.user.followArtist, data).then(function (resp) {
+        if (resp.status === 200) {
+          _this3.noty("Artista seguido");
+
+          _this3.$store.dispatch("userRequest");
+        }
+      })["catch"](function (error) {
+        return console.error(error);
+      })["finally"](function () {
+        return _this3.loadFollow = false;
+      });
     }
   }
 });
@@ -928,7 +981,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$getProfilePhoto, _vm$artwork$user, _vm$randomImage, _vm$randomImage2, _vm$getProfilePhoto2, _vm$userArtwork, _vm$userArtwork$profi, _vm$userArtwork2, _vm$userArtwork2$prof, _this$artwork$categor;
+  var _vm$getProfilePhoto, _vm$artwork$user, _vm$randomImage, _vm$randomImage2, _vm$getProfilePhoto2, _vm$artUser$profile$b, _vm$artUser, _vm$artUser$profile, _vm$artUser$profile$b2, _vm$artUser2, _vm$artUser2$profile, _this$artwork$categor;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -1156,9 +1209,9 @@ var render = function render() {
     staticClass: "w-full"
   }, [_c("h3", {
     staticClass: "font-bold text-2xl text-zinc-900 leading-7"
-  }, [_vm._v("\n                                        " + _vm._s((_vm$userArtwork = _vm.userArtwork) === null || _vm$userArtwork === void 0 ? void 0 : _vm$userArtwork.name) + "\n                                    ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                                        " + _vm._s((_vm$artUser$profile$b = (_vm$artUser = _vm.artUser) === null || _vm$artUser === void 0 ? void 0 : (_vm$artUser$profile = _vm$artUser.profile) === null || _vm$artUser$profile === void 0 ? void 0 : _vm$artUser$profile.bio_title) !== null && _vm$artUser$profile$b !== void 0 ? _vm$artUser$profile$b : "---") + "\n                                    ")]), _vm._v(" "), _c("p", {
     staticClass: "font-medium text-base text-gray-600"
-  }, [_vm._v("\n                                        " + _vm._s((_vm$userArtwork$profi = (_vm$userArtwork2 = _vm.userArtwork) === null || _vm$userArtwork2 === void 0 ? void 0 : (_vm$userArtwork2$prof = _vm$userArtwork2.profile) === null || _vm$userArtwork2$prof === void 0 ? void 0 : _vm$userArtwork2$prof.bio) !== null && _vm$userArtwork$profi !== void 0 ? _vm$userArtwork$profi : "Sin biografía") + "\n                                    ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                        " + _vm._s((_vm$artUser$profile$b2 = (_vm$artUser2 = _vm.artUser) === null || _vm$artUser2 === void 0 ? void 0 : (_vm$artUser2$profile = _vm$artUser2.profile) === null || _vm$artUser2$profile === void 0 ? void 0 : _vm$artUser2$profile.bio_content) !== null && _vm$artUser$profile$b2 !== void 0 ? _vm$artUser$profile$b2 : "---") + "\n                                    ")])]), _vm._v(" "), _c("div", {
     staticClass: "w-full"
   }, [_c("button", {
     staticClass: "btn btn-primary btn-sm text-sm px-4 uppercase w-2/4 flex justify-center md:justify-start"
@@ -1308,8 +1361,22 @@ var render = function render() {
   }, [_c("span", {
     staticClass: "py-0"
   }, [_vm._v("\n                            " + _vm._s((_vm$artwork$user = _vm.artwork.user) === null || _vm$artwork$user === void 0 ? void 0 : _vm$artwork$user.name) + "\n                        ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase w-20"
-  }, [_vm._v("\n                            Seguir\n                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase w-2/4",
+    "class": {
+      "btn-dark": _vm.isFollowingArtist
+    },
+    attrs: {
+      disabled: !_vm.canFollowArtist || _vm.isFollowingArtist
+    },
+    on: {
+      click: function click($event) {
+        var _vm$artwork$user2;
+
+        $event.stopPropagation();
+        return _vm.followArtist((_vm$artwork$user2 = _vm.artwork.user) === null || _vm$artwork$user2 === void 0 ? void 0 : _vm$artwork$user2.id);
+      }
+    }
+  }, [_vm.isFollowingArtist ? _c("span", [_vm._v("Siguiendo")]) : _c("span", [_vm._v("Seguir")])])])]), _vm._v(" "), _c("div", {
     staticClass: "w-full border-t border-gray-800 my-4"
   }), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between items-center pb-4 px-2"
@@ -1341,6 +1408,12 @@ var render = function render() {
   })])])])])])], 1), _vm._v(" "), _c("loading-overlay", {
     attrs: {
       active: _vm.loadLiked,
+      "is-full-page": true,
+      loader: "bars"
+    }
+  }), _vm._v(" "), _c("loading-overlay", {
+    attrs: {
+      active: _vm.loadFollow,
       "is-full-page": true,
       loader: "bars"
     }

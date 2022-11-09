@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShippingAddressController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserInformationsController;
 
 Route::post('/login', [LoginController::class, 'login']);
@@ -21,8 +22,7 @@ Route::middleware('auth:api')->get('/paises', [PaisesController::class, 'getAll'
 Route::middleware('auth:api')->get('/artistics', [ArtisticActivitysController::class, 'getAll']);
 Route::middleware('auth:api')->put('/registerPerfil', [UserInformationsController::class, 'create']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    $user = $request->user()->load('profile');
-    // $user->perfil = $user->load('perfil');
+    $user = $request->user()->load(['profile', 'followingArtists']);
     return $user;
 });
 
@@ -37,7 +37,12 @@ Route::middleware('auth:api')->delete('/deleteUser/{id}', [UserInformationsContr
  */
 Route::middleware(['auth:api'])->group(function () {
 
-    // Perfil
+    // user
+    Route::group(['prefix' => 'user'], function () {
+        Route::post('/follow-artist', [UserController::class, 'followArtist'])->name('followArtist');
+    });
+
+    // perfil
     Route::group(['prefix' => 'profile'], function () {
         Route::put('/update-front-photo', [ProfileController::class, 'updateFrontPhoto'])->name('updateFrontPhoto');
         Route::put('/update-profile-photo', [ProfileController::class, 'updateProfilePhoto'])->name('updateProfilePhoto');

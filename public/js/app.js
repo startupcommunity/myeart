@@ -2376,8 +2376,20 @@ var endpoints = {
   // acceso global
   global: {
     categories: "".concat(API, "/categories"),
+    // get
     subcategories: "".concat(API, "/subcategories/"),
-    labels: "".concat(API, "/labels/")
+    // get
+    labels: "".concat(API, "/labels/") // get
+
+  },
+  // user
+  user: {
+    // profile
+    editProfile: "".concat(API, "/profile/update-profile"),
+    // put
+    // user
+    followArtist: "".concat(API, "/user/follow-artist") // post
+
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (endpoints);
@@ -4534,6 +4546,33 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].mixin({
           }
         }, _callee2);
       }))();
+    },
+
+    /**
+     * Ir directamente a una sección indicada
+     *  dentro de la pagina
+     *
+     * @param {String} id
+     */
+    toScrollTo: function toScrollTo() {
+      var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var setTop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      // encontrar el elemento por el id
+      var ele = {
+        top: setTop
+      };
+
+      if (id) {
+        var el = document.getElementById(id);
+        ele = el ? el.getBoundingClientRect() : ele;
+      } // en caso de recibir el parámetro, se asigna el mismo
+
+
+      var top = setTop > 0 ? setTop : ele.top;
+      globalThis.scrollTo({
+        top: top,
+        behavior: "smooth"
+      });
     }
   },
   computed: {

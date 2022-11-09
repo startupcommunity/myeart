@@ -1,14 +1,13 @@
+import getDataMixin from "../../../mixins/getDataMixin";
+
 const COUNTER_ART_PUB = 6;
 
 export default {
+    mixins: [getDataMixin],
     data() {
         return {
             // todas las obras publicadas
             artworkPublished: [],
-            originalArtPub: [],
-
-            // obras restantes
-            remainingArt: [],
 
             // loading de carga
             loadArtworkPublished: false,
@@ -17,8 +16,11 @@ export default {
             // para filtrar, solo para mobile
             showOptionModal: false,
 
-            // counter de obras
-            counter: COUNTER_ART_PUB,
+            // total de registros recibidos del backend
+            totalRecords: 0,
+
+            // mostrar la pagina
+            showPage: 1,
 
             filters: {
                 category: 0,
@@ -58,15 +60,48 @@ export default {
         },
 
         /**
-         * si se puede mostrar el botón de ver mas resultados o no
+         * Devuelve la cantidad de obras para mostrar por pagina
          *
-         * @returns
+         * @returns Number
          */
-        showBtnMore() {
-            return (
-                this.artworkPublished.length > this.SHOW_ARTWORKS &&
-                this.remainingArt.length
-            );
+        showPerPage() {
+            return COUNTER_ART_PUB;
+        },
+
+        /**
+         * Total de paginas a cargar en la paginación
+         * @returns Number
+         */
+        totalPages() {
+            return this.totalRecords / this.showPerPage;
+        },
+    },
+    watch: {
+        filters: {
+            handler(filter) {
+                // @getDataMixin
+                if (filter.category) {
+                    this.getSubCategories(filter.category);
+                }
+
+                // @getDataMixin
+                if (this.hasSubAndCategory) {
+                    this.getSubLabels(filter.category, filter.subcategory);
+                }
+
+                // reset de la pagina a mostrar
+                this.resetShowPage();
+
+                // @this
+                this.getFilterArtworkPublished();
+            },
+            deep: true,
+        },
+
+        // cuando la subcategoria cambia
+        // se resetea el valor de la etiqueta
+        "filters.subcategory"() {
+            this.filters.label = 0;
         },
     },
     methods: {
@@ -75,53 +110,25 @@ export default {
          * del DOM seleccionados
          */
         getFilterArtworkPublished() {
+            // loading
             this.loadArtworkPublished = true;
+
+            // indicar la pagina a mostrar
+            this.filters.page = this.showPage;
+
             this.axios
                 .post(this.ep.artworks.filterPublished, this.filters)
-                .then((resp) => {
+                .then(async (resp) => {
                     if (resp.status === 200) {
-                        this.counter = COUNTER_ART_PUB;
-
                         // copia original - originales
-                        this.originalArtPub = JSON.parse(
-                            JSON.stringify(resp.data)
-                        );
+                        this.artworkPublished = await resp.data.data;
 
-                        // mostrar al front
-                        this.artworkPublished = resp.data;
-
-                        // carga las restantes
-                        const rmg = this.artworkPublished.splice(this.counter);
-                        this.loadRemainingArtworks(rmg);
+                        // registros totales
+                        this.totalRecords = await resp.data.total;
                     }
                 })
                 .catch((error) => console.log(error))
                 .finally(() => (this.loadArtworkPublished = false));
-        },
-
-        /**
-         * Va mostrando la cantidad de ($count) las obras cargadas
-         */
-        showMoreArtworks(count) {
-            // counter
-            this.counter += count;
-
-            // obras originales
-            const originalData = this.originalArtPub;
-
-            // obtiene las obras restantes y acorta
-            const remaining = originalData.splice(this.counter);
-            this.artworkPublished = originalData;
-
-            this.loadRemainingArtworks(remaining);
-        },
-
-        /**
-         * Cargar las obras restantes cada vez que se actualiza
-         * la lista de obras por medio de algún evento
-         */
-        loadRemainingArtworks(remaining) {
-            this.remainingArt = remaining;
         },
 
         /**
@@ -131,6 +138,26 @@ export default {
         initArtworks() {
             // 1 => mas reciente
             this.filters.sortBy = 1;
+        },
+
+        /**
+         * Reset de la pagina a mostrar
+         */
+        resetShowPage() {
+            this.showPage = 1;
+        },
+
+        /**
+         * Cambia a la pagina indicada y realiza la consulta
+         * al backend
+         * @param {Number} page Numero de la pagina a mostrar
+         */
+        loadPage(page) {
+            this.showPage = page;
+            const top = globalThis.innerWidth < 450 ? 170 : 490;
+            this.toScrollTo(null, top);
+
+            this.getFilterArtworkPublished();
         },
     },
 };

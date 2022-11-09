@@ -201,6 +201,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       loadLiked: false,
+      loadFollow: false,
       isLike: false
     };
   },
@@ -221,9 +222,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": true
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
     user: "getProfile"
-  })),
+  })), {}, {
+    /**
+     * Comprueba si el usuario puede seguir al artista
+     *
+     * NO es posible autoseguirse
+     */
+    canFollowArtist: function canFollowArtist() {
+      var _this$artwork$user;
+
+      return this.user.id !== ((_this$artwork$user = this.artwork.user) === null || _this$artwork$user === void 0 ? void 0 : _this$artwork$user.id);
+    },
+    isFollowingArtist: function isFollowingArtist() {
+      var artist = this.artwork.user;
+      return this.user.following_artists.some(function (follow) {
+        return follow.following_id === artist.id;
+      });
+    }
+  }),
   methods: {
     /**
      * Path completo de la foto de portada
@@ -302,6 +320,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      */
     getSubCategory: function getSubCategory(labels) {
       return labels.length ? labels[0].name : "";
+    },
+
+    /**
+     * Seguir a un artista
+     */
+    followArtist: function followArtist() {
+      var _this$artwork$user2,
+          _this3 = this;
+
+      if (!this.canFollowArtist) {
+        this.noty("No es posible autoseguirte", "error");
+        return;
+      }
+
+      if (this.isFollowingArtist) {
+        this.noty("Ya se sigue a este artista", "error");
+        return;
+      }
+
+      var id = (_this$artwork$user2 = this.artwork.user) === null || _this$artwork$user2 === void 0 ? void 0 : _this$artwork$user2.id;
+      var data = {
+        following_id: id
+      };
+      this.loadFollow = true;
+      this.axios.post(this.ep.user.followArtist, data).then(function (resp) {
+        if (resp.status === 200) {
+          _this3.noty("Artista seguido");
+
+          _this3.$store.dispatch("userRequest");
+        }
+      })["catch"](function (error) {
+        return console.error(error);
+      })["finally"](function () {
+        return _this3.loadFollow = false;
+      });
     }
   }
 });
@@ -467,8 +520,22 @@ var render = function render() {
   }, [_c("span", {
     staticClass: "py-0"
   }, [_vm._v("\n                            " + _vm._s((_vm$artwork$user = _vm.artwork.user) === null || _vm$artwork$user === void 0 ? void 0 : _vm$artwork$user.name) + "\n                        ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase w-20"
-  }, [_vm._v("\n                            Seguir\n                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase w-2/4",
+    "class": {
+      "btn-dark": _vm.isFollowingArtist
+    },
+    attrs: {
+      disabled: !_vm.canFollowArtist || _vm.isFollowingArtist
+    },
+    on: {
+      click: function click($event) {
+        var _vm$artwork$user2;
+
+        $event.stopPropagation();
+        return _vm.followArtist((_vm$artwork$user2 = _vm.artwork.user) === null || _vm$artwork$user2 === void 0 ? void 0 : _vm$artwork$user2.id);
+      }
+    }
+  }, [_vm.isFollowingArtist ? _c("span", [_vm._v("Siguiendo")]) : _c("span", [_vm._v("Seguir")])])])]), _vm._v(" "), _c("div", {
     staticClass: "w-full border-t border-gray-800 my-4"
   }), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between items-center pb-4 px-2"
@@ -500,6 +567,12 @@ var render = function render() {
   })])])])])])], 1), _vm._v(" "), _c("loading-overlay", {
     attrs: {
       active: _vm.loadLiked,
+      "is-full-page": true,
+      loader: "bars"
+    }
+  }), _vm._v(" "), _c("loading-overlay", {
+    attrs: {
+      active: _vm.loadFollow,
       "is-full-page": true,
       loader: "bars"
     }

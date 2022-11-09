@@ -32,6 +32,8 @@ class UserInformations extends Model
         'galeria',
         'asociacion_turismo',
         'lang',
-        'country'
+        'country',
+        'bio_title',
+        'bio_content',
     ];
 }

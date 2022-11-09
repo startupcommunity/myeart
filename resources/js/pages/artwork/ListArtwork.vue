@@ -18,7 +18,7 @@
         <!-- /sección hero -->
 
         <!-- content -->
-        <section class="bg-white">
+        <section class="bg-white" id="results">
             <div class="container py-10 md:py-20">
                 <div class="flex flex-wrap justify-start items-start">
                     <!-- filtros -->
@@ -320,22 +320,14 @@
                                 />
                             </div>
 
-                            <!-- mostrar mas resultados -->
-                            <div
+                            <!-- paginación -->
+                            <Paginator
                                 class="w-full text-center my-4"
-                                v-if="showBtnMore"
-                            >
-                                <button
-                                    class="w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
-                                    type="button"
-                                    @click.stop="
-                                        showMoreArtworks(SHOW_ARTWORKS)
-                                    "
-                                >
-                                    Ver más
-                                </button>
-                            </div>
-                            <!-- /mostrar mas resultados -->
+                                :counter="totalPages"
+                                @load-page="loadPage"
+                                v-if="this.artworkPublished.length"
+                            />
+                            <!-- /paginación -->
                         </div>
                         <!-- /cards - obras -->
                     </div>
@@ -363,6 +355,7 @@ import HeroList from "./sections/HeroList.vue";
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
 import CardArtwork from "./sections/CardArtwork.vue";
 import OptionsFilterModal from "./sections/OptionsFilterModal.vue";
+import Paginator from "../../components/Paginator.vue";
 
 // mixin
 import getDataMixin from "../../mixins/getDataMixin";
@@ -378,6 +371,7 @@ export default {
         LoadingTailwind,
         CardArtwork,
         OptionsFilterModal,
+        Paginator,
     },
     mixins: [getDataMixin, utilMixin, listArtworkMixin],
     mounted() {
@@ -387,32 +381,6 @@ export default {
         // @listArtworkMixin
         this.initArtworks();
     },
-    watch: {
-        filters: {
-            handler(filter) {
-                // @getDataMixin
-                if (filter.category) {
-                    this.getSubCategories(filter.category);
-                }
-
-                // @getDataMixin
-                if (this.hasSubAndCategory) {
-                    this.getSubLabels(filter.category, filter.subcategory);
-                }
-
-                // @listArtworkMixin
-                this.getFilterArtworkPublished();
-            },
-            deep: true,
-        },
-
-        // cuando la subcategoria cambia
-        // se resetea el valor de la etiqueta
-        "filters.subcategory"() {
-            this.filters.label = 0;
-        },
-    },
-    methods: {},
 };
 </script>
 <style>

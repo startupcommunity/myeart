@@ -31,9 +31,19 @@ const endpoints = {
 
     // acceso global
     global: {
-        categories: `${API}/categories`,
-        subcategories: `${API}/subcategories/`,
-        labels: `${API}/labels/`,
+        categories: `${API}/categories`, // get
+        subcategories: `${API}/subcategories/`, // get
+        labels: `${API}/labels/`, // get
+    },
+
+    // user
+    user: {
+
+        // profile
+        editProfile: `${API}/profile/update-profile`, // put
+
+        // user
+        followArtist: `${API}/user/follow-artist`, // post
     },
 };
 

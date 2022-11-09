@@ -27,6 +27,8 @@ class CreateOrUpdateUserRequest extends FormRequest
             'name' => 'required|string',
             'fecha_nacimiento' => 'required|string',
             'pais_id' => 'required',
+            'bio_title' => 'nullable|max:255',
+            'bio_content' => 'nullable|max:2000',
         ];
     }
 

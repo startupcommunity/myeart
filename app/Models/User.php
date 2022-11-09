@@ -67,6 +67,16 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve los artistas/usuarios seguidos
+     *
+     * @return HasMany
+     */
+    public function followingArtists(): HasMany
+    {
+        return $this->hasMany(FollowedArtist::class, 'follower_id');
+    }
+
+    /**
      * devuelve las direcciones de envío del usuario
      *
      * @return HasMany

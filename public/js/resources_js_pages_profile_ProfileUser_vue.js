@@ -1371,6 +1371,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       loadingFormProfile: false
     };
   },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
+    userProfile: "getProfile"
+  })),
+  watch: {
+    showSection: function showSection(val) {
+      if (val) {
+        this.getCountries();
+      }
+    }
+  },
   methods: {
     /**
      * Actualizar los datos del usuario
@@ -1380,42 +1390,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loadingFormProfile = true; // datos
 
-      var profile = this.userProfile.profile;
+      var p = this.userProfile.profile;
       var data = {
         _method: "put",
         name: this.userProfile.name,
-        sexo: profile.sexo ? profile.sexo.abbr : null,
-        lang: profile.lang ? profile.lang.abbr : null,
-        pais_id: profile.pais_id ? profile.pais_id : null,
-        fecha_nacimiento: profile.fecha_nacimiento ? profile.fecha_nacimiento : null
+        sexo: p.sexo ? p.sexo.abbr : null,
+        lang: p.lang ? p.lang.abbr : null,
+        pais_id: p.pais_id ? p.pais_id : null,
+        fecha_nacimiento: p.fecha_nacimiento ? p.fecha_nacimiento : null,
+        // bio
+        bio_title: p.bio_title ? p.bio_title : null,
+        bio_content: p.bio_content ? p.bio_content : null
       }; // request
 
-      this.axios.post("/api/profile/update-profile", data).then(function (resp) {
+      this.axios.post(this.ep.user.editProfile, data).then(function (resp) {
         if (resp.status === 200) {
-          _this.$notify({
-            group: "container",
-            text: resp.data.message,
-            type: "success"
-          }); // reload user
+          _this.noty(resp.data.message); // reload user
 
 
           _this.$store.dispatch("userRequest");
         }
       })["catch"](function (error) {
-        _this.showRequestErrors(error);
+        return _this.showRequestErrors(error);
       })["finally"](function () {
         return _this.loadingFormProfile = false;
       });
-    }
-  },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
-    userProfile: "getProfile"
-  })),
-  watch: {
-    showSection: function showSection(val) {
-      if (val) {
-        this.getCountries();
-      }
     }
   }
 });
@@ -3559,6 +3558,7 @@ var render = function render() {
     attrs: {
       name: "fullname",
       label: "Nombre y Apellidos",
+      color: "#B2794C",
       disabled: !_vm.editDataProfile
     },
     model: {
@@ -3590,7 +3590,8 @@ var render = function render() {
           attrs: {
             name: "fecha_nac",
             label: "Fecha de nacimiento",
-            disabled: !_vm.editDataProfile
+            disabled: !_vm.editDataProfile,
+            color: "#B2794C"
           },
           model: {
             value: _vm.userProfile.profile.fecha_nacimiento,
@@ -3639,6 +3640,8 @@ var render = function render() {
       "item-text": "state",
       "item-value": "abbr",
       label: "Sexo",
+      color: "#B2794C",
+      "item-color": "brown darken-2",
       "return-object": "",
       disabled: !_vm.editDataProfile
     },
@@ -3663,6 +3666,8 @@ var render = function render() {
       label: "País",
       "item-text": "nombre",
       "item-value": "id",
+      color: "#B2794C",
+      "item-color": "brown darken-2",
       disabled: !_vm.editDataProfile
     },
     model: {
@@ -3685,6 +3690,8 @@ var render = function render() {
       label: "Idioma",
       "return-object": "",
       name: "lang",
+      color: "#B2794C",
+      "item-color": "brown darken-2",
       disabled: !_vm.editDataProfile
     },
     model: {
@@ -3693,6 +3700,44 @@ var render = function render() {
         _vm.$set(_vm.userProfile.profile, "lang", $$v);
       },
       expression: "userProfile.profile.lang"
+    }
+  })], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12"
+    }
+  }, [_c("p", {
+    staticClass: "font-bold text-xl"
+  }, [_vm._v("Biografía")]), _vm._v(" "), _c("v-text-field", {
+    attrs: {
+      name: "bio_title",
+      label: "Coloca una frase que te identifique como artista",
+      color: "#B2794C",
+      disabled: !_vm.editDataProfile
+    },
+    model: {
+      value: _vm.userProfile.profile.bio_title,
+      callback: function callback($$v) {
+        _vm.$set(_vm.userProfile.profile, "bio_title", $$v);
+      },
+      expression: "userProfile.profile.bio_title"
+    }
+  })], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12"
+    }
+  }, [_c("v-textarea", {
+    attrs: {
+      label: "Cuéntanos tu historia...",
+      name: "bio_content",
+      color: "#B2794C",
+      disabled: !_vm.editDataProfile
+    },
+    model: {
+      value: _vm.userProfile.profile.bio_content,
+      callback: function callback($$v) {
+        _vm.$set(_vm.userProfile.profile, "bio_content", $$v);
+      },
+      expression: "userProfile.profile.bio_content"
     }
   })], 1), _vm._v(" "), _vm.editDataProfile ? _c("v-col", {
     staticClass: "hidden sm:block",

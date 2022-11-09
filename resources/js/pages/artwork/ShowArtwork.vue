@@ -314,14 +314,17 @@
                                         <h3
                                             class="font-bold text-2xl text-zinc-900 leading-7"
                                         >
-                                            {{ userArtwork?.name }}
+                                            {{
+                                                artUser?.profile?.bio_title ??
+                                                "---"
+                                            }}
                                         </h3>
                                         <p
                                             class="font-medium text-base text-gray-600"
                                         >
                                             {{
-                                                userArtwork?.profile?.bio ??
-                                                "Sin biografía"
+                                                artUser?.profile?.bio_content ??
+                                                "---"
                                             }}
                                         </p>
                                     </div>
@@ -407,7 +410,7 @@ export default {
         /**
          * Devuelve el usuario o artista de la obra a mostrar
          */
-        userArtwork() {
+        artUser() {
             return this.artwork?.user;
         },
 

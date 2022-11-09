@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateOrUpdateUserRequest;
 use App\Models\UserInformations;
 use App\Utils\AppStorage;
+use App\Utils\ResponseJson;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,14 @@ use Illuminate\Support\Facades\Lang;
 
 class ProfileController extends Controller
 {
+    private $resp;
+
+    public function __construct(ResponseJson $resp)
+    {
+        $this->resp = $resp;
+        // $this->authorizeResource(Artwork::class, 'id');
+    }
+
     /**
      * Actualiza la foto de portada del usuario
      *
@@ -126,14 +135,10 @@ class ProfileController extends Controller
             return UserInformations::updateOrCreate(['user_id' => $user->id], $dataProfile);
         });
 
-        if ($db) {
-            return response()->json([
-                'message' => Lang::get('Datos actualizados con éxito'),
-            ], 200);
+        if (!$db) {
+            return $this->resp->json(['message' => Lang::get('Error al actualizar los datos')], 500);
         }
 
-        return response()->json([
-            'message' => Lang::get('Error al actualizar los datos')
-        ], 500);
+        return $this->resp->json(['message' => Lang::get('Datos actualizados con éxito')], 200);
     }
 }

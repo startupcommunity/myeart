@@ -51,6 +51,7 @@
                             v-model="userProfile.name"
                             name="fullname"
                             label="Nombre y Apellidos"
+                            color="#B2794C"
                             :disabled="!editDataProfile"
                         ></v-text-field>
                     </v-col>
@@ -73,6 +74,7 @@
                                     :disabled="!editDataProfile"
                                     v-bind="attrs"
                                     v-on="on"
+                                    color="#B2794C"
                                 ></v-text-field>
                             </template>
                             <v-date-picker
@@ -92,6 +94,8 @@
                             item-text="state"
                             item-value="abbr"
                             label="Sexo"
+                            color="#B2794C"
+                            item-color="brown darken-2"
                             return-object
                             :disabled="!editDataProfile"
                         ></v-select>
@@ -106,6 +110,8 @@
                             label="País"
                             item-text="nombre"
                             item-value="id"
+                            color="#B2794C"
+                            item-color="brown darken-2"
                             :disabled="!editDataProfile"
                         ></v-autocomplete>
                     </v-col>
@@ -118,8 +124,29 @@
                             label="Idioma"
                             return-object
                             name="lang"
+                            color="#B2794C"
+                            item-color="brown darken-2"
                             :disabled="!editDataProfile"
                         ></v-select>
+                    </v-col>
+                    <v-col cols="12">
+                        <p class="font-bold text-xl">Biografía</p>
+                        <v-text-field
+                            v-model="userProfile.profile.bio_title"
+                            name="bio_title"
+                            label="Coloca una frase que te identifique como artista"
+                            color="#B2794C"
+                            :disabled="!editDataProfile"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-textarea
+                            v-model="userProfile.profile.bio_content"
+                            label="Cuéntanos tu historia..."
+                            name="bio_content"
+                            color="#B2794C"
+                            :disabled="!editDataProfile"
+                        ></v-textarea>
                     </v-col>
                     <v-col
                         cols="12"
@@ -167,48 +194,6 @@ export default {
             loadingFormProfile: false,
         };
     },
-    methods: {
-        /**
-         * Actualizar los datos del usuario
-         */
-        updateUser() {
-            this.loadingFormProfile = true;
-
-            // datos
-            const profile = this.userProfile.profile;
-            const data = {
-                _method: "put",
-                name: this.userProfile.name,
-                sexo: profile.sexo ? profile.sexo.abbr : null,
-                lang: profile.lang ? profile.lang.abbr : null,
-                pais_id: profile.pais_id ? profile.pais_id : null,
-                fecha_nacimiento: profile.fecha_nacimiento
-                    ? profile.fecha_nacimiento
-                    : null,
-            };
-
-            // request
-            this.axios
-                .post("/api/profile/update-profile", data)
-                .then((resp) => {
-                    if (resp.status === 200) {
-                        this.$notify({
-                            group: "container",
-                            text: resp.data.message,
-                            type: "success",
-                        });
-
-                        // reload user
-                        this.$store.dispatch("userRequest");
-                    }
-                })
-                .catch((error) => {
-                    this.showRequestErrors(error);
-                })
-                .finally(() => (this.loadingFormProfile = false));
-        },
-    },
-
     computed: {
         /**
          * Acceder a los getters necesarios
@@ -223,6 +208,46 @@ export default {
             if (val) {
                 this.getCountries();
             }
+        },
+    },
+
+    methods: {
+        /**
+         * Actualizar los datos del usuario
+         */
+        updateUser() {
+            this.loadingFormProfile = true;
+
+            // datos
+            const p = this.userProfile.profile;
+            const data = {
+                _method: "put",
+                name: this.userProfile.name,
+                sexo: p.sexo ? p.sexo.abbr : null,
+                lang: p.lang ? p.lang.abbr : null,
+                pais_id: p.pais_id ? p.pais_id : null,
+                fecha_nacimiento: p.fecha_nacimiento
+                    ? p.fecha_nacimiento
+                    : null,
+
+                // bio
+                bio_title: p.bio_title ? p.bio_title : null,
+                bio_content: p.bio_content ? p.bio_content : null,
+            };
+
+            // request
+            this.axios
+                .post(this.ep.user.editProfile, data)
+                .then((resp) => {
+                    if (resp.status === 200) {
+                        this.noty(resp.data.message);
+
+                        // reload user
+                        this.$store.dispatch("userRequest");
+                    }
+                })
+                .catch((error) => this.showRequestErrors(error))
+                .finally(() => (this.loadingFormProfile = false));
         },
     },
 };

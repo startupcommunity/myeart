@@ -5,6 +5,7 @@ namespace App\Querys;
 use App\Enums\ArtworkStateEnum;
 use App\Models\Artwork;
 use App\Models\ArtworkLike;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class ArtworkDB
@@ -152,9 +153,9 @@ class ArtworkDB
      * Filtrar las obras publicadas de todos los usuarios
      *
      * @param array $filters            Filtros
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public static function filterPublished(array $filters): Collection
+    public static function filterPublished(array $filters): LengthAwarePaginator
     {
         // query
         $data = Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])
@@ -184,6 +185,6 @@ class ArtworkDB
             ->large($filter->large)
             ->price($filter->price);
 
-        return $data->get();
+        return $data->paginate(6, '*', 'page', $filters['page']);
     }
 }

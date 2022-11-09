@@ -23,3 +23,6 @@ mix.copy("resources/img/home", "public/img/home");
 
 // imagenes de obras - categorías
 mix.copy("resources/img/artwork", "public/img/artwork");
+
+// favicons
+mix.copy("resources/img/favicon", "public/img/favicon");
