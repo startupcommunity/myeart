@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
       sections: [{
         personal: false,
         obras: false,
+        fav: false,
         pedidos: false,
         direcciones: false,
         pagos: false,
@@ -28,6 +29,7 @@ __webpack_require__.r(__webpack_exports__);
       original: [{
         personal: false,
         obras: false,
+        fav: false,
         pedidos: false,
         direcciones: false,
         pagos: false,
@@ -37,6 +39,7 @@ __webpack_require__.r(__webpack_exports__);
       mobileSection: {
         personal: "personal",
         obras: "obras",
+        fav: "favoritos",
         pedidos: "pedidos",
         direcciones: "direcciones",
         pagos: "pagos",
@@ -97,7 +100,7 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa-solid fa-pen"
   }), _vm._v(" Editar perfil\n        ")])], 1), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-wrap justify-center items-center mt-6 text-primary text-[10px] gap-2"
+    staticClass: "flex flex-wrap justify-center items-start mt-6 text-primary text-[10px] gap-2"
   }, [_c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
@@ -129,6 +132,21 @@ var render = function render() {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].obras ? "font-black" : "font-light"
   }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Obras\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+    staticClass: "flex flex-col items-center justify-start space-y-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.changeEmitAndClass(_vm.mobileSection.fav);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-bookmark text-primary fa-2x"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].fav ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Favoritos\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"

@@ -44,17 +44,10 @@
                             <span class="py-0">
                                 {{ artwork.user?.name }}
                             </span>
-                            <button
-                                class="btn btn-primary btn-sm text-xs px-4 uppercase w-2/4"
-                                @click.stop="followArtist(artwork.user?.id)"
-                                :disabled="
-                                    !canFollowArtist || isFollowingArtist
-                                "
-                                :class="{ 'btn-dark': isFollowingArtist }"
-                            >
-                                <span v-if="isFollowingArtist">Siguiendo</span>
-                                <span v-else>Seguir</span>
-                            </button>
+                            <FollowArtistButton
+                                :artist="artwork.user"
+                                class="w-2/4"
+                            />
                         </div>
                     </div>
                     <div class="w-full border-t border-gray-800 my-4"></div>
@@ -90,24 +83,19 @@
             :is-full-page="true"
             loader="bars"
         />
-
-        <loading-overlay
-            :active="loadFollow"
-            :is-full-page="true"
-            loader="bars"
-        />
     </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
 import utilMixin from "../../../mixins/utilMixin";
+import FollowArtistButton from "../components/FollowArtistButton.vue";
 export default {
+    components: { FollowArtistButton },
     name: "CardArtwork",
     mixins: [utilMixin],
     data() {
         return {
             loadLiked: false,
-            loadFollow: false,
             isLike: false,
         };
     },
@@ -136,23 +124,6 @@ export default {
         ...mapGetters({
             user: "getProfile",
         }),
-
-        /**
-         * Comprueba si el usuario puede seguir al artista
-         *
-         * NO es posible autoseguirse
-         */
-        canFollowArtist() {
-            return this.user.id !== this.artwork.user?.id;
-        },
-
-        isFollowingArtist() {
-            const artist = this.artwork.user;
-
-            return this.user.following_artists.some(
-                (follow) => follow.following_id === artist.id
-            );
-        },
     },
     methods: {
         /**
@@ -229,37 +200,6 @@ export default {
          */
         getSubCategory(labels) {
             return labels.length ? labels[0].name : "";
-        },
-
-        /**
-         * Seguir a un artista
-         */
-        followArtist() {
-            if (!this.canFollowArtist) {
-                this.noty("No es posible autoseguirte", "error");
-                return;
-            }
-
-            if (this.isFollowingArtist) {
-                this.noty("Ya se sigue a este artista", "error");
-                return;
-            }
-
-            const id = this.artwork.user?.id;
-            const data = { following_id: id };
-            this.loadFollow = true;
-
-            this.axios
-                .post(this.ep.user.followArtist, data)
-                .then((resp) => {
-                    if (resp.status === 200) {
-                        this.noty("Artista seguido");
-
-                        this.$store.dispatch("userRequest");
-                    }
-                })
-                .catch((error) => console.error(error))
-                .finally(() => (this.loadFollow = false));
         },
     },
 };

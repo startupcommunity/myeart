@@ -8,14 +8,26 @@
         <section class="bg-white">
             <div class="container py-20">
                 <div class="flex flex-wrap">
-                    <div class="w-full lg:w-2/4 mb-4 md:mb-0">
-                        <div v-if="previewFiles.length">
-                            <div class="h-96 w-full">
+                    <div class="w-full lg:w-[70%] mb-4 lg:mb-0">
+                        <div>
+                            <div class="h-96 lg:h-[36rem] w-full relative">
                                 <img
-                                    :src="previewFiles[0].file"
+                                    :src="
+                                        previewFiles[0]?.file ??
+                                        getURLDefaultFrontArtwork
+                                    "
                                     class="w-full object-cover object-center h-full rounded-sm"
                                     :alt="previewFiles[0]"
                                 />
+                                <div class="absolute bottom-6 right-7">
+                                    <button
+                                        @click="showFullImage(previewFiles[0])"
+                                    >
+                                        <i
+                                            class="fas fa-search fa-2x text-white"
+                                        ></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="overflow-x-auto flex pt-4">
                                 <div
@@ -23,44 +35,51 @@
                                         (_, i) => i !== 0
                                     )"
                                     :key="file.id"
-                                    class="flex-shrink-0 w-1/2 xl:w-1/4 h-32 lg:h-40 bg-gray-200 rounded-sm border border-gray-300 animate-swing-in-top-fwd"
+                                    class="flex-shrink-0 w-1/2 xl:w-1/3 h-32 lg:h-52 bg-gray-200 rounded-sm border border-gray-300 animate-swing-in-top-fwd"
                                 >
                                     <div class="h-full w-full">
-                                        <img
-                                            :src="file.file"
-                                            class="w-full object-cover object-center h-full rounded-sm"
-                                            :alt="file"
-                                        />
+                                        <a @click="showFullImage(file)">
+                                            <img
+                                                :src="file?.file"
+                                                class="w-full object-cover object-center h-full rounded-sm"
+                                                :alt="file"
+                                            />
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="w-full lg:w-2/4 md:px-7">
-                        <div class="flex flex-row justify-between items-center">
-                            <div>
-                                <h1
-                                    class="text-xl lg:text-5xl font-bold leading-10 text-zinc-900"
-                                >
-                                    {{ artwork.title }}
-                                </h1>
-                            </div>
-                            <div class="text-gray-400 flex justify-end">
+                    <div class="w-full lg:w-[30%] md:px-7">
+                        <div class="flex justify-between items-start">
+                            <h1
+                                class="text-xl lg:text-5xl font-bold text-zinc-900 lg:-mt-3"
+                            >
+                                {{ artwork.title }}
+                            </h1>
+                            <div
+                                class="text-gray-400 flex justify-end items-start lg:-mr-20"
+                            >
                                 <button
                                     class="pr-4 hover:text-gray-700"
                                     @click.stop=""
                                 >
                                     <i class="fa-regular fa-bookmark fa-2x"></i>
                                 </button>
-                                <button
-                                    class="pr-4 hover:text-gray-700"
-                                    @click.stop="likeOrDislike()"
-                                >
-                                    <i
-                                        class="fa-regular fa-heart fa-2x"
-                                        :class="{ 'p-1 text-red-800': isLike }"
-                                    ></i>
-                                </button>
+                                <div class="flex flex-col items-center">
+                                    <button
+                                        class="pr-4 hover:text-gray-700"
+                                        @click.stop="likeOrDislike()"
+                                    >
+                                        <i
+                                            class="fa-regular fa-heart fa-2x"
+                                            :class="{ 'text-red-800': isLike }"
+                                        ></i>
+                                    </button>
+                                    <div class="text-zinc-800 -ml-3">
+                                        {{ likes }}
+                                    </div>
+                                </div>
                                 <button
                                     @click.stop="sharePublicArtwork(artwork)"
                                     class="hover:text-gray-700"
@@ -71,9 +90,7 @@
                                 </button>
                             </div>
                         </div>
-                        <p
-                            class="text-base leading-5 tracking-widest text-gray-400 pt-2"
-                        >
+                        <p class="text-base text-gray-600 pt-2 font-normal">
                             {{ artwork.description }}
                         </p>
                         <p class="text-primary text-sm leading-4">
@@ -107,11 +124,10 @@
                                 <span class="py-0">
                                     {{ artwork.user?.name }}
                                 </span>
-                                <button
-                                    class="btn btn-primary btn-sm text-xs px-4 uppercase w-20"
-                                >
-                                    Seguir
-                                </button>
+                                <FollowArtistButton
+                                    :artist="artwork.user"
+                                    class="w-20"
+                                />
                             </div>
                         </div>
                         <div class="border-t border-zinc-800 w-full pb-5"></div>
@@ -145,7 +161,7 @@
         <section class="bg-white">
             <div class="container pb-20">
                 <div class="flex flex-wrap">
-                    <div class="w-full lg:w-[60%]">
+                    <div class="w-full lg:w-[70%]">
                         <div class="border-b border-zinc-900 pb-5">
                             <h2
                                 class="text-primary text-2xl leading-5 tracking-widest uppercase"
@@ -243,7 +259,7 @@
                                         <span
                                             class="font-medium text-base text-gray-600"
                                         >
-                                            -
+                                            {{ artwork.other_details ?? "---" }}
                                         </span>
                                     </p>
                                 </div>
@@ -258,7 +274,10 @@
                                         <span
                                             class="font-medium text-base text-gray-600 text-justify"
                                         >
-                                            {{ artwork.description }}
+                                            {{
+                                                artwork.large_description ??
+                                                "---"
+                                            }}
                                         </span>
                                     </p>
                                 </div>
@@ -266,12 +285,12 @@
                         </div>
                     </div>
                     <div
-                        class="w-full lg:w-[40%] md:px-7 lg:mt-10 h-80 lg:h-[30rem]"
+                        class="w-full lg:w-[30%] lg:px-7 lg:mt-10 h-80 lg:h-[30rem]"
                     >
                         <img
-                            :src="randomImage?.file"
+                            :src="randomImage?.file ?? getURLDefaultFrontArtwork"
                             class="w-full h-full object-cover object-center rounded-sm"
-                            :alt="randomImage?.file"
+                            :alt="randomImage?.file ?? 'default-picture'"
                         />
                     </div>
                 </div>
@@ -283,7 +302,7 @@
         <section class="bg-gray-100">
             <div class="container py-20">
                 <div class="flex flex-wrap">
-                    <div class="w-full lg:w-[60%]">
+                    <div class="w-full lg:w-[70%]">
                         <div class="border-b border-zinc-900 pb-5">
                             <h2
                                 class="text-primary text-2xl leading-5 tracking-widest uppercase"
@@ -296,7 +315,7 @@
                                 class="flex flex-wrap justify-center lg:justify-between w-full"
                             >
                                 <div
-                                    class="w-full md:w-2/4 h-80 md:h-80 xl:h-80 2xl:h-[26rem] md:pr-10"
+                                    class="w-full md:w-2/4 h-80 md:h-80 xl:h-80 2xl:h-[30rem] md:pr-10"
                                 >
                                     <img
                                         :src="
@@ -308,7 +327,7 @@
                                     />
                                 </div>
                                 <div
-                                    class="md:w-2/4 h-full md:h-80 xl:h-80 2xl:h-[26rem] grid md:grid-cols-1 content-center md:content-between justify-items-center md:justify-items-start mx-auto"
+                                    class="md:w-2/4 h-full md:h-80 xl:h-80 2xl:h-[30rem] grid md:grid-cols-1 content-center md:content-between justify-items-center md:justify-items-start mx-auto pt-2 sm:pt-0"
                                 >
                                     <div class="w-full">
                                         <h3
@@ -320,7 +339,7 @@
                                             }}
                                         </h3>
                                         <p
-                                            class="font-medium text-base text-gray-600"
+                                            class="font-medium text-base text-gray-600 mt-2"
                                         >
                                             {{
                                                 artUser?.profile?.bio_content ??
@@ -329,11 +348,10 @@
                                         </p>
                                     </div>
                                     <div class="w-full">
-                                        <button
-                                            class="btn btn-primary btn-sm text-sm px-4 uppercase w-2/4 flex justify-center md:justify-start"
-                                        >
-                                            Seguir
-                                        </button>
+                                        <FollowArtistButton
+                                            :artist="artwork.user"
+                                            class="w-2/4 py-3"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -345,32 +363,42 @@
         <!-- /sobre el artista -->
 
         <!-- mas obras del artista -->
-        <ArtistArtworks
-            :user="this.artwork.user"
-            :ignoreArtworkID="this.artwork.id"
-        />
+        <ArtistArtworks :user="artwork.user" :ignoreArtworkID="artwork.id" />
         <!-- /mas obras del artista -->
 
         <!-- otras obras -->
         <OtherArtworks
-            :categoryID="this.artwork.categories[0]?.id"
-            :ignoreUser="this.artwork.user"
+            :categoryID="artwork.categories[0]?.id"
+            :ignoreUser="artwork.user"
         />
         <!-- /otras obras -->
+
+        <!-- modal full image -->
+        <ShowImageDialog
+            :show="showModalImage"
+            :imageBlob="file"
+            @close-full-image="showModalImage = false"
+        />
     </main-layout>
 </template>
 <script>
 import { mapGetters } from "vuex";
+
+// componentes
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
-import utilMixin from "../../mixins/utilMixin";
 import Header from "../landing/sections/Header.vue";
 import MainLayout from "../layouts/MainLayout.vue";
 import CardArtwork from "./sections/CardArtwork.vue";
 import ArtistArtworks from "./sections/ArtistArtworks.vue";
 import OtherArtworks from "./sections/OtherArtworks.vue";
+import FollowArtistButton from "./components/FollowArtistButton.vue";
+import ShowImageDialog from "./components/ShowImageDialog.vue";
 
+// mixin
+import utilMixin from "../../mixins/utilMixin";
 export default {
     name: "ShowArtwork",
+    mixins: [utilMixin],
     components: {
         MainLayout,
         Header,
@@ -378,12 +406,16 @@ export default {
         CardArtwork,
         ArtistArtworks,
         OtherArtworks,
+        FollowArtistButton,
+        ShowImageDialog,
     },
-    mixins: [utilMixin],
     data() {
         return {
             views: 0,
+            likes: 0,
             isLike: false,
+            showModalImage: false,
+            file: "",
             previewFiles: [],
             artwork: {
                 categories: [],
@@ -542,6 +574,7 @@ export default {
                 .post(endpoint + id)
                 .then((resp) => {
                     if (resp.status === 200) {
+                        this.isLike ? this.likes-- : this.likes++;
                         this.isLike = !this.isLike;
                     }
                 })
@@ -557,6 +590,8 @@ export default {
             this.isLike = this.artwork.likes.some(
                 (like) => like.user_id === this.user.id
             );
+
+            this.likes = this.artwork.likes.length;
         },
 
         /**
@@ -578,6 +613,15 @@ export default {
                 .post(this.ep.artworks.addVisit, data)
                 .then(() => console.log("visita agregada con éxito"))
                 .catch((error) => console.log(error));
+        },
+
+        /**
+         * Muestra la imagen en pantalla completa
+         */
+        showFullImage(obj) {
+            if (!obj?.file) return false;
+            this.file = obj.file;
+            this.showModalImage = true;
         },
     },
 };

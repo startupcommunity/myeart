@@ -94,6 +94,30 @@ class ArtworkFactory
   }
 
   /**
+   * Devuelve los campos a ser almacenados en la tabla obras
+   *
+   * @param array $data     el array de datos
+   * @return array          el array de datos filtrado
+   */
+  public function selectFieldsToSave(array $data): array
+  {
+    return collect($data)->only([
+      'title',
+      'description',
+      'date_created',
+      'width',
+      'large',
+      'weight',
+      'location',
+      'shipping',
+      'price',
+      'state',
+      'large_description',
+      'other_details'
+    ])->toArray();
+  }
+
+  /**
    * Almacena los datos y relaciones de la obra
    * sync:
    * type => categorías
@@ -103,16 +127,14 @@ class ArtworkFactory
    */
   public function saveSyncArtwork(array $data): ?object
   {
-    $artwork = DB::transaction(function () use ($data) {
+    $db = DB::transaction(function () use ($data) {
       $user = auth()->user();
 
       // datos de obras
-      $dataArtwork = collect($data)->only([
-        'title', 'description', 'date_created', 'width', 'large', 'weight', 'location', 'shipping', 'price', 'state'
-      ])->toArray();
+      $fields = $this->selectFieldsToSave($data);
 
       // obra creada
-      $artwork = $user->artworks()->create($dataArtwork);
+      $artwork = $user->artworks()->create($fields);
 
       // attach data
       $type = json_decode($data['type']);
@@ -128,7 +150,7 @@ class ArtworkFactory
       return $artwork;
     });
 
-    return $artwork;
+    return $db;
   }
 
   /**
@@ -143,13 +165,11 @@ class ArtworkFactory
     $db = DB::transaction(function () use ($data, $id) {
 
       // datos de obras
-      $dataArtwork = collect($data)->only([
-        'title', 'description', 'date_created', 'width', 'large', 'weight', 'location', 'shipping', 'price', 'state'
-      ])->toArray();
+      $fields = $this->selectFieldsToSave($data);
 
       // obra actualizada
       $artwork = $this->artwork->findOrFail($id);
-      $artwork->update($dataArtwork);
+      $artwork->update($fields);
 
       // attach data
       // eliminar o separa por categoría o por etiquetas
@@ -167,26 +187,6 @@ class ArtworkFactory
           ]);
         }
       }
-
-      // attach data
-      // if ($categories) {
-      //   foreach ($data['categories'] as $cat) {
-      //     $category = json_decode($cat);
-
-      //     // eliminar por categoría o por etiquetas
-      //     $artwork->categories()->detach($category->category_id);
-      //     $artwork->labels()->detach($category->sub_sub_category_id);
-
-      //     // agregar las nuevas categorías
-      //     // siempre y cuando existan etiquetas
-      //     if ($category->sub_sub_category_id) {
-      //       $artwork->labels()->attach($category->sub_sub_category_id, [
-      //         'category_id' => $category->category_id,
-      //         'sub_category_id' => $category->sub_category_id
-      //       ]);
-      //     }
-      //   }
-      // }
 
       return $artwork;
     });

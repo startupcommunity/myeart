@@ -20,12 +20,18 @@
     <!-- CDNs de Font-Awesome -->
     <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
     <script src="{{ mix('js/app.js') }}" type="text/javascript" defer></script>
+
+    {{--  favicon  --}}
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon/favicon-16x16.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon/favicon-16x16.ico') }}">
 </head>
 
 <body>
     <div id="app">
 
     </div>
+
+    <noscript>Debe activar el Javascript de su navegador para visualizar el contenido</noscript>
 </body>
 
 </html>

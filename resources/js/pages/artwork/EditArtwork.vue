@@ -298,14 +298,36 @@
                                 v-if="form.type.category_id"
                             />
                         </v-col>
+                        <v-col cols="12">
+                            <v-textarea v-model="form.large_description">
+                                <template slot="label">
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Descripción larga
+                                    </span>
+                                </template>
+                            </v-textarea>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-textarea v-model="form.other_details">
+                                <template slot="label">
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Otros detalles
+                                    </span>
+                                </template>
+                            </v-textarea>
+                        </v-col>
 
                         <!-- ------------------- -->
                         <!-- borrador o publicar -->
                         <!-- ------------------- -->
                         <v-col cols="12">
-                            <div
+                            <!-- <div
                                 class="w-full border-t border-gray-700 mt-8 pb-8"
-                            ></div>
+                            ></div> -->
                             <div class="flex flex-wrap w-full sm:justify-end">
                                 <button
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
@@ -368,6 +390,8 @@ export default {
                 id: "",
                 title: "",
                 description: "",
+                large_description: "",
+                other_details: "",
                 width: "",
                 large: "",
                 weight: "",
@@ -531,6 +555,8 @@ export default {
             data.append("_method", "PUT");
             data.append("title", form.title);
             data.append("description", form.description);
+            data.append("large_description", this.form.large_description);
+            data.append("other_details", this.form.other_details);
             data.append("width", form.width);
             data.append("large", form.large);
             data.append("weight", form.weight);

@@ -12,7 +12,7 @@
         </div>
         <!-- botonera -->
         <div
-            class="flex flex-wrap justify-center items-center mt-6 text-primary text-[10px] gap-2"
+            class="flex flex-wrap justify-center items-start mt-6 text-primary text-[10px] gap-2"
         >
             <!-- <div class=""> -->
             <div>
@@ -46,6 +46,17 @@
                     >
                         Mis <br />
                         Obras
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button type="button" class="flex flex-col items-center justify-start space-y-2" @click="changeEmitAndClass(mobileSection.fav)">
+                    <i class="fa-solid fa-bookmark text-primary fa-2x"></i>
+                    <span
+                        class="tracking-tight"
+                        :class="sections[0].fav ? 'font-black' : 'font-light'"
+                    >
+                        Favoritos
                     </span>
                 </button>
             </div>
@@ -139,6 +150,7 @@ export default {
                 {
                     personal: false,
                     obras: false,
+                    fav: false,
                     pedidos: false,
                     direcciones: false,
                     pagos: false,
@@ -151,6 +163,7 @@ export default {
                 {
                     personal: false,
                     obras: false,
+                    fav: false,
                     pedidos: false,
                     direcciones: false,
                     pagos: false,
@@ -162,6 +175,7 @@ export default {
             mobileSection: {
                 personal: "personal",
                 obras: "obras",
+                fav: "favoritos",
                 pedidos: "pedidos",
                 direcciones: "direcciones",
                 pagos: "pagos",
@@ -170,7 +184,6 @@ export default {
         };
     },
     methods: {
-
         /**
          * Emitir evento para cambiar entre secciones
          * y cambiar clase activa de cada botón de activación

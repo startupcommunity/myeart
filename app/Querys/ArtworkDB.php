@@ -37,6 +37,16 @@ class ArtworkDB
             ->get();
     }
 
+    /**
+     * Devuelve todas las obras publicadas de los usuarios
+     */
+    public static function getArtworkForID($id): Artwork
+    {
+        return Artwork::with(['categories'])
+            ->with(['gallery' => function ($q) {
+                return $q->orderBy('id', 'ASC');
+            }])->findOrFail($id);
+    }
 
     /**
      * Devuelve todas las obras publicadas del usuario indicado

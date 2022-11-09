@@ -65,6 +65,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         date_created: "",
         location: "",
         shipping: "",
+        large_description: "",
+        other_details: "",
         type: {
           category_id: "",
           sub_category: []
@@ -98,6 +100,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var data = new FormData();
       data.append("title", this.form.title);
       data.append("description", this.form.description);
+      data.append("large_description", this.form.large_description);
+      data.append("other_details", this.form.other_details);
       data.append("width", this.form.width);
       data.append("large", this.form.large);
       data.append("weight", this.form.weight);
@@ -754,9 +758,39 @@ var render = function render() {
     attrs: {
       cols: "12"
     }
+  }, [_c("v-textarea", {
+    model: {
+      value: _vm.form.large_description,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "large_description", $$v);
+      },
+      expression: "form.large_description"
+    }
+  }, [_c("template", {
+    slot: "label"
+  }, [_c("span", {
+    staticClass: "font-black tracking-wide uppercase text-gray-900"
+  }, [_vm._v("\n                                    Descripción larga\n                                ")])])], 2)], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12"
+    }
+  }, [_c("v-textarea", {
+    model: {
+      value: _vm.form.other_details,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "other_details", $$v);
+      },
+      expression: "form.other_details"
+    }
+  }, [_c("template", {
+    slot: "label"
+  }, [_c("span", {
+    staticClass: "font-black tracking-wide uppercase text-gray-900"
+  }, [_vm._v("\n                                    Otros detalles\n                                ")])])], 2)], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12"
+    }
   }, [_c("div", {
-    staticClass: "w-full border-t border-gray-700 mt-8 pb-8"
-  }), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap w-full sm:justify-end"
   }, [_c("button", {
     staticClass: "w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase",
@@ -1563,6 +1597,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         sold: 2,
         draft: 3
       };
+    },
+
+    /**
+     * Tipos de favoritos guardados por el usuario
+     * @returns Object
+     */
+    TYPEFAV: function TYPEFAV() {
+      return {
+        artist: 1,
+        artwork: 2,
+        news: 3
+      };
     }
   },
   methods: {
@@ -2337,9 +2383,10 @@ var ONLY_POSITIVE = /^[+]?([1-9][0-9]*(?:[\.][0-9]*)?|0*\.0*[1-9][0-9]*)(?:[eE][
       }],
       dimensionRules: [function (v) {
         return !!v || "Las dimensiones son requeridas";
-      }, function (v) {
-        return v && v.length <= 1000 || "Las dimensiones no deben tener mas de 1000 caracteres";
-      }],
+      } // (v) =>
+      //     (v && v.length <= 1000) ||
+      //     "Las dimensiones no deben tener mas de 1000 caracteres",
+      ],
       priceRules: [function (v) {
         return !!v || "El precio es requerido";
       }, function (v) {

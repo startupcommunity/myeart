@@ -71,25 +71,18 @@ class ArtworkController extends Controller
         // guardar y crear galeria
         !$hasFiles ?: $this->artworkfactory->uploadGalleryFiles($artwork, $data['gallery']);
 
-        if (!$artwork) {
-            return $this->resp->json('error al guardar los datos', 500);
-        }
-
         return $this->resp->json($artwork, 200);
     }
 
     /**
-     * Devuelve los datos de una obra del usuario
+     * Devuelve los datos de una obra
      *
      * @param integer $id           el id de la obra
      * @return JsonResponse
      */
     public function editArtworks(int $id): JsonResponse
     {
-        $artwork = Artwork::with(['categories'])
-            ->with(['gallery' => function ($q) {
-                return $q->orderBy('id', 'ASC');
-            }])->findOrFail($id);
+        $artwork = ArtworkDB::getArtworkForID($id);
 
         if (!$artwork) {
             return $this->resp->json('error al obtener los datos', 500);

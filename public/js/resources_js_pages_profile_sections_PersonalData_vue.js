@@ -432,6 +432,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         sold: 2,
         draft: 3
       };
+    },
+
+    /**
+     * Tipos de favoritos guardados por el usuario
+     * @returns Object
+     */
+    TYPEFAV: function TYPEFAV() {
+      return {
+        artist: 1,
+        artwork: 2,
+        news: 3
+      };
     }
   },
   methods: {

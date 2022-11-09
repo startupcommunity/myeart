@@ -141,6 +141,26 @@
                                 >
                                     <button
                                         type="button"
+                                        @click="loadSection('favoritos')"
+                                    >
+                                        <i class="fa-solid fa-bookmark text-primary"></i>
+                                        <span
+                                            class="tracking-tight uppercase"
+                                            :class="
+                                                sections.fav
+                                                    ? 'font-black'
+                                                    : 'font-light'
+                                            "
+                                        >
+                                            Favoritos
+                                        </span>
+                                    </button>
+                                </div>
+                                <div
+                                    class="flex flex-wrap gap-4 items-center justify-start py-6"
+                                >
+                                    <button
+                                        type="button"
                                         @click="loadSection('pedidos')"
                                     >
                                         <i
@@ -244,6 +264,10 @@
                     <Artwork :showSection="sections.artwork" />
                     <!-- /sección obras -->
 
+                    <!-- sección favoritos -->
+                    <Favourite :showSection="sections.fav" />
+                    <!-- /sección favoritos -->
+
                     <!-- sección direcciones -->
                     <Address :showSection="sections.direction" />
                     <!-- /sección direcciones -->
@@ -295,11 +319,13 @@ import Artwork from "./sections/Artwork.vue";
 import MobileKeypad from "./sections/MobileKeypad.vue";
 import PersonalData from "./sections/PersonalData.vue";
 import Address from "./sections/Address.vue";
+import Favourite from "./sections/Favourite.vue";
 
 // secciones como tabs
 const SECTIONS = {
     personal: "personal",
     obras: "obras",
+    fav: "favoritos",
     pedidos: "pedidos",
     direcciones: "direcciones",
     pagos: "pagos",
@@ -320,6 +346,7 @@ export default {
         Artwork,
         PersonalData,
         Address,
+        Favourite,
     },
     data() {
         return {
@@ -331,6 +358,7 @@ export default {
             sections: {
                 personal: false,
                 artwork: false,
+                fav: false,
                 order: false,
                 direction: false,
                 payment: false,
@@ -388,6 +416,7 @@ export default {
         showOrHideSection(id) {
             this.sections.personal = id == SECTIONS.personal;
             this.sections.artwork = id == SECTIONS.obras;
+            this.sections.fav = id == SECTIONS.fav;
             this.sections.direction = id == SECTIONS.direcciones;
         },
     },
