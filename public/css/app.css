@@ -12406,6 +12406,9 @@ video {
 .ml-0{
   margin-left: 0px;
 }
+.ml-5{
+  margin-left: 1.25rem;
+}
 .block{
   display: block;
 }
@@ -13034,6 +13037,12 @@ video {
 }
 .pr-2{
   padding-right: 0.5rem;
+}
+.pl-3{
+  padding-left: 0.75rem;
+}
+.pl-5{
+  padding-left: 1.25rem;
 }
 .text-left{
   text-align: left;
@@ -13700,6 +13709,14 @@ body {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+  .md\:py-32{
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+  .md\:py-52{
+    padding-top: 13rem;
+    padding-bottom: 13rem;
+  }
   .md\:pt-4{
     padding-top: 1rem;
   }
@@ -13815,6 +13832,14 @@ body {
   .lg\:px-4{
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  .lg\:py-20{
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  .lg\:py-0{
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
   .lg\:pb-24{
     padding-bottom: 6rem;

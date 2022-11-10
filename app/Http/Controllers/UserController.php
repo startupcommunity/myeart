@@ -11,12 +11,20 @@ use Throwable;
 
 class UserController extends Controller
 {
-    private $resp;
-    private $userfactory;
+    // acceso a los datos
     private $db;
 
-    public function __construct(UserFactory $userfactory, ResponseJson $resp, UserDB $db)
-    {
+    // tipo de responde de la app
+    private $resp;
+
+    // lógica del negocio
+    private $userfactory;
+
+    public function __construct(
+        UserFactory $userfactory,
+        ResponseJson $resp,
+        UserDB $db
+    ) {
         $this->userfactory = $userfactory;
         $this->resp = $resp;
         $this->db = $db;
@@ -31,13 +39,12 @@ class UserController extends Controller
      */
     public function followArtist(Request $request): JsonResponse
     {
-        $resp = $this->userfactory->followArtist($request);
-
-        if (!$resp) {
-            return $this->resp->json('Error al procesar la información', 500);
+        try {
+            $this->userfactory->followArtist($request);
+            return $this->resp->json('artista seguido con éxito', 200);
+        } catch (Throwable $th) {
+            return $this->resp->json($th, 500);
         }
-
-        return $this->resp->json('artista seguido con éxito', 200);
     }
 
     /**
@@ -51,7 +58,23 @@ class UserController extends Controller
             $resp = $this->db->getFollowArtists();
             return $this->resp->json($resp, 200);
         } catch (Throwable $th) {
-            return $this->resp->json($th, 200);
+            return $this->resp->json($th, 500);
+        }
+    }
+
+    /**
+     * Devuelve todos los artistas de la app, excluyendo
+     * el usuario logueado y los eliminados
+     *
+     * @return JsonResponse
+     */
+    public function getArtists(): JsonResponse
+    {
+        try {
+            $resp = $this->db->getArtists();
+            return $this->resp->json($resp, 200);
+        } catch (Throwable $th) {
+            return $this->resp->json($th, 500);
         }
     }
 }

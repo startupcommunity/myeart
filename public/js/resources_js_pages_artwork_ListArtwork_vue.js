@@ -1728,11 +1728,13 @@ var render = function render() {
         name: "listArtwork"
       }
     }
-  }, [_vm._v(" OBRAS ")]), _vm._v(" "), _c("a", {
+  }, [_vm._v(" OBRAS ")]), _vm._v(" "), _c("router-link", {
     attrs: {
-      href: "#"
+      to: {
+        name: "listArtist"
+      }
     }
-  }, [_vm._v("ARTISTAS")]), _vm._v(" "), _c("a", {
+  }, [_vm._v(" ARTISTAS ")]), _vm._v(" "), _c("a", {
     attrs: {
       href: "#"
     }
@@ -1800,7 +1802,13 @@ var render = function render() {
         name: "listArtwork"
       }
     }
-  }, [_vm._v("\n                                            OBRAS\n                                        ")])], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
+  }, [_vm._v("\n                                            OBRAS\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("router-link", {
+    attrs: {
+      to: {
+        name: "listArtist"
+      }
+    }
+  }, [_vm._v("\n                                            ARTISTAS\n                                        ")])], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
     staticClass: "header-icons"
@@ -1838,7 +1846,7 @@ var render = function render() {
     }
   }, [_vm._v("\n                                                            Cerrar sesión\n                                                        ")])])])]), _vm._v(" "), _c("li", [_c("div", {
     staticClass: "header-icons"
-  }, [_vm._m(3), _vm._v(" "), !_vm.isPathObrasCreate ? _c("button", {
+  }, [_vm._m(2), _vm._v(" "), !_vm.isPathObrasCreate ? _c("button", {
     staticClass: "btn btn-primary text-white px-3 py-2 rounded-lg",
     on: {
       click: function click($event) {
@@ -1863,19 +1871,10 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-regular fa-user text-white"
-  })])], 1), _vm._v(" "), _vm._m(4)])])])])])])])]);
+  })])], 1), _vm._v(" "), _vm._m(3)])])])])])])])]);
 };
 
 var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("li", [_c("a", {
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("ARTISTAS")])]);
-}, function () {
   var _vm = this,
       _c = _vm._self._c;
 

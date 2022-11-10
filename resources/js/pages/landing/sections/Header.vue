@@ -3,7 +3,7 @@
         <!-- menu mobile -->
         <div id="mySidenav" class="sidenav">
             <div class="sidenav_header">
-                <button href="#" class="closebtn" v-on:click="closeNav()">
+                <button href="#" class="closebtn" @click="closeNav()">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
             </div>
@@ -43,7 +43,7 @@
                     SUBIR OBRA <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 </button>
                 <router-link :to="{ name: 'listArtwork' }"> OBRAS </router-link>
-                <a href="#">ARTISTAS</a>
+                <router-link :to="{ name: 'listArtist' }"> ARTISTAS </router-link>
                 <a href="#">EVENTOS</a>
                 <a href="#">MI COMUNIDAD</a>
             </div>
@@ -65,7 +65,7 @@
                                 >
                                     <i
                                         class="fa-solid fa-bars text-white"
-                                        v-on:click="openNav()"
+                                        @click="openNav()"
                                     ></i>
                                 </div>
                             </div>
@@ -98,7 +98,11 @@
                                             </router-link>
                                         </li>
                                         <li>
-                                            <a href="#">ARTISTAS</a>
+                                            <router-link
+                                                :to="{ name: 'listArtist' }"
+                                            >
+                                                ARTISTAS
+                                            </router-link>
                                         </li>
                                         <li>
                                             <a href="#">EVENTOS</a>

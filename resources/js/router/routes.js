@@ -23,31 +23,31 @@ export const routes = [
     {
         name: "home",
         path: "/home",
-        component: importPage('Home'),
+        component: importPage("Home"),
         beforeEnter: ifNotAuthenticated,
     },
     {
         name: "login",
         path: "/login",
-        component: importPage('auth/Login'),
+        component: importPage("auth/Login"),
         beforeEnter: ifNotAuthenticated,
     },
     {
         name: "register",
         path: "/register",
-        component: importPage('auth/register'),
+        component: importPage("auth/register"),
         beforeEnter: ifNotAuthenticated,
     },
     {
         name: "dashboard",
         path: "/",
-        component: importPage('dashboard/dashboard'),
+        component: importPage("dashboard/dashboard"),
         beforeEnter: ifAuthenticated,
     },
     {
         name: "perfil",
         path: "/perfil",
-        component: importPage('auth/perfil'),
+        component: importPage("auth/perfil"),
         beforeEnter: ifAuthenticated,
         meta: {
             title: "perfil",
@@ -62,19 +62,19 @@ export const routes = [
     {
         name: "createArtwork",
         path: "/obras/crear",
-        component: importPage('artwork/CreateArtwork'),
+        component: importPage("artwork/CreateArtwork"),
         beforeEnter: ifAuthenticated,
     },
     {
         name: "editArtwork",
         path: "/obras/editar/:id",
-        component: importPage('artwork/EditArtwork'),
+        component: importPage("artwork/EditArtwork"),
         beforeEnter: ifAuthenticated,
     },
     {
         name: "listArtwork",
         path: "/obras",
-        component: importPage('artwork/ListArtwork'),
+        component: importPage("artwork/ListArtwork"),
         beforeEnter: ifAuthenticated,
     },
     // {
@@ -86,7 +86,13 @@ export const routes = [
     {
         name: "showArtwork",
         path: "/obras/:id",
-        component: importPage('artwork/ShowArtwork'),
+        component: importPage("artwork/ShowArtwork"),
+        beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "listArtist",
+        path: "/artistas",
+        component: importPage("artist/List"),
         beforeEnter: ifAuthenticated,
     },
 ];
