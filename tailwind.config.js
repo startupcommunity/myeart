@@ -110,7 +110,7 @@ module.exports = {
                     },
                     "100%": {
                         transform: "translateZ(50px)",
-                        "box-shadow": "0 0 20px 0 rgba(0,0,0,.35)",
+                        "box-shadow": "0 0 20px 0 rgba(0,0,0,0.2)",
                     },
                 },
                 "shadow-and-color-app": {
@@ -120,7 +120,7 @@ module.exports = {
                     },
                     "100%": {
                         transform: "translateZ(50px)",
-                        "box-shadow": "0 0 10px 0 rgba(0,0,0,.35)",
+                        "box-shadow": "0 0 10px 0 rgba(0,0,0,0.2)",
                         "background-color": "#B2794C",
                     },
                 },
@@ -137,6 +137,9 @@ module.exports = {
             },
             colors: {
                 "app-brown-1": "#B2794C",
+            },
+            boxShadow: {
+                "card-artist": "10px 10px 15px -2px rgba(0,0,0,0.1)",
             },
         },
     },

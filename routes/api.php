@@ -7,11 +7,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PaisesController;
 use App\Http\Controllers\ArtisticActivitysController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ShippingAddressController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserInformationsController;
 
 Route::post('/login', [LoginController::class, 'login']);
@@ -38,19 +35,16 @@ Route::middleware('auth:api')->delete('/deleteUser/{id}', [UserInformationsContr
 Route::middleware(['auth:api'])->group(function () {
 
     // user
-    Route::group(['prefix' => 'user'], function () {
-        Route::post('/follow-artist', [UserController::class, 'followArtist'])->name('followArtist');
-    });
+    require __DIR__ . '/api/user.php';
 
     // perfil
-    Route::group(['prefix' => 'profile'], function () {
-        Route::put('/update-front-photo', [ProfileController::class, 'updateFrontPhoto'])->name('updateFrontPhoto');
-        Route::put('/update-profile-photo', [ProfileController::class, 'updateProfilePhoto'])->name('updateProfilePhoto');
-        Route::put('/update-profile', [ProfileController::class, 'updateProfile'])->name('updateProfile');
-    });
+    require __DIR__ . '/api/profile.php';
 
     // obras
     require __DIR__ . '/api/artwork.php';
+
+    // direcciones de envió
+    require __DIR__ . '/api/shipping_address.php';
 
     // categorías
     Route::group(['prefix' => 'categories'], function () {
@@ -74,13 +68,5 @@ Route::middleware(['auth:api'])->group(function () {
          * @param sub_category_id id de la categoría que pertenece
          */
         Route::get('/{category_id}/{sub_category_id}', [SubSubCategoryController::class, 'getLabels'])->name('getLabels');
-    });
-
-    // dirección de envió
-    Route::group(['prefix' => 'shippingAddress'], function () {
-        Route::get('/getShippingAddress', [ShippingAddressController::class, 'getUserShippingAddress'])->name('getShippingAddress');
-        Route::post('/save', [ShippingAddressController::class, 'save'])->name('saveShippingAddress');
-        Route::put('/update/{id}', [ShippingAddressController::class, 'update'])->name('updateShippingAddress');
-        Route::delete('/delete/{id}', [ShippingAddressController::class, 'delete'])->name('deleteShippingAddress');
     });
 });

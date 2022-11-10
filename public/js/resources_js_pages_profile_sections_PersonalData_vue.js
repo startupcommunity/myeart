@@ -319,9 +319,9 @@ var render = function render() {
     attrs: {
       cols: "12"
     }
-  }, [_c("p", {
-    staticClass: "font-bold text-xl"
-  }, [_vm._v("Biografía")]), _vm._v(" "), _c("v-text-field", {
+  }, [_c("h3", {
+    staticClass: "font-extrabold text-xl sm:text-lg md:text-xl tracking-tight uppercase text-gray-900"
+  }, [_vm._v("\n                        Biografía\n                    ")]), _vm._v(" "), _c("v-text-field", {
     attrs: {
       name: "bio_title",
       label: "Coloca una frase que te identifique como artista",

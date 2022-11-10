@@ -23,7 +23,7 @@
                         depressed
                         block
                         class="uppercase tracking-wide"
-                        :class="stateActivePub ? 'font-bold' : 'font-light'"
+                        :class="states.artist ? 'font-bold' : 'font-light'"
                         @click.stop="filterToState(TYPEFAV.artist)"
                     >
                         Artistas
@@ -37,7 +37,7 @@
                         depressed
                         block
                         class="uppercase tracking-wide"
-                        :class="stateActiveSold ? 'font-bold' : 'font-light'"
+                        :class="states.artwork ? 'font-bold' : 'font-light'"
                         @click.stop="filterToState(TYPEFAV.artwork)"
                     >
                         Obras
@@ -51,7 +51,7 @@
                         depressed
                         block
                         class="uppercase tracking-wide"
-                        :class="stateActiveDraft ? 'font-bold' : 'font-light'"
+                        :class="states.news ? 'font-bold' : 'font-light'"
                         @click.stop="filterToState(TYPEFAV.news)"
                     >
                         Noticias
@@ -59,32 +59,38 @@
                 </div>
             </div>
 
-            <!-- obras -->
+            <!-- artistas -->
             <div class="py-6 w-full">
                 <div class="flex flex-wrap h-full items-stretch">
                     <LoadingTailwind
                         v-if="loading"
                         css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
                     />
+                    <CardArtist
+                        v-for="followArt in following_artists"
+                        :key="followArt.id"
+                        :artist="followArt.following"
+                    />
                 </div>
             </div>
-            <!-- /obras -->
+            <!-- /artistas -->
         </div>
     </div>
 </template>
 <script>
 // componentes
 import LoadingTailwind from "./../../../components/LoadingTailwind.vue";
+import CardArtist from "./../components/CardArtist.vue";
 
 // mixin
 import getDataMixin from "./../../../mixins/getDataMixin";
 
 // cantidad de obras en aumento
-let counterArtworks = 4;
+let counterArtists = 4;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind },
+    components: { LoadingTailwind, CardArtist },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -93,21 +99,15 @@ export default {
     },
     data() {
         return {
-            symbol: "€",
             loading: false,
-            stateActivePub: false,
-            stateActiveSold: false,
-            stateActiveDraft: false,
-            artworks: [],
-            originalArtworks: [],
-            remainingArtworks: [],
-            loadState: [
-                {
-                    published: false,
-                    sold: false,
-                    draft: false,
-                },
-            ],
+            states: {
+                artist: false,
+                artwork: false,
+                news: false,
+            },
+            following_artists: [],
+            originalArtists: [],
+            remainingArtists: [],
         };
     },
     methods: {
@@ -117,7 +117,7 @@ export default {
          * @param Number state
          */
         filterToState(state) {
-            counterArtworks = 4;
+            counterArtists = 4;
 
             // activar la clase según el state
             // this.stateActivePub = state === this.TYPEFAV.published;
@@ -136,10 +136,23 @@ export default {
             // this.loadRemainingArtworks(remaining);
             // this.changeStateArtwork(state);
         },
+
+        /**
+         * Carga los artistas seguidos del usuario
+         */
+        loadArtist() {
+            this.loading = true;
+            this.axios
+                .get(this.ep.user.getFollowArtists)
+                .then((resp) => (this.following_artists = resp.data))
+                .catch((error) => console.error(error))
+                .finally(() => (this.loading = false));
+        },
     },
     watch: {
         showSection(val) {
             if (val) {
+                this.loadArtist();
             }
         },
     },

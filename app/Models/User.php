@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -51,7 +52,22 @@ class User extends Authenticatable
         return $this->belongsToMany(Artistic_activitys::class);
     }
 
-    public function profile()
+    /**
+     * Devuelve los datos como artista
+     *
+     * @return HasMany
+     */
+    public function artistic(): HasMany
+    {
+        return $this->HasMany(Artistic_activitys::class);
+    }
+
+    /**
+     * Devuelve los datos del perfil de usuario
+     *
+     * @return HasOne
+     */
+    public function profile(): HasOne
     {
         return $this->hasOne(UserInformations::class, 'user_id')->withDefault();
     }

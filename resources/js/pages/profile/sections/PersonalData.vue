@@ -130,7 +130,11 @@
                         ></v-select>
                     </v-col>
                     <v-col cols="12">
-                        <p class="font-bold text-xl">Biografía</p>
+                        <h3
+                            class="font-extrabold text-xl sm:text-lg md:text-xl tracking-tight uppercase text-gray-900"
+                        >
+                            Biografía
+                        </h3>
                         <v-text-field
                             v-model="userProfile.profile.bio_title"
                             name="bio_title"

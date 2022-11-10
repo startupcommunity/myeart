@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
             // StyleSeeder::class,
             // TechniqueSeeder::class,
             // ArtworkSeeder::class,
-            ArtistArtworkSeeder::class,
+            // ArtistArtworkSeeder::class,
         ]);
     }
 }
