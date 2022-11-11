@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Artistic_activitys;
-use App\Models\Paises;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -38,26 +37,11 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        if (Paises::count() == 0) {
-            DB::table('paises')->insert([
-                [
-                    'nombre' => 'VENEZUELA',
-                    'activo' => '1',
-                    'created_at' => date('Y-m-d H:m:s'),
-                    'updated_at' => date('Y-m-d H:m:s')
-                ], [
-                    'nombre' => 'EEUU',
-                    'activo' => '1',
-                    'created_at' => date('Y-m-d H:m:s'),
-                    'updated_at' => date('Y-m-d H:m:s')
-                ]
-            ]);
-        }
-
         // ------------
         // seeders
         // ------------
         $this->call([
+            CountriesSeeder::class,
             CategorySeeder::class,
             SubSubCategorySeeder::class,
             // StyleSeeder::class,

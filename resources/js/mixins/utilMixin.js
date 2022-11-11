@@ -158,9 +158,30 @@ export default {
         sharePublicArtwork(artwork) {
             const url = this.secureUrl;
             const slug = artwork.slug ?? "";
-            const route = "/obras/" + slug;
+            const route = "/obras/slug/" + slug;
             const text = url + route;
             this.copyToClipboard(text);
+        },
+
+        /**
+         * Agrupa un array de acuerdo al callback indicado
+         *
+         * @param {Array} arr                       Array de datos
+         * @param {CallableFunction} keyGetter      función callback o key
+         * @returns Array agrupado por la key
+         */
+        groupBy(arr, keyGetter) {
+            const map = new Map();
+            arr.forEach((item) => {
+                const key = keyGetter(item);
+                const collection = map.get(key);
+                if (!collection) {
+                    map.set(key, [item]);
+                } else {
+                    collection.push(item);
+                }
+            });
+            return map;
         },
     },
 };

@@ -33,6 +33,25 @@ vue.mixin({
         },
 
         /**
+         * Devuelve una notificación al estilo de swalert
+         *
+         * @param {Object} params       objeto de config
+         * @returns
+         */
+        notySwal({ icon = "success", title, text, showConfirmButton = true }) {
+            const config = this.$swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-outline-success",
+                    cancelButton: "btn btn-danger",
+                    // showCancelButton: "btn-outline-success",
+                },
+                buttonsStyling: false,
+            });
+
+            return config.fire(title, text, icon, showConfirmButton);
+        },
+
+        /**
          * Muestra un dialog de confirmación para una acción concreta
          *
          * @returns new Promise

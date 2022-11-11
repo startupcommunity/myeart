@@ -244,7 +244,10 @@ export default {
                 .post(this.ep.user.editProfile, data)
                 .then((resp) => {
                     if (resp.status === 200) {
-                        this.noty(resp.data.message);
+                        this.notySwal({
+                            title: "Éxito",
+                            text: "Tus datos fueron actualizados satisfactoriamente",
+                        });
 
                         // reload user
                         this.$store.dispatch("userRequest");

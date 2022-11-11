@@ -123,10 +123,18 @@ export default {
             changeCat: false,
         };
     },
-    mounted() {
-        if (this.category.category_id) {
-            this.loadSubCat(this.category.category_id, false);
-        }
+    // mounted() {
+    //     if (this.category.category_id) {
+    //         console.log('cargo algo');
+    //         this.loadSubCat(this.category.category_id, false);
+    //     }
+    // },
+    watch: {
+        category(val) {
+            if (val.category_id) {
+                this.loadSubCat(this.category.category_id, false);
+            }
+        },
     },
     methods: {
         /**

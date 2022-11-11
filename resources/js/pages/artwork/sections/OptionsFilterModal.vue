@@ -35,119 +35,11 @@
                                 <div
                                     class="my-4 w-full border-t border-gray-900"
                                 ></div>
-                                <v-chip-group
-                                    v-model="options.category"
-                                    column
-                                    show-arrows
-                                    center-active
-                                    class="mx-auto my-4"
-                                >
-                                    <v-chip
-                                        filter
-                                        outlined
-                                        color="#B2794C"
-                                        v-for="cat in categories"
-                                        :key="cat.id"
-                                        :value="cat.id"
-                                        class="border-o"
-                                    >
-                                        <span
-                                            class="font-medium text-gray-900 text-xs tracking-tighter"
-                                        >
-                                            <i
-                                                class="text-primary"
-                                                :class="setIcon(cat.name)"
-                                            ></i>
-                                            {{ cat.name }}
-                                        </span>
-                                    </v-chip>
-                                </v-chip-group>
-                            </div>
-                            <div
-                                v-if="options.category"
-                                class="animate-fade-in-down"
-                            >
-                                <h3
-                                    class="text-primary font-bold tracking-wide uppercase text-lg"
-                                >
-                                    SubCategorías
-                                </h3>
-                                <div
-                                    class="my-4 w-full border-t border-gray-900"
-                                ></div>
-                                <v-chip-group
-                                    v-model="options.subcategory"
-                                    column
-                                    show-arrows
-                                    center-active
-                                    class="mx-auto my-4"
-                                >
-                                    <v-chip
-                                        filter
-                                        outlined
-                                        color="#B2794C"
-                                        v-for="subcat in subcategories"
-                                        :key="subcat.id"
-                                        :value="subcat.id"
-                                        class="border-o"
-                                    >
-                                        <span
-                                            class="font-medium text-gray-900 text-xs tracking-tighter"
-                                        >
-                                            {{ subcat.name }}
-                                        </span>
-                                    </v-chip>
-                                </v-chip-group>
-                            </div>
-                            <div
-                                v-if="options.category && options.subcategory"
-                                class="animate-fade-in-down"
-                            >
-                                <h3
-                                    class="text-primary font-bold tracking-wide uppercase text-lg"
-                                >
-                                    Etiquetas
-                                </h3>
-                                <div
-                                    class="my-4 w-full border-t border-gray-900"
-                                ></div>
-                                <!-- <v-select
-                                    v-model="options.label"
-                                    :items="labels"
-                                    item-value="id"
-                                    item-text="name"
-                                >
-                                    <template slot="label">
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Etiquetas
-                                        </span>
-                                    </template>
-                                </v-select> -->
-                                <v-chip-group
-                                    v-model="options.label"
-                                    column
-                                    show-arrows
-                                    center-active
-                                    class="mx-auto my-4"
-                                >
-                                    <v-chip
-                                        filter
-                                        outlined
-                                        color="#B2794C"
-                                        v-for="label in labels"
-                                        :key="label.id"
-                                        :value="label.id"
-                                        class="border-o"
-                                    >
-                                        <span
-                                            class="font-medium text-gray-900 text-xs tracking-tighter"
-                                        >
-                                            {{ label.name }}
-                                        </span>
-                                    </v-chip>
-                                </v-chip-group>
+                                <CategoryTypeFilter
+                                    :selected="options"
+                                    :categories="categories"
+                                    :subCategories="subcategories"
+                                />
                             </div>
                         </div>
                         <!-- categorías -->
@@ -176,6 +68,7 @@
                                     max="10000"
                                     color="#b2794c"
                                     thumb-color="#b2794c"
+                                    track-color="grey lighten-2"
                                     thumb-label
                                     hide-details
                                     class="w-full"
@@ -210,6 +103,7 @@
                                         max="500"
                                         color="#b2794c"
                                         thumb-color="#b2794c"
+                                        track-color="grey lighten-2"
                                         thumb-label
                                         hide-details
                                         class="w-full"
@@ -236,6 +130,7 @@
                                         max="500"
                                         color="#b2794c"
                                         thumb-color="#b2794c"
+                                        track-color="grey lighten-2"
                                         thumb-label
                                         hide-details
                                         class="w-full"
@@ -263,6 +158,7 @@
                                     max="100"
                                     color="#b2794c"
                                     thumb-color="#b2794c"
+                                    track-color="grey lighten-2"
                                     thumb-label
                                     hide-details
                                     class="w-full"
@@ -294,7 +190,9 @@
 </template>
 <script>
 import utilMixin from "../../../mixins/utilMixin";
+import CategoryTypeFilter from "../components/CategoryTypeFilter.vue";
 export default {
+    components: { CategoryTypeFilter },
     name: "OptionsFilterModal",
     props: {
         show: {

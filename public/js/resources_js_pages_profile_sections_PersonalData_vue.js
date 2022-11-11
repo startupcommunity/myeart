@@ -77,7 +77,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.axios.post(this.ep.user.editProfile, data).then(function (resp) {
         if (resp.status === 200) {
-          _this.noty(resp.data.message); // reload user
+          _this.notySwal({
+            title: "Éxito",
+            text: "Tus datos fueron actualizados satisfactoriamente"
+          }); // reload user
 
 
           _this.$store.dispatch("userRequest");
@@ -1179,9 +1182,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var url = this.secureUrl;
       var slug = (_artwork$slug = artwork.slug) !== null && _artwork$slug !== void 0 ? _artwork$slug : "";
-      var route = "/obras/" + slug;
+      var route = "/obras/slug/" + slug;
       var text = url + route;
       this.copyToClipboard(text);
+    },
+
+    /**
+     * Agrupa un array de acuerdo al callback indicado
+     *
+     * @param {Array} arr                       Array de datos
+     * @param {CallableFunction} keyGetter      función callback o key
+     * @returns Array agrupado por la key
+     */
+    groupBy: function groupBy(arr, keyGetter) {
+      var map = new Map();
+      arr.forEach(function (item) {
+        var key = keyGetter(item);
+        var collection = map.get(key);
+
+        if (!collection) {
+          map.set(key, [item]);
+        } else {
+          collection.push(item);
+        }
+      });
+      return map;
     }
   }
 });

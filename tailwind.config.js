@@ -137,6 +137,7 @@ module.exports = {
             },
             colors: {
                 "app-brown-1": "#B2794C",
+                "app-gray-1": "#E0E0E0",
             },
             boxShadow: {
                 "card-artist": "10px 10px 15px -2px rgba(0,0,0,0.1)",

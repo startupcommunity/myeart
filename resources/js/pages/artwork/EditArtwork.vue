@@ -295,7 +295,6 @@
                                 :category="form.type"
                                 :dataCategories="categories"
                                 :edit="true"
-                                v-if="form.type.category_id"
                             />
                         </v-col>
                         <v-col cols="12">
@@ -392,10 +391,10 @@ export default {
                 description: "",
                 large_description: "",
                 other_details: "",
-                width: "",
-                large: "",
-                weight: "",
-                price: "",
+                width: 0,
+                large: 0,
+                weight: 0,
+                price: 0,
                 date_created: "",
                 location: "",
                 shipping: "",
@@ -444,7 +443,6 @@ export default {
 
                     // datos
                     this.form = artwork;
-                    // delete this.form.categories;
                     this.form.type = {
                         category_id: "",
                         sub_category: [],
@@ -550,20 +548,20 @@ export default {
         loadFormData() {
             const form = this.form;
             const files = this.uploadedFiles;
-
             const data = new FormData();
+
             data.append("_method", "PUT");
             data.append("title", form.title);
-            data.append("description", form.description);
-            data.append("large_description", this.form.large_description);
-            data.append("other_details", this.form.other_details);
-            data.append("width", form.width);
-            data.append("large", form.large);
-            data.append("weight", form.weight);
-            data.append("price", form.price);
+            data.append("description", form.description ?? "");
+            data.append("large_description", this.form.large_description ?? "");
+            data.append("other_details", this.form.other_details ?? "");
+            data.append("width", form.width ?? "");
+            data.append("large", form.large ?? "");
+            data.append("weight", form.weight ?? "");
+            data.append("price", form.price ?? "");
             data.append("date_created", form.date_created);
-            data.append("location", form.location);
-            data.append("shipping", form.shipping);
+            data.append("location", form.location ?? "");
+            data.append("shipping", form.shipping ?? "");
             data.append("state", form.state);
             data.append(`type`, JSON.stringify(this.form.type));
 
@@ -606,15 +604,21 @@ export default {
          * sub categorías y etiquetas
          */
         async loadType(data) {
-            const group = await data.group((cat) => cat.pivot.sub_category_id);
-            this.form.type.category_id = data[0].id;
+            // agrupar las subcategorias
+            const grouped = this.groupBy(
+                data,
+                (cat) => cat.pivot.sub_category_id
+            );
+            const arr = Array.from(grouped.values());
+            const ids = arr.map((value) => value[0].id);
+            this.form.type.category_id = ids.length ? ids[0] : "";
 
-            for (const key in group) {
-                const cat = group[key];
-
+            // iterar y agregar a la prop principal
+            for (const array of grouped.values()) {
+                const subID = array[0].pivot.sub_category_id;
                 this.form.type.sub_category.push({
-                    id: cat[0].pivot.sub_category_id,
-                    labels: cat.map((d) => d.pivot.sub_sub_category_id),
+                    id: subID,
+                    labels: array.map((d) => d.pivot.sub_sub_category_id),
                 });
             }
 

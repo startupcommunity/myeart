@@ -294,6 +294,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!(obj !== null && obj !== void 0 && obj.file)) return false;
       this.file = obj.file;
       this.showModalImage = true;
+    },
+
+    /**
+     * Devuelve el path del perfil de artista o usuario
+     */
+    pathProfile: function pathProfile(userArtwork) {
+      if (userArtwork.id === this.user.id) {
+        return "/usuario/perfil/".concat(this.user.id);
+      }
+
+      return '';
     }
   }
 });
@@ -1097,7 +1108,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex flex-wrap"
   }, [_c("div", {
-    staticClass: "w-full lg:w-[70%] mb-4 lg:mb-0"
+    staticClass: "w-full lg:w-[60%] mb-4 lg:mb-0"
   }, [_c("div", [_c("div", {
     staticClass: "h-96 lg:h-[36rem] w-full relative"
   }, [_c("img", {
@@ -1140,13 +1151,13 @@ var render = function render() {
       }
     })])])]);
   }), 0)])]), _vm._v(" "), _c("div", {
-    staticClass: "w-full lg:w-[30%] md:px-7"
+    staticClass: "w-full lg:w-[40%] md:px-7"
   }, [_c("div", {
     staticClass: "flex justify-between"
   }, [_c("div", [_c("h1", {
     staticClass: "text-xl lg:text-5xl font-bold text-zinc-900 lg:-mt-3"
   }, [_vm._v("\n                                " + _vm._s(_vm.artwork.title) + "\n                            ")])]), _vm._v(" "), _c("div", {
-    staticClass: "text-gray-400 lg:-mr-20"
+    staticClass: "text-gray-400"
   }, [_c("div", {
     staticClass: "flex justify-end items-start space-x-3"
   }, [_c("button", {
@@ -1240,7 +1251,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex flex-wrap"
   }, [_c("div", {
-    staticClass: "w-full lg:w-[70%]"
+    staticClass: "w-full lg:w-[60%]"
   }, [_c("div", {
     staticClass: "border-b border-zinc-900 pb-5"
   }, [_c("h2", {
@@ -1292,7 +1303,7 @@ var render = function render() {
   }, [_vm._v("\n                                        Descripción\n                                    ")]), _vm._v(" "), _c("br"), _vm._v(" "), _c("span", {
     staticClass: "font-medium text-base text-gray-600 text-justify"
   }, [_vm._v("\n                                        " + _vm._s((_vm$artwork$large_des = _vm.artwork.large_description) !== null && _vm$artwork$large_des !== void 0 ? _vm$artwork$large_des : "---") + "\n                                    ")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "w-full lg:w-[30%] lg:px-7 lg:mt-10 h-80 lg:h-[30rem]"
+    staticClass: "w-full lg:w-[40%] lg:px-7 lg:mt-10 h-80 lg:h-[30rem]"
   }, [_c("img", {
     staticClass: "w-full h-full object-cover object-center rounded-sm",
     attrs: {
@@ -1317,13 +1328,17 @@ var render = function render() {
     staticClass: "flex flex-wrap justify-center lg:justify-between w-full"
   }, [_c("div", {
     staticClass: "w-full md:w-2/4 h-80 md:h-80 xl:h-80 2xl:h-[30rem] md:pr-10"
+  }, [_c("router-link", {
+    attrs: {
+      to: _vm.pathProfile(_vm.artwork.user)
+    }
   }, [_c("img", {
     staticClass: "border w-full h-full rounded-full object-cover object-center",
     attrs: {
       src: (_vm$getProfilePhoto2 = _vm.getProfilePhoto(_vm.artwork.user)) !== null && _vm$getProfilePhoto2 !== void 0 ? _vm$getProfilePhoto2 : _vm.getURLDefaultProfilePhoto,
       alt: "profile-picture"
     }
-  })]), _vm._v(" "), _c("div", {
+  })])], 1), _vm._v(" "), _c("div", {
     staticClass: "md:w-2/4 h-full md:h-80 xl:h-80 2xl:h-[30rem] grid md:grid-cols-1 content-center md:content-between justify-items-center md:justify-items-start mx-auto pt-2 sm:pt-0"
   }, [_c("div", {
     staticClass: "w-full"
@@ -3080,9 +3095,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var url = this.secureUrl;
       var slug = (_artwork$slug = artwork.slug) !== null && _artwork$slug !== void 0 ? _artwork$slug : "";
-      var route = "/obras/" + slug;
+      var route = "/obras/slug/" + slug;
       var text = url + route;
       this.copyToClipboard(text);
+    },
+
+    /**
+     * Agrupa un array de acuerdo al callback indicado
+     *
+     * @param {Array} arr                       Array de datos
+     * @param {CallableFunction} keyGetter      función callback o key
+     * @returns Array agrupado por la key
+     */
+    groupBy: function groupBy(arr, keyGetter) {
+      var map = new Map();
+      arr.forEach(function (item) {
+        var key = keyGetter(item);
+        var collection = map.get(key);
+
+        if (!collection) {
+          map.set(key, [item]);
+        } else {
+          collection.push(item);
+        }
+      });
+      return map;
     }
   }
 });

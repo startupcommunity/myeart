@@ -180,9 +180,17 @@ __webpack_require__.r(__webpack_exports__);
       changeCat: false
     };
   },
-  mounted: function mounted() {
-    if (this.category.category_id) {
-      this.loadSubCat(this.category.category_id, false);
+  // mounted() {
+  //     if (this.category.category_id) {
+  //         console.log('cargo algo');
+  //         this.loadSubCat(this.category.category_id, false);
+  //     }
+  // },
+  watch: {
+    category: function category(val) {
+      if (val.category_id) {
+        this.loadSubCat(this.category.category_id, false);
+      }
     }
   },
   methods: {
@@ -2343,9 +2351,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var url = this.secureUrl;
       var slug = (_artwork$slug = artwork.slug) !== null && _artwork$slug !== void 0 ? _artwork$slug : "";
-      var route = "/obras/" + slug;
+      var route = "/obras/slug/" + slug;
       var text = url + route;
       this.copyToClipboard(text);
+    },
+
+    /**
+     * Agrupa un array de acuerdo al callback indicado
+     *
+     * @param {Array} arr                       Array de datos
+     * @param {CallableFunction} keyGetter      función callback o key
+     * @returns Array agrupado por la key
+     */
+    groupBy: function groupBy(arr, keyGetter) {
+      var map = new Map();
+      arr.forEach(function (item) {
+        var key = keyGetter(item);
+        var collection = map.get(key);
+
+        if (!collection) {
+          map.set(key, [item]);
+        } else {
+          collection.push(item);
+        }
+      });
+      return map;
     }
   }
 });

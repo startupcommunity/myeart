@@ -8,7 +8,7 @@
         <section class="bg-white">
             <div class="container py-20">
                 <div class="flex flex-wrap">
-                    <div class="w-full lg:w-[70%] mb-4 lg:mb-0">
+                    <div class="w-full lg:w-[60%] mb-4 lg:mb-0">
                         <div>
                             <div class="h-96 lg:h-[36rem] w-full relative">
                                 <img
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full lg:w-[30%] md:px-7">
+                    <div class="w-full lg:w-[40%] md:px-7">
                         <div class="flex justify-between">
                             <div>
                                 <h1
@@ -59,8 +59,10 @@
                                     {{ artwork.title }}
                                 </h1>
                             </div>
-                            <div class="text-gray-400 lg:-mr-20">
-                                <div class="flex justify-end items-start space-x-3">
+                            <div class="text-gray-400">
+                                <div
+                                    class="flex justify-end items-start space-x-3"
+                                >
                                     <button
                                         class="hover:text-gray-700"
                                         @click.stop=""
@@ -169,7 +171,7 @@
         <section class="bg-white">
             <div class="container pb-20">
                 <div class="flex flex-wrap">
-                    <div class="w-full lg:w-[70%]">
+                    <div class="w-full lg:w-[60%]">
                         <div class="border-b border-zinc-900 pb-5">
                             <h2
                                 class="text-primary text-2xl leading-5 tracking-widest uppercase"
@@ -293,7 +295,7 @@
                         </div>
                     </div>
                     <div
-                        class="w-full lg:w-[30%] lg:px-7 lg:mt-10 h-80 lg:h-[30rem]"
+                        class="w-full lg:w-[40%] lg:px-7 lg:mt-10 h-80 lg:h-[30rem]"
                     >
                         <img
                             :src="
@@ -327,14 +329,18 @@
                                 <div
                                     class="w-full md:w-2/4 h-80 md:h-80 xl:h-80 2xl:h-[30rem] md:pr-10"
                                 >
-                                    <img
-                                        :src="
-                                            getProfilePhoto(artwork.user) ??
-                                            getURLDefaultProfilePhoto
-                                        "
-                                        class="border w-full h-full rounded-full object-cover object-center"
-                                        alt="profile-picture"
-                                    />
+                                    <router-link
+                                        :to="pathProfile(artwork.user)"
+                                    >
+                                        <img
+                                            :src="
+                                                getProfilePhoto(artwork.user) ??
+                                                getURLDefaultProfilePhoto
+                                            "
+                                            class="border w-full h-full rounded-full object-cover object-center"
+                                            alt="profile-picture"
+                                        />
+                                    </router-link>
                                 </div>
                                 <div
                                     class="md:w-2/4 h-full md:h-80 xl:h-80 2xl:h-[30rem] grid md:grid-cols-1 content-center md:content-between justify-items-center md:justify-items-start mx-auto pt-2 sm:pt-0"
@@ -632,6 +638,17 @@ export default {
             if (!obj?.file) return false;
             this.file = obj.file;
             this.showModalImage = true;
+        },
+
+        /**
+         * Devuelve el path del perfil de artista o usuario
+         */
+        pathProfile(userArtwork) {
+            if (userArtwork.id === this.user.id) {
+                return `/usuario/perfil/${this.user.id}`;
+            }
+
+            return '';
         },
     },
 };

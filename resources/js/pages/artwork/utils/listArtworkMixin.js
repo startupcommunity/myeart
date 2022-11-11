@@ -51,12 +51,12 @@ export default {
     },
     computed: {
         /**
-         * Verifica si hay una categoría y subcategoria seleccionada
+         * Verifica si hay una categoría seleccionada
          *
          * @returns
          */
-        hasSubAndCategory() {
-            return this.filters.category && this.filters.subcategory;
+        hasCategory() {
+            return this.filters.category ? true : false;
         },
 
         /**
@@ -79,16 +79,6 @@ export default {
     watch: {
         filters: {
             handler(filter) {
-                // @getDataMixin
-                if (filter.category) {
-                    this.getSubCategories(filter.category);
-                }
-
-                // @getDataMixin
-                if (this.hasSubAndCategory) {
-                    this.getSubLabels(filter.category, filter.subcategory);
-                }
-
                 // reset de la pagina a mostrar
                 this.resetShowPage();
 
@@ -102,6 +92,15 @@ export default {
         // se resetea el valor de la etiqueta
         "filters.subcategory"() {
             this.filters.label = 0;
+        },
+
+        // cargar las subcategorias unicamente
+        // cuando el valor se la categoría cambie
+        "filters.category"(val) {
+            if (val) {
+                // @getDataMixin
+                this.getSubCategories(val);
+            }
         },
     },
     methods: {
