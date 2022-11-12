@@ -304,7 +304,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return "/usuario/perfil/".concat(this.user.id);
       }
 
-      return '';
+      return "";
     }
   }
 });

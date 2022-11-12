@@ -1,9 +1,9 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
 
-import user from './modules/user'
-import user_information from './modules/user_information'
-import auth from './modules/auth'
+import user from "./modules/user";
+import user_information from "./modules/user_information";
+import auth from "./modules/auth";
 
 Vue.use(Vuex);
 
@@ -11,6 +11,8 @@ export const store = new Vuex.Store({
     modules: {
         user,
         auth,
-        user_information
-    }
+        user_information,
+    },
 });
+
+export default store;

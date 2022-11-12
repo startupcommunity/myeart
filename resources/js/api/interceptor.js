@@ -1,5 +1,5 @@
 import axios from "axios";
-import { routes } from "../router/routes";
+import routes from "../router/routes";
 import { store } from "../store/store";
 import JwtService from "../common/jwt.service";
 

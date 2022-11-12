@@ -1,14 +1,14 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/img/profile/hero-profile.webp": "/img/profile/hero-profile.webp",
-    "/img/home/mobile-newsletter.png": "/img/home/mobile-newsletter.png",
-    "/img/home/newsletter.png": "/img/home/newsletter.png",
-    "/img/home/Rectangle 7.png": "/img/home/Rectangle 7.png",
-    "/img/artwork/categories/pintura.webp": "/img/artwork/categories/pintura.webp",
-    "/img/artwork/default.webp": "/img/artwork/default.webp",
-    "/img/favicon/favicon-16x16.ico": "/img/favicon/favicon-16x16.ico",
-    "/img/favicon/favicon-16x16.png": "/img/favicon/favicon-16x16.png",
-    "/img/favicon/favicon-32x32.ico": "/img/favicon/favicon-32x32.ico",
-    "/img/favicon/favicon-32x32.png": "/img/favicon/favicon-32x32.png"
+    "/js/app.js": "/js/app.js?id=560949b71cca5b6122bdda2fcfbef115",
+    "/css/app.css": "/css/app.css?id=3b3e77d88ab2df1c8bcb0fa51d5636fb",
+    "/img/profile/hero-profile.webp": "/img/profile/hero-profile.webp?id=6394aed9251f89322880b03382d64c8e",
+    "/img/home/mobile-newsletter.png": "/img/home/mobile-newsletter.png?id=91648657bdfd1d6b22b2e8794e3941db",
+    "/img/home/newsletter.png": "/img/home/newsletter.png?id=0c4849e6c0b19f20d5c322b24c31a822",
+    "/img/home/Rectangle 7.png": "/img/home/Rectangle 7.png?id=91648657bdfd1d6b22b2e8794e3941db",
+    "/img/artwork/categories/pintura.webp": "/img/artwork/categories/pintura.webp?id=89fe1f63561badc177f407dcfe01db41",
+    "/img/artwork/default.webp": "/img/artwork/default.webp?id=0df7f647a46cea5213bd43b5a7e1faed",
+    "/img/favicon/favicon-16x16.ico": "/img/favicon/favicon-16x16.ico?id=6f90cf37f31e0635c9c8440aa747985a",
+    "/img/favicon/favicon-16x16.png": "/img/favicon/favicon-16x16.png?id=eae6fcc2b269852a2fdfb9ae4be869fa",
+    "/img/favicon/favicon-32x32.ico": "/img/favicon/favicon-32x32.ico?id=4d2f494fa0e02aea7e0b4cda70b1bdd0",
+    "/img/favicon/favicon-32x32.png": "/img/favicon/favicon-32x32.png?id=a35bbc63770b28eb06e5a6a3204a136c"
 }

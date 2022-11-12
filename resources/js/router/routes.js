@@ -1,7 +1,10 @@
+import Vue from "vue";
+import VueRouter from "vue-router";
+import store from "../store/store";
+
 const importPage = (page) => () => import(`../pages/${page}.vue`);
 
-// store
-import { store } from "../store/store";
+Vue.use(VueRouter);
 
 const ifNotAuthenticated = (to, from, next) => {
     if (!store.getters.isAuthenticated) {
@@ -96,3 +99,10 @@ export const routes = [
         beforeEnter: ifAuthenticated,
     },
 ];
+
+const config = new VueRouter({
+    mode: "history",
+    routes: routes,
+});
+
+export default config;

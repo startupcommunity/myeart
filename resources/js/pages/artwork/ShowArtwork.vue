@@ -648,7 +648,7 @@ export default {
                 return `/usuario/perfil/${this.user.id}`;
             }
 
-            return '';
+            return "";
         },
     },
 };
