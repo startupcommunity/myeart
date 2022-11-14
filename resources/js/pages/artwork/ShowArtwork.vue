@@ -29,23 +29,31 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto flex pt-4">
-                                <div
-                                    v-for="file in previewFiles.filter(
-                                        (_, i) => i !== 0
-                                    )"
-                                    :key="file.id"
-                                    class="flex-shrink-0 w-1/2 xl:w-1/3 h-32 lg:h-52 bg-gray-200 rounded-sm border border-gray-300 animate-swing-in-top-fwd"
-                                >
-                                    <div class="h-full w-full">
-                                        <a @click="showFullImage(file)">
-                                            <img
-                                                :src="file?.file"
-                                                class="w-full object-cover object-center h-full rounded-sm"
-                                                :alt="file"
-                                            />
-                                        </a>
+                            <div class="flex flex-wrap">
+                                <div class="overflow-x-auto flex pt-4 sm:w-full"
+                                :class="previewFiles.length > 3 ? 'w-[80%]' : 'w-full'">
+                                    <div
+                                        v-for="file in previewFiles.filter(
+                                            (_, i) => i !== 0
+                                        )"
+                                        :key="file.id"
+                                        class="flex-shrink-0 w-1/2 xl:w-1/3 h-32 lg:h-52 bg-gray-200 rounded-sm border border-gray-300 animate-swing-in-top-fwd"
+                                    >
+                                        <div class="h-full w-full">
+                                            <a @click="showFullImage(file)">
+                                                <img
+                                                    :src="file?.file"
+                                                    class="w-full object-cover object-center h-full rounded-sm"
+                                                    :alt="file"
+                                                />
+                                            </a>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="justify-center items-center w-[20%] flex sm:hidden" v-if="previewFiles.length > 3">
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-400 fa-2x p-2 rounded-full border"
+                                    ></i>
                                 </div>
                             </div>
                         </div>
@@ -327,7 +335,7 @@
                                 class="flex flex-wrap justify-center lg:justify-between w-full"
                             >
                                 <div
-                                    class="w-full md:w-2/4 h-80 md:h-80 xl:h-80 2xl:h-[30rem] md:pr-10"
+                                    class="w-52 h-52 md:w-2/4 md:h-80 xl:h-96 2xl:h-[30rem] md:pr-10"
                                 >
                                     <router-link
                                         :to="pathProfile(artwork.user)"
@@ -349,25 +357,49 @@
                                         <h3
                                             class="font-bold text-2xl text-zinc-900 leading-7"
                                         >
-                                            {{
-                                                artUser?.profile?.bio_title ??
-                                                "---"
-                                            }}
+                                            <span
+                                                class="text-center block sm:hidden"
+                                            >
+                                                {{ bioTitle }}
+                                            </span>
+                                            <span
+                                                class="text-left hidden sm:block"
+                                            >
+                                                {{ bioTitle }}
+                                            </span>
                                         </h3>
                                         <p
-                                            class="font-medium text-base text-gray-600 mt-2"
+                                            class="font-medium text-base text-gray-600 mt-2 text-center"
                                         >
-                                            {{
-                                                artUser?.profile?.bio_content ??
-                                                "---"
-                                            }}
+                                            <span
+                                                class="text-center block sm:hidden"
+                                            >
+                                                {{ bioContent }}
+                                            </span>
+                                            <span
+                                                class="text-left hidden sm:block"
+                                            >
+                                                {{ bioContent }}
+                                            </span>
                                         </p>
                                     </div>
                                     <div class="w-full">
-                                        <FollowArtistButton
-                                            :artist="artwork.user"
-                                            class="w-2/4 py-3"
-                                        />
+                                        <div
+                                            class="justify-center flex sm:hidden"
+                                        >
+                                            <FollowArtistButton
+                                                :artist="artwork.user"
+                                                class="w-2/4 py-3"
+                                            />
+                                        </div>
+                                        <div
+                                            class="justify-start hidden sm:flex"
+                                        >
+                                            <FollowArtistButton
+                                                :artist="artwork.user"
+                                                class="w-2/4 py-3"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -506,6 +538,20 @@ export default {
             const large = `Largo ${this.artwork.large + this.artSize}`;
             const weight = this.weight;
             return `${width} | ${large} | ${weight}`;
+        },
+
+        /**
+         * Devuelve el titulo de la bio del usuario
+         */
+        bioTitle() {
+            return this.artUser?.profile?.bio_title ?? "---";
+        },
+
+        /**
+         * Devuelve el titulo de la bio del usuario
+         */
+        bioContent() {
+            return this.artUser?.profile?.bio_content ?? "---";
         },
     },
     methods: {

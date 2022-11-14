@@ -1,6 +1,6 @@
 <template>
     <section class="bg-gray-100" v-show="loadComponent">
-        <div class="container pt-20">
+        <div class="container-fluid pt-20">
             <div class="w-full">
                 <h2
                     class="text-primary text-2xl leading-5 tracking-widest uppercase text-center"
@@ -19,6 +19,7 @@
                         :artwork="art"
                         :showProfile="false"
                         :key="art.id"
+                        classCard="min-h-[30rem] bg-gray-50"
                     />
                 </div>
             </div>
@@ -106,7 +107,7 @@ export default {
                 responsive: {
                     0: {
                         items: 1,
-                        edgePadding: 50,
+                        edgePadding: 10,
                     },
                     500: {
                         items: 2,

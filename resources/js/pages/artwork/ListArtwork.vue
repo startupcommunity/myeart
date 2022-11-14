@@ -222,6 +222,7 @@
                                     :artwork="artwork"
                                     :key="artwork.id"
                                     :class="index % 1 == 0 ? 'sm:px-4' : ''"
+                                    classCard="min-h-[32rem] bg-gray-50"
                                     v-else
                                 />
                             </div>

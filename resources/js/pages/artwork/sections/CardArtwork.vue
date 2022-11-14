@@ -1,6 +1,9 @@
 <template>
     <div class="w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd">
-        <div class="rounded-md w-full hover:animate-shadow-drop-center">
+        <div
+            class="rounded-md w-full hover:animate-shadow-drop-center relative"
+            :class="classCard"
+        >
             <router-link
                 :to="{
                     name: 'showArtwork',
@@ -50,28 +53,34 @@
                             />
                         </div>
                     </div>
-                    <div class="w-full border-t border-gray-800 my-4"></div>
-                    <div class="flex justify-between items-center pb-4 px-2">
-                        <div class="text-gray-900 font-black">
-                            {{ artwork.price ?? 0 }}
-                            {{ euro }}
-                        </div>
-                        <div class="text-gray-400">
-                            <button
-                                class="px-2"
-                                @click.stop="sharePublicArtwork(artwork)"
-                            >
-                                <i class="fa-regular fa-bookmark"></i>
-                            </button>
-                            <button
-                                @click.stop="likeOrDislike(artwork.id)"
-                                class="hover:text-gray-700"
-                            >
-                                <i
-                                    class="fa-regular fa-heart"
-                                    :class="isLike ? 'p-1 text-red-800' : ''"
-                                ></i>
-                            </button>
+                    <div
+                        class="flex flex-wrap pb-4 px-2 bottom-0 inset-x-0 absolute"
+                    >
+                        <div class="w-full border-t border-gray-800 my-4"></div>
+                        <div class="w-full flex justify-between items-center">
+                            <div class="text-gray-900 font-black">
+                                {{ artwork.price ?? 0 }}
+                                {{ euro }}
+                            </div>
+                            <div class="text-gray-400">
+                                <button
+                                    class="px-2"
+                                    @click.stop="sharePublicArtwork(artwork)"
+                                >
+                                    <i class="fa-regular fa-bookmark"></i>
+                                </button>
+                                <button
+                                    @click.stop="likeOrDislike(artwork.id)"
+                                    class="hover:text-gray-700"
+                                >
+                                    <i
+                                        class="fa-regular fa-heart"
+                                        :class="
+                                            isLike ? 'p-1 text-red-800' : ''
+                                        "
+                                    ></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,6 +123,10 @@ export default {
         routerLink: {
             type: Boolean,
             default: true,
+        },
+        classCard: {
+            type: String,
+            default: "",
         },
     },
     computed: {

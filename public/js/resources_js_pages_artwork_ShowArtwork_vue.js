@@ -156,6 +156,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var large = "Largo ".concat(this.artwork.large + this.artSize);
       var weight = this.weight;
       return "".concat(width, " | ").concat(large, " | ").concat(weight);
+    },
+
+    /**
+     * Devuelve el titulo de la bio del usuario
+     */
+    bioTitle: function bioTitle() {
+      var _this$artUser$profile, _this$artUser, _this$artUser$profile2;
+
+      return (_this$artUser$profile = (_this$artUser = this.artUser) === null || _this$artUser === void 0 ? void 0 : (_this$artUser$profile2 = _this$artUser.profile) === null || _this$artUser$profile2 === void 0 ? void 0 : _this$artUser$profile2.bio_title) !== null && _this$artUser$profile !== void 0 ? _this$artUser$profile : "---";
+    },
+
+    /**
+     * Devuelve el titulo de la bio del usuario
+     */
+    bioContent: function bioContent() {
+      var _this$artUser$profile3, _this$artUser2, _this$artUser2$profil;
+
+      return (_this$artUser$profile3 = (_this$artUser2 = this.artUser) === null || _this$artUser2 === void 0 ? void 0 : (_this$artUser2$profil = _this$artUser2.profile) === null || _this$artUser2$profil === void 0 ? void 0 : _this$artUser2$profil.bio_content) !== null && _this$artUser$profile3 !== void 0 ? _this$artUser$profile3 : "---";
     }
   }),
   methods: {
@@ -559,7 +577,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         responsive: {
           0: {
             items: 1,
-            edgePadding: 50
+            edgePadding: 10
           },
           500: {
             items: 2,
@@ -634,6 +652,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     routerLink: {
       type: Boolean,
       "default": true
+    },
+    classCard: {
+      type: String,
+      "default": ""
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
@@ -850,7 +872,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         responsive: {
           0: {
             items: 1,
-            edgePadding: 50
+            edgePadding: 10
           },
           500: {
             items: 2,
@@ -1087,7 +1109,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$previewFiles$0$fi, _vm$previewFiles$, _vm$getProfilePhoto, _vm$artwork$user, _vm$artwork$other_det, _vm$artwork$large_des, _vm$randomImage$file, _vm$randomImage, _vm$randomImage$file2, _vm$randomImage2, _vm$getProfilePhoto2, _vm$artUser$profile$b, _vm$artUser, _vm$artUser$profile, _vm$artUser$profile$b2, _vm$artUser2, _vm$artUser2$profile, _vm$artwork$categorie;
+  var _vm$previewFiles$0$fi, _vm$previewFiles$, _vm$getProfilePhoto, _vm$artwork$user, _vm$artwork$other_det, _vm$artwork$large_des, _vm$randomImage$file, _vm$randomImage, _vm$randomImage$file2, _vm$randomImage2, _vm$getProfilePhoto2, _vm$artwork$categorie;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -1128,7 +1150,10 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fas fa-search fa-2x text-white"
   })])])]), _vm._v(" "), _c("div", {
-    staticClass: "overflow-x-auto flex pt-4"
+    staticClass: "flex flex-wrap"
+  }, [_c("div", {
+    staticClass: "overflow-x-auto flex pt-4 sm:w-full",
+    "class": _vm.previewFiles.length > 3 ? "w-[80%]" : "w-full"
   }, _vm._l(_vm.previewFiles.filter(function (_, i) {
     return i !== 0;
   }), function (file) {
@@ -1150,7 +1175,11 @@ var render = function render() {
         alt: file
       }
     })])])]);
-  }), 0)])]), _vm._v(" "), _c("div", {
+  }), 0), _vm._v(" "), _vm.previewFiles.length > 3 ? _c("div", {
+    staticClass: "justify-center items-center w-[20%] flex sm:hidden"
+  }, [_c("i", {
+    staticClass: "fa-solid fa-chevron-right text-gray-400 fa-2x p-2 rounded-full border"
+  })]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "w-full lg:w-[40%] md:px-7"
   }, [_c("div", {
     staticClass: "flex justify-between"
@@ -1327,7 +1356,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex flex-wrap justify-center lg:justify-between w-full"
   }, [_c("div", {
-    staticClass: "w-full md:w-2/4 h-80 md:h-80 xl:h-80 2xl:h-[30rem] md:pr-10"
+    staticClass: "w-52 h-52 md:w-2/4 md:h-80 xl:h-96 2xl:h-[30rem] md:pr-10"
   }, [_c("router-link", {
     attrs: {
       to: _vm.pathProfile(_vm.artwork.user)
@@ -1344,16 +1373,33 @@ var render = function render() {
     staticClass: "w-full"
   }, [_c("h3", {
     staticClass: "font-bold text-2xl text-zinc-900 leading-7"
-  }, [_vm._v("\n                                        " + _vm._s((_vm$artUser$profile$b = (_vm$artUser = _vm.artUser) === null || _vm$artUser === void 0 ? void 0 : (_vm$artUser$profile = _vm$artUser.profile) === null || _vm$artUser$profile === void 0 ? void 0 : _vm$artUser$profile.bio_title) !== null && _vm$artUser$profile$b !== void 0 ? _vm$artUser$profile$b : "---") + "\n                                    ")]), _vm._v(" "), _c("p", {
-    staticClass: "font-medium text-base text-gray-600 mt-2"
-  }, [_vm._v("\n                                        " + _vm._s((_vm$artUser$profile$b2 = (_vm$artUser2 = _vm.artUser) === null || _vm$artUser2 === void 0 ? void 0 : (_vm$artUser2$profile = _vm$artUser2.profile) === null || _vm$artUser2$profile === void 0 ? void 0 : _vm$artUser2$profile.bio_content) !== null && _vm$artUser$profile$b2 !== void 0 ? _vm$artUser$profile$b2 : "---") + "\n                                    ")])]), _vm._v(" "), _c("div", {
+  }, [_c("span", {
+    staticClass: "text-center block sm:hidden"
+  }, [_vm._v("\n                                            " + _vm._s(_vm.bioTitle) + "\n                                        ")]), _vm._v(" "), _c("span", {
+    staticClass: "text-left hidden sm:block"
+  }, [_vm._v("\n                                            " + _vm._s(_vm.bioTitle) + "\n                                        ")])]), _vm._v(" "), _c("p", {
+    staticClass: "font-medium text-base text-gray-600 mt-2 text-center"
+  }, [_c("span", {
+    staticClass: "text-center block sm:hidden"
+  }, [_vm._v("\n                                            " + _vm._s(_vm.bioContent) + "\n                                        ")]), _vm._v(" "), _c("span", {
+    staticClass: "text-left hidden sm:block"
+  }, [_vm._v("\n                                            " + _vm._s(_vm.bioContent) + "\n                                        ")])])]), _vm._v(" "), _c("div", {
     staticClass: "w-full"
+  }, [_c("div", {
+    staticClass: "justify-center flex sm:hidden"
   }, [_c("FollowArtistButton", {
     staticClass: "w-2/4 py-3",
     attrs: {
       artist: _vm.artwork.user
     }
-  })], 1)])])])])])])]), _vm._v(" "), _c("ArtistArtworks", {
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "justify-start hidden sm:flex"
+  }, [_c("FollowArtistButton", {
+    staticClass: "w-2/4 py-3",
+    attrs: {
+      artist: _vm.artwork.user
+    }
+  })], 1)])])])])])])])]), _vm._v(" "), _c("ArtistArtworks", {
     attrs: {
       user: _vm.artwork.user,
       ignoreArtworkID: _vm.artwork.id
@@ -1508,7 +1554,7 @@ var render = function render() {
     }],
     staticClass: "bg-white"
   }, [_c("div", {
-    staticClass: "container pt-20"
+    staticClass: "container-fluid pt-20"
   }, [_c("div", {
     staticClass: "w-full"
   }, [_c("h2", {
@@ -1534,7 +1580,8 @@ var render = function render() {
       key: art.id,
       attrs: {
         artwork: art,
-        showProfile: false
+        showProfile: false,
+        classCard: "min-h-[30rem] bg-gray-50"
       }
     });
   }), 1)], 1)])]);
@@ -1566,7 +1613,8 @@ var render = function render() {
   return _c("div", {
     staticClass: "w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd"
   }, [_c("div", {
-    staticClass: "rounded-md w-full hover:animate-shadow-drop-center"
+    staticClass: "rounded-md w-full hover:animate-shadow-drop-center relative",
+    "class": _vm.classCard
   }, [_vm.routerLink ? _c("router-link", {
     attrs: {
       to: {
@@ -1614,12 +1662,14 @@ var render = function render() {
       artist: _vm.artwork.user
     }
   })], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap pb-4 px-2 bottom-0 inset-x-0 absolute"
+  }, [_c("div", {
     staticClass: "w-full border-t border-gray-800 my-4"
   }), _vm._v(" "), _c("div", {
-    staticClass: "flex justify-between items-center pb-4 px-2"
+    staticClass: "w-full flex justify-between items-center"
   }, [_c("div", {
     staticClass: "text-gray-900 font-black"
-  }, [_vm._v("\n                        " + _vm._s((_vm$artwork$price = _vm.artwork.price) !== null && _vm$artwork$price !== void 0 ? _vm$artwork$price : 0) + "\n                        " + _vm._s(_vm.euro) + "\n                    ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                            " + _vm._s((_vm$artwork$price = _vm.artwork.price) !== null && _vm$artwork$price !== void 0 ? _vm$artwork$price : 0) + "\n                            " + _vm._s(_vm.euro) + "\n                        ")]), _vm._v(" "), _c("div", {
     staticClass: "text-gray-400"
   }, [_c("button", {
     staticClass: "px-2",
@@ -1642,7 +1692,7 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa-regular fa-heart",
     "class": _vm.isLike ? "p-1 text-red-800" : ""
-  })])])])])])], 1), _vm._v(" "), _c("loading-overlay", {
+  })])])])])])])], 1), _vm._v(" "), _c("loading-overlay", {
     attrs: {
       active: _vm.loadLiked,
       "is-full-page": true,
@@ -1681,7 +1731,7 @@ var render = function render() {
     }],
     staticClass: "bg-gray-100"
   }, [_c("div", {
-    staticClass: "container pt-20"
+    staticClass: "container-fluid pt-20"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "py-10"
   }, [_c("LoadingTailwind", {
@@ -1703,7 +1753,8 @@ var render = function render() {
       key: art.id,
       attrs: {
         artwork: art,
-        showProfile: false
+        showProfile: false,
+        classCard: "min-h-[30rem] bg-gray-50"
       }
     });
   }), 1)], 1)])]);

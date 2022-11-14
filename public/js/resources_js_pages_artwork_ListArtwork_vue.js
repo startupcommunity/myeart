@@ -313,6 +313,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     routerLink: {
       type: Boolean,
       "default": true
+    },
+    classCard: {
+      type: String,
+      "default": ""
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
@@ -932,7 +936,8 @@ var render = function render() {
       key: artwork.id,
       "class": index % 1 == 0 ? "sm:px-4" : "",
       attrs: {
-        artwork: artwork
+        artwork: artwork,
+        classCard: "min-h-[32rem] bg-gray-50"
       }
     });
   })], 2), _vm._v(" "), this.artworkPublished.length ? _c("Paginator", {
@@ -1111,7 +1116,8 @@ var render = function render() {
   return _c("div", {
     staticClass: "w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd"
   }, [_c("div", {
-    staticClass: "rounded-md w-full hover:animate-shadow-drop-center"
+    staticClass: "rounded-md w-full hover:animate-shadow-drop-center relative",
+    "class": _vm.classCard
   }, [_vm.routerLink ? _c("router-link", {
     attrs: {
       to: {
@@ -1159,12 +1165,14 @@ var render = function render() {
       artist: _vm.artwork.user
     }
   })], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap pb-4 px-2 bottom-0 inset-x-0 absolute"
+  }, [_c("div", {
     staticClass: "w-full border-t border-gray-800 my-4"
   }), _vm._v(" "), _c("div", {
-    staticClass: "flex justify-between items-center pb-4 px-2"
+    staticClass: "w-full flex justify-between items-center"
   }, [_c("div", {
     staticClass: "text-gray-900 font-black"
-  }, [_vm._v("\n                        " + _vm._s((_vm$artwork$price = _vm.artwork.price) !== null && _vm$artwork$price !== void 0 ? _vm$artwork$price : 0) + "\n                        " + _vm._s(_vm.euro) + "\n                    ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                            " + _vm._s((_vm$artwork$price = _vm.artwork.price) !== null && _vm$artwork$price !== void 0 ? _vm$artwork$price : 0) + "\n                            " + _vm._s(_vm.euro) + "\n                        ")]), _vm._v(" "), _c("div", {
     staticClass: "text-gray-400"
   }, [_c("button", {
     staticClass: "px-2",
@@ -1187,7 +1195,7 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa-regular fa-heart",
     "class": _vm.isLike ? "p-1 text-red-800" : ""
-  })])])])])])], 1), _vm._v(" "), _c("loading-overlay", {
+  })])])])])])])], 1), _vm._v(" "), _c("loading-overlay", {
     attrs: {
       active: _vm.loadLiked,
       "is-full-page": true,
