@@ -37,13 +37,20 @@ class UserDB
     public function getArtists(array $filters): LengthAwarePaginator
     {
         $user = auth()->user();
-        $data = User::with(['userArtistic', 'profile'])
-            ->whereHas(
-                'profile',
-                fn ($pro) => $pro->where('perfil', ProfileTypeEnum::ARTIST)
-            )->where('id', '<>', $user->id);
+        $data = $filters;
+        $cat = isset($data['category']) ? $data['category'] : null;
+        $sub = isset($data['subcategory']) ? $data['subcategory'] : null;
+        $label = isset($data['label']) ? $data['label'] : null;
 
+        // query
+        $query = User::with(['userArtistic', 'profile', 'artworks.gallery'])
+            ->artist()->notUser($user->id);
 
-        return $data->paginate(self::PAGINATE_ARTIST, '*', 'page', $filters['page']);
+        // si se recibe algunas de las categorías
+        if ($cat || $sub || $label) {
+            $query->artworkCategory($cat, $sub, $label);
+        }
+
+        return $query->paginate(self::PAGINATE_ARTIST, '*', 'page', $data['page']);
     }
 }

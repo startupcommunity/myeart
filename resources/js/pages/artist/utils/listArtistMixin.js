@@ -1,3 +1,4 @@
+import { tns } from "tiny-slider";
 import getDataMixin from "../../../mixins/getDataMixin";
 
 const INIT_ARTIST_PER_PAGE = 8;
@@ -68,22 +69,23 @@ export default {
         totalPages() {
             return this.totalRecords / this.showPerPage;
         },
+
+        /**
+         * Verifica si hay artistas que mostrar
+         *
+         * @returns Boolean
+         */
+        hasArtists() {
+            return this.artists.length;
+        },
     },
     watch: {
         filters: {
             handler(_) {
                 // reset de la pagina a mostrar
                 this.resetShowPage();
-                // @this
-                this.loadArtist();
             },
             deep: true,
-        },
-
-        // cuando la subcategoria cambia
-        // se resetea el valor de la etiqueta
-        "filters.subcategory"() {
-            this.filters.label = 0;
         },
 
         // cargar las subcategorias unicamente
@@ -93,6 +95,15 @@ export default {
                 // @getDataMixin
                 this.getSubCategories(val);
             }
+
+            this.filters.label = 0;
+
+            // @this
+            this.loadArtist();
+        },
+
+        "filters.label"(val) {
+            this.loadArtist();
         },
     },
     methods: {
@@ -111,8 +122,8 @@ export default {
             this.axios
                 .get(this.ep.user.getArtists, params)
                 .then((resp) => {
-                    this.artists = resp.data.data;
                     this.totalRecords = resp.data.total;
+                    this.artists = resp.data.data;
                 })
                 .catch((error) => console.error(error))
                 .finally(() => (this.loadingArtist = false));
@@ -142,7 +153,7 @@ export default {
          * indica como se debe mostrar las tarjetas de los artistas
          * @param {Int} mode        El modo a cargar
          */
-        reloadCard(mode) {
+        loadMode(mode) {
             if (this.modeCard.col === mode) {
                 this.mode.col = true;
                 this.mode.row = false;
@@ -151,6 +162,61 @@ export default {
 
             this.mode.row = true;
             this.mode.col = false;
+
+            // init TNS
+            this.artists.forEach((art) => {
+                if (art.artworks.length) {
+                    this.showTNS("#row-artist-" + art.id);
+                }
+            });
+        },
+
+        /**
+         * cargar datos cuando se monte el componente
+         */
+        initData() {
+            this.loadArtist();
+        },
+
+        /**
+         * Iniciar el carousel
+         */
+        showTNS(id) {
+            tns({
+                container: id,
+                mode: "carousel",
+                speed: 400,
+                gutter: 20,
+                items: 5,
+                autoplay: false,
+                mouseDrag: true,
+                autoplayButtonOutput: false,
+                autoplayHoverPause: true,
+                lazyload: true,
+                controls: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        edgePadding: 10,
+                    },
+                    500: {
+                        items: 2,
+                        edgePadding: 2,
+                    },
+                    1000: {
+                        items: 3,
+                        edgePadding: 2,
+                    },
+                    1200: {
+                        items: 4,
+                        edgePadding: 2,
+                    },
+                    1500: {
+                        items: 5,
+                        edgePadding: 0,
+                    },
+                },
+            });
         },
     },
 };

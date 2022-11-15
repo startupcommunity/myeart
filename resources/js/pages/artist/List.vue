@@ -1,13 +1,13 @@
 <template>
     <main-layout :showHeader="false">
         <!-- header -->
-        <div class="bg-zinc-900 pb-32">
+        <div class="bg-zinc-900 pb-32" v-if="!showFilterModal">
             <Header class="mt-5" />
         </div>
 
         <!-- content -->
         <section class="bg-white" id="list-artist">
-            <div class="container py-20">
+            <div class="py-20 container">
                 <div class="flex flex-wrap justify-start items-start">
                     <!-- filtros -->
                     <div class="w-[30%] md:pr-10 hidden md:block">
@@ -17,7 +17,6 @@
                             Categorías
                         </h3>
                         <div class="my-4 w-full border-t border-gray-900"></div>
-                        <!-- categorías -->
                         <CategoryTypeFilter
                             :selected="filters"
                             :categories="categories"
@@ -28,13 +27,24 @@
 
                     <!-- resultados -->
                     <div class="w-full md:w-[70%]">
-                        <div class="flex justify-end">
+                        <div class="flex justify-end items-center">
+                            <div class="block md:hidden">
+                                <v-btn
+                                    raised
+                                    text
+                                    @click="showFilterModal = !showFilterModal"
+                                >
+                                    <span class="text-xl"> Filtrar </span>
+                                    <i class="fa-solid fa-list-check fa-2x"></i>
+                                </v-btn>
+                            </div>
                             <div
-                                class="flex flex-wrap items-center justify-end"
+                                class="flex-wrap items-center justify-end hidden md:flex"
                             >
                                 <button
-                                    @click.prevent="reloadCard(modeCard.col)"
-                                    class="me-5"
+                                    @click.prevent="loadMode(modeCard.col)"
+                                    class="md:pr-5"
+                                    :disabled="!hasArtists"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +96,8 @@
                                     </svg>
                                 </button>
                                 <button
-                                    @click.prevent="reloadCard(modeCard.row)"
+                                    @click.prevent="loadMode(modeCard.row)"
+                                    :disabled="!hasArtists"
                                 >
                                     <i
                                         class="fas fa-bars fa-3x"
@@ -98,21 +109,11 @@
                                     ></i>
                                 </button>
                             </div>
-                            <!-- <div class="block md:hidden">
-                                <v-btn
-                                    raised
-                                    text
-                                    @click="showFilterModal = !showFilterModal"
-                                >
-                                    Filtrar
-                                    <i class="fa-solid fa-list-check"></i>
-                                </v-btn>
-                            </div> -->
                         </div>
 
                         <!-- cards - obras -->
                         <div class="my-4">
-                            <div class="flex flex-wrap">
+                            <div class="flex">
                                 <LoadingTailwind
                                     v-if="loadingArtist"
                                     css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
@@ -125,8 +126,9 @@
                                         v-for="(artist, index) in artists"
                                         :key="artist.id"
                                         :class="{
-                                            'sm:px-4': index % 1 == 0,
-                                            'md:w-1/2 lg:w-1/3 xl:w-1/4':
+                                            'sm:px-4':
+                                                index % 1 == 0 && mode.col,
+                                            'w-full md:w-1/2 lg:w-1/3 xl:w-1/4':
                                                 mode.col,
                                             'w-full flex flex-wrap': mode.row,
                                         }"
@@ -135,15 +137,32 @@
                                             :showButtonFollow="true"
                                             :routerLink="true"
                                             :artist="artist"
-                                            :class="{ 'md:w-3/12': mode.row }"
+                                            :class="{
+                                                'w-full md:w-3/12': mode.row,
+                                                'w-full h-full': mode.col,
+                                            }"
                                         />
-                                        <div v-if="mode.row" class="md:w-9/12 md:pl-8">
-                                            <h3>
+
+                                        <!-- slider tns -->
+                                        <div
+                                            v-show="mode.row"
+                                            class="md:w-9/12 md:pl-8 hidden md:block"
+                                        >
+                                            <h3
+                                                class="text-base text-zinc-900 font-extra-bold uppercase"
+                                            >
                                                 algunas obras de
                                                 {{ artist.name }}
                                             </h3>
-                                            <div class="md:pt-3">
-                                                <!-- cards -->
+                                            <div
+                                                :id="'row-artist-' + artist.id"
+                                                class="mt-3 w-full"
+                                            >
+                                                <RowArtwork
+                                                    v-for="artwork in artist.artworks"
+                                                    :key="artwork.id"
+                                                    :artwork="artwork"
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -152,10 +171,10 @@
 
                             <!-- paginación -->
                             <Paginator
-                                class="w-full text-center my-4"
+                                class="w-full text-center my-10"
                                 :counter="totalPages"
                                 @load-page="loadPage"
-                                v-if="this.artists.length"
+                                v-if="hasArtists"
                             />
                             <!-- /paginación -->
                         </div>
@@ -166,14 +185,26 @@
             </div>
         </section>
         <!-- /content -->
+
+        <!-- modal filter mobile -->
+        <FilterArtistModal
+            :show="showFilterModal"
+            :options="filters"
+            :categories="categories"
+            :subcategories="subCategories"
+            @close-filter-dialog-artist="showFilterModal = false"
+        />
     </main-layout>
 </template>
 <script>
+// componentes
 import MainLayout from "../layouts/MainLayout.vue";
 import Header from "../landing/sections/Header.vue";
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
 import Paginator from "../../components/Paginator.vue";
 import CardArtist from "./../profile/components/CardArtist.vue";
+import RowArtwork from "./components/RowArtwork.vue";
+import FilterArtistModal from "./components/FilterArtistModal.vue";
 
 // mixin
 import getDataMixin from "../../mixins/getDataMixin";
@@ -190,6 +221,8 @@ export default {
         CardArtist,
         Paginator,
         CategoryTypeFilter,
+        RowArtwork,
+        FilterArtistModal,
     },
     mixins: [getDataMixin, utilMixin, listArtistMixin],
     mounted() {
@@ -197,7 +230,7 @@ export default {
         this.getCategories();
 
         // @listArtistMixin
-        // this.initArtworks();
+        this.initData();
     },
 };
 </script>

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\ProfileTypeEnum;
+use Illuminate\Database\Eloquent\Builder;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -120,5 +122,45 @@ class User extends Authenticatable
     public function hasAFrontPhoto(): bool
     {
         return !is_null($this->front_photo);
+    }
+
+    // ------------------------------------------------
+    // ------------- Local Scopes ---------------------
+    // ------------------------------------------------
+
+    /**
+     * Devuelve los usuario del tipo artista
+     *
+     * @param  Builder $query
+     * @return Builder
+     */
+    public function scopeArtist($query)
+    {
+        return $query->whereHas(
+            'profile',
+            fn ($pro) => $pro->where('perfil', ProfileTypeEnum::ARTIST)
+        );
+    }
+
+    /**
+     * Filtra de no incluir el usuario indicado
+     *
+     * @param  Builder $query
+     * @return Builder
+     */
+    public function scopeNotUser($query, $id)
+    {
+        return $query->where('id', '<>', $id);
+    }
+
+    /**
+     * Filtra por las categorías de las obras de los artistas
+     *
+     * @param  Builder $query
+     * @return Builder
+     */
+    public function scopeArtworkCategory($query, $cat = null, $sub = null, $label = null)
+    {
+        return $query->whereHas('artworks', fn ($art) => $art->category($cat, $sub, $label));
     }
 }
