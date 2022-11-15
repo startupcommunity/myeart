@@ -38,13 +38,17 @@ const endpoints = {
 
     // user
     user: {
-
         // profile
         editProfile: `${API}/profile/update-profile`, // put
 
         // user - seguir artista
         followArtist: `${API}/user/follow-artist`, // post
+
+        // artistas seguidos por el usuario
         getFollowArtists: `${API}/user/get-follow-artists`, // get
+
+        // colección de artistas activos
+        getArtists: `${API}/user/get-artists`, // get
     },
 };
 

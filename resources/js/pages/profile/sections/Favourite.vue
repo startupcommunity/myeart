@@ -70,6 +70,7 @@
                         v-for="followArt in following_artists"
                         :key="followArt.id"
                         :artist="followArt.following"
+                        class="md:w-1/2"
                     />
                 </div>
             </div>

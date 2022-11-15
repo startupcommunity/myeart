@@ -1,11 +1,19 @@
 <template>
-    <div class="w-full md:w-1/2 mb-10 animate-swing-in-top-fwd">
+    <div class="w-full mb-10 animate-swing-in-top-fwd">
         <div
-            class="rounded-md w-full hover:animate-shadow-drop-center shadow-[10px_10px_15px_-2px_rgba(0,0,0,0.1)] px-6 py-6"
+            class="rounded-md w-full h-full hover:animate-shadow-drop-center shadow-[10px_10px_15px_-2px_rgba(0,0,0,0.1)] px-6 py-6 relative"
         >
             <div class="w-full flex justify-center">
                 <div class="w-28 h-28">
-                    <router-link v-if="routerLink">
+                    <router-link
+                        v-if="routerLink"
+                        :to="{
+                            name: 'showArtist',
+                            params: {
+                                id: artist.id,
+                            },
+                        }"
+                    >
                         <img
                             :src="getPathProfilePhoto"
                             :alt="artist.name"
@@ -33,8 +41,13 @@
                     <p class="text-gray-800 text-xs italic py-5">
                         "{{ getBioTitle }}"
                     </p>
-                    <div v-if="showButtonFollow">
-                        <FollowArtistButton :artist="artist" class="btn-block py-2" />
+                    <div class="py-8" v-if="showButtonFollow">
+                        <div class="absolute bottom-5 inset-x-0 px-6">
+                            <FollowArtistButton
+                                :artist="artist"
+                                class="btn-block py-2"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

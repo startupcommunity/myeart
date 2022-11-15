@@ -98,6 +98,12 @@ export const routes = [
         component: importPage("artist/List"),
         beforeEnter: ifAuthenticated,
     },
+    {
+        name: "showArtist",
+        path: "/artista/:id",
+        component: importPage("artist/Show"),
+        beforeEnter: ifAuthenticated,
+    },
 ];
 
 const config = new VueRouter({

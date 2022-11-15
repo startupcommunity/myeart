@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Factories\UserFactory;
 use App\Querys\UserDB;
 use App\Utils\ResponseJson;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Throwable;
 
 class UserController extends Controller
 {
@@ -42,7 +42,7 @@ class UserController extends Controller
         try {
             $this->userfactory->followArtist($request);
             return $this->resp->json('artista seguido con éxito', 200);
-        } catch (Throwable $th) {
+        } catch (Exception $th) {
             return $this->resp->json($th, 500);
         }
     }
@@ -57,7 +57,7 @@ class UserController extends Controller
         try {
             $resp = $this->db->getFollowArtists();
             return $this->resp->json($resp, 200);
-        } catch (Throwable $th) {
+        } catch (Exception $th) {
             return $this->resp->json($th, 500);
         }
     }
@@ -68,12 +68,12 @@ class UserController extends Controller
      *
      * @return JsonResponse
      */
-    public function getArtists(): JsonResponse
+    public function getArtists(Request $request): JsonResponse
     {
         try {
-            $resp = $this->db->getArtists();
+            $resp = $this->db->getArtists($request->all());
             return $this->resp->json($resp, 200);
-        } catch (Throwable $th) {
+        } catch (Exception $th) {
             return $this->resp->json($th, 500);
         }
     }

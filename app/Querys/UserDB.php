@@ -9,13 +9,16 @@ namespace App\Querys;
 
 use App\Enums\ProfileTypeEnum;
 use App\Models\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class UserDB
 {
+    private const PAGINATE_ARTIST = 8;
+
     /**
      * Devuelve los artistas seguidos por el usuario logueado
-     * 
+     *
      * @param int|null $userID
      */
     public function getFollowArtists($userID = null): Collection
@@ -31,14 +34,16 @@ class UserDB
      *
      * @return Collection
      */
-    public function getArtists(): Collection
+    public function getArtists(array $filters): LengthAwarePaginator
     {
         $user = auth()->user();
-        $data = User::with(['followingArtists.following.userArtistic', 'followingArtists.following.profile'])
-            ->whereHas('profile', function ($profile) {
-                $profile->where('perfil', ProfileTypeEnum::ARTIST);
-            })->where('id', '<>', $user->id);
+        $data = User::with(['userArtistic', 'profile'])
+            ->whereHas(
+                'profile',
+                fn ($pro) => $pro->where('perfil', ProfileTypeEnum::ARTIST)
+            )->where('id', '<>', $user->id);
 
-        return $data->get();
+
+        return $data->paginate(self::PAGINATE_ARTIST, '*', 'page', $filters['page']);
     }
 }

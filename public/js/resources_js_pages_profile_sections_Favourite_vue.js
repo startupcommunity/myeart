@@ -375,14 +375,23 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "w-full md:w-1/2 mb-10 animate-swing-in-top-fwd"
+    staticClass: "w-full mb-10 animate-swing-in-top-fwd"
   }, [_c("div", {
-    staticClass: "rounded-md w-full hover:animate-shadow-drop-center shadow-[10px_10px_15px_-2px_rgba(0,0,0,0.1)] px-6 py-6"
+    staticClass: "rounded-md w-full h-full hover:animate-shadow-drop-center shadow-[10px_10px_15px_-2px_rgba(0,0,0,0.1)] px-6 py-6 relative"
   }, [_c("div", {
     staticClass: "w-full flex justify-center"
   }, [_c("div", {
     staticClass: "w-28 h-28"
-  }, [_vm.routerLink ? _c("router-link", [_c("img", {
+  }, [_vm.routerLink ? _c("router-link", {
+    attrs: {
+      to: {
+        name: "showArtist",
+        params: {
+          id: _vm.artist.id
+        }
+      }
+    }
+  }, [_c("img", {
     staticClass: "object-cover object-center w-full h-full rounded-full",
     attrs: {
       src: _vm.getPathProfilePhoto,
@@ -404,12 +413,16 @@ var render = function render() {
     staticClass: "text-primary text-xs"
   }, [_vm._v("\n                    " + _vm._s(_vm.getNameCategory) + "\n                ")]), _vm._v(" "), _c("p", {
     staticClass: "text-gray-800 text-xs italic py-5"
-  }, [_vm._v('\n                    "' + _vm._s(_vm.getBioTitle) + '"\n                ')]), _vm._v(" "), _vm.showButtonFollow ? _c("div", [_c("FollowArtistButton", {
+  }, [_vm._v('\n                    "' + _vm._s(_vm.getBioTitle) + '"\n                ')]), _vm._v(" "), _vm.showButtonFollow ? _c("div", {
+    staticClass: "py-8"
+  }, [_c("div", {
+    staticClass: "absolute bottom-5 inset-x-0 px-6"
+  }, [_c("FollowArtistButton", {
     staticClass: "btn-block py-2",
     attrs: {
       artist: _vm.artist
     }
-  })], 1) : _vm._e()])])])]);
+  })], 1)]) : _vm._e()])])])]);
 };
 
 var staticRenderFns = [];
@@ -509,6 +522,7 @@ var render = function render() {
   }) : _vm._e(), _vm._v(" "), _vm._l(_vm.following_artists, function (followArt) {
     return _c("CardArtist", {
       key: followArt.id,
+      staticClass: "md:w-1/2",
       attrs: {
         artist: followArt.following
       }
