@@ -332,10 +332,10 @@
                         </div>
                         <div class="mt-5">
                             <div
-                                class="flex flex-wrap justify-center lg:justify-between w-full"
+                                class="flex flex-wrap justify-center lg:justify-between"
                             >
                                 <div
-                                    class="w-52 h-52 md:w-2/4 md:h-80 xl:h-96 2xl:h-[30rem] md:pr-10"
+                                    class="w-full md:w-2/4 md:h-80 xl:h-96 2xl:h-[30rem] md:pr-10"
                                 >
                                     <router-link
                                         :to="pathProfile(artwork.user)"
@@ -345,13 +345,13 @@
                                                 getProfilePhoto(artwork.user) ??
                                                 getURLDefaultProfilePhoto
                                             "
-                                            class="border w-full h-full rounded-full object-cover object-center"
+                                            class="border md:w-full md:h-full h-52 w-52 rounded-full object-cover object-center mx-auto"
                                             alt="profile-picture"
                                         />
                                     </router-link>
                                 </div>
                                 <div
-                                    class="md:w-2/4 h-full md:h-80 xl:h-80 2xl:h-[30rem] grid md:grid-cols-1 content-center md:content-between justify-items-center md:justify-items-start mx-auto pt-2 sm:pt-0"
+                                    class="w-full md:w-2/4 h-full md:h-80 xl:h-80 2xl:h-[30rem] grid md:grid-cols-1 content-center md:content-between justify-items-center md:justify-items-start mx-auto pt-2 sm:pt-0"
                                 >
                                     <div class="w-full">
                                         <h3

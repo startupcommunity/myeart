@@ -1354,21 +1354,21 @@ var render = function render() {
   }, [_vm._v("\n                            Sobre el artista\n                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "mt-5"
   }, [_c("div", {
-    staticClass: "flex flex-wrap justify-center lg:justify-between w-full"
+    staticClass: "flex flex-wrap justify-center lg:justify-between"
   }, [_c("div", {
-    staticClass: "w-52 h-52 md:w-2/4 md:h-80 xl:h-96 2xl:h-[30rem] md:pr-10"
+    staticClass: "w-full md:w-2/4 md:h-80 xl:h-96 2xl:h-[30rem] md:pr-10"
   }, [_c("router-link", {
     attrs: {
       to: _vm.pathProfile(_vm.artwork.user)
     }
   }, [_c("img", {
-    staticClass: "border w-full h-full rounded-full object-cover object-center",
+    staticClass: "border md:w-full md:h-full h-52 w-52 rounded-full object-cover object-center mx-auto",
     attrs: {
       src: (_vm$getProfilePhoto2 = _vm.getProfilePhoto(_vm.artwork.user)) !== null && _vm$getProfilePhoto2 !== void 0 ? _vm$getProfilePhoto2 : _vm.getURLDefaultProfilePhoto,
       alt: "profile-picture"
     }
   })])], 1), _vm._v(" "), _c("div", {
-    staticClass: "md:w-2/4 h-full md:h-80 xl:h-80 2xl:h-[30rem] grid md:grid-cols-1 content-center md:content-between justify-items-center md:justify-items-start mx-auto pt-2 sm:pt-0"
+    staticClass: "w-full md:w-2/4 h-full md:h-80 xl:h-80 2xl:h-[30rem] grid md:grid-cols-1 content-center md:content-between justify-items-center md:justify-items-start mx-auto pt-2 sm:pt-0"
   }, [_c("div", {
     staticClass: "w-full"
   }, [_c("h3", {
