@@ -100,7 +100,7 @@ __webpack_require__.r(__webpack_exports__);
     FilterArtistModal: _components_FilterArtistModal_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   mixins: [_mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_7__["default"], _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_8__["default"], _utils_listArtistMixin__WEBPACK_IMPORTED_MODULE_9__["default"]],
-  mounted: function mounted() {
+  created: function created() {
     // @getDataMixin
     this.getCategories(); // @listArtistMixin
 
@@ -1901,6 +1901,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         artist: 1,
         artwork: 2,
         news: 3
+      };
+    },
+
+    /**
+     * Tipos de favoritos guardados por el usuario
+     * @returns Object
+     */
+    SOCIALNETWORK: function SOCIALNETWORK() {
+      return {
+        FB: "https://www.facebook.com/",
+        IG: "https://www.instagram.com/",
+        TW: "https://twitter.com/",
+        YT: "https://www.youtube.com/",
+        BH: "https://www.behance.net/",
+        LK: "https://www.linkedin.com/in/"
       };
     }
   },

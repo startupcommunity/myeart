@@ -23,6 +23,7 @@ module.exports = {
         extend: {
             backgroundImage: {
                 "hero-profile-bg": "url('/img/profile/hero-profile.webp')",
+                "hero-front-default": "url('/img/profile/front-artist.webp')",
                 newsletter: "url('/img/home/newsletter.png')",
                 "mobile-newsletter": "url('/img/home/mobile-newsletter.png')",
                 "last-info": "url('/images/ultima_informacion.png')",

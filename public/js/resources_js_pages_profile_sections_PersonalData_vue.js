@@ -60,20 +60,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     updateUser: function updateUser() {
       var _this = this;
 
-      this.loadingFormProfile = true; // datos
-
-      var p = this.userProfile.profile;
-      var data = {
-        _method: "put",
-        name: this.userProfile.name,
-        sexo: p.sexo ? p.sexo.abbr : null,
-        lang: p.lang ? p.lang.abbr : null,
-        pais_id: p.pais_id ? p.pais_id : null,
-        fecha_nacimiento: p.fecha_nacimiento ? p.fecha_nacimiento : null,
-        // bio
-        bio_title: p.bio_title ? p.bio_title : null,
-        bio_content: p.bio_content ? p.bio_content : null
-      }; // request
+      this.loadingFormProfile = true;
+      var data = this.loadData(); // request
 
       this.axios.post(this.ep.user.editProfile, data).then(function (resp) {
         if (resp.status === 200) {
@@ -90,6 +78,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       })["finally"](function () {
         return _this.loadingFormProfile = false;
       });
+    },
+
+    /**
+     * Data a guardar
+     */
+    loadData: function loadData() {
+      var p = this.userProfile.profile;
+      var social = this.userProfile.social_network;
+      return {
+        _method: "put",
+        name: this.userProfile.name,
+        sexo: p.sexo ? p.sexo.abbr : null,
+        lang: p.lang ? p.lang.abbr : null,
+        pais_id: p.pais_id ? p.pais_id : null,
+        fecha_nacimiento: p.fecha_nacimiento ? p.fecha_nacimiento : null,
+        // bio
+        bio_title: p.bio_title ? p.bio_title : null,
+        bio_content: p.bio_content ? p.bio_content : null,
+        // social
+        web_url: p.web_url ? p.web_url : null,
+        facebook: social.facebook ? social.facebook : null,
+        instagram: social.instagram ? social.instagram : null,
+        behance: social.behance ? social.behance : null,
+        linkedin: social.linkedin ? social.linkedin : null
+      };
     }
   }
 });
@@ -356,7 +369,114 @@ var render = function render() {
       },
       expression: "userProfile.profile.bio_content"
     }
-  })], 1), _vm._v(" "), _vm.editDataProfile ? _c("v-col", {
+  })], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12"
+    }
+  }, [_c("h3", {
+    staticClass: "font-extrabold text-xl sm:text-lg md:text-xl tracking-tight uppercase text-gray-900"
+  }, [_vm._v("\n                        Redes sociales\n                    ")]), _vm._v(" "), _c("v-text-field", {
+    attrs: {
+      name: "web_url",
+      label: "Página web",
+      color: "#B2794C",
+      placeholder: "ejemplo: https://www.tupagina.com",
+      disabled: !_vm.editDataProfile
+    },
+    model: {
+      value: _vm.userProfile.profile.web_url,
+      callback: function callback($$v) {
+        _vm.$set(_vm.userProfile.profile, "web_url", $$v);
+      },
+      expression: "userProfile.profile.web_url"
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap items-center"
+  }, [_c("div", {
+    staticClass: "w-full md:w-1/2"
+  }, [_c("span", {
+    staticClass: "text-base font-medium text-zinc-500"
+  }, [_vm._v("\n                                " + _vm._s(_vm.SOCIALNETWORK.FB) + "\n                            ")])]), _vm._v(" "), _c("div", {
+    staticClass: "w-full md:w-1/2"
+  }, [_c("v-text-field", {
+    attrs: {
+      name: "facebook",
+      label: "Usuario Facebook",
+      color: "#B2794C",
+      placeholder: "ejemplo: MyEart123",
+      disabled: !_vm.editDataProfile
+    },
+    model: {
+      value: _vm.userProfile.social_network.facebook,
+      callback: function callback($$v) {
+        _vm.$set(_vm.userProfile.social_network, "facebook", $$v);
+      },
+      expression: "\n                                    userProfile.social_network.facebook\n                                "
+    }
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "w-full md:w-1/2"
+  }, [_c("span", {
+    staticClass: "text-base font-medium text-zinc-500"
+  }, [_vm._v("\n                                " + _vm._s(_vm.SOCIALNETWORK.IG) + "\n                            ")])]), _vm._v(" "), _c("div", {
+    staticClass: "w-full md:w-1/2"
+  }, [_c("v-text-field", {
+    attrs: {
+      name: "instagram",
+      label: "Usuario Instagram",
+      color: "#B2794C",
+      placeholder: "ejemplo: MyEart123",
+      disabled: !_vm.editDataProfile
+    },
+    model: {
+      value: _vm.userProfile.social_network.instagram,
+      callback: function callback($$v) {
+        _vm.$set(_vm.userProfile.social_network, "instagram", $$v);
+      },
+      expression: "\n                                    userProfile.social_network.instagram\n                                "
+    }
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "w-full md:w-1/2"
+  }, [_c("span", {
+    staticClass: "text-base font-medium text-zinc-500"
+  }, [_vm._v("\n                                " + _vm._s(_vm.SOCIALNETWORK.BH) + "\n                            ")])]), _vm._v(" "), _c("div", {
+    staticClass: "w-full md:w-1/2"
+  }, [_c("v-text-field", {
+    attrs: {
+      name: "behance",
+      label: "Usuario Behance",
+      color: "#B2794C",
+      placeholder: "ejemplo: MyEart123",
+      disabled: !_vm.editDataProfile
+    },
+    model: {
+      value: _vm.userProfile.social_network.behance,
+      callback: function callback($$v) {
+        _vm.$set(_vm.userProfile.social_network, "behance", $$v);
+      },
+      expression: "userProfile.social_network.behance"
+    }
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "w-full md:w-1/2"
+  }, [_c("span", {
+    staticClass: "text-base font-medium text-zinc-500"
+  }, [_vm._v("\n                                " + _vm._s(_vm.SOCIALNETWORK.LK) + "\n                            ")])]), _vm._v(" "), _c("div", {
+    staticClass: "w-full md:w-1/2"
+  }, [_c("v-text-field", {
+    attrs: {
+      name: "linkedin",
+      label: "Usuario Linkedin",
+      color: "#B2794C",
+      placeholder: "ejemplo: MyEart123",
+      disabled: !_vm.editDataProfile
+    },
+    model: {
+      value: _vm.userProfile.social_network.linkedin,
+      callback: function callback($$v) {
+        _vm.$set(_vm.userProfile.social_network, "linkedin", $$v);
+      },
+      expression: "\n                                    userProfile.social_network.linkedin\n                                "
+    }
+  })], 1)])], 1), _vm._v(" "), _vm.editDataProfile ? _c("v-col", {
     staticClass: "hidden sm:block",
     attrs: {
       cols: "12"
@@ -446,6 +566,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         artist: 1,
         artwork: 2,
         news: 3
+      };
+    },
+
+    /**
+     * Tipos de favoritos guardados por el usuario
+     * @returns Object
+     */
+    SOCIALNETWORK: function SOCIALNETWORK() {
+      return {
+        FB: "https://www.facebook.com/",
+        IG: "https://www.instagram.com/",
+        TW: "https://twitter.com/",
+        YT: "https://www.youtube.com/",
+        BH: "https://www.behance.net/",
+        LK: "https://www.linkedin.com/in/"
       };
     }
   },

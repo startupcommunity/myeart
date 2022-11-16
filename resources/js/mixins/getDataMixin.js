@@ -41,6 +41,21 @@ export default {
                 news: 3,
             };
         },
+
+        /**
+         * Tipos de favoritos guardados por el usuario
+         * @returns Object
+         */
+        SOCIALNETWORK() {
+            return {
+                FB: "https://www.facebook.com/",
+                IG: "https://www.instagram.com/",
+                TW: "https://twitter.com/",
+                YT: "https://www.youtube.com/",
+                BH: "https://www.behance.net/",
+                LK: "https://www.linkedin.com/in/",
+            };
+        },
     },
     methods: {
         /**

@@ -77,4 +77,19 @@ class UserController extends Controller
             return $this->resp->json($th, 500);
         }
     }
+
+    /**
+     * Devuelve los datos de un artista
+     *
+     * @return JsonResponse
+     */
+    public function getArtist(int $id): JsonResponse
+    {
+        try {
+            $resp = $this->db->getArtist($id);
+            return $this->resp->json($resp, 200);
+        } catch (Exception $th) {
+            return $this->resp->json($th, 500);
+        }
+    }
 }

@@ -19,4 +19,9 @@ Route::group(['prefix' => 'user'], function () {
    * Devuelve todos los artistas de la app, excluyendo el usuario logueado y los eliminados
    */
   Route::get('/get-artists', [UserController::class, 'getArtists'])->name('getArtists');
+
+  /**
+   * Devuelve un usuario artista con sus respectivas relaciones
+   */
+  Route::get('/get-artist/{id}', [UserController::class, 'getArtist'])->name('getArtist');
 });

@@ -152,6 +152,103 @@
                             :disabled="!editDataProfile"
                         ></v-textarea>
                     </v-col>
+
+                    <v-col cols="12">
+                        <h3
+                            class="font-extrabold text-xl sm:text-lg md:text-xl tracking-tight uppercase text-gray-900"
+                        >
+                            Redes sociales
+                        </h3>
+                        <v-text-field
+                            v-model="userProfile.profile.web_url"
+                            name="web_url"
+                            label="Página web"
+                            color="#B2794C"
+                            placeholder="ejemplo: https://www.tupagina.com"
+                            :disabled="!editDataProfile"
+                        ></v-text-field>
+                        <div class="flex flex-wrap items-center">
+                            <div class="w-full md:w-1/2">
+                                <span
+                                    class="text-base font-medium text-zinc-500"
+                                >
+                                    {{ SOCIALNETWORK.FB }}
+                                </span>
+                            </div>
+                            <div class="w-full md:w-1/2">
+                                <v-text-field
+                                    v-model="
+                                        userProfile.social_network.facebook
+                                    "
+                                    name="facebook"
+                                    label="Usuario Facebook"
+                                    color="#B2794C"
+                                    placeholder="ejemplo: MyEart123"
+                                    :disabled="!editDataProfile"
+                                ></v-text-field>
+                            </div>
+
+                            <div class="w-full md:w-1/2">
+                                <span
+                                    class="text-base font-medium text-zinc-500"
+                                >
+                                    {{ SOCIALNETWORK.IG }}
+                                </span>
+                            </div>
+                            <div class="w-full md:w-1/2">
+                                <v-text-field
+                                    v-model="
+                                        userProfile.social_network.instagram
+                                    "
+                                    name="instagram"
+                                    label="Usuario Instagram"
+                                    color="#B2794C"
+                                    placeholder="ejemplo: MyEart123"
+                                    :disabled="!editDataProfile"
+                                ></v-text-field>
+                            </div>
+
+                            <div class="w-full md:w-1/2">
+                                <span
+                                    class="text-base font-medium text-zinc-500"
+                                >
+                                    {{ SOCIALNETWORK.BH }}
+                                </span>
+                            </div>
+                            <div class="w-full md:w-1/2">
+                                <v-text-field
+                                    v-model="userProfile.social_network.behance"
+                                    name="behance"
+                                    label="Usuario Behance"
+                                    color="#B2794C"
+                                    placeholder="ejemplo: MyEart123"
+                                    :disabled="!editDataProfile"
+                                ></v-text-field>
+                            </div>
+
+                            <div class="w-full md:w-1/2">
+                                <span
+                                    class="text-base font-medium text-zinc-500"
+                                >
+                                    {{ SOCIALNETWORK.LK }}
+                                </span>
+                            </div>
+                            <div class="w-full md:w-1/2">
+                                <v-text-field
+                                    v-model="
+                                        userProfile.social_network.linkedin
+                                    "
+                                    name="linkedin"
+                                    label="Usuario Linkedin"
+                                    color="#B2794C"
+                                    placeholder="ejemplo: MyEart123"
+                                    :disabled="!editDataProfile"
+                                ></v-text-field>
+                            </div>
+                        </div>
+                    </v-col>
+
+                    <!-- botón -->
                     <v-col
                         cols="12"
                         v-if="editDataProfile"
@@ -222,22 +319,7 @@ export default {
         updateUser() {
             this.loadingFormProfile = true;
 
-            // datos
-            const p = this.userProfile.profile;
-            const data = {
-                _method: "put",
-                name: this.userProfile.name,
-                sexo: p.sexo ? p.sexo.abbr : null,
-                lang: p.lang ? p.lang.abbr : null,
-                pais_id: p.pais_id ? p.pais_id : null,
-                fecha_nacimiento: p.fecha_nacimiento
-                    ? p.fecha_nacimiento
-                    : null,
-
-                // bio
-                bio_title: p.bio_title ? p.bio_title : null,
-                bio_content: p.bio_content ? p.bio_content : null,
-            };
+            const data = this.loadData();
 
             // request
             this.axios
@@ -255,6 +337,35 @@ export default {
                 })
                 .catch((error) => this.showRequestErrors(error))
                 .finally(() => (this.loadingFormProfile = false));
+        },
+
+        /**
+         * Data a guardar
+         */
+        loadData() {
+            const p = this.userProfile.profile;
+            const social = this.userProfile.social_network;
+            return {
+                _method: "put",
+                name: this.userProfile.name,
+                sexo: p.sexo ? p.sexo.abbr : null,
+                lang: p.lang ? p.lang.abbr : null,
+                pais_id: p.pais_id ? p.pais_id : null,
+                fecha_nacimiento: p.fecha_nacimiento
+                    ? p.fecha_nacimiento
+                    : null,
+
+                // bio
+                bio_title: p.bio_title ? p.bio_title : null,
+                bio_content: p.bio_content ? p.bio_content : null,
+
+                // social
+                web_url: p.web_url ? p.web_url : null,
+                facebook: social.facebook ? social.facebook : null,
+                instagram: social.instagram ? social.instagram : null,
+                behance: social.behance ? social.behance : null,
+                linkedin: social.linkedin ? social.linkedin : null,
+            };
         },
     },
 };

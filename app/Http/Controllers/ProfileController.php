@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateOrUpdateUserRequest;
 use App\Models\UserInformations;
+use App\Models\UserSocialNetwork;
 use App\Utils\AppStorage;
 use App\Utils\ResponseJson;
 use Illuminate\Http\JsonResponse;
@@ -124,15 +125,25 @@ class ProfileController extends Controller
     public function updateProfile(CreateOrUpdateUserRequest $request): JsonResponse
     {
         $db = DB::transaction(function () use ($request) {
-            $data = $request->all();
+            $data = $request;
             $user = auth()->user();
 
             // actualizar user
-            $user->update(['name' => $data['name']]);
+            $user->update(['name' => $data->name]);
 
             // actualizar datos del perfil
-            $dataProfile = collect($data)->except(['_method', 'name'])->toArray();
-            return UserInformations::updateOrCreate(['user_id' => $user->id], $dataProfile);
+            $dataProfile = collect($data)
+                ->except(['_method', 'name', 'facebook', 'instagram', 'linkedin', 'behance'])
+                ->toArray();
+
+            UserInformations::updateOrCreate(['user_id' => $user->id], $dataProfile);
+
+            $dataSocial = collect($data)
+                ->only(['facebook', 'instagram', 'linkedin', 'behance'])
+                ->toArray();
+            UserSocialNetwork::updateOrCreate(['user_id' => $user->id], $dataSocial);
+
+            return true;
         });
 
         if (!$db) {

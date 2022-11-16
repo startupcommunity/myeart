@@ -4,6 +4,8 @@ const state = {
     status: "",
     profile: {
         profile: {},
+        social_network: {},
+        following_artists: [],
     },
 };
 

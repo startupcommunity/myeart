@@ -75,6 +75,24 @@ class User extends Authenticatable
     }
 
     /**
+     * Devuelve las redes sociales del artista
+     *
+     * @return HasOne
+     */
+    public function socialNetwork(): HasOne
+    {
+        return $this->hasOne(UserSocialNetwork::class, 'user_id')->withDefault([
+            'facebook' => '',
+            'instagram' => '',
+            'twitter' => '',
+            'youtube' => '',
+            'behance' => '',
+            'linkedin' => '',
+            'pinterest' => '',
+        ]);
+    }
+
+    /**
      * devuelve las obras creadas del usuario
      *
      * @return HasMany

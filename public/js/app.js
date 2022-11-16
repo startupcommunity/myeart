@@ -2384,7 +2384,7 @@ var endpoints = {
   },
   // user
   user: {
-    // profile
+    // actualizar profile
     editProfile: "".concat(API, "/profile/update-profile"),
     // put
     // user - seguir artista
@@ -2394,7 +2394,10 @@ var endpoints = {
     getFollowArtists: "".concat(API, "/user/get-follow-artists"),
     // get
     // colección de artistas activos
-    getArtists: "".concat(API, "/user/get-artists") // get
+    getArtists: "".concat(API, "/user/get-artists"),
+    // get
+    // obtiene todos los datos de un artista (params :id)
+    getArtist: "".concat(API, "/user/get-artist/") // get
 
   }
 };
@@ -5123,7 +5126,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = {
   status: "",
   profile: {
-    profile: {}
+    profile: {},
+    social_network: {},
+    following_artists: []
   }
 };
 var getters = {
@@ -73794,6 +73799,14 @@ var map = {
 		"./resources/js/pages/artist/components/RowArtwork.vue",
 		"resources_js_pages_artist_components_RowArtwork_vue"
 	],
+	"./artist/sections/Hero.vue": [
+		"./resources/js/pages/artist/sections/Hero.vue",
+		"resources_js_pages_artist_sections_Hero_vue"
+	],
+	"./artist/sections/PostHero.vue": [
+		"./resources/js/pages/artist/sections/PostHero.vue",
+		"resources_js_pages_artist_sections_PostHero_vue"
+	],
 	"./artwork/CreateArtwork.vue": [
 		"./resources/js/pages/artwork/CreateArtwork.vue",
 		"resources_js_pages_artwork_CreateArtwork_vue"
@@ -74239,7 +74252,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artist_sections_Hero_vue":1,"resources_js_pages_artist_sections_PostHero_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

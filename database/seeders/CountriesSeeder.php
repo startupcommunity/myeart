@@ -16,8 +16,8 @@ class CountriesSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        Paises::truncate();
+        // Schema::disableForeignKeyConstraints();
+        // Paises::truncate();
         if (Paises::count() == 0) {
             DB::table('paises')->insert([
                 [
@@ -184,6 +184,6 @@ class CountriesSeeder extends Seeder
                 ],
             ]);
         }
-        Schema::disableForeignKeyConstraints();
+        // Schema::disableForeignKeyConstraints();
     }
 }

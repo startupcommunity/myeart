@@ -225,7 +225,7 @@ export default {
         FilterArtistModal,
     },
     mixins: [getDataMixin, utilMixin, listArtistMixin],
-    mounted() {
+    created() {
         // @getDataMixin
         this.getCategories();
 

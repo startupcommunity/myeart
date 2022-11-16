@@ -157,4 +157,13 @@ class UserInformationsController extends Controller
             'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:5000'
         ];
     }
+
+    /**
+     * Devuelve los datos del usuario logueado
+     */
+    public function getAuthUser(Request $request)
+    {
+        $user = $request->user()->load(['profile', 'followingArtists', 'socialNetwork']);
+        return $user;
+    }
 }

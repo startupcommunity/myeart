@@ -35,5 +35,6 @@ class UserInformations extends Model
         'country',
         'bio_title',
         'bio_content',
+        'web_url',
     ];
 }

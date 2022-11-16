@@ -38,7 +38,7 @@ const endpoints = {
 
     // user
     user: {
-        // profile
+        // actualizar profile
         editProfile: `${API}/profile/update-profile`, // put
 
         // user - seguir artista
@@ -49,6 +49,9 @@ const endpoints = {
 
         // colección de artistas activos
         getArtists: `${API}/user/get-artists`, // get
+
+        // obtiene todos los datos de un artista (params :id)
+        getArtist: `${API}/user/get-artist/`, // get
     },
 };
 

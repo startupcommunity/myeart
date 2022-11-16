@@ -29,6 +29,11 @@ class CreateOrUpdateUserRequest extends FormRequest
             'pais_id' => 'required',
             'bio_title' => 'nullable|max:255',
             'bio_content' => 'nullable|max:2000',
+            'web_url' => 'nullable|max:200',
+            'facebook' => 'nullable|max:200',
+            'instagram' => 'nullable|max:200',
+            'linkedin' => 'nullable|max:200',
+            'behance' => 'nullable|max:200',
         ];
     }
 

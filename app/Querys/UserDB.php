@@ -24,7 +24,9 @@ class UserDB
     public function getFollowArtists($userID = null): Collection
     {
         $user = $userID ? User::findOrFail($userID) : auth()->user();
-        $data = $user->with(['followingArtists.following.userArtistic', 'followingArtists.following.profile'])->first();
+        $data = $user->with([
+            'followingArtists.following.userArtistic', 'followingArtists.following.profile'
+        ])->first();
         return $data['followingArtists'];
     }
 
@@ -52,5 +54,18 @@ class UserDB
         }
 
         return $query->paginate(self::PAGINATE_ARTIST, '*', 'page', $data['page']);
+    }
+
+    /**
+     * Devuelve los datos de un artista
+     *
+     * @param int $id
+     * @return User
+     */
+    public function getArtist(int $id): User
+    {
+        return User::with([
+            'userArtistic', 'profile', 'artworks.gallery', 'socialNetwork'
+        ])->findOrFail($id);
     }
 }
