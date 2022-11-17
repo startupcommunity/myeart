@@ -5,7 +5,8 @@
                 <h2
                     class="text-primary text-2xl leading-5 tracking-widest uppercase text-center"
                 >
-                    Mas obras de {{ user?.name }}
+                    <span v-if="title"> {{ title }} </span>
+                    <span v-else>Mas obras de {{ user?.name }}</span>
                 </h2>
             </div>
             <div class="py-10">
@@ -41,9 +42,13 @@ export default {
             type: Object,
             default: {},
         },
+        title: {
+            type: String,
+            default: null,
+        },
         ignoreArtworkID: {
             type: Number | String,
-            default: null,
+            default: "",
         },
         loadComponent: {
             type: Boolean,

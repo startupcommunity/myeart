@@ -488,9 +488,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       type: Object,
       "default": {}
     },
+    title: {
+      type: String,
+      "default": null
+    },
     ignoreArtworkID: {
       type: Number | String,
-      "default": null
+      "default": ""
     },
     loadComponent: {
       type: Boolean,
@@ -1559,7 +1563,7 @@ var render = function render() {
     staticClass: "w-full"
   }, [_c("h2", {
     staticClass: "text-primary text-2xl leading-5 tracking-widest uppercase text-center"
-  }, [_vm._v("\n                Mas obras de " + _vm._s((_vm$user = _vm.user) === null || _vm$user === void 0 ? void 0 : _vm$user.name) + "\n            ")])]), _vm._v(" "), _c("div", {
+  }, [_vm.title ? _c("span", [_vm._v(" " + _vm._s(_vm.title) + " ")]) : _c("span", [_vm._v("Mas obras de " + _vm._s((_vm$user = _vm.user) === null || _vm$user === void 0 ? void 0 : _vm$user.name))])])]), _vm._v(" "), _c("div", {
     staticClass: "py-10"
   }, [_c("LoadingTailwind", {
     directives: [{

@@ -24,6 +24,8 @@ module.exports = {
             backgroundImage: {
                 "hero-profile-bg": "url('/img/profile/hero-profile.webp')",
                 "hero-front-default": "url('/img/profile/front-artist.webp')",
+                "profile-about-me": "url('/img/profile/about-me.webp')",
+                "default-event": "url('/img/events/default-event.webp')",
                 newsletter: "url('/img/home/newsletter.png')",
                 "mobile-newsletter": "url('/img/home/mobile-newsletter.png')",
                 "last-info": "url('/images/ultima_informacion.png')",
@@ -139,6 +141,7 @@ module.exports = {
             colors: {
                 "app-brown-1": "#B2794C",
                 "app-gray-1": "#E0E0E0",
+                "app-hashtag": "#298FC2",
             },
             boxShadow: {
                 "card-artist": "10px 10px 15px -2px rgba(0,0,0,0.1)",
