@@ -30,8 +30,14 @@
                                 </div>
                             </div>
                             <div class="flex flex-wrap">
-                                <div class="overflow-x-auto flex pt-4 sm:w-full"
-                                :class="previewFiles.length > 3 ? 'w-[80%]' : 'w-full'">
+                                <div
+                                    class="overflow-x-auto flex pt-4 sm:w-full"
+                                    :class="
+                                        previewFiles.length > 3
+                                            ? 'w-[80%]'
+                                            : 'w-full'
+                                    "
+                                >
                                     <div
                                         v-for="file in previewFiles.filter(
                                             (_, i) => i !== 0
@@ -50,7 +56,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="justify-center items-center w-[20%] flex sm:hidden" v-if="previewFiles.length > 3">
+                                <div
+                                    class="justify-center items-center w-[20%] flex sm:hidden"
+                                    v-if="previewFiles.length > 3"
+                                >
                                     <i
                                         class="fa-solid fa-chevron-right text-gray-400 fa-2x p-2 rounded-full border"
                                     ></i>
@@ -690,11 +699,10 @@ export default {
          * Devuelve el path del perfil de artista o usuario
          */
         pathProfile(userArtwork) {
-            if (userArtwork.id === this.user.id) {
-                return `/usuario/perfil/${this.user.id}`;
-            }
-
-            return "";
+            return {
+                name: "showArtist",
+                params: { id: userArtwork.id },
+            };
         },
     },
 };

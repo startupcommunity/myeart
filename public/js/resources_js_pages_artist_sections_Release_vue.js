@@ -124,7 +124,7 @@ var LOAD_MORE = 2;
         date: "2021-05-25",
         time: "10:00",
         place: "Madrid, España",
-        image: "https://picsum.photos/600/400",
+        image: "https://picsum.photos/200/300",
         hashtag: "#arte #escultura"
       }, {
         id: 2,
@@ -142,7 +142,7 @@ var LOAD_MORE = 2;
         date: "2021-05-25",
         time: "10:00",
         place: "Madrid, España",
-        image: "https://picsum.photos/600/400",
+        image: "https://picsum.photos/100/100",
         hashtag: "#dibujo #oleo"
       }, {
         id: 4,
@@ -151,9 +151,10 @@ var LOAD_MORE = 2;
         date: "2021-05-25",
         time: "10:00",
         place: "Madrid, España",
-        image: "https://picsum.photos/600/400",
+        image: "https://picsum.photos/200/200",
         hashtag: "#dibujo #literatura"
-      }];
+      }]; // original releases
+
       this.originalReleases = JSON.parse(JSON.stringify(mockup)); // mostrar las releases
 
       this.releases = this.originalReleases.slice(0, LIMIT); // reminders

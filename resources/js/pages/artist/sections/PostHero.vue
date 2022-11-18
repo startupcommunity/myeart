@@ -5,7 +5,9 @@
                 <div class="w-full md:w-1/3 order-2 order-md-1">
                     <div class="flex gap-4 justify-center">
                         <div class="border-b pb-2 border-gray-400 text-center">
-                            <div class="text-4xl font-bold">0 K</div>
+                            <div class="text-4xl font-bold">
+                                {{ artist.followers_count | numberK }}
+                            </div>
                             <span
                                 class="font-bold text-base text-primary uppercase"
                             >
@@ -13,7 +15,9 @@
                             </span>
                         </div>
                         <div class="border-b pb-2 border-gray-400 text-center">
-                            <div class="text-4xl font-bold">0 K</div>
+                            <div class="text-4xl font-bold">
+                                {{ artist.following_artists_count | numberK }}
+                            </div>
                             <span
                                 class="font-bold text-base text-primary uppercase"
                             >
@@ -21,7 +25,9 @@
                             </span>
                         </div>
                         <div class="border-b pb-2 border-gray-400 text-center">
-                            <div class="text-4xl font-bold">0 K</div>
+                            <div class="text-4xl font-bold">
+                                {{ artist.artworks_count | numberK }}
+                            </div>
                             <span
                                 class="font-bold text-base text-primary uppercase"
                             >
@@ -29,14 +35,30 @@
                             </span>
                         </div>
                     </div>
-                    <div class="flex flex-wrap mt-5">
+                    <div class="flex flex-wrap mt-5" v-if="isUserLogged">
                         <div class="w-full md:w-1/2 mb-3 md:mb-0 md:pr-3">
-                            <v-btn outlined block color="#B2794C" class="rounded-md">
+                            <v-btn
+                                outlined
+                                block
+                                color="#B2794C"
+                                class="rounded-md"
+                            >
                                 Ir a mi blog
                             </v-btn>
                         </div>
                         <div class="w-full md:w-1/2 mb-3 md:mb-0 md:pl-3">
-                            <v-btn outlined block color="#B2794C" class="rounded-md">
+                            <v-btn
+                                outlined
+                                block
+                                color="#B2794C"
+                                class="rounded-md"
+                                :to="{
+                                    name: 'userProfile',
+                                    params: {
+                                        id: artist.id,
+                                    },
+                                }"
+                            >
                                 Ir a mi post
                             </v-btn>
                         </div>
@@ -109,7 +131,7 @@
                     </div>
                 </div>
                 <div class="w-full md:w-1/3 order-3">
-                    <div class="flex flex-wrap">
+                    <div class="flex flex-wrap" v-if="!isUserLogged">
                         <div class="w-full md:w-1/2 mb-3 md:mb-0 md:pr-3">
                             <FollowArtistButton
                                 :artist="artist"
@@ -117,7 +139,11 @@
                             />
                         </div>
                         <div class="w-full md:w-1/2 mb-3 md:mb-0 md:pl-3">
-                            <v-btn block color="grey lighten-1" class="rounded-md">
+                            <v-btn
+                                block
+                                color="grey lighten-1"
+                                class="rounded-md"
+                            >
                                 enviar mensaje
                             </v-btn>
                         </div>
@@ -157,6 +183,17 @@ export default {
 
         isUserLogged() {
             return this.user?.id === this.artist?.id;
+        },
+    },
+    filters: {
+        /**
+         * Si el numero pasa de 1000, se convierte a K
+         */
+        numberK(value) {
+            if (value > 1000) {
+                return `${(value / 1000).toFixed(1)}K`;
+            }
+            return value;
         },
     },
 };

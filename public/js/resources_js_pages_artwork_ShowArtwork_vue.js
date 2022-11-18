@@ -318,11 +318,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * Devuelve el path del perfil de artista o usuario
      */
     pathProfile: function pathProfile(userArtwork) {
-      if (userArtwork.id === this.user.id) {
-        return "/usuario/perfil/".concat(this.user.id);
-      }
-
-      return "";
+      return {
+        name: "showArtist",
+        params: {
+          id: userArtwork.id
+        }
+      };
     }
   }
 });

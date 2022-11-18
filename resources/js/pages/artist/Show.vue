@@ -45,7 +45,7 @@ export default {
         ArtistArtworks,
         Blog,
         EventSection,
-        Release
+        Release,
     },
     name: "Show",
     mixins: [getDataMixin],
@@ -59,6 +59,10 @@ export default {
     },
     created() {
         this.getArtist();
+    },
+    mounted() {
+        // ir a la parte superior de la página
+        window.scrollTo(0, 0);
     },
     computed: {
         /**
@@ -85,11 +89,19 @@ export default {
 
             this.axios
                 .get(this.ep.user.getArtist + id)
-                .then((response) => {
-                    this.artist = response.data;
+                .then((res) => {
+                    if (res.status !== 200) return false;
+                    this.artist = res.data;
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.error(error);
+                    if (error?.request?.status === 404) {
+                        this.$router.push({ name: "NotFound" });
+                    }
+
+                    if (error?.request?.status === 500) {
+                        this.$router.push({ name: "ServerError" });
+                    }
                 })
                 .finally(() => (this.globalLoading = false));
         },

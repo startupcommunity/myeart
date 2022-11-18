@@ -62,10 +62,14 @@ class UserDB
      * @param int $id
      * @return User
      */
-    public function getArtist(int $id): User
+    public function getArtist(int $id): ?User
     {
         return User::with([
             'userArtistic', 'profile', 'artworks.gallery', 'socialNetwork'
-        ])->findOrFail($id);
+        ])
+            ->withCount('artworks')
+            ->withCount('followingArtists')
+            ->withCount('followers')
+            ->find($id);
     }
 }

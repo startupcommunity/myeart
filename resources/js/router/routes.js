@@ -23,6 +23,18 @@ const ifAuthenticated = (to, from, next) => {
 };
 
 export const routes = [
+    // 404
+    {
+        path: "*",
+        name: "NotFound",
+        component: importPage("errors/404"),
+    },
+    // 500
+    {
+        path: "/500",
+        name: "ServerError",
+        component: importPage("errors/500"),
+    },
     {
         name: "home",
         path: "/home",

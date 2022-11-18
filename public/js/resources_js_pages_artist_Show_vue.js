@@ -76,6 +76,10 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.getArtist();
   },
+  mounted: function mounted() {
+    // ir a la parte superior de la página
+    window.scrollTo(0, 0);
+  },
   computed: {
     /**
      * Devuelve los datos de las redes sociales
@@ -104,10 +108,25 @@ __webpack_require__.r(__webpack_exports__);
 
       var id = this.$route.params.id;
       this.globalLoading = true;
-      this.axios.get(this.ep.user.getArtist + id).then(function (response) {
-        _this.artist = response.data;
+      this.axios.get(this.ep.user.getArtist + id).then(function (res) {
+        if (res.status !== 200) return false;
+        _this.artist = res.data;
       })["catch"](function (error) {
-        console.log(error);
+        var _error$request, _error$request2;
+
+        console.error(error);
+
+        if ((error === null || error === void 0 ? void 0 : (_error$request = error.request) === null || _error$request === void 0 ? void 0 : _error$request.status) === 404) {
+          _this.$router.push({
+            name: "NotFound"
+          });
+        }
+
+        if ((error === null || error === void 0 ? void 0 : (_error$request2 = error.request) === null || _error$request2 === void 0 ? void 0 : _error$request2.status) === 500) {
+          _this.$router.push({
+            name: "ServerError"
+          });
+        }
       })["finally"](function () {
         return _this.globalLoading = false;
       });
@@ -492,7 +511,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id) === ((_this$artist = this.artist) === null || _this$artist === void 0 ? void 0 : _this$artist.id);
     }
-  })
+  }),
+  filters: {
+    /**
+     * Si el numero pasa de 1000, se convierte a K
+     */
+    numberK: function numberK(value) {
+      if (value > 1000) {
+        return "".concat((value / 1000).toFixed(1), "K");
+      }
+
+      return value;
+    }
+  }
 });
 
 /***/ }),
@@ -563,7 +594,7 @@ var LOAD_MORE = 2;
         date: "2021-05-25",
         time: "10:00",
         place: "Madrid, España",
-        image: "https://picsum.photos/600/400",
+        image: "https://picsum.photos/200/300",
         hashtag: "#arte #escultura"
       }, {
         id: 2,
@@ -581,7 +612,7 @@ var LOAD_MORE = 2;
         date: "2021-05-25",
         time: "10:00",
         place: "Madrid, España",
-        image: "https://picsum.photos/600/400",
+        image: "https://picsum.photos/100/100",
         hashtag: "#dibujo #oleo"
       }, {
         id: 4,
@@ -590,9 +621,10 @@ var LOAD_MORE = 2;
         date: "2021-05-25",
         time: "10:00",
         place: "Madrid, España",
-        image: "https://picsum.photos/600/400",
+        image: "https://picsum.photos/200/200",
         hashtag: "#dibujo #literatura"
-      }];
+      }]; // original releases
+
       this.originalReleases = JSON.parse(JSON.stringify(mockup)); // mostrar las releases
 
       this.releases = this.originalReleases.slice(0, LIMIT); // reminders
@@ -1770,7 +1802,27 @@ var render = function render() {
     staticClass: "flex flex-wrap justify-center items-start"
   }, [_c("div", {
     staticClass: "w-full md:w-1/3 order-2 order-md-1"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_c("div", {
+    staticClass: "flex gap-4 justify-center"
+  }, [_c("div", {
+    staticClass: "border-b pb-2 border-gray-400 text-center"
+  }, [_c("div", {
+    staticClass: "text-4xl font-bold"
+  }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.followers_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
+    staticClass: "font-bold text-base text-primary uppercase"
+  }, [_vm._v("\n                            Seguidores\n                        ")])]), _vm._v(" "), _c("div", {
+    staticClass: "border-b pb-2 border-gray-400 text-center"
+  }, [_c("div", {
+    staticClass: "text-4xl font-bold"
+  }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.following_artists_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
+    staticClass: "font-bold text-base text-primary uppercase"
+  }, [_vm._v("\n                            Seguidos\n                        ")])]), _vm._v(" "), _c("div", {
+    staticClass: "border-b pb-2 border-gray-400 text-center"
+  }, [_c("div", {
+    staticClass: "text-4xl font-bold"
+  }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.artworks_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
+    staticClass: "font-bold text-base text-primary uppercase"
+  }, [_vm._v("\n                            Obras\n                        ")])])]), _vm._v(" "), _vm.isUserLogged ? _c("div", {
     staticClass: "flex flex-wrap mt-5"
   }, [_c("div", {
     staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pr-3"
@@ -1788,9 +1840,15 @@ var render = function render() {
     attrs: {
       outlined: "",
       block: "",
-      color: "#B2794C"
+      color: "#B2794C",
+      to: {
+        name: "userProfile",
+        params: {
+          id: _vm.artist.id
+        }
+      }
     }
-  }, [_vm._v("\n                            Ir a mi post\n                        ")])], 1)])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                            Ir a mi post\n                        ")])], 1)]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "w-full md:w-1/3 order-1 order-md-2"
   }, [_c("div", {
     staticClass: "flex flex-col justify-center"
@@ -1842,7 +1900,7 @@ var render = function render() {
     staticClass: "fa-brands fa-square-facebook text-zinc-300 fa-2x hover:text-zinc-500"
   })]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "w-full md:w-1/3 order-3"
-  }, [_c("div", {
+  }, [!_vm.isUserLogged ? _c("div", {
     staticClass: "flex flex-wrap"
   }, [_c("div", {
     staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pr-3"
@@ -1859,35 +1917,10 @@ var render = function render() {
       block: "",
       color: "grey lighten-1"
     }
-  }, [_vm._v("\n                            enviar mensaje\n                        ")])], 1)])])])])]);
+  }, [_vm._v("\n                            enviar mensaje\n                        ")])], 1)]) : _vm._e()])])])]);
 };
 
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "flex gap-4 justify-center"
-  }, [_c("div", {
-    staticClass: "border-b pb-2 border-gray-400 text-center"
-  }, [_c("div", {
-    staticClass: "text-4xl font-bold"
-  }, [_vm._v("0 K")]), _vm._v(" "), _c("span", {
-    staticClass: "font-bold text-base text-primary uppercase"
-  }, [_vm._v("\n                            Seguidores\n                        ")])]), _vm._v(" "), _c("div", {
-    staticClass: "border-b pb-2 border-gray-400 text-center"
-  }, [_c("div", {
-    staticClass: "text-4xl font-bold"
-  }, [_vm._v("0 K")]), _vm._v(" "), _c("span", {
-    staticClass: "font-bold text-base text-primary uppercase"
-  }, [_vm._v("\n                            Seguidos\n                        ")])]), _vm._v(" "), _c("div", {
-    staticClass: "border-b pb-2 border-gray-400 text-center"
-  }, [_c("div", {
-    staticClass: "text-4xl font-bold"
-  }, [_vm._v("0 K")]), _vm._v(" "), _c("span", {
-    staticClass: "font-bold text-base text-primary uppercase"
-  }, [_vm._v("\n                            Obras\n                        ")])])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

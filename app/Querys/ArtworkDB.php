@@ -168,8 +168,7 @@ class ArtworkDB
     public static function filterPublished(array $filters): LengthAwarePaginator
     {
         // query
-        $data = Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])
-            ->where('state', ArtworkStateEnum::PUBLISHED);
+        $data = Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])->published();
         $filter = (object) $filters;
 
         // conditions

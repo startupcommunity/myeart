@@ -87,6 +87,11 @@ class UserController extends Controller
     {
         try {
             $resp = $this->db->getArtist($id);
+
+            if (!$resp) {
+                return $this->resp->json('artista no encontrado', 404);
+            }
+
             return $this->resp->json($resp, 200);
         } catch (Exception $th) {
             return $this->resp->json($th, 500);
