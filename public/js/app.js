@@ -4592,6 +4592,29 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].mixin({
         top: top,
         behavior: "smooth"
       });
+    },
+
+    /**
+     * Administra el error como request del backend
+     *
+     * @param {Object} resp  respuesta del backend
+     */
+    manageError: function manageError(resp) {
+      var _resp$request, _resp$request2;
+
+      console.error(resp);
+
+      if ((resp === null || resp === void 0 ? void 0 : (_resp$request = resp.request) === null || _resp$request === void 0 ? void 0 : _resp$request.status) === 404) {
+        this.$router.push({
+          name: "NotFound"
+        });
+      }
+
+      if ((resp === null || resp === void 0 ? void 0 : (_resp$request2 = resp.request) === null || _resp$request2 === void 0 ? void 0 : _resp$request2.status) === 500) {
+        this.$router.push({
+          name: "ServerError"
+        });
+      }
     }
   },
   computed: {

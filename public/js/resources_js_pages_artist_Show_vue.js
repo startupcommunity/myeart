@@ -111,22 +111,8 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.get(this.ep.user.getArtist + id).then(function (res) {
         if (res.status !== 200) return false;
         _this.artist = res.data;
-      })["catch"](function (error) {
-        var _error$request, _error$request2;
-
-        console.error(error);
-
-        if ((error === null || error === void 0 ? void 0 : (_error$request = error.request) === null || _error$request === void 0 ? void 0 : _error$request.status) === 404) {
-          _this.$router.push({
-            name: "NotFound"
-          });
-        }
-
-        if ((error === null || error === void 0 ? void 0 : (_error$request2 = error.request) === null || _error$request2 === void 0 ? void 0 : _error$request2.status) === 500) {
-          _this.$router.push({
-            name: "ServerError"
-          });
-        }
+      })["catch"](function (resp) {
+        return _this.manageError(resp);
       })["finally"](function () {
         return _this.globalLoading = false;
       });

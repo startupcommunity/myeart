@@ -93,16 +93,7 @@ export default {
                     if (res.status !== 200) return false;
                     this.artist = res.data;
                 })
-                .catch((error) => {
-                    console.error(error);
-                    if (error?.request?.status === 404) {
-                        this.$router.push({ name: "NotFound" });
-                    }
-
-                    if (error?.request?.status === 500) {
-                        this.$router.push({ name: "ServerError" });
-                    }
-                })
+                .catch((resp) => this.manageError(resp))
                 .finally(() => (this.globalLoading = false));
         },
     },

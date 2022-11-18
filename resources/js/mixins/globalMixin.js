@@ -96,6 +96,22 @@ vue.mixin({
 
             globalThis.scrollTo({ top, behavior: "smooth" });
         },
+
+        /**
+         * Administra el error como request del backend
+         *
+         * @param {Object} resp  respuesta del backend
+         */
+        manageError(resp) {
+            console.error(resp);
+            if (resp?.request?.status === 404) {
+                this.$router.push({ name: "NotFound" });
+            }
+
+            if (resp?.request?.status === 500) {
+                this.$router.push({ name: "ServerError" });
+            }
+        },
     },
     computed: {
         /**
