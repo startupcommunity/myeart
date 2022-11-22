@@ -2102,53 +2102,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./resources/js/mixins/requestErrorsMixin.js":
-/*!***************************************************!*\
-  !*** ./resources/js/mixins/requestErrorsMixin.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * requestErrorsMixin
- *
- * mixin para gestionar los errores de las request
- */
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  methods: {
-    /**
-     * muestra en pantalla los errores de la request
-     * @luisandev
-     * @param {Object} request      datos recibidos del backend
-     */
-    showRequestErrors: function showRequestErrors(request) {
-      console.log(request);
-
-      if (request.response.data.errors) {
-        var errors = request.response.data.errors;
-        var mjsErrors = [];
-
-        for (var error in errors) {
-          mjsErrors.push(errors[error][0]);
-        }
-
-        this.$notify({
-          title: "Aviso!",
-          text: mjsErrors.join("<br/>"),
-          group: "container",
-          type: "warning",
-          duration: 6000
-        });
-      }
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/js/mixins/utilMixin.js":
 /*!******************************************!*\
   !*** ./resources/js/mixins/utilMixin.js ***!

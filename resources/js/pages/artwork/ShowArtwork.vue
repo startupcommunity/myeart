@@ -430,6 +430,9 @@
         />
         <!-- /otras obras -->
 
+        <!-- comentarios -->
+        <Comment :artwork="artwork" />
+
         <!-- modal full image -->
         <ShowImageDialog
             :show="showModalImage"
@@ -448,6 +451,7 @@ import MainLayout from "../layouts/MainLayout.vue";
 import CardArtwork from "./sections/CardArtwork.vue";
 import ArtistArtworks from "./sections/ArtistArtworks.vue";
 import OtherArtworks from "./sections/OtherArtworks.vue";
+import Comment from "./sections/Comment.vue";
 import FollowArtistButton from "./components/FollowArtistButton.vue";
 import ShowImageDialog from "./components/ShowImageDialog.vue";
 
@@ -465,6 +469,7 @@ export default {
         OtherArtworks,
         FollowArtistButton,
         ShowImageDialog,
+        Comment,
     },
     data() {
         return {
@@ -483,7 +488,7 @@ export default {
             },
         };
     },
-    mounted() {
+    created() {
         this.loadData();
         globalThis.scrollTo(0, 0);
     },

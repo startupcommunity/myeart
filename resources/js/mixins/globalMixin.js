@@ -9,8 +9,10 @@
 
 import vue from "vue";
 import endpoints from "../api/endpoints";
+import requestErrorsMixin from "./requestErrorsMixin";
 
 vue.mixin({
+    mixins: [requestErrorsMixin],
     data() {
         return {
             globalLoading: false,
@@ -111,6 +113,9 @@ vue.mixin({
             if (resp?.request?.status === 500) {
                 this.$router.push({ name: "ServerError" });
             }
+
+            // si el error es de validación
+            this.showRequestErrors(resp);
         },
     },
     computed: {

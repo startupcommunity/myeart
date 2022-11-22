@@ -12,7 +12,6 @@ export default {
          * @param {Object} request      datos recibidos del backend
          */
         showRequestErrors(request) {
-            console.log(request);
             if (request.response.data.errors) {
                 const errors = request.response.data.errors;
                 let mjsErrors = [];

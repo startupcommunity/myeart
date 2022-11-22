@@ -36,6 +36,9 @@ Route::middleware(['auth:api'])->group(function () {
     // direcciones de envió
     require __DIR__ . '/api/shipping_address.php';
 
+    // comentarios / preguntas
+    require __DIR__ . '/api/comment.php';
+
     // categorías
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', [CategoryController::class, 'getCategories'])->name('getCategories');

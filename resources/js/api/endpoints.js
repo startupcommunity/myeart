@@ -6,12 +6,12 @@ const API = `${API_URL}api`;
 const endpoints = {
     // obras
     artworks: {
-        save: API + "/artworks/create",
-        edit: API + "/artworks/edit/",
-        update: API + "/artworks/update/",
-        getImage: API + "/artworks/image/",
-        getPublish: API + "/artworks/publish",
-        getUserPublish: API + "/artworks/user/publish/",
+        save: `${API}/artworks/create`,
+        edit: `${API}/artworks/edit/`,
+        update: `${API}/artworks/update/`,
+        getImage: `${API}/artworks/image/`,
+        getPublish: `${API}/artworks/publish`,
+        getUserPublish: `${API}/artworks/user/publish/`,
         getPublishForCategory: `${API}/artworks/publish/category/`,
         liked: `${API}/artworks/liked/`,
         disliked: `${API}/artworks/disliked/`,
@@ -52,6 +52,13 @@ const endpoints = {
 
         // obtiene todos los datos de un artista (params :id)
         getArtist: `${API}/user/get-artist/`, // get
+    },
+
+    // comentarios
+    comments: {
+        artworkSave: `${API}/comments/artworks/save`, // post
+        artworkAnswerSave: `${API}/comments/artworks/answer/save`, // post
+        artworkList: `${API}/comments/artwork-list/`, // get
     },
 };
 
