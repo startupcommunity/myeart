@@ -11,6 +11,11 @@ Route::group(['prefix' => 'user'], function () {
   Route::post('/follow-artist', [UserController::class, 'followArtist'])->name('followArtist');
 
   /**
+   * Deja de seguir a un artista indicado por request
+   */
+  Route::post('/unfollow-artist', [UserController::class, 'unfollowArtist'])->name('unfollowArtist');
+
+  /**
    * Devuelve los artistas seguidos por el usuario logueado
    */
   Route::get('/get-follow-artists', [UserController::class, 'getFollowArtists'])->name('getFollowArtists');

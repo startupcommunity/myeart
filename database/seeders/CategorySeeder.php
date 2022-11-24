@@ -19,16 +19,34 @@ class CategorySeeder extends Seeder
         // SubCategory::truncate();
         if (Category::count() == 0) {
             Category::insert([
-                ['name' => 'Literatura'],               // 1
-                ['name' => 'Pintura'],                  // 2
-                ['name' => 'Escultura'],                // 3
-                ['name' => 'Dibujo'],                   // 4
-                ['name' => 'Fotografía'],               // 5
-                ['name' => 'Artesanía y Manualidades'], // 6
-                ['name' => 'Libros'],                   // 7
-                // ['name' => 'Audios'],                   // 8
-                // ['name' => 'Arte'],                     // 9
-                // ['name' => 'Otros'],                    // 10
+                [
+                    'name' => 'Literatura',
+                    'qualified' => 'Literario',
+                ], // 1
+                [
+                    'name' => 'Pintura',
+                    'qualified' => 'Pintor',
+                ], // 2
+                [
+                    'name' => 'Escultura',
+                    'qualified' => 'Escultor',
+                ], // 3
+                [
+                    'name' => 'Dibujo',
+                    'qualified' => 'Dibujante',
+                ], // 4
+                [
+                    'name' => 'Fotografía',
+                    'qualified' => 'Fotógrafo',
+                ], // 5
+                [
+                    'name' => 'Artesanía y Manualidades',
+                    'qualified' => 'Artesano',
+                ], // 6
+                [
+                    'name' => 'Libros',
+                    'qualified' => 'Escritor',
+                ], // 7
             ]);
 
             // sub categorías - 2do nivel

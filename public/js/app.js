@@ -2390,6 +2390,9 @@ var endpoints = {
     // user - seguir artista
     followArtist: "".concat(API, "/user/follow-artist"),
     // post
+    // user - dejar de seguir artista
+    unfollowArtist: "".concat(API, "/user/unfollow-artist"),
+    // post
     // artistas seguidos por el usuario
     getFollowArtists: "".concat(API, "/user/get-follow-artists"),
     // get

@@ -70,13 +70,13 @@ var render = function render() {
   return _c("div", {
     staticClass: "w-full h-full animate-swing-in-top-fwd"
   }, [_c("div", {
-    staticClass: "w-full h-full rounded-md hover:animate-shadow-drop-center"
+    staticClass: "rounded-md hover:animate-shadow-drop-center"
   }, [_c("router-link", {
     attrs: {
       to: _vm.routerPath
     }
   }, [_c("img", {
-    staticClass: "object-cover object-center w-full h-56",
+    staticClass: "object-cover object-center w-60 h-60",
     attrs: {
       src: _vm.getPathGallery(_vm.artwork),
       alt: _vm.artwork.title

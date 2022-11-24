@@ -1,11 +1,11 @@
 <template>
     <div class="w-full h-full animate-swing-in-top-fwd">
-        <div class="w-full h-full rounded-md hover:animate-shadow-drop-center">
+        <div class="rounded-md hover:animate-shadow-drop-center">
             <router-link :to="routerPath">
                 <img
                     :src="getPathGallery(artwork)"
                     :alt="artwork.title"
-                    class="object-cover object-center w-full h-56"
+                    class="object-cover object-center w-60 h-60"
                 />
             </router-link>
             <div class="flex flex-col">

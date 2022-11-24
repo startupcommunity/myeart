@@ -44,6 +44,9 @@ const endpoints = {
         // user - seguir artista
         followArtist: `${API}/user/follow-artist`, // post
 
+        // user - dejar de seguir artista
+        unfollowArtist: `${API}/user/unfollow-artist`, // post
+
         // artistas seguidos por el usuario
         getFollowArtists: `${API}/user/get-follow-artists`, // get
 

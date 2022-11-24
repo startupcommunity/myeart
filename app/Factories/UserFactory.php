@@ -14,7 +14,7 @@ class UserFactory
   }
 
   /**
-   * Agrega una visita a la obra por medio del usuario logueado
+   * Sigue a un artista
    *
    * @param Request $request
    * @return boolean
@@ -33,5 +33,23 @@ class UserFactory
     ]);
 
     return $created ? true : false;
+  }
+
+  /**
+   * Deja de seguir a un artista
+   *
+   * @param Request $request
+   * @return boolean
+   */
+  public function unfollowArtist($request): bool
+  {
+    $follower = auth()->user();
+
+    // dejar de seguir al artista indicado
+    $deleted = $follower->followingArtists()
+      ->where('following_id', $request->following_id)
+      ->delete();
+
+    return $deleted;
   }
 }

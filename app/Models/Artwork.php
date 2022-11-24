@@ -249,4 +249,15 @@ class Artwork extends Model
             return $query->orderByDesc('price');
         }
     }
+
+    /**
+     * Devuelve el calificativo de cada artista según las categorías
+     * de sus obras
+     * 
+     * 
+     */
+    // public function getQualifiedArtistAttribute($query)
+    // {
+    //     $query->whereHas();
+    // }
 }

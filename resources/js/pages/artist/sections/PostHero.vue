@@ -3,9 +3,9 @@
         <div class="container py-16">
             <div class="flex flex-wrap justify-center items-start">
                 <div class="w-full md:w-1/3 order-2 order-md-1">
-                    <div class="flex gap-4 justify-center">
+                    <div class="flex gap-4 justify-between">
                         <div class="border-b pb-2 border-gray-400 text-center">
-                            <div class="text-4xl font-bold">
+                            <div class="text-2xl font-bold">
                                 {{ artist.followers_count | numberK }}
                             </div>
                             <span
@@ -15,7 +15,7 @@
                             </span>
                         </div>
                         <div class="border-b pb-2 border-gray-400 text-center">
-                            <div class="text-4xl font-bold">
+                            <div class="text-2xl font-bold">
                                 {{ artist.following_artists_count | numberK }}
                             </div>
                             <span
@@ -25,7 +25,7 @@
                             </span>
                         </div>
                         <div class="border-b pb-2 border-gray-400 text-center">
-                            <div class="text-4xl font-bold">
+                            <div class="text-2xl font-bold">
                                 {{ artist.artworks_count | numberK }}
                             </div>
                             <span
@@ -35,7 +35,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="flex flex-wrap mt-5" v-if="isUserLogged">
+                    <div class="flex flex-wrap mt-7" v-if="isUserLogged">
                         <div class="w-full md:w-1/2 mb-3 md:mb-0 md:pr-3">
                             <v-btn
                                 outlined
@@ -67,12 +67,12 @@
                 <div class="w-full md:w-1/3 order-1 order-md-2">
                     <div class="flex flex-col justify-center">
                         <h3
-                            class="text-4xl font-bold tracking-wide text-center"
+                            class="text-2xl font-black tracking-wide text-center"
                         >
                             {{ artist.name }}
                         </h3>
                         <p
-                            class="uppercase text-xl font-semibold text-center"
+                            class="uppercase text-lg font-medium text-center"
                             v-if="profile?.web_url"
                         >
                             <i class="fa-solid fa-link text-zinc-700"></i>

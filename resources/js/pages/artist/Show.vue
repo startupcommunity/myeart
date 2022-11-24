@@ -10,16 +10,16 @@
         <AboutMe :profile="profile" />
 
         <!-- my artworks -->
-        <ArtistArtworks :user="artist" :ignoreArtworkID="0" title="Mis Obras" />
+        <ArtistArtworks :user="artist" :ignoreArtworkID="0" title="Obras del artista" />
 
         <!-- blog -->
-        <Blog :artist="artist" title="Mis blog" />
+        <!-- <Blog :artist="artist" title="Mis blog" /> -->
 
         <!-- events -->
         <EventSection :artist="artist" title="Mis eventos" />
 
         <!-- publications -->
-        <Release :artist="artist" title="Mis publicaciones" />
+        <Release :artist="artist" title="Publicaciones del artista" />
     </MainLayout>
 </template>
 <script>
@@ -32,7 +32,7 @@ import Hero from "./sections/Hero.vue";
 import PostHero from "./sections/PostHero.vue";
 import AboutMe from "./sections/AboutMe.vue";
 import ArtistArtworks from "../artwork/sections/ArtistArtworks.vue";
-import Blog from "./sections/Blog.vue";
+// import Blog from "./sections/Blog.vue";
 import EventSection from "./sections/Event.vue";
 import Release from "./sections/Release.vue";
 
@@ -43,7 +43,6 @@ export default {
         PostHero,
         AboutMe,
         ArtistArtworks,
-        Blog,
         EventSection,
         Release,
     },

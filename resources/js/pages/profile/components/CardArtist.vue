@@ -31,7 +31,7 @@
             <div class="flex flex-col justify-between space-y-8">
                 <div class="space-y-2 text-center">
                     <h3
-                        class="text-xl md:text-base xl:text-xl font-semibold tracking-wide text-gray-900 pt-3"
+                        class="text-xl md:text-sm font-semibold tracking-wide text-gray-900 pt-3"
                     >
                         {{ artist.name }}
                     </h3>
@@ -97,12 +97,23 @@ export default {
         }),
 
         /**
-         * devuelve una de las actividades del artista
-         * o técnica/especialidad
+         * devuelve los calificativos del artista
+         * según las categorías de sus obras
          */
         getNameCategory() {
-            const artistic = this.artist.user_artistic;
-            return artistic.length ? artistic[0].nombre : "---";
+            const artworks = this.artist.artworks;
+            const categories = artworks.map((artwork) => {
+                return artwork.categories.map((category) => {
+                    return category.qualified;
+                });
+            });
+
+            // eliminar las redundancias
+            const categoriesUnique = categories
+                .flat()
+                .filter((v, i, a) => a.indexOf(v) === i);
+
+            return categoriesUnique.join(", ");
         },
 
         /**

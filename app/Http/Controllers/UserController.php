@@ -48,6 +48,22 @@ class UserController extends Controller
     }
 
     /**
+     * Deja de seguir a un artista indicado por request
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function unfollowArtist(Request $request): JsonResponse
+    {
+        try {
+            $this->userfactory->unfollowArtist($request);
+            return $this->resp->json('el artista se ha dejado de seguir con éxito', 200);
+        } catch (Exception $th) {
+            return $this->resp->json($th, 500);
+        }
+    }
+
+    /**
      * Devuelve los artistas seguidos por el usuario logueado
      *
      * @return JsonResponse
@@ -63,8 +79,7 @@ class UserController extends Controller
     }
 
     /**
-     * Devuelve todos los artistas de la app, excluyendo
-     * el usuario logueado y los eliminados
+     * Devuelve todos los artistas de la app, excluyendo los eliminados
      *
      * @return JsonResponse
      */

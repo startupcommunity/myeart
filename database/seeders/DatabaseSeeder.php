@@ -42,8 +42,9 @@ class DatabaseSeeder extends Seeder
         // ------------
         $this->call([
             CountriesSeeder::class,
-            CategorySeeder::class,
-            SubSubCategorySeeder::class,
+            // CategorySeeder::class,
+            // SubSubCategorySeeder::class,
+            QualifiedCategorySeeder::class,
             // StyleSeeder::class,
             // TechniqueSeeder::class,
             // ArtworkSeeder::class,

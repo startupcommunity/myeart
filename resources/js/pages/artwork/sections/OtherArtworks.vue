@@ -8,7 +8,7 @@
                     Otras obras que te pueden interesar
                 </h2>
             </div>
-            <div class="py-10">
+            <div class="py-10 md:-mr-60">
                 <LoadingTailwind
                     v-show="loading"
                     css="w-full animate-swing-in-top-fwd"
@@ -98,7 +98,7 @@ export default {
                 speed: 800,
                 gutter: 20,
                 items: 5,
-                autoplay: true,
+                autoplay: false,
                 mouseDrag: true,
                 autoplayButtonOutput: false,
                 autoplayHoverPause: true,

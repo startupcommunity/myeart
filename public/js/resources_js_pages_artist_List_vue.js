@@ -300,50 +300,53 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * NO es posible autoseguirse
      */
     canFollowArtist: function canFollowArtist() {
-      return this.user.id !== this.artist.id;
+      var _this$user, _this$artist;
+
+      return ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id) !== ((_this$artist = this.artist) === null || _this$artist === void 0 ? void 0 : _this$artist.id);
     },
 
     /**
      * Comprueba si ya se sigue al artista seleccionado
      */
     isFollowingArtist: function isFollowingArtist() {
-      var _this$user,
-          _this$user$following_,
+      var _this$user2,
+          _this$user2$following,
           _this = this;
 
-      return (_this$user = this.user) === null || _this$user === void 0 ? void 0 : (_this$user$following_ = _this$user.following_artists) === null || _this$user$following_ === void 0 ? void 0 : _this$user$following_.some(function (follow) {
+      return (_this$user2 = this.user) === null || _this$user2 === void 0 ? void 0 : (_this$user2$following = _this$user2.following_artists) === null || _this$user2$following === void 0 ? void 0 : _this$user2$following.some(function (follow) {
         return follow.following_id === _this.artist.id;
       });
     }
   }),
   methods: {
     /**
-     * Seguir a un artista
+     * Seguir o dejar de seguir a un artista
      */
     followArtist: function followArtist() {
-      var _this$artist,
+      var _this$artist2,
           _this2 = this;
 
       if (!this.canFollowArtist) {
         this.noty("No es posible autoseguirte", "error");
         return;
-      }
+      } // if (this.isFollowingArtist) {
+      //     this.noty("Ya se sigue a este artista", "error");
+      //     return;
+      // }
 
-      if (this.isFollowingArtist) {
-        this.noty("Ya se sigue a este artista", "error");
-        return;
-      }
 
       var data = {
-        following_id: (_this$artist = this.artist) === null || _this$artist === void 0 ? void 0 : _this$artist.id
+        following_id: (_this$artist2 = this.artist) === null || _this$artist2 === void 0 ? void 0 : _this$artist2.id
       };
       this.loadFollow = true;
-      this.axios.post(this.ep.user.followArtist, data).then(function (resp) {
-        if (resp.status === 200) {
-          _this2.noty("Artista seguido");
+      var ep = this.isFollowingArtist ? this.ep.user.unfollowArtist : this.ep.user.followArtist;
+      this.axios.post(ep, data).then(function (resp) {
+        if (resp.status !== 200) return false;
+        var mjs = _this2.isFollowingArtist ? "Dejaste de seguir a este artista" : "Ahora sigues a este artista";
 
-          _this2.$store.dispatch("userRequest");
-        }
+        _this2.noty(mjs);
+
+        _this2.$store.dispatch("userRequest");
       })["catch"](function (error) {
         return console.error(error);
       })["finally"](function () {
@@ -571,12 +574,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     user: "getProfile"
   })), {}, {
     /**
-     * devuelve una de las actividades del artista
-     * o técnica/especialidad
+     * devuelve los calificativos del artista
+     * según las categorías de sus obras
      */
     getNameCategory: function getNameCategory() {
-      var artistic = this.artist.user_artistic;
-      return artistic.length ? artistic[0].nombre : "---";
+      var artworks = this.artist.artworks;
+      var categories = artworks.map(function (artwork) {
+        return artwork.categories.map(function (category) {
+          return category.qualified;
+        });
+      }); // eliminar las redundancias
+
+      var categoriesUnique = categories.flat().filter(function (v, i, a) {
+        return a.indexOf(v) === i;
+      });
+      return categoriesUnique.join(", ");
     },
 
     /**
@@ -707,19 +719,21 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex flex-wrap justify-start items-start"
   }, [_c("div", {
-    staticClass: "w-[30%] md:pr-10 hidden md:block"
+    staticClass: "hidden md:block",
+    "class": {
+      "md:w-[30%]": _vm.mode.col,
+      "md:w-[24%]": _vm.mode.row
+    }
+  }, [_c("div", {
+    staticClass: "w-full pb-4 border-b border-gray-900"
   }, [_c("h3", {
     staticClass: "text-primary font-bold tracking-wide uppercase text-2xl"
-  }, [_vm._v("\n                        Categorías\n                    ")]), _vm._v(" "), _c("div", {
-    staticClass: "my-4 w-full border-t border-gray-900"
-  }), _vm._v(" "), _c("CategoryTypeFilter", {
-    attrs: {
-      selected: _vm.filters,
-      categories: _vm.categories,
-      subCategories: _vm.subCategories
+  }, [_vm._v("\n                            Categorías\n                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "w-full",
+    "class": {
+      "md:w-[70%]": _vm.mode.col,
+      "md:w-[76%]": _vm.mode.row
     }
-  })], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-[70%]"
   }, [_c("div", {
     staticClass: "flex justify-end items-center"
   }, [_c("div", {
@@ -815,13 +829,37 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fas fa-bars fa-3x",
     "class": _vm.mode.row ? "text-zinc-900" : "text-gray-300"
-  })])])]), _vm._v(" "), _c("div", {
+  })])])])])]), _vm._v(" "), _c("div", {
+    "class": {
+      "md:-mr-60": _vm.mode.row
+    }
+  }, [_c("div", {
+    staticClass: "flex flex-wrap justify-start items-start"
+  }, [_c("div", {
+    staticClass: "hidden md:flex",
+    "class": {
+      "md:w-[30%]": _vm.mode.col,
+      "md:w-[20%]": _vm.mode.row
+    }
+  }, [_c("CategoryTypeFilter", {
+    attrs: {
+      selected: _vm.filters,
+      categories: _vm.categories,
+      subCategories: _vm.subCategories
+    }
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "w-full",
+    "class": {
+      "md:w-[70%]": _vm.mode.col,
+      "md:w-[80%]": _vm.mode.row
+    }
+  }, [_c("div", {
     staticClass: "my-4"
   }, [_c("div", {
-    staticClass: "flex"
+    staticClass: "w-full"
   }, [_vm.loadingArtist ? _c("LoadingTailwind", {
     attrs: {
-      css: "w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
+      css: "w-full md:w-1/2 mb-10 md:px-4 animate-swing-in-top-fwd"
     }
   }) : _c("div", {
     staticClass: "flex flex-wrap items-stretch"
@@ -831,7 +869,7 @@ var render = function render() {
       "class": {
         "sm:px-4": index % 1 == 0 && _vm.mode.col,
         "w-full md:w-1/2 lg:w-1/3 xl:w-1/4": _vm.mode.col,
-        "w-full flex flex-wrap": _vm.mode.row
+        "w-full flex flex-wrap ml-4": _vm.mode.row
       }
     }, [_c("CardArtist", {
       "class": {
@@ -853,7 +891,7 @@ var render = function render() {
       staticClass: "md:w-9/12 md:pl-8 hidden md:block"
     }, [_c("h3", {
       staticClass: "text-base text-zinc-900 font-extra-bold uppercase"
-    }, [_vm._v("\n                                            algunas obras de\n                                            " + _vm._s(artist.name) + "\n                                        ")]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                algunas obras de\n                                                " + _vm._s(artist.name) + "\n                                            ")]), _vm._v(" "), _c("div", {
       staticClass: "mt-3 w-full",
       attrs: {
         id: "row-artist-" + artist.id
@@ -874,7 +912,7 @@ var render = function render() {
     on: {
       "load-page": _vm.loadPage
     }
-  }) : _vm._e()], 1)])])])]), _vm._v(" "), _c("FilterArtistModal", {
+  }) : _vm._e()], 1)])])])])]), _vm._v(" "), _c("FilterArtistModal", {
     attrs: {
       show: _vm.showFilterModal,
       options: _vm.filters,
@@ -995,13 +1033,13 @@ var render = function render() {
   return _c("div", {
     staticClass: "w-full h-full animate-swing-in-top-fwd"
   }, [_c("div", {
-    staticClass: "w-full h-full rounded-md hover:animate-shadow-drop-center"
+    staticClass: "rounded-md hover:animate-shadow-drop-center"
   }, [_c("router-link", {
     attrs: {
       to: _vm.routerPath
     }
   }, [_c("img", {
-    staticClass: "object-cover object-center w-full h-56",
+    staticClass: "object-cover object-center w-60 h-60",
     attrs: {
       src: _vm.getPathGallery(_vm.artwork),
       alt: _vm.artwork.title
@@ -1130,7 +1168,7 @@ var render = function render() {
       "btn-dark": _vm.isFollowingArtist
     },
     attrs: {
-      disabled: !_vm.canFollowArtist || _vm.isFollowingArtist || _vm.loadFollow
+      disabled: !_vm.canFollowArtist || _vm.loadFollow
     },
     on: {
       click: function click($event) {
@@ -1138,7 +1176,7 @@ var render = function render() {
         return _vm.followArtist();
       }
     }
-  }, [_vm.isFollowingArtist ? _c("span", [_vm._v("Siguiendo")]) : _c("span", [_vm._v("Seguir")])]);
+  }, [_vm.isFollowingArtist ? _c("span", [_vm._v("Dejar de seguir")]) : _c("span", [_vm._v("Seguir")])]);
 };
 
 var staticRenderFns = [];
@@ -1823,7 +1861,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "space-y-2 text-center"
   }, [_c("h3", {
-    staticClass: "text-xl md:text-base xl:text-xl font-semibold tracking-wide text-gray-900 pt-3"
+    staticClass: "text-xl md:text-sm font-semibold tracking-wide text-gray-900 pt-3"
   }, [_vm._v("\n                    " + _vm._s(_vm.artist.name) + "\n                ")]), _vm._v(" "), _c("p", {
     staticClass: "text-primary text-xs"
   }, [_vm._v("\n                    " + _vm._s(_vm.getNameCategory) + "\n                ")]), _vm._v(" "), _c("p", {
@@ -2759,6 +2797,8 @@ var INIT_ARTIST_PER_PAGE = 8;
       this.axios.get(this.ep.user.getArtists, params).then(function (resp) {
         _this.totalRecords = resp.data.total;
         _this.artists = resp.data.data;
+
+        _this.loadMode(_this.modeCard.col);
       })["catch"](function (error) {
         return console.error(error);
       })["finally"](function () {
@@ -2792,18 +2832,26 @@ var INIT_ARTIST_PER_PAGE = 8;
     loadMode: function loadMode(mode) {
       var _this2 = this;
 
+      // modo columna
       if (this.modeCard.col === mode) {
         this.mode.col = true;
         this.mode.row = false;
         return;
-      }
+      } // modo fila
 
+
+      this.loadingArtist = true;
       this.mode.row = true;
       this.mode.col = false; // init TNS
 
-      this.artists.forEach(function (art) {
+      this.artists.forEach(function (art, index) {
         if (art.artworks.length) {
           _this2.showTNS("#row-artist-" + art.id);
+        } // detener loading
+
+
+        if (index === _this2.artists.length - 1) {
+          _this2.loadingArtist = false;
         }
       });
     },
@@ -2831,22 +2879,23 @@ var INIT_ARTIST_PER_PAGE = 8;
         autoplayHoverPause: true,
         lazyload: true,
         controls: false,
+        fixedWidth: 240,
         responsive: {
           0: {
             items: 1,
-            edgePadding: 10
+            edgePadding: 5
           },
           500: {
             items: 2,
-            edgePadding: 2
+            edgePadding: 5
           },
           1000: {
             items: 3,
-            edgePadding: 2
+            edgePadding: 5
           },
           1200: {
             items: 4,
-            edgePadding: 2
+            edgePadding: 5
           },
           1500: {
             items: 5,

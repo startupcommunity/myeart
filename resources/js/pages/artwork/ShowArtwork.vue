@@ -153,7 +153,7 @@
                                 </span>
                                 <FollowArtistButton
                                     :artist="artwork.user"
-                                    class="w-20"
+                                    class="w-2/5 py-1"
                                 />
                             </div>
                         </div>

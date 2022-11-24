@@ -1,20 +1,20 @@
 <template>
     <div class="overflow-hidden">
         <div
-            class="flex flex-wrap items-start hover:animate-shadow-drop-center"
+            class="flex flex-wrap items-start"
         >
             <div class="w-full">
-                <div class="flex justify-between items-center py-4">
+                <div class="flex justify-between items-center py-2">
                     <div class="flex flex-row justify-start items-center">
                         <img
                             :src="profilePhoto"
-                            class="border w-20 h-20 rounded-full"
+                            class="border w-10 h-10 rounded-full"
                         />
-                        <div class="mt-3">
-                            <p class="font-semibold text-gray-900 text-base">
+                        <div class="mt-4 ml-2">
+                            <p class="font-medium text-gray-900 text-xs">
                                 {{ artist?.name }}
                                 <br />
-                                <span class="text-gray-400"> Museo MOMA </span>
+                                <span class="text-gray-400">Museo {{ release?.museum }} </span>
                             </p>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full h-96 md:h-[28rem]">
+            <div class="w-full h-96 md:h-[24rem]">
                 <img
                     class="w-full h-full object-cover object-center"
                     :src="release?.image"
@@ -49,6 +49,12 @@
                             ></i>
                         </button>
                     </div>
+                    <div class="flex justify-start items-center gap-1">
+                        <i class="fa-solid fa-circle super-small text-app-hashtag"></i>
+                        <i class="fa-solid fa-circle super-small text-gray-400"></i>
+                        <i class="fa-solid fa-circle super-small text-gray-400"></i>
+                        <i class="fa-solid fa-circle super-small text-gray-400"></i>
+                    </div>
                     <div>
                         <button>
                             <i
@@ -57,18 +63,18 @@
                         </button>
                     </div>
                 </div>
-                <p class="font-extra-bold text-xs">
+                <div class="font-extra-bold text-xs mb-1">
                     <span class="uppercase">{{ artist?.name }}</span>
                     <span class="font-normal">
                         {{ release?.text }}
                     </span>
-                </p>
-                <p class="text-app-hashtag text-xs font-medium">
+                </div>
+                <div class="text-app-hashtag text-xs font-medium mb-1">
                     {{ release?.hashtag }}
-                </p>
-                <p class="text-xs font-semibold text-gray-400">
+                </div>
+                <div class="text-xs font-semibold text-gray-400">
                     10 comentarios
-                </p>
+                </div>
             </div>
         </div>
     </div>

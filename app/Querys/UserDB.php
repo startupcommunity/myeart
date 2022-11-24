@@ -25,28 +25,30 @@ class UserDB
     {
         $user = $userID ? User::findOrFail($userID) : auth()->user();
         $data = $user->with([
-            'followingArtists.following.userArtistic', 'followingArtists.following.profile'
+            'followingArtists.following.profile',
+            'followingArtists.following.artworks.categories'
         ])->first();
+
         return $data['followingArtists'];
     }
 
     /**
-     * Devuelve todos los artistas de la app, excluyendo
-     * el usuario logueado y los eliminados
-     *
+     * Devuelve todos los artistas de la app, excluyendo  los eliminados
+     * y los que no tengan obras subidas
+     * 
      * @return Collection
      */
     public function getArtists(array $filters): LengthAwarePaginator
     {
-        $user = auth()->user();
         $data = $filters;
         $cat = isset($data['category']) ? $data['category'] : null;
         $sub = isset($data['subcategory']) ? $data['subcategory'] : null;
         $label = isset($data['label']) ? $data['label'] : null;
 
         // query
-        $query = User::with(['userArtistic', 'profile', 'artworks.gallery'])
-            ->artist()->notUser($user->id);
+        $query = User::with(['userArtistic', 'profile', 'artworks.gallery', 'artworks.categories'])
+            ->withCount('artworks')
+            ->having('artworks_count', '>', 0);
 
         // si se recibe algunas de las categorías
         if ($cat || $sub || $label) {
@@ -65,7 +67,7 @@ class UserDB
     public function getArtist(int $id): ?User
     {
         return User::with([
-            'userArtistic', 'profile', 'artworks.gallery', 'socialNetwork'
+            'profile', 'artworks.gallery', 'socialNetwork'
         ])
             ->withCount('artworks')
             ->withCount('followingArtists')

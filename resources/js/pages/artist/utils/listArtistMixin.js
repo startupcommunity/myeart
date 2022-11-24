@@ -124,6 +124,7 @@ export default {
                 .then((resp) => {
                     this.totalRecords = resp.data.total;
                     this.artists = resp.data.data;
+                    this.loadMode(this.modeCard.col);
                 })
                 .catch((error) => console.error(error))
                 .finally(() => (this.loadingArtist = false));
@@ -154,19 +155,27 @@ export default {
          * @param {Int} mode        El modo a cargar
          */
         loadMode(mode) {
+            // modo columna
             if (this.modeCard.col === mode) {
                 this.mode.col = true;
                 this.mode.row = false;
                 return;
             }
 
+            // modo fila
+            this.loadingArtist = true;
             this.mode.row = true;
             this.mode.col = false;
 
             // init TNS
-            this.artists.forEach((art) => {
+            this.artists.forEach((art, index) => {
                 if (art.artworks.length) {
                     this.showTNS("#row-artist-" + art.id);
+                }
+
+                // detener loading
+                if (index === this.artists.length - 1) {
+                    this.loadingArtist = false;
                 }
             });
         },
@@ -194,22 +203,23 @@ export default {
                 autoplayHoverPause: true,
                 lazyload: true,
                 controls: false,
+                fixedWidth: 240,
                 responsive: {
                     0: {
                         items: 1,
-                        edgePadding: 10,
+                        edgePadding: 5,
                     },
                     500: {
                         items: 2,
-                        edgePadding: 2,
+                        edgePadding: 5,
                     },
                     1000: {
                         items: 3,
-                        edgePadding: 2,
+                        edgePadding: 5,
                     },
                     1200: {
                         items: 4,
-                        edgePadding: 2,
+                        edgePadding: 5,
                     },
                     1500: {
                         items: 5,

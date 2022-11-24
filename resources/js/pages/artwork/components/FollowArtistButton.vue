@@ -2,10 +2,10 @@
     <button
         class="btn btn-primary btn-sm text-xs px-4 uppercase"
         @click.stop="followArtist()"
-        :disabled="!canFollowArtist || isFollowingArtist || loadFollow"
+        :disabled="!canFollowArtist || loadFollow"
         :class="{ 'btn-dark': isFollowingArtist }"
     >
-        <span v-if="isFollowingArtist">Siguiendo</span>
+        <span v-if="isFollowingArtist">Dejar de seguir</span>
         <span v-else>Seguir</span>
     </button>
     <!-- <loading-overlay
@@ -44,7 +44,7 @@ export default {
          * NO es posible autoseguirse
          */
         canFollowArtist() {
-            return this.user.id !== this.artist.id;
+            return this.user?.id !== this.artist?.id;
         },
 
         /**
@@ -58,7 +58,7 @@ export default {
     },
     methods: {
         /**
-         * Seguir a un artista
+         * Seguir o dejar de seguir a un artista
          */
         followArtist() {
             if (!this.canFollowArtist) {
@@ -66,21 +66,30 @@ export default {
                 return;
             }
 
-            if (this.isFollowingArtist) {
-                this.noty("Ya se sigue a este artista", "error");
-                return;
-            }
+            // if (this.isFollowingArtist) {
+            //     this.noty("Ya se sigue a este artista", "error");
+            //     return;
+            // }
 
             const data = { following_id: this.artist?.id };
             this.loadFollow = true;
 
+            const ep = this.isFollowingArtist
+                ? this.ep.user.unfollowArtist
+                : this.ep.user.followArtist;
+
             this.axios
-                .post(this.ep.user.followArtist, data)
+                .post(ep, data)
                 .then((resp) => {
-                    if (resp.status === 200) {
-                        this.noty("Artista seguido");
-                        this.$store.dispatch("userRequest");
-                    }
+                    if (resp.status !== 200) return false;
+
+                    const mjs = this.isFollowingArtist
+                        ? "Dejaste de seguir a este artista"
+                        : "Ahora sigues a este artista";
+
+                    this.noty(mjs);
+
+                    this.$store.dispatch("userRequest");
                 })
                 .catch((error) => console.error(error))
                 .finally(() => (this.loadFollow = false));

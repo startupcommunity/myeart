@@ -98,6 +98,7 @@ export default {
                     place: "Madrid, España",
                     image: "https://picsum.photos/200/300",
                     hashtag: "#arte #escultura",
+                    museum: 'Roma',
                 },
                 {
                     id: 2,
@@ -108,6 +109,7 @@ export default {
                     place: "Madrid, España",
                     image: "https://picsum.photos/600/400",
                     hashtag: "#arte #pintura",
+                    museum: 'Madrid',
                 },
                 {
                     id: 3,
@@ -118,6 +120,7 @@ export default {
                     place: "Madrid, España",
                     image: "https://picsum.photos/100/100",
                     hashtag: "#dibujo #oleo",
+                    museum: 'París',
                 },
                 {
                     id: 4,
@@ -128,6 +131,7 @@ export default {
                     place: "Madrid, España",
                     image: "https://picsum.photos/200/200",
                     hashtag: "#dibujo #literatura",
+                    museum: 'Londres',
                 },
             ];
 
