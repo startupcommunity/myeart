@@ -1,15 +1,17 @@
 <template>
-    <section class="bg-white">
-        <div class="container py-16">
+    <section
+        class="bg-white border-gray-900 rounded-t-3xl -mt-10 sm:rounded-t-none relative"
+    >
+        <div class="container pt-16 pb-10">
             <div class="flex flex-wrap justify-center items-start">
-                <div class="w-full md:w-1/3 order-2 order-md-1">
-                    <div class="flex gap-4 justify-between">
+                <div class="w-full md:w-1/3 order-3 order-md-1">
+                    <div class="flex gap-4 justify-between px-10 px-md-0">
                         <div class="border-b pb-2 border-gray-400 text-center">
                             <div class="text-2xl font-bold">
                                 {{ artist.followers_count | numberK }}
                             </div>
                             <span
-                                class="font-bold text-base text-primary uppercase"
+                                class="font-bold text-xs md:text-base text-primary uppercase"
                             >
                                 Seguidores
                             </span>
@@ -19,7 +21,7 @@
                                 {{ artist.following_artists_count | numberK }}
                             </div>
                             <span
-                                class="font-bold text-base text-primary uppercase"
+                                class="font-bold text-xs md:text-base text-primary uppercase"
                             >
                                 Seguidos
                             </span>
@@ -29,43 +31,67 @@
                                 {{ artist.artworks_count | numberK }}
                             </div>
                             <span
-                                class="font-bold text-base text-primary uppercase"
+                                class="font-bold text-xs md:text-base text-primary uppercase"
                             >
                                 Obras
                             </span>
                         </div>
                     </div>
-                    <div class="flex flex-wrap mt-7" v-if="isUserLogged">
-                        <div class="w-full md:w-1/2 mb-3 md:mb-0 md:pr-3">
+                    <div
+                        class="flex justify-between gap-3 px-10 px-md-0 mt-5 md:mt-7"
+                        v-if="isUserLogged"
+                    >
+                        <div class="w-1/2">
                             <v-btn
                                 outlined
                                 block
                                 color="#B2794C"
-                                class="rounded-md"
+                                class="rounded-md hidden md:block"
+                            >
+                                Ir a mi blog
+                            </v-btn>
+                            <v-btn
+                                outlined
+                                small
+                                color="#B2794C"
+                                class="rounded-md block md:hidden"
                             >
                                 Ir a mi blog
                             </v-btn>
                         </div>
-                        <div class="w-full md:w-1/2 mb-3 md:mb-0 md:pl-3">
+                        <div class="w-1/2">
                             <v-btn
                                 outlined
                                 block
                                 color="#B2794C"
-                                class="rounded-md"
-                                :to="{
-                                    name: 'userProfile',
-                                    params: {
-                                        id: artist.id,
-                                    },
-                                }"
+                                class="rounded-md hidden md:flex"
+                                :to="getPathProfile"
+                            >
+                                Ir a mi post
+                            </v-btn>
+                            <v-btn
+                                outlined
+                                small
+                                color="#B2794C"
+                                class="rounded-md flex md:hidden"
+                                :to="getPathProfile"
                             >
                                 Ir a mi post
                             </v-btn>
                         </div>
                     </div>
                 </div>
-                <div class="w-full md:w-1/3 order-1 order-md-2">
+                <div
+                    class="w-full md:w-1/3 order-1 order-md-2 -mt-48 md:-mt-60"
+                >
                     <div class="flex flex-col justify-center">
+                        <div class="flex justify-center pb-3">
+                            <img
+                                :src="profilePhoto"
+                                :alt="'profile-photo-' + artist.name"
+                                class="rounded-full w-40 h-40 md:w-56 md:h-56"
+                            />
+                        </div>
                         <h3
                             class="text-2xl font-black tracking-wide text-center"
                         >
@@ -130,22 +156,20 @@
                         </p>
                     </div>
                 </div>
-                <div class="w-full md:w-1/3 order-3">
-                    <div class="flex flex-wrap" v-if="!isUserLogged">
-                        <div class="w-full md:w-1/2 mb-3 md:mb-0 md:pr-3">
+                <div class="w-full md:w-1/3 order-2 order-md-3 md:px-0 mb-5">
+                    <div class="flex gap-3 justify-center px-10">
+                        <div class="w-40 md:w-1/2 mb-3 md:mb-0">
                             <FollowArtistButton
                                 :artist="artist"
-                                class="w-full h-9 md:h-full rounded-md"
+                                class="md:text-xs w-full h-6 md:h-full rounded-xl md:rounded-md md:py-2"
                             />
                         </div>
-                        <div class="w-full md:w-1/2 mb-3 md:mb-0 md:pl-3">
-                            <v-btn
-                                block
-                                color="grey lighten-1"
-                                class="rounded-md"
+                        <div class="w-40 md:w-1/2 mb-3 md:mb-0">
+                            <button
+                                class="btn btn-primary btn-sm uppercase rounded-xl md:rounded-md w-full h-6 md:h-full md:py-2 text-xxs md:text-xs text-white"
                             >
-                                enviar mensaje
-                            </v-btn>
+                                <span> enviar mensaje </span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -183,6 +207,29 @@ export default {
 
         isUserLogged() {
             return this.user?.id === this.artist?.id;
+        },
+
+        /**
+         * devuelve la Foto de perfil o la default
+         * @pathProfilePhoto: globalMixin
+         */
+        profilePhoto() {
+            if (!this.artist?.profile_photo)
+                return this.getURLDefaultProfilePhoto;
+
+            return `${this.pathProfilePhoto + this.artist?.profile_photo}`;
+        },
+
+        /**
+         * devuelve el path del perfil del usuario
+         */
+        getPathProfile() {
+            return {
+                name: "userProfile",
+                params: {
+                    id: this.artist.id,
+                },
+            };
         },
     },
     filters: {

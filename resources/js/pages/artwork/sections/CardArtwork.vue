@@ -4,58 +4,47 @@
             class="rounded-md w-full hover:animate-shadow-drop-center relative"
             :class="classCard"
         >
-            <router-link
-                :to="{
-                    name: 'showArtwork',
-                    params: {
-                        id: artwork.id,
-                    },
-                }"
-                v-if="routerLink"
-            >
+            <router-link :to="getPathDetailArtwork" v-if="routerLink">
                 <img
-                    :src="getPathGallery(artwork)"
+                    :src="getPathGallery"
                     :alt="artwork.title"
                     class="object-cover object-center w-full h-72"
+                    :class="classImage"
                 />
             </router-link>
             <div class="flex flex-col justify-between space-y-8 bg-gray-50">
                 <div class="space-y-2">
-                    <h3
-                        class="text-xl md:text-base xl:text-xl font-semibold tracking-wide text-gray-900 pt-3"
-                    >
-                        {{ artwork.title }}
-                    </h3>
-                    <p class="text-primary text-xs">
-                        {{ getDimensions(artwork) }}
-                        {{ getCategoryName(artwork.categories) }}
-                        {{ getSubCategory(artwork.labels) }}
-                    </p>
-                    <div
-                        class="flex justify-start items-center"
-                        v-show="showProfile"
-                    >
-                        <img
-                            :src="
-                                getProfilePhoto(artwork.user) ??
-                                getURLDefaultProfilePhoto
-                            "
-                            class="img-thumbnail border w-14 h-14 rounded-full"
-                            alt="profile-picture"
-                        />
-                        <div class="flex flex-col pl-2">
-                            <span class="py-0">
-                                {{ artwork.user?.name }}
-                            </span>
-                            <FollowArtistButton
-                                :artist="artwork.user"
-                                class="w-2/4"
-                            />
-                        </div>
+                    <div class="w-full px-2">
+                        <h3
+                            class="text-xl md:text-base xl:text-xl font-semibold tracking-wide text-gray-900 pt-3"
+                        >
+                            {{ artwork.title }}
+                        </h3>
+                        <p class="text-primary text-xs">
+                            {{ getDimensions(artwork) }}
+                            {{ getCategoryName(artwork.categories) }}
+                            {{ getSubCategory(artwork.labels) }}
+                        </p>
                     </div>
+
                     <div
                         class="flex flex-wrap pb-4 px-2 bottom-0 inset-x-0 absolute"
                     >
+                        <div
+                            class="flex justify-end items-center"
+                            v-show="showProfile"
+                        >
+                            <Avatar :artist="artwork?.user" custom="border w-12 h-12"/>
+                            <div class="flex flex-col pl-2">
+                                <span class="py-0">
+                                    {{ artwork.user?.name }}
+                                </span>
+                                <FollowArtistButton
+                                    :artist="artwork.user"
+                                    class="w-3/5"
+                                />
+                            </div>
+                        </div>
                         <div class="w-full border-t border-gray-800 my-4"></div>
                         <div class="w-full flex justify-between items-center">
                             <div class="text-gray-900 font-black">
@@ -96,10 +85,11 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import Avatar from '../../../components/Avatar.vue';
 import utilMixin from "../../../mixins/utilMixin";
 import FollowArtistButton from "../components/FollowArtistButton.vue";
 export default {
-    components: { FollowArtistButton },
+    components: { FollowArtistButton, Avatar },
     name: "CardArtwork",
     mixins: [utilMixin],
     data() {
@@ -128,6 +118,10 @@ export default {
             type: String,
             default: "",
         },
+        classImage: {
+            type: String,
+            default: "",
+        },
     },
     computed: {
         /**
@@ -137,17 +131,27 @@ export default {
         ...mapGetters({
             user: "getProfile",
         }),
-    },
-    methods: {
+
+        /**
+         * devuelve el path del detalle de obra
+         */
+        getPathDetailArtwork() {
+            return {
+                name: "showArtwork",
+                params: { id: this.artwork?.id },
+            };
+        },
+
         /**
          * Path completo de la foto de portada
          */
-        getPathGallery(artwork) {
-            if (!artwork.gallery.length) return this.getURLDefaultFrontArtwork;
+        getPathGallery() {
+            const artwork = this.artwork;
+            const gallery = this.artwork?.gallery;
 
-            const front_page = artwork.gallery.filter(
-                (pic) => pic.front_page === 1
-            );
+            if (!artwork?.gallery.length) return this.getURLDefaultFrontArtwork;
+
+            const front_page = gallery.filter((pic) => pic.front_page === 1);
 
             return `${this.pathArtworkGallery + front_page[0]?.picture}`;
         },
@@ -155,12 +159,15 @@ export default {
         /**
          * Devuelve el path completo de la foto de perfil del usuario
          */
-        getProfilePhoto(user = null) {
+        getProfilePhoto() {
+            const user = this.artwork?.user;
+
             if (!user || !user?.profile_photo) return null;
 
             return `${this.pathProfilePhoto + user.profile_photo}`;
         },
-
+    },
+    methods: {
         /**
          * Si la obra ha sido likeada para el usuario logueado
          * se muestra en rojo el botón de me gusta

@@ -1,15 +1,17 @@
 <template>
     <section class="bg-white" v-show="loadComponent">
-        <div class="container-fluid pt-20">
-            <div class="w-full">
-                <h2
-                    class="text-primary text-2xl leading-5 tracking-widest uppercase text-center"
-                >
-                    <span v-if="title"> {{ title }} </span>
-                    <span v-else>Mas obras de {{ user?.name }}</span>
-                </h2>
+        <div class="container-fluid py-7 py-md-16">
+            <div class="w-full md:w-4/5 mx-auto">
+                <div class="mx-auto border-b pb-1 pb-md-2 border-zinc-800">
+                    <h2
+                        class="text-primary text-lg md:text-2xl tracking-widest uppercase text-left font-bold"
+                    >
+                        <span v-if="title"> {{ title }} </span>
+                        <span v-else>Mas obras de {{ user?.name }}</span>
+                    </h2>
+                </div>
             </div>
-            <div class="py-10 md:-mr-60">
+            <div class="pt-10 md:-mr-60">
                 <LoadingTailwind
                     v-show="loading"
                     css="w-full animate-swing-in-top-fwd"
@@ -94,33 +96,25 @@ export default {
          * Iniciar el carousel
          */
         showTNS() {
+            const countArt = this.userArtworks.length;
             tns({
                 container: "#slider-user-artworks",
                 mode: "carousel",
-                speed: 800,
+                center: countArt > 4 ? true : false,
+                speed: 400,
                 gutter: 20,
                 items: 5,
                 autoplay: false,
                 mouseDrag: true,
-                autoplayButtonOutput: false,
-                autoplayHoverPause: true,
                 lazyload: true,
                 controls: false,
                 responsive: {
                     0: {
                         items: 1,
-                        edgePadding: 10,
-                    },
-                    500: {
-                        items: 2,
-                        edgePadding: 30,
+                        edgePadding: 50,
                     },
                     700: {
                         items: 3,
-                        edgePadding: 30,
-                    },
-                    900: {
-                        items: 4,
                         edgePadding: 30,
                     },
                     1200: {

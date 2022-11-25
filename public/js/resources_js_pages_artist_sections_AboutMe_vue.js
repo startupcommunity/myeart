@@ -45,21 +45,21 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {
-    staticClass: "md:-mr-60 md:-my-3 py-10 py-md-0"
+    staticClass: "md:-mr-60 md:-my-3 py-7 py-md-0"
   }, [_c("div", {
     staticClass: "flex flex-wrap"
   }, [_c("div", {
-    staticClass: "w-full md:w-1/2"
+    staticClass: "w-full md:w-1/2 order-2 order-md-1"
   }, [_c("div", {
     staticClass: "md:py-20 md:pr-10"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "w-full pt-6"
+    staticClass: "w-full pt-2 pt-md-5"
   }, [_c("h4", {
-    staticClass: "font-bold text-2xl text-justify text-zinc-900 pb-5"
+    staticClass: "font-bold text-base md:text-2xl text-justify text-zinc-900 pb-5"
   }, [_vm._v("\n                                " + _vm._s((_vm$profile$bio_title = (_vm$profile = _vm.profile) === null || _vm$profile === void 0 ? void 0 : _vm$profile.bio_title) !== null && _vm$profile$bio_title !== void 0 ? _vm$profile$bio_title : "---") + "\n                            ")]), _vm._v(" "), _c("p", {
-    staticClass: "font-normal text-base text-zinc-500"
+    staticClass: "font-normal text-sm md:text-base text-zinc-500"
   }, [_vm._v("\n                                " + _vm._s((_vm$profile$bio_conte = (_vm$profile2 = _vm.profile) === null || _vm$profile2 === void 0 ? void 0 : _vm$profile2.bio_content) !== null && _vm$profile$bio_conte !== void 0 ? _vm$profile$bio_conte : "---") + "\n                            ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/2 bg-profile-about-me bg-no-repeat bg-cover h-96 md:min-h-[40rem]"
+    staticClass: "w-full md:w-1/2 bg-profile-about-me bg-no-repeat bg-cover h-96 md:min-h-[40rem] order-1 order-md-2"
   })])])])]);
 };
 
@@ -68,9 +68,9 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "w-full border-b border-zinc-800 pb-5"
+    staticClass: "w-full border-b border-zinc-800 pb-md-5 pt-5 pt-md-0"
   }, [_c("h3", {
-    staticClass: "uppercase text-primary font-bold text-2xl tracking-widest"
+    staticClass: "uppercase text-primary font-bold text-lg md:text-2xl tracking-widest"
   }, [_vm._v("\n                                sobre mi\n                            ")])]);
 }];
 render._withStripped = true;

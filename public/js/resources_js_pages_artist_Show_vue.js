@@ -1,6 +1,65 @@
 "use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_pages_artist_Show_vue"],{
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Avatar",
+  props: {
+    artist: {
+      type: Object,
+      "default": function _default() {},
+      required: true
+    },
+    defaultClass: {
+      type: String,
+      "default": "border w-10 h-10"
+    },
+    custom: {
+      type: String,
+      "default": ""
+    }
+  },
+  computed: {
+    /**
+     * Devuelve la foto de perfil
+     */
+    profilePhoto: function profilePhoto() {
+      var _this$artist;
+
+      var photo = (_this$artist = this.artist) === null || _this$artist === void 0 ? void 0 : _this$artist.profile_photo; // path por defecto @globalMixin
+
+      if (!photo) return this.getURLDefaultProfilePhoto; // path en el servidor @globalMixin
+
+      return "".concat(this.pathProfilePhoto + photo);
+    },
+
+    /**
+     * Devuelve el path del perfil del artista
+     */
+    getPathProfile: function getPathProfile() {
+      var _this$artist2;
+
+      return {
+        name: "showArtist",
+        params: {
+          id: (_this$artist2 = this.artist) === null || _this$artist2 === void 0 ? void 0 : _this$artist2.id
+        }
+      };
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LoadingTailwind.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LoadingTailwind.vue?vue&type=script&lang=js& ***!
@@ -166,7 +225,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Avatar.vue */ "./resources/js/components/Avatar.vue");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   name: "CardEvent",
   props: {
     release: {
@@ -291,15 +355,6 @@ __webpack_require__.r(__webpack_exports__);
     frontPhoto: function frontPhoto() {
       if (!this.artist.front_photo) return "";
       return "url('".concat(this.pathFrontPhoto + this.artist.front_photo, "')");
-    },
-
-    /**
-     * devuelve la Foto de perfil o la default
-     * @pathProfilePhoto: globalMixin
-     */
-    profilePhoto: function profilePhoto() {
-      if (!this.artist.profile_photo) return this.getURLDefaultProfilePhoto;
-      return "".concat(this.pathProfilePhoto + this.artist.profile_photo);
     }
   }
 });
@@ -355,6 +410,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this$user, _this$artist;
 
       return ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id) === ((_this$artist = this.artist) === null || _this$artist === void 0 ? void 0 : _this$artist.id);
+    },
+
+    /**
+     * devuelve la Foto de perfil o la default
+     * @pathProfilePhoto: globalMixin
+     */
+    profilePhoto: function profilePhoto() {
+      var _this$artist2, _this$artist3;
+
+      if (!((_this$artist2 = this.artist) !== null && _this$artist2 !== void 0 && _this$artist2.profile_photo)) return this.getURLDefaultProfilePhoto;
+      return "".concat(this.pathProfilePhoto + ((_this$artist3 = this.artist) === null || _this$artist3 === void 0 ? void 0 : _this$artist3.profile_photo));
+    },
+
+    /**
+     * devuelve el path del perfil del usuario
+     */
+    getPathProfile: function getPathProfile() {
+      return {
+        name: "userProfile",
+        params: {
+          id: this.artist.id
+        }
+      };
     }
   }),
   filters: {
@@ -708,33 +786,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * Iniciar el carousel
      */
     showTNS: function showTNS() {
+      var countArt = this.userArtworks.length;
       (0,tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)({
         container: "#slider-user-artworks",
         mode: "carousel",
-        speed: 800,
+        center: countArt > 4 ? true : false,
+        speed: 400,
         gutter: 20,
         items: 5,
         autoplay: false,
         mouseDrag: true,
-        autoplayButtonOutput: false,
-        autoplayHoverPause: true,
         lazyload: true,
         controls: false,
         responsive: {
           0: {
             items: 1,
-            edgePadding: 10
-          },
-          500: {
-            items: 2,
-            edgePadding: 30
+            edgePadding: 50
           },
           700: {
             items: 3,
-            edgePadding: 30
-          },
-          900: {
-            items: 4,
             edgePadding: 30
           },
           1200: {
@@ -759,9 +829,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
-/* harmony import */ var _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Avatar.vue */ "./resources/js/components/Avatar.vue");
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+/* harmony import */ var _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -771,12 +842,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    FollowArtistButton: _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    FollowArtistButton: _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   name: "CardArtwork",
-  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       loadLiked: false,
@@ -802,20 +875,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     classCard: {
       type: String,
       "default": ""
+    },
+    classImage: {
+      type: String,
+      "default": ""
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
     user: "getProfile"
-  })),
-  methods: {
+  })), {}, {
+    /**
+     * devuelve el path del detalle de obra
+     */
+    getPathDetailArtwork: function getPathDetailArtwork() {
+      var _this$artwork;
+
+      return {
+        name: "showArtwork",
+        params: {
+          id: (_this$artwork = this.artwork) === null || _this$artwork === void 0 ? void 0 : _this$artwork.id
+        }
+      };
+    },
+
     /**
      * Path completo de la foto de portada
      */
-    getPathGallery: function getPathGallery(artwork) {
-      var _front_page$;
+    getPathGallery: function getPathGallery() {
+      var _this$artwork2, _front_page$;
 
-      if (!artwork.gallery.length) return this.getURLDefaultFrontArtwork;
-      var front_page = artwork.gallery.filter(function (pic) {
+      var artwork = this.artwork;
+      var gallery = (_this$artwork2 = this.artwork) === null || _this$artwork2 === void 0 ? void 0 : _this$artwork2.gallery;
+      if (!(artwork !== null && artwork !== void 0 && artwork.gallery.length)) return this.getURLDefaultFrontArtwork;
+      var front_page = gallery.filter(function (pic) {
         return pic.front_page === 1;
       });
       return "".concat(this.pathArtworkGallery + ((_front_page$ = front_page[0]) === null || _front_page$ === void 0 ? void 0 : _front_page$.picture));
@@ -825,11 +917,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * Devuelve el path completo de la foto de perfil del usuario
      */
     getProfilePhoto: function getProfilePhoto() {
-      var user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var _this$artwork3;
+
+      var user = (_this$artwork3 = this.artwork) === null || _this$artwork3 === void 0 ? void 0 : _this$artwork3.user;
       if (!user || !(user !== null && user !== void 0 && user.profile_photo)) return null;
       return "".concat(this.pathProfilePhoto + user.profile_photo);
-    },
-
+    }
+  }),
+  methods: {
     /**
      * Si la obra ha sido likeada para el usuario logueado
      * se muestra en rojo el botón de me gusta
@@ -1058,6 +1153,40 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("router-link", {
+    attrs: {
+      to: _vm.getPathProfile
+    }
+  }, [_c("img", {
+    staticClass: "rounded-full",
+    "class": _vm.custom || _vm.defaultClass,
+    attrs: {
+      src: _vm.profilePhoto
+    }
+  })]);
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LoadingTailwind.vue?vue&type=template&id=af4ccfce&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LoadingTailwind.vue?vue&type=template&id=af4ccfce& ***!
@@ -1128,7 +1257,7 @@ var render = function render() {
   }), _vm._v(" "), _c("EventSection", {
     attrs: {
       artist: _vm.artist,
-      title: "Mis eventos"
+      title: "Eventos del artista"
     }
   }), _vm._v(" "), _c("Release", {
     attrs: {
@@ -1164,15 +1293,15 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex flex-wrap items-start hover:animate-shadow-drop-center"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "px-6 w-full md:w-1/2"
+    staticClass: "md:px-6 w-full md:w-1/2"
   }, [_c("h3", {
     staticClass: "text-2xl text-zinc-900 font-semibold"
-  }, [_vm._v("\n                Exposición de arte: Cubismo 2022\n            ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                Exposición de arte: Cubismo 2022\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "leading-relaxed text-xl text-zinc-500"
-  }, [_vm._v("\n                22 Junio 2022\n            ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                22 Junio 2022\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "leading-relaxed text-xl text-zinc-500"
-  }, [_vm._v("\n                21:00 hr.\n            ")]), _vm._v(" "), _c("p", {
-    staticClass: "leading-relaxed text-xl text-zinc-500"
+  }, [_vm._v("\n                21:00 hr.\n            ")]), _vm._v(" "), _c("div", {
+    staticClass: "leading-relaxed text-xl text-zinc-500 mb-5"
   }, [_vm._v("\n                Museo del Prado. Madrid\n            ")]), _vm._v(" "), _c("v-btn", {
     staticClass: "rounded",
     attrs: {
@@ -1193,7 +1322,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "w-full md:w-1/2 h-60 md:h-96"
   }, [_c("img", {
-    staticClass: "w-full h-full object-cover object-center rounded-xl",
+    staticClass: "w-full h-full object-cover object-center rounded-md md:rounded-xl",
     attrs: {
       src: "/img/events/default-event.webp",
       alt: "event"
@@ -1232,10 +1361,9 @@ var render = function render() {
     staticClass: "flex justify-between items-center py-2"
   }, [_c("div", {
     staticClass: "flex flex-row justify-start items-center"
-  }, [_c("img", {
-    staticClass: "border w-10 h-10 rounded-full",
+  }, [_c("Avatar", {
     attrs: {
-      src: _vm.profilePhoto
+      artist: _vm.artist
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "mt-4 ml-2"
@@ -1243,7 +1371,7 @@ var render = function render() {
     staticClass: "font-medium text-gray-900 text-xs"
   }, [_vm._v("\n                            " + _vm._s((_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name) + "\n                            "), _c("br"), _vm._v(" "), _c("span", {
     staticClass: "text-gray-400"
-  }, [_vm._v("Museo " + _vm._s((_vm$release = _vm.release) === null || _vm$release === void 0 ? void 0 : _vm$release.museum) + " ")])])])]), _vm._v(" "), _c("div", [_c("v-btn", {
+  }, [_vm._v("Museo " + _vm._s((_vm$release = _vm.release) === null || _vm$release === void 0 ? void 0 : _vm$release.museum) + "\n                            ")])])])], 1), _vm._v(" "), _c("div", [_c("v-btn", {
     attrs: {
       text: ""
     }
@@ -1325,21 +1453,21 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {
-    staticClass: "md:-mr-60 md:-my-3 py-10 py-md-0"
+    staticClass: "md:-mr-60 md:-my-3 py-7 py-md-0"
   }, [_c("div", {
     staticClass: "flex flex-wrap"
   }, [_c("div", {
-    staticClass: "w-full md:w-1/2"
+    staticClass: "w-full md:w-1/2 order-2 order-md-1"
   }, [_c("div", {
     staticClass: "md:py-20 md:pr-10"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "w-full pt-6"
+    staticClass: "w-full pt-2 pt-md-5"
   }, [_c("h4", {
-    staticClass: "font-bold text-2xl text-justify text-zinc-900 pb-5"
+    staticClass: "font-bold text-base md:text-2xl text-justify text-zinc-900 pb-5"
   }, [_vm._v("\n                                " + _vm._s((_vm$profile$bio_title = (_vm$profile = _vm.profile) === null || _vm$profile === void 0 ? void 0 : _vm$profile.bio_title) !== null && _vm$profile$bio_title !== void 0 ? _vm$profile$bio_title : "---") + "\n                            ")]), _vm._v(" "), _c("p", {
-    staticClass: "font-normal text-base text-zinc-500"
+    staticClass: "font-normal text-sm md:text-base text-zinc-500"
   }, [_vm._v("\n                                " + _vm._s((_vm$profile$bio_conte = (_vm$profile2 = _vm.profile) === null || _vm$profile2 === void 0 ? void 0 : _vm$profile2.bio_content) !== null && _vm$profile$bio_conte !== void 0 ? _vm$profile$bio_conte : "---") + "\n                            ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/2 bg-profile-about-me bg-no-repeat bg-cover h-96 md:min-h-[40rem]"
+    staticClass: "w-full md:w-1/2 bg-profile-about-me bg-no-repeat bg-cover h-96 md:min-h-[40rem] order-1 order-md-2"
   })])])])]);
 };
 
@@ -1348,9 +1476,9 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "w-full border-b border-zinc-800 pb-5"
+    staticClass: "w-full border-b border-zinc-800 pb-md-5 pt-5 pt-md-0"
   }, [_c("h3", {
-    staticClass: "uppercase text-primary font-bold text-2xl tracking-widest"
+    staticClass: "uppercase text-primary font-bold text-lg md:text-2xl tracking-widest"
   }, [_vm._v("\n                                sobre mi\n                            ")])]);
 }];
 render._withStripped = true;
@@ -1380,11 +1508,11 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {
-    staticClass: "w-full border-b pb-4 border-zinc-800"
+    staticClass: "w-full border-b pb-1 pb-md-2 border-zinc-800"
   }, [_c("h2", {
-    staticClass: "text-primary text-2xl leading-5 tracking-widest uppercase text-left"
+    staticClass: "text-primary text-lg md:text-2xl font-bold tracking-widest uppercase text-left"
   }, [_vm.title ? _c("span", [_vm._v(" " + _vm._s(_vm.title) + " ")]) : _c("span", [_vm._v("Mas eventos de " + _vm._s((_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name))])])]), _vm._v(" "), _c("div", {
-    staticClass: "py-10"
+    staticClass: "pt-10"
   }, [_c("LoadingTailwind", {
     directives: [{
       name: "show",
@@ -1396,19 +1524,19 @@ var render = function render() {
       css: "w-full animate-swing-in-top-fwd"
     }
   }), _vm._v(" "), _c("div", {
-    staticClass: "py-10"
+    staticClass: "md:py-10"
   }, [_c("div", {
     staticClass: "flex flex-wrap animate-swing-in-top-fwd"
   }, [_c("CardEvent", {
     key: "1",
-    staticClass: "w-full md:w-1/2 pr-4 mb-4",
+    staticClass: "w-full md:w-1/2 md:pr-4 mb-5",
     attrs: {
       event: {},
       artist: _vm.artist
     }
   }), _vm._v(" "), _c("CardEvent", {
     key: "2",
-    staticClass: "w-full md:w-1/2 mb-4",
+    staticClass: "w-full md:w-1/2 mb-5",
     attrs: {
       event: {},
       artist: _vm.artist
@@ -1438,7 +1566,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("section", [_c("div", {
-    staticClass: "relative z-[1] h-96 sm:h-[30rem] bg-no-repeat bg-cover bg-center",
+    staticClass: "relative h-72 md:h-[30rem] bg-no-repeat bg-cover bg-center",
     "class": {
       "bg-hero-front-default": !_vm.artist.front_photo
     },
@@ -1447,18 +1575,8 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "container-fluid py-0 px-4 sm:px-0 absolute -bottom-8 sm:-bottom-12"
-  }, [_c("div", {}, [_c("div", {
-    staticClass: "flex flex-row items-center justify-center sm:justify-between"
-  }, [_c("div", {
-    staticClass: "relative w-full flex justify-center px-2 sm:px-0"
-  }, [_c("img", {
-    staticClass: "rounded-full w-48 h-48 sm:w-56 sm:h-56",
-    attrs: {
-      src: _vm.profilePhoto,
-      alt: "profile-photo-" + _vm.artist.name
-    }
-  })])])])]), _vm._v(" "), _vm.artist.front_photo ? _c("div", {
-    staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-gray-900 bg-opacity-60"
+  }), _vm._v(" "), _vm.artist.front_photo ? _c("div", {
+    staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-zinc-900 md:bg-opacity-60"
   }) : _vm._e()])]);
 };
 
@@ -1486,64 +1604,82 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("section", {
-    staticClass: "bg-white"
+    staticClass: "bg-white border-gray-900 rounded-t-3xl -mt-10 sm:rounded-t-none relative"
   }, [_c("div", {
-    staticClass: "container py-16"
+    staticClass: "container pt-16 pb-10"
   }, [_c("div", {
     staticClass: "flex flex-wrap justify-center items-start"
   }, [_c("div", {
-    staticClass: "w-full md:w-1/3 order-2 order-md-1"
+    staticClass: "w-full md:w-1/3 order-3 order-md-1"
   }, [_c("div", {
-    staticClass: "flex gap-4 justify-between"
+    staticClass: "flex gap-4 justify-between px-10 px-md-0"
   }, [_c("div", {
     staticClass: "border-b pb-2 border-gray-400 text-center"
   }, [_c("div", {
     staticClass: "text-2xl font-bold"
   }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.followers_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
-    staticClass: "font-bold text-base text-primary uppercase"
+    staticClass: "font-bold text-xs md:text-base text-primary uppercase"
   }, [_vm._v("\n                            Seguidores\n                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "border-b pb-2 border-gray-400 text-center"
   }, [_c("div", {
     staticClass: "text-2xl font-bold"
   }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.following_artists_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
-    staticClass: "font-bold text-base text-primary uppercase"
+    staticClass: "font-bold text-xs md:text-base text-primary uppercase"
   }, [_vm._v("\n                            Seguidos\n                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "border-b pb-2 border-gray-400 text-center"
   }, [_c("div", {
     staticClass: "text-2xl font-bold"
   }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.artworks_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
-    staticClass: "font-bold text-base text-primary uppercase"
+    staticClass: "font-bold text-xs md:text-base text-primary uppercase"
   }, [_vm._v("\n                            Obras\n                        ")])])]), _vm._v(" "), _vm.isUserLogged ? _c("div", {
-    staticClass: "flex flex-wrap mt-7"
+    staticClass: "flex justify-between gap-3 px-10 px-md-0 mt-5 md:mt-7"
   }, [_c("div", {
-    staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pr-3"
+    staticClass: "w-1/2"
   }, [_c("v-btn", {
-    staticClass: "rounded-md",
+    staticClass: "rounded-md hidden md:block",
     attrs: {
       outlined: "",
       block: "",
       color: "#B2794C"
     }
+  }, [_vm._v("\n                            Ir a mi blog\n                        ")]), _vm._v(" "), _c("v-btn", {
+    staticClass: "rounded-md block md:hidden",
+    attrs: {
+      outlined: "",
+      small: "",
+      color: "#B2794C"
+    }
   }, [_vm._v("\n                            Ir a mi blog\n                        ")])], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pl-3"
+    staticClass: "w-1/2"
   }, [_c("v-btn", {
-    staticClass: "rounded-md",
+    staticClass: "rounded-md hidden md:flex",
     attrs: {
       outlined: "",
       block: "",
       color: "#B2794C",
-      to: {
-        name: "userProfile",
-        params: {
-          id: _vm.artist.id
-        }
-      }
+      to: _vm.getPathProfile
+    }
+  }, [_vm._v("\n                            Ir a mi post\n                        ")]), _vm._v(" "), _c("v-btn", {
+    staticClass: "rounded-md flex md:hidden",
+    attrs: {
+      outlined: "",
+      small: "",
+      color: "#B2794C",
+      to: _vm.getPathProfile
     }
   }, [_vm._v("\n                            Ir a mi post\n                        ")])], 1)]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/3 order-1 order-md-2"
+    staticClass: "w-full md:w-1/3 order-1 order-md-2 -mt-48 md:-mt-60"
   }, [_c("div", {
     staticClass: "flex flex-col justify-center"
-  }, [_c("h3", {
+  }, [_c("div", {
+    staticClass: "flex justify-center pb-3"
+  }, [_c("img", {
+    staticClass: "rounded-full w-40 h-40 md:w-56 md:h-56",
+    attrs: {
+      src: _vm.profilePhoto,
+      alt: "profile-photo-" + _vm.artist.name
+    }
+  })]), _vm._v(" "), _c("h3", {
     staticClass: "text-2xl font-black tracking-wide text-center"
   }, [_vm._v("\n                        " + _vm._s(_vm.artist.name) + "\n                    ")]), _vm._v(" "), (_vm$profile = _vm.profile) !== null && _vm$profile !== void 0 && _vm$profile.web_url ? _c("p", {
     staticClass: "uppercase text-lg font-medium text-center"
@@ -1590,28 +1726,29 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa-brands fa-square-facebook text-zinc-300 fa-2x hover:text-zinc-500"
   })]) : _vm._e()])])]), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/3 order-3"
-  }, [!_vm.isUserLogged ? _c("div", {
-    staticClass: "flex flex-wrap"
+    staticClass: "w-full md:w-1/3 order-2 order-md-3 md:px-0 mb-5"
   }, [_c("div", {
-    staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pr-3"
+    staticClass: "flex gap-3 justify-center px-10"
+  }, [_c("div", {
+    staticClass: "w-40 md:w-1/2 mb-3 md:mb-0"
   }, [_c("FollowArtistButton", {
-    staticClass: "w-full h-9 md:h-full rounded-md",
+    staticClass: "md:text-xs w-full h-6 md:h-full rounded-xl md:rounded-md md:py-2",
     attrs: {
       artist: _vm.artist
     }
-  })], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pl-3"
-  }, [_c("v-btn", {
-    staticClass: "rounded-md",
-    attrs: {
-      block: "",
-      color: "grey lighten-1"
-    }
-  }, [_vm._v("\n                            enviar mensaje\n                        ")])], 1)]) : _vm._e()])])])]);
+  })], 1), _vm._v(" "), _vm._m(0)])])])])]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "w-40 md:w-1/2 mb-3 md:mb-0"
+  }, [_c("button", {
+    staticClass: "btn btn-primary btn-sm uppercase rounded-xl md:rounded-md w-full h-6 md:h-full md:py-2 text-xxs md:text-xs text-white"
+  }, [_c("span", [_vm._v(" enviar mensaje ")])])]);
+}];
 render._withStripped = true;
 
 
@@ -1639,11 +1776,11 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {
-    staticClass: "w-full border-b pb-4 border-zinc-800"
+    staticClass: "w-full border-b pb-1 pb-md-2 border-zinc-800"
   }, [_c("h2", {
-    staticClass: "text-primary text-2xl leading-5 tracking-widest uppercase text-left"
+    staticClass: "text-primary text-lg md:text-2xl font-bold tracking-widest uppercase text-left"
   }, [_vm.title ? _c("span", [_vm._v(" " + _vm._s(_vm.title) + " ")]) : _c("span", [_vm._v("Mas publicaciones de " + _vm._s((_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name))])])]), _vm._v(" "), _c("div", {
-    staticClass: "py-10"
+    staticClass: "md:py-10"
   }, [_c("LoadingTailwind", {
     directives: [{
       name: "show",
@@ -1655,13 +1792,13 @@ var render = function render() {
       css: "w-full animate-swing-in-top-fwd"
     }
   }), _vm._v(" "), _c("div", {
-    staticClass: "py-10"
+    staticClass: "md:py-10"
   }, [_c("div", {
     staticClass: "flex flex-wrap"
   }, _vm._l(_vm.releases, function (release, index) {
     return _c("CardRelease", {
       key: index,
-      staticClass: "w-full md:w-1/2 pr-4 mb-4 animate-swing-in-top-fwd",
+      staticClass: "w-full md:w-1/2 md:pr-4 mb-4 animate-swing-in-top-fwd",
       attrs: {
         artist: _vm.artist,
         release: release
@@ -1701,7 +1838,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("button", {
-    staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase",
+    staticClass: "btn btn-primary btn-sm text-xxs px-4 uppercase",
     "class": {
       "btn-dark": _vm.isFollowingArtist
     },
@@ -1749,13 +1886,15 @@ var render = function render() {
     }],
     staticClass: "bg-white"
   }, [_c("div", {
-    staticClass: "container-fluid pt-20"
+    staticClass: "container-fluid py-7 py-md-16"
   }, [_c("div", {
-    staticClass: "w-full"
+    staticClass: "w-full md:w-4/5 mx-auto"
+  }, [_c("div", {
+    staticClass: "mx-auto border-b pb-1 pb-md-2 border-zinc-800"
   }, [_c("h2", {
-    staticClass: "text-primary text-2xl leading-5 tracking-widest uppercase text-center"
-  }, [_vm.title ? _c("span", [_vm._v(" " + _vm._s(_vm.title) + " ")]) : _c("span", [_vm._v("Mas obras de " + _vm._s((_vm$user = _vm.user) === null || _vm$user === void 0 ? void 0 : _vm$user.name))])])]), _vm._v(" "), _c("div", {
-    staticClass: "py-10 md:-mr-60"
+    staticClass: "text-primary text-lg md:text-2xl tracking-widest uppercase text-left font-bold"
+  }, [_vm.title ? _c("span", [_vm._v(" " + _vm._s(_vm.title) + " ")]) : _c("span", [_vm._v("Mas obras de " + _vm._s((_vm$user = _vm.user) === null || _vm$user === void 0 ? void 0 : _vm$user.name))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "pt-10 md:-mr-60"
   }, [_c("LoadingTailwind", {
     directives: [{
       name: "show",
@@ -1800,7 +1939,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$getProfilePhoto, _vm$artwork$user, _vm$artwork$price;
+  var _vm$artwork, _vm$artwork$user, _vm$artwork$price;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -1812,53 +1951,50 @@ var render = function render() {
     "class": _vm.classCard
   }, [_vm.routerLink ? _c("router-link", {
     attrs: {
-      to: {
-        name: "showArtwork",
-        params: {
-          id: _vm.artwork.id
-        }
-      }
+      to: _vm.getPathDetailArtwork
     }
   }, [_c("img", {
     staticClass: "object-cover object-center w-full h-72",
+    "class": _vm.classImage,
     attrs: {
-      src: _vm.getPathGallery(_vm.artwork),
+      src: _vm.getPathGallery,
       alt: _vm.artwork.title
     }
   })]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "flex flex-col justify-between space-y-8 bg-gray-50"
   }, [_c("div", {
     staticClass: "space-y-2"
+  }, [_c("div", {
+    staticClass: "w-full px-2"
   }, [_c("h3", {
     staticClass: "text-xl md:text-base xl:text-xl font-semibold tracking-wide text-gray-900 pt-3"
-  }, [_vm._v("\n                    " + _vm._s(_vm.artwork.title) + "\n                ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                        " + _vm._s(_vm.artwork.title) + "\n                    ")]), _vm._v(" "), _c("p", {
     staticClass: "text-primary text-xs"
-  }, [_vm._v("\n                    " + _vm._s(_vm.getDimensions(_vm.artwork)) + "\n                    " + _vm._s(_vm.getCategoryName(_vm.artwork.categories)) + "\n                    " + _vm._s(_vm.getSubCategory(_vm.artwork.labels)) + "\n                ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        " + _vm._s(_vm.getDimensions(_vm.artwork)) + "\n                        " + _vm._s(_vm.getCategoryName(_vm.artwork.categories)) + "\n                        " + _vm._s(_vm.getSubCategory(_vm.artwork.labels)) + "\n                    ")])]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap pb-4 px-2 bottom-0 inset-x-0 absolute"
+  }, [_c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
       value: _vm.showProfile,
       expression: "showProfile"
     }],
-    staticClass: "flex justify-start items-center"
-  }, [_c("img", {
-    staticClass: "img-thumbnail border w-14 h-14 rounded-full",
+    staticClass: "flex justify-end items-center"
+  }, [_c("Avatar", {
     attrs: {
-      src: (_vm$getProfilePhoto = _vm.getProfilePhoto(_vm.artwork.user)) !== null && _vm$getProfilePhoto !== void 0 ? _vm$getProfilePhoto : _vm.getURLDefaultProfilePhoto,
-      alt: "profile-picture"
+      artist: (_vm$artwork = _vm.artwork) === null || _vm$artwork === void 0 ? void 0 : _vm$artwork.user,
+      custom: "border w-12 h-12"
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "flex flex-col pl-2"
   }, [_c("span", {
     staticClass: "py-0"
-  }, [_vm._v("\n                            " + _vm._s((_vm$artwork$user = _vm.artwork.user) === null || _vm$artwork$user === void 0 ? void 0 : _vm$artwork$user.name) + "\n                        ")]), _vm._v(" "), _c("FollowArtistButton", {
-    staticClass: "w-2/4",
+  }, [_vm._v("\n                                " + _vm._s((_vm$artwork$user = _vm.artwork.user) === null || _vm$artwork$user === void 0 ? void 0 : _vm$artwork$user.name) + "\n                            ")]), _vm._v(" "), _c("FollowArtistButton", {
+    staticClass: "w-3/5",
     attrs: {
       artist: _vm.artwork.user
     }
-  })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-wrap pb-4 px-2 bottom-0 inset-x-0 absolute"
-  }, [_c("div", {
+  })], 1)], 1), _vm._v(" "), _c("div", {
     staticClass: "w-full border-t border-gray-800 my-4"
   }), _vm._v(" "), _c("div", {
     staticClass: "w-full flex justify-between items-center"
@@ -7000,6 +7136,44 @@ exports.tns = tns;
 
 /***/ }),
 
+/***/ "./resources/js/components/Avatar.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Avatar.vue ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Avatar.vue?vue&type=template&id=62781b04& */ "./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&");
+/* harmony import */ var _Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Avatar.vue?vue&type=script&lang=js& */ "./resources/js/components/Avatar.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Avatar.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/LoadingTailwind.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/LoadingTailwind.vue ***!
@@ -7684,6 +7858,21 @@ component.options.__file = "resources/js/pages/layouts/MainLayout.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Avatar.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Avatar.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Avatar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/LoadingTailwind.vue?vue&type=script&lang=js&":
 /*!******************************************************************************!*\
   !*** ./resources/js/components/LoadingTailwind.vue?vue&type=script&lang=js& ***!
@@ -7951,6 +8140,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MainLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MainLayout.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/layouts/MainLayout.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MainLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/Avatar.vue?vue&type=template&id=62781b04& ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Avatar.vue?vue&type=template&id=62781b04& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&");
+
 
 /***/ }),
 

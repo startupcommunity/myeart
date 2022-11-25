@@ -1,6 +1,65 @@
 "use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_pages_artwork_ShowArtwork_vue"],{
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Avatar",
+  props: {
+    artist: {
+      type: Object,
+      "default": function _default() {},
+      required: true
+    },
+    defaultClass: {
+      type: String,
+      "default": "border w-10 h-10"
+    },
+    custom: {
+      type: String,
+      "default": ""
+    }
+  },
+  computed: {
+    /**
+     * Devuelve la foto de perfil
+     */
+    profilePhoto: function profilePhoto() {
+      var _this$artist;
+
+      var photo = (_this$artist = this.artist) === null || _this$artist === void 0 ? void 0 : _this$artist.profile_photo; // path por defecto @globalMixin
+
+      if (!photo) return this.getURLDefaultProfilePhoto; // path en el servidor @globalMixin
+
+      return "".concat(this.pathProfilePhoto + photo);
+    },
+
+    /**
+     * Devuelve el path del perfil del artista
+     */
+    getPathProfile: function getPathProfile() {
+      var _this$artist2;
+
+      return {
+        name: "showArtist",
+        params: {
+          id: (_this$artist2 = this.artist) === null || _this$artist2 === void 0 ? void 0 : _this$artist2.id
+        }
+      };
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LoadingTailwind.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LoadingTailwind.vue?vue&type=script&lang=js& ***!
@@ -343,7 +402,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Avatar.vue */ "./resources/js/components/Avatar.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -352,7 +412,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 // vuex
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   props: {
     comment: {
       type: Object,
@@ -363,35 +427,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": function _default() {}
     }
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
     user: "getProfile"
   })), {}, {
+    /**
+     * Devuelve el usuario artista de la obra
+     */
+    artist: function artist() {
+      var _this$comment;
+
+      return (_this$comment = this.comment) === null || _this$comment === void 0 ? void 0 : _this$comment.user;
+    },
+
     /**
      * Devuelve la foto de perfil del usuario
      */
     profilePhoto: function profilePhoto() {
-      var _this$user;
+      var _this$artist;
 
-      if (!((_this$user = this.user) !== null && _this$user !== void 0 && _this$user.profile_photo)) return this.getURLDefaultProfilePhoto;
-      return "".concat(this.pathProfilePhoto + this.user.profile_photo);
+      if (!((_this$artist = this.artist) !== null && _this$artist !== void 0 && _this$artist.profile_photo)) return this.getURLDefaultProfilePhoto;
+      return "".concat(this.pathProfilePhoto + this.artist.profile_photo);
     },
 
     /**
      * Si el artista es el dueño de la obra
      */
     isOwnerArtwork: function isOwnerArtwork() {
-      var _this$artwork, _this$user2;
+      var _this$artwork, _this$user;
 
-      return ((_this$artwork = this.artwork) === null || _this$artwork === void 0 ? void 0 : _this$artwork.user_id) === ((_this$user2 = this.user) === null || _this$user2 === void 0 ? void 0 : _this$user2.id) && !this.answer;
+      return ((_this$artwork = this.artwork) === null || _this$artwork === void 0 ? void 0 : _this$artwork.user_id) === ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id) && !this.answer;
     },
 
     /**
      * Objeto de respuesta al comentario/pregunta
      */
     answer: function answer() {
-      var _this$comment;
+      var _this$comment2;
 
-      return (_this$comment = this.comment) === null || _this$comment === void 0 ? void 0 : _this$comment.answer;
+      return (_this$comment2 = this.comment) === null || _this$comment2 === void 0 ? void 0 : _this$comment2.answer;
     }
   }),
   filters: {
@@ -400,7 +473,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      */
     formatDate: function formatDate(value) {
       if (value) {
-        return new Date(value).toLocaleDateString();
+        var date = new Date(value).toLocaleDateString(); // convertir a dd/mm/yyyy
+
+        var dateParts = date.split("/");
+        return "".concat(dateParts[1], "/").concat(dateParts[0], "/").concat(dateParts[2]);
       }
     }
   }
@@ -853,33 +929,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * Iniciar el carousel
      */
     showTNS: function showTNS() {
+      var countArt = this.userArtworks.length;
       (0,tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)({
         container: "#slider-user-artworks",
         mode: "carousel",
-        speed: 800,
+        center: countArt > 4 ? true : false,
+        speed: 400,
         gutter: 20,
         items: 5,
         autoplay: false,
         mouseDrag: true,
-        autoplayButtonOutput: false,
-        autoplayHoverPause: true,
         lazyload: true,
         controls: false,
         responsive: {
           0: {
             items: 1,
-            edgePadding: 10
-          },
-          500: {
-            items: 2,
-            edgePadding: 30
+            edgePadding: 50
           },
           700: {
             items: 3,
-            edgePadding: 30
-          },
-          900: {
-            items: 4,
             edgePadding: 30
           },
           1200: {
@@ -904,9 +972,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
-/* harmony import */ var _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Avatar.vue */ "./resources/js/components/Avatar.vue");
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+/* harmony import */ var _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -916,12 +985,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    FollowArtistButton: _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    FollowArtistButton: _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   name: "CardArtwork",
-  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       loadLiked: false,
@@ -947,20 +1018,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     classCard: {
       type: String,
       "default": ""
+    },
+    classImage: {
+      type: String,
+      "default": ""
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
     user: "getProfile"
-  })),
-  methods: {
+  })), {}, {
+    /**
+     * devuelve el path del detalle de obra
+     */
+    getPathDetailArtwork: function getPathDetailArtwork() {
+      var _this$artwork;
+
+      return {
+        name: "showArtwork",
+        params: {
+          id: (_this$artwork = this.artwork) === null || _this$artwork === void 0 ? void 0 : _this$artwork.id
+        }
+      };
+    },
+
     /**
      * Path completo de la foto de portada
      */
-    getPathGallery: function getPathGallery(artwork) {
-      var _front_page$;
+    getPathGallery: function getPathGallery() {
+      var _this$artwork2, _front_page$;
 
-      if (!artwork.gallery.length) return this.getURLDefaultFrontArtwork;
-      var front_page = artwork.gallery.filter(function (pic) {
+      var artwork = this.artwork;
+      var gallery = (_this$artwork2 = this.artwork) === null || _this$artwork2 === void 0 ? void 0 : _this$artwork2.gallery;
+      if (!(artwork !== null && artwork !== void 0 && artwork.gallery.length)) return this.getURLDefaultFrontArtwork;
+      var front_page = gallery.filter(function (pic) {
         return pic.front_page === 1;
       });
       return "".concat(this.pathArtworkGallery + ((_front_page$ = front_page[0]) === null || _front_page$ === void 0 ? void 0 : _front_page$.picture));
@@ -970,11 +1060,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * Devuelve el path completo de la foto de perfil del usuario
      */
     getProfilePhoto: function getProfilePhoto() {
-      var user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var _this$artwork3;
+
+      var user = (_this$artwork3 = this.artwork) === null || _this$artwork3 === void 0 ? void 0 : _this$artwork3.user;
       if (!user || !(user !== null && user !== void 0 && user.profile_photo)) return null;
       return "".concat(this.pathProfilePhoto + user.profile_photo);
-    },
-
+    }
+  }),
+  methods: {
     /**
      * Si la obra ha sido likeada para el usuario logueado
      * se muestra en rojo el botón de me gusta
@@ -1297,7 +1390,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         responsive: {
           0: {
             items: 1,
-            edgePadding: 10
+            edgePadding: 30
           },
           500: {
             items: 2,
@@ -1487,6 +1580,40 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("router-link", {
+    attrs: {
+      to: _vm.getPathProfile
+    }
+  }, [_c("img", {
+    staticClass: "rounded-full",
+    "class": _vm.custom || _vm.defaultClass,
+    attrs: {
+      src: _vm.profilePhoto
+    }
+  })]);
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
 
 /***/ }),
 
@@ -1707,9 +1834,9 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "w-full lg:w-[60%]"
   }, [_c("div", {
-    staticClass: "border-b border-zinc-900 pb-5"
+    staticClass: "border-b border-zinc-900 pb-1 pb-md-4"
   }, [_c("h2", {
-    staticClass: "text-primary text-2xl leading-5 tracking-widest uppercase"
+    staticClass: "text-primary text-lg md:text-2xl font-bold leading-5 tracking-widest uppercase"
   }, [_vm._v("\n                            Sobre la obra\n                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "mt-5"
   }, [_c("div", {
@@ -1773,9 +1900,9 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "w-full lg:w-[70%]"
   }, [_c("div", {
-    staticClass: "border-b border-zinc-900 pb-5"
+    staticClass: "border-b border-zinc-900 pb-1 pb-md-4"
   }, [_c("h2", {
-    staticClass: "text-primary text-2xl leading-5 tracking-widest uppercase"
+    staticClass: "text-primary text-lg md:text-2xl font-bold tracking-widest uppercase"
   }, [_vm._v("\n                            Sobre el artista\n                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "mt-5"
   }, [_c("div", {
@@ -1869,7 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$comment$user, _vm$answer, _vm$answer2;
+  var _vm$artist, _vm$answer, _vm$answer2;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -1878,10 +2005,9 @@ var render = function render() {
     staticClass: "flex flex-wrap items-center"
   }, [_c("div", {
     staticClass: "w-full flex justify-start items-center"
-  }, [_c("img", {
-    staticClass: "border w-16 h-16 rounded-full",
+  }, [_c("Avatar", {
     attrs: {
-      src: _vm.profilePhoto
+      artist: _vm.artist
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap items-center ml-2"
@@ -1889,11 +2015,11 @@ var render = function render() {
     staticClass: "w-full"
   }, [_c("span", {
     staticClass: "text-lg font-medium"
-  }, [_vm._v("\n                        " + _vm._s((_vm$comment$user = _vm.comment.user) === null || _vm$comment$user === void 0 ? void 0 : _vm$comment$user.name) + "\n                    ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        " + _vm._s((_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name) + "\n                    ")])]), _vm._v(" "), _c("div", {
     staticClass: "w-full -mt-2"
   }, [_c("span", {
     staticClass: "text-sm font-medium"
-  }, [_vm._v("\n                        " + _vm._s(_vm._f("formatDate")(_vm.comment.created_at)) + "\n                    ")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        " + _vm._s(_vm._f("formatDate")(_vm.comment.created_at)) + "\n                    ")])])])], 1)]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap items-center pt-3"
   }, [_c("div", {
     staticClass: "w-full"
@@ -1948,7 +2074,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("button", {
-    staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase",
+    staticClass: "btn btn-primary btn-sm text-xxs px-4 uppercase",
     "class": {
       "btn-dark": _vm.isFollowingArtist
     },
@@ -2248,13 +2374,15 @@ var render = function render() {
     }],
     staticClass: "bg-white"
   }, [_c("div", {
-    staticClass: "container-fluid pt-20"
+    staticClass: "container-fluid py-7 py-md-16"
   }, [_c("div", {
-    staticClass: "w-full"
+    staticClass: "w-full md:w-4/5 mx-auto"
+  }, [_c("div", {
+    staticClass: "mx-auto border-b pb-1 pb-md-2 border-zinc-800"
   }, [_c("h2", {
-    staticClass: "text-primary text-2xl leading-5 tracking-widest uppercase text-center"
-  }, [_vm.title ? _c("span", [_vm._v(" " + _vm._s(_vm.title) + " ")]) : _c("span", [_vm._v("Mas obras de " + _vm._s((_vm$user = _vm.user) === null || _vm$user === void 0 ? void 0 : _vm$user.name))])])]), _vm._v(" "), _c("div", {
-    staticClass: "py-10 md:-mr-60"
+    staticClass: "text-primary text-lg md:text-2xl tracking-widest uppercase text-left font-bold"
+  }, [_vm.title ? _c("span", [_vm._v(" " + _vm._s(_vm.title) + " ")]) : _c("span", [_vm._v("Mas obras de " + _vm._s((_vm$user = _vm.user) === null || _vm$user === void 0 ? void 0 : _vm$user.name))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "pt-10 md:-mr-60"
   }, [_c("LoadingTailwind", {
     directives: [{
       name: "show",
@@ -2299,7 +2427,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$getProfilePhoto, _vm$artwork$user, _vm$artwork$price;
+  var _vm$artwork, _vm$artwork$user, _vm$artwork$price;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -2311,53 +2439,50 @@ var render = function render() {
     "class": _vm.classCard
   }, [_vm.routerLink ? _c("router-link", {
     attrs: {
-      to: {
-        name: "showArtwork",
-        params: {
-          id: _vm.artwork.id
-        }
-      }
+      to: _vm.getPathDetailArtwork
     }
   }, [_c("img", {
     staticClass: "object-cover object-center w-full h-72",
+    "class": _vm.classImage,
     attrs: {
-      src: _vm.getPathGallery(_vm.artwork),
+      src: _vm.getPathGallery,
       alt: _vm.artwork.title
     }
   })]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "flex flex-col justify-between space-y-8 bg-gray-50"
   }, [_c("div", {
     staticClass: "space-y-2"
+  }, [_c("div", {
+    staticClass: "w-full px-2"
   }, [_c("h3", {
     staticClass: "text-xl md:text-base xl:text-xl font-semibold tracking-wide text-gray-900 pt-3"
-  }, [_vm._v("\n                    " + _vm._s(_vm.artwork.title) + "\n                ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                        " + _vm._s(_vm.artwork.title) + "\n                    ")]), _vm._v(" "), _c("p", {
     staticClass: "text-primary text-xs"
-  }, [_vm._v("\n                    " + _vm._s(_vm.getDimensions(_vm.artwork)) + "\n                    " + _vm._s(_vm.getCategoryName(_vm.artwork.categories)) + "\n                    " + _vm._s(_vm.getSubCategory(_vm.artwork.labels)) + "\n                ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        " + _vm._s(_vm.getDimensions(_vm.artwork)) + "\n                        " + _vm._s(_vm.getCategoryName(_vm.artwork.categories)) + "\n                        " + _vm._s(_vm.getSubCategory(_vm.artwork.labels)) + "\n                    ")])]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap pb-4 px-2 bottom-0 inset-x-0 absolute"
+  }, [_c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
       value: _vm.showProfile,
       expression: "showProfile"
     }],
-    staticClass: "flex justify-start items-center"
-  }, [_c("img", {
-    staticClass: "img-thumbnail border w-14 h-14 rounded-full",
+    staticClass: "flex justify-end items-center"
+  }, [_c("Avatar", {
     attrs: {
-      src: (_vm$getProfilePhoto = _vm.getProfilePhoto(_vm.artwork.user)) !== null && _vm$getProfilePhoto !== void 0 ? _vm$getProfilePhoto : _vm.getURLDefaultProfilePhoto,
-      alt: "profile-picture"
+      artist: (_vm$artwork = _vm.artwork) === null || _vm$artwork === void 0 ? void 0 : _vm$artwork.user,
+      custom: "border w-12 h-12"
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "flex flex-col pl-2"
   }, [_c("span", {
     staticClass: "py-0"
-  }, [_vm._v("\n                            " + _vm._s((_vm$artwork$user = _vm.artwork.user) === null || _vm$artwork$user === void 0 ? void 0 : _vm$artwork$user.name) + "\n                        ")]), _vm._v(" "), _c("FollowArtistButton", {
-    staticClass: "w-2/4",
+  }, [_vm._v("\n                                " + _vm._s((_vm$artwork$user = _vm.artwork.user) === null || _vm$artwork$user === void 0 ? void 0 : _vm$artwork$user.name) + "\n                            ")]), _vm._v(" "), _c("FollowArtistButton", {
+    staticClass: "w-3/5",
     attrs: {
       artist: _vm.artwork.user
     }
-  })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-wrap pb-4 px-2 bottom-0 inset-x-0 absolute"
-  }, [_c("div", {
+  })], 1)], 1), _vm._v(" "), _c("div", {
     staticClass: "w-full border-t border-gray-800 my-4"
   }), _vm._v(" "), _c("div", {
     staticClass: "w-full flex justify-between items-center"
@@ -2537,9 +2662,9 @@ var render = function render() {
     }],
     staticClass: "bg-gray-100"
   }, [_c("div", {
-    staticClass: "container-fluid pt-20"
+    staticClass: "container-fluid py-7 py-md-16"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "py-10 md:-mr-60"
+    staticClass: "pt-10 md:-mr-60"
   }, [_c("LoadingTailwind", {
     directives: [{
       name: "show",
@@ -2571,10 +2696,12 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "w-full"
+    staticClass: "w-full md:w-4/5 mx-auto"
+  }, [_c("div", {
+    staticClass: "w-full mx-auto border-b pb-1 pb-md-2 border-zinc-800"
   }, [_c("h2", {
-    staticClass: "text-primary text-2xl leading-5 tracking-widest uppercase text-center"
-  }, [_vm._v("\n                Otras obras que te pueden interesar\n            ")])]);
+    staticClass: "text-primary text-lg md:text-2xl font-bold tracking-widest uppercase text-left"
+  }, [_vm._v("\n                    Otras obras que te pueden interesar\n                ")])])]);
 }];
 render._withStripped = true;
 
@@ -4012,7 +4139,7 @@ __webpack_require__.r(__webpack_exports__);
  * Lista de palabras prohibidas para comentarios/preguntas/respuestas
  * de la app
  */
-var listDisallowedWords = ["puta", "puto", "putos", "putas", "putita", "putitas", "putito", "putitos", "putazo", "putazos", "putazón", "putazones", "putazónes", "putazón", "putazones", "putazónes", "putazón", "putazones", "putazónes", "culo", "culos", "culito", "culitos", "culazo", "culazos", "culazón", "tetas", "teta", "tetazas", "tetazos", "tetazón", "tetazones", "tetazónes", "verga", "vergas", "vergazo", "vergazos", "vergazón", "vergazones", "vergazónes", "cuca", "cucas", "cucazo", "cucazos", "cucazón", "cucazones", "http", "https", "www", "com", "net", "org", "info", "es", "@", "gmail", "hotmail", "yahoo", "outlook", "live", "facebook", "twitter", "instagram", "youtube", "tiktok", "tik", "tok", "snapchat", "snap", "chat", "twitch", "twitch.tv", "ano", "anos", "anito", "jodete", "muerete", "muerte", "/", "//", "!", "nalgas", "nalguitas", "nalguitos", "nalguita", "nalguito", "nalgón", "nalgones", "nalgónes", "nalgón", "nalgones", "nalgónes", "nalga", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "whatsapp", "whats", "app", "wsp", "wsp.", "wsp:", "wsp/", "wsp//", "telegram", "maricon", "marica", "maricona", "maricones", "marico", "maricos", "homo", "homosexual"];
+var listDisallowedWords = ["puta", "puto", "putos", "putas", "putita", "putitas", "putito", "putitos", "putazo", "putazos", "putazón", "putazones", "putazónes", "putazón", "putazones", "putazónes", "putazón", "putazones", "putazónes", "culo", "culos", "culito", "culitos", "culazo", "culazos", "culazón", "tetas", "teta", "tetazas", "tetazos", "tetazón", "tetazones", "tetazónes", "verga", "vergas", "vergazo", "vergazos", "vergazón", "vergazones", "vergazónes", "cuca", "cucas", "cucazo", "cucazos", "cucazón", "cucazones", "http", "https", "www.", ".com", ".net", ".org", ".info", ".es", "@", "gmail", "hotmail", "yahoo", "outlook", "live", "facebook", "twitter", "instagram", "youtube", "tiktok", "tik", "tok", "snapchat", "snap", "chat", "twitch", "twitch.tv", "ano", "anos", "anito", "jodete", "muerete", "muerte", "/", "//", "!", "nalgas", "nalguitas", "nalguitos", "nalguita", "nalguito", "nalgón", "nalgones", "nalgónes", "nalgón", "nalgones", "nalgónes", "nalga", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "whatsapp", "whats", "app", "wsp", "wsp.", "wsp:", "wsp/", "wsp//", "telegram", "maricon", "marica", "maricona", "maricones", "marico", "maricos", "homo", "homosexual"];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (listDisallowedWords);
 
 /***/ }),
@@ -7698,6 +7825,44 @@ exports.tns = tns;
 
 /***/ }),
 
+/***/ "./resources/js/components/Avatar.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Avatar.vue ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Avatar.vue?vue&type=template&id=62781b04& */ "./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&");
+/* harmony import */ var _Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Avatar.vue?vue&type=script&lang=js& */ "./resources/js/components/Avatar.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Avatar.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/LoadingTailwind.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/LoadingTailwind.vue ***!
@@ -8344,6 +8509,21 @@ component.options.__file = "resources/js/pages/layouts/MainLayout.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Avatar.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Avatar.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Avatar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/LoadingTailwind.vue?vue&type=script&lang=js&":
 /*!******************************************************************************!*\
   !*** ./resources/js/components/LoadingTailwind.vue?vue&type=script&lang=js& ***!
@@ -8596,6 +8776,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MainLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MainLayout.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/layouts/MainLayout.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MainLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/Avatar.vue?vue&type=template&id=62781b04& ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Avatar.vue?vue&type=template&id=62781b04& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&");
+
 
 /***/ }),
 

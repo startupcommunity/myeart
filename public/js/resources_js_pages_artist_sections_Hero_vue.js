@@ -27,15 +27,6 @@ __webpack_require__.r(__webpack_exports__);
     frontPhoto: function frontPhoto() {
       if (!this.artist.front_photo) return "";
       return "url('".concat(this.pathFrontPhoto + this.artist.front_photo, "')");
-    },
-
-    /**
-     * devuelve la Foto de perfil o la default
-     * @pathProfilePhoto: globalMixin
-     */
-    profilePhoto: function profilePhoto() {
-      if (!this.artist.profile_photo) return this.getURLDefaultProfilePhoto;
-      return "".concat(this.pathProfilePhoto + this.artist.profile_photo);
     }
   }
 });
@@ -58,7 +49,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("section", [_c("div", {
-    staticClass: "relative z-[1] h-96 sm:h-[30rem] bg-no-repeat bg-cover bg-center",
+    staticClass: "relative h-72 md:h-[30rem] bg-no-repeat bg-cover bg-center",
     "class": {
       "bg-hero-front-default": !_vm.artist.front_photo
     },
@@ -67,18 +58,8 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "container-fluid py-0 px-4 sm:px-0 absolute -bottom-8 sm:-bottom-12"
-  }, [_c("div", {}, [_c("div", {
-    staticClass: "flex flex-row items-center justify-center sm:justify-between"
-  }, [_c("div", {
-    staticClass: "relative w-full flex justify-center px-2 sm:px-0"
-  }, [_c("img", {
-    staticClass: "rounded-full w-48 h-48 sm:w-56 sm:h-56",
-    attrs: {
-      src: _vm.profilePhoto,
-      alt: "profile-photo-" + _vm.artist.name
-    }
-  })])])])]), _vm._v(" "), _vm.artist.front_photo ? _c("div", {
-    staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-gray-900 bg-opacity-60"
+  }), _vm._v(" "), _vm.artist.front_photo ? _c("div", {
+    staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-zinc-900 md:bg-opacity-60"
   }) : _vm._e()])]);
 };
 

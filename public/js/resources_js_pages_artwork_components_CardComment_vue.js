@@ -1,6 +1,65 @@
 "use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_pages_artwork_components_CardComment_vue"],{
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Avatar",
+  props: {
+    artist: {
+      type: Object,
+      "default": function _default() {},
+      required: true
+    },
+    defaultClass: {
+      type: String,
+      "default": "border w-10 h-10"
+    },
+    custom: {
+      type: String,
+      "default": ""
+    }
+  },
+  computed: {
+    /**
+     * Devuelve la foto de perfil
+     */
+    profilePhoto: function profilePhoto() {
+      var _this$artist;
+
+      var photo = (_this$artist = this.artist) === null || _this$artist === void 0 ? void 0 : _this$artist.profile_photo; // path por defecto @globalMixin
+
+      if (!photo) return this.getURLDefaultProfilePhoto; // path en el servidor @globalMixin
+
+      return "".concat(this.pathProfilePhoto + photo);
+    },
+
+    /**
+     * Devuelve el path del perfil del artista
+     */
+    getPathProfile: function getPathProfile() {
+      var _this$artist2;
+
+      return {
+        name: "showArtist",
+        params: {
+          id: (_this$artist2 = this.artist) === null || _this$artist2 === void 0 ? void 0 : _this$artist2.id
+        }
+      };
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/CardComment.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/CardComment.vue?vue&type=script&lang=js& ***!
@@ -11,7 +70,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Avatar.vue */ "./resources/js/components/Avatar.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -20,7 +80,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 // vuex
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   props: {
     comment: {
       type: Object,
@@ -31,35 +95,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": function _default() {}
     }
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
     user: "getProfile"
   })), {}, {
+    /**
+     * Devuelve el usuario artista de la obra
+     */
+    artist: function artist() {
+      var _this$comment;
+
+      return (_this$comment = this.comment) === null || _this$comment === void 0 ? void 0 : _this$comment.user;
+    },
+
     /**
      * Devuelve la foto de perfil del usuario
      */
     profilePhoto: function profilePhoto() {
-      var _this$user;
+      var _this$artist;
 
-      if (!((_this$user = this.user) !== null && _this$user !== void 0 && _this$user.profile_photo)) return this.getURLDefaultProfilePhoto;
-      return "".concat(this.pathProfilePhoto + this.user.profile_photo);
+      if (!((_this$artist = this.artist) !== null && _this$artist !== void 0 && _this$artist.profile_photo)) return this.getURLDefaultProfilePhoto;
+      return "".concat(this.pathProfilePhoto + this.artist.profile_photo);
     },
 
     /**
      * Si el artista es el dueño de la obra
      */
     isOwnerArtwork: function isOwnerArtwork() {
-      var _this$artwork, _this$user2;
+      var _this$artwork, _this$user;
 
-      return ((_this$artwork = this.artwork) === null || _this$artwork === void 0 ? void 0 : _this$artwork.user_id) === ((_this$user2 = this.user) === null || _this$user2 === void 0 ? void 0 : _this$user2.id) && !this.answer;
+      return ((_this$artwork = this.artwork) === null || _this$artwork === void 0 ? void 0 : _this$artwork.user_id) === ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id) && !this.answer;
     },
 
     /**
      * Objeto de respuesta al comentario/pregunta
      */
     answer: function answer() {
-      var _this$comment;
+      var _this$comment2;
 
-      return (_this$comment = this.comment) === null || _this$comment === void 0 ? void 0 : _this$comment.answer;
+      return (_this$comment2 = this.comment) === null || _this$comment2 === void 0 ? void 0 : _this$comment2.answer;
     }
   }),
   filters: {
@@ -68,11 +141,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      */
     formatDate: function formatDate(value) {
       if (value) {
-        return new Date(value).toLocaleDateString();
+        var date = new Date(value).toLocaleDateString(); // convertir a dd/mm/yyyy
+
+        var dateParts = date.split("/");
+        return "".concat(dateParts[1], "/").concat(dateParts[0], "/").concat(dateParts[2]);
       }
     }
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("router-link", {
+    attrs: {
+      to: _vm.getPathProfile
+    }
+  }, [_c("img", {
+    staticClass: "rounded-full",
+    "class": _vm.custom || _vm.defaultClass,
+    attrs: {
+      src: _vm.profilePhoto
+    }
+  })]);
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
 
 /***/ }),
 
@@ -88,7 +198,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$comment$user, _vm$answer, _vm$answer2;
+  var _vm$artist, _vm$answer, _vm$answer2;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -97,10 +207,9 @@ var render = function render() {
     staticClass: "flex flex-wrap items-center"
   }, [_c("div", {
     staticClass: "w-full flex justify-start items-center"
-  }, [_c("img", {
-    staticClass: "border w-16 h-16 rounded-full",
+  }, [_c("Avatar", {
     attrs: {
-      src: _vm.profilePhoto
+      artist: _vm.artist
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap items-center ml-2"
@@ -108,11 +217,11 @@ var render = function render() {
     staticClass: "w-full"
   }, [_c("span", {
     staticClass: "text-lg font-medium"
-  }, [_vm._v("\n                        " + _vm._s((_vm$comment$user = _vm.comment.user) === null || _vm$comment$user === void 0 ? void 0 : _vm$comment$user.name) + "\n                    ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        " + _vm._s((_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name) + "\n                    ")])]), _vm._v(" "), _c("div", {
     staticClass: "w-full -mt-2"
   }, [_c("span", {
     staticClass: "text-sm font-medium"
-  }, [_vm._v("\n                        " + _vm._s(_vm._f("formatDate")(_vm.comment.created_at)) + "\n                    ")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        " + _vm._s(_vm._f("formatDate")(_vm.comment.created_at)) + "\n                    ")])])])], 1)]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap items-center pt-3"
   }, [_c("div", {
     staticClass: "w-full"
@@ -148,6 +257,44 @@ var staticRenderFns = [function () {
 }];
 render._withStripped = true;
 
+
+/***/ }),
+
+/***/ "./resources/js/components/Avatar.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Avatar.vue ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Avatar.vue?vue&type=template&id=62781b04& */ "./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&");
+/* harmony import */ var _Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Avatar.vue?vue&type=script&lang=js& */ "./resources/js/components/Avatar.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Avatar.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
 
@@ -189,6 +336,21 @@ component.options.__file = "resources/js/pages/artwork/components/CardComment.vu
 
 /***/ }),
 
+/***/ "./resources/js/components/Avatar.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Avatar.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Avatar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/pages/artwork/components/CardComment.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************!*\
   !*** ./resources/js/pages/artwork/components/CardComment.vue?vue&type=script&lang=js& ***!
@@ -201,6 +363,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardComment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CardComment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/CardComment.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardComment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/Avatar.vue?vue&type=template&id=62781b04& ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Avatar_vue_vue_type_template_id_62781b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Avatar.vue?vue&type=template&id=62781b04& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&");
+
 
 /***/ }),
 

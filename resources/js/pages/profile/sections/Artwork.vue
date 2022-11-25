@@ -83,15 +83,17 @@
                         v-else
                     >
                         <div class="rounded-md shadow-md w-full">
-                            <img
-                                :src="setPathGallery(art)"
-                                :alt="art.title"
-                                class="object-cover object-center w-full h-72"
-                            />
+                            <router-link :to="getPathDetailArtwork(art.id)">
+                                <img
+                                    :src="setPathGallery(art)"
+                                    :alt="art.title"
+                                    class="object-cover object-center w-full h-72"
+                                />
+                            </router-link>
                             <div
                                 class="flex flex-col justify-between space-y-8 bg-gray-50"
                             >
-                                <div class="space-y-2">
+                                <div class="space-y-2 px-2">
                                     <h3
                                         class="text-xl font-semibold tracking-wide text-gray-900 pt-3"
                                     >
@@ -110,18 +112,13 @@
                                     </p>
                                 </div>
                                 <div
-                                    class="flex flex-wrap py-4 justify-between items-center"
+                                    class="flex flex-wrap py-4 justify-between items-center px-2"
                                 >
                                     <div class="w-full xl:w-1/2 mb-4 xl:pr-2">
                                         <router-link
                                             class="uppercase font-bold tracking-wide border-[1.5px] border-gray-900 text-center px-9 h-11 flex min-w-full max-w-none justify-center items-center hover:animate-bg-gray-light text-black rounded-sm"
                                             id="btn-edit"
-                                            :to="{
-                                                name: 'editArtwork',
-                                                params: {
-                                                    id: art.id,
-                                                },
-                                            }"
+                                            :to="getPathEditArtwork(art.id)"
                                         >
                                             Editar
                                         </router-link>
@@ -389,6 +386,26 @@ export default {
             const width = artwork.width ?? 0;
             const large = artwork.large ?? 0;
             return `${width + "X" + large + " " + this.artSize}`;
+        },
+
+        /**
+         * Devuelve el path del detalle de la obra
+         */
+        getPathDetailArtwork(id) {
+            return {
+                name: "showArtwork",
+                params: { id },
+            };
+        },
+
+        /**
+         * Devuelve el path paras editar la obra
+         */
+        getPathEditArtwork(id) {
+            return {
+                name: "editArtwork",
+                params: { id },
+            };
         },
     },
     watch: {

@@ -189,9 +189,9 @@
             <div class="container pb-20">
                 <div class="flex flex-wrap">
                     <div class="w-full lg:w-[60%]">
-                        <div class="border-b border-zinc-900 pb-5">
+                        <div class="border-b border-zinc-900 pb-1 pb-md-4">
                             <h2
-                                class="text-primary text-2xl leading-5 tracking-widest uppercase"
+                                class="text-primary text-lg md:text-2xl font-bold leading-5 tracking-widest uppercase"
                             >
                                 Sobre la obra
                             </h2>
@@ -332,9 +332,9 @@
             <div class="container py-20">
                 <div class="flex flex-wrap">
                     <div class="w-full lg:w-[70%]">
-                        <div class="border-b border-zinc-900 pb-5">
+                        <div class="border-b border-zinc-900 pb-1 pb-md-4">
                             <h2
-                                class="text-primary text-2xl leading-5 tracking-widest uppercase"
+                                class="text-primary text-lg md:text-2xl font-bold tracking-widest uppercase"
                             >
                                 Sobre el artista
                             </h2>

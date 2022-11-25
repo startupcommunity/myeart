@@ -1,20 +1,17 @@
 <template>
     <div class="overflow-hidden">
-        <div
-            class="flex flex-wrap items-start"
-        >
+        <div class="flex flex-wrap items-start">
             <div class="w-full">
                 <div class="flex justify-between items-center py-2">
                     <div class="flex flex-row justify-start items-center">
-                        <img
-                            :src="profilePhoto"
-                            class="border w-10 h-10 rounded-full"
-                        />
+                        <Avatar :artist="artist" />
                         <div class="mt-4 ml-2">
                             <p class="font-medium text-gray-900 text-xs">
                                 {{ artist?.name }}
                                 <br />
-                                <span class="text-gray-400">Museo {{ release?.museum }} </span>
+                                <span class="text-gray-400"
+                                    >Museo {{ release?.museum }}
+                                </span>
                             </p>
                         </div>
                     </div>
@@ -50,10 +47,18 @@
                         </button>
                     </div>
                     <div class="flex justify-start items-center gap-1">
-                        <i class="fa-solid fa-circle super-small text-app-hashtag"></i>
-                        <i class="fa-solid fa-circle super-small text-gray-400"></i>
-                        <i class="fa-solid fa-circle super-small text-gray-400"></i>
-                        <i class="fa-solid fa-circle super-small text-gray-400"></i>
+                        <i
+                            class="fa-solid fa-circle super-small text-app-hashtag"
+                        ></i>
+                        <i
+                            class="fa-solid fa-circle super-small text-gray-400"
+                        ></i>
+                        <i
+                            class="fa-solid fa-circle super-small text-gray-400"
+                        ></i>
+                        <i
+                            class="fa-solid fa-circle super-small text-gray-400"
+                        ></i>
                     </div>
                     <div>
                         <button>
@@ -80,7 +85,9 @@
     </div>
 </template>
 <script>
+import Avatar from "../../../components/Avatar.vue";
 export default {
+    components: { Avatar },
     name: "CardEvent",
     props: {
         release: {

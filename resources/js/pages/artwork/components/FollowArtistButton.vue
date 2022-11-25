@@ -1,6 +1,6 @@
 <template>
     <button
-        class="btn btn-primary btn-sm text-xs px-4 uppercase"
+        class="btn btn-primary btn-sm text-xxs px-4 uppercase"
         @click.stop="followArtist()"
         :disabled="!canFollowArtist || loadFollow"
         :class="{ 'btn-dark': isFollowingArtist }"
@@ -8,11 +8,6 @@
         <span v-if="isFollowingArtist">Dejar de seguir</span>
         <span v-else>Seguir</span>
     </button>
-    <!-- <loading-overlay
-            :active="loadFollow"
-            :is-full-page="true"
-            loader="bars"
-        /> -->
 </template>
 <script>
 import { mapGetters } from "vuex";

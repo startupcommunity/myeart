@@ -161,15 +161,15 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex flex-wrap items-start hover:animate-shadow-drop-center"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "px-6 w-full md:w-1/2"
+    staticClass: "md:px-6 w-full md:w-1/2"
   }, [_c("h3", {
     staticClass: "text-2xl text-zinc-900 font-semibold"
-  }, [_vm._v("\n                Exposición de arte: Cubismo 2022\n            ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                Exposición de arte: Cubismo 2022\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "leading-relaxed text-xl text-zinc-500"
-  }, [_vm._v("\n                22 Junio 2022\n            ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                22 Junio 2022\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "leading-relaxed text-xl text-zinc-500"
-  }, [_vm._v("\n                21:00 hr.\n            ")]), _vm._v(" "), _c("p", {
-    staticClass: "leading-relaxed text-xl text-zinc-500"
+  }, [_vm._v("\n                21:00 hr.\n            ")]), _vm._v(" "), _c("div", {
+    staticClass: "leading-relaxed text-xl text-zinc-500 mb-5"
   }, [_vm._v("\n                Museo del Prado. Madrid\n            ")]), _vm._v(" "), _c("v-btn", {
     staticClass: "rounded",
     attrs: {
@@ -190,7 +190,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "w-full md:w-1/2 h-60 md:h-96"
   }, [_c("img", {
-    staticClass: "w-full h-full object-cover object-center rounded-xl",
+    staticClass: "w-full h-full object-cover object-center rounded-md md:rounded-xl",
     attrs: {
       src: "/img/events/default-event.webp",
       alt: "event"
@@ -224,11 +224,11 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {
-    staticClass: "w-full border-b pb-4 border-zinc-800"
+    staticClass: "w-full border-b pb-1 pb-md-2 border-zinc-800"
   }, [_c("h2", {
-    staticClass: "text-primary text-2xl leading-5 tracking-widest uppercase text-left"
+    staticClass: "text-primary text-lg md:text-2xl font-bold tracking-widest uppercase text-left"
   }, [_vm.title ? _c("span", [_vm._v(" " + _vm._s(_vm.title) + " ")]) : _c("span", [_vm._v("Mas eventos de " + _vm._s((_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name))])])]), _vm._v(" "), _c("div", {
-    staticClass: "py-10"
+    staticClass: "pt-10"
   }, [_c("LoadingTailwind", {
     directives: [{
       name: "show",
@@ -240,19 +240,19 @@ var render = function render() {
       css: "w-full animate-swing-in-top-fwd"
     }
   }), _vm._v(" "), _c("div", {
-    staticClass: "py-10"
+    staticClass: "md:py-10"
   }, [_c("div", {
     staticClass: "flex flex-wrap animate-swing-in-top-fwd"
   }, [_c("CardEvent", {
     key: "1",
-    staticClass: "w-full md:w-1/2 pr-4 mb-4",
+    staticClass: "w-full md:w-1/2 md:pr-4 mb-5",
     attrs: {
       event: {},
       artist: _vm.artist
     }
   }), _vm._v(" "), _c("CardEvent", {
     key: "2",
-    staticClass: "w-full md:w-1/2 mb-4",
+    staticClass: "w-full md:w-1/2 mb-5",
     attrs: {
       event: {},
       artist: _vm.artist

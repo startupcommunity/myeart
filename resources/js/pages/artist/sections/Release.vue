@@ -1,23 +1,23 @@
 <template>
     <section class="bg-white">
         <div class="container">
-            <div class="w-full border-b pb-4 border-zinc-800">
+            <div class="w-full border-b pb-1 pb-md-2 border-zinc-800">
                 <h2
-                    class="text-primary text-2xl leading-5 tracking-widest uppercase text-left"
+                    class="text-primary text-lg md:text-2xl font-bold tracking-widest uppercase text-left"
                 >
                     <span v-if="title"> {{ title }} </span>
                     <span v-else>Mas publicaciones de {{ artist?.name }}</span>
                 </h2>
             </div>
-            <div class="py-10">
+            <div class="md:py-10">
                 <LoadingTailwind
                     v-show="loading"
                     css="w-full animate-swing-in-top-fwd"
                 />
-                <div class="py-10">
+                <div class="md:py-10">
                     <div class="flex flex-wrap">
                         <CardRelease
-                            class="w-full md:w-1/2 pr-4 mb-4 animate-swing-in-top-fwd"
+                            class="w-full md:w-1/2 md:pr-4 mb-4 animate-swing-in-top-fwd"
                             v-for="(release, index) in releases"
                             :artist="artist"
                             :key="index"

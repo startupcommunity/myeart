@@ -1,14 +1,18 @@
 <template>
     <section class="bg-gray-100" v-show="loadComponent">
-        <div class="container-fluid pt-20">
-            <div class="w-full">
-                <h2
-                    class="text-primary text-2xl leading-5 tracking-widest uppercase text-center"
+        <div class="container-fluid py-7 py-md-16">
+            <div class="w-full md:w-4/5 mx-auto">
+                <div
+                    class="w-full mx-auto border-b pb-1 pb-md-2 border-zinc-800"
                 >
-                    Otras obras que te pueden interesar
-                </h2>
+                    <h2
+                        class="text-primary text-lg md:text-2xl font-bold tracking-widest uppercase text-left"
+                    >
+                        Otras obras que te pueden interesar
+                    </h2>
+                </div>
             </div>
-            <div class="py-10 md:-mr-60">
+            <div class="pt-10 md:-mr-60">
                 <LoadingTailwind
                     v-show="loading"
                     css="w-full animate-swing-in-top-fwd"
@@ -107,7 +111,7 @@ export default {
                 responsive: {
                     0: {
                         items: 1,
-                        edgePadding: 10,
+                        edgePadding: 30,
                     },
                     500: {
                         items: 2,

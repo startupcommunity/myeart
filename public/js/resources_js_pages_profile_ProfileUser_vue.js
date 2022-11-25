@@ -1442,6 +1442,30 @@ var counterArtworks = 4;
       var width = (_artwork$width = artwork.width) !== null && _artwork$width !== void 0 ? _artwork$width : 0;
       var large = (_artwork$large = artwork.large) !== null && _artwork$large !== void 0 ? _artwork$large : 0;
       return "".concat(width + "X" + large + " " + this.artSize);
+    },
+
+    /**
+     * Devuelve el path del detalle de la obra
+     */
+    getPathDetailArtwork: function getPathDetailArtwork(id) {
+      return {
+        name: "showArtwork",
+        params: {
+          id: id
+        }
+      };
+    },
+
+    /**
+     * Devuelve el path paras editar la obra
+     */
+    getPathEditArtwork: function getPathEditArtwork(id) {
+      return {
+        name: "editArtwork",
+        params: {
+          id: id
+        }
+      };
     }
   },
   watch: {
@@ -2298,7 +2322,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("button", {
-    staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase",
+    staticClass: "btn btn-primary btn-sm text-xxs px-4 uppercase",
     "class": {
       "btn-dark": _vm.isFollowingArtist
     },
@@ -3698,16 +3722,20 @@ var render = function render() {
       "class": index % 2 == 0 ? "sm:pr-8" : ""
     }, [_c("div", {
       staticClass: "rounded-md shadow-md w-full"
+    }, [_c("router-link", {
+      attrs: {
+        to: _vm.getPathDetailArtwork(art.id)
+      }
     }, [_c("img", {
       staticClass: "object-cover object-center w-full h-72",
       attrs: {
         src: _vm.setPathGallery(art),
         alt: art.title
       }
-    }), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "flex flex-col justify-between space-y-8 bg-gray-50"
     }, [_c("div", {
-      staticClass: "space-y-2"
+      staticClass: "space-y-2 px-2"
     }, [_c("h3", {
       staticClass: "text-xl font-semibold tracking-wide text-gray-900 pt-3"
     }, [_vm._v("\n                                    " + _vm._s(art.title) + "\n                                ")]), _vm._v(" "), _c("p", {
@@ -3717,19 +3745,14 @@ var render = function render() {
     }), _vm._v(" "), _c("p", {
       staticClass: "text-gray-900"
     }, [_vm._v("\n                                    " + _vm._s((_art$price = art.price) !== null && _art$price !== void 0 ? _art$price : 0) + " " + _vm._s(_vm.symbol) + "\n                                ")])]), _vm._v(" "), _c("div", {
-      staticClass: "flex flex-wrap py-4 justify-between items-center"
+      staticClass: "flex flex-wrap py-4 justify-between items-center px-2"
     }, [_c("div", {
       staticClass: "w-full xl:w-1/2 mb-4 xl:pr-2"
     }, [_c("router-link", {
       staticClass: "uppercase font-bold tracking-wide border-[1.5px] border-gray-900 text-center px-9 h-11 flex min-w-full max-w-none justify-center items-center hover:animate-bg-gray-light text-black rounded-sm",
       attrs: {
         id: "btn-edit",
-        to: {
-          name: "editArtwork",
-          params: {
-            id: art.id
-          }
-        }
+        to: _vm.getPathEditArtwork(art.id)
       }
     }, [_vm._v("\n                                        Editar\n                                    ")])], 1), _vm._v(" "), _c("div", {
       staticClass: "w-full xl:w-1/2 mb-4 xl:pl-2"
@@ -3746,7 +3769,7 @@ var render = function render() {
           return _vm.deleteArtwork(art.id);
         }
       }
-    }, [_vm._v("\n                                        Eliminar\n                                    ")])], 1)])])])]);
+    }, [_vm._v("\n                                        Eliminar\n                                    ")])], 1)])])], 1)]);
   }), _vm._v(" "), _vm.remainingArtworks.length ? _c("div", {
     staticClass: "w-full text-center"
   }, [_c("button", {

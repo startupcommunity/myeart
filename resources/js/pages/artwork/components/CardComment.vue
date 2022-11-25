@@ -2,14 +2,11 @@
     <div>
         <div class="flex flex-wrap items-center">
             <div class="w-full flex justify-start items-center">
-                <img
-                    :src="profilePhoto"
-                    class="border w-16 h-16 rounded-full"
-                />
+                <Avatar :artist="artist"/>
                 <div class="flex flex-wrap items-center ml-2">
                     <div class="w-full">
                         <span class="text-lg font-medium">
-                            {{ comment.user?.name }}
+                            {{ artist?.name }}
                         </span>
                     </div>
                     <div class="w-full -mt-2">
@@ -55,8 +52,10 @@
 <script>
 // vuex
 import { mapGetters } from "vuex";
+import Avatar from "../../../components/Avatar.vue";
 
 export default {
+    components: { Avatar },
     props: {
         comment: {
             type: Object,
@@ -73,13 +72,20 @@ export default {
         }),
 
         /**
+         * Devuelve el usuario artista de la obra
+         */
+        artist() {
+            return this.comment?.user;
+        },
+
+        /**
          * Devuelve la foto de perfil del usuario
          */
         profilePhoto() {
-            if (!this.user?.profile_photo)
+            if (!this.artist?.profile_photo)
                 return this.getURLDefaultProfilePhoto;
 
-            return `${this.pathProfilePhoto + this.user.profile_photo}`;
+            return `${this.pathProfilePhoto + this.artist.profile_photo}`;
         },
 
         /**
@@ -102,7 +108,11 @@ export default {
          */
         formatDate(value) {
             if (value) {
-                return new Date(value).toLocaleDateString();
+                const date = new Date(value).toLocaleDateString();
+
+                // convertir a dd/mm/yyyy
+                const dateParts = date.split("/");
+                return `${dateParts[1]}/${dateParts[0]}/${dateParts[2]}`;
             }
         },
     },

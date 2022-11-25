@@ -57,15 +57,15 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex flex-wrap items-start hover:animate-shadow-drop-center"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "px-6 w-full md:w-1/2"
+    staticClass: "md:px-6 w-full md:w-1/2"
   }, [_c("h3", {
     staticClass: "text-2xl text-zinc-900 font-semibold"
-  }, [_vm._v("\n                Exposición de arte: Cubismo 2022\n            ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                Exposición de arte: Cubismo 2022\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "leading-relaxed text-xl text-zinc-500"
-  }, [_vm._v("\n                22 Junio 2022\n            ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                22 Junio 2022\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "leading-relaxed text-xl text-zinc-500"
-  }, [_vm._v("\n                21:00 hr.\n            ")]), _vm._v(" "), _c("p", {
-    staticClass: "leading-relaxed text-xl text-zinc-500"
+  }, [_vm._v("\n                21:00 hr.\n            ")]), _vm._v(" "), _c("div", {
+    staticClass: "leading-relaxed text-xl text-zinc-500 mb-5"
   }, [_vm._v("\n                Museo del Prado. Madrid\n            ")]), _vm._v(" "), _c("v-btn", {
     staticClass: "rounded",
     attrs: {
@@ -86,7 +86,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "w-full md:w-1/2 h-60 md:h-96"
   }, [_c("img", {
-    staticClass: "w-full h-full object-cover object-center rounded-xl",
+    staticClass: "w-full h-full object-cover object-center rounded-md md:rounded-xl",
     attrs: {
       src: "/img/events/default-event.webp",
       alt: "event"

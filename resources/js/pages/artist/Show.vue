@@ -16,7 +16,7 @@
         <!-- <Blog :artist="artist" title="Mis blog" /> -->
 
         <!-- events -->
-        <EventSection :artist="artist" title="Mis eventos" />
+        <EventSection :artist="artist" title="Eventos del artista" />
 
         <!-- publications -->
         <Release :artist="artist" title="Publicaciones del artista" />

@@ -50,6 +50,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this$user, _this$artist;
 
       return ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id) === ((_this$artist = this.artist) === null || _this$artist === void 0 ? void 0 : _this$artist.id);
+    },
+
+    /**
+     * devuelve la Foto de perfil o la default
+     * @pathProfilePhoto: globalMixin
+     */
+    profilePhoto: function profilePhoto() {
+      var _this$artist2, _this$artist3;
+
+      if (!((_this$artist2 = this.artist) !== null && _this$artist2 !== void 0 && _this$artist2.profile_photo)) return this.getURLDefaultProfilePhoto;
+      return "".concat(this.pathProfilePhoto + ((_this$artist3 = this.artist) === null || _this$artist3 === void 0 ? void 0 : _this$artist3.profile_photo));
+    },
+
+    /**
+     * devuelve el path del perfil del usuario
+     */
+    getPathProfile: function getPathProfile() {
+      return {
+        name: "userProfile",
+        params: {
+          id: this.artist.id
+        }
+      };
     }
   }),
   filters: {
@@ -184,64 +207,82 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("section", {
-    staticClass: "bg-white"
+    staticClass: "bg-white border-gray-900 rounded-t-3xl -mt-10 sm:rounded-t-none relative"
   }, [_c("div", {
-    staticClass: "container py-16"
+    staticClass: "container pt-16 pb-10"
   }, [_c("div", {
     staticClass: "flex flex-wrap justify-center items-start"
   }, [_c("div", {
-    staticClass: "w-full md:w-1/3 order-2 order-md-1"
+    staticClass: "w-full md:w-1/3 order-3 order-md-1"
   }, [_c("div", {
-    staticClass: "flex gap-4 justify-between"
+    staticClass: "flex gap-4 justify-between px-10 px-md-0"
   }, [_c("div", {
     staticClass: "border-b pb-2 border-gray-400 text-center"
   }, [_c("div", {
     staticClass: "text-2xl font-bold"
   }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.followers_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
-    staticClass: "font-bold text-base text-primary uppercase"
+    staticClass: "font-bold text-xs md:text-base text-primary uppercase"
   }, [_vm._v("\n                            Seguidores\n                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "border-b pb-2 border-gray-400 text-center"
   }, [_c("div", {
     staticClass: "text-2xl font-bold"
   }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.following_artists_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
-    staticClass: "font-bold text-base text-primary uppercase"
+    staticClass: "font-bold text-xs md:text-base text-primary uppercase"
   }, [_vm._v("\n                            Seguidos\n                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "border-b pb-2 border-gray-400 text-center"
   }, [_c("div", {
     staticClass: "text-2xl font-bold"
   }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.artworks_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
-    staticClass: "font-bold text-base text-primary uppercase"
+    staticClass: "font-bold text-xs md:text-base text-primary uppercase"
   }, [_vm._v("\n                            Obras\n                        ")])])]), _vm._v(" "), _vm.isUserLogged ? _c("div", {
-    staticClass: "flex flex-wrap mt-7"
+    staticClass: "flex justify-between gap-3 px-10 px-md-0 mt-5 md:mt-7"
   }, [_c("div", {
-    staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pr-3"
+    staticClass: "w-1/2"
   }, [_c("v-btn", {
-    staticClass: "rounded-md",
+    staticClass: "rounded-md hidden md:block",
     attrs: {
       outlined: "",
       block: "",
       color: "#B2794C"
     }
+  }, [_vm._v("\n                            Ir a mi blog\n                        ")]), _vm._v(" "), _c("v-btn", {
+    staticClass: "rounded-md block md:hidden",
+    attrs: {
+      outlined: "",
+      small: "",
+      color: "#B2794C"
+    }
   }, [_vm._v("\n                            Ir a mi blog\n                        ")])], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pl-3"
+    staticClass: "w-1/2"
   }, [_c("v-btn", {
-    staticClass: "rounded-md",
+    staticClass: "rounded-md hidden md:flex",
     attrs: {
       outlined: "",
       block: "",
       color: "#B2794C",
-      to: {
-        name: "userProfile",
-        params: {
-          id: _vm.artist.id
-        }
-      }
+      to: _vm.getPathProfile
+    }
+  }, [_vm._v("\n                            Ir a mi post\n                        ")]), _vm._v(" "), _c("v-btn", {
+    staticClass: "rounded-md flex md:hidden",
+    attrs: {
+      outlined: "",
+      small: "",
+      color: "#B2794C",
+      to: _vm.getPathProfile
     }
   }, [_vm._v("\n                            Ir a mi post\n                        ")])], 1)]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/3 order-1 order-md-2"
+    staticClass: "w-full md:w-1/3 order-1 order-md-2 -mt-48 md:-mt-60"
   }, [_c("div", {
     staticClass: "flex flex-col justify-center"
-  }, [_c("h3", {
+  }, [_c("div", {
+    staticClass: "flex justify-center pb-3"
+  }, [_c("img", {
+    staticClass: "rounded-full w-40 h-40 md:w-56 md:h-56",
+    attrs: {
+      src: _vm.profilePhoto,
+      alt: "profile-photo-" + _vm.artist.name
+    }
+  })]), _vm._v(" "), _c("h3", {
     staticClass: "text-2xl font-black tracking-wide text-center"
   }, [_vm._v("\n                        " + _vm._s(_vm.artist.name) + "\n                    ")]), _vm._v(" "), (_vm$profile = _vm.profile) !== null && _vm$profile !== void 0 && _vm$profile.web_url ? _c("p", {
     staticClass: "uppercase text-lg font-medium text-center"
@@ -288,28 +329,29 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa-brands fa-square-facebook text-zinc-300 fa-2x hover:text-zinc-500"
   })]) : _vm._e()])])]), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/3 order-3"
-  }, [!_vm.isUserLogged ? _c("div", {
-    staticClass: "flex flex-wrap"
+    staticClass: "w-full md:w-1/3 order-2 order-md-3 md:px-0 mb-5"
   }, [_c("div", {
-    staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pr-3"
+    staticClass: "flex gap-3 justify-center px-10"
+  }, [_c("div", {
+    staticClass: "w-40 md:w-1/2 mb-3 md:mb-0"
   }, [_c("FollowArtistButton", {
-    staticClass: "w-full h-9 md:h-full rounded-md",
+    staticClass: "md:text-xs w-full h-6 md:h-full rounded-xl md:rounded-md md:py-2",
     attrs: {
       artist: _vm.artist
     }
-  })], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-full md:w-1/2 mb-3 md:mb-0 md:pl-3"
-  }, [_c("v-btn", {
-    staticClass: "rounded-md",
-    attrs: {
-      block: "",
-      color: "grey lighten-1"
-    }
-  }, [_vm._v("\n                            enviar mensaje\n                        ")])], 1)]) : _vm._e()])])])]);
+  })], 1), _vm._v(" "), _vm._m(0)])])])])]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "w-40 md:w-1/2 mb-3 md:mb-0"
+  }, [_c("button", {
+    staticClass: "btn btn-primary btn-sm uppercase rounded-xl md:rounded-md w-full h-6 md:h-full md:py-2 text-xxs md:text-xs text-white"
+  }, [_c("span", [_vm._v(" enviar mensaje ")])])]);
+}];
 render._withStripped = true;
 
 
@@ -331,7 +373,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("button", {
-    staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase",
+    staticClass: "btn btn-primary btn-sm text-xxs px-4 uppercase",
     "class": {
       "btn-dark": _vm.isFollowingArtist
     },

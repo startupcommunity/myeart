@@ -202,7 +202,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("button", {
-    staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase",
+    staticClass: "btn btn-primary btn-sm text-xxs px-4 uppercase",
     "class": {
       "btn-dark": _vm.isFollowingArtist
     },
