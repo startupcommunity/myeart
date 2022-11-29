@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
 class UserDB
 {
     private const PAGINATE_ARTIST = 8;
+    private const PAGINATE_ALL_ARTIST = 999999;
 
     /**
      * Devuelve los artistas seguidos por el usuario logueado
@@ -44,6 +45,7 @@ class UserDB
         $cat = isset($data['category']) ? $data['category'] : null;
         $sub = isset($data['subcategory']) ? $data['subcategory'] : null;
         $label = isset($data['label']) ? $data['label'] : null;
+        $all = isset($data['all']) ? $data['all'] : null;
 
         // query
         $query = User::with(['userArtistic', 'profile', 'artworks.gallery', 'artworks.categories'])
@@ -53,6 +55,11 @@ class UserDB
         // si se recibe algunas de las categorías
         if ($cat || $sub || $label) {
             $query->artworkCategory($cat, $sub, $label);
+        }
+
+        // si se desea todos los artistas
+        if ($all) {
+            return $query->paginate(self::PAGINATE_ALL_ARTIST, '*', 'page', $data['page']);
         }
 
         return $query->paginate(self::PAGINATE_ARTIST, '*', 'page', $data['page']);

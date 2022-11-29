@@ -183,5 +183,31 @@ export default {
             });
             return map;
         },
+
+        /**
+         * devuelve los calificativos del artista
+         * según las categorías de sus obras
+         */
+        getArtistQualifying(artist, max = null) {
+            const artworks = artist?.artworks;
+            const categories = artworks.map((artwork) => {
+                return artwork.categories.map((category) => {
+                    return category.qualified;
+                });
+            });
+
+            // eliminar las redundancias
+            const categoriesUnique = categories
+                .flat()
+                .filter((v, i, a) => a.indexOf(v) === i);
+
+            // si max es null, se devuelven todos los calificativos
+            // si no, se devuelven los primeros max
+            if (max) {
+                return categoriesUnique.slice(0, max).join(", ");
+            }
+
+            return categoriesUnique.join(", ");
+        },
     },
 };

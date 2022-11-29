@@ -4677,6 +4677,20 @@ vue__WEBPACK_IMPORTED_MODULE_2__["default"].mixin({
     },
 
     /**
+     * Path para la imagen de las publicaciones
+     * @returns string
+     */
+    pathReleaseImage: function pathReleaseImage() {
+      var path = document.head.querySelector('meta[name="release-image"]');
+
+      if (path) {
+        return path.content;
+      }
+
+      return "/";
+    },
+
+    /**
      * Path de la url de la app
      * @returns string
      */
@@ -4703,6 +4717,15 @@ vue__WEBPACK_IMPORTED_MODULE_2__["default"].mixin({
      * @returns string
      */
     getURLDefaultFrontArtwork: function getURLDefaultFrontArtwork() {
+      return "/img/artwork/default.webp";
+    },
+
+    /**
+     * Devuelve la imagen por defecto de una publicación
+     *
+     * @returns string
+     */
+    getDefaultImageRelease: function getDefaultImageRelease() {
       return "/img/artwork/default.webp";
     },
 
@@ -74092,6 +74115,10 @@ var map = {
 		"./resources/js/pages/profile/components/CardArtist.vue",
 		"resources_js_pages_profile_components_CardArtist_vue"
 	],
+	"./profile/components/CardRelease.vue": [
+		"./resources/js/pages/profile/components/CardRelease.vue",
+		"resources_js_pages_profile_components_CardRelease_vue"
+	],
 	"./profile/sections/Address.vue": [
 		"./resources/js/pages/profile/sections/Address.vue",
 		"resources_js_pages_profile_sections_Address_vue"
@@ -74100,9 +74127,17 @@ var map = {
 		"./resources/js/pages/profile/sections/Artwork.vue",
 		"resources_js_pages_profile_sections_Artwork_vue"
 	],
+	"./profile/sections/DesktopKeypad.vue": [
+		"./resources/js/pages/profile/sections/DesktopKeypad.vue",
+		"resources_js_pages_profile_sections_DesktopKeypad_vue"
+	],
 	"./profile/sections/Favourite.vue": [
 		"./resources/js/pages/profile/sections/Favourite.vue",
 		"resources_js_pages_profile_sections_Favourite_vue"
+	],
+	"./profile/sections/HeroProfile.vue": [
+		"./resources/js/pages/profile/sections/HeroProfile.vue",
+		"resources_js_pages_profile_sections_HeroProfile_vue"
 	],
 	"./profile/sections/MobileKeypad.vue": [
 		"./resources/js/pages/profile/sections/MobileKeypad.vue",
@@ -74111,6 +74146,10 @@ var map = {
 	"./profile/sections/PersonalData.vue": [
 		"./resources/js/pages/profile/sections/PersonalData.vue",
 		"resources_js_pages_profile_sections_PersonalData_vue"
+	],
+	"./profile/sections/Release.vue": [
+		"./resources/js/pages/profile/sections/Release.vue",
+		"resources_js_pages_profile_sections_Release_vue"
 	]
 };
 function webpackAsyncContext(req) {
@@ -74405,7 +74444,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_CardBlog_vue":1,"resources_js_pages_artist_components_CardEvent_vue":1,"resources_js_pages_artist_components_CardRelease_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artist_sections_AboutMe_vue":1,"resources_js_pages_artist_sections_Blog_vue":1,"resources_js_pages_artist_sections_Event_vue":1,"resources_js_pages_artist_sections_Hero_vue":1,"resources_js_pages_artist_sections_PostHero_vue":1,"resources_js_pages_artist_sections_Release_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CardComment_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_FormQuestion_vue":1,"resources_js_pages_artwork_components_ResponseCommentDialog_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_Comment_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_errors_404_vue":1,"resources_js_pages_errors_500_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_layouts_ErrorLayout_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_CardBlog_vue":1,"resources_js_pages_artist_components_CardEvent_vue":1,"resources_js_pages_artist_components_CardRelease_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artist_sections_AboutMe_vue":1,"resources_js_pages_artist_sections_Blog_vue":1,"resources_js_pages_artist_sections_Event_vue":1,"resources_js_pages_artist_sections_Hero_vue":1,"resources_js_pages_artist_sections_PostHero_vue":1,"resources_js_pages_artist_sections_Release_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CardComment_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_FormQuestion_vue":1,"resources_js_pages_artwork_components_ResponseCommentDialog_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_Comment_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_errors_404_vue":1,"resources_js_pages_errors_500_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_layouts_ErrorLayout_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_components_CardRelease_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_DesktopKeypad_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_HeroProfile_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1,"resources_js_pages_profile_sections_Release_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

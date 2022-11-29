@@ -856,7 +856,7 @@ var render = function render() {
       value: _vm.showSection,
       expression: "showSection"
     }],
-    staticClass: "w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 sm:min-h-[43rem] animate-fade-in-down",
+    staticClass: "w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 h-full animate-fade-in-down",
     attrs: {
       id: "direcciones"
     }

@@ -37,6 +37,21 @@
                 <button
                     type="button"
                     class="flex flex-col items-center justify-start space-y-2"
+                    @click="changeEmitAndClass(mobileSection.pub)"
+                >
+                    <i class="fas fa-camera text-primary fa-2x"></i>
+                    <span
+                        class="tracking-tight"
+                        :class="sections[0].pub ? 'font-black' : 'font-light'"
+                    >
+                        Publicaciones
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button
+                    type="button"
+                    class="flex flex-col items-center justify-start space-y-2"
                     @click="changeEmitAndClass(mobileSection.obras)"
                 >
                     <i class="fas fa-palette text-primary fa-2x"></i>
@@ -149,6 +164,7 @@ export default {
             sections: [
                 {
                     personal: false,
+                    pub: false,
                     obras: false,
                     fav: false,
                     pedidos: false,
@@ -162,6 +178,7 @@ export default {
             original: [
                 {
                     personal: false,
+                    pub: false,
                     obras: false,
                     fav: false,
                     pedidos: false,
@@ -174,6 +191,7 @@ export default {
             // id de secciones
             mobileSection: {
                 personal: "personal",
+                pub: "publicaciones",
                 obras: "obras",
                 fav: "favoritos",
                 pedidos: "pedidos",

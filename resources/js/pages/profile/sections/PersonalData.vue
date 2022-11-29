@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 sm:min-h-[43rem] animate-fade-in-down"
+        class="w-full h-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 animate-fade-in-down"
         id="personal"
         v-show="showSection"
     >

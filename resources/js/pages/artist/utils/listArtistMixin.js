@@ -2,6 +2,7 @@ import { tns } from "tiny-slider";
 import getDataMixin from "../../../mixins/getDataMixin";
 
 const INIT_ARTIST_PER_PAGE = 8;
+let addArtist = 3;
 
 export default {
     mixins: [getDataMixin],
@@ -13,6 +14,9 @@ export default {
             // muestra o no la modal de filtros
             showFilterModal: false,
 
+            // aspect mobile
+            aspectMobile: false,
+
             // total de registros recibidos del backend
             totalRecords: 0,
 
@@ -23,10 +27,14 @@ export default {
                 category: 0,
                 subcategory: 0,
                 label: 0,
+                all: 0,
             },
 
             // colección de artistas
             artists: [],
+
+            // colección original de artistas
+            originalArtists: [],
 
             // indica como se debe ver las tarjeta
             // de los artistas
@@ -78,6 +86,13 @@ export default {
         hasArtists() {
             return this.artists.length;
         },
+
+        /**
+         * Verifica si hay artistas que mostrar
+         */
+        hasShowArtists() {
+            return this.artists.length !== this.totalRecords;
+        },
     },
     watch: {
         filters: {
@@ -124,6 +139,29 @@ export default {
                 .then((resp) => {
                     this.totalRecords = resp.data.total;
                     this.artists = resp.data.data;
+
+                    // solo para vista mobile
+                    if (this.aspectMobile) {
+                        this.originalArtists = JSON.parse(
+                            JSON.stringify(resp.data.data)
+                        );
+
+                        // aumentar los artistas a mostrar
+                        const ADD_COUNT = addArtist + this.artists.length;
+                        this.artists = this.originalArtists.slice(0, ADD_COUNT);
+                        addArtist += 3;
+                    }
+
+                    return this.artists;
+                })
+                .then((_) => {
+                    // si estamos en mobile
+                    // cargar el modo row
+                    if (globalThis.innerWidth < 450) {
+                        this.loadMode(this.modeCard.row);
+                        return;
+                    }
+
                     this.loadMode(this.modeCard.col);
                 })
                 .catch((error) => console.error(error))
@@ -171,6 +209,7 @@ export default {
             this.artists.forEach((art, index) => {
                 if (art.artworks.length) {
                     this.showTNS("#row-artist-" + art.id);
+                    this.showTNS("#row-artist-mobile-" + art.id);
                 }
 
                 // detener loading
@@ -184,6 +223,19 @@ export default {
          * cargar datos cuando se monte el componente
          */
         initData() {
+            this.loadArtist();
+        },
+
+        /**
+         * Carga mas artistas
+         */
+        loadMoreArtist() {
+            // mostrar mas card de artistas
+            // sin perder los artistas previos
+            this.filters.all = 1;
+
+            this.aspectMobile = true;
+
             this.loadArtist();
         },
 

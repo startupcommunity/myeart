@@ -131,7 +131,7 @@ var render = function render() {
       value: _vm.showSection,
       expression: "showSection"
     }],
-    staticClass: "w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 sm:min-h-[43rem] animate-fade-in-down",
+    staticClass: "w-full h-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 animate-fade-in-down",
     attrs: {
       id: "personal"
     }
@@ -1295,6 +1295,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       });
       return map;
+    },
+
+    /**
+     * devuelve los calificativos del artista
+     * según las categorías de sus obras
+     */
+    getArtistQualifying: function getArtistQualifying(artist) {
+      var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var artworks = artist === null || artist === void 0 ? void 0 : artist.artworks;
+      var categories = artworks.map(function (artwork) {
+        return artwork.categories.map(function (category) {
+          return category.qualified;
+        });
+      }); // eliminar las redundancias
+
+      var categoriesUnique = categories.flat().filter(function (v, i, a) {
+        return a.indexOf(v) === i;
+      }); // si max es null, se devuelven todos los calificativos
+      // si no, se devuelven los primeros max
+
+      if (max) {
+        return categoriesUnique.slice(0, max).join(", ");
+      }
+
+      return categoriesUnique.join(", ");
     }
   }
 });

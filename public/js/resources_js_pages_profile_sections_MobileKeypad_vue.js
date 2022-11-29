@@ -18,6 +18,7 @@ __webpack_require__.r(__webpack_exports__);
       // secciones
       sections: [{
         personal: false,
+        pub: false,
         obras: false,
         fav: false,
         pedidos: false,
@@ -28,6 +29,7 @@ __webpack_require__.r(__webpack_exports__);
       // original secciones
       original: [{
         personal: false,
+        pub: false,
         obras: false,
         fav: false,
         pedidos: false,
@@ -38,6 +40,7 @@ __webpack_require__.r(__webpack_exports__);
       // id de secciones
       mobileSection: {
         personal: "personal",
+        pub: "publicaciones",
         obras: "obras",
         fav: "favoritos",
         pedidos: "pedidos",
@@ -117,6 +120,21 @@ var render = function render() {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].personal ? "font-black" : "font-light"
   }, [_vm._v("\n                    Datos "), _c("br"), _vm._v("\n                    Personales\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+    staticClass: "flex flex-col items-center justify-start space-y-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.changeEmitAndClass(_vm.mobileSection.pub);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-camera text-primary fa-2x"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].pub ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Publicaciones\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"

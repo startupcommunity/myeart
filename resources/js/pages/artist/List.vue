@@ -115,6 +115,18 @@
                                 </button>
                             </div>
                         </div>
+
+                        <div
+                            class="flex justify-center items-center mt-5 md:hidden"
+                        >
+                            <h1>
+                                <span
+                                    class="font-bold tracking-wide text-lg text-zinc-900"
+                                >
+                                    Descubre a los mejores artistas
+                                </span>
+                            </h1>
+                        </div>
                     </div>
                 </div>
 
@@ -152,9 +164,10 @@
                                         v-if="loadingArtist"
                                         css="w-full md:w-1/2 mb-10 md:px-4 animate-swing-in-top-fwd"
                                     />
+
+                                    <!-- desktop -->
                                     <div
-                                        v-else
-                                        class="flex flex-wrap items-stretch"
+                                        class="hidden md:flex flex-wrap items-stretch"
                                     >
                                         <div
                                             v-for="(artist, index) in artists"
@@ -182,7 +195,7 @@
                                             <!-- slider tns -->
                                             <div
                                                 v-show="mode.row"
-                                                class="md:w-9/12 md:pl-8 hidden md:block"
+                                                class="md:w-9/12 md:pl-8"
                                             >
                                                 <h3
                                                     class="text-base text-zinc-900 font-extra-bold uppercase"
@@ -206,16 +219,99 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- mobile -->
+                                    <div class="flex flex-wrap md:hidden">
+                                        <div
+                                            v-for="artist in artists"
+                                            :key="artist.id"
+                                            class="w-full py-5"
+                                        >
+                                            <div
+                                                class="flex justify-between items-center"
+                                            >
+                                                <div
+                                                    class="flex justify-start items-center"
+                                                >
+                                                    <Avatar
+                                                        :artist="artist"
+                                                        custom="border w-12 h-12"
+                                                    />
+                                                    <div
+                                                        class="flex flex-col pl-2"
+                                                    >
+                                                        <div
+                                                            class="text-sm font-bold text-zinc-900"
+                                                        >
+                                                            {{ artist.name }}
+                                                        </div>
+                                                        <div
+                                                            class="text-primary text-xs"
+                                                        >
+                                                            {{
+                                                                getArtistQualifying(
+                                                                    artist,
+                                                                    3
+                                                                )
+                                                            }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <FollowArtistButton
+                                                        :artist="artist"
+                                                        class="btn-block py-2"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <!-- slider tns -->
+                                            <div class="w-full pt-4">
+                                                <h3
+                                                    class="text-sm text-zinc-900 font-bold uppercase"
+                                                >
+                                                    algunas obras de
+                                                    {{ artist.name }}
+                                                </h3>
+                                                <div
+                                                    :id="
+                                                        'row-artist-mobile-' +
+                                                        artist.id
+                                                    "
+                                                    class="mt-3 w-full"
+                                                >
+                                                    <RowArtwork
+                                                        v-for="artwork in artist.artworks"
+                                                        :key="artwork.id"
+                                                        :artwork="artwork"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <!-- paginación -->
+                                <!-- paginación desktop -->
                                 <Paginator
-                                    class="w-full text-center my-10"
+                                    class="w-full text-center my-10 hidden md:block"
                                     :counter="totalPages"
                                     @load-page="loadPage"
                                     v-if="hasArtists"
                                 />
-                                <!-- /paginación -->
+                                <!-- /paginación desktop -->
+
+                                <!-- mostrar mas mobile -->
+                                <div
+                                    class="w-full text-center my-10 md:hidden"
+                                    v-if="hasShowArtists"
+                                >
+                                    <button
+                                        class="btn btn-primary uppercase"
+                                        @click="loadMoreArtist"
+                                    >
+                                        Ver más
+                                    </button>
+                                </div>
+                                <!-- /mostrar mas mobile -->
                             </div>
                             <!-- /cards - obras -->
                         </div>
@@ -251,6 +347,8 @@ import getDataMixin from "../../mixins/getDataMixin";
 import utilMixin from "../../mixins/utilMixin";
 import listArtistMixin from "./utils/listArtistMixin";
 import CategoryTypeFilter from "../artwork/components/CategoryTypeFilter.vue";
+import Avatar from "../../components/Avatar.vue";
+import FollowArtistButton from "../artwork/components/FollowArtistButton.vue";
 
 export default {
     name: "ListArtist",
@@ -263,6 +361,8 @@ export default {
         CategoryTypeFilter,
         RowArtwork,
         FilterArtistModal,
+        Avatar,
+        FollowArtistButton,
     },
     mixins: [getDataMixin, utilMixin, listArtistMixin],
     created() {

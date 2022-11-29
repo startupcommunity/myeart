@@ -163,6 +163,21 @@ vue.mixin({
         },
 
         /**
+         * Path para la imagen de las publicaciones
+         * @returns string
+         */
+        pathReleaseImage() {
+            const path = document.head.querySelector(
+                'meta[name="release-image"]'
+            );
+            if (path) {
+                return path.content;
+            }
+
+            return "/";
+        },
+
+        /**
          * Path de la url de la app
          * @returns string
          */
@@ -186,6 +201,13 @@ vue.mixin({
          * @returns string
          */
         getURLDefaultFrontArtwork: () => "/img/artwork/default.webp",
+
+        /**
+         * Devuelve la imagen por defecto de una publicación
+         *
+         * @returns string
+         */
+        getDefaultImageRelease: () => "/img/artwork/default.webp",
 
         /**
          * Endpoints para consumir la API rest

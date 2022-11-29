@@ -18,6 +18,9 @@ return [
   // path publico para la galeria de imagenes
   'artwork_gallery' => env('APP_URL') . 'storage/img/artwork/gallery/',
 
+  // path publico para la imagen de la publicación
+  'release_image' => env('APP_URL') . 'storage/img/release/images/',
+
   // archivos ubicados en el storage/public
   'public' => [
 
@@ -29,5 +32,8 @@ return [
 
     // galeria de imagenes de obras
     'artwork_gallery' => 'public/img/artwork/gallery/',
+
+    // imagen de la publicación
+    'release_image' => 'public/img/release/images/',
   ]
 ];

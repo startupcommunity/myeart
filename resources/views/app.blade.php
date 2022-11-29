@@ -16,6 +16,7 @@
     <meta name="front-photo" content="{{ config('storage.front_photo') }}" />
     <meta name="profile-photo" content="{{ config('storage.profile_photo') }}" />
     <meta name="artwork-gallery" content="{{ config('storage.artwork_gallery') }}" />
+    <meta name="release-image" content="{{ config('storage.release_image') }}" />
 
     <!-- CDNs de Font-Awesome -->
     <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />

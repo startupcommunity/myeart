@@ -12,60 +12,11 @@
         <!-- /pre y header -->
 
         <!-- sección hero -->
-        <div
-            class="relative z-[1] h-96 sm:h-[30rem] bg-no-repeat bg-cover bg-center"
-            :class="!userProfile.front_photo ? 'bg-hero-profile-bg' : ''"
-            :style="{
-                'background-image': userProfile.front_photo ? frontPhoto : '',
-            }"
-        >
-            <div
-                class="container-fluid py-0 px-4 sm:px-0 absolute -bottom-8 sm:-bottom-12"
-            >
-                <div class="">
-                    <div
-                        class="flex flex-row items-center justify-center sm:justify-between"
-                    >
-                        <div class="w-1/3 block sm:hidden"></div>
-                        <div
-                            class="relative w-full sm:w-2/5 flex justify-center px-2 sm:px-0"
-                        >
-                            <img
-                                :src="
-                                    userProfile.profile_photo
-                                        ? profilePhoto
-                                        : '/img/avatar.png'
-                                "
-                                alt="profile-photo-myaert"
-                                class="rounded-full w-48 h-48 sm:w-56 sm:h-56"
-                            />
-                            <div
-                                class="absolute sm:bottom-16 bottom-6 sm:pl-52 pl-44"
-                            >
-                                <button
-                                    class="border rounded-full bg-white hover:bg-gray-100 px-2 py-1 text-primary text-2xl"
-                                    @click.stop="dialogProfilePhoto = true"
-                                >
-                                    <i class="fas fa-camera"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="w-1/3 sm:w-3/5 justify-end flex">
-                            <button
-                                class="font-bold text-xs sm:text-lg lg:mr-28 text-white"
-                                type="button"
-                                @click.stop="dialogFrontPhoto = true"
-                            >
-                                <i class="fas fa-camera"></i> Editar portada
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="absolute top-0 bottom-auto pb-24 inset-x-0 bg-gray-900 bg-opacity-60"
-            ></div>
-        </div>
+        <HeroProfile
+            :user="userProfile"
+            @openDialogPP="dialogProfilePhoto = true"
+            @openDialogFP="dialogFrontPhoto = true"
+        />
         <!-- /sección hero -->
 
         <!-- tabs responsiva mobile -->
@@ -90,163 +41,10 @@
                         </h3>
 
                         <!-- botonera escritorio -->
-                        <div class="flex justify-center">
-                            <div
-                                class="text-gray-800 sm:text-xs md:text-sm lg:text-lg"
-                            >
-                                <div
-                                    class="flex flex-wrap gap-4 items-center justify-start py-6"
-                                >
-                                    <button
-                                        type="button"
-                                        @click="loadSection('personal')"
-                                    >
-                                        <i class="fa fa-user text-primary"></i>
-                                        <span
-                                            class="tracking-tight uppercase"
-                                            :class="
-                                                sections.personal
-                                                    ? 'font-black'
-                                                    : 'font-light'
-                                            "
-                                        >
-                                            Datos personales
-                                        </span>
-                                    </button>
-                                </div>
-                                <div
-                                    class="flex flex-wrap gap-4 items-center justify-start py-6"
-                                >
-                                    <button
-                                        type="button"
-                                        @click="loadSection('obras')"
-                                    >
-                                        <i
-                                            class="fas fa-palette text-primary"
-                                        ></i>
-                                        <span
-                                            class="tracking-tight uppercase"
-                                            :class="
-                                                sections.artwork
-                                                    ? 'font-black'
-                                                    : 'font-light'
-                                            "
-                                        >
-                                            Mis obras
-                                        </span>
-                                    </button>
-                                </div>
-                                <div
-                                    class="flex flex-wrap gap-4 items-center justify-start py-6"
-                                >
-                                    <button
-                                        type="button"
-                                        @click="loadSection('favoritos')"
-                                    >
-                                        <i class="fa-solid fa-bookmark text-primary"></i>
-                                        <span
-                                            class="tracking-tight uppercase"
-                                            :class="
-                                                sections.fav
-                                                    ? 'font-black'
-                                                    : 'font-light'
-                                            "
-                                        >
-                                            Favoritos
-                                        </span>
-                                    </button>
-                                </div>
-                                <div
-                                    class="flex flex-wrap gap-4 items-center justify-start py-6"
-                                >
-                                    <button
-                                        type="button"
-                                        @click="loadSection('pedidos')"
-                                    >
-                                        <i
-                                            class="fas fa-shopping-cart text-primary"
-                                        ></i>
-                                        <span
-                                            class="tracking-tight uppercase"
-                                            :class="
-                                                sections.order
-                                                    ? 'font-black'
-                                                    : 'font-light'
-                                            "
-                                        >
-                                            Mis Pedidos
-                                        </span>
-                                    </button>
-                                </div>
-                                <div
-                                    class="flex flex-wrap gap-4 items-center justify-start py-6"
-                                >
-                                    <button
-                                        type="button"
-                                        @click="loadSection('direcciones')"
-                                    >
-                                        <i
-                                            class="fas fa-location-arrow text-primary"
-                                        ></i>
-                                        <span
-                                            class="tracking-tight uppercase"
-                                            :class="
-                                                sections.direction
-                                                    ? 'font-black'
-                                                    : 'font-light'
-                                            "
-                                        >
-                                            Mis Direcciones
-                                        </span>
-                                    </button>
-                                </div>
-                                <div
-                                    class="flex flex-wrap gap-4 items-center justify-start py-6"
-                                >
-                                    <button
-                                        type="button"
-                                        @click="loadSection('pagos')"
-                                    >
-                                        <i
-                                            class="fas fa-money-check text-primary"
-                                        ></i>
-                                        <span
-                                            class="tracking-tight uppercase"
-                                            :class="
-                                                sections.payment
-                                                    ? 'font-black'
-                                                    : 'font-light'
-                                            "
-                                        >
-                                            Métodos de pago
-                                        </span>
-                                    </button>
-                                </div>
-                                <div
-                                    class="flex flex-wrap gap-4 items-center justify-start py-6"
-                                >
-                                    <button
-                                        type="button"
-                                        @click="loadSection('seguridad')"
-                                    >
-                                        <i
-                                            class="fas fa-shield text-primary"
-                                        ></i>
-                                        <span
-                                            class="tracking-tight uppercase"
-                                            :class="
-                                                sections.security
-                                                    ? 'font-black'
-                                                    : 'font-light'
-                                            "
-                                        >
-                                            Privacidad y seguridad
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /botonera escritorio -->
+                        <DesktopKeypad
+                            :sections="sections"
+                            @showSection="loadSection"
+                        />
                     </div>
                     <!-- /menu sidebar -->
 
@@ -257,19 +55,36 @@
                         @editDataProfilePersonal="
                             editDataProfile = !editDataProfile
                         "
+                        class="sm:min-h-[52rem]"
                     />
                     <!-- /sección datos personales -->
 
+                    <!-- publicaciones -->
+                    <Release
+                        :showSection="sections.pub"
+                        class="sm:min-h-[52rem]"
+                    />
+                    <!-- /publicaciones -->
+
                     <!-- sección obras -->
-                    <Artwork :showSection="sections.artwork" />
+                    <Artwork
+                        :showSection="sections.artwork"
+                        class="sm:min-h-[52rem]"
+                    />
                     <!-- /sección obras -->
 
                     <!-- sección favoritos -->
-                    <Favourite :showSection="sections.fav" />
+                    <Favourite
+                        :showSection="sections.fav"
+                        class="sm:min-h-[52rem]"
+                    />
                     <!-- /sección favoritos -->
 
                     <!-- sección direcciones -->
-                    <Address :showSection="sections.direction" />
+                    <Address
+                        :showSection="sections.direction"
+                        class="sm:min-h-[52rem]"
+                    />
                     <!-- /sección direcciones -->
                 </div>
             </div>
@@ -320,11 +135,15 @@ import MobileKeypad from "./sections/MobileKeypad.vue";
 import PersonalData from "./sections/PersonalData.vue";
 import Address from "./sections/Address.vue";
 import Favourite from "./sections/Favourite.vue";
+import DesktopKeypad from "./sections/DesktopKeypad.vue";
+import Release from "./sections/Release.vue";
+import HeroProfile from "./sections/HeroProfile.vue";
 
 // secciones como tabs
 const SECTIONS = {
     personal: "personal",
     obras: "obras",
+    pub: "publicaciones",
     fav: "favoritos",
     pedidos: "pedidos",
     direcciones: "direcciones",
@@ -347,6 +166,9 @@ export default {
         PersonalData,
         Address,
         Favourite,
+        DesktopKeypad,
+        Release,
+        HeroProfile,
     },
     data() {
         return {
@@ -358,6 +180,7 @@ export default {
             sections: {
                 personal: false,
                 artwork: false,
+                pub: false,
                 fav: false,
                 order: false,
                 direction: false,
@@ -416,6 +239,7 @@ export default {
         showOrHideSection(id) {
             this.sections.personal = id == SECTIONS.personal;
             this.sections.artwork = id == SECTIONS.obras;
+            this.sections.pub = id == SECTIONS.pub;
             this.sections.fav = id == SECTIONS.fav;
             this.sections.direction = id == SECTIONS.direcciones;
         },
