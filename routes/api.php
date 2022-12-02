@@ -13,11 +13,6 @@ use App\Http\Controllers\SubSubCategoryController;
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
 
-// auth:api
-Route::middleware('auth:api')->post('/logout', [LoginController::class, 'logout']);
-Route::middleware('auth:api')->get('/paises', [PaisesController::class, 'getAll']);
-Route::middleware('auth:api')->get('/artistics', [ArtisticActivitysController::class, 'getAll']);
-
 /**
  * grupo de rutas protegidas
  * @luisandev
@@ -38,6 +33,9 @@ Route::middleware(['auth:api'])->group(function () {
 
     // comentarios / preguntas
     require __DIR__ . '/api/comment.php';
+
+    // publicaciones
+    require __DIR__ . '/api/release.php';
 
     // categorías
     Route::group(['prefix' => 'categories'], function () {
@@ -62,4 +60,9 @@ Route::middleware(['auth:api'])->group(function () {
          */
         Route::get('/{category_id}/{sub_category_id}', [SubSubCategoryController::class, 'getLabels'])->name('getLabels');
     });
+
+    // general
+    Route::post('/logout', [LoginController::class, 'logout']);
+    Route::get('/paises', [PaisesController::class, 'getAll']);
+    Route::get('/artistics', [ArtisticActivitysController::class, 'getAll']);
 });

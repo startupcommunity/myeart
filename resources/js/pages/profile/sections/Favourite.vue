@@ -1,7 +1,7 @@
 <template>
     <div
         class="w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 h-full animate-fade-in-down"
-        id="favoritos"
+        id="fav"
         v-show="showSection"
     >
         <div class="sm:px-5">

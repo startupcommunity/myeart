@@ -143,8 +143,8 @@ import HeroProfile from "./sections/HeroProfile.vue";
 const SECTIONS = {
     personal: "personal",
     obras: "obras",
-    pub: "publicaciones",
-    fav: "favoritos",
+    pub: "pub",
+    fav: "fav",
     pedidos: "pedidos",
     direcciones: "direcciones",
     pagos: "pagos",

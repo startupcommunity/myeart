@@ -2,42 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Factories\ReleaseFactory;
+use App\Http\Requests\CreateUserReleaseRequest;
 use App\Models\UserRelease;
+use App\Querys\ReleaseDB;
+use App\Utils\ResponseJson;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Exception;
 
 class UserReleaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function __construct(
+        private ResponseJson $resp,
+        private ReleaseFactory $factory,
+        private ReleaseDB $db,
+    ) {
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Guarda una publicación del usuario logueado
      *
-     * @return \Illuminate\Http\Response
+     * @param CreateUserReleaseRequest $request
+     * @return JsonResponse
      */
-    public function create()
+    public function store(CreateUserReleaseRequest $request): JsonResponse
     {
-        //
+        try {
+            $data = $this->factory->store($request);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e, 500);
+        }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Devuelve todas las publicaciones del usuario logueado
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function getUserRelease(): JsonResponse
     {
-        //
+        try {
+            $data = $this->db->getUserRelease();
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e, 500);
+        }
     }
-
     /**
      * Display the specified resource.
      *

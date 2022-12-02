@@ -13,7 +13,7 @@
                 </button>
             </div>
             <div class="flex flex-wrap gap-4 items-center justify-start py-6">
-                <button type="button" @click="showSection('publicaciones')">
+                <button type="button" @click="showSection('pub')">
                     <i class="fas fa-camera text-primary"></i>
                     <span
                         class="tracking-tight uppercase"
@@ -35,7 +35,7 @@
                 </button>
             </div>
             <div class="flex flex-wrap gap-4 items-center justify-start py-6">
-                <button type="button" @click="showSection('favoritos')">
+                <button type="button" @click="showSection('fav')">
                     <i class="fa-solid fa-bookmark text-primary"></i>
                     <span
                         class="tracking-tight uppercase"

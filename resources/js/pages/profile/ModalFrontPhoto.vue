@@ -5,7 +5,10 @@
                 <v-card class="bg-gray-one mt-12">
                     <v-card-title class="hidden sm:block">
                         <div class="flex justify-end">
-                            <button type="button" @click="$emit('close-modal-edit-front-photo')">
+                            <button
+                                type="button"
+                                @click="$emit('close-modal-edit-front-photo')"
+                            >
                                 <i class="fa fa-times text-primary"></i>
                             </button>
                         </div>

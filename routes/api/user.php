@@ -21,6 +21,13 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/get-follow-artists', [UserController::class, 'getFollowArtists'])->name('getFollowArtists');
 
   /**
+   * Devuelve los artistas seguidos por el usuario, solo la info corta y básica de los artistas,
+   * como el nombre, el id...
+   */
+  Route::get('/get-follow-artists-short-info', [UserController::class, 'getFollowArtistsShortInfo'])
+    ->name('getFollowArtistsShortInfo');
+
+  /**
    * Devuelve todos los artistas de la app, excluyendo el usuario logueado y los eliminados
    */
   Route::get('/get-artists', [UserController::class, 'getArtists'])->name('getArtists');

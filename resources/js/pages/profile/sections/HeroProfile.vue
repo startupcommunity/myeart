@@ -50,7 +50,7 @@
             </div>
         </div>
         <div
-            class="absolute top-0 bottom-auto pb-24 inset-x-0 bg-gray-900 bg-opacity-60"
+            class="absolute top-0 bottom-auto pb-24 inset-x-0 bg-zinc-900 bg-opacity-60"
         ></div>
     </div>
 </template>

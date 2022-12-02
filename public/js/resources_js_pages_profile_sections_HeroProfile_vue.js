@@ -104,7 +104,7 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fas fa-camera"
   }), _vm._v(" Editar portada\n                    ")])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-gray-900 bg-opacity-60"
+    staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-zinc-900 bg-opacity-60"
   })]);
 };
 

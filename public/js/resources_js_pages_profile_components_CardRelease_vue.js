@@ -23,15 +23,14 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   computed: {
-    getPathGallery: function getPathGallery() {
+    getImage: function getImage() {
       var _this$release;
 
-      // const image = this.release?.image?.path;
-      // if (!image) return this.getDefaultImageRelease;
-      // return `${this.pathReleaseImage + image}`;
-      return (_this$release = this.release) === null || _this$release === void 0 ? void 0 : _this$release.image;
+      var image = (_this$release = this.release) === null || _this$release === void 0 ? void 0 : _this$release.image;
+      if (!image) return this.getDefaultImageRelease;
+      return "".concat(this.pathReleaseImage + image);
     },
-    likeCounter: function likeCounter() {
+    likes: function likes() {
       var _this$release2, _this$release2$likes;
 
       return ((_this$release2 = this.release) === null || _this$release2 === void 0 ? void 0 : (_this$release2$likes = _this$release2.likes) === null || _this$release2$likes === void 0 ? void 0 : _this$release2$likes.length) || 0;
@@ -47,8 +46,7 @@ __webpack_require__.r(__webpack_exports__);
       };
       return date.toLocaleDateString("es-ES", options);
     }
-  },
-  methods: {}
+  }
 });
 
 /***/ }),
@@ -71,14 +69,36 @@ var render = function render() {
   return _c("div", {
     staticClass: "animate-swing-in-top-fwd"
   }, [_c("div", {
-    staticClass: "rounded-md w-full relative"
+    staticClass: "rounded-md w-full"
+  }, [_c("div", {
+    staticClass: "relative group"
   }, [_c("img", {
-    staticClass: "object-cover object-center w-full h-72",
+    staticClass: "object-cover object-center w-full h-72 group-hover:bg-opacity-50",
     attrs: {
-      src: _vm.getPathGallery,
+      src: _vm.getImage,
       alt: _vm.release.title
     }
   }), _vm._v(" "), _c("div", {
+    staticClass: "absolute w-full h-full inset-0 hover:cursor-pointer opacity-0 group-hover:opacity-100 hover:bg-zinc-900/60"
+  }, [_c("div", {
+    staticClass: "flex justify-center items-center h-full"
+  }, [_c("v-btn", {
+    attrs: {
+      text: ""
+    }
+  }, [_c("span", {
+    staticClass: "text-white"
+  }, [_c("i", {
+    staticClass: "fa-regular fa-pen-to-square text-white"
+  }), _vm._v("\n                            Editar\n                        ")])]), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      text: ""
+    }
+  }, [_c("span", {
+    staticClass: "text-white"
+  }, [_c("i", {
+    staticClass: "fa-regular fa-trash text-white"
+  }), _vm._v("\n                            Eliminar\n                        ")])])], 1)])]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between pt-1 pb-3"
   }, [_c("div", [_c("span", {
     staticClass: "text-sm font-medium tracking-wide text-gray-500"
@@ -88,7 +108,7 @@ var render = function render() {
     staticClass: "text-gray-400"
   }, [_c("span", {
     staticClass: "text-sm uppercase"
-  }, [_vm._v(_vm._s(_vm.likeCounter))]), _vm._v(" "), _c("i", {
+  }, [_vm._v(_vm._s(_vm.likes))]), _vm._v(" "), _c("i", {
     staticClass: "fa-regular fa-heart text-gray-400"
   })]), _vm._v(" "), _c("i", {
     staticClass: "fa-solid fa-share-nodes text-gray-400"

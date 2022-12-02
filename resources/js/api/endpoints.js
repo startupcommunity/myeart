@@ -50,6 +50,9 @@ const endpoints = {
         // artistas seguidos por el usuario
         getFollowArtists: `${API}/user/get-follow-artists`, // get
 
+        // artistas seguidos por el usuario, info corta y necesaria
+        getFASI: `${API}/user/get-follow-artists-short-info`, // get
+
         // colección de artistas activos
         getArtists: `${API}/user/get-artists`, // get
 
@@ -62,6 +65,15 @@ const endpoints = {
         artworkSave: `${API}/comments/artworks/save`, // post
         artworkAnswerSave: `${API}/comments/artworks/answer/save`, // post
         artworkList: `${API}/comments/artwork-list/`, // get
+    },
+
+    // publicaciones
+    releases: {
+        // guardar una nueva publicación
+        save: `${API}/releases/store`, // post
+
+        // obtiene todas las publicaciones del usuario
+        getAllUser: `${API}/releases/get-user-releases`, // get
     },
 };
 

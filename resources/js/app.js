@@ -35,6 +35,21 @@ import Notifications from "vue-notification";
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
+// maps
+import * as VueGoogleMaps from "vue2-google-maps";
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: "AIzaSyCoEZAiDQOxmweKf1caokAcGqkOjlXxa04",
+        // This is required if you use the Autocomplete plugin
+        libraries: "places",
+        // OR: libraries: 'places,drawing'
+        // OR: libraries: 'places,drawing,visualization'
+        // v: '3.26',
+    },
+    installComponents: false,
+});
+
 Vue.use(Notifications);
 Vue.use(Vuelidate);
 Vue.use(VueEvents);
@@ -42,6 +57,7 @@ Vue.use(VueFormWizard);
 Vue.use(VueSweetalert2);
 Vue.component("loading-overlay-original", Loading);
 Vue.component("loading-overlay", loadingOverlayComponent);
+Vue.component('vgm-places', VueGoogleMaps.Autocomplete);
 
 // init API
 ApiService.init();

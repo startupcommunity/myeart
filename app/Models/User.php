@@ -139,7 +139,7 @@ class User extends Authenticatable
      */
     public function releases(): HasMany
     {
-        return $this->hasMany(UserRelease::class);
+        return $this->hasMany(UserRelease::class, 'user_id');
     }
 
     /**

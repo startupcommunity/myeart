@@ -467,7 +467,7 @@ var render = function render() {
     }],
     staticClass: "w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 h-full animate-fade-in-down",
     attrs: {
-      id: "favoritos"
+      id: "fav"
     }
   }, [_c("div", {
     staticClass: "sm:px-5"

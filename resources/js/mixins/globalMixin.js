@@ -191,6 +191,16 @@ vue.mixin({
         },
 
         /**
+         * Devuelve el header multipart/formdata
+         * @returns     headers: { "Content-Type": "multipart/form-data" }
+         */
+        headerFormData() {
+            return {
+                headers: { "Content-Type": "multipart/form-data" },
+            };
+        },
+
+        /**
          * Devuelve la url de la imagen por defecto de la foto de perfil del usuario
          * @returns string
          */

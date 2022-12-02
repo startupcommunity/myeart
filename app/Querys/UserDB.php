@@ -33,6 +33,14 @@ class UserDB
         return $data['followingArtists'];
     }
 
+    public function getFollowArtistsShortInfo($userID = null)
+    {
+        $user = $userID ? User::findOrFail($userID) : auth()->user();
+        $data = $user->with(['followingArtists.following'])->first();
+
+        return $data['followingArtists'];
+    }
+
     /**
      * Devuelve todos los artistas de la app, excluyendo  los eliminados
      * y los que no tengan obras subidas

@@ -79,6 +79,23 @@ class UserController extends Controller
     }
 
     /**
+     * Devuelve los artistas seguidos por el usuario,
+     * solo la info corta y básica de los artistas,
+     * como el nombre, el id...
+     *
+     * @return JsonResponse
+     */
+    public function getFollowArtistsShortInfo(): JsonResponse
+    {
+        try {
+            $resp = $this->db->getFollowArtistsShortInfo();
+            return $this->resp->json($resp, 200);
+        } catch (Exception $th) {
+            return $this->resp->json($th, 500);
+        }
+    }
+
+    /**
      * Devuelve todos los artistas de la app, excluyendo los eliminados
      *
      * @return JsonResponse

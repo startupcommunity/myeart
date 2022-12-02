@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col justify-center items-center sm:hidden">
-        <div class="mt-12">
+        <div class="mt-12" v-if="sections[0].personal">
             <v-btn
                 class="text-primary font-bold"
                 depressed
@@ -10,9 +10,15 @@
                 <i class="fa-solid fa-pen"></i> Editar perfil
             </v-btn>
         </div>
+
+        <div :class="sections[0].personal ? 'mt-3' : 'mt-12'">
+            <v-btn elevation="0" color="#B2794C" class="rounded-md">
+                <span class="text-white"> Crear colectivo </span>
+            </v-btn>
+        </div>
         <!-- botonera -->
         <div
-            class="flex flex-wrap justify-center items-start mt-6 text-primary text-[10px] gap-2"
+            class="flex flex-wrap justify-center items-start mt-6 text-primary text-xs gap-3"
         >
             <!-- <div class=""> -->
             <div>
@@ -28,8 +34,7 @@
                             sections[0].personal ? 'font-black' : 'font-light'
                         "
                     >
-                        Datos <br />
-                        Personales
+                        Datos
                     </span>
                 </button>
             </div>
@@ -59,13 +64,16 @@
                         class="tracking-tight"
                         :class="sections[0].obras ? 'font-black' : 'font-light'"
                     >
-                        Mis <br />
                         Obras
                     </span>
                 </button>
             </div>
             <div>
-                <button type="button" class="flex flex-col items-center justify-start space-y-2" @click="changeEmitAndClass(mobileSection.fav)">
+                <button
+                    type="button"
+                    class="flex flex-col items-center justify-start space-y-2"
+                    @click="changeEmitAndClass(mobileSection.fav)"
+                >
                     <i class="fa-solid fa-bookmark text-primary fa-2x"></i>
                     <span
                         class="tracking-tight"
@@ -88,11 +96,17 @@
                             sections[0].pedidos ? 'font-black' : 'font-light'
                         "
                     >
-                        Mis <br />
                         Pedidos
                     </span>
                 </button>
             </div>
+            <!-- </div> -->
+        </div>
+
+        <!-- segunda hilera -->
+        <div
+            class="flex flex-wrap justify-center items-start text-primary text-xs gap-3 mt-5"
+        >
             <div>
                 <button
                     type="button"
@@ -108,7 +122,6 @@
                                 : 'font-light'
                         "
                     >
-                        Mis <br />
                         Direcciones
                     </span>
                 </button>
@@ -146,7 +159,6 @@
                     </span>
                 </button>
             </div>
-            <!-- </div> -->
         </div>
         <!-- /botonera -->
 
@@ -191,15 +203,18 @@ export default {
             // id de secciones
             mobileSection: {
                 personal: "personal",
-                pub: "publicaciones",
+                pub: "pub",
                 obras: "obras",
-                fav: "favoritos",
+                fav: "fav",
                 pedidos: "pedidos",
                 direcciones: "direcciones",
                 pagos: "pagos",
                 seguridad: "seguridad",
             },
         };
+    },
+    mounted() {
+        this.sections[0].personal = true;
     },
     methods: {
         /**

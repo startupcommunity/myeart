@@ -71,7 +71,7 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.showSection("publicaciones");
+        return _vm.showSection("pub");
       }
     }
   }, [_c("i", {
@@ -103,7 +103,7 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.showSection("favoritos");
+        return _vm.showSection("fav");
       }
     }
   }, [_c("i", {

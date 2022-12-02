@@ -40,15 +40,18 @@ __webpack_require__.r(__webpack_exports__);
       // id de secciones
       mobileSection: {
         personal: "personal",
-        pub: "publicaciones",
+        pub: "pub",
         obras: "obras",
-        fav: "favoritos",
+        fav: "fav",
         pedidos: "pedidos",
         direcciones: "direcciones",
         pagos: "pagos",
         seguridad: "seguridad"
       }
     };
+  },
+  mounted: function mounted() {
+    this.sections[0].personal = true;
   },
   methods: {
     /**
@@ -87,7 +90,7 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "flex flex-col justify-center items-center sm:hidden"
-  }, [_c("div", {
+  }, [_vm.sections[0].personal ? _c("div", {
     staticClass: "mt-12"
   }, [_c("v-btn", {
     staticClass: "text-primary font-bold",
@@ -102,8 +105,18 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-pen"
-  }), _vm._v(" Editar perfil\n        ")])], 1), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-wrap justify-center items-start mt-6 text-primary text-[10px] gap-2"
+  }), _vm._v(" Editar perfil\n        ")])], 1) : _vm._e(), _vm._v(" "), _c("div", {
+    "class": _vm.sections[0].personal ? "mt-3" : "mt-12"
+  }, [_c("v-btn", {
+    staticClass: "rounded-md",
+    attrs: {
+      elevation: "0",
+      color: "#B2794C"
+    }
+  }, [_c("span", {
+    staticClass: "text-white"
+  }, [_vm._v(" Crear colectivo ")])])], 1), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap justify-center items-start mt-6 text-primary text-xs gap-3"
   }, [_c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
@@ -119,7 +132,7 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].personal ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Datos "), _c("br"), _vm._v("\n                    Personales\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+  }, [_vm._v("\n                    Datos\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
@@ -149,7 +162,7 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].obras ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Obras\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+  }, [_vm._v("\n                    Obras\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
@@ -179,7 +192,9 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].pedidos ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Pedidos\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+  }, [_vm._v("\n                    Pedidos\n                ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap justify-center items-start text-primary text-xs gap-3 mt-5"
+  }, [_c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
@@ -194,7 +209,7 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].direcciones ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Mis "), _c("br"), _vm._v("\n                    Direcciones\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+  }, [_vm._v("\n                    Direcciones\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"

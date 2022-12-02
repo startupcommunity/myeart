@@ -1,27 +1,42 @@
 <template>
     <div
         class="w-full sm:w-3/5 bg-white px-5 sm:px-12 sm:py-20 h-full animate-fade-in-down"
-        id="publicaciones"
+        id="pub"
         v-show="showSection"
     >
         <div class="md:px-5">
-            <div class="flex justify-between pb-4 border-b border-gray-900">
+            <div
+                class="flex flex-col flex-md-row justify-between pb-4 md:border-b md:border-gray-900 space-y-5 md:space-y-0"
+            >
                 <h3
-                    class="font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
+                    class="font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900 text-center text-md-left"
                 >
-                    <span class="text-left text-md-center">
-                        Publicaciones
-                    </span>
+                    <span> Publicaciones </span>
                 </h3>
-                <div>
-                    <v-btn outlined elevation="0" color="#B2794C">
+                <div class="flex justify-center justify-md-end">
+                    <v-btn
+                        outlined
+                        elevation="0"
+                        color="#B2794C"
+                        @click.stop="create = true"
+                        v-if="!create"
+                    >
                         <i class="fas fa-plus"></i> Nueva Publicación
+                    </v-btn>
+                    <v-btn
+                        outlined
+                        elevation="0"
+                        color="#B2794C"
+                        @click.stop="create = false"
+                        v-else
+                    >
+                        <i class="fas fa-arrow-left"></i> Volver
                     </v-btn>
                 </div>
             </div>
 
             <!-- publicaciones -->
-            <div class="py-6 w-full">
+            <div class="py-6 w-full" v-if="!create">
                 <div class="flex flex-wrap h-full items-stretch">
                     <LoadingTailwind
                         v-if="loading"
@@ -38,26 +53,26 @@
                         />
                     </div>
 
-                    <!-- <div
-                        class="w-full text-center"
-                        v-if="remainingArtworks.length"
-                    >
+                    <div class="w-full text-center" v-if="hasShowRelease">
                         <button
                             class="w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
                             type="button"
-                            @click.stop="showMoreArtworks(SHOW_ARTWORKS)"
+                            @click.stop="showMore"
                         >
                             Ver más
                         </button>
-                    </div> -->
+                    </div>
                 </div>
             </div>
-            <!-- /publicaciones -->
+
+            <!-- crear publicaciones -->
+            <CreateRelease v-else @created="create = false" />
         </div>
     </div>
 </template>
 <script>
 // componentes
+import CreateRelease from "../../release/Create.vue";
 import CardRelease from "../components/CardRelease.vue";
 import LoadingTailwind from "./../../../components/LoadingTailwind.vue";
 
@@ -65,11 +80,12 @@ import LoadingTailwind from "./../../../components/LoadingTailwind.vue";
 import getDataMixin from "./../../../mixins/getDataMixin";
 
 // cantidad de obras en aumento
-let LOAD_MORE_RELEASE = 4;
+const INIT_RELEASES = 2;
+let loadMoreRelease = 2;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind, CardRelease },
+    components: { LoadingTailwind, CardRelease, CreateRelease },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -79,65 +95,59 @@ export default {
     data() {
         return {
             loading: false,
+            create: false,
             releases: [],
+            original: [],
         };
     },
-    created() {
-        // this.getReleases();
+    computed: {
+        /**
+         * Verificar si hay mas publicaciones que mostrar
+         */
+        hasShowRelease() {
+            return this.releases.length !== this.original.length;
+        },
     },
-    methods: {},
+    methods: {
+        /**
+         * Obtiene todas las publicaciones del usuario
+         */
+        getReleases() {
+            this.loading = true;
+            this.axios
+                .get(this.ep.releases.getAllUser)
+                .then((resp) => {
+                    this.original = JSON.parse(JSON.stringify(resp.data));
+                    this.releases = resp.data.splice(INIT_RELEASES);
+                })
+                .catch((error) => this.manageError(error))
+                .finally(() => (this.loading = false));
+        },
+
+        /**
+         * Muestra mas publicaciones
+         */
+        showMore() {
+            const total = this.releases.length + loadMoreRelease;
+            const data = JSON.parse(JSON.stringify(this.original));
+
+            this.releases = data.splice(0, total);
+            loadMoreRelease++;
+        },
+    },
     watch: {
         showSection(val) {
             if (val) {
-                // this.changeStateArtwork();
-                // this.resetData();
+                this.getReleases();
+            }
+        },
 
-                // generar mockup de prueba
-                this.releases = [
-                    {
-                        id: 1,
-                        text: "Nisi culpa id minim mollit enim nulla proident sint culpa dolor do occaecat et amet.",
-                        created_at: "2021-05-05 00:00:00.000000",
-                        image: "https://picsum.photos/200/300",
-                    },
-                    {
-                        id: 2,
-                        text: "Nisi culpa id minim mollit enim nulla proident sint culpa dolor do occaecat et amet.",
-                        created_at: "2021-07-10 00:00:00.000000",
-                        image: "https://picsum.photos/400/300",
-                    },
-                    {
-                        id: 3,
-                        text: "Nisi culpa id minim mollit enim nulla proident sint culpa dolor do occaecat et amet.",
-                        created_at: "2021-10-28 00:00:00.000000",
-                        image: "https://picsum.photos/300/300",
-                    },
-                    {
-                        id: 4,
-                        text: "Nisi culpa id minim mollit enim nulla proident sint culpa dolor do occaecat et amet.",
-                        created_at: "2021-11-07 00:00:00.000000",
-                        image: "https://picsum.photos/600/300",
-                    },
-                ];
+        create(val) {
+            if (!val) {
+                console.log("cambio el create a falso");
+                this.getReleases();
             }
         },
     },
 };
 </script>
-<style scoped>
-.v-application a {
-    color: #0f0f0f !important;
-}
-.v-application a:hover {
-    color: #fefefe !important;
-}
-
-#btn-edit {
-    color: #0f0f0f !important;
-}
-
-#btn-edit:hover {
-    color: #0f0f0f !important;
-    text-decoration: none;
-}
-</style>

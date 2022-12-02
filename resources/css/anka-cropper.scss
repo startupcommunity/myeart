@@ -11,8 +11,10 @@
 }
 .ankaCropper__droparea {
     text-align: center;
-    margin: 2em;
-    padding: 2em;
+    // margin: 2em;
+    // padding: 2em;
+    padding-top: 60px;
+    padding-bottom: 90px;
 }
 .ankaCropper__selectButton {
     height: 44px;
@@ -33,7 +35,7 @@
     transition-property: box-shadow, transform, opacity;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     position: absolute;
-    margin-top: 35px;
+    // margin-top: 35px;
     left: 0;
 }
 .ankaCropper__navigation {
