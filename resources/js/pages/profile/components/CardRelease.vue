@@ -11,7 +11,7 @@
                     class="absolute w-full h-full inset-0 hover:cursor-pointer opacity-0 group-hover:opacity-100 hover:bg-zinc-900/60"
                 >
                     <div class="flex justify-center items-center h-full">
-                        <v-btn text>
+                        <v-btn text @click.stop="editRelease">
                             <span class="text-white">
                                 <i
                                     class="fa-regular fa-pen-to-square text-white"
@@ -19,7 +19,7 @@
                                 Editar
                             </span>
                         </v-btn>
-                        <v-btn text>
+                        <v-btn text @click.stop="deleteRelease">
                             <span class="text-white">
                                 <i class="fa-regular fa-trash text-white"></i>
                                 Eliminar
@@ -84,6 +84,15 @@ export default {
             };
 
             return date.toLocaleDateString("es-ES", options);
+        },
+    },
+    methods: {
+        editRelease() {
+            this.$emit("edit", this.release);
+        },
+
+        deleteRelease() {
+            this.$emit("delete", this.release);
         },
     },
 };

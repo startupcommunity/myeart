@@ -13,5 +13,15 @@ Route::group(['prefix' => 'releases'], function () {
   /**
    * Almacena los datos y crea una nueva publicación
    */
-  Route::post('/store', [UserReleaseController::class, 'store'])->name('store');
+  Route::post('/store', [UserReleaseController::class, 'store'])->name('storeRelease');
+
+  /**
+   * Almacena los datos y actualiza una publicación
+   */
+  Route::put('/update/{id}', [UserReleaseController::class, 'update'])->name('updateRelease');
+
+  /**
+   * Elimina una publicación
+   */
+  Route::delete('/delete/{id}', [UserReleaseController::class, 'destroy'])->name('deleteRelease');
 });

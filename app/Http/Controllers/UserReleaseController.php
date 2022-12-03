@@ -62,36 +62,35 @@ class UserReleaseController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Actualiza una publicación del usuario logueado
      *
-     * @param  \App\Models\UserRelease  $userRelease
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  UserRelease  $userRelease
+     * @return Response
      */
-    public function edit(UserRelease $userRelease)
+    public function update(CreateUserReleaseRequest $request, int $id): JsonResponse
     {
-        //
+        try {
+            $data = $this->factory->update($request, $id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e, 500);
+        }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Elimina una publicación del usuario logueado
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserRelease  $userRelease
-     * @return \Illuminate\Http\Response
+     * @param  UserRelease  $userRelease
+     * @return Response
      */
-    public function update(Request $request, UserRelease $userRelease)
+    public function destroy(int $id): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\UserRelease  $userRelease
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(UserRelease $userRelease)
-    {
-        //
+        try {
+            $data = $this->factory->delete($id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e, 500);
+        }
     }
 }

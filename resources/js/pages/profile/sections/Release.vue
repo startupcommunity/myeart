@@ -13,13 +13,13 @@
                 >
                     <span> Publicaciones </span>
                 </h3>
-                <div class="flex justify-center justify-md-end">
+                <div class="flex justify-center justify-md-end gap-3">
                     <v-btn
                         outlined
                         elevation="0"
                         color="#B2794C"
-                        @click.stop="create = true"
-                        v-if="!create"
+                        @click.stop="createRelease"
+                        v-if="!create && !edit"
                     >
                         <i class="fas fa-plus"></i> Nueva Publicación
                     </v-btn>
@@ -27,8 +27,8 @@
                         outlined
                         elevation="0"
                         color="#B2794C"
-                        @click.stop="create = false"
-                        v-else
+                        @click.stop="backList"
+                        v-if="create || edit"
                     >
                         <i class="fas fa-arrow-left"></i> Volver
                     </v-btn>
@@ -36,7 +36,7 @@
             </div>
 
             <!-- publicaciones -->
-            <div class="py-6 w-full" v-if="!create">
+            <div class="py-6 w-full" v-if="!create && !edit">
                 <div class="flex flex-wrap h-full items-stretch">
                     <LoadingTailwind
                         v-if="loading"
@@ -48,8 +48,10 @@
                             v-for="(release, index) in releases"
                             :key="release.id"
                             :release="release"
-                            class="w-full md:w-1/2 pb-4"
+                            @edit="editRelease"
+                            @delete="deleteRelease"
                             :class="index % 2 === 0 ? 'md:pr-4' : ''"
+                            class="w-full md:w-1/2 pb-4"
                         />
                     </div>
 
@@ -66,13 +68,17 @@
             </div>
 
             <!-- crear publicaciones -->
-            <CreateRelease v-else @created="create = false" />
+            <CreateRelease @created="created" v-if="create" />
+
+            <!-- editar publicaciones -->
+            <EditRelease @edited="edited" :release="release" v-if="edit" />
         </div>
     </div>
 </template>
 <script>
 // componentes
 import CreateRelease from "../../release/Create.vue";
+import EditRelease from "../../release/Edit.vue";
 import CardRelease from "../components/CardRelease.vue";
 import LoadingTailwind from "./../../../components/LoadingTailwind.vue";
 
@@ -85,7 +91,7 @@ let loadMoreRelease = 2;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind, CardRelease, CreateRelease },
+    components: { LoadingTailwind, CardRelease, CreateRelease, EditRelease },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -96,6 +102,8 @@ export default {
         return {
             loading: false,
             create: false,
+            edit: false,
+            release: {},
             releases: [],
             original: [],
         };
@@ -106,6 +114,13 @@ export default {
          */
         hasShowRelease() {
             return this.releases.length !== this.original.length;
+        },
+    },
+    watch: {
+        showSection(val) {
+            if (val) {
+                this.getReleases();
+            }
         },
     },
     methods: {
@@ -130,23 +145,87 @@ export default {
         showMore() {
             const total = this.releases.length + loadMoreRelease;
             const data = JSON.parse(JSON.stringify(this.original));
-
             this.releases = data.splice(0, total);
             loadMoreRelease++;
         },
-    },
-    watch: {
-        showSection(val) {
-            if (val) {
-                this.getReleases();
-            }
+
+        /**
+         * Volver a la lista de publicaciones
+         */
+        backList() {
+            this.create = false;
+            this.edit = false;
         },
 
-        create(val) {
-            if (!val) {
-                console.log("cambio el create a falso");
-                this.getReleases();
-            }
+        /**
+         * Activa el formulario para crear una publicación
+         */
+        createRelease() {
+            this.create = true;
+            this.edit = false;
+        },
+
+        /**
+         * Cuando se crea una una nueva publicación
+         */
+        created() {
+            this.create = false;
+            this.getReleases();
+        },
+
+        /**
+         * Cuando se actualiza una publicación
+         */
+        edited() {
+            this.edit = false;
+            this.getReleases();
+        },
+
+        /**
+         * Activa el formulario para editar una publicación
+         *
+         * @param {Object} release
+         */
+        editRelease(release) {
+            this.create = false;
+            this.edit = true;
+            this.release = release;
+        },
+
+        /**
+         * Confirma y elimina una publicación
+         *
+         * @param {Object} release
+         */
+        deleteRelease(release) {
+            this.confirmedDialog({
+                title: "¿Estás seguro que desea eliminar esta publicación?",
+                text: "Esta acción no se puede deshacer",
+                icon: "warning",
+                confirmButtonText: "Si, eliminar",
+                cancelButtonText: "Cancelar",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    this.loading = true;
+                    const ep = this.ep.releases.delete + release.id;
+
+                    // eliminar publicación
+                    try {
+                        await this.axios.post(ep, { _method: "DELETE" });
+
+                        await this.notySwal({
+                            title: "Eliminado!",
+                            text: "La publicación ha sido eliminada con éxito",
+                        });
+
+                        this.getReleases();
+                    } catch (error) {
+                        this.manageError(error);
+                    } finally {
+                        this.loading = false;
+                    }
+                }
+            });
         },
     },
 };

@@ -72,6 +72,12 @@ const endpoints = {
         // guardar una nueva publicación
         save: `${API}/releases/store`, // post
 
+        // actualiza una publicación
+        update: `${API}/releases/update/`, // post
+
+        // elimina una publicación
+        delete: `${API}/releases/delete/`, // delete
+
         // obtiene todas las publicaciones del usuario
         getAllUser: `${API}/releases/get-user-releases`, // get
     },

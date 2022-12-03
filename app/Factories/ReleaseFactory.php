@@ -46,4 +46,75 @@ class ReleaseFactory
 
     return $release;
   }
+
+  /**
+   * Actualiza una publicación del usuario logueado
+   *
+   * @param Request $request
+   * @param integer $id
+   * @return boolean
+   */
+  public function update(Request $request, int $id): bool
+  {
+
+    $updated = DB::transaction(function () use ($request, $id) {
+
+      // data
+      $filename = null;
+      $data     = $request->only(['text', 'location']);
+      $isFile   = $request->hasFile('image');
+      $file     = $request->file('image');
+      $name     = 'picture-' . '-' . date('Ymdhis');
+      $path     = config('storage.public.release_image');
+
+      // publicación
+      $release = UserRelease::find($id);
+
+      // update image
+      if ($isFile) {
+        $filename = AppStorage::updateFile($file, $release->image, $path, $name);
+      }
+
+      // update release
+      $data['image'] = $isFile ? $filename : $release->image;
+      $updated = $release->update($data);
+
+      // update labels or friends
+      if ($request->labels && $request->labels != 'null' && is_array($request->labels)) {
+        // delete
+        $release->labels()->delete();
+        foreach ($request->labels as $label) {
+          // create
+          $release->labels()->create(['friend_id' => $label]);
+        }
+      }
+
+      return $updated;
+    });
+
+    return $updated;
+  }
+
+  /**
+   * Elimina una publicación del usuario logueado
+   *
+   * @param integer $id
+   * @return boolean
+   */
+  public function delete(int $id): bool
+  {
+    $release = UserRelease::find($id);
+    $deleted = $release->delete();
+
+    // eliminar imagen
+    if ($deleted) {
+      $path = config('storage.public.release_image');
+      AppStorage::deleteFile($release->image, $path);
+    }
+
+    // eliminar etiquetas
+    $release->labels()->delete();
+
+    return $deleted;
+  }
 }

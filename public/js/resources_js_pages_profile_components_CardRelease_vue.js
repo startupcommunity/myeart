@@ -46,6 +46,14 @@ __webpack_require__.r(__webpack_exports__);
       };
       return date.toLocaleDateString("es-ES", options);
     }
+  },
+  methods: {
+    editRelease: function editRelease() {
+      this.$emit("edit", this.release);
+    },
+    deleteRelease: function deleteRelease() {
+      this.$emit("delete", this.release);
+    }
   }
 });
 
@@ -85,6 +93,12 @@ var render = function render() {
   }, [_c("v-btn", {
     attrs: {
       text: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.editRelease.apply(null, arguments);
+      }
     }
   }, [_c("span", {
     staticClass: "text-white"
@@ -93,6 +107,12 @@ var render = function render() {
   }), _vm._v("\n                            Editar\n                        ")])]), _vm._v(" "), _c("v-btn", {
     attrs: {
       text: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.deleteRelease.apply(null, arguments);
+      }
     }
   }, [_c("span", {
     staticClass: "text-white"

@@ -2,11 +2,28 @@
     <div class="w-full md:w-3/4">
         <div class="flex flex-col space-y-5 pt-5">
             <div class="w-full">
+                <div class="max-w-xl max-h-96 relative" v-if="form.image">
+                    <img
+                        :src="getImage"
+                        class="w-full h-full object-cover object-center"
+                        :alt="'release' + release.id"
+                    />
+
+                    <!-- botón para eliminar -->
+                    <div
+                        class="absolute top-0 right-0 p-2 bg-zinc-900/60 rounded-bl-md"
+                    >
+                        <v-btn text @click.stop="deleteImage">
+                            <i class="fa-solid fa-trash text-white"></i>
+                        </v-btn>
+                    </div>
+                </div>
                 <AnkaCropper
                     :options="ankaOptions"
                     @cropper-error="errorCropper"
                     @cropper-saved="validateAndConfirm"
-                    class="anka-release"
+                    class="anka-release-edit"
+                    v-else
                 />
             </div>
             <div class="w-full">
@@ -33,18 +50,6 @@
                 ></v-autocomplete>
             </div>
             <div class="w-full flex justify-start items-center gap-2">
-                <!-- <v-autocomplete
-                        v-model="form.location"
-                        label="Añade tu ubicación"
-                        color="#B2794C"
-                        item-color="#B2794C"
-                        id="mapSearch"
-                    ></v-autocomplete> -->
-                <!-- <vgm-places
-                        placeholder="This is a placeholder text"
-                        @place_changed="setPlace"
-                    >
-                    </vgm-places> -->
                 <i class="fa-solid fa-location-pin"></i>
                 <v-text-field
                     v-model="form.location"
@@ -61,32 +66,36 @@
                     @click.prevent="buttonClick"
                     color="#B2794C"
                 >
-                    Publicar
+                    Actualizar
                 </v-btn>
             </div>
         </div>
 
         <!-- loader -->
-        <loading-overlay
-            :active="globalLoading"
-            :is-full-page="true"
-            loader="bars"
-        />
+        <loading-overlay :active="loading" :is-full-page="true" loader="bars" />
     </div>
 </template>
 
 <script>
 import AnkaCropper from "vue-anka-cropper";
 export default {
-    name: "CreateRelease",
+    name: "EditRelease",
     components: { AnkaCropper },
+    props: {
+        release: {
+            type: Object,
+            default: () => {},
+        },
+    },
     data() {
         return {
             loading: false,
             formIsValid: true,
+            deleteFile: false,
             artists: [],
             croppedFile: "",
             form: {
+                id: "",
                 image: "",
                 text: "",
                 labels: [],
@@ -126,12 +135,19 @@ export default {
     created() {
         this.getFASI();
     },
-    methods: {
-        // setPlace(place) {
-        //     this.form.location = place;
-        //     console.log(this.form.location);
-        // },
+    mounted() {
+        this.loadData();
+    },
+    computed: {
+        getImage() {
+            const image = this.release?.image;
 
+            if (!image) return this.getDefaultImageRelease;
+
+            return `${this.pathReleaseImage + image}`;
+        },
+    },
+    methods: {
         /**
          * Devuelve los artistas seguidos por el usuario,
          * con la info corta y justa
@@ -148,6 +164,28 @@ export default {
         },
 
         /**
+         * Carga los datos de la publicación
+         */
+        loadData() {
+            this.form.id = this.release.id;
+            this.form.text = this.release.text;
+            this.form.location = this.release.location;
+            this.form.image = this.release.image;
+
+            // obtener los ids de los artistas etiquetados
+            const ids = this.release.labels.map((label) => label.friend_id);
+            this.form.labels = ids;
+        },
+
+        /**
+         * Elimina la imagen de la publicación
+         */
+        deleteImage() {
+            this.form.image = "";
+            this.deleteFile = true;
+        },
+
+        /**
          * Algún error al cargar el archivo
          */
         errorCropper(error) {
@@ -159,7 +197,14 @@ export default {
          * y los datos adicionales del formulario
          */
         buttonClick() {
-            const btn = document.querySelector('.anka-release a[title="Save"]');
+            if (!this.deleteFile) {
+                this.validateAndConfirm();
+                return;
+            }
+
+            const btn = document.querySelector(
+                '.anka-release-edit a[title="Save"]'
+            );
             if (!btn) return;
             btn.click();
         },
@@ -169,9 +214,9 @@ export default {
          *
          * @param {File} file
          */
-        validateAndConfirm(file) {
-            this.validateData(file);
+        validateAndConfirm(file = null) {
             this.croppedFile = file;
+            this.validateData();
             if (!this.formIsValid) return;
 
             this.confirmSave();
@@ -180,28 +225,25 @@ export default {
         /**
          * Valida Los datos del formulario
          */
-        validateData(file) {
+        validateData() {
             this.formIsValid = true;
             const form = this.form;
-            if (!file) {
+            const firstCase = !form.image && !this.croppedFile;
+
+            if (firstCase) {
                 this.noty("Debe seleccionar una imagen", "error");
                 this.formIsValid = false;
             }
 
-            if (!form.text) {
+            if (!form.text || form.text.length < 1) {
                 this.noty("Debe indicar un texto descriptivo", "error");
                 this.formIsValid = false;
             }
 
-            if (!form.location) {
+            if (!form.location || form.location.length < 1) {
                 this.noty("Debe indicar una ubicación", "error");
                 this.formIsValid = false;
             }
-
-            // if (!form.labels.length) {
-            //     this.noty("Debe etiquetar algunos amigos", "error");
-            //     this.formIsValid = false;
-            // }
         },
 
         /**
@@ -210,46 +252,44 @@ export default {
         confirmSave() {
             // ejecutar swalert de confirm
             this.confirmedDialog({
-                title: "¿Estás seguro de publicar esta publicación?",
-                text: "Esta acción no se puede deshacer",
+                title: "¿Estás seguro de actualizar esta publicación?",
+                text: "Esta apunto de actualizar esta publicación",
                 icon: "warning",
-                confirmButtonText: "Si, publicar",
+                confirmButtonText: "Si, actualizar",
                 cancelButtonText: "Cancelar",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.globalLoading = true;
+                    this.loading = true;
                     const file = this.croppedFile;
                     const form = this.form;
+                    const labels = this.form.labels;
                     const data = new FormData();
-                    const ep = this.ep.releases.save;
+                    const ep = this.ep.releases.update + form.id;
 
                     // imagen cortada
-                    const croppedFile = new File(
-                        [file.croppedFile],
-                        file.croppedFile.name
-                    );
+                    const image = this.deleteFile
+                        ? new File([file.croppedFile], file.croppedFile.name)
+                        : null;
 
                     // datos para el backend
-                    data.append("image", croppedFile);
+                    data.append("_method", "PUT");
+                    data.append("image", image);
                     data.append("text", form.text);
                     data.append("location", form.location);
-                    form.labels.forEach((label) =>
-                        data.append(`labels[]`, label)
-                    );
+                    labels.forEach((label) => data.append(`labels[]`, label));
 
                     this.axios
                         .post(ep, data, this.headerFormData)
                         .then((_) => {
                             this.notySwal({
-                                title: "¡Publicado!",
-                                text: "La publicación ha sido publicada con éxito",
+                                title: "¡Actualizado!",
+                                text: "La publicación ha sido actualizada y publicada con éxito",
                                 icon: "success",
                             });
-
-                            this.$emit("created");
+                            this.$emit("edited");
                         })
                         .catch((error) => this.manageError(error))
-                        .finally(() => (this.globalLoading = false));
+                        .finally(() => (this.loading = false));
                 }
             });
         },
