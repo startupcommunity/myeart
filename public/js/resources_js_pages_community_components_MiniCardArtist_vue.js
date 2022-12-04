@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_pages_profile_components_CardArtist_vue"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_pages_community_components_MiniCardArtist_vue"],{
 
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************!*\
@@ -158,92 +158,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/profile/components/CardArtist.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/profile/components/CardArtist.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Avatar.vue */ "./resources/js/components/Avatar.vue");
-/* harmony import */ var _artwork_components_FollowArtistButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../artwork/components/FollowArtistButton */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
+/* harmony import */ var _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../artwork/components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "MiniCardArtist",
   components: {
-    FollowArtistButton: _artwork_components_FollowArtistButton__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  name: "CardArtist",
-  data: function data() {
-    return {
-      loadLiked: false,
-      isLike: false
-    };
+    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    FollowArtistButton: _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: {
     artist: {
       type: Object,
       "default": {}
-    },
-    showButtonFollow: {
-      type: Boolean,
-      "default": false
-    },
-    routerLink: {
-      type: Boolean,
-      "default": false
     }
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
-    user: "getProfile"
-  })), {}, {
+  computed: {
     /**
      * devuelve los calificativos del artista
      * según las categorías de sus obras
+     *
+     * limitar solo a 1
      */
-    getNameCategory: function getNameCategory() {
-      var artworks = this.artist.artworks;
+    getNameQualified: function getNameQualified() {
+      var _this$artist;
+
+      var artworks = ((_this$artist = this.artist) === null || _this$artist === void 0 ? void 0 : _this$artist.artworks) || [];
       var categories = artworks.map(function (artwork) {
-        return artwork.categories.map(function (category) {
+        return artwork === null || artwork === void 0 ? void 0 : artwork.categories.map(function (category) {
           return category.qualified;
         });
       }); // eliminar las redundancias
 
       var categoriesUnique = categories.flat().filter(function (v, i, a) {
         return a.indexOf(v) === i;
-      });
-      return categoriesUnique.join(", ");
-    },
+      }); // devolver solo 1
 
-    /**
-     * devuelve la frase o titulo de la bio del artista
-     */
-    getBioTitle: function getBioTitle() {
-      var profile = this.artist.profile;
-      return profile.bio_title ? profile.bio_title : "----";
-    },
-
-    /**
-     * Path completo de la foto de perfil
-     */
-    getPathProfilePhoto: function getPathProfilePhoto() {
-      var artist = this.artist;
-      if (!artist.profile_photo) return this.getURLDefaultProfilePhoto;
-      return "".concat(this.pathProfilePhoto + artist.profile_photo);
+      return categoriesUnique[0];
     }
-  })
+  }
 });
 
 /***/ }),
@@ -320,10 +284,10 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/profile/components/CardArtist.vue?vue&type=template&id=98aeac9e&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/profile/components/CardArtist.vue?vue&type=template&id=98aeac9e& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=template&id=9b961930&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=template&id=9b961930& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -332,48 +296,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
+  var _vm$artist;
+
   var _vm = this,
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "w-full mb-10 animate-swing-in-top-fwd"
+    staticClass: "flex justify-between items-center"
   }, [_c("div", {
-    staticClass: "rounded-md w-full h-full hover:animate-shadow-drop-center shadow-[10px_10px_15px_-2px_rgba(0,0,0,0.1)] px-6 py-6 relative"
-  }, [_c("div", {
-    staticClass: "w-full flex justify-center"
-  }, [_c("div", {
-    staticClass: "w-28 h-28"
-  }, [_vm.routerLink ? _c("Avatar", {
+    staticClass: "flex flex-row justify-start items-center"
+  }, [_c("Avatar", {
     attrs: {
       artist: _vm.artist,
-      custom: "object-cover object-center w-full h-full rounded-full border"
+      custom: "w-14 h-14 border"
     }
-  }) : _c("img", {
-    staticClass: "object-cover object-center w-full h-full rounded-full border",
-    attrs: {
-      src: _vm.getPathProfilePhoto,
-      alt: _vm.artist.name
-    }
-  })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-col justify-between space-y-8"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "ml-2"
   }, [_c("div", {
-    staticClass: "space-y-2 text-center"
-  }, [_c("h3", {
-    staticClass: "text-xl md:text-sm font-semibold tracking-wide text-gray-900 pt-3"
-  }, [_vm._v("\n                    " + _vm._s(_vm.artist.name) + "\n                ")]), _vm._v(" "), _c("p", {
-    staticClass: "text-primary text-xs"
-  }, [_vm._v("\n                    " + _vm._s(_vm.getNameCategory) + "\n                ")]), _vm._v(" "), _c("p", {
-    staticClass: "text-gray-800 text-xs italic py-5"
-  }, [_vm._v('\n                    "' + _vm._s(_vm.getBioTitle) + '"\n                ')]), _vm._v(" "), _vm.showButtonFollow ? _c("div", {
-    staticClass: "py-8"
+    staticClass: "font-semibold text-gray-900 text-xs"
   }, [_c("div", {
-    staticClass: "absolute bottom-5 inset-x-0 px-6"
-  }, [_c("FollowArtistButton", {
-    staticClass: "btn-block py-2",
+    staticClass: "pb-1"
+  }, [_vm._v(_vm._s((_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name))]), _vm._v(" "), _c("FollowArtistButton", {
     attrs: {
       artist: _vm.artist
     }
-  })], 1)]) : _vm._e()])])])]);
+  })], 1)])], 1), _vm._v(" "), _c("div", [_c("span", {
+    staticClass: "text-primary text-xs"
+  }, [_vm._v("\n            " + _vm._s(_vm.getNameQualified) + "\n        ")])])]);
 };
 
 var staticRenderFns = [];
@@ -458,18 +407,18 @@ component.options.__file = "resources/js/pages/artwork/components/FollowArtistBu
 
 /***/ }),
 
-/***/ "./resources/js/pages/profile/components/CardArtist.vue":
-/*!**************************************************************!*\
-  !*** ./resources/js/pages/profile/components/CardArtist.vue ***!
-  \**************************************************************/
+/***/ "./resources/js/pages/community/components/MiniCardArtist.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/pages/community/components/MiniCardArtist.vue ***!
+  \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _CardArtist_vue_vue_type_template_id_98aeac9e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CardArtist.vue?vue&type=template&id=98aeac9e& */ "./resources/js/pages/profile/components/CardArtist.vue?vue&type=template&id=98aeac9e&");
-/* harmony import */ var _CardArtist_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CardArtist.vue?vue&type=script&lang=js& */ "./resources/js/pages/profile/components/CardArtist.vue?vue&type=script&lang=js&");
+/* harmony import */ var _MiniCardArtist_vue_vue_type_template_id_9b961930___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MiniCardArtist.vue?vue&type=template&id=9b961930& */ "./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=template&id=9b961930&");
+/* harmony import */ var _MiniCardArtist_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MiniCardArtist.vue?vue&type=script&lang=js& */ "./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -479,9 +428,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CardArtist_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CardArtist_vue_vue_type_template_id_98aeac9e___WEBPACK_IMPORTED_MODULE_0__.render,
-  _CardArtist_vue_vue_type_template_id_98aeac9e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _MiniCardArtist_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MiniCardArtist_vue_vue_type_template_id_9b961930___WEBPACK_IMPORTED_MODULE_0__.render,
+  _MiniCardArtist_vue_vue_type_template_id_9b961930___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -491,7 +440,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/profile/components/CardArtist.vue"
+component.options.__file = "resources/js/pages/community/components/MiniCardArtist.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -526,18 +475,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/profile/components/CardArtist.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/pages/profile/components/CardArtist.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************/
+/***/ "./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardArtist_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CardArtist.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/profile/components/CardArtist.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardArtist_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MiniCardArtist_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MiniCardArtist.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MiniCardArtist_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -573,18 +522,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/profile/components/CardArtist.vue?vue&type=template&id=98aeac9e&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/pages/profile/components/CardArtist.vue?vue&type=template&id=98aeac9e& ***!
-  \*********************************************************************************************/
+/***/ "./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=template&id=9b961930&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=template&id=9b961930& ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CardArtist_vue_vue_type_template_id_98aeac9e___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CardArtist_vue_vue_type_template_id_98aeac9e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MiniCardArtist_vue_vue_type_template_id_9b961930___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MiniCardArtist_vue_vue_type_template_id_9b961930___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CardArtist_vue_vue_type_template_id_98aeac9e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CardArtist.vue?vue&type=template&id=98aeac9e& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/profile/components/CardArtist.vue?vue&type=template&id=98aeac9e&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MiniCardArtist_vue_vue_type_template_id_9b961930___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MiniCardArtist.vue?vue&type=template&id=9b961930& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/community/components/MiniCardArtist.vue?vue&type=template&id=9b961930&");
 
 
 /***/ })

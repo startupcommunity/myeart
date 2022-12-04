@@ -86,7 +86,7 @@ import LoadingTailwind from "./../../../components/LoadingTailwind.vue";
 import getDataMixin from "./../../../mixins/getDataMixin";
 
 // cantidad de obras en aumento
-const INIT_RELEASES = 2;
+const INIT_RELEASES = 4;
 let loadMoreRelease = 2;
 
 export default {
@@ -113,7 +113,7 @@ export default {
          * Verificar si hay mas publicaciones que mostrar
          */
         hasShowRelease() {
-            return this.releases.length !== this.original.length;
+            return (this.releases.length !== this.original.length) && this.releases.length;
         },
     },
     watch: {
@@ -133,7 +133,7 @@ export default {
                 .get(this.ep.releases.getAllUser)
                 .then((resp) => {
                     this.original = JSON.parse(JSON.stringify(resp.data));
-                    this.releases = resp.data.splice(INIT_RELEASES);
+                    this.releases = resp.data.splice(0, INIT_RELEASES);
                 })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));

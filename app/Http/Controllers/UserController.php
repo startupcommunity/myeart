@@ -111,6 +111,22 @@ class UserController extends Controller
     }
 
     /**
+     * Devuelve todos los artistas de la app, excluyendo los eliminados
+     * de forma random
+     *
+     * @return JsonResponse
+     */
+    public function getRandomArtists(Request $request): JsonResponse
+    {
+        try {
+            $resp = $this->db->getRandomArtists($request->all());
+            return $this->resp->json($resp, 200);
+        } catch (Exception $th) {
+            return $this->resp->json($th, 500);
+        }
+    }
+
+    /**
      * Devuelve los datos de un artista
      *
      * @return JsonResponse

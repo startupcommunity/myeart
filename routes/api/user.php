@@ -29,8 +29,15 @@ Route::group(['prefix' => 'user'], function () {
 
   /**
    * Devuelve todos los artistas de la app, excluyendo el usuario logueado y los eliminados
+   * paginados
    */
   Route::get('/get-artists', [UserController::class, 'getArtists'])->name('getArtists');
+
+  /**
+   * Devuelve todos los artistas de la app, excluyendo el usuario logueado
+   * de forma random
+   */
+  Route::get('/get-random-artists', [UserController::class, 'getRandomArtists'])->name('getRandomArtists');
 
   /**
    * Devuelve un usuario artista con sus respectivas relaciones

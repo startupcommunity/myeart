@@ -5,21 +5,11 @@
         >
             <div class="w-full flex justify-center">
                 <div class="w-28 h-28">
-                    <router-link
+                    <Avatar
+                        :artist="artist"
                         v-if="routerLink"
-                        :to="{
-                            name: 'showArtist',
-                            params: {
-                                id: artist.id,
-                            },
-                        }"
-                    >
-                        <img
-                            :src="getPathProfilePhoto"
-                            :alt="artist.name"
-                            class="object-cover object-center w-full h-full rounded-full"
-                        />
-                    </router-link>
+                        custom="object-cover object-center w-full h-full rounded-full border"
+                    />
                     <img
                         :src="getPathProfilePhoto"
                         :alt="artist.name"
@@ -52,20 +42,15 @@
                 </div>
             </div>
         </div>
-
-        <!-- <loading-overlay
-            :active="loadLiked"
-            :is-full-page="true"
-            loader="bars"
-        /> -->
     </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+import Avatar from "../../../components/Avatar.vue";
 import FollowArtistButton from "./../../artwork/components/FollowArtistButton";
 
 export default {
-    components: { FollowArtistButton },
+    components: { FollowArtistButton, Avatar },
     name: "CardArtist",
     data() {
         return {

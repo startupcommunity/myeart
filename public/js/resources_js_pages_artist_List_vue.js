@@ -600,8 +600,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _artwork_components_FollowArtistButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../artwork/components/FollowArtistButton */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Avatar.vue */ "./resources/js/components/Avatar.vue");
+/* harmony import */ var _artwork_components_FollowArtistButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../artwork/components/FollowArtistButton */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -610,9 +611,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    FollowArtistButton: _artwork_components_FollowArtistButton__WEBPACK_IMPORTED_MODULE_0__["default"]
+    FollowArtistButton: _artwork_components_FollowArtistButton__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   name: "CardArtist",
   data: function data() {
@@ -635,7 +638,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": false
     }
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
     user: "getProfile"
   })), {}, {
     /**
@@ -1647,15 +1650,17 @@ var render = function render() {
         name: "listArtist"
       }
     }
-  }, [_vm._v(" ARTISTAS ")]), _vm._v(" "), _c("a", {
+  }, [_vm._v("\n                ARTISTAS\n            ")]), _vm._v(" "), _c("a", {
     attrs: {
       href: "#"
     }
-  }, [_vm._v("EVENTOS")]), _vm._v(" "), _c("a", {
+  }, [_vm._v("EVENTOS")]), _vm._v(" "), _c("router-link", {
     attrs: {
-      href: "#"
+      to: {
+        name: "indexCommunity"
+      }
     }
-  }, [_vm._v("MI COMUNIDAD")])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                COMUNIDAD\n            ")])], 1), _vm._v(" "), _c("div", {
     staticClass: "sidenav_footer"
   }, [_c("a", {
     attrs: {
@@ -1721,7 +1726,13 @@ var render = function render() {
         name: "listArtist"
       }
     }
-  }, [_vm._v("\n                                            ARTISTAS\n                                        ")])], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
+  }, [_vm._v("\n                                            ARTISTAS\n                                        ")])], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("li", [_c("router-link", {
+    attrs: {
+      to: {
+        name: "indexCommunity"
+      }
+    }
+  }, [_vm._v("\n                                            MI COMUNIDAD\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
     staticClass: "header-icons"
@@ -1759,7 +1770,7 @@ var render = function render() {
     }
   }, [_vm._v("\n                                                            Cerrar sesión\n                                                        ")])])])]), _vm._v(" "), _c("li", [_c("div", {
     staticClass: "header-icons"
-  }, [_vm._m(2), _vm._v(" "), !_vm.isPathObrasCreate ? _c("button", {
+  }, [_vm._m(1), _vm._v(" "), !_vm.isPathObrasCreate ? _c("button", {
     staticClass: "btn btn-primary text-white px-3 py-2 rounded-lg",
     on: {
       click: function click($event) {
@@ -1784,7 +1795,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-regular fa-user text-white"
-  })])], 1), _vm._v(" "), _vm._m(3)])])])])])])])]);
+  })])], 1), _vm._v(" "), _vm._m(2)])])])])])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -1796,15 +1807,6 @@ var staticRenderFns = [function () {
       href: "#"
     }
   }, [_vm._v("EVENTOS")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("li", [_c("a", {
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("MI COMUNIDAD")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -1988,22 +1990,12 @@ var render = function render() {
     staticClass: "w-full flex justify-center"
   }, [_c("div", {
     staticClass: "w-28 h-28"
-  }, [_vm.routerLink ? _c("router-link", {
+  }, [_vm.routerLink ? _c("Avatar", {
     attrs: {
-      to: {
-        name: "showArtist",
-        params: {
-          id: _vm.artist.id
-        }
-      }
+      artist: _vm.artist,
+      custom: "object-cover object-center w-full h-full rounded-full border"
     }
-  }, [_c("img", {
-    staticClass: "object-cover object-center w-full h-full rounded-full",
-    attrs: {
-      src: _vm.getPathProfilePhoto,
-      alt: _vm.artist.name
-    }
-  })]) : _c("img", {
+  }) : _c("img", {
     staticClass: "object-cover object-center w-full h-full rounded-full border",
     attrs: {
       src: _vm.getPathProfilePhoto,

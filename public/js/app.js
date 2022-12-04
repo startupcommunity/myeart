@@ -2402,6 +2402,9 @@ var endpoints = {
     // colección de artistas activos
     getArtists: "".concat(API, "/user/get-artists"),
     // get
+    // colección de artistas activos, de forma random
+    getRandomArtists: "".concat(API, "/user/get-random-artists"),
+    // get
     // obtiene todos los datos de un artista (params :id)
     getArtist: "".concat(API, "/user/get-artist/") // get
 
@@ -2427,7 +2430,10 @@ var endpoints = {
     "delete": "".concat(API, "/releases/delete/"),
     // delete
     // obtiene todas las publicaciones del usuario
-    getAllUser: "".concat(API, "/releases/get-user-releases") // get
+    getAllUser: "".concat(API, "/releases/get-user-releases"),
+    // get
+    // get publicaciones de artistas seguidos
+    followArtists: "".concat(API, "/releases/get-follow-artists-releases") // get
 
   }
 };
@@ -5040,14 +5046,14 @@ var ifAuthenticated = function ifAuthenticated(to, from, next) {
   next("/home");
 };
 
-var routes = [// 404
-{
+var routes = [{
   path: "*",
+  // 404
   name: "NotFound",
   component: importPage("errors/404")
-}, // 500
-{
+}, {
   path: "/500",
+  // 500
   name: "ServerError",
   component: importPage("errors/500")
 }, {
@@ -5083,7 +5089,8 @@ var routes = [// 404
   path: "/usuario/perfil/:id/:section?",
   component: importPage("profile/ProfileUser"),
   beforeEnter: ifAuthenticated
-}, {
+}, // ------------- Obras -------------
+{
   name: "createArtwork",
   path: "/obras/crear",
   component: importPage("artwork/CreateArtwork"),
@@ -5109,7 +5116,8 @@ var routes = [// 404
   path: "/obras/:id",
   component: importPage("artwork/ShowArtwork"),
   beforeEnter: ifAuthenticated
-}, {
+}, // ------------- Artistas -------------
+{
   name: "listArtist",
   path: "/artistas",
   component: importPage("artist/List"),
@@ -5118,6 +5126,17 @@ var routes = [// 404
   name: "showArtist",
   path: "/artista/:id",
   component: importPage("artist/Show"),
+  beforeEnter: ifAuthenticated
+}, // ------------- Comunidad -------------
+{
+  name: "indexCommunity",
+  path: "/comunidad",
+  component: importPage("community/Index"),
+  beforeEnter: ifAuthenticated
+}, {
+  name: "searchHashTag",
+  path: "/buscar/:hashtag",
+  // component: importPage("community/Index"),
   beforeEnter: ifAuthenticated
 }];
 var config = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
@@ -76936,6 +76955,26 @@ var map = {
 		"./resources/js/pages/auth/register.vue",
 		"resources_js_pages_auth_register_vue"
 	],
+	"./community/Index.vue": [
+		"./resources/js/pages/community/Index.vue",
+		"resources_js_pages_community_Index_vue"
+	],
+	"./community/components/CardEventCol.vue": [
+		"./resources/js/pages/community/components/CardEventCol.vue",
+		"resources_js_pages_community_components_CardEventCol_vue"
+	],
+	"./community/components/MiniCardArtist.vue": [
+		"./resources/js/pages/community/components/MiniCardArtist.vue",
+		"resources_js_pages_community_components_MiniCardArtist_vue"
+	],
+	"./community/sections/index/Filters.vue": [
+		"./resources/js/pages/community/sections/index/Filters.vue",
+		"resources_js_pages_community_sections_index_Filters_vue"
+	],
+	"./community/sections/index/Title.vue": [
+		"./resources/js/pages/community/sections/index/Title.vue",
+		"resources_js_pages_community_sections_index_Title_vue"
+	],
 	"./dashboard/dashboard.vue": [
 		"./resources/js/pages/dashboard/dashboard.vue",
 		"resources_js_pages_dashboard_dashboard_vue"
@@ -77353,7 +77392,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_CardBlog_vue":1,"resources_js_pages_artist_components_CardEvent_vue":1,"resources_js_pages_artist_components_CardRelease_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artist_sections_AboutMe_vue":1,"resources_js_pages_artist_sections_Blog_vue":1,"resources_js_pages_artist_sections_Event_vue":1,"resources_js_pages_artist_sections_Hero_vue":1,"resources_js_pages_artist_sections_PostHero_vue":1,"resources_js_pages_artist_sections_Release_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CardComment_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_FormQuestion_vue":1,"resources_js_pages_artwork_components_ResponseCommentDialog_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_Comment_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_errors_404_vue":1,"resources_js_pages_errors_500_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_layouts_ErrorLayout_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_components_CardRelease_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_DesktopKeypad_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_HeroProfile_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1,"resources_js_pages_profile_sections_Release_vue":1,"resources_js_pages_release_Create_vue":1,"resources_js_pages_release_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_CardBlog_vue":1,"resources_js_pages_artist_components_CardEvent_vue":1,"resources_js_pages_artist_components_CardRelease_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artist_sections_AboutMe_vue":1,"resources_js_pages_artist_sections_Blog_vue":1,"resources_js_pages_artist_sections_Event_vue":1,"resources_js_pages_artist_sections_Hero_vue":1,"resources_js_pages_artist_sections_PostHero_vue":1,"resources_js_pages_artist_sections_Release_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CardComment_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_FormQuestion_vue":1,"resources_js_pages_artwork_components_ResponseCommentDialog_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_Comment_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_community_Index_vue":1,"resources_js_pages_community_components_CardEventCol_vue":1,"resources_js_pages_community_components_MiniCardArtist_vue":1,"resources_js_pages_community_sections_index_Filters_vue":1,"resources_js_pages_community_sections_index_Title_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_errors_404_vue":1,"resources_js_pages_errors_500_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_layouts_ErrorLayout_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_components_CardRelease_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_DesktopKeypad_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_HeroProfile_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1,"resources_js_pages_profile_sections_Release_vue":1,"resources_js_pages_release_Create_vue":1,"resources_js_pages_release_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

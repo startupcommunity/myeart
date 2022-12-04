@@ -43,9 +43,13 @@
                     SUBIR OBRA <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 </button>
                 <router-link :to="{ name: 'listArtwork' }"> OBRAS </router-link>
-                <router-link :to="{ name: 'listArtist' }"> ARTISTAS </router-link>
+                <router-link :to="{ name: 'listArtist' }">
+                    ARTISTAS
+                </router-link>
                 <a href="#">EVENTOS</a>
-                <a href="#">MI COMUNIDAD</a>
+                <router-link :to="{ name: 'indexCommunity' }">
+                    COMUNIDAD
+                </router-link>
             </div>
             <div class="sidenav_footer">
                 <a href="#" @click.prevent="logout">CERRAR SESIÓN</a>
@@ -108,7 +112,11 @@
                                             <a href="#">EVENTOS</a>
                                         </li>
                                         <li>
-                                            <a href="#">MI COMUNIDAD</a>
+                                            <router-link
+                                                :to="{ name: 'indexCommunity' }"
+                                            >
+                                                MI COMUNIDAD
+                                            </router-link>
                                         </li>
 
                                         <!-- area del perfil -->

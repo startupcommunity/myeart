@@ -113,7 +113,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
  // cantidad de obras en aumento
 
-var INIT_RELEASES = 2;
+var INIT_RELEASES = 4;
 var loadMoreRelease = 2;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Artwork",
@@ -144,7 +144,7 @@ var loadMoreRelease = 2;
      * Verificar si hay mas publicaciones que mostrar
      */
     hasShowRelease: function hasShowRelease() {
-      return this.releases.length !== this.original.length;
+      return this.releases.length !== this.original.length && this.releases.length;
     }
   },
   watch: {
@@ -164,7 +164,7 @@ var loadMoreRelease = 2;
       this.loading = true;
       this.axios.get(this.ep.releases.getAllUser).then(function (resp) {
         _this.original = JSON.parse(JSON.stringify(resp.data));
-        _this.releases = resp.data.splice(INIT_RELEASES);
+        _this.releases = resp.data.splice(0, INIT_RELEASES);
       })["catch"](function (error) {
         return _this.manageError(error);
       })["finally"](function () {

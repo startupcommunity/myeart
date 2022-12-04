@@ -23,15 +23,13 @@ const ifAuthenticated = (to, from, next) => {
 };
 
 export const routes = [
-    // 404
     {
-        path: "*",
+        path: "*", // 404
         name: "NotFound",
         component: importPage("errors/404"),
     },
-    // 500
     {
-        path: "/500",
+        path: "/500", // 500
         name: "ServerError",
         component: importPage("errors/500"),
     },
@@ -74,6 +72,8 @@ export const routes = [
         component: importPage("profile/ProfileUser"),
         beforeEnter: ifAuthenticated,
     },
+
+    // ------------- Obras -------------
     {
         name: "createArtwork",
         path: "/obras/crear",
@@ -104,6 +104,8 @@ export const routes = [
         component: importPage("artwork/ShowArtwork"),
         beforeEnter: ifAuthenticated,
     },
+
+    // ------------- Artistas -------------
     {
         name: "listArtist",
         path: "/artistas",
@@ -114,6 +116,20 @@ export const routes = [
         name: "showArtist",
         path: "/artista/:id",
         component: importPage("artist/Show"),
+        beforeEnter: ifAuthenticated,
+    },
+
+    // ------------- Comunidad -------------
+    {
+        name: "indexCommunity",
+        path: "/comunidad",
+        component: importPage("community/Index"),
+        beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "searchHashTag",
+        path: "/buscar/:hashtag",
+        // component: importPage("community/Index"),
         beforeEnter: ifAuthenticated,
     },
 ];

@@ -211,4 +211,15 @@ class User extends Authenticatable
     {
         return $query->whereHas('artworks', fn ($art) => $art->category($cat, $sub, $label));
     }
+
+    /**
+     * Devuelve las publicaciones de los usuarios seguidos
+     *
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeFollowReleases($query)
+    {
+        return $query->whereHas('followingArtists', fn ($art) => $art->whereHas('following', fn ($rel) => $rel->releases()));
+    }
 }

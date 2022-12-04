@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -42,5 +43,25 @@ class UserRelease extends Model
     public function likes(): HasMany
     {
         return $this->hasMany(ReleaseLike::class, 'release_id');
+    }
+
+    /**
+     * Devuelve los comentarios de la publicación
+     *
+     * @return HasMany
+     */
+    // public function comments(): HasMany
+    // {
+    //     return $this->hasMany(ReleaseComment::class, 'release_id');
+    // }
+
+    /**
+     * Devuelve el dueño de la publicación
+     *
+     * @return BelongsTo
+     */
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

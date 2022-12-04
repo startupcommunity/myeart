@@ -93,4 +93,20 @@ class UserReleaseController extends Controller
             return $this->resp->json($e, 500);
         }
     }
+
+    /**
+     * Devuelve todas las publicaciones de los artistas seguidos
+     * por el usuario logueado
+     *
+     * @return Response
+     */
+    public function getReleaseFollowArtists(): JsonResponse
+    {
+        try {
+            $data = $this->db->getReleaseFollowArtists();
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
 }

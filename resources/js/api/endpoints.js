@@ -56,6 +56,9 @@ const endpoints = {
         // colección de artistas activos
         getArtists: `${API}/user/get-artists`, // get
 
+        // colección de artistas activos, de forma random
+        getRandomArtists: `${API}/user/get-random-artists`, // get
+
         // obtiene todos los datos de un artista (params :id)
         getArtist: `${API}/user/get-artist/`, // get
     },
@@ -80,6 +83,9 @@ const endpoints = {
 
         // obtiene todas las publicaciones del usuario
         getAllUser: `${API}/releases/get-user-releases`, // get
+
+        // get publicaciones de artistas seguidos
+        followArtists: `${API}/releases/get-follow-artists-releases`, // get
     },
 };
 

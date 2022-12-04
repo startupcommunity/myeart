@@ -1,34 +1,38 @@
 <template>
-    <div class="overflow-hidden">
+    <div>
         <div class="flex flex-wrap items-start">
             <div class="w-full">
-                <div class="flex justify-between items-center py-2">
+                <div class="flex justify-between items-center pb-2">
                     <div class="flex flex-row justify-start items-center">
                         <Avatar :artist="artist" />
                         <div class="mt-4 ml-2">
                             <p class="font-medium text-gray-900 text-xs">
                                 {{ artist?.name }}
                                 <br />
-                                <span class="text-gray-400"
-                                    >Museo {{ release?.museum }}
+                                <span class="text-gray-400">
+                                    {{ release?.location }}
                                 </span>
                             </p>
                         </div>
                     </div>
-                    <div>
+                    <div v-if="optionButton">
                         <v-btn text>...</v-btn>
                     </div>
                 </div>
             </div>
-            <div class="w-full h-96 md:h-[24rem]">
+            <div class="w-full h-60">
                 <img
                     class="w-full h-full object-cover object-center"
-                    :src="release?.image"
+                    :src="getImage"
                     alt="release"
                 />
             </div>
-            <div class="w-full px-4">
-                <div class="flex justify-between py-3">
+            <div class="w-full">
+                <!-- menu default -->
+                <div
+                    class="flex justify-between py-3"
+                    v-if="menuButton && !menuDate"
+                >
                     <div class="flex gap-3">
                         <button>
                             <i
@@ -68,17 +72,52 @@
                         </button>
                     </div>
                 </div>
-                <div class="font-extra-bold text-xs mb-1">
-                    <span class="uppercase">{{ artist?.name }}</span>
-                    <span class="font-normal">
-                        {{ release?.text }}
-                    </span>
+
+                <!-- menu date and buttons -->
+                <div
+                    class="flex justify-between py-2"
+                    v-if="menuDate && !menuButton"
+                >
+                    <div>
+                        <span class="text-sm text-gray-500 font-medium">
+                            {{ release?.created_at | formatDate }}
+                        </span>
+                    </div>
+                    <div class="flex gap-2 items-center justify-end">
+                        <button>
+                            <i
+                                class="fa-regular fa-comment text-gray-500 text-base"
+                            ></i>
+                        </button>
+                        <button>
+                            <i
+                                class="fa-regular fa-heart text-gray-500 text-base"
+                            ></i>
+                        </button>
+                        <button>
+                            <i
+                                class="fa-regular fa-bookmark text-gray-500 text-base"
+                            ></i>
+                        </button>
+                        <button>
+                            <i
+                                class="fa-solid fa-share-nodes text-gray-500 text-base"
+                            ></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="text-app-hashtag text-xs font-medium mb-1">
-                    {{ release?.hashtag }}
+
+                <div class="font-bold text-xs mb-1">
+                    <span class="uppercase">{{ artist?.name }}</span>
+                    <span class="font-normal" v-html="getText"></span>
                 </div>
                 <div class="text-xs font-semibold text-gray-400">
-                    10 comentarios
+                    <span v-if="countComment">
+                        Ver los {{ countComment }} comentarios
+                    </span>
+                    <span v-else>
+                        Aún no hay comentarios
+                    </span>
                 </div>
             </div>
         </div>
@@ -98,6 +137,18 @@ export default {
             type: Object,
             default: () => {},
         },
+        optionButton: {
+            type: Boolean,
+            default: true,
+        },
+        menuButton: {
+            type: Boolean,
+            default: true,
+        },
+        menuDate: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         /**
@@ -106,8 +157,72 @@ export default {
         profilePhoto() {
             const artist = this.artist;
             if (!artist?.profile_photo) return this.getURLDefaultProfilePhoto;
-
             return `${this.pathProfilePhoto + artist.profile_photo}`;
+        },
+
+        /**
+         * Devuelve la imagen de la publicación
+         */
+        getImage() {
+            const image = this.release?.image;
+            if (!image) return this.getDefaultImageRelease;
+            return `${this.pathReleaseImage + image}`;
+        },
+
+        /**
+         * Evalúa el text de la publicación, si tiene hashtag lo convierte en link
+         */
+        getText() {
+            // acceder al filter de vue para convertir el texto en link
+            const text = this.release?.text;
+            if (!text) return "";
+            return this.$options.filters.hashTag(text);
+        },
+
+        /**
+         * Devuelve el número de comentarios
+         */
+        countComment() {
+            return this.release?.comments?.length || 0;
+        },
+    },
+    filters: {
+        /**
+         * Formatear la fecha del evento, en un formato
+         * de texto español, ejemplo:
+         * Lunes, 1 de Enero de 2021
+         * @param {String} date
+         */
+        formatDate(date) {
+            const options = {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            };
+            return new Date(date).toLocaleDateString("es-ES", options);
+        },
+
+        /**
+         * Filtrar el texto de la publicación, para
+         * convertir los hashtags en un router-link
+         * con class text-primary
+         *
+         * @param {String} text
+         */
+        hashTag(text) {
+            const regex = /#(\w+)/g;
+            const matches = text.match(regex);
+            if (!matches) return text;
+            const result = text.replace(regex, (match) => {
+                // match sin el #
+                const matchWithoutHash = match.replace("#", "");
+
+                // result
+                return `\n<a class="text-primary" href="/buscar/${matchWithoutHash}" target="_blank">${match}</a>`;
+            });
+
+            return result;
         },
     },
 };

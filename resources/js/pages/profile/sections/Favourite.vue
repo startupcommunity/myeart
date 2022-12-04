@@ -71,6 +71,7 @@
                         :key="followArt.id"
                         :artist="followArt.following"
                         class="md:w-1/2"
+                        :router-link="true"
                     />
                 </div>
             </div>

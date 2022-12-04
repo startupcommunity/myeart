@@ -7,7 +7,6 @@
 
 namespace App\Querys;
 
-use App\Enums\ProfileTypeEnum;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -44,7 +43,7 @@ class UserDB
     /**
      * Devuelve todos los artistas de la app, excluyendo  los eliminados
      * y los que no tengan obras subidas
-     * 
+     *
      * @return Collection
      */
     public function getArtists(array $filters): LengthAwarePaginator
@@ -71,6 +70,24 @@ class UserDB
         }
 
         return $query->paginate(self::PAGINATE_ARTIST, '*', 'page', $data['page']);
+    }
+
+    /**
+     * Devuelve los artistas seguidos por el usuario logueado
+     * de forma random
+     *
+     * @return Collection
+     */
+    public function getRandomArtists(): Collection
+    {
+        $query = User::with(['profile', 'artworks.categories'])
+            ->withCount('artworks')
+            ->having('artworks_count', '>', 0)
+            ->inRandomOrder()
+            ->notUser(auth()->user()->id)
+            ->limit(10);
+
+        return $query->get();
     }
 
     /**
