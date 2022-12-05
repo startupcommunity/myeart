@@ -143,6 +143,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Devuelve las publicaciones guardadas como favoritas
+     *
+     * @return HasMany
+     */
+    public function favoriteReleases(): HasMany
+    {
+        return $this->hasMany(FavoriteRelease::class, 'user_id');
+    }
+
+    /**
      * devuelve las direcciones de envío del usuario
      *
      * @return HasMany

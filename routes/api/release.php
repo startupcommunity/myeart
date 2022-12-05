@@ -22,6 +22,16 @@ Route::group(['prefix' => 'releases'], function () {
   Route::post('/store', [UserReleaseController::class, 'store'])->name('storeRelease');
 
   /**
+   * Agrega un like a la publicación
+   */
+  Route::post('/like', [UserReleaseController::class, 'like'])->name('likeRelease');
+
+  /**
+   * elimina un like a la publicación
+   */
+  Route::post('/dislike', [UserReleaseController::class, 'dislike'])->name('dislikeRelease');
+
+  /**
    * Almacena los datos y actualiza una publicación
    */
   Route::put('/update/{id}', [UserReleaseController::class, 'update'])->name('updateRelease');
@@ -30,4 +40,14 @@ Route::group(['prefix' => 'releases'], function () {
    * Elimina una publicación
    */
   Route::delete('/delete/{id}', [UserReleaseController::class, 'destroy'])->name('deleteRelease');
+
+  /**
+   * Agrega a favoritos una publicación
+   */
+  Route::post('/add-favorite', [UserReleaseController::class, 'addFavorite'])->name('addFavoriteRelease');
+
+  /**
+   * Agrega a favoritos una publicación
+   */
+  Route::post('/remove-favorite', [UserReleaseController::class, 'removeFavorite'])->name('removeFavoriteRelease');
 });

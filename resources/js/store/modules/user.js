@@ -6,6 +6,7 @@ const state = {
         profile: {},
         social_network: {},
         following_artists: [],
+        favorite_releases: [],
     },
 };
 

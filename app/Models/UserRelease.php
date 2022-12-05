@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class UserRelease extends Model
 {
@@ -24,6 +25,17 @@ class UserRelease extends Model
      * @var array
      */
     protected $guarded = [];
+
+    // boot
+    protected static function boot()
+    {
+        parent::boot();
+
+        // crear slug cuando se crea una nueva publicación
+        static::creating(function ($release) {
+            $release->slug = Str::slug($release->text);
+        });
+    }
 
     /**
      * Devuelve los usuarios etiquetados

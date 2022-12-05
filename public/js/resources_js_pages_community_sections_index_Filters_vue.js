@@ -26,6 +26,14 @@ __webpack_require__.r(__webpack_exports__);
         sortBy: 1
       }
     };
+  },
+  watch: {
+    filters: {
+      handler: function handler() {
+        this.$emit("filters", this.filters);
+      },
+      deep: true
+    }
   }
 });
 

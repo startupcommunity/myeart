@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Factories\ReleaseFactory;
+use App\Http\Requests\CreateFavoriteRelease;
+use App\Http\Requests\CreateReleaseLike;
 use App\Http\Requests\CreateUserReleaseRequest;
 use App\Models\UserRelease;
 use App\Querys\ReleaseDB;
@@ -100,10 +102,74 @@ class UserReleaseController extends Controller
      *
      * @return Response
      */
-    public function getReleaseFollowArtists(): JsonResponse
+    public function getReleaseFollowArtists(Request $request): JsonResponse
     {
         try {
-            $data = $this->db->getReleaseFollowArtists();
+            $data = $this->db->getReleaseFollowArtists($request);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Agrega un like a la publicación
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function like(CreateReleaseLike $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->like($request);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * elimina un like a la publicación
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function dislike(CreateReleaseLike $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->dislike($request);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Agrega a favoritos una publicación
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addFavorite(CreateFavoriteRelease $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->addFavorite($request);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Elimina de favoritos una publicación
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function removeFavorite(CreateFavoriteRelease $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->removeFavorite($request);
             return $this->resp->json($data, 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);

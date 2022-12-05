@@ -23,7 +23,7 @@ class ReleaseDB
    *
    * @return SupportCollection|Array
    */
-  public function getReleaseFollowArtists(): array|SupportCollection
+  public function getReleaseFollowArtists($request = null): array|SupportCollection
   {
     $user = auth()->user();
     $data =  $user
@@ -36,6 +36,16 @@ class ReleaseDB
 
     // devolver solo las publicaciones de los artistas
     $data = $data->count() ?  $data->pluck('following.releases')->flatten() : [];
+
+    // si se envía un request, se filtra por la mas reciente
+    if ($request->sortBy && $request->sortBy == 1) {
+      $data = $data->sortByDesc('created_at')->values();
+    }
+
+    // ordenar por orden alfabético
+    if ($request->sortBy && $request->sortBy == 2) {
+      $data = $data->sortBy('text')->values();
+    }
 
     return $data;
   }

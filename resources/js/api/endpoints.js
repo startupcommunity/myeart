@@ -23,10 +23,10 @@ const endpoints = {
 
     // direcciones del usuario
     shippingAddress: {
-        save: `${API}/shippingAddress/save`,
-        update: `${API}/shippingAddress/update/`,
-        delete: `${API}/shippingAddress/delete/`,
-        getShippingAddress: `${API}/shippingAddress/getShippingAddress`,
+        save: `${API}/shippingAddress/save`, // post
+        update: `${API}/shippingAddress/update/`, // put
+        delete: `${API}/shippingAddress/delete/`, // delete
+        getShippingAddress: `${API}/shippingAddress/getShippingAddress`, // get
     },
 
     // acceso global
@@ -86,6 +86,18 @@ const endpoints = {
 
         // get publicaciones de artistas seguidos
         followArtists: `${API}/releases/get-follow-artists-releases`, // get
+
+        // agrega un like a una publicación
+        like: `${API}/releases/like`, // post
+
+        // elimina un like a una publicación
+        dislike: `${API}/releases/dislike`, // post
+
+        // agregar a favoritos la publicación
+        addFav: `${API}/releases/add-favorite`, // post
+
+        // eliminar de favoritos la publicación
+        removeFav: `${API}/releases/remove-favorite`, // post
     },
 };
 

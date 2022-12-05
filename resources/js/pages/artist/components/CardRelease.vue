@@ -83,27 +83,15 @@
                             {{ release?.created_at | formatDate }}
                         </span>
                     </div>
-                    <div class="flex gap-2 items-center justify-end">
+                    <div class="flex gap-2 items-start justify-end">
                         <button>
                             <i
                                 class="fa-regular fa-comment text-gray-500 text-base"
                             ></i>
                         </button>
-                        <button>
-                            <i
-                                class="fa-regular fa-heart text-gray-500 text-base"
-                            ></i>
-                        </button>
-                        <button>
-                            <i
-                                class="fa-regular fa-bookmark text-gray-500 text-base"
-                            ></i>
-                        </button>
-                        <button>
-                            <i
-                                class="fa-solid fa-share-nodes text-gray-500 text-base"
-                            ></i>
-                        </button>
+                        <LikeButton :release="release" />
+                        <FavButton :release="release" />
+                        <ShareButton :release="release" />
                     </div>
                 </div>
 
@@ -115,9 +103,7 @@
                     <span v-if="countComment">
                         Ver los {{ countComment }} comentarios
                     </span>
-                    <span v-else>
-                        Aún no hay comentarios
-                    </span>
+                    <span v-else> Aún no hay comentarios </span>
                 </div>
             </div>
         </div>
@@ -125,8 +111,12 @@
 </template>
 <script>
 import Avatar from "../../../components/Avatar.vue";
+import FavButton from "../../release/components/FavButton.vue";
+import LikeButton from "../../release/components/LikeButton.vue";
+import ShareButton from "../../release/components/ShareButton.vue";
+
 export default {
-    components: { Avatar },
+    components: { Avatar, ShareButton, LikeButton, FavButton },
     name: "CardEvent",
     props: {
         release: {

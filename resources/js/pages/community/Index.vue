@@ -9,7 +9,7 @@
         <Title />
 
         <!-- section filters -->
-        <Filters />
+        <Filters @filters="getReleaseFollowArtists" />
 
         <!-- content -->
         <section class="bg-white">
@@ -33,7 +33,7 @@
 
                     <!-- publicaciones -->
                     <div class="w-full md:w-1/2 md:px-16">
-                        <div class="flex flex-col -mt-5">
+                        <div class="flex flex-col -mt-5 pb-5">
                             <CardRelease
                                 v-for="release in releases"
                                 :key="release.id"
@@ -42,8 +42,20 @@
                                 :optionButton="false"
                                 :menuButton="false"
                                 :menuDate="true"
-                                class="mb-5"
+                                class="mb-5 animate-fade-in-down"
                             />
+
+                            <div
+                                class="py-5 flex justify-center"
+                                v-if="isMoreReleasesToShow"
+                            >
+                                <button
+                                    class="bg-zinc-900 px-5 py-3 uppercase text-gray-50 hover:animate-shadow-and-color-app rounded text-sm"
+                                    @click="showMoreReleases"
+                                >
+                                    Ver más publicaciones
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <!-- /publicaciones -->
@@ -77,8 +89,9 @@ import MiniCardArtist from "./components/MiniCardArtist.vue";
 import CardRelease from "../artist/components/CardRelease.vue";
 
 const MAX_EVENTS = 6;
-const MAX_INIT_RELEASES = 4;
 const RANDOM_ARTIST = 6;
+const MAX_INIT_RELEASES = 4;
+const SHOW_MORE_RELEASES = 2;
 
 export default {
     name: "Index",
@@ -96,6 +109,7 @@ export default {
             events: [],
             artists: [],
             releases: [],
+            original: [],
             loading: false,
         };
     },
@@ -153,11 +167,16 @@ export default {
         this.getRandomArtists();
 
         // publicaciones
-        this.getReleaseFollowArtists();
+        const filters = { sortBy: 1 };
+        this.getReleaseFollowArtists(filters);
     },
     computed: {
         user() {
             return this.$store.getters.getProfile;
+        },
+
+        isMoreReleasesToShow() {
+            return this.releases.length < this.original.length;
         },
     },
     methods: {
@@ -177,18 +196,26 @@ export default {
         /**
          * Obtiene los publicaciones de los artistas seguidos
          */
-        getReleaseFollowArtists() {
+        getReleaseFollowArtists(filters = null) {
             this.loading = true;
             this.axios
-                .get(this.ep.releases.followArtists)
-                .then(async (resp) => (this.releases = await resp.data))
-                .then(() => this.releases.slice(0, MAX_INIT_RELEASES))
+                .get(this.ep.releases.followArtists, { params: filters })
+                .then(async (resp) => {
+                    this.original = JSON.parse(JSON.stringify(await resp.data));
+                    this.releases = resp.data.slice(0, MAX_INIT_RELEASES);
+                })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));
         },
 
-
-        // TODO: Realizar la paginación
+        /**
+         * Muestra más publicaciones
+         */
+        showMoreReleases() {
+            const backup = JSON.parse(JSON.stringify(this.original));
+            const add = this.releases.length + SHOW_MORE_RELEASES;
+            this.releases = backup.slice(0, add);
+        },
     },
 };
 </script>

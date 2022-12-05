@@ -65,5 +65,14 @@ export default {
             },
         };
     },
+
+    watch: {
+        filters: {
+            handler() {
+                this.$emit("filters", this.filters);
+            },
+            deep: true,
+        },
+    },
 };
 </script>

@@ -2,6 +2,9 @@
 
 namespace App\Factories;
 
+use App\Models\FavoriteRelease;
+use App\Models\ReleaseLike;
+use App\Models\User;
 use App\Models\UserRelease;
 use App\Utils\AppStorage;
 use Illuminate\Http\Request;
@@ -116,5 +119,85 @@ class ReleaseFactory
     $release->labels()->delete();
 
     return $deleted;
+  }
+
+  /**
+   * Agrega un like a la publicación
+   *
+   * @param Request $request
+   * @return null|ReleaseLike
+   */
+  public function like($request): ?ReleaseLike
+  {
+    $release = UserRelease::find($request->release_id);
+    $liked = $release->likes()->where('user_id', $request->user_id)->first();
+
+    // si ya el usuario dio like return false
+    if ($liked) {
+      return null;
+    }
+
+    // si no, crear like
+    return $release->likes()->create(['user_id' => $request->user_id]);
+  }
+
+  /**
+   * Elimina un like a la publicación
+   *
+   * @param Request $request
+   * @return boolean
+   */
+  public function dislike($request): bool
+  {
+    $release = UserRelease::find($request->release_id);
+    $liked = $release->likes()->where('user_id', $request->user_id)->first();
+
+    // si no existe el like return false
+    if (!$liked) {
+      return false;
+    }
+
+    // si existe, eliminar like
+    return $liked->delete();
+  }
+
+  /**
+   * Agrega a favoritos una publicación
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function addFavorite($request): bool|FavoriteRelease
+  {
+    $user = User::find($request->user_id);
+    $isFav = $user->favoriteReleases()->where('release_id', $request->release_id)->first();
+
+    // si ya el usuario la tiene en favoritos return false
+    if ($isFav) {
+      return false;
+    }
+
+    // si no, agregar a favoritos
+    return $user->favoriteReleases()->create(['release_id' => $request->release_id]);
+  }
+
+  /**
+   * elimina de favoritos una publicación
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function removeFavorite($request): bool
+  {
+    $user = User::find($request->user_id);
+    $isFav = $user->favoriteReleases()->where('release_id', $request->release_id)->first();
+
+    // si no existe en favoritos return false
+    if (!$isFav) {
+      return false;
+    }
+
+    // si existe, eliminar de favoritos
+    return $isFav->delete();
   }
 }
