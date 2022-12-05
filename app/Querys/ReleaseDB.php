@@ -21,9 +21,9 @@ class ReleaseDB
   /**
    * Devuelve todas las publicaciones de los usuarios seguidos
    *
-   * @return Collection|null
+   * @return SupportCollection|Array
    */
-  public function getReleaseFollowArtists(): ?SupportCollection
+  public function getReleaseFollowArtists(): array|SupportCollection
   {
     $user = auth()->user();
     $data =  $user
