@@ -41,7 +41,7 @@ class ReleaseDB
     $data = $data->filter(fn ($artist) => $artist->following->releases->count());
 
     // devolver solo las publicaciones de los artistas
-    $data = $data->count() ? $data->pluck('following.releases')->flatten() : [];
+    $data = $data->count() ? $data->pluck('following.releases')->flatten() : $data;
 
     // se filtra por la mas reciente
     $data = $option1 ? $data->sortByDesc('created_at')->values() : $data;
