@@ -46,9 +46,9 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "flex justify-center items-center"
   }, [_c("div", {
-    staticClass: "w-full"
+    staticClass: "w-full border-b border-zinc-300 pb-4 md:border-0 md:pb-0"
   }, [_c("h1", {
-    staticClass: "text-zinc-900 font-bold tracking-wide text-3xl text-center"
+    staticClass: "text-zinc-900 font-bold tracking-wide text-lg md:text-3xl text-center"
   }, [_vm._v("\n                    Descubre las publicaciones de tu comunidad\n                ")])])])])]);
 }];
 render._withStripped = true;

@@ -20,9 +20,9 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full h-60">
+            <div class="w-full h-full">
                 <img
-                    class="w-full h-full object-cover object-center"
+                    class="w-full h-72 md:h-60 object-cover object-center"
                     :src="getImage"
                     alt="release"
                 />

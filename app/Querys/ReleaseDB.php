@@ -2,11 +2,15 @@
 
 namespace App\Querys;
 
+use App\Querys\Traits\UseReleaseTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
 
 class ReleaseDB
 {
+
+  use UseReleaseTrait;
+
   /**
    * Devuelve todas las publicaciones del usuario logueado
    *
@@ -26,26 +30,24 @@ class ReleaseDB
   public function getReleaseFollowArtists($request = null): array|SupportCollection
   {
     $user = auth()->user();
-    $data =  $user
-      ->followingArtists()
-      ->with(['following.releases' => fn ($query) => $query->with(['labels', 'likes', 'creator'])])
-      ->get();
+    $sortBy = $this->getSortByInt($request->sortBy);
+    $option1 = $this->isMoreRecent($sortBy);
+    $option2 = $this->isAlphabeticalOrder($sortBy);
+
+    // artistas y sus publicaciones
+    $data =  $user->followingArtistReleases()->get();
 
     // devolver solo los artistas que tengan publicaciones
-    $data = $data->filter(fn ($artist) => $artist->following->releases->count() > 0);
+    $data = $data->filter(fn ($artist) => $artist->following->releases->count());
 
     // devolver solo las publicaciones de los artistas
-    $data = $data->count() ?  $data->pluck('following.releases')->flatten() : [];
+    $data = $data->count() ? $data->pluck('following.releases')->flatten() : [];
 
-    // si se envía un request, se filtra por la mas reciente
-    if ($request->sortBy && $request->sortBy == 1) {
-      $data = $data->sortByDesc('created_at')->values();
-    }
+    // se filtra por la mas reciente
+    $data = $option1 ? $data->sortByDesc('created_at')->values() : $data;
 
-    // ordenar por orden alfabético
-    if ($request->sortBy && $request->sortBy == 2) {
-      $data = $data->sortBy('text')->values();
-    }
+    // se filtra por orden alfabético
+    $data = $option2 ? $data->sortBy('text')->values() : $data;
 
     return $data;
   }

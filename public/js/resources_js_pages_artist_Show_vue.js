@@ -1669,9 +1669,9 @@ var render = function render() {
       text: ""
     }
   }, [_vm._v("...")])], 1) : _vm._e()])]), _vm._v(" "), _c("div", {
-    staticClass: "w-full h-60"
+    staticClass: "w-full h-full"
   }, [_c("img", {
-    staticClass: "w-full h-full object-cover object-center",
+    staticClass: "w-full h-72 md:h-60 object-cover object-center",
     attrs: {
       src: _vm.getImage,
       alt: "release"

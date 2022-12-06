@@ -30,6 +30,8 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     filters: {
       handler: function handler() {
+        // convertir a entero antes de enviar
+        this.filters.sortBy = parseInt(this.filters.sortBy);
         this.$emit("filters", this.filters);
       },
       deep: true
@@ -57,13 +59,15 @@ var render = function render() {
   return _c("section", {
     staticClass: "bg-white"
   }, [_c("div", {
-    staticClass: "py-10 container"
+    staticClass: "py-5 md:py-10 container px-5 px-md-0"
   }, [_c("div", {
-    staticClass: "flex justify-center items-center md:gap-16 border-b border-zinc-700 pb-5"
-  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "flex flex-col md:flex-row justify-center items-center md:gap-16 md:border-b border-zinc-700 md:pb-5"
+  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
+    staticClass: "order-1 order-md-3"
+  }, [_c("div", {
     staticClass: "flex flex-wrap items-center"
   }, [_vm._m(2), _vm._v(" "), _c("v-select", {
-    staticClass: "pl-2 uppercase w-52",
+    staticClass: "pl-2 uppercase w-52 text-sm md:text-base mt-2 md:mt-0",
     attrs: {
       items: _vm.sortBy,
       "item-text": "text",
@@ -86,11 +90,11 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "md:border-r border-gray-900 h-full md:pr-16"
+    staticClass: "md:border-r border-gray-900 h-full md:pr-16 order-2 order-md-1"
   }, [_c("button", {
     staticClass: "hover:animate-bg-gray-light rounded-md p-2"
   }, [_c("span", {
-    staticClass: "text-zinc-900 font-medium tracking-widest uppercase text-base"
+    staticClass: "text-zinc-900 font-bold tracking-normal uppercase text-sm md:text-base"
   }, [_c("i", {
     staticClass: "fas fa-user text-zinc-900"
   }, [_vm._v("\n                            Publicaciones de amigos\n                        ")])])])]);
@@ -99,11 +103,11 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "md:border-r border-gray-900 h-full md:pr-16"
+    staticClass: "md:border-r border-gray-900 h-full md:pr-16 order-3 order-md-2"
   }, [_c("button", {
     staticClass: "hover:animate-bg-gray-light rounded-md p-2"
   }, [_c("span", {
-    staticClass: "text-zinc-400 font-medium tracking-wide uppercase text-base"
+    staticClass: "text-zinc-400 font-bold tracking-normal uppercase text-sm md:text-base"
   }, [_c("i", {
     staticClass: "fa-solid fa-bars-staggered text-zinc-400"
   }, [_vm._v("\n                            Blog\n                        ")])])])]);
@@ -114,7 +118,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "w-auto"
   }, [_c("span", {
-    staticClass: "text-zinc-900 font-medium tracking-wide uppercase text-base"
+    staticClass: "text-zinc-900 font-bold tracking-normal uppercase text-sm md:text-base"
   }, [_vm._v("\n                            Ordenar por:\n                        ")])]);
 }];
 render._withStripped = true;

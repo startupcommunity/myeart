@@ -16,7 +16,7 @@
             <div class="container pt-5">
                 <div class="flex flex-wrap justify-between items-start">
                     <!-- eventos -->
-                    <div class="w-full md:w-1/4">
+                    <div class="w-full md:w-1/4 hidden md:block">
                         <h3 class="text-zinc-900 font-bold text-base uppercase">
                             Eventos
                         </h3>
@@ -32,8 +32,8 @@
                     <!-- /eventos -->
 
                     <!-- publicaciones -->
-                    <div class="w-full md:w-1/2 md:px-16">
-                        <div class="flex flex-col -mt-5 pb-5">
+                    <div class="w-full md:w-1/2 px-5">
+                        <div class="flex flex-col -mt-5 pb-5 md:px-10">
                             <CardRelease
                                 v-for="release in releases"
                                 :key="release.id"
@@ -61,7 +61,7 @@
                     <!-- /publicaciones -->
 
                     <!-- artistas -->
-                    <div class="w-full md:w-1/4">
+                    <div class="w-full md:w-1/4 hidden md:block">
                         <h3 class="text-zinc-900 font-bold text-base uppercase">
                             Artistas que te pueden interesar
                         </h3>

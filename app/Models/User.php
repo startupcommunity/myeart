@@ -232,4 +232,18 @@ class User extends Authenticatable
     {
         return $query->whereHas('followingArtists', fn ($art) => $art->whereHas('following', fn ($rel) => $rel->releases()));
     }
+
+    /**
+     * Devuelve los artistas seguidos con sus publicaciones
+     *
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeFollowingArtistReleases($query)
+    {
+        return $this->followingArtists()
+            ->with([
+                'following.releases' => fn ($rel) => $rel->with(['labels', 'likes', 'creator'])
+            ]);
+    }
 }
