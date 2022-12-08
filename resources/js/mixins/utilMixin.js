@@ -188,10 +188,10 @@ export default {
          * devuelve los calificativos del artista
          * según las categorías de sus obras
          */
-        getArtistQualifying(artist, max = null) {
-            const artworks = artist?.artworks;
+        getArtistQualifying(artist, max = null, one = false) {
+            const artworks = artist?.artworks ?? [];
             const categories = artworks.map((artwork) => {
-                return artwork.categories.map((category) => {
+                return artwork?.categories?.map((category) => {
                     return category.qualified;
                 });
             });
@@ -201,13 +201,39 @@ export default {
                 .flat()
                 .filter((v, i, a) => a.indexOf(v) === i);
 
-            // si max es null, se devuelven todos los calificativos
-            // si no, se devuelven los primeros max
+            // si solo se quiere un calificativo
+            if (one) {
+                return categoriesUnique[0];
+            }
+
+            // si max es tiene valor, se devuelven los primeros indicados
             if (max) {
                 return categoriesUnique.slice(0, max).join(", ");
             }
 
             return categoriesUnique.join(", ");
+        },
+
+        /**
+         * Filtrar el texto de la publicación, para
+         * convertir los hashtags en un router-link
+         * con class text-primary
+         *
+         * @param {String} text
+         */
+        hashTag(text) {
+            const regex = /#(\w+)/g;
+            const matches = text.match(regex);
+            if (!matches) return text;
+            const result = text.replace(regex, (match) => {
+                // match sin el #
+                const matchWithoutHash = match.replace("#", "");
+
+                // result
+                return `\n<a class="text-primary" href="/buscar/${matchWithoutHash}" target="_blank">${match}</a>`;
+            });
+
+            return result;
         },
     },
 };

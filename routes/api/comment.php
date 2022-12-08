@@ -19,4 +19,19 @@ Route::group(['prefix' => 'comments'], function () {
    * Guardar la respuesta de un comentario/pregunta de una obra
    */
   Route::post('/artworks/answer/save', [CommentController::class, 'saveAnswer'])->name('saveAnswer');
+
+  /**
+   * agregar un like a un comentario de una publicación
+   */
+  Route::post('/add-release-like', [CommentController::class, 'addReleaseLike'])->name('addReleaseLike');
+
+  /**
+   * eliminar un like a un comentario de una publicación
+   */
+  Route::post('/delete-release-like', [CommentController::class, 'deleteReleaseLike'])->name('deleteReleaseLike');
+
+  /**
+   * agregar una respuesta a un comentario de una publicación
+   */
+  Route::post('/add-release-answer', [CommentController::class, 'addReleaseAnswer'])->name('addReleaseAnswer');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Models\Comment;
 use App\Models\FavoriteRelease;
 use App\Models\ReleaseLike;
 use App\Models\User;
@@ -199,5 +200,22 @@ class ReleaseFactory
 
     // si existe, eliminar de favoritos
     return $isFav->delete();
+  }
+
+  /**
+   * Agrega un comentario a la publicación
+   *
+   * @param Request $request
+   * @return null|Comment
+   */
+  public function storeComment($request): ?Comment
+  {
+    $release = UserRelease::find($request->release_id);
+    $comment = $release->comments()->create([
+      'user_id' => $request->user_id,
+      'comment' => $request->comment
+    ]);
+
+    return $comment;
   }
 }

@@ -2562,24 +2562,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * según las categorías de sus obras
      */
     getArtistQualifying: function getArtistQualifying(artist) {
+      var _artist$artworks;
+
       var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      var artworks = artist === null || artist === void 0 ? void 0 : artist.artworks;
+      var one = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var artworks = (_artist$artworks = artist === null || artist === void 0 ? void 0 : artist.artworks) !== null && _artist$artworks !== void 0 ? _artist$artworks : [];
       var categories = artworks.map(function (artwork) {
-        return artwork.categories.map(function (category) {
+        var _artwork$categories;
+
+        return artwork === null || artwork === void 0 ? void 0 : (_artwork$categories = artwork.categories) === null || _artwork$categories === void 0 ? void 0 : _artwork$categories.map(function (category) {
           return category.qualified;
         });
       }); // eliminar las redundancias
 
       var categoriesUnique = categories.flat().filter(function (v, i, a) {
         return a.indexOf(v) === i;
-      }); // si max es null, se devuelven todos los calificativos
-      // si no, se devuelven los primeros max
+      }); // si solo se quiere un calificativo
+
+      if (one) {
+        return categoriesUnique[0];
+      } // si max es tiene valor, se devuelven los primeros indicados
+
 
       if (max) {
         return categoriesUnique.slice(0, max).join(", ");
       }
 
       return categoriesUnique.join(", ");
+    },
+
+    /**
+     * Filtrar el texto de la publicación, para
+     * convertir los hashtags en un router-link
+     * con class text-primary
+     *
+     * @param {String} text
+     */
+    hashTag: function hashTag(text) {
+      var regex = /#(\w+)/g;
+      var matches = text.match(regex);
+      if (!matches) return text;
+      var result = text.replace(regex, function (match) {
+        // match sin el #
+        var matchWithoutHash = match.replace("#", ""); // result
+
+        return "\n<a class=\"text-primary\" href=\"/buscar/".concat(matchWithoutHash, "\" target=\"_blank\">").concat(match, "</a>");
+      });
+      return result;
     }
   }
 });

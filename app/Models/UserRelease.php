@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -60,12 +61,12 @@ class UserRelease extends Model
     /**
      * Devuelve los comentarios de la publicación
      *
-     * @return HasMany
+     * @return MorphMany
      */
-    // public function comments(): HasMany
-    // {
-    //     return $this->hasMany(ReleaseComment::class, 'release_id');
-    // }
+    public function comments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 
     /**
      * Devuelve el dueño de la publicación

@@ -5,19 +5,19 @@ namespace App\Http\Controllers;
 use App\Factories\CommentFactory;
 use App\Http\Requests\CreateArtworkAnswerCommentRequest;
 use App\Http\Requests\CreateArtworkCommentRequest;
+use App\Http\Requests\CreateReleaseAnswerCommentRequest;
+use App\Http\Requests\CreateReleaseLikeCommentRequest;
 use App\Utils\ResponseJson;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
 class CommentController extends Controller
 {
-    private $factory;
-    private $resp;
 
-    public function __construct(CommentFactory $factory, ResponseJson $resp)
-    {
-        $this->factory = $factory;
-        $this->resp = $resp;
+    public function __construct(
+        private CommentFactory $factory,
+        private ResponseJson $resp
+    ) {
     }
 
     /**
@@ -62,6 +62,54 @@ class CommentController extends Controller
     {
         try {
             $answer = $this->factory->createArtworkAnswer($request);
+            return $this->resp->json($answer, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * agregar un like a un comentario de una publicación
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addReleaseLike(CreateReleaseLikeCommentRequest $request): JsonResponse
+    {
+        try {
+            $like = $this->factory->addReleaseLike($request);
+            return $this->resp->json($like, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * eliminar un like a un comentario de una publicación
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function deleteReleaseLike(CreateReleaseLikeCommentRequest $request): JsonResponse
+    {
+        try {
+            $like = $this->factory->deleteReleaseLike($request);
+            return $this->resp->json($like, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * agregar una respuesta a un comentario de una publicación
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addReleaseAnswer(CreateReleaseAnswerCommentRequest $request): JsonResponse
+    {
+        try {
+            $answer = $this->factory->addReleaseAnswer($request);
             return $this->resp->json($answer, 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);

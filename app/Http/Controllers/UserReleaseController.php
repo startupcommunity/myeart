@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Factories\ReleaseFactory;
 use App\Http\Requests\CreateFavoriteRelease;
+use App\Http\Requests\CreateReleaseCommentRequest;
 use App\Http\Requests\CreateReleaseLike;
 use App\Http\Requests\CreateUserReleaseRequest;
 use App\Models\UserRelease;
@@ -170,6 +171,38 @@ class UserReleaseController extends Controller
     {
         try {
             $data = $this->factory->removeFavorite($request);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Devuelve los comentarios de una publicación
+     *
+     * @param Int $id           Id de la publicación
+     * @return JsonResponse
+     */
+    public function getComments(int $id): JsonResponse
+    {
+        try {
+            $data = $this->db->getComments($id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Agrega un nuevo comentario a una publicación
+     *
+     * @param CreateReleaseCommentRequest $request
+     * @return JsonResponse
+     */
+    public function storeComment(CreateReleaseCommentRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->storeComment($request);
             return $this->resp->json($data, 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);

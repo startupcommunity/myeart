@@ -2,6 +2,7 @@
 
 namespace App\Querys;
 
+use App\Models\UserRelease;
 use App\Querys\Traits\UseReleaseTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
@@ -10,6 +11,17 @@ class ReleaseDB
 {
 
   use UseReleaseTrait;
+
+  /**
+   * Devuelve una publicación por su id
+   *
+   * @param integer $id
+   * @return UserRelease|null
+   */
+  public function getReleaseById($id): ?UserRelease
+  {
+    return UserRelease::find($id);
+  }
 
   /**
    * Devuelve todas las publicaciones del usuario logueado
@@ -50,5 +62,26 @@ class ReleaseDB
     $data = $option2 ? $data->sortBy('text')->values() : $data;
 
     return $data;
+  }
+
+  /**
+   * Devuelve los comentarios de una publicación
+   *
+   * @param integer $id
+   * @return UserRelease|null
+   */
+  public function getComments(int $id): ?UserRelease
+  {
+    $release = $this->getReleaseById($id);
+
+    // publicaciones con sus comentarios y likes
+    // comentarios con sus likes y respuestas
+    $release->load(['creator.artworks.categories', 'likes.user', 'comments.user', 'comments.likes', 'comments.answer.user']);
+
+    // ordenar por fecha de creación
+    $release->comments = $release->comments->sortByDesc('created_at');
+
+    // devolver la publicación con sus comentarios
+    return $release;
   }
 }

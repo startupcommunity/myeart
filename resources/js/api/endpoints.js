@@ -68,6 +68,9 @@ const endpoints = {
         artworkSave: `${API}/comments/artworks/save`, // post
         artworkAnswerSave: `${API}/comments/artworks/answer/save`, // post
         artworkList: `${API}/comments/artwork-list/`, // get
+        addReleaseLike: `${API}/comments/add-release-like`, // post
+        deleteReleaselike: `${API}/comments/delete-release-like`, // post
+        addAnswerRelease: `${API}/comments/add-release-answer`, // post
     },
 
     // publicaciones
@@ -98,6 +101,12 @@ const endpoints = {
 
         // eliminar de favoritos la publicación
         removeFav: `${API}/releases/remove-favorite`, // post
+
+        // obtiene los comentarios de una publicación / {id}
+        getComment: `${API}/releases/get-comments/`, // get
+
+        // guarda un comentario en una publicación
+        storeComment: `${API}/releases/store-comment`, // post
     },
 };
 

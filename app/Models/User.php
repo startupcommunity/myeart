@@ -243,7 +243,10 @@ class User extends Authenticatable
     {
         return $this->followingArtists()
             ->with([
-                'following.releases' => fn ($rel) => $rel->with(['labels', 'likes', 'creator'])
+                'following.releases' =>
+                fn ($rel) => $rel->with([
+                    'labels', 'likes.user', 'creator.artworks.categories', 'comments'
+                ])
             ]);
     }
 }

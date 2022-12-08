@@ -43,6 +43,7 @@
                                 :menuButton="false"
                                 :menuDate="true"
                                 class="mb-5 animate-fade-in-down"
+                                @show-comment-dialog="showCommentDialog"
                             />
 
                             <div
@@ -77,6 +78,13 @@
                 </div>
             </div>
         </section>
+
+        <!-- modal de comentarios de las publicaciones -->
+        <ReleaseCommentsDialog
+            :show="show"
+            :releaseID="release.id"
+            @close-comments="show = false"
+        />
     </MainLayout>
 </template>
 <script>
@@ -87,6 +95,7 @@ import Filters from "./sections/index/Filters.vue";
 import CardEvent from "./components/CardEventCol.vue";
 import MiniCardArtist from "./components/MiniCardArtist.vue";
 import CardRelease from "../artist/components/CardRelease.vue";
+import ReleaseCommentsDialog from "../release/components/ReleaseCommentsDialog.vue";
 
 const MAX_EVENTS = 6;
 const RANDOM_ARTIST = 6;
@@ -103,6 +112,7 @@ export default {
         CardEvent,
         MiniCardArtist,
         CardRelease,
+        ReleaseCommentsDialog,
     },
     data() {
         return {
@@ -110,7 +120,9 @@ export default {
             artists: [],
             releases: [],
             original: [],
+            release: {},
             loading: false,
+            show: false,
         };
     },
     mounted() {
@@ -215,6 +227,14 @@ export default {
             const backup = JSON.parse(JSON.stringify(this.original));
             const add = this.releases.length + SHOW_MORE_RELEASES;
             this.releases = backup.slice(0, add);
+        },
+
+        /**
+         * Muestra el modal de comentarios de la publicación
+         */
+        showCommentDialog(release) {
+            this.release = release;
+            this.show = true;
         },
     },
 };

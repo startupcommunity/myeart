@@ -17,6 +17,12 @@ Route::group(['prefix' => 'releases'], function () {
     ->name('getReleaseFollowArtists');
 
   /**
+   * Devuelve los comentarios de una publicación
+   */
+  Route::get('/get-comments/{id}', [UserReleaseController::class, 'getComments'])
+    ->name('getReleaseComments');
+
+  /**
    * Almacena los datos y crea una nueva publicación
    */
   Route::post('/store', [UserReleaseController::class, 'store'])->name('storeRelease');
@@ -50,4 +56,9 @@ Route::group(['prefix' => 'releases'], function () {
    * Agrega a favoritos una publicación
    */
   Route::post('/remove-favorite', [UserReleaseController::class, 'removeFavorite'])->name('removeFavoriteRelease');
+
+  /**
+   * Almacena y crea un nuevo comentario
+   */
+  Route::post('/store-comment', [UserReleaseController::class, 'storeComment'])->name('storeCommentRelease');
 });

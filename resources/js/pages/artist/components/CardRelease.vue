@@ -84,11 +84,7 @@
                         </span>
                     </div>
                     <div class="flex gap-2 items-start justify-end">
-                        <button>
-                            <i
-                                class="fa-regular fa-comment text-gray-500 text-base"
-                            ></i>
-                        </button>
+                        <CommentButton @open-modal-comment="openModalComment" />
                         <LikeButton :release="release" />
                         <FavButton :release="release" />
                         <ShareButton :release="release" />
@@ -99,11 +95,20 @@
                     <span class="uppercase">{{ artist?.name }}</span>
                     <span class="font-normal" v-html="getText"></span>
                 </div>
-                <div class="text-xs font-semibold text-gray-400">
-                    <span v-if="countComment">
+                <div class="text-xs font-medium text-gray-400 py-2">
+                    <button
+                        v-if="countComment"
+                        type="button"
+                        @click.stop="openModalComment"
+                    >
                         Ver los {{ countComment }} comentarios
+                    </button>
+                    <span v-else>
+                        Aún no hay comentarios,
+                        <button type="button" @click.stop="openModalComment">
+                            agregar nuevo
+                        </button>
                     </span>
-                    <span v-else> Aún no hay comentarios </span>
                 </div>
             </div>
         </div>
@@ -111,13 +116,18 @@
 </template>
 <script>
 import Avatar from "../../../components/Avatar.vue";
+import CommentButton from "../../release/components/CommentButton.vue";
 import FavButton from "../../release/components/FavButton.vue";
 import LikeButton from "../../release/components/LikeButton.vue";
 import ShareButton from "../../release/components/ShareButton.vue";
 
+// utilmixin
+import utilMixin from "../../../mixins/utilMixin";
+
 export default {
-    components: { Avatar, ShareButton, LikeButton, FavButton },
     name: "CardEvent",
+    components: { Avatar, ShareButton, LikeButton, FavButton, CommentButton },
+    mixins: [utilMixin],
     props: {
         release: {
             type: Object,
@@ -163,10 +173,9 @@ export default {
          * Evalúa el text de la publicación, si tiene hashtag lo convierte en link
          */
         getText() {
-            // acceder al filter de vue para convertir el texto en link
             const text = this.release?.text;
             if (!text) return "";
-            return this.$options.filters.hashTag(text);
+            return this.hashTag(text);
         },
 
         /**
@@ -192,27 +201,14 @@ export default {
             };
             return new Date(date).toLocaleDateString("es-ES", options);
         },
+    },
 
+    methods: {
         /**
-         * Filtrar el texto de la publicación, para
-         * convertir los hashtags en un router-link
-         * con class text-primary
-         *
-         * @param {String} text
+         * Abrir modal para agregar o ver comentarios
          */
-        hashTag(text) {
-            const regex = /#(\w+)/g;
-            const matches = text.match(regex);
-            if (!matches) return text;
-            const result = text.replace(regex, (match) => {
-                // match sin el #
-                const matchWithoutHash = match.replace("#", "");
-
-                // result
-                return `\n<a class="text-primary" href="/buscar/${matchWithoutHash}" target="_blank">${match}</a>`;
-            });
-
-            return result;
+        openModalComment() {
+            this.$emit("show-comment-dialog", this.release);
         },
     },
 };
