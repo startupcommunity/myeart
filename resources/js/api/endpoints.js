@@ -108,6 +108,18 @@ const endpoints = {
         // guarda un comentario en una publicación
         storeComment: `${API}/releases/store-comment`, // post
     },
+
+    // carrito de compras
+    carts: {
+        // agregar un item al carrito
+        addItem: `${API}/cart/add-item`, // post
+
+        // obtiene los artículos del carrito
+        getItems: `${API}/cart/get-items`, // get
+
+        // elimina un item del carrito - {id}
+        deleteItem: `${API}/cart/delete-item/`, // delete
+    },
 };
 
 export default endpoints;

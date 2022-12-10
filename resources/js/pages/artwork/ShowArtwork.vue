@@ -171,10 +171,26 @@
                                 </span>
                             </p>
                         </div>
-                        <div class="py-2">
-                            <v-btn large color="grey darken-4">
-                                <span class="uppercase text-white">
-                                    comprar esta obra
+                        <div class="py-2" v-if="!hasOwner">
+                            <v-btn
+                                large
+                                :color="
+                                    insideCart
+                                        ? 'green darken-4'
+                                        : 'grey darken-4'
+                                "
+                                @click.stop="addToCart"
+                                :disabled="!canAddToCart"
+                                :loading="loading"
+                            >
+                                <span
+                                    class="uppercase text-white"
+                                    v-if="!insideCart"
+                                >
+                                    Agregar al carrito
+                                </span>
+                                <span class="uppercase text-white" v-else>
+                                    Agregada al carrito
                                 </span>
                             </v-btn>
                         </div>
@@ -346,9 +362,7 @@
                                 <div
                                     class="w-full md:w-2/4 md:h-80 xl:h-96 2xl:h-[30rem] md:pr-10"
                                 >
-                                    <router-link
-                                        :to="pathProfile(artwork.user)"
-                                    >
+                                    <router-link :to="pathProfile">
                                         <img
                                             :src="
                                                 getProfilePhoto(artwork.user) ??
@@ -477,6 +491,7 @@ export default {
             likes: 0,
             isLike: false,
             showModalImage: false,
+            loading: false,
             file: "",
             previewFiles: [],
             artwork: {
@@ -566,6 +581,39 @@ export default {
          */
         bioContent() {
             return this.artUser?.profile?.bio_content ?? "---";
+        },
+
+        /**
+         * Verifica si es el dueño de la obra
+         */
+        hasOwner() {
+            return this.artwork?.user?.id === this.user?.id;
+        },
+
+        /**
+         * Devuelve el path del perfil de artista o usuario
+         */
+        pathProfile() {
+            return {
+                name: "showArtist",
+                params: { id: this.artUser?.id },
+            };
+        },
+
+        /**
+         * Verifica si la obra ya fue agregada
+         * al carrito de compras del usuario
+         */
+        insideCart() {
+            const cart = this.user?.shopping_cart || [];
+            return cart.some((item) => item.artwork_id === this.artwork.id);
+        },
+
+        /**
+         * Verifica si la obra esta disponible
+         */
+        canAddToCart() {
+            return !this.loading && !this.insideCart;
         },
     },
     methods: {
@@ -701,13 +749,48 @@ export default {
         },
 
         /**
-         * Devuelve el path del perfil de artista o usuario
+         * Agrega la obra al carrito de compras
          */
-        pathProfile(userArtwork) {
-            return {
-                name: "showArtist",
-                params: { id: userArtwork.id },
+        addToCart() {
+            if (!this.canAddToCart) return false;
+
+            this.loading = true;
+            const data = {
+                artwork_id: this.artwork.id,
+                user_id: this.user.id,
             };
+
+            this.axios
+                .post(this.ep.carts.addItem, data)
+                .then((resp) => {
+                    if (resp.status === 200) {
+                        this.$store.dispatch("userRequest");
+
+                        const title = `La obra ${this.artwork.title} se agregó al carrito de compras`;
+                        const dialog = {
+                            title,
+                            text: "Excelente!",
+                            icon: "success",
+                            confirmButtonText: "Ir al carrito de compras",
+                            cancelButtonText: "Seguir comprando",
+                        };
+
+                        this.confirmedDialog(dialog).then((resp) => {
+                            if (resp.isConfirmed) {
+                                this.$router.push({ name: "shoppingCart" });
+                            }
+                        });
+                    }
+
+                    if (resp.status === 204) {
+                        this.noty(
+                            "La obra no se encuentra disponible",
+                            "warning"
+                        );
+                    }
+                })
+                .catch((error) => this.manageError(error))
+                .finally(() => (this.loading = false));
         },
     },
 };

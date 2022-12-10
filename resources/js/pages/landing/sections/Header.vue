@@ -1,60 +1,7 @@
 <template>
     <div class="top-header-area" id="sticker">
         <!-- menu mobile -->
-        <div id="mySidenav" class="sidenav">
-            <div class="sidenav_header">
-                <button href="#" class="closebtn" @click="closeNav()">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-            </div>
-            <div class="sidenav_body">
-                <div class="w-100 d-flex justify-content-center">
-                    <label
-                        style="
-                            border: 2px solid #b2794c;
-                            padding: 5px;
-                            border-radius: 50%;
-                        "
-                    >
-                        <v-avatar size="120">
-                            <v-img
-                                :src="'/img/avatar.png'"
-                                :lazy-src="'/img/avatar.png'"
-                                @error="&quot;URL ON ERROR&quot;;"
-                                width="118px"
-                                height="118px"
-                            >
-                                <!-- ALSO, YOU CAN USE A LOADING ANIMATION -->
-                                <template v-slot:placeholder>
-                                    <v-progress-circular
-                                        indeterminate
-                                        color="custm_theme_6"
-                                    ></v-progress-circular>
-                                </template>
-                            </v-img>
-                        </v-avatar>
-                    </label>
-                </div>
-                <p class="text-white">Artista/Fotografía</p>
-                <button
-                    @click="closeAndGo('obras')"
-                    class="text-white text-2xl"
-                >
-                    SUBIR OBRA <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                </button>
-                <router-link :to="{ name: 'listArtwork' }"> OBRAS </router-link>
-                <router-link :to="{ name: 'listArtist' }">
-                    ARTISTAS
-                </router-link>
-                <a href="#">EVENTOS</a>
-                <router-link :to="{ name: 'indexCommunity' }">
-                    COMUNIDAD
-                </router-link>
-            </div>
-            <div class="sidenav_footer">
-                <a href="#" @click.prevent="logout">CERRAR SESIÓN</a>
-            </div>
-        </div>
+        <MobileMenu />
         <!-- /menu mobile -->
 
         <div class="container-fluid">
@@ -84,6 +31,7 @@
                                         <img
                                             src="/images/Logo_Myeart.svg"
                                             alt="my-eart"
+                                            class="w-40"
                                         />
                                     </router-link>
                                 </div>
@@ -131,20 +79,15 @@
                                                             <i
                                                                 class="fas fa-user mr-1"
                                                             ></i>
-                                                            {{
-                                                                perfilUsers.username
-                                                            }}
+                                                            {{ user.username }}
                                                         </a>
                                                     </div>
                                                     <ul class="sub-menu">
                                                         <li class="bg-zinc-900">
                                                             <router-link
-                                                                :to="{
-                                                                    name: 'userProfile',
-                                                                    params: {
-                                                                        id: perfilUsers.id,
-                                                                    },
-                                                                }"
+                                                                :to="
+                                                                    pathProfile
+                                                                "
                                                             >
                                                                 Perfil
                                                             </router-link>
@@ -163,15 +106,17 @@
                                                 </li>
                                                 <li>
                                                     <div class="header-icons">
-                                                        <a
-                                                            class="shopping-cart hover:no-underline"
-                                                            href="#"
+                                                        <router-link
+                                                            :to="
+                                                                pathShoppingCart
+                                                            "
+                                                            class="hover:no-underline"
                                                         >
                                                             <i
                                                                 class="fas fa-shopping-cart mr-1"
                                                             ></i>
-                                                            00.00
-                                                        </a>
+                                                            {{ totalCart }}
+                                                        </router-link>
                                                         <button
                                                             class="btn btn-primary text-white px-3 py-2 rounded-lg"
                                                             v-if="
@@ -199,23 +144,18 @@
                                     class="w-100 d-flex justify-content-center -mt-4"
                                 >
                                     <div class="flex-fill">
-                                        <router-link
-                                            :to="{
-                                                name: 'userProfile',
-                                                params: {
-                                                    id: perfilUsers.id,
-                                                },
-                                            }"
-                                        >
+                                        <router-link :to="pathProfile">
                                             <i
                                                 class="fa-regular fa-user text-white"
                                             ></i>
                                         </router-link>
                                     </div>
                                     <div class="flex-fill">
-                                        <i
-                                            class="fa-solid fa-cart-shopping text-white"
-                                        ></i>
+                                        <router-link :to="pathShoppingCart">
+                                            <i
+                                                class="fas fa-shopping-cart text-white"
+                                            ></i>
+                                        </router-link>
                                     </div>
                                 </div>
                             </div>
@@ -228,6 +168,8 @@
     </div>
 </template>
 <script>
+import MobileMenu from "./components/MobileMenu.vue";
+
 export default {
     name: "Header",
     methods: {
@@ -252,13 +194,32 @@ export default {
         },
     },
     computed: {
-        perfilUsers() {
+        user() {
             return this.$store.getters.getProfile;
         },
-
         isPathObrasCreate() {
             return this.$route.path == "/obras/crear";
         },
+        pathProfile() {
+            return {
+                name: "userProfile",
+                params: {
+                    id: this.user.id,
+                },
+            };
+        },
+        pathShoppingCart() {
+            return {
+                name: "shoppingCart",
+            };
+        },
+        totalCart() {
+            const shoppingCart = this.user?.shopping_cart || [];
+
+            // devolver la cantidad de artículos en el carrito
+            return shoppingCart.length || 0;
+        },
     },
+    components: { MobileMenu },
 };
 </script>

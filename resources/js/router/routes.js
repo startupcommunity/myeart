@@ -140,6 +140,14 @@ export const routes = [
         // component: importPage('artwork/ListArtwork'),
         beforeEnter: ifNotAuthenticated,
     },
+
+    // ----------- carrito de compras ----------
+    {
+        name: "shoppingCart",
+        path: "/carrito",
+        component: importPage("shoppingcart/Index"),
+        beforeEnter: ifAuthenticated,
+    },
 ];
 
 const config = new VueRouter({

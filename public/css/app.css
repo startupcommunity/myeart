@@ -12636,9 +12636,6 @@ video {
 .h-11{
   height: 2.75rem;
 }
-.h-56{
-  height: 14rem;
-}
 .max-h-96{
   max-height: 24rem;
 }
@@ -12751,8 +12748,8 @@ video {
 .w-\[90\%\]{
   width: 90%;
 }
-.w-80{
-  width: 20rem;
+.w-32{
+  width: 8rem;
 }
 .min-w-full{
   min-width: 100%;
@@ -12870,6 +12867,9 @@ video {
 }
 .gap-4{
   gap: 1rem;
+}
+.gap-5{
+  gap: 1.25rem;
 }
 .space-x-2 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
@@ -13037,6 +13037,10 @@ video {
 .border-zinc-300{
   --tw-border-opacity: 1;
   border-color: rgb(212 212 216 / var(--tw-border-opacity));
+}
+.border-\[\#b2794c\]{
+  --tw-border-opacity: 1;
+  border-color: rgb(178 121 76 / var(--tw-border-opacity));
 }
 .border-b-gray-300{
   --tw-border-opacity: 1;
@@ -13336,9 +13340,6 @@ video {
 .pl-44{
   padding-left: 11rem;
 }
-.pl-3{
-  padding-left: 0.75rem;
-}
 .text-left{
   text-align: left;
 }
@@ -13570,6 +13571,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
+.text-red-500{
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
 .underline{
   text-decoration-line: underline;
 }
@@ -13706,6 +13711,10 @@ body {
 .hover\:text-zinc-500:hover{
   --tw-text-opacity: 1;
   color: rgb(113 113 122 / var(--tw-text-opacity));
+}
+.hover\:text-zinc-900:hover{
+  --tw-text-opacity: 1;
+  color: rgb(24 24 27 / var(--tw-text-opacity));
 }
 .hover\:no-underline:hover{
   text-decoration-line: none;
@@ -14129,14 +14138,14 @@ body {
   .md\:w-2\/5{
     width: 40%;
   }
-  .md\:w-3\/5{
-    width: 60%;
+  .md\:w-14{
+    width: 3.5rem;
   }
   .md\:w-60{
     width: 15rem;
   }
-  .md\:w-14{
-    width: 3.5rem;
+  .md\:w-3\/5{
+    width: 60%;
   }
   .md\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -14263,14 +14272,14 @@ body {
   .md\:pr-2{
     padding-right: 0.5rem;
   }
+  .md\:pl-3{
+    padding-left: 0.75rem;
+  }
   .md\:pb-5{
     padding-bottom: 1.25rem;
   }
   .md\:pr-16{
     padding-right: 4rem;
-  }
-  .md\:pl-3{
-    padding-left: 0.75rem;
   }
   .md\:text-3xl{
     font-size: 1.875rem;

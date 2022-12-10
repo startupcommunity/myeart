@@ -163,6 +163,17 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve el carrito de compras del usuario
+     * junto a todas sus obras
+     *
+     * @return HasMany
+     */
+    public function shoppingCart(): HasMany
+    {
+        return $this->hasMany(ShoppingCart::class);
+    }
+
+    /**
      * Determina si el usuario tiene foto de perfil
      * @luisandev
      * @return boolean      true si posee

@@ -5,6 +5,7 @@ const state = {
     profile: {
         profile: {},
         social_network: {},
+        shopping_cart: [],
         following_artists: [],
         favorite_releases: [],
     },

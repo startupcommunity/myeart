@@ -40,7 +40,7 @@ class Artwork extends Model
     }
 
     /**
-     * Devuelve el usuario perteneciente
+     * Devuelve el usuario creador de la obra
      *
      * @return BelongsTo
      */
@@ -117,6 +117,26 @@ class Artwork extends Model
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    /**
+     * Verifica si la obra esta disponible
+     *
+     * @return bool
+     */
+    public function isAvailable(): bool
+    {
+        return $this->state === ArtworkStateEnum::PUBLISHED;
+    }
+
+    /**
+     * Verifica si la obra esta vendida
+     *
+     * @return bool
+     */
+    public function isSold(): bool
+    {
+        return $this->state === ArtworkStateEnum::SOLD;
     }
 
     // -------------------------
@@ -249,15 +269,4 @@ class Artwork extends Model
             return $query->orderByDesc('price');
         }
     }
-
-    /**
-     * Devuelve el calificativo de cada artista según las categorías
-     * de sus obras
-     * 
-     * 
-     */
-    // public function getQualifiedArtistAttribute($query)
-    // {
-    //     $query->whereHas();
-    // }
 }

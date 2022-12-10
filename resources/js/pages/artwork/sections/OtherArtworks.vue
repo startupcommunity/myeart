@@ -3,12 +3,25 @@
         <div class="container-fluid py-7 py-md-16">
             <div class="w-full md:w-4/5 mx-auto">
                 <div
-                    class="w-full mx-auto border-b pb-1 pb-md-2 border-zinc-800"
+                    class="w-full mx-auto"
+                    :class="{
+                        'border-b pb-1 pb-md-2 border-zinc-800': !borderBottom,
+                        'pb-1 pb-md-2': borderBottom,
+                    }"
                 >
                     <h2
-                        class="text-primary text-lg md:text-2xl font-bold tracking-widest uppercase text-left"
+                        class="text-primary text-lg md:text-2xl font-bold tracking-widest uppercase"
+                        :class="{
+                            'text-center': center,
+                            'text-left': !center,
+                        }"
                     >
-                        Otras obras que te pueden interesar
+                        <span v-if="title">
+                            {{ title }}
+                        </span>
+                        <span v-else>
+                            Otras obras que te pueden interesar
+                        </span>
                     </h2>
                 </div>
             </div>
@@ -55,6 +68,20 @@ export default {
             default: true,
             description:
                 "define si el componente debe cargarse/cuando debe cargarse de data",
+        },
+        title: {
+            type: String,
+            description: "título de la sección",
+        },
+        center: {
+            type: Boolean,
+            default: false,
+            description: "centrar el texto",
+        },
+        borderBottom: {
+            type: Boolean,
+            default: false,
+            description: "añadir borde inferior",
         },
     },
     watch: {

@@ -393,6 +393,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       type: Boolean,
       "default": true,
       description: "define si el componente debe cargarse/cuando debe cargarse de data"
+    },
+    title: {
+      type: String,
+      description: "título de la sección"
+    },
+    center: {
+      type: Boolean,
+      "default": false,
+      description: "centrar el texto"
+    },
+    borderBottom: {
+      type: Boolean,
+      "default": false,
+      description: "añadir borde inferior"
     }
   },
   watch: {
@@ -739,7 +753,21 @@ var render = function render() {
     staticClass: "bg-gray-100"
   }, [_c("div", {
     staticClass: "container-fluid py-7 py-md-16"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_c("div", {
+    staticClass: "w-full md:w-4/5 mx-auto"
+  }, [_c("div", {
+    staticClass: "w-full mx-auto",
+    "class": {
+      "border-b pb-1 pb-md-2 border-zinc-800": !_vm.borderBottom,
+      "pb-1 pb-md-2": _vm.borderBottom
+    }
+  }, [_c("h2", {
+    staticClass: "text-primary text-lg md:text-2xl font-bold tracking-widest uppercase",
+    "class": {
+      "text-center": _vm.center,
+      "text-left": !_vm.center
+    }
+  }, [_vm.title ? _c("span", [_vm._v("\n                        " + _vm._s(_vm.title) + "\n                    ")]) : _c("span", [_vm._v("\n                        Otras obras que te pueden interesar\n                    ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "pt-10 md:-mr-60"
   }, [_c("LoadingTailwind", {
     directives: [{
@@ -767,18 +795,7 @@ var render = function render() {
   }), 1)], 1)])]);
 };
 
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "w-full md:w-4/5 mx-auto"
-  }, [_c("div", {
-    staticClass: "w-full mx-auto border-b pb-1 pb-md-2 border-zinc-800"
-  }, [_c("h2", {
-    staticClass: "text-primary text-lg md:text-2xl font-bold tracking-widest uppercase text-left"
-  }, [_vm._v("\n                    Otras obras que te pueden interesar\n                ")])])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

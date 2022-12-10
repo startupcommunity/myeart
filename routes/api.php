@@ -37,6 +37,9 @@ Route::middleware(['auth:api'])->group(function () {
     // publicaciones
     require __DIR__ . '/api/release.php';
 
+    // carrito de compras
+    require __DIR__ . '/api/shopping_cart.php';
+
     // categorías
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', [CategoryController::class, 'getCategories'])->name('getCategories');

@@ -15,6 +15,9 @@ final class ArtworkStateEnum
     // borrador
     public const DRAFT = 3;
 
+    // en carrito
+    public const IN_CART = 4;
+
     /**
      * Conversion a string
      *
@@ -29,6 +32,8 @@ final class ArtworkStateEnum
                 return Lang::get('Vendida');
             case self::DRAFT:
                 return Lang::get('Borrador');
+            case self::IN_CART:
+                return Lang::get('En carrito');
         }
     }
 }
