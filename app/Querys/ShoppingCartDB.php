@@ -16,7 +16,7 @@ class ShoppingCartDB
   {
     $user = auth()->user();
     return $user->shoppingCart()->with([
-      'artwork.gallery', 'artwork.user', 'artwork.categories'
+      'artwork.gallery', 'artwork.user.artworks.categories', 'artwork.categories'
     ])->get();
   }
 }

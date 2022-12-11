@@ -1,16 +1,16 @@
 <template>
     <div class="flex flex-wrap justify-between items-start">
-        <div class="w-full md:w-3/4">
-            <div class="flex flex-row items-start gap-4">
-                <div class="w-52 h-52">
+        <div class="w-full md:w-3/4 mb-4 md:mb-0">
+            <div class="flex flex-col md:flex-row items-start gap-4">
+                <div class="w-full md:w-80 h-80 md:h-60">
                     <img
                         :src="getPathImage"
                         class="w-full h-full object-cover object-center"
                         alt="imagen-obra-de-arte"
                     />
                 </div>
-                <div class="flex flex-col justify-start space-y-3">
-                    <h3 class="text-2xl font-bold text-zinc-900">
+                <div class="flex flex-col justify-start space-y-3 w-full">
+                    <h3 class="text-lg md:text-2xl font-bold text-zinc-900">
                         {{ artwork.title }}
                     </h3>
                     <div>
@@ -18,34 +18,55 @@
                             Medida: {{ measures }}
                         </p>
                         <p
-                            class="uppercase text-base leading-8 font-bold -mt-4"
+                            class="uppercase text-base leading-8 font-bold -mt-5"
                         >
                             Peso: {{ weight }}
                         </p>
                     </div>
-                    <div class="flex flex-row justify-start">
-                        <Avatar :artist="creator" custom="w-14 h-14 border" />
-                        <div class="flex flex-col pl-2">
-                            <span class="py-0">
-                                {{ creator?.name }}
-                            </span>
-                            <FollowArtistButton
-                                :artist="creator"
-                                class="w-2/5 py-2"
-                            />
+                    <div class="w-full">
+                        <div class="flex justify-between md:justify-start">
+                            <div class="flex justify-start">
+                                <Avatar
+                                    :artist="creator"
+                                    custom="w-14 h-14 border"
+                                />
+                                <div class="flex-col pl-2 hidden md:flex">
+                                    <span class="py-0">
+                                        {{ creator?.name }}
+                                    </span>
+                                    <FollowArtistButton
+                                        :artist="creator"
+                                        class="w-40 py-2 rounded-md"
+                                    />
+                                </div>
+                                <div class="flex-col justify-center pl-2 flex md:hidden">
+                                    <span class="py-0 font-bold">
+                                        {{ creator?.name }}
+                                    </span>
+                                    <span>
+                                        {{ getArtistQualifying(creator, null, 1) }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex justify-end items-center md:hidden">
+                                <FollowArtistButton
+                                    :artist="creator"
+                                    class="w-32 h-7 rounded-md"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="w-full md:w-1/4">
-            <div class="flex flex-col items-end">
-                <div class="mb-3">
+            <div class="flex flex-col items-start md:items-end">
+                <div class="md:mb-3">
                     <h4 class="text-2xl font-bold text-zinc-900 uppercase">
                         {{ artwork.price }} {{ euro }}
                     </h4>
                 </div>
-                <div class="mb-3">
+                <div class="md:mb-3">
                     <v-btn text @click.stop="deleteItem">Eliminar</v-btn>
                 </div>
                 <div v-if="!isAvailable">
@@ -63,9 +84,13 @@
 import Avatar from "../../../components/Avatar.vue";
 import FollowArtistButton from "./FollowArtistButton.vue";
 
+// utilmixin
+import utilMixin from "../../../mixins/utilMixin";
+
 export default {
     name: "CardRowCart",
     components: { Avatar, FollowArtistButton },
+    mixins: [utilMixin],
     props: {
         artwork: {
             type: Object,

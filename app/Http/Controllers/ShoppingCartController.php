@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Factories\ShoppingCartFactory;
+use App\Http\Requests\CreateOrderRequest;
 use App\Querys\ShoppingCartDB;
 use App\Utils\ResponseJson;
 use Exception;
@@ -35,7 +36,7 @@ class ShoppingCartController extends Controller
 
             return $this->resp->json('La obra no se encuentra disponible', 204);
         } catch (Exception $e) {
-            return $this->resp->json($e->getMessage(), $e->getCode());
+            return $this->resp->json($e->getMessage(), 500);
         }
     }
 
@@ -51,7 +52,7 @@ class ShoppingCartController extends Controller
             $items = $this->db->getItemsOfAuthUser();
             return $this->resp->json($items, 200);
         } catch (Exception $e) {
-            return $this->resp->json($e->getMessage(), $e->getCode());
+            return $this->resp->json($e->getMessage(), 500);
         }
     }
 
@@ -67,7 +68,26 @@ class ShoppingCartController extends Controller
             $item = $this->factory->deleteItem($id);
             return $this->resp->json($item, 200);
         } catch (Exception $e) {
-            return $this->resp->json($e->getMessage(), $e->getCode());
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Finaliza la compra
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function finishShop(CreateOrderRequest $request): JsonResponse
+    {
+        try {
+            $order = $this->factory->finishShop($request);
+
+            if ($order) {
+                return $this->resp->json($order, 200);
+            }
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
         }
     }
 }

@@ -21,4 +21,9 @@ Route::group(['prefix' => 'cart'], function () {
    * @param integer $artwork_id
    */
   Route::delete('/delete-item/{id}', [ShoppingCartController::class, 'deleteItem'])->name('deleteItem');
+
+  /**
+   * finalizar la compra
+   */
+  Route::post('/finish-shop', [ShoppingCartController::class, 'finishShop'])->name('finishShop');
 });

@@ -148,6 +148,20 @@ export const routes = [
         component: importPage("shoppingcart/Index"),
         beforeEnter: ifAuthenticated,
     },
+
+    // ---------- checkout --------------------
+    {
+        name: "checkout",
+        path: "/checkout",
+        component: importPage("Checkout/Index"),
+        beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "orderSuccess",
+        path: "/checkout/success/:id",
+        component: importPage("Checkout/CheckoutSuccess"),
+        beforeEnter: ifAuthenticated,
+    },
 ];
 
 const config = new VueRouter({

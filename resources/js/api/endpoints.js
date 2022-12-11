@@ -119,6 +119,15 @@ const endpoints = {
 
         // elimina un item del carrito - {id}
         deleteItem: `${API}/cart/delete-item/`, // delete
+
+        // finalizar compra
+        finish: `${API}/cart/finish-shop`, // post
+    },
+
+    // pedidos - ordenes
+    orders: {
+        // obtiene los artículos del pedido
+        getItems: `${API}/orders/get-items/`, // get
     },
 };
 

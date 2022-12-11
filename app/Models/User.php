@@ -174,6 +174,16 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve las ordenes realizadas por el usuario
+     *
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
      * Determina si el usuario tiene foto de perfil
      * @luisandev
      * @return boolean      true si posee

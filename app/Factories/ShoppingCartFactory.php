@@ -2,9 +2,13 @@
 
 namespace App\Factories;
 
+use App\Enums\ArtworkStateEnum;
+use App\Enums\OrderStatusEnum;
 use App\Models\Artwork;
+use App\Models\Order;
 use App\Models\ShoppingCart;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ShoppingCartFactory
 {
@@ -67,5 +71,73 @@ class ShoppingCartFactory
     }
 
     return $item->delete();
+  }
+
+  /**
+   * Finaliza la compra
+   *
+   * @param Request $request
+   * @return order $order     devuelve la orden creada
+   */
+  public function finishShop($request): ?Order
+  {
+    $tra = DB::transaction(function () use ($request) {
+      // obtener el usuario
+      $user = auth()->user();
+
+      // obtener los items del carrito de compras
+      $items = $user->shoppingCart()->get();
+
+      // obtener el total y subtotal de la compra
+      $subtotal = $items->sum('artwork.price');
+
+      // agregar el impuesto y el envío y los decimales
+      $total = $subtotal + $request->tax + $request->shipping;
+      $total = floatval(number_format($total, 2, '.', ''));
+
+      // crear la orden
+      $order = $user->orders()->create([
+        'status' => OrderStatusEnum::PENDING,
+        'subtotal' => $subtotal,
+        'tax' => $request->tax,
+        'shipping' => $request->shipping,
+        'total' => $total,
+      ]);
+
+      // agregar los items a la orden
+      foreach ($items as $item) {
+        $order->items()->create([
+          'artwork_id' => $item->artwork_id,
+          'price' => $item->artwork->price,
+          'quantity' => 1,
+          'title' => $item->artwork->title,
+        ]);
+
+        // pasar los items a estado vendido
+        $item->artwork->update(['state' => ArtworkStateEnum::SOLD]);
+      }
+
+      // registrar la dirección de envío
+      $order->shippingAddress()->create([
+        'name' => $user->name,
+        'address' => $request->address,
+        'city' => $request->city,
+        'postal_code' => $request->postal_code,
+      ]);
+
+      // registrar el método de envió
+      $order->shippingMethod()->create([
+        'type' => $request->shipping_method,
+      ]);
+
+      // eliminar los items del carrito de compras
+      $user->shoppingCart()->delete();
+
+      // TODO: falta registrar el pago, pendiente
+
+      return $order;
+    });
+
+    return $tra;
   }
 }

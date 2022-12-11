@@ -7,7 +7,7 @@
 
         <!-- sección cesta -->
         <section class="bg-white">
-            <div class="container py-12">
+            <div class="container pt-12">
                 <button
                     @click.stop="$router.go(-1)"
                     text
@@ -19,7 +19,7 @@
                 <h1 class="uppercase text-3xl text-zinc-900 font-bold">
                     Tu cesta
                 </h1>
-                <div v-if="items.length">
+                <div v-if="items.length" class="animate-fade-in-down">
                     <div class="py-5 border-b border-zinc-900 pb-5">
                         <CardRowCart
                             :artwork="item.artwork"
@@ -29,11 +29,11 @@
                             @deleteItemSuccess="deleteItemSuccess"
                         />
                     </div>
-                    <div class="py-5 flex flex-col items-end">
+                    <div class="py-5 flex flex-col items-center md:items-end">
                         <h4 class="text-2xl font-bold text-gray-900 uppercase">
                             total
                             <span class="font-light">
-                                {{ total }} {{ euro }}
+                                {{ total }}
                             </span>
                         </h4>
                         <p class="uppercase text-base font-light">
@@ -54,7 +54,8 @@
                             <div v-if="!allPublished">
                                 <p class="text-red-500 text-sm">
                                     <i class="fa fa-warning"></i>
-                                    Hay artículos que no se encuentran disponibles
+                                    Hay artículos que no se encuentran
+                                    disponibles
                                 </p>
                             </div>
                         </div>
@@ -105,25 +106,23 @@ export default {
     },
     computed: {
         /**
-         * Devuelve el path completo de la foto de perfil del usuario
-         */
-        getProfilePhoto() {
-            if (!user || !user?.profile_photo) return null;
-
-            return `${this.pathProfilePhoto + user.profile_photo}`;
-        },
-
-        /**
          * Obtener el monto total de todos
          * los artículos en la cesta
          */
         total() {
-            return this.items.reduce((total, item) => {
+            const total = this.items.reduce((total, item) => {
                 const one = parseFloat(total);
                 const two = parseFloat(item.artwork?.price);
                 const result = one + two;
                 return parseFloat(result).toFixed(2);
             }, 0);
+
+            // si el numero es miles, se le agrega un punto
+            // para indicar que es miles
+            return new Intl.NumberFormat("de-DE", {
+                style: "currency",
+                currency: "EUR",
+            }).format(total);
         },
 
         /**
@@ -181,7 +180,7 @@ export default {
          * continuar con el proceso de compra
          */
         checkout() {
-            console.log("checkout y continuar");
+            this.$router.push({ name: "checkout" });
         },
     },
 };
