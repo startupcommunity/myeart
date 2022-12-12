@@ -182,6 +182,7 @@ __webpack_require__.r(__webpack_exports__);
     getItems: function getItems() {
       var _this = this;
 
+      console.log(this.$route.params.id);
       this.loading = true;
       this.axios.get(this.ep.orders.getItems + this.$route.params.id).then(function (response) {
         return _this.order = response.data;

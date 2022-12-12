@@ -3,7 +3,6 @@
 namespace App\Querys;
 
 use App\Models\Order;
-use Illuminate\Database\Eloquent\Collection;
 
 class OrderDB
 {
@@ -16,9 +15,9 @@ class OrderDB
   public function getItems(int $orderID): ?Order
   {
     $order = $this->getOrder($orderID);
-    return $order->with([
+    return $order->load([
       'items.artwork.gallery', 'items.artwork.categories', 'items.artwork.user'
-    ])->first();
+    ]);
   }
 
   /**

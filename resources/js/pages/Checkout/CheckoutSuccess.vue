@@ -166,6 +166,7 @@ export default {
          * productos del carrito
          */
         getItems() {
+            console.log(this.$route.params.id);
             this.loading = true;
             this.axios
                 .get(this.ep.orders.getItems + this.$route.params.id)
