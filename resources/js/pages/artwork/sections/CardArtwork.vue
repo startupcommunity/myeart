@@ -34,7 +34,10 @@
                             class="flex justify-end items-center"
                             v-show="showProfile"
                         >
-                            <Avatar :artist="artwork?.user" custom="border w-12 h-12"/>
+                            <Avatar
+                                :artist="artwork?.user"
+                                custom="border w-12 h-12"
+                            />
                             <div class="flex flex-col pl-2">
                                 <span class="py-0">
                                     {{ artwork.user?.name }}
@@ -52,12 +55,10 @@
                                 {{ euro }}
                             </div>
                             <div class="text-gray-400">
-                                <button
-                                    class="px-2"
-                                    @click.stop="sharePublicArtwork(artwork)"
-                                >
-                                    <i class="fa-regular fa-bookmark"></i>
-                                </button>
+                                <FollowArtworkButton
+                                    :artistID="artwork?.user?.id"
+                                    :artworkID="artwork?.id"
+                                />
                                 <button
                                     @click.stop="likeOrDislike(artwork.id)"
                                     class="hover:text-gray-700"
@@ -85,11 +86,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import Avatar from '../../../components/Avatar.vue';
+import Avatar from "../../../components/Avatar.vue";
 import utilMixin from "../../../mixins/utilMixin";
 import FollowArtistButton from "../components/FollowArtistButton.vue";
+import FollowArtworkButton from "../components/FollowArtworkButton.vue";
 export default {
-    components: { FollowArtistButton, Avatar },
+    components: { FollowArtistButton, Avatar, FollowArtworkButton },
     name: "CardArtwork",
     mixins: [utilMixin],
     data() {

@@ -1,7 +1,10 @@
 import Vue from "vue";
 
+import endpoints from "../../api/endpoints";
+
 const state = {
     status: "",
+    following_artworks: [],
     profile: {
         profile: {},
         social_network: {},
@@ -13,6 +16,7 @@ const state = {
 
 const getters = {
     getProfile: (state) => state.profile,
+    getFollowArtworks: (state) => state.following_artworks,
     isProfileLoaded: (state) => !!state.profile.name,
 };
 
@@ -26,9 +30,22 @@ const actions = {
             })
             .catch((err) => {
                 commit("userError");
-                // if resp is unauthorized, logout, to
                 dispatch("authLogout");
             });
+    },
+
+    userFollowArtworks: ({ commit, dispatch }) => {
+        commit("userRequest");
+
+        // acceder al global mixin para obtener el endpoint
+        const ep = endpoints.user.getFollowArtworks;
+
+        Vue.axios
+            .get(ep)
+            .then(async (resp) => {
+                await commit("setFollowArtworks", resp.data);
+            })
+            .catch((err) => console.log(err));
     },
 };
 
@@ -38,6 +55,10 @@ const mutations = {
     },
     userSuccess: async (state, resp) => {
         await Vue.set(state, "profile", resp);
+        state.status = "success";
+    },
+    setFollowArtworks: async (state, resp) => {
+        await Vue.set(state, "following_artworks", resp);
         state.status = "success";
     },
     userError: (state) => {

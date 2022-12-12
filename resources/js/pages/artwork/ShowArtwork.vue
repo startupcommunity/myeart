@@ -80,14 +80,11 @@
                                 <div
                                     class="flex justify-end items-start space-x-3"
                                 >
-                                    <button
-                                        class="hover:text-gray-700"
-                                        @click.stop=""
-                                    >
-                                        <i
-                                            class="fa-regular fa-bookmark fa-2x"
-                                        ></i>
-                                    </button>
+                                    <FollowArtworkButton
+                                        :artistID="artUser?.id"
+                                        :artworkID="artwork.id"
+                                        class-icon="fa-2x"
+                                    />
                                     <div class="flex flex-col items-center">
                                         <button
                                             class="hover:text-gray-700"
@@ -471,6 +468,7 @@ import ShowImageDialog from "./components/ShowImageDialog.vue";
 
 // mixin
 import utilMixin from "../../mixins/utilMixin";
+import FollowArtworkButton from "./components/FollowArtworkButton.vue";
 export default {
     name: "ShowArtwork",
     mixins: [utilMixin],
@@ -484,6 +482,7 @@ export default {
         FollowArtistButton,
         ShowImageDialog,
         Comment,
+        FollowArtworkButton,
     },
     data() {
         return {

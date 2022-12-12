@@ -91,7 +91,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_LoadingTailwind_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/LoadingTailwind.vue */ "./resources/js/components/LoadingTailwind.vue");
 /* harmony import */ var _landing_sections_Header_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../landing/sections/Header.vue */ "./resources/js/pages/landing/sections/Header.vue");
 /* harmony import */ var _layouts_MainLayout_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../layouts/MainLayout.vue */ "./resources/js/pages/layouts/MainLayout.vue");
@@ -102,6 +102,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
 /* harmony import */ var _components_ShowImageDialog_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/ShowImageDialog.vue */ "./resources/js/pages/artwork/components/ShowImageDialog.vue");
 /* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+/* harmony import */ var _components_FollowArtworkButton_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/FollowArtworkButton.vue */ "./resources/js/pages/artwork/components/FollowArtworkButton.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -121,6 +122,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  // mixin
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ShowArtwork",
   mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_9__["default"]],
@@ -133,7 +135,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     OtherArtworks: _sections_OtherArtworks_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     FollowArtistButton: _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     ShowImageDialog: _components_ShowImageDialog_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    Comment: _sections_Comment_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    Comment: _sections_Comment_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    FollowArtworkButton: _components_FollowArtworkButton_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
   },
   data: function data() {
     return {
@@ -157,7 +160,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.loadData();
     globalThis.scrollTo(0, 0);
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_10__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_11__.mapGetters)({
     user: "getProfile"
   })), {}, {
     /**
@@ -630,11 +633,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!this.canFollowArtist) {
         this.noty("No es posible autoseguirte", "error");
         return;
-      } // if (this.isFollowingArtist) {
-      //     this.noty("Ya se sigue a este artista", "error");
-      //     return;
-      // }
-
+      }
 
       var data = {
         following_id: (_this$artist2 = this.artist) === null || _this$artist2 === void 0 ? void 0 : _this$artist2.id
@@ -650,6 +649,119 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.$store.dispatch("userRequest");
       })["catch"](function (error) {
         return console.error(error);
+      })["finally"](function () {
+        return _this2.loadFollow = false;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "FollowArtworkButton",
+  props: {
+    artworkID: {
+      type: Number,
+      "default": 0,
+      description: "ID de la obra a seguir"
+    },
+    artistID: {
+      type: Number,
+      "default": 0,
+      description: "ID del artista de la obra"
+    },
+    classIcon: {
+      type: String,
+      "default": "",
+      description: "Clase del icono opcional"
+    }
+  },
+  data: function data() {
+    return {
+      loadFollow: false
+    };
+  },
+  computed: {
+    /**
+     * Comprueba si el usuario puede seguir la obra
+     *
+     * NO es posible auto seguir sus obras
+     */
+    canFollowArtwork: function canFollowArtwork() {
+      var _this$user;
+
+      return ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id) !== this.artistID;
+    },
+
+    /**
+     * Comprueba si ya se sigue la obra seleccionada
+     */
+    isFollowingArtwork: function isFollowingArtwork() {
+      var _this$followArtworks,
+          _this = this;
+
+      return (_this$followArtworks = this.followArtworks) === null || _this$followArtworks === void 0 ? void 0 : _this$followArtworks.some(function (follow) {
+        return follow.artwork_id === _this.artworkID;
+      });
+    },
+
+    /**
+     * Acceder a los getters necesarios
+     */
+    user: function user() {
+      return this.$store.getters.getProfile || {};
+    },
+
+    /**
+     * Acceder a los getters necesarios
+     */
+    followArtworks: function followArtworks() {
+      return this.$store.getters.getFollowArtworks || [];
+    }
+  },
+  methods: {
+    /**
+     * Seguir o dejar de seguir a una obra
+     */
+    followOrUnfollow: function followOrUnfollow() {
+      var _this2 = this;
+
+      if (!this.canFollowArtwork) {
+        this.noty("No es posible auto seguir tus obras", "error");
+        return;
+      }
+
+      this.loadFollow = true;
+      var ep = this.isFollowingArtwork ? this.ep.user.removeArtworkToFav : this.ep.user.addArtworkToFav;
+      this.axios.post(ep, {
+        artwork_id: this.artworkID
+      }).then(function (resp) {
+        if (resp.status === 204) {
+          _this2.noty(resp.data, "error");
+
+          return;
+        }
+
+        if (_this2.isFollowingArtwork) {
+          _this2.noty("Obra eliminada de favoritos", "success");
+        } else {
+          _this2.noty("Obra agregada a favoritos", "success");
+        }
+
+        _this2.$store.dispatch("userFollowArtworks");
+      })["catch"](function (error) {
+        return _this2.manageError(error);
       })["finally"](function () {
         return _this2.loadFollow = false;
       });
@@ -1049,10 +1161,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Avatar.vue */ "./resources/js/components/Avatar.vue");
 /* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
 /* harmony import */ var _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
+/* harmony import */ var _components_FollowArtworkButton_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/FollowArtworkButton.vue */ "./resources/js/pages/artwork/components/FollowArtworkButton.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -1063,10 +1176,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     FollowArtistButton: _components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    FollowArtworkButton: _components_FollowArtworkButton_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   name: "CardArtwork",
   mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
@@ -1101,7 +1216,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": ""
     }
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)({
     user: "getProfile"
   })), {}, {
     /**
@@ -1842,7 +1957,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$previewFiles$0$fi, _vm$previewFiles$, _vm$getProfilePhoto, _vm$artwork$user, _vm$artwork$other_det, _vm$artwork$large_des, _vm$randomImage$file, _vm$randomImage, _vm$randomImage$file2, _vm$randomImage2, _vm$getProfilePhoto2, _vm$artwork$categorie;
+  var _vm$previewFiles$0$fi, _vm$previewFiles$, _vm$artUser, _vm$getProfilePhoto, _vm$artwork$user, _vm$artwork$other_det, _vm$artwork$large_des, _vm$randomImage$file, _vm$randomImage, _vm$randomImage$file2, _vm$randomImage2, _vm$getProfilePhoto2, _vm$artwork$categorie;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -1922,16 +2037,13 @@ var render = function render() {
     staticClass: "text-gray-400"
   }, [_c("div", {
     staticClass: "flex justify-end items-start space-x-3"
-  }, [_c("button", {
-    staticClass: "hover:text-gray-700",
-    on: {
-      click: function click($event) {
-        $event.stopPropagation();
-      }
+  }, [_c("FollowArtworkButton", {
+    attrs: {
+      artistID: (_vm$artUser = _vm.artUser) === null || _vm$artUser === void 0 ? void 0 : _vm$artUser.id,
+      artworkID: _vm.artwork.id,
+      "class-icon": "fa-2x"
     }
-  }, [_c("i", {
-    staticClass: "fa-regular fa-bookmark fa-2x"
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _c("div", {
     staticClass: "flex flex-col items-center"
   }, [_c("button", {
     staticClass: "hover:text-gray-700",
@@ -1958,7 +2070,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-share-nodes fa-2x"
-  })])])])]), _vm._v(" "), _c("p", {
+  })])], 1)])]), _vm._v(" "), _c("p", {
     staticClass: "text-base text-gray-600 pt-2 font-normal"
   }, [_vm._v("\n                        " + _vm._s(_vm.artwork.description) + "\n                    ")]), _vm._v(" "), _c("p", {
     staticClass: "text-primary text-sm leading-4"
@@ -2275,10 +2387,53 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.stopPropagation();
-        return _vm.followArtist();
+        return _vm.followArtist.apply(null, arguments);
       }
     }
   }, [_vm.isFollowingArtist ? _c("span", [_vm._v("Dejar de seguir")]) : _c("span", [_vm._v("Seguir")])]);
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=template&id=03b1a7c0&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=template&id=03b1a7c0& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("button", {
+    staticClass: "px-2",
+    attrs: {
+      disabled: !_vm.canFollowArtwork || _vm.loadFollow
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.followOrUnfollow.apply(null, arguments);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-regular fa-bookmark",
+    "class": _defineProperty({
+      "text-zinc-900": _vm.isFollowingArtwork,
+      "text-gray-400": !_vm.isFollowingArtwork
+    }, _vm.classIcon, _vm.classIcon)
+  })]);
 };
 
 var staticRenderFns = [];
@@ -2618,7 +2773,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
-  var _vm$artwork, _vm$artwork$user, _vm$artwork$price;
+  var _vm$artwork, _vm$artwork$user, _vm$artwork$price, _vm$artwork2, _vm$artwork2$user, _vm$artwork3;
 
   var _vm = this,
       _c = _vm._self._c;
@@ -2681,17 +2836,12 @@ var render = function render() {
     staticClass: "text-gray-900 font-black"
   }, [_vm._v("\n                            " + _vm._s((_vm$artwork$price = _vm.artwork.price) !== null && _vm$artwork$price !== void 0 ? _vm$artwork$price : 0) + "\n                            " + _vm._s(_vm.euro) + "\n                        ")]), _vm._v(" "), _c("div", {
     staticClass: "text-gray-400"
-  }, [_c("button", {
-    staticClass: "px-2",
-    on: {
-      click: function click($event) {
-        $event.stopPropagation();
-        return _vm.sharePublicArtwork(_vm.artwork);
-      }
+  }, [_c("FollowArtworkButton", {
+    attrs: {
+      artistID: (_vm$artwork2 = _vm.artwork) === null || _vm$artwork2 === void 0 ? void 0 : (_vm$artwork2$user = _vm$artwork2.user) === null || _vm$artwork2$user === void 0 ? void 0 : _vm$artwork2$user.id,
+      artworkID: (_vm$artwork3 = _vm.artwork) === null || _vm$artwork3 === void 0 ? void 0 : _vm$artwork3.id
     }
-  }, [_c("i", {
-    staticClass: "fa-regular fa-bookmark"
-  })]), _vm._v(" "), _c("button", {
+  }), _vm._v(" "), _c("button", {
     staticClass: "hover:text-gray-700",
     on: {
       click: function click($event) {
@@ -2702,7 +2852,7 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa-regular fa-heart",
     "class": _vm.isLike ? "p-1 text-red-800" : ""
-  })])])])])])])], 1), _vm._v(" "), _c("loading-overlay", {
+  })])], 1)])])])])], 1), _vm._v(" "), _c("loading-overlay", {
     attrs: {
       active: _vm.loadLiked,
       "is-full-page": true,
@@ -8254,6 +8404,44 @@ component.options.__file = "resources/js/pages/artwork/components/FollowArtistBu
 
 /***/ }),
 
+/***/ "./resources/js/pages/artwork/components/FollowArtworkButton.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/pages/artwork/components/FollowArtworkButton.vue ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _FollowArtworkButton_vue_vue_type_template_id_03b1a7c0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FollowArtworkButton.vue?vue&type=template&id=03b1a7c0& */ "./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=template&id=03b1a7c0&");
+/* harmony import */ var _FollowArtworkButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FollowArtworkButton.vue?vue&type=script&lang=js& */ "./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FollowArtworkButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FollowArtworkButton_vue_vue_type_template_id_03b1a7c0___WEBPACK_IMPORTED_MODULE_0__.render,
+  _FollowArtworkButton_vue_vue_type_template_id_03b1a7c0___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/artwork/components/FollowArtworkButton.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/pages/artwork/components/FormQuestion.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/pages/artwork/components/FormQuestion.vue ***!
@@ -8861,6 +9049,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowArtworkButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FollowArtworkButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowArtworkButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/pages/artwork/components/FormQuestion.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************!*\
   !*** ./resources/js/pages/artwork/components/FormQuestion.vue?vue&type=script&lang=js& ***!
@@ -9147,6 +9350,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowArtistButton_vue_vue_type_template_id_4f6806ef___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowArtistButton_vue_vue_type_template_id_4f6806ef___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FollowArtistButton.vue?vue&type=template&id=4f6806ef& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/FollowArtistButton.vue?vue&type=template&id=4f6806ef&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=template&id=03b1a7c0&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=template&id=03b1a7c0& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowArtworkButton_vue_vue_type_template_id_03b1a7c0___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowArtworkButton_vue_vue_type_template_id_03b1a7c0___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowArtworkButton_vue_vue_type_template_id_03b1a7c0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FollowArtworkButton.vue?vue&type=template&id=03b1a7c0& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/artwork/components/FollowArtworkButton.vue?vue&type=template&id=03b1a7c0&");
 
 
 /***/ }),

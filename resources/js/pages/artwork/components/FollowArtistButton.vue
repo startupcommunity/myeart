@@ -1,7 +1,7 @@
 <template>
     <button
         class="btn btn-primary btn-sm text-xxs px-4 uppercase"
-        @click.stop="followArtist()"
+        @click.stop="followArtist"
         :disabled="!canFollowArtist || loadFollow"
         :class="{ 'btn-dark': isFollowingArtist }"
     >
@@ -60,11 +60,6 @@ export default {
                 this.noty("No es posible autoseguirte", "error");
                 return;
             }
-
-            // if (this.isFollowingArtist) {
-            //     this.noty("Ya se sigue a este artista", "error");
-            //     return;
-            // }
 
             const data = { following_id: this.artist?.id };
             this.loadFollow = true;

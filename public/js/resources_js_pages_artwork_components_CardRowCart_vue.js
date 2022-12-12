@@ -281,11 +281,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!this.canFollowArtist) {
         this.noty("No es posible autoseguirte", "error");
         return;
-      } // if (this.isFollowingArtist) {
-      //     this.noty("Ya se sigue a este artista", "error");
-      //     return;
-      // }
-
+      }
 
       var data = {
         following_id: (_this$artist2 = this.artist) === null || _this$artist2 === void 0 ? void 0 : _this$artist2.id
@@ -478,7 +474,7 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.stopPropagation();
-        return _vm.followArtist();
+        return _vm.followArtist.apply(null, arguments);
       }
     }
   }, [_vm.isFollowingArtist ? _c("span", [_vm._v("Dejar de seguir")]) : _c("span", [_vm._v("Seguir")])]);

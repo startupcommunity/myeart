@@ -52,4 +52,54 @@ class UserFactory
 
     return $deleted;
   }
+
+  /**
+   * Agrega una obra a favoritos del usuario
+   *
+   * @param Request $request
+   * @return boolean
+   */
+  public function addFavoriteArtwork($request): bool
+  {
+    $user = auth()->user();
+    $artwork = $user->favoriteArtworks()->where('artwork_id', $request->artwork_id);
+
+    // obras del usuario
+    $userArtworks = $user->artworks()->pluck('id');
+
+    // si la obra pertenece a el
+    if ($userArtworks->contains($request->artwork_id)) {
+      return false;
+    }
+
+    // si la obra ya está en favoritos, no se agrega
+    if ($artwork->exists()) {
+      return false;
+    }
+
+    // caso contrario, se agrega
+    $user->favoriteArtworks()->create(['artwork_id' => $request->artwork_id]);
+
+    return true;
+  }
+
+  /**
+   * Elimina una obra de los favoritos del usuario
+   *
+   * @param Request $request
+   * @return boolean
+   */
+  public function removeFavoriteArtwork($request): bool
+  {
+    $user = auth()->user();
+    $artwork = $user->favoriteArtworks()->where('artwork_id', $request->artwork_id);
+
+    // si la obra no está en favoritos, no se elimina
+    if (!$artwork->exists()) {
+      return false;
+    }
+
+    // caso contrario, se elimina
+    return $artwork->delete();
+  }
 }

@@ -7,7 +7,7 @@ import router from "./router/routes";
 import store from "./store/store";
 import vuetify from "./plugins/vuetify";
 import i18n from "./plugins/lang";
-import "./mixins/globalMixin";
+import globalMixin from "./mixins/globalMixin";
 
 // events
 import VueEvents from "vue-events";
@@ -57,7 +57,8 @@ Vue.use(VueFormWizard);
 Vue.use(VueSweetalert2);
 Vue.component("loading-overlay-original", Loading);
 Vue.component("loading-overlay", loadingOverlayComponent);
-Vue.component('vgm-places', VueGoogleMaps.Autocomplete);
+Vue.component("vgm-places", VueGoogleMaps.Autocomplete);
+Vue.mixin(globalMixin);
 
 // init API
 ApiService.init();
@@ -74,6 +75,7 @@ new Vue({
     async beforeCreate() {
         if (this.$store.getters.isAuthenticated) {
             await this.$store.dispatch("userRequest");
+            await this.$store.dispatch("userFollowArtworks");
         }
     },
     render: (h) => h(App),

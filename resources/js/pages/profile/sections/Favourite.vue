@@ -24,7 +24,7 @@
                         block
                         class="uppercase tracking-wide"
                         :class="states.artist ? 'font-bold' : 'font-light'"
-                        @click.stop="filterToState(TYPEFAV.artist)"
+                        @click.stop="changeType(TYPEFAV.artist)"
                     >
                         Artistas
                     </v-btn>
@@ -38,7 +38,7 @@
                         block
                         class="uppercase tracking-wide"
                         :class="states.artwork ? 'font-bold' : 'font-light'"
-                        @click.stop="filterToState(TYPEFAV.artwork)"
+                        @click.stop="changeType(TYPEFAV.artwork)"
                     >
                         Obras
                     </v-btn>
@@ -52,7 +52,7 @@
                         block
                         class="uppercase tracking-wide"
                         :class="states.news ? 'font-bold' : 'font-light'"
-                        @click.stop="filterToState(TYPEFAV.news)"
+                        @click.stop="changeType(TYPEFAV.news)"
                     >
                         Noticias
                     </v-btn>
@@ -60,22 +60,64 @@
             </div>
 
             <!-- artistas -->
-            <div class="py-6 w-full">
+            <div class="py-6 w-full" v-if="states.artist">
                 <div class="flex flex-wrap h-full items-stretch">
                     <LoadingTailwind
                         v-if="loading"
                         css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
                     />
                     <CardArtist
-                        v-for="followArt in following_artists"
+                        v-for="followArt in artists"
                         :key="followArt.id"
                         :artist="followArt.following"
                         class="md:w-1/2"
                         :router-link="true"
+                        classCard="min-h-[32rem] bg-gray-50"
+                        v-else
                     />
                 </div>
             </div>
             <!-- /artistas -->
+
+            <!-- obras -->
+            <div class="py-6 w-full" v-if="states.artwork">
+                <div class="flex flex-wrap h-full items-stretch">
+                    <LoadingTailwind
+                        v-if="loading"
+                        css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
+                    />
+                    <CardArtwork
+                        v-for="(obj, index) in artworks"
+                        :key="obj.artwork?.id"
+                        :artwork="obj.artwork"
+                        class="w-full md:w-1/2 lg:w-1/2"
+                        :class="index % 2 == 0 ? 'lg:pr-4' : 'lg:pl-4'"
+                        :router-link="true"
+                        classCard="min-h-[32rem] bg-gray-50"
+                        v-else
+                    />
+                    <!-- <CardArtwork
+                        v-for="obj in artworks"
+                        :key="3 + 1"
+                        :artwork="obj.artwork"
+                        class="w-full md:w-1/2"
+                        :router-link="true"
+                        classCard="min-h-[32rem] bg-gray-50"
+                    /> -->
+                </div>
+            </div>
+            <!-- /artistas -->
+
+            <!-- publicaciones -->
+            <div class="py-6 w-full" v-if="states.news">
+                <div class="flex flex-wrap h-full items-stretch">
+                    <LoadingTailwind
+                        v-if="loading"
+                        css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
+                    />
+                </div>
+            </div>
+            <!-- /publicaciones -->
         </div>
     </div>
 </template>
@@ -86,13 +128,14 @@ import CardArtist from "./../components/CardArtist.vue";
 
 // mixin
 import getDataMixin from "./../../../mixins/getDataMixin";
+import CardArtwork from "../../artwork/sections/CardArtwork.vue";
 
 // cantidad de obras en aumento
 let counterArtists = 4;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind, CardArtist },
+    components: { LoadingTailwind, CardArtist, CardArtwork },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -102,15 +145,23 @@ export default {
     data() {
         return {
             loading: false,
+            artists: [],
+            // artworks: [],
+            news: [],
             states: {
                 artist: false,
                 artwork: false,
                 news: false,
             },
-            following_artists: [],
-            originalArtists: [],
-            remainingArtists: [],
         };
+    },
+    mounted() {
+        this.states.artist = true;
+    },
+    computed: {
+        artworks() {
+            return this.$store.getters.getFollowArtworks || [];
+        },
     },
     methods: {
         /**
@@ -118,25 +169,11 @@ export default {
          *
          * @param Number state
          */
-        filterToState(state) {
-            counterArtists = 4;
-
+        changeType(state) {
             // activar la clase según el state
-            // this.stateActivePub = state === this.TYPEFAV.published;
-            // this.stateActiveSold = state === this.TYPEFAV.sold;
-            // this.stateActiveDraft = state === this.TYPEFAV.draft;
-
-            // filtrar por estado
-            // const artworks = this.originalArtworks.filter(
-            //     (art) => art.state === state
-            // );
-
-            // // tomar las restantes
-            // this.artworks = artworks;
-            // const remaining = this.artworks.splice(counterArtworks);
-
-            // this.loadRemainingArtworks(remaining);
-            // this.changeStateArtwork(state);
+            this.states.artist = state === this.TYPEFAV.artist;
+            this.states.artwork = state === this.TYPEFAV.artwork;
+            this.states.news = state === this.TYPEFAV.news;
         },
 
         /**
@@ -146,15 +183,37 @@ export default {
             this.loading = true;
             this.axios
                 .get(this.ep.user.getFollowArtists)
-                .then((resp) => (this.following_artists = resp.data))
-                .catch((error) => console.error(error))
+                .then((resp) => (this.artists = resp.data))
+                .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));
+        },
+
+        /**
+         * Carga los obras favoritas del usuario
+         */
+        loadArtworks() {
+            // this.artworks = this.$store.getters.getFollowArtworks || [];
+            // console.log(this.artworks);
+        },
+
+        /**
+         * Carga las publicaciones favoritas del usuario
+         */
+        loadNews() {
+            this.news = [];
         },
     },
     watch: {
         showSection(val) {
             if (val) {
-                this.loadArtist();
+                // validar que mostrar
+                if (this.states.artist) {
+                    this.loadArtist();
+                } else if (this.states.artwork) {
+                    // this.loadArtworks();
+                } else if (this.states.news) {
+                    this.loadNews();
+                }
             }
         },
     },

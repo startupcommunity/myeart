@@ -7,11 +7,11 @@
  * @luisandev
  */
 
-import vue from "vue";
 import endpoints from "../api/endpoints";
 import requestErrorsMixin from "./requestErrorsMixin";
 
-vue.mixin({
+export default {
+    name: "globalMixin",
     mixins: [requestErrorsMixin],
     data() {
         return {
@@ -229,4 +229,4 @@ vue.mixin({
          */
         ep: () => endpoints,
     },
-});
+};

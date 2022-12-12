@@ -21,6 +21,11 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/get-follow-artists', [UserController::class, 'getFollowArtists'])->name('getFollowArtists');
 
   /**
+   * Devuelve los obras guardadas por el usuario logueado
+   */
+  Route::get('/get-follow-artworks', [UserController::class, 'getFollowArtworks'])->name('getFollowArtworks');
+
+  /**
    * Devuelve los artistas seguidos por el usuario, solo la info corta y básica de los artistas,
    * como el nombre, el id...
    */
@@ -43,4 +48,14 @@ Route::group(['prefix' => 'user'], function () {
    * Devuelve un usuario artista con sus respectivas relaciones
    */
   Route::get('/get-artist/{id}', [UserController::class, 'getArtist'])->name('getArtist');
+
+  /**
+   * Agrega una obra a favoritos de los usuarios
+   */
+  Route::post('/add-favorite-artwork', [UserController::class, 'addFavoriteArtwork'])->name('addFavoriteArtwork');
+
+  /**
+   * Elimina una obra de favoritos de los usuarios
+   */
+  Route::post('/remove-favorite-artwork', [UserController::class, 'removeFavoriteArtwork'])->name('removeFavoriteArtwork');
 });

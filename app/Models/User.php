@@ -113,6 +113,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Devuelve las obras guardadas como favoritas por el usuario
+     *
+     * @return HasMany
+     */
+    public function favoriteArtworks(): HasMany
+    {
+        return $this->hasMany(FavoriteArtwork::class, 'user_id');
+    }
+
+    /**
      * devuelve los artistas/usuarios que siguen al usuario
      *
      * @return HasMany

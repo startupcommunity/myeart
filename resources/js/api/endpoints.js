@@ -50,6 +50,9 @@ const endpoints = {
         // artistas seguidos por el usuario
         getFollowArtists: `${API}/user/get-follow-artists`, // get
 
+        // obras seguidas por el usuario
+        getFollowArtworks: `${API}/user/get-follow-artworks`, // post
+
         // artistas seguidos por el usuario, info corta y necesaria
         getFASI: `${API}/user/get-follow-artists-short-info`, // get
 
@@ -61,6 +64,12 @@ const endpoints = {
 
         // obtiene todos los datos de un artista (params :id)
         getArtist: `${API}/user/get-artist/`, // get
+
+        // agregar obra a favoritos
+        addArtworkToFav: `${API}/user/add-favorite-artwork`, // post
+
+        // eliminar obra de favoritos
+        removeArtworkToFav: `${API}/user/remove-favorite-artwork`, // post
     },
 
     // comentarios

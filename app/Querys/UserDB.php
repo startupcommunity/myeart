@@ -17,26 +17,43 @@ class UserDB
     private const PAGINATE_ALL_ARTIST = 999999;
 
     /**
+     * Devuelve un usuario por su id
+     * @param int $id
+     * @return User|null
+     */
+    public function getUser(int $id): ?User
+    {
+        return User::find($id);
+    }
+
+    /**
      * Devuelve los artistas seguidos por el usuario logueado
      *
      * @param int|null $userID
+     * @return Collection
      */
-    public function getFollowArtists($userID = null): Collection
+    public function getFollowArtists(int $userID = null): ?Collection
     {
-        $user = $userID ? User::findOrFail($userID) : auth()->user();
-        $data = $user->with([
+        $user = $userID ? $this->getUser($userID) : auth()->user();
+        $data = $user->load([
             'followingArtists.following.profile',
             'followingArtists.following.artworks.categories'
-        ])->first();
+        ]);
 
         return $data['followingArtists'];
     }
 
-    public function getFollowArtistsShortInfo($userID = null)
+    /**
+     * devuelve los artistas seguidos por el usuario logueado
+     * per con información reducida
+     *
+     * @param Int|null $userID
+     * @return Collection
+     */
+    public function getFollowArtistsShortInfo(int $userID = null): ?Collection
     {
-        $user = $userID ? User::findOrFail($userID) : auth()->user();
-        $data = $user->with(['followingArtists.following'])->first();
-
+        $user = $userID ? $this->getUser($userID) : auth()->user();
+        $data = $user->load(['followingArtists.following']);
         return $data['followingArtists'];
     }
 
@@ -105,5 +122,25 @@ class UserDB
             ->withCount('followingArtists')
             ->withCount('followers')
             ->find($id);
+    }
+
+    /**
+     * Devuelve los obras guardadas como favoritos
+     * por el usuario logueado
+     *
+     * @return Collection
+     */
+    public function getFollowArtworks(): Collection
+    {
+        $user = auth()->user();
+        $data = $user->load([
+            'favoriteArtworks.artwork.gallery',
+            'favoriteArtworks.artwork.categories',
+            'favoriteArtworks.artwork.labels',
+            'favoriteArtworks.artwork.likes',
+            'favoriteArtworks.artwork.user.profile',
+        ]);
+
+        return $data['favoriteArtworks'];
     }
 }
