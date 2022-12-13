@@ -1,98 +1,118 @@
 <template>
-    <div class="animate-swing-in-top-fwd">
+    <div class="animate-fade-in-down">
         <div class="rounded-md w-full">
-            <div class="relative group">
-                <img
-                    :src="getImage"
-                    :alt="release.title"
-                    class="object-cover object-center w-full h-72 group-hover:bg-opacity-50"
-                />
-                <div
-                    class="absolute w-full h-full inset-0 hover:cursor-pointer opacity-0 group-hover:opacity-100 hover:bg-zinc-900/60"
-                >
-                    <div class="flex justify-center items-center h-full">
-                        <v-btn text @click.stop="editRelease">
-                            <span class="text-white">
-                                <i
-                                    class="fa-regular fa-pen-to-square text-white"
-                                ></i>
-                                Editar
-                            </span>
-                        </v-btn>
-                        <v-btn text @click.stop="deleteRelease">
-                            <span class="text-white">
-                                <i class="fa-regular fa-trash text-white"></i>
-                                Eliminar
-                            </span>
-                        </v-btn>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-between pt-1 pb-3">
-                <div>
-                    <span
-                        class="text-sm font-medium tracking-wide text-gray-500"
-                    >
-                        {{ release.created_at | formatTextDate }}
-                    </span>
-                </div>
-                <div class="flex gap-3 items-center justify-end">
-                    <div class="text-gray-400">
-                        <span class="text-sm uppercase">{{ likes }}</span>
-                        <i class="fa-regular fa-heart text-gray-400"></i>
-                    </div>
-                    <i class="fa-solid fa-share-nodes text-gray-400"></i>
-                </div>
-            </div>
-        </div>
+            <!-- avatar -->
+            <InfoArtist
+                v-if="showArtist"
+                :artist="artist"
+                :location="release?.location"
+            />
 
-        <loading-overlay :active="false" :is-full-page="true" loader="bars" />
+            <!-- imagen -->
+            <ImageActionRelease
+                :show-actions="showActions"
+                :release="release"
+                @edit="editRelease"
+                @delete="deleteRelease"
+            />
+
+            <!-- sub 1 con solo me gustas y compartir -->
+            <InfoShortRelease
+                v-if="showShortInfo"
+                class="py-1"
+                :likes="likes"
+                :release="release"
+            />
+
+            <!-- sub 2 con toda la info hasta comentarios  -->
+            <InfoCompleteRelease
+                v-if="showCompleteInfo"
+                class="py-1"
+                :release="release"
+                @open-comment-modal="openModalComment"
+            />
+
+            <!-- texto y comentarios -->
+            <CommentRelease
+                :release="release"
+                :showComments="showComments"
+                :artistName="artist?.name"
+                :countComment="countComment"
+                @open-comment-modal="openModalComment"
+            />
+        </div>
     </div>
 </template>
 <script>
+import InfoArtist from "./subcomponents/InfoArtist.vue";
+import ImageActionRelease from "./subcomponents/ImageActionRelease.vue";
+import InfoCompleteRelease from "./subcomponents/InfoCompleteRelease.vue";
+import InfoShortRelease from "./subcomponents/InfoShortRelease.vue";
+import CommentRelease from "./subcomponents/CommentRelease.vue";
+
 export default {
     name: "CardReleaseProfile",
+    components: {
+        InfoArtist,
+        ImageActionRelease,
+        InfoShortRelease,
+        InfoCompleteRelease,
+        CommentRelease,
+    },
     props: {
         release: {
             type: Object,
             default: () => {},
+            description: "Datos de la publicación",
         },
-    },
-    data() {
-        return {};
+        artist: {
+            type: Object,
+            default: () => ({}),
+            description: "artista o creador",
+        },
+        showActions: {
+            type: Boolean,
+            default: true,
+            description: "muestra o no los botones de editar y eliminar",
+        },
+        showArtist: {
+            type: Boolean,
+            default: false,
+            description: "muestra o no el avatar del artista",
+        },
+        showShortInfo: {
+            type: Boolean,
+            default: false,
+            description: "muestra solo la fecha, likes y compartir",
+        },
+        showCompleteInfo: {
+            type: Boolean,
+            default: false,
+            description: "muestra toda la info de la release",
+        },
+        showComments: {
+            type: Boolean,
+            default: true,
+            description: "muestra los comentarios y el botón para verlos",
+        },
     },
     computed: {
-        getImage() {
-            const image = this.release?.image;
-
-            if (!image) return this.getDefaultImageRelease;
-
-            return `${this.pathReleaseImage + image}`;
-        },
-
         likes() {
             return this.release?.likes?.length || 0;
         },
-    },
-    filters: {
-        formatTextDate(value) {
-            const date = new Date(value);
-            const options = {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-            };
-
-            return date.toLocaleDateString("es-ES", options);
+        countComment() {
+            return this.release?.comments?.length || 0;
         },
     },
     methods: {
         editRelease() {
-            this.$emit("edit", this.release);
+            this.$emit("activeEdit", this.release);
         },
-
         deleteRelease() {
-            this.$emit("delete", this.release);
+            this.$emit("activeDelete", this.release);
+        },
+        openModalComment() {
+            this.$emit("showCommentDialog", this.release);
         },
     },
 };

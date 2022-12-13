@@ -58,6 +58,7 @@ export default {
                     }
 
                     this.$store.dispatch("userRequest");
+                    this.$store.dispatch("userFavoriteReleases");
                 })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));

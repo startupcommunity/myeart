@@ -163,6 +163,21 @@ class UserController extends Controller
     }
 
     /**
+     * Devuelve los publicaciones guardadas por el usuario
+     *
+     * @return JsonResponse
+     */
+    public function getFollowReleases(): JsonResponse
+    {
+        try {
+            $resp = $this->db->getFollowReleases();
+            return $this->resp->json($resp, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
      * Agregar a favoritos una obra
      *
      * @param CreateFollowArtworkRequest $request

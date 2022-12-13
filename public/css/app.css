@@ -12865,9 +12865,6 @@ video {
 .gap-3{
   gap: 0.75rem;
 }
-.gap-1{
-  gap: 0.25rem;
-}
 .gap-4{
   gap: 1rem;
 }
@@ -13308,9 +13305,6 @@ video {
 .pr-4{
   padding-right: 1rem;
 }
-.pb-2{
-  padding-bottom: 0.5rem;
-}
 .pt-20{
   padding-top: 5rem;
 }
@@ -13329,6 +13323,9 @@ video {
 .pt-16{
   padding-top: 4rem;
 }
+.pb-2{
+  padding-bottom: 0.5rem;
+}
 .pr-2{
   padding-right: 0.5rem;
 }
@@ -13337,9 +13334,6 @@ video {
 }
 .pr-3{
   padding-right: 0.75rem;
-}
-.pt-1{
-  padding-top: 0.25rem;
 }
 .pl-44{
   padding-left: 11rem;
@@ -13555,10 +13549,6 @@ video {
   --tw-text-opacity: 1;
   color: rgb(113 113 122 / var(--tw-text-opacity));
 }
-.text-app-hashtag{
-  --tw-text-opacity: 1;
-  color: rgb(41 143 194 / var(--tw-text-opacity));
-}
 .text-zinc-700{
   --tw-text-opacity: 1;
   color: rgb(63 63 70 / var(--tw-text-opacity));
@@ -13702,12 +13692,12 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
-.hover\:bg-zinc-900\/60:hover{
-  background-color: rgb(24 24 27 / 0.6);
-}
 .hover\:bg-gray-100:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+.hover\:bg-zinc-900\/60:hover{
+  background-color: rgb(24 24 27 / 0.6);
 }
 .hover\:bg-opacity-0:hover{
   --tw-bg-opacity: 0;

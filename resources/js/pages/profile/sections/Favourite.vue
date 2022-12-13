@@ -67,9 +67,9 @@
                         css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
                     />
                     <CardArtist
-                        v-for="followArt in artists"
-                        :key="followArt.id"
-                        :artist="followArt.following"
+                        v-for="art in artists"
+                        :key="art.id"
+                        :artist="art"
                         class="md:w-1/2"
                         :router-link="true"
                         classCard="min-h-[32rem] bg-gray-50"
@@ -87,23 +87,15 @@
                         css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
                     />
                     <CardArtwork
-                        v-for="(obj, index) in artworks"
-                        :key="obj.artwork?.id"
-                        :artwork="obj.artwork"
+                        v-for="(art, index) in artworks"
+                        :key="art?.id"
+                        :artwork="art"
                         class="w-full md:w-1/2 lg:w-1/2"
                         :class="index % 2 == 0 ? 'lg:pr-4' : 'lg:pl-4'"
                         :router-link="true"
                         classCard="min-h-[32rem] bg-gray-50"
                         v-else
                     />
-                    <!-- <CardArtwork
-                        v-for="obj in artworks"
-                        :key="3 + 1"
-                        :artwork="obj.artwork"
-                        class="w-full md:w-1/2"
-                        :router-link="true"
-                        classCard="min-h-[32rem] bg-gray-50"
-                    /> -->
                 </div>
             </div>
             <!-- /artistas -->
@@ -114,6 +106,15 @@
                     <LoadingTailwind
                         v-if="loading"
                         css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
+                    />
+                    <CardRelease
+                        v-for="(release, index) in news"
+                        :key="release.id"
+                        :release="release"
+                        :show-actions="false"
+                        class="w-full md:w-1/2"
+                        :class="index % 2 == 0 ? 'lg:pr-4' : 'lg:pl-4'"
+                        v-else
                     />
                 </div>
             </div>
@@ -129,13 +130,14 @@ import CardArtist from "./../components/CardArtist.vue";
 // mixin
 import getDataMixin from "./../../../mixins/getDataMixin";
 import CardArtwork from "../../artwork/sections/CardArtwork.vue";
+import CardRelease from "../components/CardRelease.vue";
 
 // cantidad de obras en aumento
 let counterArtists = 4;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind, CardArtist, CardArtwork },
+    components: { LoadingTailwind, CardArtist, CardArtwork, CardRelease },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -145,9 +147,6 @@ export default {
     data() {
         return {
             loading: false,
-            artists: [],
-            // artworks: [],
-            news: [],
             states: {
                 artist: false,
                 artwork: false,
@@ -162,6 +161,15 @@ export default {
         artworks() {
             return this.$store.getters.getFollowArtworks || [];
         },
+        news() {
+            return this.$store.getters.getFollowReleases || [];
+        },
+        artists() {
+            const data = this.$store.getters.getFollowArtists || [];
+
+            // sacar los artistas  de following
+            return data.map((item) => item.following);
+        },
     },
     methods: {
         /**
@@ -175,45 +183,13 @@ export default {
             this.states.artwork = state === this.TYPEFAV.artwork;
             this.states.news = state === this.TYPEFAV.news;
         },
-
-        /**
-         * Carga los artistas seguidos del usuario
-         */
-        loadArtist() {
-            this.loading = true;
-            this.axios
-                .get(this.ep.user.getFollowArtists)
-                .then((resp) => (this.artists = resp.data))
-                .catch((error) => this.manageError(error))
-                .finally(() => (this.loading = false));
-        },
-
-        /**
-         * Carga los obras favoritas del usuario
-         */
-        loadArtworks() {
-            // this.artworks = this.$store.getters.getFollowArtworks || [];
-            // console.log(this.artworks);
-        },
-
-        /**
-         * Carga las publicaciones favoritas del usuario
-         */
-        loadNews() {
-            this.news = [];
-        },
     },
     watch: {
         showSection(val) {
             if (val) {
-                // validar que mostrar
-                if (this.states.artist) {
-                    this.loadArtist();
-                } else if (this.states.artwork) {
-                    // this.loadArtworks();
-                } else if (this.states.news) {
-                    this.loadNews();
-                }
+                this.$store.dispatch("userFollowArtists");
+                this.$store.dispatch("userFollowArtworks");
+                this.$store.dispatch("userFavoriteReleases");
             }
         },
     },

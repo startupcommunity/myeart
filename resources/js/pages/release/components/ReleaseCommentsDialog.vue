@@ -320,7 +320,6 @@ export default {
          * Crea un comentario
          */
         createComment() {
-            // bloquear palabras prohibidas
             // validate formAnswer
             if (!this.$refs.formComment.validate()) {
                 return;
@@ -339,6 +338,7 @@ export default {
                 .then(() => {
                     this.noty("Tu comentario ha sido publicado");
                     this.question = "";
+                    this.$refs.formComment.resetValidation();
                     this.getComments();
                 })
                 .catch((error) => this.manageError(error))

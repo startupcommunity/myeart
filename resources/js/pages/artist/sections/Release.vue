@@ -17,11 +17,15 @@
                 <div class="md:py-10">
                     <div class="flex flex-wrap">
                         <CardRelease
-                            class="w-full md:w-1/2 md:pr-4 mb-4 animate-swing-in-top-fwd"
-                            v-for="(release, index) in releases"
-                            :artist="artist"
-                            :key="index"
+                            v-for="release in releases"
+                            :key="release.id"
                             :release="release"
+                            :artist="artist"
+                            :showArtist="true"
+                            :showActions="false"
+                            :showShortInfo="true"
+                            :showComments="false"
+                            class="w-full md:w-1/2 md:pr-4 mb-4 animate-swing-in-top-fwd"
                         />
                     </div>
                 </div>
@@ -41,7 +45,7 @@
 
 <script>
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
-import CardRelease from "../components/CardRelease.vue";
+import CardRelease from "../../profile/components/CardRelease.vue";
 
 const LIMIT = 2;
 const LOAD_MORE = 2;
@@ -81,12 +85,6 @@ export default {
          * carga las publicaciones de un artista
          */
         loadReleases() {
-            // this.loading = true;
-            // const response = await this.$axios.get(
-            //     `/api/artist/${this.artist.id}/releases`
-            // );
-            // this.releases = response.data;
-
             // mockup de prueba para releases
             const mockup = [
                 {
@@ -98,7 +96,7 @@ export default {
                     place: "Madrid, España",
                     image: "https://picsum.photos/200/300",
                     hashtag: "#arte #escultura",
-                    museum: 'Roma',
+                    museum: "Roma",
                 },
                 {
                     id: 2,
@@ -109,7 +107,7 @@ export default {
                     place: "Madrid, España",
                     image: "https://picsum.photos/600/400",
                     hashtag: "#arte #pintura",
-                    museum: 'Madrid',
+                    museum: "Madrid",
                 },
                 {
                     id: 3,
@@ -120,7 +118,7 @@ export default {
                     place: "Madrid, España",
                     image: "https://picsum.photos/100/100",
                     hashtag: "#dibujo #oleo",
-                    museum: 'París',
+                    museum: "París",
                 },
                 {
                     id: 4,
@@ -131,7 +129,7 @@ export default {
                     place: "Madrid, España",
                     image: "https://picsum.photos/200/200",
                     hashtag: "#dibujo #literatura",
-                    museum: 'Londres',
+                    museum: "Londres",
                 },
             ];
 

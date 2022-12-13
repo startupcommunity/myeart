@@ -75,7 +75,9 @@ new Vue({
     async beforeCreate() {
         if (this.$store.getters.isAuthenticated) {
             await this.$store.dispatch("userRequest");
+            await this.$store.dispatch("userFollowArtists");
             await this.$store.dispatch("userFollowArtworks");
+            await this.$store.dispatch("userFavoriteReleases");
         }
     },
     render: (h) => h(App),

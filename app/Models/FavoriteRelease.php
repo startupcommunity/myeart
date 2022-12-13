@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FavoriteRelease extends Model
 {
@@ -13,18 +14,33 @@ class FavoriteRelease extends Model
      */
     protected $table = 'favorite_releases';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
         'release_id',
     ];
 
-    public function user()
+    /**
+     * Get the user that owns the favorite release.
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function release()
+    /**
+     * Get the release that owns the favorite release.
+     *
+     * @return BelongsTo
+     */
+    public function release(): BelongsTo
     {
-        return $this->belongsTo(Release::class);
+        return $this->belongsTo(UserRelease::class, 'release_id');
     }
 }

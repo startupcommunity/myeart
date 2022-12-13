@@ -260,6 +260,8 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this.$store.dispatch("userRequest");
+
+        _this.$store.dispatch("userFavoriteReleases");
       })["catch"](function (error) {
         return _this.manageError(error);
       })["finally"](function () {

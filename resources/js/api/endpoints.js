@@ -51,7 +51,10 @@ const endpoints = {
         getFollowArtists: `${API}/user/get-follow-artists`, // get
 
         // obras seguidas por el usuario
-        getFollowArtworks: `${API}/user/get-follow-artworks`, // post
+        getFollowArtworks: `${API}/user/get-follow-artworks`, // get
+
+        // obtiene las publicaciones seguidas por el usuario
+        getFollowReleases: `${API}/user/get-follow-releases`, // get
 
         // artistas seguidos por el usuario, info corta y necesaria
         getFASI: `${API}/user/get-follow-artists-short-info`, // get

@@ -26,6 +26,11 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/get-follow-artworks', [UserController::class, 'getFollowArtworks'])->name('getFollowArtworks');
 
   /**
+   * Devuelve las publicaciones guardadas por el usuario logueado
+   */
+  Route::get('/get-follow-releases', [UserController::class, 'getFollowReleases'])->name('getFollowReleases');
+
+  /**
    * Devuelve los artistas seguidos por el usuario, solo la info corta y básica de los artistas,
    * como el nombre, el id...
    */

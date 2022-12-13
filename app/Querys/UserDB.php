@@ -132,7 +132,10 @@ class UserDB
      */
     public function getFollowArtworks(): Collection
     {
+        // user
         $user = auth()->user();
+
+        // load relations
         $data = $user->load([
             'favoriteArtworks.artwork.gallery',
             'favoriteArtworks.artwork.categories',
@@ -141,6 +144,30 @@ class UserDB
             'favoriteArtworks.artwork.user.profile',
         ]);
 
-        return $data['favoriteArtworks'];
+        // return especific data
+        return $data['favoriteArtworks']
+            ->map(fn ($item) => $item->artwork);
+    }
+
+    /**
+     * Devuelve los publicaciones guardadas como favoritos
+     * por el usuario logueado
+     *
+     * @return Collection
+     */
+    public function getFollowReleases(): Collection
+    {
+        // user
+        $user = auth()->user();
+
+        // load relations
+        $data = $user->load([
+            'favoriteReleases.release.likes',
+            'favoriteReleases.release.creator',
+        ]);
+
+        // return especific data
+        return $data['favoriteReleases']
+            ->map(fn ($item) => $item->release);
     }
 }

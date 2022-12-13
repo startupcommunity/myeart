@@ -48,10 +48,13 @@
                             v-for="(release, index) in releases"
                             :key="release.id"
                             :release="release"
-                            @edit="editRelease"
-                            @delete="deleteRelease"
+                            :showArtist="false"
+                            :showShortInfo="true"
                             :class="index % 2 === 0 ? 'md:pr-4' : ''"
                             class="w-full md:w-1/2 pb-4"
+                            @activeEdit="editRelease"
+                            @activeDelete="deleteRelease"
+                            @showCommentDialog="activeCommentModal"
                         />
                     </div>
 
@@ -72,11 +75,19 @@
 
             <!-- editar publicaciones -->
             <EditRelease @edited="edited" :release="release" v-if="edit" />
+
+            <!-- modal de comentarios -->
+            <ReleaseCommentsDialog
+                :show="showCommentDialog"
+                :releaseID="release?.id"
+                @close-comments="showCommentDialog = false"
+            />
         </div>
     </div>
 </template>
 <script>
 // componentes
+import ReleaseCommentsDialog from "../../release/components/ReleaseCommentsDialog.vue";
 import CreateRelease from "../../release/Create.vue";
 import EditRelease from "../../release/Edit.vue";
 import CardRelease from "../components/CardRelease.vue";
@@ -91,7 +102,13 @@ let loadMoreRelease = 2;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind, CardRelease, CreateRelease, EditRelease },
+    components: {
+        LoadingTailwind,
+        CardRelease,
+        CreateRelease,
+        EditRelease,
+        ReleaseCommentsDialog,
+    },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -103,6 +120,7 @@ export default {
             loading: false,
             create: false,
             edit: false,
+            showCommentDialog: false,
             release: {},
             releases: [],
             original: [],
@@ -113,7 +131,10 @@ export default {
          * Verificar si hay mas publicaciones que mostrar
          */
         hasShowRelease() {
-            return (this.releases.length !== this.original.length) && this.releases.length;
+            return (
+                this.releases.length !== this.original.length &&
+                this.releases.length
+            );
         },
     },
     watch: {
@@ -190,6 +211,16 @@ export default {
             this.create = false;
             this.edit = true;
             this.release = release;
+        },
+
+        /**
+         * Activa el modal de comentarios
+         *
+         * @param {Object} release
+         */
+        activeCommentModal(release) {
+            this.release = release;
+            this.showCommentDialog = true;
         },
 
         /**

@@ -39,11 +39,12 @@
                                 :key="release.id"
                                 :release="release"
                                 :artist="release?.creator"
-                                :optionButton="false"
-                                :menuButton="false"
-                                :menuDate="true"
-                                class="mb-5 animate-fade-in-down"
-                                @show-comment-dialog="showCommentDialog"
+                                :showArtist="true"
+                                :showCompleteInfo="true"
+                                :showShortInfo="false"
+                                :show-actions="false"
+                                class="mb-5"
+                                @showCommentDialog="activeCommentDialog"
                             />
 
                             <div
@@ -94,8 +95,8 @@ import Title from "./sections/index/Title.vue";
 import Filters from "./sections/index/Filters.vue";
 import CardEvent from "./components/CardEventCol.vue";
 import MiniCardArtist from "./components/MiniCardArtist.vue";
-import CardRelease from "../artist/components/CardRelease.vue";
 import ReleaseCommentsDialog from "../release/components/ReleaseCommentsDialog.vue";
+import CardRelease from "../profile/components/CardRelease.vue";
 
 const MAX_EVENTS = 6;
 const RANDOM_ARTIST = 6;
@@ -111,8 +112,8 @@ export default {
         Filters,
         CardEvent,
         MiniCardArtist,
-        CardRelease,
         ReleaseCommentsDialog,
+        CardRelease,
     },
     data() {
         return {
@@ -186,7 +187,6 @@ export default {
         user() {
             return this.$store.getters.getProfile;
         },
-
         isMoreReleasesToShow() {
             return this.releases.length < this.original.length;
         },
@@ -232,7 +232,7 @@ export default {
         /**
          * Muestra el modal de comentarios de la publicación
          */
-        showCommentDialog(release) {
+        activeCommentDialog(release) {
             this.release = release;
             this.show = true;
         },

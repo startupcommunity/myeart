@@ -450,7 +450,6 @@ __webpack_require__.r(__webpack_exports__);
     createComment: function createComment() {
       var _this2 = this;
 
-      // bloquear palabras prohibidas
       // validate formAnswer
       if (!this.$refs.formComment.validate()) {
         return;
@@ -466,6 +465,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.noty("Tu comentario ha sido publicado");
 
         _this2.question = "";
+
+        _this2.$refs.formComment.resetValidation();
 
         _this2.getComments();
       })["catch"](function (error) {

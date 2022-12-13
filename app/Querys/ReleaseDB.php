@@ -31,7 +31,9 @@ class ReleaseDB
   public function getUserRelease(): ?Collection
   {
     $user = auth()->user();
-    return $user->releases()->with(['labels', 'likes'])->get();
+    return $user->releases()->with([
+      'labels', 'likes.user', 'creator.artworks.categories', 'comments'
+    ])->get();
   }
 
   /**

@@ -2402,7 +2402,10 @@ var endpoints = {
     // get
     // obras seguidas por el usuario
     getFollowArtworks: "".concat(API, "/user/get-follow-artworks"),
-    // post
+    // get
+    // obtiene las publicaciones seguidas por el usuario
+    getFollowReleases: "".concat(API, "/user/get-follow-releases"),
+    // get
     // artistas seguidos por el usuario, info corta y necesaria
     getFASI: "".concat(API, "/user/get-follow-artists-short-info"),
     // get
@@ -2758,7 +2761,7 @@ new Vue({
           switch (_context.prev = _context.next) {
             case 0:
               if (!_this.$store.getters.isAuthenticated) {
-                _context.next = 5;
+                _context.next = 9;
                 break;
               }
 
@@ -2767,9 +2770,17 @@ new Vue({
 
             case 3:
               _context.next = 5;
-              return _this.$store.dispatch("userFollowArtworks");
+              return _this.$store.dispatch("userFollowArtists");
 
             case 5:
+              _context.next = 7;
+              return _this.$store.dispatch("userFollowArtworks");
+
+            case 7:
+              _context.next = 9;
+              return _this.$store.dispatch("userFavoriteReleases");
+
+            case 9:
             case "end":
               return _context.stop();
           }
@@ -5396,74 +5407,134 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-var state = {
-  status: "",
-  following_artworks: [],
-  profile: {
-    profile: {},
-    social_network: {},
-    shopping_cart: [],
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: {
+    status: "",
     following_artists: [],
-    favorite_releases: []
-  }
-};
-var getters = {
-  getProfile: function getProfile(state) {
-    return state.profile;
+    following_artworks: [],
+    following_releases: [],
+    profile: {
+      profile: {},
+      social_network: {},
+      shopping_cart: [],
+      following_artists: [],
+      favorite_releases: []
+    }
   },
-  getFollowArtworks: function getFollowArtworks(state) {
-    return state.following_artworks;
+  getters: {
+    getProfile: function getProfile(state) {
+      return state.profile;
+    },
+    getFollowArtists: function getFollowArtists(state) {
+      return state.following_artists;
+    },
+    getFollowArtworks: function getFollowArtworks(state) {
+      return state.following_artworks;
+    },
+    getFollowReleases: function getFollowReleases(state) {
+      return state.following_releases;
+    },
+    isProfileLoaded: function isProfileLoaded(state) {
+      return !!state.profile.name;
+    }
   },
-  isProfileLoaded: function isProfileLoaded(state) {
-    return !!state.profile.name;
-  }
-};
-var actions = {
-  userRequest: function userRequest(_ref) {
-    var commit = _ref.commit,
-        dispatch = _ref.dispatch;
-    commit("userRequest");
-    vue__WEBPACK_IMPORTED_MODULE_1__["default"].axios.get("/api/user").then( /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(resp) {
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return commit("userSuccess", resp.data);
+  actions: {
+    /**
+     * Obtener el usuario y los datos de su perfil
+     * @param {Commit, Dispatch} param
+     */
+    userRequest: function userRequest(_ref) {
+      var commit = _ref.commit,
+          dispatch = _ref.dispatch;
+      commit("userRequest");
+      vue__WEBPACK_IMPORTED_MODULE_1__["default"].axios.get("/api/user").then( /*#__PURE__*/function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(resp) {
+          return _regeneratorRuntime().wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return commit("userSuccess", resp.data);
 
-              case 2:
-              case "end":
-                return _context.stop();
+                case 2:
+                  return _context.abrupt("return", _context.sent);
+
+                case 3:
+                case "end":
+                  return _context.stop();
+              }
             }
-          }
-        }, _callee);
-      }));
+          }, _callee);
+        }));
 
-      return function (_x) {
-        return _ref2.apply(this, arguments);
-      };
-    }())["catch"](function (err) {
-      commit("userError");
-      dispatch("authLogout");
-    });
+        return function (_x) {
+          return _ref2.apply(this, arguments);
+        };
+      }())["catch"](function (err) {
+        commit("userError");
+        dispatch("authLogout");
+      });
+    },
+
+    /**
+     * Obtener los artistas seguidos por el usuario
+     * @param {Commit} param
+     */
+    userFollowArtists: function userFollowArtists(_ref3) {
+      var commit = _ref3.commit;
+      commit("userRequest");
+      vue__WEBPACK_IMPORTED_MODULE_1__["default"].axios.get(_api_endpoints__WEBPACK_IMPORTED_MODULE_0__["default"].user.getFollowArtists).then(function (resp) {
+        return commit("setFollowArtists", resp.data);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+
+    /**
+     * Obtener las obras seguidas por el usuario
+     * @param {Commit} param
+     */
+    userFollowArtworks: function userFollowArtworks(_ref4) {
+      var commit = _ref4.commit;
+      commit("userRequest");
+      vue__WEBPACK_IMPORTED_MODULE_1__["default"].axios.get(_api_endpoints__WEBPACK_IMPORTED_MODULE_0__["default"].user.getFollowArtworks).then(function (resp) {
+        return commit("setFollowArtworks", resp.data);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+
+    /**
+     * Obtener las publicaciones seguidas por el usuario
+     * @param {Commit} param
+     */
+    userFavoriteReleases: function userFavoriteReleases(_ref5) {
+      var commit = _ref5.commit;
+      commit("userRequest");
+      vue__WEBPACK_IMPORTED_MODULE_1__["default"].axios.get(_api_endpoints__WEBPACK_IMPORTED_MODULE_0__["default"].user.getFollowReleases).then(function (resp) {
+        return commit("setFollowReleases", resp.data);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
   },
-  userFollowArtworks: function userFollowArtworks(_ref3) {
-    var commit = _ref3.commit,
-        dispatch = _ref3.dispatch;
-    commit("userRequest"); // acceder al global mixin para obtener el endpoint
-
-    var ep = _api_endpoints__WEBPACK_IMPORTED_MODULE_0__["default"].user.getFollowArtworks;
-    vue__WEBPACK_IMPORTED_MODULE_1__["default"].axios.get(ep).then( /*#__PURE__*/function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(resp) {
+  mutations: {
+    userRequest: function userRequest(state) {
+      state.status = "loading";
+    },
+    userSuccess: function () {
+      var _userSuccess = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(state, resp) {
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return commit("setFollowArtworks", resp.data);
+                return vue__WEBPACK_IMPORTED_MODULE_1__["default"].set(state, "profile", resp);
 
               case 2:
+                state.status = "success";
+
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -5471,79 +5542,94 @@ var actions = {
         }, _callee2);
       }));
 
-      return function (_x2) {
-        return _ref4.apply(this, arguments);
-      };
-    }())["catch"](function (err) {
-      return console.log(err);
-    });
-  }
-};
-var mutations = {
-  userRequest: function userRequest(state) {
-    state.status = "loading";
-  },
-  userSuccess: function () {
-    var _userSuccess = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(state, resp) {
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return vue__WEBPACK_IMPORTED_MODULE_1__["default"].set(state, "profile", resp);
+      function userSuccess(_x2, _x3) {
+        return _userSuccess.apply(this, arguments);
+      }
 
-            case 2:
-              state.status = "success";
+      return userSuccess;
+    }(),
+    setFollowArtists: function () {
+      var _setFollowArtists = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(state, resp) {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return vue__WEBPACK_IMPORTED_MODULE_1__["default"].set(state, "following_artists", resp);
 
-            case 3:
-            case "end":
-              return _context3.stop();
+              case 2:
+                state.status = "success";
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
           }
-        }
-      }, _callee3);
-    }));
+        }, _callee3);
+      }));
 
-    function userSuccess(_x3, _x4) {
-      return _userSuccess.apply(this, arguments);
-    }
+      function setFollowArtists(_x4, _x5) {
+        return _setFollowArtists.apply(this, arguments);
+      }
 
-    return userSuccess;
-  }(),
-  setFollowArtworks: function () {
-    var _setFollowArtworks = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(state, resp) {
-      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.next = 2;
-              return vue__WEBPACK_IMPORTED_MODULE_1__["default"].set(state, "following_artworks", resp);
+      return setFollowArtists;
+    }(),
+    setFollowArtworks: function () {
+      var _setFollowArtworks = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(state, resp) {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return vue__WEBPACK_IMPORTED_MODULE_1__["default"].set(state, "following_artworks", resp);
 
-            case 2:
-              state.status = "success";
+              case 2:
+                state.status = "success";
 
-            case 3:
-            case "end":
-              return _context4.stop();
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
           }
-        }
-      }, _callee4);
-    }));
+        }, _callee4);
+      }));
 
-    function setFollowArtworks(_x5, _x6) {
-      return _setFollowArtworks.apply(this, arguments);
+      function setFollowArtworks(_x6, _x7) {
+        return _setFollowArtworks.apply(this, arguments);
+      }
+
+      return setFollowArtworks;
+    }(),
+    setFollowReleases: function () {
+      var _setFollowReleases = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(state, resp) {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return vue__WEBPACK_IMPORTED_MODULE_1__["default"].set(state, "following_releases", resp);
+
+              case 2:
+                state.status = "success";
+
+              case 3:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function setFollowReleases(_x8, _x9) {
+        return _setFollowReleases.apply(this, arguments);
+      }
+
+      return setFollowReleases;
+    }(),
+    userError: function userError(state) {
+      state.status = "error";
     }
-
-    return setFollowArtworks;
-  }(),
-  userError: function userError(state) {
-    state.status = "error";
   }
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  state: state,
-  getters: getters,
-  actions: actions,
-  mutations: mutations
 });
 
 /***/ }),
@@ -77017,10 +77103,6 @@ var map = {
 		"./resources/js/pages/artist/components/CardEvent.vue",
 		"resources_js_pages_artist_components_CardEvent_vue"
 	],
-	"./artist/components/CardRelease.vue": [
-		"./resources/js/pages/artist/components/CardRelease.vue",
-		"resources_js_pages_artist_components_CardRelease_vue"
-	],
 	"./artist/components/FilterArtistModal.vue": [
 		"./resources/js/pages/artist/components/FilterArtistModal.vue",
 		"resources_js_pages_artist_components_FilterArtistModal_vue"
@@ -77248,6 +77330,26 @@ var map = {
 	"./profile/components/CardRelease.vue": [
 		"./resources/js/pages/profile/components/CardRelease.vue",
 		"resources_js_pages_profile_components_CardRelease_vue"
+	],
+	"./profile/components/subcomponents/CommentRelease.vue": [
+		"./resources/js/pages/profile/components/subcomponents/CommentRelease.vue",
+		"resources_js_pages_profile_components_subcomponents_CommentRelease_vue"
+	],
+	"./profile/components/subcomponents/ImageActionRelease.vue": [
+		"./resources/js/pages/profile/components/subcomponents/ImageActionRelease.vue",
+		"resources_js_pages_profile_components_subcomponents_ImageActionRelease_vue"
+	],
+	"./profile/components/subcomponents/InfoArtist.vue": [
+		"./resources/js/pages/profile/components/subcomponents/InfoArtist.vue",
+		"resources_js_pages_profile_components_subcomponents_InfoArtist_vue"
+	],
+	"./profile/components/subcomponents/InfoCompleteRelease.vue": [
+		"./resources/js/pages/profile/components/subcomponents/InfoCompleteRelease.vue",
+		"resources_js_pages_profile_components_subcomponents_InfoCompleteRelease_vue"
+	],
+	"./profile/components/subcomponents/InfoShortRelease.vue": [
+		"./resources/js/pages/profile/components/subcomponents/InfoShortRelease.vue",
+		"resources_js_pages_profile_components_subcomponents_InfoShortRelease_vue"
 	],
 	"./profile/sections/Address.vue": [
 		"./resources/js/pages/profile/sections/Address.vue",
@@ -77610,7 +77712,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_pages_Checkout_CheckoutSuccess_vue":1,"resources_js_pages_Checkout_Index_vue":1,"resources_js_pages_Checkout_components_CardItemCheckout_vue":1,"resources_js_pages_Checkout_components_UseDefaultAddress_vue":1,"resources_js_pages_Checkout_components_UseFormAddress_vue":1,"resources_js_pages_Checkout_components_UseShippingMethod_vue":1,"resources_js_pages_Checkout_sections_OrderSection_vue":1,"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_CardBlog_vue":1,"resources_js_pages_artist_components_CardEvent_vue":1,"resources_js_pages_artist_components_CardRelease_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artist_sections_AboutMe_vue":1,"resources_js_pages_artist_sections_Blog_vue":1,"resources_js_pages_artist_sections_Event_vue":1,"resources_js_pages_artist_sections_Hero_vue":1,"resources_js_pages_artist_sections_PostHero_vue":1,"resources_js_pages_artist_sections_Release_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CardComment_vue":1,"resources_js_pages_artwork_components_CardRowCart_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_FollowArtworkButton_vue":1,"resources_js_pages_artwork_components_FormQuestion_vue":1,"resources_js_pages_artwork_components_ResponseCommentDialog_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_Comment_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_community_Index_vue":1,"resources_js_pages_community_components_CardEventCol_vue":1,"resources_js_pages_community_components_MiniCardArtist_vue":1,"resources_js_pages_community_sections_index_Filters_vue":1,"resources_js_pages_community_sections_index_Title_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_errors_404_vue":1,"resources_js_pages_errors_500_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_landing_sections_components_MobileMenu_vue":1,"resources_js_pages_layouts_ErrorLayout_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_components_CardRelease_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_DesktopKeypad_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_HeroProfile_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1,"resources_js_pages_profile_sections_Release_vue":1,"resources_js_pages_release_Create_vue":1,"resources_js_pages_release_Edit_vue":1,"resources_js_pages_release_components_CardComment_vue":1,"resources_js_pages_release_components_CommentButton_vue":1,"resources_js_pages_release_components_FavButton_vue":1,"resources_js_pages_release_components_LikeButton_vue":1,"resources_js_pages_release_components_ReleaseCommentsDialog_vue":1,"resources_js_pages_release_components_ShareButton_vue":1,"resources_js_pages_shoppingcart_Index_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_pages_Checkout_CheckoutSuccess_vue":1,"resources_js_pages_Checkout_Index_vue":1,"resources_js_pages_Checkout_components_CardItemCheckout_vue":1,"resources_js_pages_Checkout_components_UseDefaultAddress_vue":1,"resources_js_pages_Checkout_components_UseFormAddress_vue":1,"resources_js_pages_Checkout_components_UseShippingMethod_vue":1,"resources_js_pages_Checkout_sections_OrderSection_vue":1,"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_CardBlog_vue":1,"resources_js_pages_artist_components_CardEvent_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artist_sections_AboutMe_vue":1,"resources_js_pages_artist_sections_Blog_vue":1,"resources_js_pages_artist_sections_Event_vue":1,"resources_js_pages_artist_sections_Hero_vue":1,"resources_js_pages_artist_sections_PostHero_vue":1,"resources_js_pages_artist_sections_Release_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CardComment_vue":1,"resources_js_pages_artwork_components_CardRowCart_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_FollowArtworkButton_vue":1,"resources_js_pages_artwork_components_FormQuestion_vue":1,"resources_js_pages_artwork_components_ResponseCommentDialog_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_Comment_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_community_Index_vue":1,"resources_js_pages_community_components_CardEventCol_vue":1,"resources_js_pages_community_components_MiniCardArtist_vue":1,"resources_js_pages_community_sections_index_Filters_vue":1,"resources_js_pages_community_sections_index_Title_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_errors_404_vue":1,"resources_js_pages_errors_500_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_landing_sections_components_MobileMenu_vue":1,"resources_js_pages_layouts_ErrorLayout_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_components_CardRelease_vue":1,"resources_js_pages_profile_components_subcomponents_CommentRelease_vue":1,"resources_js_pages_profile_components_subcomponents_ImageActionRelease_vue":1,"resources_js_pages_profile_components_subcomponents_InfoArtist_vue":1,"resources_js_pages_profile_components_subcomponents_InfoCompleteRelease_vue":1,"resources_js_pages_profile_components_subcomponents_InfoShortRelease_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_DesktopKeypad_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_HeroProfile_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1,"resources_js_pages_profile_sections_Release_vue":1,"resources_js_pages_release_Create_vue":1,"resources_js_pages_release_Edit_vue":1,"resources_js_pages_release_components_CardComment_vue":1,"resources_js_pages_release_components_CommentButton_vue":1,"resources_js_pages_release_components_FavButton_vue":1,"resources_js_pages_release_components_LikeButton_vue":1,"resources_js_pages_release_components_ReleaseCommentsDialog_vue":1,"resources_js_pages_release_components_ShareButton_vue":1,"resources_js_pages_shoppingcart_Index_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
