@@ -17,7 +17,7 @@
                 class="text-xs font-medium text-blue-600 pr-1"
                 :to="getPathProfile(label.user?.id)"
             >
-                @{{ label.user?.username ?? label.user?.name }}
+                @{{ label.user?.username ?? label.user?.name }} &nbsp;
             </router-link>
         </p>
         <div v-if="showComments">
