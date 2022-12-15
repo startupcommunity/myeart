@@ -2099,17 +2099,19 @@ var render = function render() {
     domProps: {
       innerHTML: _vm._s(_vm.getTextWithHashtag)
     }
-  }), _vm._v(" "), _vm.showLabels || _vm.labels.length ? _c("p", _vm._l(_vm.labels, function (label) {
+  }), _vm._v(" "), _vm.showLabels || _vm.labels.length ? _c("p") : _vm._e(), _vm._l(_vm.labels, function (label) {
     var _label$user, _label$user$username, _label$user2, _label$user3;
 
-    return _c("router-link", {
+    return _c("div", {
       key: label.id,
+      staticClass: "flex justify-start gap-2"
+    }, [_c("router-link", {
       staticClass: "text-xs font-medium text-blue-600 pr-1",
       attrs: {
         to: _vm.getPathProfile((_label$user = label.user) === null || _label$user === void 0 ? void 0 : _label$user.id)
       }
-    }, [_vm._v("\n            @" + _vm._s((_label$user$username = (_label$user2 = label.user) === null || _label$user2 === void 0 ? void 0 : _label$user2.username) !== null && _label$user$username !== void 0 ? _label$user$username : (_label$user3 = label.user) === null || _label$user3 === void 0 ? void 0 : _label$user3.name) + "\n        ")]);
-  }), 1) : _vm._e(), _vm._v(" "), _vm.showComments ? _c("div", [!_vm.isTheCreator ? _c("div", {
+    }, [_vm._v("\n                @" + _vm._s((_label$user$username = (_label$user2 = label.user) === null || _label$user2 === void 0 ? void 0 : _label$user2.username) !== null && _label$user$username !== void 0 ? _label$user$username : (_label$user3 = label.user) === null || _label$user3 === void 0 ? void 0 : _label$user3.name) + "\n            ")])], 1);
+  }), _vm._v(" "), _c("p"), _vm._v(" "), _vm.showComments ? _c("div", [!_vm.isTheCreator ? _c("div", {
     staticClass: "text-xs font-medium text-gray-400 py-2"
   }, [_vm.countComment ? _c("button", {
     attrs: {
@@ -2143,7 +2145,7 @@ var render = function render() {
         return _vm.openModalComment.apply(null, arguments);
       }
     }
-  }, [_vm.countComment ? _c("span", [_vm._v("\n                    Ver " + _vm._s(_vm.countComment) + " comentario(s)\n                ")]) : _c("span", [_vm._v("No hay comentarios")])])])]) : _vm._e()]);
+  }, [_vm.countComment ? _c("span", [_vm._v("\n                    Ver " + _vm._s(_vm.countComment) + " comentario(s)\n                ")]) : _c("span", [_vm._v("No hay comentarios")])])])]) : _vm._e()], 2);
 };
 
 var staticRenderFns = [];
