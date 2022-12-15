@@ -29,11 +29,6 @@
                             Responder
                         </span>
                     </button>
-                    <!-- <button type="button">
-                        <span class="text-xs font-bold text-primary">
-                            Seguir
-                        </span>
-                    </button> -->
                 </div>
 
                 <!-- agregar una respuesta -->
@@ -288,6 +283,14 @@ export default {
         addAnswer() {
             // validar formulario
             if (!this.$refs.formAnswer.validate()) return;
+
+            if (!this.user?.id) {
+                this.noty(
+                    "Debes iniciar sesión para poder responder",
+                    "warning"
+                );
+                return;
+            }
 
             this.loading = true;
 

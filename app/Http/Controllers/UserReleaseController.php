@@ -194,6 +194,23 @@ class UserReleaseController extends Controller
     }
 
     /**
+     * Devuelve los comentarios de una publicación
+     * por medio del slug
+     *
+     * @param Int $id           Id de la publicación
+     * @return JsonResponse
+     */
+    public function getCommentsSlug(string $slug): JsonResponse
+    {
+        try {
+            $data = $this->db->getComments($slug);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
      * Agrega un nuevo comentario a una publicación
      *
      * @param CreateReleaseCommentRequest $request

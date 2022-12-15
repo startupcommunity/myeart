@@ -272,12 +272,12 @@ class User extends Authenticatable
      */
     public function scopeFollowingArtistReleases($query)
     {
-        return $this->followingArtists()
-            ->with([
-                'following.releases' =>
-                fn ($rel) => $rel->with([
-                    'labels', 'likes.user', 'creator.artworks.categories', 'comments'
-                ])
-            ]);
+        $artists = $this->followingArtists();
+        $relations = [
+            'following.releases' =>
+            fn ($rel) => $rel->with(['labels.user', 'likes.user', 'creator.artworks.categories', 'comments'])
+        ];
+
+        return $artists->with($relations);
     }
 }

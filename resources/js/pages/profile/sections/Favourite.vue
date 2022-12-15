@@ -111,10 +111,22 @@
                         v-for="(release, index) in news"
                         :key="release.id"
                         :release="release"
+                        :artist="release.creator"
                         :show-actions="false"
+                        :showShortInfo="true"
+                        :showArtist="true"
+                        :show-comments="true"
                         class="w-full md:w-1/2"
                         :class="index % 2 == 0 ? 'lg:pr-4' : 'lg:pl-4'"
+                        @showCommentDialog="activeCommentModal"
                         v-else
+                    />
+
+                    <!-- modal de comentarios -->
+                    <ReleaseCommentsDialog
+                        :show="showCommentDialog"
+                        :releaseID="release?.id"
+                        @close-comments="showCommentDialog = false"
                     />
                 </div>
             </div>
@@ -131,13 +143,14 @@ import CardArtist from "./../components/CardArtist.vue";
 import getDataMixin from "./../../../mixins/getDataMixin";
 import CardArtwork from "../../artwork/sections/CardArtwork.vue";
 import CardRelease from "../components/CardRelease.vue";
+import ReleaseCommentsDialog from "../../release/components/ReleaseCommentsDialog.vue";
 
 // cantidad de obras en aumento
 let counterArtists = 4;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind, CardArtist, CardArtwork, CardRelease },
+    components: { LoadingTailwind, CardArtist, CardArtwork, CardRelease, ReleaseCommentsDialog },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -147,6 +160,8 @@ export default {
     data() {
         return {
             loading: false,
+            showCommentDialog: false,
+            release: {},
             states: {
                 artist: false,
                 artwork: false,
@@ -182,6 +197,16 @@ export default {
             this.states.artist = state === this.TYPEFAV.artist;
             this.states.artwork = state === this.TYPEFAV.artwork;
             this.states.news = state === this.TYPEFAV.news;
+        },
+
+        /**
+         * Activa el modal de comentarios
+         *
+         * @param {Object} release
+         */
+        activeCommentModal(release) {
+            this.release = release;
+            this.showCommentDialog = true;
         },
     },
     watch: {

@@ -779,9 +779,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         // match sin el #
         var matchWithoutHash = match.replace("#", ""); // result
 
-        return "\n<a class=\"text-primary\" href=\"/buscar/".concat(matchWithoutHash, "\" target=\"_blank\">").concat(match, "</a>");
-      });
-      return result;
+        return "<a class=\"text-primary\" href=\"/comunidad/".concat(matchWithoutHash, "\">").concat(match, "</a>");
+      }); // agregar un solo br al momento de encontrar
+      // el primer hashtag
+
+      return result.replace(/<a/, "<br><a");
     }
   }
 });

@@ -4,25 +4,28 @@
             <div
                 class="flex flex-col md:flex-row justify-center items-center md:gap-16 md:border-b border-zinc-700 md:pb-5"
             >
-                <div class="md:border-r border-gray-900 h-full md:pr-16 order-2 order-md-1">
+                <div
+                    class="md:border-r border-gray-900 h-full md:pr-16 order-2 order-md-1"
+                >
                     <button class="hover:animate-bg-gray-light rounded-md p-2">
                         <span
                             class="text-zinc-900 font-bold tracking-normal uppercase text-sm md:text-base"
                         >
-                            <i class="fas fa-user text-zinc-900">
-                                Publicaciones de amigos
-                            </i>
+                            <i class="fas fa-user text-zinc-900"> </i>
+                            Publicaciones de amigos
                         </span>
                     </button>
                 </div>
-                <div class="md:border-r border-gray-900 h-full md:pr-16 order-3 order-md-2">
+                <div
+                    class="md:border-r border-gray-900 h-full md:pr-16 order-3 order-md-2"
+                >
                     <button class="hover:animate-bg-gray-light rounded-md p-2">
                         <span
                             class="text-zinc-400 font-bold tracking-normal uppercase text-sm md:text-base"
                         >
                             <i class="fa-solid fa-bars-staggered text-zinc-400">
-                                Blog
                             </i>
+                            Blog
                         </span>
                     </button>
                 </div>

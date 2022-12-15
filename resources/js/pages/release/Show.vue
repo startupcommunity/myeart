@@ -1,15 +1,12 @@
 <template>
-    <v-row justify="center">
-        <loading-overlay :active="loading" :is-full-page="true" loader="bars" />
-        <v-dialog
-            v-model="show"
-            persistent
-            max-width="1200"
-            :fullscreen="isMobile"
-            :hide-overlay="isMobile"
-        >
-            <v-card class="bg-white">
-                <div class="flex flex-wrap justify-center h-full p-3">
+    <MainLayout :showHeader="false" :loadingOverlay="loading">
+        <!-- header -->
+        <div class="bg-zinc-900 pb-32">
+            <Header class="mt-5" />
+        </div>
+        <section class="bg-white">
+            <div class="container py-16">
+                <div class="flex flex-wrap justify-center h-full">
                     <div class="w-full md:w-3/5 md:min-h-[600px]">
                         <img
                             class="w-full h-full object-cover object-center"
@@ -47,16 +44,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <v-btn
-                                            text
-                                            @click="$emit('close-comments')"
-                                        >
-                                            <i
-                                                class="fa-solid fa-times text-gray-400"
-                                            ></i>
-                                        </v-btn>
                                     </div>
                                 </div>
 
@@ -164,49 +151,35 @@
                         </div>
                     </div>
                 </div>
-            </v-card>
-        </v-dialog>
-    </v-row>
+            </div>
+        </section>
+    </MainLayout>
 </template>
 
 <script>
-import Avatar from "../../../components/Avatar.vue";
-import CardComment from "./CardComment.vue";
-
-// mixin utilMixin
-import utilMixin from "../../../mixins/utilMixin";
-
-// util rules
-import rulesCommentMixin from "../utils/rulesCommentMixin";
+import utilMixin from "../../mixins/utilMixin";
+import rulesCommentMixin from "./utils/rulesCommentMixin";
+import Header from "../landing/sections/Header.vue";
+import MainLayout from "../layouts/MainLayout.vue";
+import CardComment from "./components/CardComment.vue";
+import Avatar from "../../components/Avatar.vue";
 
 export default {
-    name: "ReleaseCommentsDialog",
+    name: "ShowRelease",
+    components: { MainLayout, Header, CardComment, Avatar },
     mixins: [utilMixin, rulesCommentMixin],
-    components: { Avatar, CardComment },
-    props: {
-        show: {
-            type: Boolean,
-            default: false,
-        },
-        releaseID: {
-            type: Number,
-            default: 0,
-        },
-    },
     data() {
         return {
-            comments: [],
-            question: "",
-            release: {},
             loading: false,
+            loadingComments: false,
+            comments: [],
+            release: {},
+            question: "",
+            msj: "Debes iniciar sesión",
         };
     },
-    watch: {
-        show() {
-            if (this.show) {
-                this.getComments();
-            }
-        },
+    created() {
+        this.getComments();
     },
     computed: {
         /**
@@ -217,14 +190,12 @@ export default {
             if (!image) return this.getDefaultImageRelease;
             return `${this.pathReleaseImage + image}`;
         },
-
         /**
          * Devuelve el creador de la publicación
          */
         creator() {
             return this.release?.creator || {};
         },
-
         /**
          * devuelve los calificativos del artista
          * según las categorías de sus obras
@@ -234,7 +205,6 @@ export default {
         getNameQualified() {
             return this.getArtistQualifying(this.creator, null, true);
         },
-
         /**
          * Evalúa el text de la publicación, si tiene hashtag lo convierte en link
          */
@@ -244,14 +214,12 @@ export default {
             if (!text) return "";
             return this.hashTag(text);
         },
-
         /**
          * Numero de likes de la publicación
          */
         likes() {
             return this.release?.likes?.length || 0;
         },
-
         /**
          * si hay likes devuelve el texto:
          * Les gusta a user1, user2 y {count} personas más
@@ -265,26 +233,16 @@ export default {
             const firstLikes = this.release?.likes?.slice(0, 2);
             const count = likes - 2;
             const text = firstLikes.map((like) => like.user?.name).join(", ");
-
             const textOne = `Les gusta a ${text} y ${count} personas más`;
             const textTwo = `Le gusta a ${text}`;
             return count > 0 ? textOne : textTwo;
         },
-
         /**
          * Usuario logueado
          */
         user() {
             return this.$store.getters.getProfile;
         },
-
-        /**
-         * verifica si estamos en modo mobile
-         */
-        isMobile() {
-            return this.$vuetify.breakpoint.xsOnly;
-        },
-
         /**
          * verifica si puede publicar un comentario
          *
@@ -296,44 +254,67 @@ export default {
             return this.user && this.user.id !== this.creator.id;
         },
     },
+    watch: {
+        /**
+         * cada vez que el usuario intente hacer algún procedimiento
+         * en la DB y no esta logueado, mostrar mensaje
+         */
+        loading(val) {
+            if (val && !this.user?.id) {
+                this.noty(this.msj, "warning");
+
+                // detener el loading
+                this.loading = false;
+
+                // cancelar el procedimiento
+                return false;
+            }
+        },
+    },
     methods: {
         /**
          * Obtiene los comentarios de la publicación
          */
         getComments() {
-            this.loading = true;
+            // verificar si el id es un número
+            const id = this.$route.params.id;
+            const slug = this.$route.params.slug;
+
+            const ep = isNaN(id)
+                ? this.ep.releases.getCommentSlug + slug
+                : this.ep.releases.getComment + id;
+
+            this.loadingComments = true;
             this.axios
-                .get(this.ep.releases.getComment + this.releaseID)
+                .get(ep)
                 .then((resp) => {
                     // ordenar por fecha
                     this.comments = resp.data.comments.sort((a, b) => {
                         return new Date(b.created_at) - new Date(a.created_at);
                     });
-
                     // la publicación actualizada
                     this.release = resp.data;
                 })
                 .catch((error) => this.manageError(error))
-                .finally(() => (this.loading = false));
+                .finally(() => (this.loadingComments = false));
         },
-
         /**
          * Crea un comentario
          */
         createComment() {
             // validate formAnswer
-            if (!this.$refs.formComment.validate()) {
-                return;
-            }
+            if (!this.$refs.formComment.validate()) return;
 
             this.loading = true;
+
+            // si no esta logueado
+            if (!this.user?.id) return;
 
             const data = {
                 release_id: this.release.id,
                 user_id: this.user.id,
                 comment: this.question,
             };
-
             this.axios
                 .post(this.ep.releases.storeComment, data)
                 .then(() => {

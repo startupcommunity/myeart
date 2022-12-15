@@ -6,7 +6,7 @@
         </div>
 
         <!-- section title -->
-        <Title />
+        <Title :hashtag="hashtag" />
 
         <!-- section filters -->
         <Filters @filters="getReleaseFollowArtists" />
@@ -124,9 +124,10 @@ export default {
             release: {},
             loading: false,
             show: false,
+            hashtag: "",
         };
     },
-    mounted() {
+    created() {
         // mockup para eventos
         this.events = [
             {
@@ -181,6 +182,7 @@ export default {
 
         // publicaciones
         const filters = { sortBy: 1 };
+
         this.getReleaseFollowArtists(filters);
     },
     computed: {
@@ -209,12 +211,24 @@ export default {
          * Obtiene los publicaciones de los artistas seguidos
          */
         getReleaseFollowArtists(filters = null) {
+            // si se esta indicando un hashtag en la url
+            if (this.$route.params.hashtag) {
+                filters.hashtag = this.$route.params.hashtag;
+                this.hashtag = this.$route.params.hashtag;
+            }
+
             this.loading = true;
             this.axios
                 .get(this.ep.releases.followArtists, { params: filters })
                 .then(async (resp) => {
-                    this.original = JSON.parse(JSON.stringify(await resp.data));
+
+                    // si la respuesta es un objeto, se convierte a array
+                    if (typeof resp.data === "object") {
+                        resp.data = Object.values(resp.data);
+                    }
+
                     this.releases = resp.data.slice(0, MAX_INIT_RELEASES);
+                    this.original = JSON.parse(JSON.stringify(await resp.data));
                 })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));

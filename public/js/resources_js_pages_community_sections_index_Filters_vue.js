@@ -97,7 +97,7 @@ var staticRenderFns = [function () {
     staticClass: "text-zinc-900 font-bold tracking-normal uppercase text-sm md:text-base"
   }, [_c("i", {
     staticClass: "fas fa-user text-zinc-900"
-  }, [_vm._v("\n                            Publicaciones de amigos\n                        ")])])])]);
+  }), _vm._v("\n                        Publicaciones de amigos\n                    ")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -110,7 +110,7 @@ var staticRenderFns = [function () {
     staticClass: "text-zinc-400 font-bold tracking-normal uppercase text-sm md:text-base"
   }, [_c("i", {
     staticClass: "fa-solid fa-bars-staggered text-zinc-400"
-  }, [_vm._v("\n                            Blog\n                        ")])])])]);
+  }), _vm._v("\n                        Blog\n                    ")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;

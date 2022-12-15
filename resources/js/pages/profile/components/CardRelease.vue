@@ -36,6 +36,7 @@
             <CommentRelease
                 :release="release"
                 :showComments="showComments"
+                :showLabels="showLabels"
                 :artistName="artist?.name"
                 :countComment="countComment"
                 @open-comment-modal="openModalComment"
@@ -94,6 +95,11 @@ export default {
             type: Boolean,
             default: true,
             description: "muestra los comentarios y el botón para verlos",
+        },
+        showLabels: {
+            type: Boolean,
+            default: true,
+            description: "muestra a las personas etiquetadas",
         },
     },
     computed: {

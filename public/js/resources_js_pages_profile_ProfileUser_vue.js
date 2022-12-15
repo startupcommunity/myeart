@@ -1553,6 +1553,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": true,
       description: "muestra los comentarios y el botón para verlos"
+    },
+    showLabels: {
+      type: Boolean,
+      "default": true,
+      description: "muestra a las personas etiquetadas"
     }
   },
   computed: {
@@ -1614,6 +1619,10 @@ __webpack_require__.r(__webpack_exports__);
     artistName: {
       type: String,
       "default": ""
+    },
+    showLabels: {
+      type: Boolean,
+      "default": true
     }
   },
   computed: {
@@ -1631,11 +1640,24 @@ __webpack_require__.r(__webpack_exports__);
       var text = (_this$release2 = this.release) === null || _this$release2 === void 0 ? void 0 : _this$release2.text;
       if (!text) return "";
       return this.hashTag(text);
+    },
+    labels: function labels() {
+      var _this$release3;
+
+      return ((_this$release3 = this.release) === null || _this$release3 === void 0 ? void 0 : _this$release3.labels) || [];
     }
   },
   methods: {
     openModalComment: function openModalComment() {
       this.$emit("open-comment-modal");
+    },
+    getPathProfile: function getPathProfile(id) {
+      return {
+        name: "showArtist",
+        params: {
+          id: id
+        }
+      };
     }
   }
 });
@@ -2334,9 +2356,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../../mixins/getDataMixin */ "./resources/js/mixins/getDataMixin.js");
 /* harmony import */ var _artwork_sections_CardArtwork_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../artwork/sections/CardArtwork.vue */ "./resources/js/pages/artwork/sections/CardArtwork.vue");
 /* harmony import */ var _components_CardRelease_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/CardRelease.vue */ "./resources/js/pages/profile/components/CardRelease.vue");
+/* harmony import */ var _release_components_ReleaseCommentsDialog_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../release/components/ReleaseCommentsDialog.vue */ "./resources/js/pages/release/components/ReleaseCommentsDialog.vue");
 // componentes
 
  // mixin
+
 
 
 
@@ -2349,7 +2373,8 @@ var counterArtists = 4;
     LoadingTailwind: _components_LoadingTailwind_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     CardArtist: _components_CardArtist_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     CardArtwork: _artwork_sections_CardArtwork_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    CardRelease: _components_CardRelease_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    CardRelease: _components_CardRelease_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    ReleaseCommentsDialog: _release_components_ReleaseCommentsDialog_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   mixins: [_mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
@@ -2360,6 +2385,8 @@ var counterArtists = 4;
   data: function data() {
     return {
       loading: false,
+      showCommentDialog: false,
+      release: {},
       states: {
         artist: false,
         artwork: false,
@@ -2396,6 +2423,16 @@ var counterArtists = 4;
       this.states.artist = state === this.TYPEFAV.artist;
       this.states.artwork = state === this.TYPEFAV.artwork;
       this.states.news = state === this.TYPEFAV.news;
+    },
+
+    /**
+     * Activa el modal de comentarios
+     *
+     * @param {Object} release
+     */
+    activeCommentModal: function activeCommentModal(release) {
+      this.release = release;
+      this.showCommentDialog = true;
     }
   },
   watch: {
@@ -3485,10 +3522,17 @@ __webpack_require__.r(__webpack_exports__);
      * Agrega una respuesta al comentario
      */
     addAnswer: function addAnswer() {
-      var _this2 = this;
+      var _this$user3,
+          _this2 = this;
 
       // validar formulario
       if (!this.$refs.formAnswer.validate()) return;
+
+      if (!((_this$user3 = this.user) !== null && _this$user3 !== void 0 && _this$user3.id)) {
+        this.noty("Debes iniciar sesión para poder responder", "warning");
+        return;
+      }
+
       this.loading = true;
       var data = {
         comment_id: this.comment.id,
@@ -5759,6 +5803,7 @@ var render = function render() {
     attrs: {
       release: _vm.release,
       showComments: _vm.showComments,
+      showLabels: _vm.showLabels,
       artistName: (_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name,
       countComment: _vm.countComment
     },
@@ -5802,7 +5847,17 @@ var render = function render() {
     domProps: {
       innerHTML: _vm._s(_vm.getTextWithHashtag)
     }
-  }), _vm._v(" "), _vm.showComments ? _c("div", [!_vm.isTheCreator ? _c("div", {
+  }), _vm._v(" "), _vm.showLabels || _vm.labels.length ? _c("p", _vm._l(_vm.labels, function (label) {
+    var _label$user, _label$user$username, _label$user2, _label$user3;
+
+    return _c("router-link", {
+      key: label.id,
+      staticClass: "text-xs font-medium text-blue-600 pr-1",
+      attrs: {
+        to: _vm.getPathProfile((_label$user = label.user) === null || _label$user === void 0 ? void 0 : _label$user.id)
+      }
+    }, [_vm._v("\n            @" + _vm._s((_label$user$username = (_label$user2 = label.user) === null || _label$user2 === void 0 ? void 0 : _label$user2.username) !== null && _label$user$username !== void 0 ? _label$user$username : (_label$user3 = label.user) === null || _label$user3 === void 0 ? void 0 : _label$user3.name) + "\n        ")]);
+  }), 1) : _vm._e(), _vm._v(" "), _vm.showComments ? _c("div", [!_vm.isTheCreator ? _c("div", {
     staticClass: "text-xs font-medium text-gray-400 py-2"
   }, [_vm.countComment ? _c("button", {
     attrs: {
@@ -6546,6 +6601,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
+  var _vm$release;
+
   var _vm = this,
       _c = _vm._self._c;
 
@@ -6666,9 +6723,26 @@ var render = function render() {
       "class": index % 2 == 0 ? "lg:pr-4" : "lg:pl-4",
       attrs: {
         release: release,
-        "show-actions": false
+        artist: release.creator,
+        "show-actions": false,
+        showShortInfo: true,
+        showArtist: true,
+        "show-comments": true
+      },
+      on: {
+        showCommentDialog: _vm.activeCommentModal
       }
     });
+  }), _vm._v(" "), _c("ReleaseCommentsDialog", {
+    attrs: {
+      show: _vm.showCommentDialog,
+      releaseID: (_vm$release = _vm.release) === null || _vm$release === void 0 ? void 0 : _vm$release.id
+    },
+    on: {
+      "close-comments": function closeComments($event) {
+        _vm.showCommentDialog = false;
+      }
+    }
   })], 2)]) : _vm._e()])]);
 };
 
@@ -9066,9 +9140,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         // match sin el #
         var matchWithoutHash = match.replace("#", ""); // result
 
-        return "\n<a class=\"text-primary\" href=\"/buscar/".concat(matchWithoutHash, "\" target=\"_blank\">").concat(match, "</a>");
-      });
-      return result;
+        return "<a class=\"text-primary\" href=\"/comunidad/".concat(matchWithoutHash, "\">").concat(match, "</a>");
+      }); // agregar un solo br al momento de encontrar
+      // el primer hashtag
+
+      return result.replace(/<a/, "<br><a");
     }
   }
 });

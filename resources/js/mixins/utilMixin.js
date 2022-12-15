@@ -230,10 +230,12 @@ export default {
                 const matchWithoutHash = match.replace("#", "");
 
                 // result
-                return `\n<a class="text-primary" href="/buscar/${matchWithoutHash}" target="_blank">${match}</a>`;
+                return `<a class="text-primary" href="/comunidad/${matchWithoutHash}">${match}</a>`;
             });
 
-            return result;
+            // agregar un solo br al momento de encontrar
+            // el primer hashtag
+            return result.replace(/<a/, "<br><a");
         },
     },
 };

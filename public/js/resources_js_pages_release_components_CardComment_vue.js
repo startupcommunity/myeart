@@ -240,10 +240,17 @@ __webpack_require__.r(__webpack_exports__);
      * Agrega una respuesta al comentario
      */
     addAnswer: function addAnswer() {
-      var _this2 = this;
+      var _this$user3,
+          _this2 = this;
 
       // validar formulario
       if (!this.$refs.formAnswer.validate()) return;
+
+      if (!((_this$user3 = this.user) !== null && _this$user3 !== void 0 && _this$user3.id)) {
+        this.noty("Debes iniciar sesión para poder responder", "warning");
+        return;
+      }
+
       this.loading = true;
       var data = {
         comment_id: this.comment.id,

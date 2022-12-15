@@ -8,10 +8,17 @@ use App\Http\Controllers\ArtisticActivitysController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
+use App\Http\Controllers\UserReleaseController;
 
 // sin middleware
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
+
+/**
+ * Devuelve los comentarios de una publicación a través del slug
+ */
+Route::get('releases/get-comments-slug/{slug}', [UserReleaseController::class, 'getCommentsSlug'])
+    ->name('getReleaseCommentsSlug');
 
 /**
  * grupo de rutas protegidas

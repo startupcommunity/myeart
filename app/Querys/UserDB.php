@@ -162,8 +162,10 @@ class UserDB
 
         // load relations
         $data = $user->load([
-            'favoriteReleases.release.likes',
-            'favoriteReleases.release.creator',
+            'favoriteReleases.release.likes.user',
+            'favoriteReleases.release.creator.artworks.categories',
+            'favoriteReleases.release.comments',
+            'favoriteReleases.release.labels.user',
         ]);
 
         // return especific data

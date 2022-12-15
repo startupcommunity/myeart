@@ -212,10 +212,11 @@ var SHOW_MORE_RELEASES = 2;
       original: [],
       release: {},
       loading: false,
-      show: false
+      show: false,
+      hashtag: ""
     };
   },
-  mounted: function mounted() {
+  created: function created() {
     // mockup para eventos
     this.events = [{
       id: 1,
@@ -319,6 +320,13 @@ var SHOW_MORE_RELEASES = 2;
       var _this2 = this;
 
       var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      // si se esta indicando un hashtag en la url
+      if (this.$route.params.hashtag) {
+        filters.hashtag = this.$route.params.hashtag;
+        this.hashtag = this.$route.params.hashtag;
+      }
+
       this.loading = true;
       this.axios.get(this.ep.releases.followArtists, {
         params: filters
@@ -328,18 +336,23 @@ var SHOW_MORE_RELEASES = 2;
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
+                  // si la respuesta es un objeto, se convierte a array
+                  if (_typeof(resp.data) === "object") {
+                    resp.data = Object.values(resp.data);
+                  }
+
+                  _this2.releases = resp.data.slice(0, MAX_INIT_RELEASES);
                   _context2.t0 = JSON;
                   _context2.t1 = JSON;
-                  _context2.next = 4;
+                  _context2.next = 6;
                   return resp.data;
 
-                case 4:
+                case 6:
                   _context2.t2 = _context2.sent;
                   _context2.t3 = _context2.t1.stringify.call(_context2.t1, _context2.t2);
                   _this2.original = _context2.t0.parse.call(_context2.t0, _context2.t3);
-                  _this2.releases = resp.data.slice(0, MAX_INIT_RELEASES);
 
-                case 8:
+                case 9:
                 case "end":
                   return _context2.stop();
               }
@@ -616,7 +629,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Title"
+  name: "Title",
+  props: {
+    hashtag: {
+      type: String,
+      "default": ""
+    }
+  }
 });
 
 /***/ }),
@@ -944,6 +963,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": true,
       description: "muestra los comentarios y el botón para verlos"
+    },
+    showLabels: {
+      type: Boolean,
+      "default": true,
+      description: "muestra a las personas etiquetadas"
     }
   },
   computed: {
@@ -1004,6 +1028,10 @@ __webpack_require__.r(__webpack_exports__);
     artistName: {
       type: String,
       "default": ""
+    },
+    showLabels: {
+      type: Boolean,
+      "default": true
     }
   },
   computed: {
@@ -1021,11 +1049,24 @@ __webpack_require__.r(__webpack_exports__);
       var text = (_this$release2 = this.release) === null || _this$release2 === void 0 ? void 0 : _this$release2.text;
       if (!text) return "";
       return this.hashTag(text);
+    },
+    labels: function labels() {
+      var _this$release3;
+
+      return ((_this$release3 = this.release) === null || _this$release3 === void 0 ? void 0 : _this$release3.labels) || [];
     }
   },
   methods: {
     openModalComment: function openModalComment() {
       this.$emit("open-comment-modal");
+    },
+    getPathProfile: function getPathProfile(id) {
+      return {
+        name: "showArtist",
+        params: {
+          id: id
+        }
+      };
     }
   }
 });
@@ -1414,10 +1455,17 @@ __webpack_require__.r(__webpack_exports__);
      * Agrega una respuesta al comentario
      */
     addAnswer: function addAnswer() {
-      var _this2 = this;
+      var _this$user3,
+          _this2 = this;
 
       // validar formulario
       if (!this.$refs.formAnswer.validate()) return;
+
+      if (!((_this$user3 = this.user) !== null && _this$user3 !== void 0 && _this$user3.id)) {
+        this.noty("Debes iniciar sesión para poder responder", "warning");
+        return;
+      }
+
       this.loading = true;
       var data = {
         comment_id: this.comment.id,
@@ -1978,7 +2026,11 @@ var render = function render() {
     staticClass: "bg-zinc-900 pb-32"
   }, [_c("Header", {
     staticClass: "mt-5"
-  })], 1), _vm._v(" "), _c("Title"), _vm._v(" "), _c("Filters", {
+  })], 1), _vm._v(" "), _c("Title", {
+    attrs: {
+      hashtag: _vm.hashtag
+    }
+  }), _vm._v(" "), _c("Filters", {
     on: {
       filters: _vm.getReleaseFollowArtists
     }
@@ -2220,7 +2272,7 @@ var staticRenderFns = [function () {
     staticClass: "text-zinc-900 font-bold tracking-normal uppercase text-sm md:text-base"
   }, [_c("i", {
     staticClass: "fas fa-user text-zinc-900"
-  }, [_vm._v("\n                            Publicaciones de amigos\n                        ")])])])]);
+  }), _vm._v("\n                        Publicaciones de amigos\n                    ")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -2233,7 +2285,7 @@ var staticRenderFns = [function () {
     staticClass: "text-zinc-400 font-bold tracking-normal uppercase text-sm md:text-base"
   }, [_c("i", {
     staticClass: "fa-solid fa-bars-staggered text-zinc-400"
-  }, [_vm._v("\n                            Blog\n                        ")])])])]);
+  }), _vm._v("\n                        Blog\n                    ")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -2264,13 +2316,6 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
   return _c("section", {
     staticClass: "bg-white"
   }, [_c("div", {
@@ -2281,8 +2326,12 @@ var staticRenderFns = [function () {
     staticClass: "w-full border-b border-zinc-300 pb-4 md:border-0 md:pb-0"
   }, [_c("h1", {
     staticClass: "text-zinc-900 font-bold tracking-wide text-lg md:text-3xl text-center"
-  }, [_vm._v("\n                    Descubre las publicaciones de tu comunidad\n                ")])])])])]);
-}];
+  }, [_vm.hashtag ? _c("span", [_vm._v("\n                        Resultados de\n                        "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("#" + _vm._s(_vm.hashtag))])]) : _c("span", [_vm._v("\n                        Descubre las publicaciones de tu comunidad\n                    ")])])])])])]);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -2959,6 +3008,7 @@ var render = function render() {
     attrs: {
       release: _vm.release,
       showComments: _vm.showComments,
+      showLabels: _vm.showLabels,
       artistName: (_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name,
       countComment: _vm.countComment
     },
@@ -3001,7 +3051,17 @@ var render = function render() {
     domProps: {
       innerHTML: _vm._s(_vm.getTextWithHashtag)
     }
-  }), _vm._v(" "), _vm.showComments ? _c("div", [!_vm.isTheCreator ? _c("div", {
+  }), _vm._v(" "), _vm.showLabels || _vm.labels.length ? _c("p", _vm._l(_vm.labels, function (label) {
+    var _label$user, _label$user$username, _label$user2, _label$user3;
+
+    return _c("router-link", {
+      key: label.id,
+      staticClass: "text-xs font-medium text-blue-600 pr-1",
+      attrs: {
+        to: _vm.getPathProfile((_label$user = label.user) === null || _label$user === void 0 ? void 0 : _label$user.id)
+      }
+    }, [_vm._v("\n            @" + _vm._s((_label$user$username = (_label$user2 = label.user) === null || _label$user2 === void 0 ? void 0 : _label$user2.username) !== null && _label$user$username !== void 0 ? _label$user$username : (_label$user3 = label.user) === null || _label$user3 === void 0 ? void 0 : _label$user3.name) + "\n        ")]);
+  }), 1) : _vm._e(), _vm._v(" "), _vm.showComments ? _c("div", [!_vm.isTheCreator ? _c("div", {
     staticClass: "text-xs font-medium text-gray-400 py-2"
   }, [_vm.countComment ? _c("button", {
     attrs: {
@@ -4017,9 +4077,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         // match sin el #
         var matchWithoutHash = match.replace("#", ""); // result
 
-        return "\n<a class=\"text-primary\" href=\"/buscar/".concat(matchWithoutHash, "\" target=\"_blank\">").concat(match, "</a>");
-      });
-      return result;
+        return "<a class=\"text-primary\" href=\"/comunidad/".concat(matchWithoutHash, "\">").concat(match, "</a>");
+      }); // agregar un solo br al momento de encontrar
+      // el primer hashtag
+
+      return result.replace(/<a/, "<br><a");
     }
   }
 });

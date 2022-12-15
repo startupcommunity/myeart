@@ -117,6 +117,9 @@ const endpoints = {
         // obtiene los comentarios de una publicación / {id}
         getComment: `${API}/releases/get-comments/`, // get
 
+        // obtiene los comentarios de una publicación por slug / {slug}
+        getCommentSlug: `${API}/releases/get-comments-slug/`, // get
+
         // guarda un comentario en una publicación
         storeComment: `${API}/releases/store-comment`, // post
     },

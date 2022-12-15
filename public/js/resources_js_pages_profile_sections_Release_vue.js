@@ -149,6 +149,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": true,
       description: "muestra los comentarios y el botón para verlos"
+    },
+    showLabels: {
+      type: Boolean,
+      "default": true,
+      description: "muestra a las personas etiquetadas"
     }
   },
   computed: {
@@ -210,6 +215,10 @@ __webpack_require__.r(__webpack_exports__);
     artistName: {
       type: String,
       "default": ""
+    },
+    showLabels: {
+      type: Boolean,
+      "default": true
     }
   },
   computed: {
@@ -227,11 +236,24 @@ __webpack_require__.r(__webpack_exports__);
       var text = (_this$release2 = this.release) === null || _this$release2 === void 0 ? void 0 : _this$release2.text;
       if (!text) return "";
       return this.hashTag(text);
+    },
+    labels: function labels() {
+      var _this$release3;
+
+      return ((_this$release3 = this.release) === null || _this$release3 === void 0 ? void 0 : _this$release3.labels) || [];
     }
   },
   methods: {
     openModalComment: function openModalComment() {
       this.$emit("open-comment-modal");
+    },
+    getPathProfile: function getPathProfile(id) {
+      return {
+        name: "showArtist",
+        params: {
+          id: id
+        }
+      };
     }
   }
 });
@@ -1295,10 +1317,17 @@ __webpack_require__.r(__webpack_exports__);
      * Agrega una respuesta al comentario
      */
     addAnswer: function addAnswer() {
-      var _this2 = this;
+      var _this$user3,
+          _this2 = this;
 
       // validar formulario
       if (!this.$refs.formAnswer.validate()) return;
+
+      if (!((_this$user3 = this.user) !== null && _this$user3 !== void 0 && _this$user3.id)) {
+        this.noty("Debes iniciar sesión para poder responder", "warning");
+        return;
+      }
+
       this.loading = true;
       var data = {
         comment_id: this.comment.id,
@@ -1890,6 +1919,7 @@ var render = function render() {
     attrs: {
       release: _vm.release,
       showComments: _vm.showComments,
+      showLabels: _vm.showLabels,
       artistName: (_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name,
       countComment: _vm.countComment
     },
@@ -1933,7 +1963,17 @@ var render = function render() {
     domProps: {
       innerHTML: _vm._s(_vm.getTextWithHashtag)
     }
-  }), _vm._v(" "), _vm.showComments ? _c("div", [!_vm.isTheCreator ? _c("div", {
+  }), _vm._v(" "), _vm.showLabels || _vm.labels.length ? _c("p", _vm._l(_vm.labels, function (label) {
+    var _label$user, _label$user$username, _label$user2, _label$user3;
+
+    return _c("router-link", {
+      key: label.id,
+      staticClass: "text-xs font-medium text-blue-600 pr-1",
+      attrs: {
+        to: _vm.getPathProfile((_label$user = label.user) === null || _label$user === void 0 ? void 0 : _label$user.id)
+      }
+    }, [_vm._v("\n            @" + _vm._s((_label$user$username = (_label$user2 = label.user) === null || _label$user2 === void 0 ? void 0 : _label$user2.username) !== null && _label$user$username !== void 0 ? _label$user$username : (_label$user3 = label.user) === null || _label$user3 === void 0 ? void 0 : _label$user3.name) + "\n        ")]);
+  }), 1) : _vm._e(), _vm._v(" "), _vm.showComments ? _c("div", [!_vm.isTheCreator ? _c("div", {
     staticClass: "text-xs font-medium text-gray-400 py-2"
   }, [_vm.countComment ? _c("button", {
     attrs: {
@@ -3894,9 +3934,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         // match sin el #
         var matchWithoutHash = match.replace("#", ""); // result
 
-        return "\n<a class=\"text-primary\" href=\"/buscar/".concat(matchWithoutHash, "\" target=\"_blank\">").concat(match, "</a>");
-      });
-      return result;
+        return "<a class=\"text-primary\" href=\"/comunidad/".concat(matchWithoutHash, "\">").concat(match, "</a>");
+      }); // agregar un solo br al momento de encontrar
+      // el primer hashtag
+
+      return result.replace(/<a/, "<br><a");
     }
   }
 });

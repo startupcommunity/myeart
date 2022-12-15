@@ -122,14 +122,8 @@ export const routes = [
     // ------------- Comunidad -------------
     {
         name: "indexCommunity",
-        path: "/comunidad",
+        path: "/comunidad/:hashtag?",
         component: importPage("community/Index"),
-        beforeEnter: ifAuthenticated,
-    },
-    {
-        name: "searchHashTag",
-        path: "/buscar/:hashtag",
-        // component: importPage("community/Index"),
         beforeEnter: ifAuthenticated,
     },
 
@@ -137,8 +131,7 @@ export const routes = [
     {
         name: "showSlugRelease",
         path: "/publicaciones/slug/:slug",
-        // component: importPage('artwork/ListArtwork'),
-        beforeEnter: ifNotAuthenticated,
+        component: importPage("release/Show"),
     },
 
     // ----------- carrito de compras ----------

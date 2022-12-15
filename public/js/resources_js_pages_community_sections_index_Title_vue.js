@@ -12,7 +12,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Title"
+  name: "Title",
+  props: {
+    hashtag: {
+      type: String,
+      "default": ""
+    }
+  }
 });
 
 /***/ }),
@@ -32,13 +38,6 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
   return _c("section", {
     staticClass: "bg-white"
   }, [_c("div", {
@@ -49,8 +48,12 @@ var staticRenderFns = [function () {
     staticClass: "w-full border-b border-zinc-300 pb-4 md:border-0 md:pb-0"
   }, [_c("h1", {
     staticClass: "text-zinc-900 font-bold tracking-wide text-lg md:text-3xl text-center"
-  }, [_vm._v("\n                    Descubre las publicaciones de tu comunidad\n                ")])])])])]);
-}];
+  }, [_vm.hashtag ? _c("span", [_vm._v("\n                        Resultados de\n                        "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("#" + _vm._s(_vm.hashtag))])]) : _c("span", [_vm._v("\n                        Descubre las publicaciones de tu comunidad\n                    ")])])])])])]);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 

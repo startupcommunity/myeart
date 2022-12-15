@@ -10,6 +10,16 @@
             }"
             v-html="getTextWithHashtag"
         ></span>
+        <p v-if="showLabels || labels.length">
+            <router-link
+                v-for="label in labels"
+                :key="label.id"
+                class="text-xs font-medium text-blue-600 pr-1"
+                :to="getPathProfile(label.user?.id)"
+            >
+                @{{ label.user?.username ?? label.user?.name }}
+            </router-link>
+        </p>
         <div v-if="showComments">
             <div
                 class="text-xs font-medium text-gray-400 py-2"
@@ -72,6 +82,10 @@ export default {
             type: String,
             default: "",
         },
+        showLabels: {
+            type: Boolean,
+            default: true,
+        },
     },
 
     computed: {
@@ -86,11 +100,20 @@ export default {
             if (!text) return "";
             return this.hashTag(text);
         },
+        labels() {
+            return this.release?.labels || [];
+        },
     },
 
     methods: {
         openModalComment() {
             this.$emit("open-comment-modal");
+        },
+        getPathProfile(id) {
+            return {
+                name: "showArtist",
+                params: { id },
+            };
         },
     },
 };

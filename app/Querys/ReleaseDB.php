@@ -24,6 +24,17 @@ class ReleaseDB
   }
 
   /**
+   * Devuelve una publicación por su slug
+   *
+   * @param string $slug
+   * @return UserRelease|null
+   */
+  public function getReleaseBySlug(string $slug): ?UserRelease
+  {
+    return UserRelease::where('slug', $slug)->first();
+  }
+
+  /**
    * Devuelve todas las publicaciones del usuario logueado
    *
    * @return Collection|null
@@ -32,7 +43,7 @@ class ReleaseDB
   {
     $user = auth()->user();
     return $user->releases()->with([
-      'labels', 'likes.user', 'creator.artworks.categories', 'comments'
+      'labels.user', 'likes.user', 'creator.artworks.categories', 'comments'
     ])->get();
   }
 
@@ -63,18 +74,28 @@ class ReleaseDB
     // se filtra por orden alfabético
     $data = $option2 ? $data->sortBy('text')->values() : $data;
 
+    // filtrar por el hashtag si se indica por request
+    // hacer una búsqueda like a la cadena de texto de release.text
+    $data = $request->hashtag ? $data->filter(fn ($release) => str_contains($release->text, $request->hashtag)) : $data;
+
+    // si la data es solo una publicación
+    // devolver como array
+    // dd($data->count());
+    // $data = $data->count() == 1 ? $data->toArray() : $data;
+
     return $data;
   }
 
   /**
    * Devuelve los comentarios de una publicación
    *
-   * @param integer $id
+   * @param integer|string $id
    * @return UserRelease|null
    */
-  public function getComments(int $id): ?UserRelease
+  public function getComments(int|string $id): ?UserRelease
   {
-    $release = $this->getReleaseById($id);
+    // verifica si el parámetro es un id o un slug
+    $release = is_numeric($id) ? $this->getReleaseById($id) : $this->getReleaseBySlug($id);
 
     // publicaciones con sus comentarios y likes
     // comentarios con sus likes y respuestas
