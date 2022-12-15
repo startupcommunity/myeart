@@ -11,14 +11,14 @@
             v-html="getTextWithHashtag"
         ></span>
         <p v-if="showLabels || labels.length">
-            <div v-for="label in labels" :key="label.id" class="flex justify-start gap-2">
-                <router-link
-                    class="text-xs font-medium text-blue-600 pr-1"
-                    :to="getPathProfile(label.user?.id)"
-                >
-                    @{{ label.user?.username ?? label.user?.name }}
-                </router-link>
-            </div>
+            <router-link
+                class="text-xs font-medium text-blue-600 pr-1"
+                v-for="label in labels"
+                :key="label.id"
+                :to="getPathProfile(label.user?.id)"
+            >
+                @{{ label.user?.username ?? label.user?.name }}
+            </router-link>
         </p>
         <div v-if="showComments">
             <div
