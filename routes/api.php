@@ -50,6 +50,9 @@ Route::middleware(['auth:api'])->group(function () {
     // ordenes
     require __DIR__ . '/api/orders.php';
 
+    // eventos
+    require __DIR__ . '/api/events.php';
+
     // categorías
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', [CategoryController::class, 'getCategories'])->name('getCategories');

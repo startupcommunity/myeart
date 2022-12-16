@@ -155,6 +155,31 @@ export const routes = [
         component: importPage("Checkout/CheckoutSuccess"),
         beforeEnter: ifAuthenticated,
     },
+
+    // ---------- eventos --------------------
+    {
+        name: "eventList",
+        path: "/eventos",
+        component: importPage("event/List"),
+        beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "eventShow",
+        path: "/eventos/ver/:id",
+        component: importPage("event/Show"),
+        beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "eventSlug",
+        path: "/eventos/public/:slug",
+        component: importPage("event/Show"),
+    },
+    {
+        name: "eventCreate",
+        path: "/eventos/crear",
+        component: importPage("event/Create"),
+        beforeEnter: ifAuthenticated,
+    },
 ];
 
 const config = new VueRouter({

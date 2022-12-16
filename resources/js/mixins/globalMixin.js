@@ -178,6 +178,20 @@ export default {
         },
 
         /**
+         * Path para la imagen de los eventos
+         * @returns string
+         */
+        $pathEventImage() {
+            const path = document.head.querySelector(
+                'meta[name="event-image"]'
+            );
+
+            if (path) return path.content;
+
+            return "/";
+        },
+
+        /**
          * Path de la url de la app
          * @returns string
          */
@@ -218,6 +232,13 @@ export default {
          * @returns string
          */
         getDefaultImageRelease: () => "/img/artwork/default.webp",
+
+        /**
+         * Devuelve la imagen por defecto de un evento
+         *
+         * @returns string
+         */
+        $getDefaultImageEvent: () => "/img/artwork/default.webp",
 
         /**
          * Endpoints para consumir la API rest

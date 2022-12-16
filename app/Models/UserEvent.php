@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class UserEvent extends Model
 {
@@ -13,4 +15,41 @@ class UserEvent extends Model
      * @var string
      */
     protected $table = 'user_events';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_id',
+        'name',
+        'image',
+        'mode',
+        'init_date', // date
+        'init_time', // time
+        'location',
+        'phone_number',
+        'description',
+        'slug'
+    ];
+
+    // crear slug al momento de guardar
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($event) {
+            $event->slug = Str::slug($event->name);
+        });
+    }
+
+    /**
+     * El usuario creador
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

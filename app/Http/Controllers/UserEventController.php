@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Factories\EventFactory;
+use App\Http\Requests\CreateUserEventRequest;
 use App\Models\UserEvent;
+use App\Querys\EventDB;
+use App\Utils\ResponseJson;
+use Exception;
 use Illuminate\Http\Request;
 
 class UserEventController extends Controller
 {
+    public function __construct(
+        private EventFactory $factory,
+        private EventDB $db,
+        private ResponseJson $resp
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,12 +42,17 @@ class UserEventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateUserEventRequest $request)
     {
-        //
+        try {
+            $event = $this->factory->store($request);
+            return $this->resp->json($event, 201);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
     }
 
     /**

@@ -144,6 +144,12 @@ const endpoints = {
         // obtiene los artículos del pedido
         getItems: `${API}/orders/get-items/`, // get
     },
+
+    // eventos
+    events: {
+        // guarda un nuevo evento
+        store: `${API}/events/store`, // post
+    },
 };
 
 export default endpoints;

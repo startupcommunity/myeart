@@ -21,6 +21,9 @@ return [
   // path publico para la imagen de la publicación
   'release_image' => env('APP_URL') . 'storage/img/release/images/',
 
+  // path publico para la imagen del evento
+  'event_image' => env('APP_URL') . 'storage/img/event/images/',
+
   // archivos ubicados en el storage/public
   'public' => [
 
@@ -35,5 +38,8 @@ return [
 
     // imagen de la publicación
     'release_image' => 'public/img/release/images/',
+
+    // imagen del evento
+    'event_image' => 'public/img/event/images/',
   ]
 ];

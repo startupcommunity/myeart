@@ -11,10 +11,13 @@
 }
 .ankaCropper__droparea {
     text-align: center;
-    // margin: 2em;
-    // padding: 2em;
     padding-top: 60px;
     padding-bottom: 90px;
+}
+.ankaCropper__droparea div {
+    color: #0f1114;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 .ankaCropper__selectButton {
     height: 44px;

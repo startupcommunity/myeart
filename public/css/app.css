@@ -11507,6 +11507,12 @@ h3 {
   padding-bottom: 90px;
 }
 
+.ankaCropper__droparea div {
+  color: #0f1114;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
 .ankaCropper__selectButton {
   height: 44px;
   padding: 0 19.5555555556px;
@@ -12567,6 +12573,9 @@ video {
 .hidden{
   display: none;
 }
+.aspect-square{
+  aspect-ratio: 1 / 1;
+}
 .h-5{
   height: 1.25rem;
 }
@@ -12754,6 +12763,9 @@ video {
 .w-\[90\%\]{
   width: 90%;
 }
+.w-80{
+  width: 20rem;
+}
 .min-w-full{
   min-width: 100%;
 }
@@ -12858,6 +12870,9 @@ video {
 }
 .justify-items-center{
   justify-items: center;
+}
+.gap-5{
+  gap: 1.25rem;
 }
 .gap-2{
   gap: 0.5rem;
@@ -13217,6 +13232,10 @@ video {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
 }
+.px-10{
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
 .px-0{
   padding-left: 0px;
   padding-right: 0px;
@@ -13236,10 +13255,6 @@ video {
 .py-10{
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
-}
-.px-10{
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
 }
 .px-8{
   padding-left: 2rem;
@@ -14065,11 +14080,11 @@ body {
   .md\:h-52{
     height: 13rem;
   }
-  .md\:h-36{
-    height: 9rem;
-  }
   .md\:h-96{
     height: 24rem;
+  }
+  .md\:h-36{
+    height: 9rem;
   }
   .md\:h-\[30rem\]{
     height: 30rem;
@@ -14127,6 +14142,9 @@ body {
   }
   .md\:w-1\/4{
     width: 25%;
+  }
+  .md\:w-40{
+    width: 10rem;
   }
   .md\:w-3\/6{
     width: 50%;
@@ -14191,11 +14209,17 @@ body {
   .md\:justify-start{
     justify-content: flex-start;
   }
+  .md\:justify-end{
+    justify-content: flex-end;
+  }
   .md\:justify-items-start{
     justify-items: start;
   }
   .md\:gap-16{
     gap: 4rem;
+  }
+  .md\:gap-5{
+    gap: 1.25rem;
   }
   .md\:space-y-0 > :not([hidden]) ~ :not([hidden]){
     --tw-space-y-reverse: 0;
@@ -14294,6 +14318,9 @@ body {
   }
   .md\:pl-4{
     padding-left: 1rem;
+  }
+  .md\:pl-5{
+    padding-left: 1.25rem;
   }
   .md\:pr-2{
     padding-right: 0.5rem;
