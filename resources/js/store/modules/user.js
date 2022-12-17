@@ -7,6 +7,7 @@ export default {
         following_artists: [],
         following_artworks: [],
         following_releases: [],
+        following_events: [],
         profile: {
             profile: {},
             social_network: {},
@@ -16,10 +17,11 @@ export default {
         },
     },
     getters: {
-        getProfile: (state) => state.profile,
         getFollowArtists: (state) => state.following_artists,
         getFollowArtworks: (state) => state.following_artworks,
         getFollowReleases: (state) => state.following_releases,
+        getFollowEvents: (state) => state.following_events,
+        getProfile: (state) => state.profile,
         isProfileLoaded: (state) => !!state.profile.name,
     },
     actions: {
@@ -73,10 +75,25 @@ export default {
                 .then((resp) => commit("setFollowReleases", resp.data))
                 .catch((err) => console.log(err));
         },
+
+        /**
+         * Obtener los eventos seguidos por el usuario
+         * @param {Commit} param
+         */
+        userFavoriteEvents: ({ commit }) => {
+            commit("userRequest");
+            Vue.axios
+                .get(endpoints.user.getFollowEvents)
+                .then((resp) => commit("setFollowEvents", resp.data))
+                .catch((err) => console.log(err));
+        },
     },
     mutations: {
         userRequest: (state) => {
             state.status = "loading";
+        },
+        userError: (state) => {
+            state.status = "error";
         },
         userSuccess: async (state, resp) => {
             await Vue.set(state, "profile", resp);
@@ -94,8 +111,9 @@ export default {
             await Vue.set(state, "following_releases", resp);
             state.status = "success";
         },
-        userError: (state) => {
-            state.status = "error";
+        setFollowEvents: async (state, resp) => {
+            await Vue.set(state, "following_events", resp);
+            state.status = "success";
         },
     },
 };

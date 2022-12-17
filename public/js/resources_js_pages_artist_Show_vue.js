@@ -1098,6 +1098,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Header",
+  components: {
+    MobileMenu: _components_MobileMenu_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   methods: {
     logout: function logout() {
       var _this = this;
@@ -1149,9 +1152,6 @@ __webpack_require__.r(__webpack_exports__);
 
       return shoppingCart.length || 0;
     }
-  },
-  components: {
-    MobileMenu: _components_MobileMenu_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -1215,6 +1215,11 @@ __webpack_require__.r(__webpack_exports__);
     pathCommunity: function pathCommunity() {
       return {
         name: "indexCommunity"
+      };
+    },
+    pathEvent: function pathEvent() {
+      return {
+        name: "eventList"
       };
     },
     user: function user() {
@@ -3029,7 +3034,13 @@ var render = function render() {
         name: "listArtist"
       }
     }
-  }, [_vm._v("\n                                            ARTISTAS\n                                        ")])], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("li", [_c("router-link", {
+  }, [_vm._v("\n                                            ARTISTAS\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("router-link", {
+    attrs: {
+      to: {
+        name: "eventList"
+      }
+    }
+  }, [_vm._v("\n                                            EVENTOS\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("router-link", {
     attrs: {
       to: {
         name: "indexCommunity"
@@ -3106,16 +3117,7 @@ var render = function render() {
   })])], 1)])])])])])])])], 1);
 };
 
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("li", [_c("a", {
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("EVENTOS")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -3300,7 +3302,7 @@ var render = function render() {
     }
   }, [_vm._v(" ARTISTAS ")]), _vm._v(" "), _c("router-link", {
     attrs: {
-      to: "#"
+      to: _vm.pathEvent
     }
   }, [_vm._v(" EVENTOS ")]), _vm._v(" "), _c("router-link", {
     attrs: {

@@ -57,7 +57,11 @@
                                             </router-link>
                                         </li>
                                         <li>
-                                            <a href="#">EVENTOS</a>
+                                            <router-link
+                                                :to="{ name: 'eventList' }"
+                                            >
+                                                EVENTOS
+                                            </router-link>
                                         </li>
                                         <li>
                                             <router-link
@@ -172,6 +176,7 @@ import MobileMenu from "./components/MobileMenu.vue";
 
 export default {
     name: "Header",
+    components: { MobileMenu },
     methods: {
         logout() {
             this.$store.dispatch("authLogout").then(() => {
@@ -220,6 +225,5 @@ export default {
             return shoppingCart.length || 0;
         },
     },
-    components: { MobileMenu },
 };
 </script>

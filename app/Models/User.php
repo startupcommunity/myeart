@@ -163,6 +163,16 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve los eventos seguidos por el usuario
+     *
+     * @return HasMany
+     */
+    public function favoriteEvents(): HasMany
+    {
+        return $this->hasMany(FavoriteEvent::class, 'user_id');
+    }
+
+    /**
      * devuelve las direcciones de envío del usuario
      *
      * @return HasMany

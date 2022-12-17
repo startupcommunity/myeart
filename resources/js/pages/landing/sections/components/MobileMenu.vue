@@ -28,7 +28,7 @@
             </button>
             <router-link :to="pathArtwork"> OBRAS </router-link>
             <router-link :to="pathArtist"> ARTISTAS </router-link>
-            <router-link to="#"> EVENTOS </router-link>
+            <router-link :to="pathEvent"> EVENTOS </router-link>
             <router-link :to="pathCommunity">COMUNIDAD</router-link>
         </div>
         <div class="sidenav_footer">
@@ -44,6 +44,7 @@ export default {
         pathArtwork: () => ({ name: "listArtwork" }),
         pathArtist: () => ({ name: "listArtist" }),
         pathCommunity: () => ({ name: "indexCommunity" }),
+        pathEvent: () => ({ name: "eventList" }),
         user() {
             return this.$store.getters.getProfile;
         },

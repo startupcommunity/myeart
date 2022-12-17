@@ -29,6 +29,11 @@ __webpack_require__.r(__webpack_exports__);
         name: "indexCommunity"
       };
     },
+    pathEvent: function pathEvent() {
+      return {
+        name: "eventList"
+      };
+    },
     user: function user() {
       return this.$store.getters.getProfile;
     },
@@ -148,7 +153,7 @@ var render = function render() {
     }
   }, [_vm._v(" ARTISTAS ")]), _vm._v(" "), _c("router-link", {
     attrs: {
-      to: "#"
+      to: _vm.pathEvent
     }
   }, [_vm._v(" EVENTOS ")]), _vm._v(" "), _c("router-link", {
     attrs: {

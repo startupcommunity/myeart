@@ -56,6 +56,9 @@ const endpoints = {
         // obtiene las publicaciones seguidas por el usuario
         getFollowReleases: `${API}/user/get-follow-releases`, // get
 
+        // obtiene los eventos seguidos por el usuario
+        getFollowEvents: `${API}/user/get-follow-events`, // get
+
         // artistas seguidos por el usuario, info corta y necesaria
         getFASI: `${API}/user/get-follow-artists-short-info`, // get
 
@@ -149,6 +152,9 @@ const endpoints = {
     events: {
         // guarda un nuevo evento
         store: `${API}/events/store`, // post
+
+        // devuelve todos los eventos
+        getAll: `${API}/events/get-all`, // get
     },
 };
 

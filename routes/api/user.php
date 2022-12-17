@@ -31,6 +31,11 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/get-follow-releases', [UserController::class, 'getFollowReleases'])->name('getFollowReleases');
 
   /**
+   * Devuelve los eventos guardados por el usuario logueado
+   */
+  Route::get('/get-follow-events', [UserController::class, 'getFollowEvents'])->name('getFollowEvents');
+
+  /**
    * Devuelve los artistas seguidos por el usuario, solo la info corta y básica de los artistas,
    * como el nombre, el id...
    */

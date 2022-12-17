@@ -172,4 +172,25 @@ class UserDB
         return $data['favoriteReleases']
             ->map(fn ($item) => $item->release);
     }
+
+    /**
+     * Devuelve los eventos guardados de un usuario
+     *
+     * @return Collection
+     */
+    public function getFollowEvents(): Collection
+    {
+        // user
+        $user = auth()->user();
+
+        // load relations
+        $data = $user->load([
+            'favoriteEvents.event.likes.user',
+            'favoriteEvents.event.user.artworks.categories',
+        ]);
+
+        // return especific data
+        return $data['favoriteEvents']
+            ->map(fn ($item) => $item->event);
+    }
 }

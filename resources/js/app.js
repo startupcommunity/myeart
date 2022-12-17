@@ -78,6 +78,7 @@ new Vue({
             await this.$store.dispatch("userFollowArtists");
             await this.$store.dispatch("userFollowArtworks");
             await this.$store.dispatch("userFavoriteReleases");
+            await this.$store.dispatch("userFavoriteEvents");
         }
     },
     render: (h) => h(App),

@@ -6,7 +6,12 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'events'], function () {
 
   /**
-   * Obtiene los artículos de una orden
+   * Crea u nuevo evento
    */
   Route::post('/store', [UserEventController::class, 'store'])->name('eventStore');
+
+  /**
+   * Obtiene todos los eventos
+   */
+  Route::get('/get-all', [UserEventController::class, 'all'])->name('getAllEvents');
 });

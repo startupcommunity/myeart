@@ -178,6 +178,21 @@ class UserController extends Controller
     }
 
     /**
+     * Devuelve los eventos guardados por el usuario
+     *
+     * @return JsonResponse
+     */
+    public function getFollowEvents(): JsonResponse
+    {
+        try {
+            $resp = $this->db->getFollowEvents();
+            return $this->resp->json($resp, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
      * Agregar a favoritos una obra
      *
      * @param CreateFollowArtworkRequest $request

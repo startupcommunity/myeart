@@ -2406,6 +2406,9 @@ var endpoints = {
     // obtiene las publicaciones seguidas por el usuario
     getFollowReleases: "".concat(API, "/user/get-follow-releases"),
     // get
+    // obtiene los eventos seguidos por el usuario
+    getFollowEvents: "".concat(API, "/user/get-follow-events"),
+    // get
     // artistas seguidos por el usuario, info corta y necesaria
     getFASI: "".concat(API, "/user/get-follow-artists-short-info"),
     // get
@@ -2503,7 +2506,10 @@ var endpoints = {
   // eventos
   events: {
     // guarda un nuevo evento
-    store: "".concat(API, "/events/store") // post
+    store: "".concat(API, "/events/store"),
+    // post
+    // devuelve todos los eventos
+    getAll: "".concat(API, "/events/get-all") // get
 
   }
 };
@@ -2770,7 +2776,7 @@ new Vue({
           switch (_context.prev = _context.next) {
             case 0:
               if (!_this.$store.getters.isAuthenticated) {
-                _context.next = 9;
+                _context.next = 11;
                 break;
               }
 
@@ -2790,6 +2796,10 @@ new Vue({
               return _this.$store.dispatch("userFavoriteReleases");
 
             case 9:
+              _context.next = 11;
+              return _this.$store.dispatch("userFavoriteEvents");
+
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -5455,6 +5465,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     following_artists: [],
     following_artworks: [],
     following_releases: [],
+    following_events: [],
     profile: {
       profile: {},
       social_network: {},
@@ -5464,9 +5475,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   getters: {
-    getProfile: function getProfile(state) {
-      return state.profile;
-    },
     getFollowArtists: function getFollowArtists(state) {
       return state.following_artists;
     },
@@ -5475,6 +5483,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getFollowReleases: function getFollowReleases(state) {
       return state.following_releases;
+    },
+    getFollowEvents: function getFollowEvents(state) {
+      return state.following_events;
+    },
+    getProfile: function getProfile(state) {
+      return state.profile;
     },
     isProfileLoaded: function isProfileLoaded(state) {
       return !!state.profile.name;
@@ -5558,11 +5572,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (err) {
         return console.log(err);
       });
+    },
+
+    /**
+     * Obtener los eventos seguidos por el usuario
+     * @param {Commit} param
+     */
+    userFavoriteEvents: function userFavoriteEvents(_ref6) {
+      var commit = _ref6.commit;
+      commit("userRequest");
+      vue__WEBPACK_IMPORTED_MODULE_1__["default"].axios.get(_api_endpoints__WEBPACK_IMPORTED_MODULE_0__["default"].user.getFollowEvents).then(function (resp) {
+        return commit("setFollowEvents", resp.data);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     }
   },
   mutations: {
     userRequest: function userRequest(state) {
       state.status = "loading";
+    },
+    userError: function userError(state) {
+      state.status = "error";
     },
     userSuccess: function () {
       var _userSuccess = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(state, resp) {
@@ -5668,9 +5699,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return setFollowReleases;
     }(),
-    userError: function userError(state) {
-      state.status = "error";
-    }
+    setFollowEvents: function () {
+      var _setFollowEvents = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(state, resp) {
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return vue__WEBPACK_IMPORTED_MODULE_1__["default"].set(state, "following_events", resp);
+
+              case 2:
+                state.status = "success";
+
+              case 3:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function setFollowEvents(_x10, _x11) {
+        return _setFollowEvents.apply(this, arguments);
+      }
+
+      return setFollowEvents;
+    }()
   }
 });
 
@@ -77309,9 +77363,41 @@ var map = {
 		"./resources/js/pages/event/Show.vue",
 		"resources_js_pages_event_Show_vue"
 	],
+	"./event/components/ButtonFavEvent.vue": [
+		"./resources/js/pages/event/components/ButtonFavEvent.vue",
+		"resources_js_pages_event_components_ButtonFavEvent_vue"
+	],
+	"./event/components/ButtonLikeEvent.vue": [
+		"./resources/js/pages/event/components/ButtonLikeEvent.vue",
+		"resources_js_pages_event_components_ButtonLikeEvent_vue"
+	],
+	"./event/components/ButtonShareEvent.vue": [
+		"./resources/js/pages/event/components/ButtonShareEvent.vue",
+		"resources_js_pages_event_components_ButtonShareEvent_vue"
+	],
+	"./event/components/CardEvent.vue": [
+		"./resources/js/pages/event/components/CardEvent.vue",
+		"resources_js_pages_event_components_CardEvent_vue"
+	],
+	"./event/components/InfoReservationModal.vue": [
+		"./resources/js/pages/event/components/InfoReservationModal.vue",
+		"resources_js_pages_event_components_InfoReservationModal_vue"
+	],
+	"./event/sections/ButtonCreate.vue": [
+		"./resources/js/pages/event/sections/ButtonCreate.vue",
+		"resources_js_pages_event_sections_ButtonCreate_vue"
+	],
+	"./event/sections/Filters.vue": [
+		"./resources/js/pages/event/sections/Filters.vue",
+		"resources_js_pages_event_sections_Filters_vue"
+	],
 	"./event/sections/Success.vue": [
 		"./resources/js/pages/event/sections/Success.vue",
 		"resources_js_pages_event_sections_Success_vue"
+	],
+	"./event/sections/Title.vue": [
+		"./resources/js/pages/event/sections/Title.vue",
+		"resources_js_pages_event_sections_Title_vue"
 	],
 	"./landing/Landing.vue": [
 		"./resources/js/pages/landing/Landing.vue",
@@ -77774,7 +77860,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_pages_Checkout_CheckoutSuccess_vue":1,"resources_js_pages_Checkout_Index_vue":1,"resources_js_pages_Checkout_components_CardItemCheckout_vue":1,"resources_js_pages_Checkout_components_UseDefaultAddress_vue":1,"resources_js_pages_Checkout_components_UseFormAddress_vue":1,"resources_js_pages_Checkout_components_UseShippingMethod_vue":1,"resources_js_pages_Checkout_sections_OrderSection_vue":1,"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_CardBlog_vue":1,"resources_js_pages_artist_components_CardEvent_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artist_sections_AboutMe_vue":1,"resources_js_pages_artist_sections_Blog_vue":1,"resources_js_pages_artist_sections_Event_vue":1,"resources_js_pages_artist_sections_Hero_vue":1,"resources_js_pages_artist_sections_PostHero_vue":1,"resources_js_pages_artist_sections_Release_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CardComment_vue":1,"resources_js_pages_artwork_components_CardRowCart_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_FollowArtworkButton_vue":1,"resources_js_pages_artwork_components_FormQuestion_vue":1,"resources_js_pages_artwork_components_ResponseCommentDialog_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_Comment_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_community_Index_vue":1,"resources_js_pages_community_components_CardEventCol_vue":1,"resources_js_pages_community_components_MiniCardArtist_vue":1,"resources_js_pages_community_sections_index_Filters_vue":1,"resources_js_pages_community_sections_index_Title_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_errors_404_vue":1,"resources_js_pages_errors_500_vue":1,"resources_js_pages_event_Create_vue":1,"resources_js_pages_event_List_vue":1,"resources_js_pages_event_Show_vue":1,"resources_js_pages_event_sections_Success_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_landing_sections_components_MobileMenu_vue":1,"resources_js_pages_layouts_ErrorLayout_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_components_CardRelease_vue":1,"resources_js_pages_profile_components_subcomponents_CommentRelease_vue":1,"resources_js_pages_profile_components_subcomponents_ImageActionRelease_vue":1,"resources_js_pages_profile_components_subcomponents_InfoArtist_vue":1,"resources_js_pages_profile_components_subcomponents_InfoCompleteRelease_vue":1,"resources_js_pages_profile_components_subcomponents_InfoShortRelease_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_DesktopKeypad_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_HeroProfile_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1,"resources_js_pages_profile_sections_Release_vue":1,"resources_js_pages_release_Create_vue":1,"resources_js_pages_release_Edit_vue":1,"resources_js_pages_release_Show_vue":1,"resources_js_pages_release_components_CardComment_vue":1,"resources_js_pages_release_components_CommentButton_vue":1,"resources_js_pages_release_components_FavButton_vue":1,"resources_js_pages_release_components_LikeButton_vue":1,"resources_js_pages_release_components_ReleaseCommentsDialog_vue":1,"resources_js_pages_release_components_ShareButton_vue":1,"resources_js_pages_shoppingcart_Index_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_pages_Checkout_CheckoutSuccess_vue":1,"resources_js_pages_Checkout_Index_vue":1,"resources_js_pages_Checkout_components_CardItemCheckout_vue":1,"resources_js_pages_Checkout_components_UseDefaultAddress_vue":1,"resources_js_pages_Checkout_components_UseFormAddress_vue":1,"resources_js_pages_Checkout_components_UseShippingMethod_vue":1,"resources_js_pages_Checkout_sections_OrderSection_vue":1,"resources_js_pages_Home_vue":1,"resources_js_pages_address_util_CreateAddressModal_vue":1,"resources_js_pages_address_util_EditAddressModal_vue":1,"resources_js_pages_artist_List_vue":1,"resources_js_pages_artist_Show_vue":1,"resources_js_pages_artist_components_CardBlog_vue":1,"resources_js_pages_artist_components_CardEvent_vue":1,"resources_js_pages_artist_components_FilterArtistModal_vue":1,"resources_js_pages_artist_components_RowArtwork_vue":1,"resources_js_pages_artist_sections_AboutMe_vue":1,"resources_js_pages_artist_sections_Blog_vue":1,"resources_js_pages_artist_sections_Event_vue":1,"resources_js_pages_artist_sections_Hero_vue":1,"resources_js_pages_artist_sections_PostHero_vue":1,"resources_js_pages_artist_sections_Release_vue":1,"resources_js_pages_artwork_CreateArtwork_vue":1,"resources_js_pages_artwork_EditArtwork_vue":1,"resources_js_pages_artwork_ListArtwork_vue":1,"resources_js_pages_artwork_ShowArtwork_vue":1,"resources_js_pages_artwork_components_CardComment_vue":1,"resources_js_pages_artwork_components_CardRowCart_vue":1,"resources_js_pages_artwork_components_CategoryTypeFilter_vue":1,"resources_js_pages_artwork_components_FollowArtistButton_vue":1,"resources_js_pages_artwork_components_FollowArtworkButton_vue":1,"resources_js_pages_artwork_components_FormQuestion_vue":1,"resources_js_pages_artwork_components_ResponseCommentDialog_vue":1,"resources_js_pages_artwork_components_ShowImageDialog_vue":1,"resources_js_pages_artwork_sections_ArtistArtworks_vue":1,"resources_js_pages_artwork_sections_CardArtwork_vue":1,"resources_js_pages_artwork_sections_Category_vue":1,"resources_js_pages_artwork_sections_Comment_vue":1,"resources_js_pages_artwork_sections_HeroList_vue":1,"resources_js_pages_artwork_sections_OptionsFilterModal_vue":1,"resources_js_pages_artwork_sections_OtherArtworks_vue":1,"resources_js_pages_auth_Login_vue":1,"resources_js_pages_auth_perfil_vue":1,"resources_js_pages_auth_register_vue":1,"resources_js_pages_community_Index_vue":1,"resources_js_pages_community_components_CardEventCol_vue":1,"resources_js_pages_community_components_MiniCardArtist_vue":1,"resources_js_pages_community_sections_index_Filters_vue":1,"resources_js_pages_community_sections_index_Title_vue":1,"resources_js_pages_dashboard_dashboard_vue":1,"resources_js_pages_errors_404_vue":1,"resources_js_pages_errors_500_vue":1,"resources_js_pages_event_Create_vue":1,"resources_js_pages_event_List_vue":1,"resources_js_pages_event_Show_vue":1,"resources_js_pages_event_components_ButtonFavEvent_vue":1,"resources_js_pages_event_components_ButtonLikeEvent_vue":1,"resources_js_pages_event_components_ButtonShareEvent_vue":1,"resources_js_pages_event_components_CardEvent_vue":1,"resources_js_pages_event_components_InfoReservationModal_vue":1,"resources_js_pages_event_sections_ButtonCreate_vue":1,"resources_js_pages_event_sections_Filters_vue":1,"resources_js_pages_event_sections_Success_vue":1,"resources_js_pages_event_sections_Title_vue":1,"resources_js_pages_landing_Landing_vue":1,"resources_js_pages_landing_sections_BreakingNews_vue":1,"resources_js_pages_landing_sections_Community_vue":1,"resources_js_pages_landing_sections_ExtraInfo_vue":1,"resources_js_pages_landing_sections_Footer_vue":1,"resources_js_pages_landing_sections_Header_vue":1,"resources_js_pages_landing_sections_Hero_vue":1,"resources_js_pages_landing_sections_LastPost_vue":1,"resources_js_pages_landing_sections_Newletter_vue":1,"resources_js_pages_landing_sections_OtherUser_vue":1,"resources_js_pages_landing_sections_PreHeader_vue":1,"resources_js_pages_landing_sections_components_MobileMenu_vue":1,"resources_js_pages_layouts_ErrorLayout_vue":1,"resources_js_pages_layouts_MainLayout_vue":1,"resources_js_pages_profile_ModalFrontPhoto_vue":1,"resources_js_pages_profile_ModalProfilePhoto_vue":1,"resources_js_pages_profile_ProfileUser_vue":1,"resources_js_pages_profile_components_CardArtist_vue":1,"resources_js_pages_profile_components_CardRelease_vue":1,"resources_js_pages_profile_components_subcomponents_CommentRelease_vue":1,"resources_js_pages_profile_components_subcomponents_ImageActionRelease_vue":1,"resources_js_pages_profile_components_subcomponents_InfoArtist_vue":1,"resources_js_pages_profile_components_subcomponents_InfoCompleteRelease_vue":1,"resources_js_pages_profile_components_subcomponents_InfoShortRelease_vue":1,"resources_js_pages_profile_sections_Address_vue":1,"resources_js_pages_profile_sections_Artwork_vue":1,"resources_js_pages_profile_sections_DesktopKeypad_vue":1,"resources_js_pages_profile_sections_Favourite_vue":1,"resources_js_pages_profile_sections_HeroProfile_vue":1,"resources_js_pages_profile_sections_MobileKeypad_vue":1,"resources_js_pages_profile_sections_PersonalData_vue":1,"resources_js_pages_profile_sections_Release_vue":1,"resources_js_pages_release_Create_vue":1,"resources_js_pages_release_Edit_vue":1,"resources_js_pages_release_Show_vue":1,"resources_js_pages_release_components_CardComment_vue":1,"resources_js_pages_release_components_CommentButton_vue":1,"resources_js_pages_release_components_FavButton_vue":1,"resources_js_pages_release_components_LikeButton_vue":1,"resources_js_pages_release_components_ReleaseCommentsDialog_vue":1,"resources_js_pages_release_components_ShareButton_vue":1,"resources_js_pages_shoppingcart_Index_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
