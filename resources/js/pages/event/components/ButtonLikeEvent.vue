@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click.stop="addLikeOrDislike" :disabled="loading">
+        <button @click.stop="addLikeOrDislike" :disabled="globalLoading">
             <i
                 class="fa-regular fa-heart"
                 :class="{
@@ -29,7 +29,6 @@ export default {
 
     data() {
         return {
-            loading: false,
             liked: false,
             likes: 0,
         };
@@ -51,36 +50,35 @@ export default {
             const fn = (like) => like.user_id === this.user?.id;
             this.liked = this.event?.likes?.some(fn);
         },
-
         getLikes() {
             this.likes = this.event?.likes?.length || 0;
         },
         addLikeOrDislike() {
             const data = {
-                release_id: this.event.id,
+                event_id: this.event.id,
                 user_id: this.user.id,
             };
 
             const ep = this.liked
-                ? this.ep.releases.dislike
-                : this.ep.releases.like;
+                ? this.ep.events.dislike
+                : this.ep.events.like;
 
-            // this.loading = true;
-            // this.axios
-            //     .post(ep, data)
-            //     .then((resp) => {
-            //         if (this.liked) {
-            //             this.$emit("disliked-added");
-            //             this.liked = false;
-            //             this.likes--;
-            //         } else {
-            //             this.$emit("liked-added", resp.data);
-            //             this.liked = true;
-            //             this.likes++;
-            //         }
-            //     })
-            //     .catch((error) => this.manageError(error))
-            //     .finally(() => (this.loading = false));
+            this.globalLoading = true;
+            this.axios
+                .post(ep, data)
+                .then((resp) => {
+                    if (this.liked) {
+                        // this.$emit("disliked-added");
+                        this.liked = false;
+                        this.likes--;
+                    } else {
+                        // this.$emit("liked-added", resp.data);
+                        this.liked = true;
+                        this.likes++;
+                    }
+                })
+                .catch((error) => this.manageError(error))
+                .finally(() => (this.globalLoading = false));
         },
     },
 };

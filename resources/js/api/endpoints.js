@@ -155,6 +155,21 @@ const endpoints = {
 
         // devuelve todos los eventos
         getAll: `${API}/events/get-all`, // get
+
+        // agregar a favoritos el evento
+        addFav: `${API}/events/add-favorite`, // post
+
+        // eliminar de favoritos el evento
+        removeFav: `${API}/events/remove-favorite`, // post
+
+        // agregar un like al evento
+        like: `${API}/events/like`, // post
+
+        // eliminar un like al evento
+        dislike: `${API}/events/dislike`, // post
+
+        // muestre el detalle de un evento / {id}
+        show: `${API}/events/show/`, // get
     },
 };
 

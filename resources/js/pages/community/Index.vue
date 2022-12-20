@@ -25,7 +25,13 @@
                                 v-for="event in events"
                                 :key="event.id"
                                 :event="event"
-                                class="mb-8"
+                                class="w-full animate-fade-in-down md:mb-8"
+                                @interested="openReservationInfo"
+                            />
+                            <InfoReservationModal
+                                :event="event"
+                                :show="showReservation"
+                                @close-info="showReservation = false"
                             />
                         </div>
                     </div>
@@ -93,12 +99,13 @@ import Header from "../landing/sections/Header.vue";
 import MainLayout from "../layouts/MainLayout.vue";
 import Title from "./sections/index/Title.vue";
 import Filters from "./sections/index/Filters.vue";
-import CardEvent from "./components/CardEventCol.vue";
 import MiniCardArtist from "./components/MiniCardArtist.vue";
 import ReleaseCommentsDialog from "../release/components/ReleaseCommentsDialog.vue";
 import CardRelease from "../profile/components/CardRelease.vue";
+import CardEvent from "../event/components/CardEvent.vue";
+import InfoReservationModal from "../event/components/InfoReservationModal.vue";
 
-const MAX_EVENTS = 6;
+const MAX_EVENTS = 3;
 const RANDOM_ARTIST = 6;
 const MAX_INIT_RELEASES = 4;
 const SHOW_MORE_RELEASES = 2;
@@ -114,6 +121,8 @@ export default {
         MiniCardArtist,
         ReleaseCommentsDialog,
         CardRelease,
+        CardEvent,
+        InfoReservationModal,
     },
     data() {
         return {
@@ -122,67 +131,17 @@ export default {
             releases: [],
             original: [],
             release: {},
+            event: {},
+            showReservation: false,
             loading: false,
             show: false,
             hashtag: "",
         };
     },
     created() {
-        // mockup para eventos
-        this.events = [
-            {
-                id: 1,
-                title: "Evento 1",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nunc nisl sit amet nisl. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nunc nisl sit amet nisl.",
-                created_at: "2022-05-01",
-                time: "12:00",
-                image: "https://picsum.photos/200/300",
-                location: "Calle 1 # 2, Colonia 3, Ciudad 4",
-                creator: {
-                    id: 1,
-                    name: "Juan Pérez",
-                },
-            },
-            {
-                id: 2,
-                title: "Evento 2",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nunc nisl sit amet nisl. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nunc nisl sit amet nisl.",
-                created_at: "2022-08-01",
-                time: "12:00",
-                image: "https://picsum.photos/400/600",
-                location: "Calle oliva, 11 Marbella",
-                creator: {
-                    id: 2,
-                    name: "Lucía García",
-                },
-            },
-            {
-                id: 3,
-                title: "Evento 3",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nunc nisl sit amet nisl. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nunc nisl sit amet nisl.",
-                created_at: "2022-10-22",
-                time: "12:00",
-                image: "https://picsum.photos/600/800",
-                location: "Calle limón, 9 Fuengirola",
-                creator: {
-                    id: 3,
-                    name: "María López",
-                },
-            },
-        ];
-
-        // máximo 3 eventos
-        this.events = this.events.slice(0, MAX_EVENTS);
-
-        // artistas
-        this.getRandomArtists();
-
-        // publicaciones
         const filters = { sortBy: 1 };
-
+        this.getEvents();
+        this.getRandomArtists();
         this.getReleaseFollowArtists(filters);
     },
     computed: {
@@ -221,7 +180,6 @@ export default {
             this.axios
                 .get(this.ep.releases.followArtists, { params: filters })
                 .then(async (resp) => {
-
                     // si la respuesta es un objeto, se convierte a array
                     if (typeof resp.data === "object") {
                         resp.data = Object.values(resp.data);
@@ -229,6 +187,21 @@ export default {
 
                     this.releases = resp.data.slice(0, MAX_INIT_RELEASES);
                     this.original = JSON.parse(JSON.stringify(await resp.data));
+                })
+                .catch((error) => this.manageError(error))
+                .finally(() => (this.loading = false));
+        },
+
+        /**
+         * Obtiene los eventos
+         */
+        getEvents() {
+            this.loading = true;
+
+            this.axios
+                .get(this.ep.events.getAll, { params: { sortBy: 1 } })
+                .then((resp) => {
+                    this.events = resp.data.slice(0, MAX_EVENTS);
                 })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));
@@ -249,6 +222,11 @@ export default {
         activeCommentDialog(release) {
             this.release = release;
             this.show = true;
+        },
+
+        openReservationInfo(event) {
+            this.event = event;
+            this.showReservation = true;
         },
     },
 };

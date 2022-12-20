@@ -25,17 +25,17 @@
                 </v-card-text>
                 <v-card-actions>
                     <div
-                        class="flex flex-col md:flex-row justify-evenly items-center pb-3 pb-md-0"
+                        class="flex flex-row justify-evenly items-center pb-3 pb-md-0"
                     >
                         <button
                             @click.prevent="$emit('close-info')"
-                            class="text-gray-800 text-base hover:no-underline uppercase py-4 px-2"
+                            class="text-gray-800 text-sm  md:text-base hover:no-underline uppercase py-4 px-2"
                         >
                             Volver atrás
                         </button>
                         <a
                             :href="`tel:${event.phone_number}`"
-                            class="text-primary text-base hover:no-underline uppercase py-4 px-2"
+                            class="text-primary text-sm md:text-base hover:no-underline uppercase py-4 px-2"
                         >
                             LLamar ahora
                             <i class="fas fa-phone"></i>

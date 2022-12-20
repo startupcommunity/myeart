@@ -6,21 +6,33 @@
         </div>
         <!-- header -->
 
-        <!-- botón crear -->
-        <ButtonCreate />
-        <!-- /botón crear -->
+        <div class="flex flex-col">
+            <!-- botón crear -->
+            <section class="bg-white order-md-1 order-3">
+                <div
+                    class="container py-5 py-md-10 flex justify-md-end justify-center"
+                >
+                    <ButtonCreate />
+                </div>
+            </section>
+            <!-- /botón crear -->
 
-        <!-- title -->
-        <Title />
-        <!-- /title -->
+            <!-- title -->
+            <Title class="order-md-2 order-1 pt-5 pt-md-0" />
+            <!-- /title -->
 
-        <!-- filtros -->
-        <Filters :filters="filters" @action="setFilterAction" />
-        <!-- /filtros -->
+            <!-- filtros -->
+            <Filters
+                :filters="filters"
+                @action="setFilterAction"
+                class="order-md-3 order-2"
+            />
+            <!-- /filtros -->
+        </div>
 
         <!-- content -->
         <section class="bg-white">
-            <div class="container pb-20">
+            <div class="container pb-20 px-5 px-md-0">
                 <div
                     class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch"
                 >
@@ -66,7 +78,7 @@ import ButtonCreate from "./sections/ButtonCreate.vue";
 import CardEvent from "./components/CardEvent.vue";
 import InfoReservationModal from "./components/InfoReservationModal.vue";
 
-const MAX_INIT_EVENTS = 6;
+const MAX_INIT_EVENTS = 12;
 const ADD_EVENTS = 3;
 
 export default {
@@ -89,7 +101,7 @@ export default {
             original: [],
             filters: {
                 sortBy: 1,
-                action: 1,
+                action: 0,
             },
         };
     },
@@ -101,12 +113,16 @@ export default {
     methods: {
         setFilterAction(action) {
             this.filters.action = action;
+
+            console.log(this.filters);
         },
         getEvents() {
             this.loading = true;
 
             this.axios
-                .get(this.ep.events.getAll)
+                .get(this.ep.events.getAll, {
+                    params: this.filters,
+                })
                 .then((resp) => {
                     this.original = JSON.parse(JSON.stringify(resp.data));
                     this.events = this.original.slice(0, MAX_INIT_EVENTS);
@@ -119,18 +135,21 @@ export default {
             this.showReservation = true;
         },
         showMore() {
-            this.events = this.original.slice(
-                0,
-                this.events.length + ADD_EVENTS
-            );
+            const total = this.events.length + ADD_EVENTS;
+            this.events = this.original.slice(0, total);
         },
+    },
 
-        // pendiente de implementar
-        // TODO: implementar
-        // hacer botón de guardar
-        // hacer botón de like
-        // filtros varios
-        // responsive mobile
+    // ------------------------
+    //  filtros
+    // ------------------------
+    watch: {
+        filters: {
+            handler() {
+                this.getEvents();
+            },
+            deep: true,
+        },
     },
 };
 </script>

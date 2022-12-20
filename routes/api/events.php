@@ -14,4 +14,29 @@ Route::group(['prefix' => 'events'], function () {
    * Obtiene todos los eventos
    */
   Route::get('/get-all', [UserEventController::class, 'all'])->name('getAllEvents');
+
+  /**
+   * agrega a favoritos
+   */
+  Route::post('/add-favorite', [UserEventController::class, 'addFavorite'])->name('addEventFavorite');
+
+  /**
+   * elimina de favoritos
+   */
+  Route::post('/remove-favorite', [UserEventController::class, 'removeFavorite'])->name('removeEventFavorite');
+
+  /**
+   * Agrega un like
+   */
+  Route::post('/like', [UserEventController::class, 'addLike'])->name('addEventLike');
+
+  /**
+   * Elimina un like
+   */
+  Route::post('/dislike', [UserEventController::class, 'removeLike'])->name('removeEventLike');
+
+  /**
+   * Muestra el detalle de un evento
+   */
+  Route::get('/show/{id}', [UserEventController::class, 'show'])->name('showEvent');
 });

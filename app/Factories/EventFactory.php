@@ -2,6 +2,8 @@
 
 namespace App\Factories;
 
+use App\Models\FavoriteEvent;
+use App\Models\User;
 use App\Models\UserEvent;
 use App\Utils\AppStorage;
 use Illuminate\Http\Request;
@@ -33,5 +35,85 @@ class EventFactory
 
 
     return $db;
+  }
+
+  /**
+   * agrega a favoritos un evento
+   *
+   * @param Request $request
+   * @return bool|FavoriteEvent
+   */
+  public function addFavorite(Request $request): bool|FavoriteEvent
+  {
+    $user = User::find($request->user_id);
+    $isFav = $user->favoriteEvents()->where('event_id', $request->event_id)->first();
+
+    // si ya el usuario la tiene en favoritos return false
+    if ($isFav) {
+      return false;
+    }
+
+    // si no, agregar a favoritos
+    return $user->favoriteEvents()->create(['event_id' => $request->event_id]);
+  }
+
+  /**
+   * elimina de favoritos un evento
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function removeFavorite(Request $request): bool
+  {
+    $user = User::find($request->user_id);
+    $isFav = $user->favoriteEvents()->where('event_id', $request->event_id)->first();
+
+    // si no la tiene en favoritos return false
+    if (!$isFav) {
+      return false;
+    }
+
+    // si la tiene, eliminar de favoritos
+    return $isFav->delete();
+  }
+
+  /**
+   * agrega un like
+   * @param Request $request
+   * @return bool
+   */
+  public function addLike(Request $request): bool
+  {
+    $event = UserEvent::find($request->event_id);
+    $liked = $event->likes()->where('user_id', $request->user_id)->first();
+
+    // si ya le dio like return false
+    if ($liked) {
+      return false;
+    }
+
+    // si no, agregar like
+    $created = $event->likes()->create(['user_id' => $request->user_id]);
+
+    return is_object($created);
+  }
+
+  /**
+   * elimina un like
+   * @param Request $request
+   * @return bool
+   */
+  public function removeLike(Request $request): bool
+  {
+    $event = UserEvent::find($request->event_id);
+    $liked = $event->likes()->where('user_id', $request->user_id)->first();
+
+    // si no le dio like return false
+    if (!$liked) {
+      return false;
+    }
+
+    // si le dio like, eliminar like
+    return $liked->delete();
   }
 }

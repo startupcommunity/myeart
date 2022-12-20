@@ -1,11 +1,13 @@
 <template>
     <div>
         <div class="w-full">
-            <img
-                class="w-full h-full object-cover object-center aspect-video"
-                :src="getImage"
-                alt="event"
-            />
+            <router-link :to="getPathShow">
+                <img
+                    class="w-full h-full object-cover object-center aspect-video"
+                    :src="getImage"
+                    alt="event"
+                />
+            </router-link>
         </div>
         <div class="flex flex-col">
             <h3 class="text-lg text-zinc-500 font-normal">
@@ -74,6 +76,12 @@ export default {
                 params: { id: this.creator?.id },
             };
         },
+        getPathShow() {
+            return {
+                name: "eventShow",
+                params: { id: this.event.id },
+            };
+        },
         /**
          * Crear un fecha formateada
          * con el siguiente formato:
@@ -102,7 +110,5 @@ export default {
             return `${dayCap}, ${dayNumber} ${monthCap} a las ${hour}`;
         },
     },
-
-    methods: {},
 };
 </script>

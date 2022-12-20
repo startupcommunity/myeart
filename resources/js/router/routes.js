@@ -165,7 +165,7 @@ export const routes = [
     },
     {
         name: "eventShow",
-        path: "/eventos/ver/:id",
+        path: "/eventos/show/:id",
         component: importPage("event/Show"),
         beforeEnter: ifAuthenticated,
     },
