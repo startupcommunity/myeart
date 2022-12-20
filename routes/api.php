@@ -8,6 +8,7 @@ use App\Http\Controllers\ArtisticActivitysController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
+use App\Http\Controllers\UserEventController;
 use App\Http\Controllers\UserReleaseController;
 
 // sin middleware
@@ -19,6 +20,14 @@ Route::post('/register', [RegisterController::class, 'register']);
  */
 Route::get('releases/get-comments-slug/{slug}', [UserReleaseController::class, 'getCommentsSlug'])
     ->name('getReleaseCommentsSlug');
+
+
+/**
+ * Muestra el detalle de un evento
+ *
+ * @param int|string $id
+ */
+Route::get('events/show/{id}', [UserEventController::class, 'show'])->name('showEvent');
 
 /**
  * grupo de rutas protegidas

@@ -43,6 +43,9 @@ export default {
         user() {
             return this.$store.getters.getProfile;
         },
+        hasUser() {
+            return this.user?.id;
+        },
     },
 
     methods: {
@@ -54,6 +57,15 @@ export default {
             this.likes = this.event?.likes?.length || 0;
         },
         addLikeOrDislike() {
+            if (!this.hasUser) {
+                this.noty(
+                    "Debes iniciar sesión para dar un like",
+                    "error"
+                );
+
+                return;
+            }
+
             const data = {
                 event_id: this.event.id,
                 user_id: this.user.id,

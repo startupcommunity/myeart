@@ -113,8 +113,6 @@ export default {
     methods: {
         setFilterAction(action) {
             this.filters.action = action;
-
-            console.log(this.filters);
         },
         getEvents() {
             this.loading = true;

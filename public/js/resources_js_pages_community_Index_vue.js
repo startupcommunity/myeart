@@ -530,6 +530,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     favEvents: function favEvents() {
       return this.$store.getters.getFollowEvents;
+    },
+    hasUser: function hasUser() {
+      var _this$user;
+
+      return (_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id;
     }
   },
   methods: {
@@ -543,6 +548,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     addOrRemoveFav: function addOrRemoveFav() {
       var _this2 = this;
+
+      if (!this.hasUser) {
+        this.noty("Debes iniciar sesión para agregar a favoritos", "error");
+        return;
+      }
 
       var data = {
         event_id: this.event.id,
@@ -605,6 +615,11 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     user: function user() {
       return this.$store.getters.getProfile;
+    },
+    hasUser: function hasUser() {
+      var _this$user;
+
+      return (_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id;
     }
   },
   methods: {
@@ -614,9 +629,9 @@ __webpack_require__.r(__webpack_exports__);
           _this$event$likes;
 
       var fn = function fn(like) {
-        var _this$user;
+        var _this$user2;
 
-        return like.user_id === ((_this$user = _this.user) === null || _this$user === void 0 ? void 0 : _this$user.id);
+        return like.user_id === ((_this$user2 = _this.user) === null || _this$user2 === void 0 ? void 0 : _this$user2.id);
       };
 
       this.liked = (_this$event = this.event) === null || _this$event === void 0 ? void 0 : (_this$event$likes = _this$event.likes) === null || _this$event$likes === void 0 ? void 0 : _this$event$likes.some(fn);
@@ -628,6 +643,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     addLikeOrDislike: function addLikeOrDislike() {
       var _this2 = this;
+
+      if (!this.hasUser) {
+        this.noty("Debes iniciar sesión para dar un like", "error");
+        return;
+      }
 
       var data = {
         event_id: this.event.id,

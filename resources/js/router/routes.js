@@ -172,7 +172,7 @@ export const routes = [
     {
         name: "eventSlug",
         path: "/eventos/public/:slug",
-        component: importPage("event/Show"),
+        component: importPage("event/ShowPublic"),
     },
     {
         name: "eventCreate",

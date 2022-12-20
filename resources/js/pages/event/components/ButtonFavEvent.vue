@@ -38,6 +38,9 @@ export default {
         favEvents() {
             return this.$store.getters.getFollowEvents;
         },
+        hasUser() {
+            return this.user?.id;
+        },
     },
 
     methods: {
@@ -46,6 +49,15 @@ export default {
         },
 
         addOrRemoveFav() {
+            if (!this.hasUser) {
+                this.noty(
+                    "Debes iniciar sesión para agregar a favoritos",
+                    "error"
+                );
+
+                return;
+            }
+
             const data = {
                 event_id: this.event.id,
                 user_id: this.user.id,

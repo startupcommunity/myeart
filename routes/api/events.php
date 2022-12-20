@@ -34,9 +34,4 @@ Route::group(['prefix' => 'events'], function () {
    * Elimina un like
    */
   Route::post('/dislike', [UserEventController::class, 'removeLike'])->name('removeEventLike');
-
-  /**
-   * Muestra el detalle de un evento
-   */
-  Route::get('/show/{id}', [UserEventController::class, 'show'])->name('showEvent');
 });

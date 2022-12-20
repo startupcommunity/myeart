@@ -122,7 +122,7 @@ class UserEventController extends Controller
      * @param  integer  $id
      * @return JsonResponse
      */
-    public function show(int $id): JsonResponse
+    public function show(int|string $id): JsonResponse
     {
         try {
             $event = $this->db->find($id);

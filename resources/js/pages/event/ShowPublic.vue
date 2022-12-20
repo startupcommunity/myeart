@@ -6,23 +6,9 @@
         </div>
         <!-- header -->
 
-        <!-- botones -->
-        <section class="bg-white">
-            <div class="container py-10">
-                <BackButton class="block md:hidden" />
-                <div
-                    class="flex flex-col flex-md-row justify-center justify-md-between items-center"
-                >
-                    <BackButton class="hidden md:flex" />
-                    <ButtonCreate class="mt-8 mt-md-0" />
-                </div>
-            </div>
-        </section>
-        <!-- botones -->
-
         <!-- section event -->
         <section class="bg-white">
-            <div class="container pb-20">
+            <div class="container py-20">
                 <div class="flex flex-wrap justify-between items-start">
                     <div class="w-full md:w-1/2">
                         <p class="text-lg block md:hidden">
@@ -55,9 +41,18 @@
                                 <div
                                     class="md:flex gap-5 items-start justify-end text-2xl hidden"
                                 >
-                                    <ButtonFavEvent :event="event" v-if="event?.id" />
-                                    <ButtonLikeEvent :event="event" v-if="event?.id" />
-                                    <ButtonShareEvent :event="event" v-if="event?.id" />
+                                    <ButtonFavEvent
+                                        :event="event"
+                                        v-if="event?.id"
+                                    />
+                                    <ButtonLikeEvent
+                                        :event="event"
+                                        v-if="event?.id"
+                                    />
+                                    <ButtonShareEvent
+                                        :event="event"
+                                        v-if="event?.id"
+                                    />
                                 </div>
                             </div>
                             <p class="text-sm text-zinc-500 font-light">
@@ -106,9 +101,18 @@
                                 <div
                                     class="flex gap-5 items-start justify-end text-2xl"
                                 >
-                                    <ButtonFavEvent :event="event" v-if="event?.id" />
-                                    <ButtonLikeEvent :event="event" v-if="event?.id" />
-                                    <ButtonShareEvent :event="event" v-if="event?.id" />
+                                    <ButtonFavEvent
+                                        :event="event"
+                                        v-if="event?.id"
+                                    />
+                                    <ButtonLikeEvent
+                                        :event="event"
+                                        v-if="event?.id"
+                                    />
+                                    <ButtonShareEvent
+                                        :event="event"
+                                        v-if="event?.id"
+                                    />
                                 </div>
                             </div>
                             <!-- /visible en mobile -->
@@ -118,10 +122,6 @@
             </div>
         </section>
         <!-- /section event -->
-
-        <!-- section eventos que te pueden interesar -->
-        <SectionOtherEvent :event="event" />
-        <!-- section eventos que te pueden interesar -->
 
         <!-- modal ver reserva -->
         <InfoReservationModal
@@ -141,7 +141,6 @@ import ButtonShareEvent from "./components/ButtonShareEvent.vue";
 import BackButton from "./../../components/BackButton.vue";
 import ButtonCreate from "./sections/ButtonCreate.vue";
 import InfoReservationModal from "./components/InfoReservationModal.vue";
-import SectionOtherEvent from "./sections/SectionOtherEvent.vue";
 
 export default {
     name: "ShowEvent",
@@ -154,7 +153,6 @@ export default {
         BackButton,
         ButtonCreate,
         InfoReservationModal,
-        SectionOtherEvent,
     },
 
     data() {
@@ -236,10 +234,10 @@ export default {
          * Obtener el evento
          */
         getEvent() {
-            const id = this.$route.params.id;
+            const slug = this.$route.params.slug;
             this.globalLoading = true;
             this.axios
-                .get(this.ep.events.show + id)
+                .get(this.ep.events.show + slug)
                 .then((resp) => (this.event = resp.data))
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.globalLoading = false));

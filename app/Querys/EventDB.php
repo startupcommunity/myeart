@@ -13,12 +13,18 @@ class EventDB
   use UserEventTrait;
 
   /**
-   * @param int $id
+   * @param int|string $id
    * @return UserEvent
    */
-  public function find(int $id): UserEvent
+  public function find(int|string $id): ?UserEvent
   {
-    return UserEvent::with(['user', 'likes'])->find($id);
+    // verificar si el id es un numero o un slug
+    if (is_numeric($id)) {
+      return UserEvent::with(['user', 'likes'])->find($id);
+    }
+
+    // si es un slug
+    return UserEvent::with(['user', 'likes'])->where('slug', $id)->first();
   }
 
   /**
