@@ -32,18 +32,13 @@
                 <div class="flex flex-row items-start bg-gray-200">
                     <!-- menu sidebar -->
                     <div
-                        class="w-2/5 bg-gray-200 px-12 py-20 min-h-full hidden sm:block"
+                        class="w-2/5 bg-gray-200 px-12 py-20 min-h-full hidden md:block"
                     >
-                        <h3
-                            class="text-3xl sm:text-lg md:text-3xl tracking-tight text-gray-900 text-center pb-8"
-                        >
-                            <b class="font-black"> {{ userProfile.name }} </b>
-                        </h3>
-
                         <!-- botonera escritorio -->
                         <DesktopKeypad
                             :sections="sections"
                             @showSection="loadSection"
+                            class="mt-5"
                         />
                     </div>
                     <!-- /menu sidebar -->

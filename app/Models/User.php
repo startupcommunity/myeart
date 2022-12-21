@@ -143,6 +143,16 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve los colectivos creados por el usuario
+     *
+     * @return HasMany
+     */
+    public function collectives(): HasMany
+    {
+        return $this->hasMany(Collective::class);
+    }
+
+    /**
      * devuelve las publicaciones del usuario
      *
      * @return HasMany

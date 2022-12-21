@@ -12,7 +12,12 @@
         </div>
 
         <div :class="sections[0].personal ? 'mt-3' : 'mt-12'">
-            <v-btn elevation="0" color="#B2794C" class="rounded-md">
+            <v-btn
+                elevation="0"
+                color="#B2794C"
+                class="rounded-md"
+                :to="{ name: 'collectiveCreate' }"
+            >
                 <span class="text-white"> Crear colectivo </span>
             </v-btn>
         </div>

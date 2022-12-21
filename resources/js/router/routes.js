@@ -180,6 +180,20 @@ export const routes = [
         component: importPage("event/Create"),
         beforeEnter: ifAuthenticated,
     },
+
+    // ---------- colectivos --------------------
+    {
+        name: "collectiveList",
+        path: "/colectivos",
+        component: importPage("collective/List"),
+        beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "collectiveCreate",
+        path: "/colectivos/crear",
+        component: importPage("collective/Create"),
+        beforeEnter: ifAuthenticated,
+    },
 ];
 
 const config = new VueRouter({

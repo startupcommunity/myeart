@@ -63,20 +63,24 @@ var render = function render() {
       "background-image": _vm.user.front_photo ? _vm.frontPhoto : ""
     }
   }, [_c("div", {
-    staticClass: "container-fluid py-0 px-4 sm:px-0 absolute -bottom-8 sm:-bottom-12"
+    staticClass: "container py-0 px-4 sm:px-0 absolute -bottom-8 sm:-bottom-12"
   }, [_c("div", {}, [_c("div", {
-    staticClass: "flex flex-row items-center justify-center sm:justify-between"
+    staticClass: "flex flex-row items-center justify-center justify-md-between"
   }, [_c("div", {
-    staticClass: "w-1/3 block sm:hidden"
-  }), _vm._v(" "), _c("div", {
-    staticClass: "relative w-full sm:w-2/5 flex justify-center px-2 sm:px-0"
+    staticClass: "relative w-full md:w-1/2 flex justify-center px-2 sm:px-0"
+  }, [_c("div", {
+    staticClass: "flex flex-col items-center md:-mb-10 md:gap-2"
   }, [_c("img", {
-    staticClass: "rounded-full w-48 h-48 sm:w-56 sm:h-56",
+    staticClass: "rounded-full w-48 h-48 sm:w-56 sm:h-56 aspect-square",
     attrs: {
       src: _vm.user.profile_photo ? _vm.profilePhoto : "/img/avatar.png",
       alt: "profile-photo-myaert"
     }
-  }), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _c("h3", {
+    staticClass: "text-3xl sm:text-lg md:text-3xl tracking-tight text-gray-900 text-center hidden md:block"
+  }, [_c("b", {
+    staticClass: "font-black"
+  }, [_vm._v(" " + _vm._s(_vm.user.name) + " ")])])]), _vm._v(" "), _c("div", {
     staticClass: "absolute sm:bottom-16 bottom-6 sm:pl-52 pl-44"
   }, [_c("button", {
     staticClass: "border rounded-full bg-white hover:bg-gray-100 px-2 py-1 text-primary text-2xl",
@@ -88,10 +92,10 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-camera"
-  })])])]), _vm._v(" "), _c("div", {
-    staticClass: "w-1/3 sm:w-3/5 justify-end flex"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "absolute top-0 right-0 mt-14 block md:hidden"
   }, [_c("button", {
-    staticClass: "font-bold text-xs sm:text-lg lg:mr-28 text-white",
+    staticClass: "font-bold text-xs md:text-lg text-white",
     attrs: {
       type: "button"
     },
@@ -103,7 +107,30 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-camera"
-  }), _vm._v(" Editar portada\n                    ")])])])])]), _vm._v(" "), _c("div", {
+  }), _vm._v(" Portada\n                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "w-full md:w-1/2 justify-end gap-5 hidden md:flex"
+  }, [_c("button", {
+    staticClass: "font-bold text-xs md:text-lg text-white",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.$emit("openDialogFP");
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-camera"
+  }), _vm._v(" Editar portada\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary text-white px-3 py-2 rounded-lg uppercase",
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.$router.push("/colectivos/crear");
+      }
+    }
+  }, [_vm._v("\n                        Crear colectivo\n                    ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-zinc-900 bg-opacity-60"
   })]);
 };

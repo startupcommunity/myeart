@@ -31,6 +31,7 @@ module.exports = {
                 "last-info": "url('/images/ultima_informacion.png')",
                 "categories-pintura":
                     "url('/img/artwork/categories/pintura.webp')",
+                "woman-black": "url('/img/layout/bg-woman.webp')",
             },
             animation: {
                 "fade-in-both":

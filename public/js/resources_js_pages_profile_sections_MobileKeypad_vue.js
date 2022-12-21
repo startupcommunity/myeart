@@ -111,7 +111,10 @@ var render = function render() {
     staticClass: "rounded-md",
     attrs: {
       elevation: "0",
-      color: "#B2794C"
+      color: "#B2794C",
+      to: {
+        name: "collectiveCreate"
+      }
     }
   }, [_c("span", {
     staticClass: "text-white"

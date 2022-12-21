@@ -7,25 +7,31 @@
         }"
     >
         <div
-            class="container-fluid py-0 px-4 sm:px-0 absolute -bottom-8 sm:-bottom-12"
+            class="container py-0 px-4 sm:px-0 absolute -bottom-8 sm:-bottom-12"
         >
             <div class="">
                 <div
-                    class="flex flex-row items-center justify-center sm:justify-between"
+                    class="flex flex-row items-center justify-center justify-md-between"
                 >
-                    <div class="w-1/3 block sm:hidden"></div>
                     <div
-                        class="relative w-full sm:w-2/5 flex justify-center px-2 sm:px-0"
+                        class="relative w-full md:w-1/2 flex justify-center px-2 sm:px-0"
                     >
-                        <img
-                            :src="
-                                user.profile_photo
-                                    ? profilePhoto
-                                    : '/img/avatar.png'
-                            "
-                            alt="profile-photo-myaert"
-                            class="rounded-full w-48 h-48 sm:w-56 sm:h-56"
-                        />
+                        <div class="flex flex-col items-center md:-mb-10 md:gap-2">
+                            <img
+                                :src="
+                                    user.profile_photo
+                                        ? profilePhoto
+                                        : '/img/avatar.png'
+                                "
+                                alt="profile-photo-myaert"
+                                class="rounded-full w-48 h-48 sm:w-56 sm:h-56 aspect-square"
+                            />
+                            <h3
+                                class="text-3xl sm:text-lg md:text-3xl tracking-tight text-gray-900 text-center hidden md:block"
+                            >
+                                <b class="font-black"> {{ user.name }} </b>
+                            </h3>
+                        </div>
                         <div
                             class="absolute sm:bottom-16 bottom-6 sm:pl-52 pl-44"
                         >
@@ -36,14 +42,33 @@
                                 <i class="fas fa-camera"></i>
                             </button>
                         </div>
+                        <div
+                            class="absolute top-0 right-0 mt-14 block md:hidden"
+                        >
+                            <button
+                                class="font-bold text-xs md:text-lg text-white"
+                                type="button"
+                                @click.stop="$emit('openDialogFP')"
+                            >
+                                <i class="fas fa-camera"></i> Portada
+                            </button>
+                        </div>
                     </div>
-                    <div class="w-1/3 sm:w-3/5 justify-end flex">
+                    <div
+                        class="w-full md:w-1/2 justify-end gap-5 hidden md:flex"
+                    >
                         <button
-                            class="font-bold text-xs sm:text-lg lg:mr-28 text-white"
+                            class="font-bold text-xs md:text-lg text-white"
                             type="button"
                             @click.stop="$emit('openDialogFP')"
                         >
                             <i class="fas fa-camera"></i> Editar portada
+                        </button>
+                        <button
+                            class="btn btn-primary text-white px-3 py-2 rounded-lg uppercase"
+                            @click.stop="$router.push('/colectivos/crear')"
+                        >
+                            Crear colectivo
                         </button>
                     </div>
                 </div>

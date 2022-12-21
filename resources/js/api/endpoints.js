@@ -171,6 +171,12 @@ const endpoints = {
         // muestre el detalle de un evento / {id}
         show: `${API}/events/show/`, // get
     },
+
+    // colectivos
+    collectives: {
+        // guarda un nuevo colectivo
+        store: `${API}/collectives/store`, // post
+    },
 };
 
 export default endpoints;

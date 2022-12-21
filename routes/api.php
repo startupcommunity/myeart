@@ -3,11 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\PaisesController;
-use App\Http\Controllers\ArtisticActivitysController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\SubCategoryController;
-use App\Http\Controllers\SubSubCategoryController;
 use App\Http\Controllers\UserEventController;
 use App\Http\Controllers\UserReleaseController;
 
@@ -20,7 +15,6 @@ Route::post('/register', [RegisterController::class, 'register']);
  */
 Route::get('releases/get-comments-slug/{slug}', [UserReleaseController::class, 'getCommentsSlug'])
     ->name('getReleaseCommentsSlug');
-
 
 /**
  * Muestra el detalle de un evento
@@ -62,32 +56,9 @@ Route::middleware(['auth:api'])->group(function () {
     // eventos
     require __DIR__ . '/api/events.php';
 
-    // categorías
-    Route::group(['prefix' => 'categories'], function () {
-        Route::get('/', [CategoryController::class, 'getCategories'])->name('getCategories');
-    });
+    // colectivos
+    require __DIR__ . '/api/collectives.php';
 
-    // subcategorias
-    Route::group(['prefix' => 'subcategories'], function () {
-
-        /**
-         * @param id id de la categoría que pertenece
-         */
-        Route::get('/{id}', [SubCategoryController::class, 'getSubcategories'])->name('getSubcategories');
-    });
-
-    // etiquetas o sub sub categorías
-    Route::group(['prefix' => 'labels'], function () {
-
-        /**
-         * @param category_id id de la categoría que pertenece
-         * @param sub_category_id id de la categoría que pertenece
-         */
-        Route::get('/{category_id}/{sub_category_id}', [SubSubCategoryController::class, 'getLabels'])->name('getLabels');
-    });
-
-    // general
-    Route::post('/logout', [LoginController::class, 'logout']);
-    Route::get('/paises', [PaisesController::class, 'getAll']);
-    Route::get('/artistics', [ArtisticActivitysController::class, 'getAll']);
+    // globales
+    require __DIR__ . '/api/global.php';
 });
