@@ -1,11 +1,11 @@
 <template>
-    <div class="w-full h-screen bg-cover bg-no-repeat bg-woman-black bg-center flex items-center">
+    <div class="w-full md:min-h-screen bg-cover bg-center bg-no-repeat bg-woman-black-mobile md:bg-woman-black flex items-center">
         <!-- loading full page -->
         <loading-overlay :active="loading" :is-full-page="true" loader="bars" />
         <!-- /loading full page -->
 
         <!-- content -->
-        <div class="container">
+        <div class="md:container mx-auto w-full h-full">
             <slot></slot>
         </div>
         <!-- /content -->

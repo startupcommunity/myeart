@@ -9,4 +9,9 @@ Route::group(['prefix' => 'collectives'], function () {
    * Crea u nuevo colectivo para el usuario autenticado
    */
   Route::post('/store', [CollectiveController::class, 'store'])->name('collectiveStore');
+
+  /**
+   * devuelve un colectivo
+   */
+  Route::get('get-collective/{id}', [CollectiveController::class, 'getCollective'])->name('getCollective');
 });

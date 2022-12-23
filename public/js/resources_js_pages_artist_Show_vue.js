@@ -3922,6 +3922,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         BH: "https://www.behance.net/",
         LK: "https://www.linkedin.com/in/"
       };
+    },
+
+    /**
+     * Tipos de colectivos
+     *
+     * @returns array
+     */
+    collectiveTypes: function collectiveTypes() {
+      return [{
+        text: "Seleccione colectivo",
+        value: ""
+      }, {
+        text: "Galerías de Arte",
+        value: 1
+      }, {
+        text: "Administración Pública",
+        value: 2
+      }, {
+        text: "Asociación",
+        value: 3
+      }, {
+        text: "Federación",
+        value: 4
+      }, {
+        text: "Otras Organizaciones",
+        value: 5
+      }];
     }
   },
   methods: {

@@ -176,6 +176,9 @@ const endpoints = {
     collectives: {
         // guarda un nuevo colectivo
         store: `${API}/collectives/store`, // post
+
+        // devuelve un colectivo / {id}
+        getCollective: `${API}/collectives/get-collective/`, // get
     },
 };
 

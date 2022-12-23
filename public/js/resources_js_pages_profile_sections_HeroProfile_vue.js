@@ -130,7 +130,14 @@ var render = function render() {
         return _vm.$router.push("/colectivos/crear");
       }
     }
-  }, [_vm._v("\n                        Crear colectivo\n                    ")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        Crear colectivo\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary text-white px-3 py-2 rounded-lg uppercase",
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+      }
+    }
+  }, [_vm._v("\n                        Ver mis colectivos\n                    ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-zinc-900 bg-opacity-60"
   })]);
 };

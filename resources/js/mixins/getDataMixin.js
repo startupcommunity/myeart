@@ -56,6 +56,22 @@ export default {
                 LK: "https://www.linkedin.com/in/",
             };
         },
+
+        /**
+         * Tipos de colectivos
+         *
+         * @returns array
+         */
+        collectiveTypes() {
+            return [
+                { text: "Seleccione colectivo", value: "" },
+                { text: "Galerías de Arte", value: 1 },
+                { text: "Administración Pública", value: 2 },
+                { text: "Asociación", value: 3 },
+                { text: "Federación", value: 4 },
+                { text: "Otras Organizaciones", value: 5 },
+            ];
+        },
     },
     methods: {
         /**

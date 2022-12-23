@@ -16,7 +16,9 @@
                     <div
                         class="relative w-full md:w-1/2 flex justify-center px-2 sm:px-0"
                     >
-                        <div class="flex flex-col items-center md:-mb-10 md:gap-2">
+                        <div
+                            class="flex flex-col items-center md:-mb-10 md:gap-2"
+                        >
                             <img
                                 :src="
                                     user.profile_photo
@@ -69,6 +71,12 @@
                             @click.stop="$router.push('/colectivos/crear')"
                         >
                             Crear colectivo
+                        </button>
+                        <button
+                            class="btn btn-primary text-white px-3 py-2 rounded-lg uppercase"
+                            @click.stop=""
+                        >
+                            Ver mis colectivos
                         </button>
                     </div>
                 </div>

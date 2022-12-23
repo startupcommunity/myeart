@@ -32,6 +32,7 @@ module.exports = {
                 "categories-pintura":
                     "url('/img/artwork/categories/pintura.webp')",
                 "woman-black": "url('/img/layout/bg-woman.webp')",
+                "woman-black-mobile": "url('/img/layout/bg-woman-mobile.webp')",
             },
             animation: {
                 "fade-in-both":

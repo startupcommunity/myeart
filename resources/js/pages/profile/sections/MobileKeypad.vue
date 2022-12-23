@@ -11,7 +11,7 @@
             </v-btn>
         </div>
 
-        <div :class="sections[0].personal ? 'mt-3' : 'mt-12'">
+        <div :class="sections[0].personal ? 'mt-3' : 'mt-12'" class="flex flex-col justify-center gap-3">
             <v-btn
                 elevation="0"
                 color="#B2794C"
@@ -19,6 +19,13 @@
                 :to="{ name: 'collectiveCreate' }"
             >
                 <span class="text-white"> Crear colectivo </span>
+            </v-btn>
+            <v-btn
+                elevation="0"
+                color="#B2794C"
+                class="rounded-md"
+            >
+                <span class="text-white"> Ver mis colectivos </span>
             </v-btn>
         </div>
         <!-- botonera -->

@@ -6852,7 +6852,14 @@ var render = function render() {
         return _vm.$router.push("/colectivos/crear");
       }
     }
-  }, [_vm._v("\n                        Crear colectivo\n                    ")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        Crear colectivo\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary text-white px-3 py-2 rounded-lg uppercase",
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+      }
+    }
+  }, [_vm._v("\n                        Ver mis colectivos\n                    ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-zinc-900 bg-opacity-60"
   })]);
 };
@@ -6897,6 +6904,7 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa-solid fa-pen"
   }), _vm._v(" Editar perfil\n        ")])], 1) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-col justify-center gap-3",
     "class": _vm.sections[0].personal ? "mt-3" : "mt-12"
   }, [_c("v-btn", {
     staticClass: "rounded-md",
@@ -6909,7 +6917,15 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "text-white"
-  }, [_vm._v(" Crear colectivo ")])])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v(" Crear colectivo ")])]), _vm._v(" "), _c("v-btn", {
+    staticClass: "rounded-md",
+    attrs: {
+      elevation: "0",
+      color: "#B2794C"
+    }
+  }, [_c("span", {
+    staticClass: "text-white"
+  }, [_vm._v(" Ver mis colectivos ")])])], 1), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap justify-center items-start mt-6 text-primary text-xs gap-3"
   }, [_c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
@@ -8404,6 +8420,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         BH: "https://www.behance.net/",
         LK: "https://www.linkedin.com/in/"
       };
+    },
+
+    /**
+     * Tipos de colectivos
+     *
+     * @returns array
+     */
+    collectiveTypes: function collectiveTypes() {
+      return [{
+        text: "Seleccione colectivo",
+        value: ""
+      }, {
+        text: "Galerías de Arte",
+        value: 1
+      }, {
+        text: "Administración Pública",
+        value: 2
+      }, {
+        text: "Asociación",
+        value: 3
+      }, {
+        text: "Federación",
+        value: 4
+      }, {
+        text: "Otras Organizaciones",
+        value: 5
+      }];
     }
   },
   methods: {

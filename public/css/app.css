@@ -12555,6 +12555,9 @@ video {
 .ml-0{
   margin-left: 0px;
 }
+.-mb-10{
+  margin-bottom: -2.5rem;
+}
 .block{
   display: block;
 }
@@ -12653,9 +12656,6 @@ video {
 }
 .h-11{
   height: 2.75rem;
-}
-.h-screen{
-  height: 100vh;
 }
 .max-h-96{
   max-height: 24rem;
@@ -12877,6 +12877,12 @@ video {
 .justify-items-center{
   justify-items: center;
 }
+.gap-1{
+  gap: 0.25rem;
+}
+.gap-3{
+  gap: 0.75rem;
+}
 .gap-5{
   gap: 1.25rem;
 }
@@ -12885,9 +12891,6 @@ video {
 }
 .gap-2{
   gap: 0.5rem;
-}
-.gap-3{
-  gap: 0.75rem;
 }
 .gap-4{
   gap: 1rem;
@@ -12941,9 +12944,6 @@ video {
 .overflow-y-auto{
   overflow-y: auto;
 }
-.overflow-y-hidden{
-  overflow-y: hidden;
-}
 .rounded-lg{
   border-radius: 0.5rem;
 }
@@ -12967,6 +12967,10 @@ video {
 }
 .rounded-none{
   border-radius: 0px;
+}
+.rounded-t-\[2rem\]{
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
 }
 .rounded-t-3xl{
   border-top-left-radius: 1.5rem;
@@ -13105,6 +13109,9 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(178 121 76 / var(--tw-bg-opacity));
 }
+.bg-white\/25{
+  background-color: rgb(255 255 255 / 0.25);
+}
 .bg-zinc-900\/60{
   background-color: rgb(24 24 27 / 0.6);
 }
@@ -13112,13 +13119,8 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
-.bg-\[\#0d0d0d\]{
-  --tw-bg-opacity: 1;
-  background-color: rgb(13 13 13 / var(--tw-bg-opacity));
-}
-.bg-black{
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+.bg-white\/20{
+  background-color: rgb(255 255 255 / 0.2);
 }
 .bg-opacity-50{
   --tw-bg-opacity: 0.5;
@@ -13149,6 +13151,25 @@ video {
 }
 .bg-hero-profile-bg{
   background-image: url('/img/profile/hero-profile.webp');
+}
+.bg-woman-black-mobile{
+  background-image: url('/img/layout/bg-woman-mobile.webp');
+}
+.bg-gradient-to-b{
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+}
+.bg-gradient-to-t{
+  background-image: linear-gradient(to top, var(--tw-gradient-stops));
+}
+.from-white\/20{
+  --tw-gradient-from: rgb(255 255 255 / 0.2);
+  --tw-gradient-to: rgb(255 255 255 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-\[\#272727\]\/20{
+  --tw-gradient-from: rgb(39 39 39 / 0.2);
+  --tw-gradient-to: rgb(39 39 39 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 .bg-cover{
   background-size: cover;
@@ -13190,9 +13211,6 @@ video {
 }
 .p-3{
   padding: 0.75rem;
-}
-.p-5{
-  padding: 1.25rem;
 }
 .py-4{
   padding-top: 1rem;
@@ -13258,13 +13276,17 @@ video {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
 }
-.px-5{
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+.px-8{
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 .py-8{
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+.px-5{
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 .px-0{
   padding-left: 0px;
@@ -13286,10 +13308,6 @@ video {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
 }
-.px-8{
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
 .px-1{
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -13301,14 +13319,6 @@ video {
 .px-9{
   padding-left: 2.25rem;
   padding-right: 2.25rem;
-}
-.px-16{
-  padding-left: 4rem;
-  padding-right: 4rem;
-}
-.px-24{
-  padding-left: 6rem;
-  padding-right: 6rem;
 }
 .pt-8{
   padding-top: 2rem;
@@ -13599,6 +13609,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(22 163 74 / var(--tw-text-opacity));
 }
+.text-\[\#f0f0f0\]{
+  --tw-text-opacity: 1;
+  color: rgb(240 240 240 / var(--tw-text-opacity));
+}
 .text-zinc-500{
   --tw-text-opacity: 1;
   color: rgb(113 113 122 / var(--tw-text-opacity));
@@ -13638,10 +13652,6 @@ video {
 .text-gray-100{
   --tw-text-opacity: 1;
   color: rgb(243 244 246 / var(--tw-text-opacity));
-}
-.text-\[\#f0f0f0\]{
-  --tw-text-opacity: 1;
-  color: rgb(240 240 240 / var(--tw-text-opacity));
 }
 .underline{
   text-decoration-line: underline;
@@ -14069,6 +14079,34 @@ body {
   }
 }
 @media (min-width: 768px){
+  .md\:container{
+    width: 100%;
+  }
+  @media (min-width: 640px){
+    .md\:container{
+      max-width: 640px;
+    }
+  }
+  @media (min-width: 768px){
+    .md\:container{
+      max-width: 768px;
+    }
+  }
+  @media (min-width: 1024px){
+    .md\:container{
+      max-width: 1024px;
+    }
+  }
+  @media (min-width: 1280px){
+    .md\:container{
+      max-width: 1280px;
+    }
+  }
+  @media (min-width: 1536px){
+    .md\:container{
+      max-width: 1536px;
+    }
+  }
   .md\:my-6{
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
@@ -14106,6 +14144,9 @@ body {
   }
   .md\:mt-0{
     margin-top: 0px;
+  }
+  .md\:-mb-0{
+    margin-bottom: -0px;
   }
   .md\:block{
     display: block;
@@ -14197,6 +14238,9 @@ body {
   .md\:w-52{
     width: 13rem;
   }
+  .md\:w-\[600px\]{
+    width: 600px;
+  }
   .md\:w-1\/4{
     width: 25%;
   }
@@ -14242,9 +14286,6 @@ body {
   .md\:w-60{
     width: 15rem;
   }
-  .md\:w-\[600px\]{
-    width: 600px;
-  }
   .md\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -14275,6 +14316,9 @@ body {
   .md\:justify-items-start{
     justify-items: start;
   }
+  .md\:gap-6{
+    gap: 1.5rem;
+  }
   .md\:gap-2{
     gap: 0.5rem;
   }
@@ -14285,6 +14329,9 @@ body {
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+  .md\:rounded{
+    border-radius: 0.25rem;
   }
   .md\:rounded-xl{
     border-radius: 0.75rem;
@@ -14311,11 +14358,29 @@ body {
     --tw-border-opacity: 1;
     border-color: rgb(17 24 39 / var(--tw-border-opacity));
   }
+  .md\:bg-\[\#0d0d0d\]{
+    --tw-bg-opacity: 1;
+    background-color: rgb(13 13 13 / var(--tw-bg-opacity));
+  }
   .md\:bg-opacity-60{
     --tw-bg-opacity: 0.6;
   }
   .md\:bg-newsletter{
     background-image: url('/img/home/newsletter.png');
+  }
+  .md\:bg-woman-black{
+    background-image: url('/img/layout/bg-woman.webp');
+  }
+  .md\:from-current{
+    --tw-gradient-from: currentColor;
+    --tw-gradient-to: rgb(255 255 255 / 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+  .md\:bg-cover{
+    background-size: cover;
+  }
+  .md\:bg-center{
+    background-position: center;
   }
   .md\:px-4{
     padding-left: 1rem;
@@ -14360,14 +14425,6 @@ body {
   .md\:px-5{
     padding-left: 1.25rem;
     padding-right: 1.25rem;
-  }
-  .md\:px-16{
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
-  .md\:px-24{
-    padding-left: 6rem;
-    padding-right: 6rem;
   }
   .md\:pb-0{
     padding-bottom: 0px;

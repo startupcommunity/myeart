@@ -31,4 +31,4 @@ if (process.env.MIX_IN_PRODUCTION) {
 }
 
 // reload browser
-mix.browserSync(process.env.MIX_APP_URL);
+// mix.browserSync(process.env.MIX_APP_URL);

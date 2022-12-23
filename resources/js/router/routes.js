@@ -194,6 +194,18 @@ export const routes = [
         component: importPage("collective/Create"),
         beforeEnter: ifAuthenticated,
     },
+    {
+        name: "collectiveShow",
+        path: "/colectivos/show/:id",
+        component: importPage("collective/Show"),
+        beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "collectiveProfile",
+        path: "/colectivos/perfil/:id",
+        component: importPage("collective/Profile"),
+        beforeEnter: ifAuthenticated,
+    },
 ];
 
 const config = new VueRouter({
