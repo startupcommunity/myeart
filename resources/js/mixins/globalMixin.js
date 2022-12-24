@@ -148,6 +148,34 @@ export default {
         },
 
         /**
+         * Path para las fotos de perfil del colectivo
+         */
+        $pathProfileCollective() {
+            const path = document.head.querySelector(
+                'meta[name="profile-photo-collective"]'
+            );
+            if (path) {
+                return path.content;
+            }
+
+            return "/";
+        },
+
+        /**
+         * Path para las fotos de portada del colectivo
+         */
+        $pathFrontCollective() {
+            const path = document.head.querySelector(
+                'meta[name="front-photo-collective"]'
+            );
+            if (path) {
+                return path.content;
+            }
+
+            return "/";
+        },
+
+        /**
          * Path para la galeria de obras del usuario
          * @returns string
          */
@@ -239,6 +267,22 @@ export default {
          * @returns string
          */
         $getDefaultImageEvent: () => "/img/artwork/default.webp",
+
+        /**
+         * Devuelve la imagen por defecto de perfil del usuario colectivo
+         *
+         * @returns string
+         */
+        $defaultProfilePhotoCollective: () =>
+            "/img/collective/default-profile.webp",
+
+        /**
+         * Devuelve la imagen por defecto de portada del usuario colectivo
+         *
+         * @returns string
+         */
+        $defaultFrontPhotoCollective: () =>
+            "/img/collective/default-front.webp",
 
         /**
          * Endpoints para consumir la API rest

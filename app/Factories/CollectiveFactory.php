@@ -39,4 +39,41 @@ class CollectiveFactory
 
     return $tran;
   }
+
+  /**
+   * Actualiza un colectivo
+   * @param Request $request
+   * @param int $id
+   * @return bool
+   */
+  public function update(Request $request, int $id): ?bool
+  {
+    $tran = DB::transaction(function () use ($request, $id) {
+      $user = auth()->user();
+
+      $data = $request->only([
+        'name',
+        'type',
+        'location',
+        'description',
+      ]);
+
+      // convertir categorias en array valido para createMany
+      $request->categories = array_map(function ($item) {
+        return ['category_id' => $item];
+      }, $request->categories);
+
+      $collective = $user->collectives()->find($id);
+
+      if ($collective) {
+        $collective->update($data);
+        $collective->categories()->delete();
+        $collective->categories()->createMany($request->categories);
+      }
+
+      return true;
+    });
+
+    return $tran;
+  }
 }

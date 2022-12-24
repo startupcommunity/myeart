@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Collective extends Model
@@ -35,5 +36,13 @@ class Collective extends Model
     public function categories(): HasMany
     {
         return $this->hasMany(CollectiveCategory::class);
+    }
+
+    /**
+     * Perfil del colectivo
+     */
+    public function profile(): HasOne
+    {
+        return $this->hasOne(CollectiveProfile::class);
     }
 }

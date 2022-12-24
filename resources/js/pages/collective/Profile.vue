@@ -6,41 +6,119 @@
         </div>
         <!-- /header -->
 
-        <h1>
-            {{ collective.name }}
-        </h1>
+        <section class="bg-white">
+            <div class="container py-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- menu -->
+                    <div class="md:col-span-1">
+                        <div class="flex flex-col items-center">
+                            <div class="relative">
+                                <CollectiveAvatar
+                                    :img="profile?.profile_image"
+                                    img-class="w-60 h-60"
+                                />
+                                <div class="absolute top-5 left-5">
+                                    <v-btn
+                                        elevation="1"
+                                        icon
+                                        outlined
+                                        color="#B2794C"
+                                        class="bg-white"
+                                    >
+                                        <v-icon>mdi-camera</v-icon>
+                                    </v-btn>
+                                </div>
+                            </div>
+                            <h2 class="font-bold text-lg md:text-4xl">
+                                {{ collective.name }}
+                            </h2>
+
+                            <!-- links -->
+                            <div class="flex flex-col items-start gap-5 my-5">
+                                <v-btn
+                                    class="uppercase hover:no-underline text-lg"
+                                    text
+                                    @click.stop="activeSection('profile')"
+                                    :class="{
+                                        'font-bold': sections.profile,
+                                        'font-normal': !sections.profile,
+                                    }"
+                                >
+                                    Mi información
+                                </v-btn>
+                                <v-btn
+                                    class="uppercase hover:no-underline text-lg"
+                                    text
+                                    @click.stop="activeSection('release')"
+                                    :class="{
+                                        'font-bold': sections.release,
+                                        'font-normal': !sections.release,
+                                    }"
+                                >
+                                    Publicaciones
+                                </v-btn>
+                                <v-btn
+                                    class="uppercase hover:no-underline text-lg"
+                                    text
+                                    @click.stop="activeSection('member')"
+                                    :class="{
+                                        'font-bold': sections.member,
+                                        'font-normal': !sections.member,
+                                    }"
+                                >
+                                    Integrantes
+                                </v-btn>
+                                <v-btn
+                                    class="uppercase hover:no-underline text-lg"
+                                    text
+                                    @click.stop="activeSection('artwork')"
+                                    :class="{
+                                        'font-bold': sections.artwork,
+                                        'font-normal': !sections.artwork,
+                                    }"
+                                >
+                                    Obras
+                                </v-btn>
+                            </div>
+                            <!-- /links -->
+                        </div>
+                    </div>
+                    <!-- /menu -->
+
+                    <!-- content -->
+                    <div class="md:col-span-2">
+                        <Info
+                            :collective="collective"
+                            :profile="profile"
+                            v-if="sections.profile"
+                        />
+                    </div>
+                    <!-- content -->
+                </div>
+            </div>
+        </section>
     </MainLayout>
 </template>
 
 <script>
 import MainLayout from "../layouts/MainLayout.vue";
 import Header from "../landing/sections/Header.vue";
+import CollectiveAvatar from "./components/CollectiveAvatar.vue";
+import profileMixin from "./modules/profile-mixin";
+import Info from "./sections/Info.vue";
 
 export default {
     name: "Profile",
-    components: { MainLayout, Header },
-    data() {
-        return {
-            collective: {},
-        };
+    mixins: [profileMixin],
+    components: {
+        MainLayout,
+        Header,
+        CollectiveAvatar,
+        Info,
     },
 
-    created() {
-        this.getCollective();
-    },
-
-    methods: {
-        getCollective() {
-            const ep = this.ep.collectives.getCollective;
-            this.globalLoading = true;
-            this.axios
-                .get(`${ep + this.$route.params.id}`)
-                .then((response) => {
-                    this.collective = response.data;
-                })
-                .catch((error) => this.manageError(error))
-                .finally(() => (this.globalLoading = false));
-        },
+    mounted() {
+        this.sections.profile = true;
     },
 };
 </script>

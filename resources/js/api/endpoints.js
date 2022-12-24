@@ -177,6 +177,9 @@ const endpoints = {
         // guarda un nuevo colectivo
         store: `${API}/collectives/store`, // post
 
+        // actualizar datos planos de un colectivo / {id}
+        update: `${API}/collectives/update/`, // put
+
         // devuelve un colectivo / {id}
         getCollective: `${API}/collectives/get-collective/`, // get
     },

@@ -8,6 +8,7 @@ export default {
         following_artworks: [],
         following_releases: [],
         following_events: [],
+        collective: {},
         profile: {
             profile: {},
             social_network: {},
@@ -21,6 +22,7 @@ export default {
         getFollowArtworks: (state) => state.following_artworks,
         getFollowReleases: (state) => state.following_releases,
         getFollowEvents: (state) => state.following_events,
+        getCollective: (state) => state.collective,
         getProfile: (state) => state.profile,
         isProfileLoaded: (state) => !!state.profile.name,
     },
@@ -87,6 +89,18 @@ export default {
                 .then((resp) => commit("setFollowEvents", resp.data))
                 .catch((err) => console.log(err));
         },
+
+        /**
+         * Obtener los datos de un colectivo
+         * @param {Commit} param
+         */
+        getUserCollective: ({ commit }, id) => {
+            commit("userRequest");
+            Vue.axios
+                .get(endpoints.collectives.getCollective + id)
+                .then((resp) => commit("setCollective", resp.data))
+                .catch((err) => console.log(err));
+        },
     },
     mutations: {
         userRequest: (state) => {
@@ -113,6 +127,10 @@ export default {
         },
         setFollowEvents: async (state, resp) => {
             await Vue.set(state, "following_events", resp);
+            state.status = "success";
+        },
+        setCollective: async (state, resp) => {
+            await Vue.set(state, "collective", resp);
             state.status = "success";
         },
     },

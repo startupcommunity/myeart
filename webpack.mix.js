@@ -25,6 +25,8 @@ mix.copy("resources/img/favicon", "public/img/favicon");
 // layouts
 mix.copy("resources/img/layout", "public/img/layout");
 
+// colectivos
+mix.copy("resources/img/collective", "public/img/collective");
 
 if (process.env.MIX_IN_PRODUCTION) {
     mix.version();

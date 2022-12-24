@@ -23,6 +23,20 @@ class CreateCollectiveRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->id;
+
+        // actualización
+        if ($id) {
+            return [
+                'name' => 'required|string|max:100|unique:collectives,name,' . $id,
+                'type' => 'required|integer',
+                'location' => 'required|string|max:100',
+                'categories' => 'required|array|min:1',
+                'description' => 'required|string|max:200',
+            ];
+        }
+
+        // creación
         return [
             'name' => 'required|string|max:100|unique:collectives,name',
             'type' => 'required|integer',

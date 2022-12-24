@@ -18,6 +18,8 @@
     <meta name="artwork-gallery" content="{{ config('storage.artwork_gallery') }}" />
     <meta name="release-image" content="{{ config('storage.release_image') }}" />
     <meta name="event-image" content="{{ config('storage.event_image') }}" />
+    <meta name="profile-photo-collective" content="{{ config('storage.collective_profile_photo') }}" />
+    <meta name="front-photo-collective" content="{{ config('storage.collective_front_photo') }}" />
 
     <!-- CDNs de Font-Awesome -->
     <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />

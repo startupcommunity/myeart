@@ -47,4 +47,21 @@ class CollectiveController extends Controller
             return $this->resp->json($e->getMessage(), 500);
         }
     }
+
+    /**
+     * Actualiza un colectivo
+     *
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(CreateCollectiveRequest $request, int $id): JsonResponse
+    {
+        try {
+            $resp = $this->factory->update($request, $id);
+            return $this->resp->json($resp, $resp ? 200 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
 }

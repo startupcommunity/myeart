@@ -18,6 +18,6 @@ class CollectiveDB
    */
   public function getCollective(int $id): Collective
   {
-    return $this->model->with('categories')->findOrFail($id);
+    return $this->model->with(['categories.category', 'profile'])->findOrFail($id);
   }
 }

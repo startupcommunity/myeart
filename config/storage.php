@@ -24,6 +24,12 @@ return [
   // path publico para la imagen del evento
   'event_image' => env('APP_URL') . 'storage/img/event/images/',
 
+  // path privado para las fotos de portada del colectivo
+  'collective_front_photo' => env('APP_URL') . 'storage/img/collective/front/',
+
+  // path privado para las fotos de perfil del colectivo
+  'collective_profile_photo' => env('APP_URL') . 'storage/img/collective/profile/',
+
   // archivos ubicados en el storage/public
   'public' => [
 
@@ -41,5 +47,11 @@ return [
 
     // imagen del evento
     'event_image' => 'public/img/event/images/',
+
+    // foto de portada del colectivo
+    'collective_front_photo' => 'public/img/collective/front/',
+
+    // foto de perfil del colectivo
+    'collective_profile_photo' => 'public/img/collective/profile/',
   ]
 ];
