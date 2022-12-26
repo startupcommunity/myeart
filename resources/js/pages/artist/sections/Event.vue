@@ -15,33 +15,39 @@
                     css="w-full animate-swing-in-top-fwd"
                 />
                 <div class="md:py-10">
-                    <div class="flex flex-wrap animate-swing-in-top-fwd">
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch"
+                    >
                         <CardEvent
-                            :event="{}"
-                            :artist="artist"
-                            class="w-full md:w-1/2 md:pr-4 mb-5"
-                            key="1"
-                        />
-                        <CardEvent
-                            :event="{}"
-                            :artist="artist"
-                            class="w-full md:w-1/2 mb-5"
-                            key="2"
+                            v-for="evt in events"
+                            :key="evt.id"
+                            :event="evt"
+                            class="w-full animate-fade-in-down md:mb-10"
+                            @interested="openReservationInfo"
                         />
                     </div>
                 </div>
             </div>
         </div>
+
+        <InfoReservationModal
+            :event="event"
+            :show="showReservation"
+            @close-info="showReservation = false"
+        />
     </section>
 </template>
 
 <script>
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
-import CardEvent from "../components/CardEvent.vue";
+import CardEvent from "../../event/components/CardEvent.vue";
+import InfoReservationModal from "../../event/components/InfoReservationModal.vue";
+
+const MAX_INIT_EVENTS = 4;
 
 export default {
     name: "EventSection",
-    components: { CardEvent, LoadingTailwind },
+    components: { CardEvent, LoadingTailwind, InfoReservationModal },
     props: {
         artist: {
             type: Object,
@@ -58,17 +64,41 @@ export default {
                 "define si el componente debe cargarse/cuando debe cargarse de data",
         },
     },
+
+    created() {
+        this.getEvents();
+    },
+
     data() {
         return {
             loading: false,
+            showReservation: false,
             post: [],
+            event: {},
+            events: [],
         };
     },
+
     methods: {
         /**
          * Obtiene los post del usuario
          */
-        getEvents() {},
+        getEvents() {
+            this.loading = true;
+
+            this.axios
+                .get(this.ep.events.getUserEvents + this.artist.id)
+                .then((resp) => {
+                    this.events = resp.data.slice(0, MAX_INIT_EVENTS);
+                })
+                .catch((error) => this.manageError(error))
+                .finally(() => (this.loading = false));
+        },
+
+        openReservationInfo(event) {
+            this.event = event;
+            this.showReservation = true;
+        },
     },
 };
 </script>

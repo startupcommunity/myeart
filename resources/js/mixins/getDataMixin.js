@@ -39,6 +39,7 @@ export default {
                 artist: 1,
                 artwork: 2,
                 news: 3,
+                events: 4,
             };
         },
 

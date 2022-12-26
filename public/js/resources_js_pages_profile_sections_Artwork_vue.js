@@ -606,7 +606,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return {
         artist: 1,
         artwork: 2,
-        news: 3
+        news: 3,
+        events: 4
       };
     },
 

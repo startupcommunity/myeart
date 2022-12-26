@@ -131,6 +131,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": true,
       description: "muestra a las personas etiquetadas"
+    },
+    showBtnComment: {
+      type: Boolean,
+      "default": true,
+      description: "muestra el botón para comentar ubicado en la info"
     }
   },
   computed: {
@@ -345,6 +350,10 @@ __webpack_require__.r(__webpack_exports__);
     release: {
       type: Object,
       "default": function _default() {}
+    },
+    showBtnComment: {
+      type: Boolean,
+      "default": true
     }
   },
   filters: {
@@ -744,7 +753,8 @@ var render = function render() {
   }) : _vm._e(), _vm._v(" "), _vm.showCompleteInfo ? _c("InfoCompleteRelease", {
     staticClass: "py-1",
     attrs: {
-      release: _vm.release
+      release: _vm.release,
+      showBtnComment: _vm.showBtnComment
     },
     on: {
       "open-comment-modal": _vm.openModalComment
@@ -974,13 +984,13 @@ var render = function render() {
     staticClass: "text-sm font-medium tracking-wide text-gray-600"
   }, [_vm._v("\n            " + _vm._s(_vm._f("formatTextDate")(_vm.release.created_at)) + "\n        ")])]), _vm._v(" "), _c("div", {
     staticClass: "flex gap-2 items-start justify-end"
-  }, [_c("CommentButton", {
+  }, [_vm.showBtnComment ? _c("CommentButton", {
     on: {
       "open-modal-comment": function openModalComment($event) {
         return _vm.$emit("open-comment-modal", _vm.release);
       }
     }
-  }), _vm._v(" "), _c("LikeButton", {
+  }) : _vm._e(), _vm._v(" "), _c("LikeButton", {
     attrs: {
       release: _vm.release
     }

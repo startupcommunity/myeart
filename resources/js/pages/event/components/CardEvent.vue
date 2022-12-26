@@ -13,6 +13,9 @@
             <h3 class="text-lg text-zinc-500 font-normal">
                 {{ newDateTime }}
             </h3>
+            <p v-if="expired">
+                <span class="text-red-600"> (Evento expirado) </span>
+            </p>
             <p
                 class="leading-relaxed text-xl text-zinc-900 font-bold uppercase"
             >
@@ -25,7 +28,7 @@
                 </router-link>
             </p>
             <div class="flex justify-between mt-1">
-                <div>
+                <div v-if="!expired">
                     <v-btn
                         color="#B2794C"
                         class="uppercase tracking-widest text-white rounded-lg"
@@ -38,8 +41,8 @@
                 </div>
                 <div class="flex gap-5 items-start justify-end text-2xl">
                     <ButtonFavEvent :event="event" />
-                    <ButtonLikeEvent :event="event" />
-                    <ButtonShareEvent :event="event" />
+                    <ButtonLikeEvent :event="event" v-if="!expired" />
+                    <ButtonShareEvent :event="event" v-if="!expired" />
                 </div>
             </div>
         </div>
@@ -108,6 +111,18 @@ export default {
             const monthCap = month.charAt(0).toUpperCase() + month.slice(1);
 
             return `${dayCap}, ${dayNumber} ${monthCap} a las ${hour}`;
+        },
+
+        /**
+         * Determina si el evento ha expirado
+         * según la fecha y hora de inicio
+         * y muestra un mensaje al usuario
+         */
+        expired() {
+            const datetime = this.event.init_date + " " + this.event.init_time;
+            const date = new Date(datetime);
+            const now = new Date();
+            return date < now;
         },
     },
 };

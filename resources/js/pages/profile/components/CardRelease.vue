@@ -29,6 +29,7 @@
                 v-if="showCompleteInfo"
                 class="py-1"
                 :release="release"
+                :showBtnComment="showBtnComment"
                 @open-comment-modal="openModalComment"
             />
 
@@ -100,6 +101,11 @@ export default {
             type: Boolean,
             default: true,
             description: "muestra a las personas etiquetadas",
+        },
+        showBtnComment: {
+            type: Boolean,
+            default: true,
+            description: "muestra el botón para comentar ubicado en la info",
         },
     },
     computed: {

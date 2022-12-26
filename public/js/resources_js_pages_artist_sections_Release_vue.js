@@ -95,7 +95,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_components_CardRelease_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../profile/components/CardRelease.vue */ "./resources/js/pages/profile/components/CardRelease.vue");
 
 
-var LIMIT = 2;
+var INIT_RELEASES = 2;
 var LOAD_MORE = 2;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Release",
@@ -122,75 +122,44 @@ var LOAD_MORE = 2;
     return {
       loading: false,
       releases: [],
-      originalReleases: [],
-      reminders: []
+      original: []
     };
   },
   mounted: function mounted() {
     this.loadReleases();
+  },
+  computed: {
+    /**
+     * Verifica si hay mas publicaciones que cargar
+     */
+    hasMore: function hasMore() {
+      return this.releases.length < this.original.length;
+    }
   },
   methods: {
     /**
      * carga las publicaciones de un artista
      */
     loadReleases: function loadReleases() {
-      // mockup de prueba para releases
-      var mockup = [{
-        id: 1,
-        title: "Exposición de esculturas",
-        text: "Mi nueva exposición de esculturas",
-        date: "2021-05-25",
-        time: "10:00",
-        place: "Madrid, España",
-        image: "https://picsum.photos/200/300",
-        hashtag: "#arte #escultura",
-        museum: "Roma"
-      }, {
-        id: 2,
-        title: "Exposición de esculturas",
-        text: "Otra forma de hacer esculturas",
-        date: "2021-05-25",
-        time: "10:00",
-        place: "Madrid, España",
-        image: "https://picsum.photos/600/400",
-        hashtag: "#arte #pintura",
-        museum: "Madrid"
-      }, {
-        id: 3,
-        title: "Exposición de esculturas",
-        text: "Amar es compartir",
-        date: "2021-05-25",
-        time: "10:00",
-        place: "Madrid, España",
-        image: "https://picsum.photos/100/100",
-        hashtag: "#dibujo #oleo",
-        museum: "París"
-      }, {
-        id: 4,
-        title: "Exposición de esculturas",
-        text: "El arte de la escultura",
-        date: "2021-05-25",
-        time: "10:00",
-        place: "Madrid, España",
-        image: "https://picsum.photos/200/200",
-        hashtag: "#dibujo #literatura",
-        museum: "Londres"
-      }]; // original releases
+      var _this = this;
 
-      this.originalReleases = JSON.parse(JSON.stringify(mockup)); // mostrar las releases
-
-      this.releases = this.originalReleases.slice(0, LIMIT); // reminders
-
-      this.reminders = JSON.parse(JSON.stringify(this.originalReleases.slice(LIMIT)));
+      this.loading = true;
+      this.axios.get(this.ep.releases.getAllUserForID + this.artist.id).then(function (resp) {
+        _this.original = JSON.parse(JSON.stringify(resp.data));
+        _this.releases = resp.data.slice(0, INIT_RELEASES);
+      })["catch"](function (error) {
+        return _this.manageError(error);
+      })["finally"](function () {
+        return _this.loading = false;
+      });
     },
 
     /**
      * carga mas publicaciones
      */
     loadMore: function loadMore() {
-      var limit = this.releases.length + LOAD_MORE;
-      this.releases = this.originalReleases.slice(0, limit);
-      this.reminders = JSON.parse(JSON.stringify(this.originalReleases.slice(limit)));
+      var total = this.releases.length + LOAD_MORE;
+      this.releases = this.original.slice(0, total);
     }
   }
 });
@@ -268,6 +237,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": true,
       description: "muestra a las personas etiquetadas"
+    },
+    showBtnComment: {
+      type: Boolean,
+      "default": true,
+      description: "muestra el botón para comentar ubicado en la info"
     }
   },
   computed: {
@@ -482,6 +456,10 @@ __webpack_require__.r(__webpack_exports__);
     release: {
       type: Object,
       "default": function _default() {}
+    },
+    showBtnComment: {
+      type: Boolean,
+      "default": true
     }
   },
   filters: {
@@ -919,16 +897,22 @@ var render = function render() {
         artist: _vm.artist,
         showArtist: true,
         showActions: false,
-        showShortInfo: true,
-        showComments: false
+        showShortInfo: false,
+        showCompleteInfo: true,
+        showComments: false,
+        showBtnComment: false
       }
     });
-  }), 1)]), _vm._v(" "), _vm.releases.length ? _c("div", {
+  }), 1)]), _vm._v(" "), _vm.hasMore ? _c("div", {
     staticClass: "py-10 flex justify-center"
   }, [_c("button", {
     staticClass: "bg-app-brown-1 px-6 py-4 uppercase text-gray-50 hover:animate-shadow-and-color-app rounded",
+    attrs: {
+      disabled: _vm.loading
+    },
     on: {
       click: function click($event) {
+        $event.stopPropagation();
         return _vm.loadMore();
       }
     }
@@ -985,7 +969,8 @@ var render = function render() {
   }) : _vm._e(), _vm._v(" "), _vm.showCompleteInfo ? _c("InfoCompleteRelease", {
     staticClass: "py-1",
     attrs: {
-      release: _vm.release
+      release: _vm.release,
+      showBtnComment: _vm.showBtnComment
     },
     on: {
       "open-comment-modal": _vm.openModalComment
@@ -1215,13 +1200,13 @@ var render = function render() {
     staticClass: "text-sm font-medium tracking-wide text-gray-600"
   }, [_vm._v("\n            " + _vm._s(_vm._f("formatTextDate")(_vm.release.created_at)) + "\n        ")])]), _vm._v(" "), _c("div", {
     staticClass: "flex gap-2 items-start justify-end"
-  }, [_c("CommentButton", {
+  }, [_vm.showBtnComment ? _c("CommentButton", {
     on: {
       "open-modal-comment": function openModalComment($event) {
         return _vm.$emit("open-comment-modal", _vm.release);
       }
     }
-  }), _vm._v(" "), _c("LikeButton", {
+  }) : _vm._e(), _vm._v(" "), _c("LikeButton", {
     attrs: {
       release: _vm.release
     }

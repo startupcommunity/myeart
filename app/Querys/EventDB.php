@@ -4,6 +4,7 @@ namespace App\Querys;
 
 use App\Models\UserEvent;
 use App\Querys\Traits\UserEventTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,16 @@ class EventDB
   use UserEventTrait;
 
   /**
+   * Devuelve el init builder
+   *
+   * @return Builder
+   */
+  public function initWithRelations(): Builder
+  {
+    return UserEvent::with(['user', 'likes']);
+  }
+
+  /**
    * @param int|string $id
    * @return UserEvent
    */
@@ -20,11 +31,11 @@ class EventDB
   {
     // verificar si el id es un numero o un slug
     if (is_numeric($id)) {
-      return UserEvent::with(['user', 'likes'])->find($id);
+      return $this->initWithRelations()->find($id);
     }
 
     // si es un slug
-    return UserEvent::with(['user', 'likes'])->where('slug', $id)->first();
+    return $this->initWithRelations()->where('slug', $id)->first();
   }
 
   /**
@@ -35,7 +46,10 @@ class EventDB
   public function all(Request $request = null): Collection
   {
     // eventos
-    $events = UserEvent::with(['user', 'likes']);
+    $events = $this->initWithRelations();
+
+    // filtrar a partir de la fecha actual
+    $events->current();
 
     // filtrar por
     if ($request->has('action')) {
@@ -74,5 +88,20 @@ class EventDB
     }
 
     return $events->get();
+  }
+
+  /**
+   * Devuelve todos los eventos de un usuario
+   *
+   * @param int $id
+   * @return Collection
+   */
+  public function getUserEvents(int $id): Collection
+  {
+    return $this->initWithRelations()
+      ->where('user_id', $id)
+      ->current()
+      ->orderByDesc('created_at')
+      ->get();
   }
 }

@@ -10,13 +10,22 @@
         <AboutMe :profile="profile" />
 
         <!-- my artworks -->
-        <ArtistArtworks :user="artist" :ignoreArtworkID="0" title="Obras del artista" />
+        <ArtistArtworks
+            :user="artist"
+            :ignoreArtworkID="0"
+            fluid="container"
+            title="Obras del artista"
+        />
 
         <!-- blog -->
         <!-- <Blog :artist="artist" title="Mis blog" /> -->
 
         <!-- events -->
-        <EventSection :artist="artist" title="Eventos del artista" />
+        <EventSection
+            :artist="artist"
+            title="Eventos del artista"
+            v-if="artist?.id"
+        />
 
         <!-- publications -->
         <Release :artist="artist" title="Publicaciones del artista" />

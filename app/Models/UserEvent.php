@@ -63,4 +63,39 @@ class UserEvent extends Model
     {
         return $this->hasMany(EventLike::class, 'event_id');
     }
+
+    /**
+     * Verifica si un evento aun esta vigente
+     * por su fecha y hora de inicio
+     *
+     * @return bool
+     */
+    public function isCurrent(): bool
+    {
+        return $this->init_date >= now()->toDateString();
+    }
+
+    // ------------- scopes ---------------
+
+    /**
+     * Devuelve los eventos aun vigentes
+     *
+     * @param  Builder $query
+     * @return Builder
+     */
+    public function scopeCurrent($query)
+    {
+        return $query->where('init_date', '>=', now()->toDateString());
+    }
+
+    /**
+     * Devuelve los eventos que ya caducaron
+     *
+     * @param  Builder $query
+     * @return Builder
+     */
+    public function scopeExpired($query)
+    {
+        return $query->where('init_date', '<', now()->toDateString());
+    }
 }

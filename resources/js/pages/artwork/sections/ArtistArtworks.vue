@@ -1,7 +1,10 @@
 <template>
     <section class="bg-white" v-show="loadComponent">
-        <div class="container-fluid py-7 py-md-16">
-            <div class="w-full md:w-4/5 mx-auto">
+        <div class="py-7 py-md-16" :class="fluid">
+            <div
+                class="w-full mx-auto"
+                :class="fluid == 'container-fluid' ? 'md:w-4/5' : ''"
+            >
                 <div class="mx-auto border-b pb-1 pb-md-2 border-zinc-800">
                     <h2
                         class="text-primary text-lg md:text-2xl tracking-widest uppercase text-left font-bold"
@@ -57,6 +60,11 @@ export default {
             default: true,
             description:
                 "define si el componente debe cargarse/cuando debe cargarse de data",
+        },
+        fluid: {
+            type: String,
+            default: "container-fluid",
+            description: "define si el componente debe ser fluido o no",
         },
     },
     watch: {

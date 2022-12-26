@@ -18,5 +18,15 @@ Route::group(['prefix' => 'collectives'], function () {
   /**
    * devuelve un colectivo
    */
-  Route::get('get-collective/{id}', [CollectiveController::class, 'getCollective'])->name('getCollective');
+  Route::get('/get-collective/{id}', [CollectiveController::class, 'getCollective'])->name('getCollective');
+
+  /**
+   * actualiza la foto de perfil de un colectivo
+   */
+  Route::put('/update-profile-photo/{id}', [CollectiveController::class, 'updateProfilePhoto'])->name('updateProfilePhotoCollective');
+
+  /**
+   * actualiza la foto de portada de un colectivo
+   */
+  Route::put('/update-front-photo/{id}', [CollectiveController::class, 'updateFrontPhoto'])->name('updateFrontPhotoCollective');
 });

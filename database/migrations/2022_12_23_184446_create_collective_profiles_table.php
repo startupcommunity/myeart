@@ -16,8 +16,8 @@ class CreateCollectiveProfilesTable extends Migration
         Schema::create('collective_profiles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('collective_id');
-            $table->string('front_image', 255);
-            $table->string('profile_image', 255);
+            $table->string('front_image', 255)->nullable();
+            $table->string('profile_image', 255)->nullable();
             $table->timestamps();
         });
     }

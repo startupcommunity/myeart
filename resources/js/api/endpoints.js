@@ -102,6 +102,9 @@ const endpoints = {
         // obtiene todas las publicaciones del usuario
         getAllUser: `${API}/releases/get-user-releases`, // get
 
+        // obtiene todas las publicaciones de un artista especifico - {id}
+        getAllUserForID: `${API}/releases/get-user-releases/`, // get
+
         // get publicaciones de artistas seguidos
         followArtists: `${API}/releases/get-follow-artists-releases`, // get
 
@@ -156,6 +159,9 @@ const endpoints = {
         // devuelve todos los eventos
         getAll: `${API}/events/get-all`, // get
 
+        // devuelve todos los eventos de un usuario / {id}
+        getUserEvents: `${API}/events/get-user-events/`, // get
+
         // agregar a favoritos el evento
         addFav: `${API}/events/add-favorite`, // post
 
@@ -182,6 +188,12 @@ const endpoints = {
 
         // devuelve un colectivo / {id}
         getCollective: `${API}/collectives/get-collective/`, // get
+
+        // actualiza la foto de perfil de un colectivo / {id}
+        updateProfilePhoto: `${API}/collectives/update-profile-photo/`, // put
+
+        // actualiza la foto de portada de un colectivo / {id}
+        updateFrontPhoto: `${API}/collectives/update-front-photo/`, // put
     },
 };
 

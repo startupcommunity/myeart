@@ -16,6 +16,11 @@ Route::group(['prefix' => 'events'], function () {
   Route::get('/get-all', [UserEventController::class, 'all'])->name('getAllEvents');
 
   /**
+   * Obtiene los eventos de un usuario
+   */
+  Route::get('/get-user-events/{id}', [UserEventController::class, 'getUserEvents'])->name('getUserEvents');
+
+  /**
    * agrega a favoritos
    */
   Route::post('/add-favorite', [UserEventController::class, 'addFavorite'])->name('addEventFavorite');

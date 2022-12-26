@@ -799,6 +799,18 @@ __webpack_require__.r(__webpack_exports__);
       var dayCap = day.charAt(0).toUpperCase() + day.slice(1);
       var monthCap = month.charAt(0).toUpperCase() + month.slice(1);
       return "".concat(dayCap, ", ").concat(dayNumber, " ").concat(monthCap, " a las ").concat(hour);
+    },
+
+    /**
+     * Determina si el evento ha expirado
+     * según la fecha y hora de inicio
+     * y muestra un mensaje al usuario
+     */
+    expired: function expired() {
+      var datetime = this.event.init_date + " " + this.event.init_time;
+      var date = new Date(datetime);
+      var now = new Date();
+      return date < now;
     }
   }
 });
@@ -1166,6 +1178,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": true,
       description: "muestra a las personas etiquetadas"
+    },
+    showBtnComment: {
+      type: Boolean,
+      "default": true,
+      description: "muestra el botón para comentar ubicado en la info"
     }
   },
   computed: {
@@ -1380,6 +1397,10 @@ __webpack_require__.r(__webpack_exports__);
     release: {
       type: Object,
       "default": function _default() {}
+    },
+    showBtnComment: {
+      type: Boolean,
+      "default": true
     }
   },
   filters: {
@@ -2637,7 +2658,9 @@ var render = function render() {
     staticClass: "flex flex-col"
   }, [_c("h3", {
     staticClass: "text-lg text-zinc-500 font-normal"
-  }, [_vm._v("\n            " + _vm._s(_vm.newDateTime) + "\n        ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n            " + _vm._s(_vm.newDateTime) + "\n        ")]), _vm._v(" "), _vm.expired ? _c("p", [_c("span", {
+    staticClass: "text-red-600"
+  }, [_vm._v(" (Evento expirado) ")])]) : _vm._e(), _vm._v(" "), _c("p", {
     staticClass: "leading-relaxed text-xl text-zinc-900 font-bold uppercase"
   }, [_vm._v("\n            " + _vm._s(_vm.event.name) + "\n        ")]), _vm._v(" "), _c("p", {
     staticClass: "text-sm text-zinc-500 font-light -mt-4"
@@ -2650,7 +2673,7 @@ var render = function render() {
     staticClass: "text-primary"
   }, [_vm._v(_vm._s((_vm$creator = _vm.creator) === null || _vm$creator === void 0 ? void 0 : _vm$creator.name))])])], 1), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between mt-1"
-  }, [_c("div", [_c("v-btn", {
+  }, [!_vm.expired ? _c("div", [_c("v-btn", {
     staticClass: "uppercase tracking-widest text-white rounded-lg",
     attrs: {
       color: "#B2794C",
@@ -2663,21 +2686,21 @@ var render = function render() {
         return _vm.$emit("interested", _vm.event);
       }
     }
-  }, [_vm._v("\n                    Me interesa\n                ")])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    Me interesa\n                ")])], 1) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "flex gap-5 items-start justify-end text-2xl"
   }, [_c("ButtonFavEvent", {
     attrs: {
       event: _vm.event
     }
-  }), _vm._v(" "), _c("ButtonLikeEvent", {
+  }), _vm._v(" "), !_vm.expired ? _c("ButtonLikeEvent", {
     attrs: {
       event: _vm.event
     }
-  }), _vm._v(" "), _c("ButtonShareEvent", {
+  }) : _vm._e(), _vm._v(" "), !_vm.expired ? _c("ButtonShareEvent", {
     attrs: {
       event: _vm.event
     }
-  })], 1)])])]);
+  }) : _vm._e()], 1)])])]);
 };
 
 var staticRenderFns = [];
@@ -3416,7 +3439,8 @@ var render = function render() {
   }) : _vm._e(), _vm._v(" "), _vm.showCompleteInfo ? _c("InfoCompleteRelease", {
     staticClass: "py-1",
     attrs: {
-      release: _vm.release
+      release: _vm.release,
+      showBtnComment: _vm.showBtnComment
     },
     on: {
       "open-comment-modal": _vm.openModalComment
@@ -3646,13 +3670,13 @@ var render = function render() {
     staticClass: "text-sm font-medium tracking-wide text-gray-600"
   }, [_vm._v("\n            " + _vm._s(_vm._f("formatTextDate")(_vm.release.created_at)) + "\n        ")])]), _vm._v(" "), _c("div", {
     staticClass: "flex gap-2 items-start justify-end"
-  }, [_c("CommentButton", {
+  }, [_vm.showBtnComment ? _c("CommentButton", {
     on: {
       "open-modal-comment": function openModalComment($event) {
         return _vm.$emit("open-comment-modal", _vm.release);
       }
     }
-  }), _vm._v(" "), _c("LikeButton", {
+  }) : _vm._e(), _vm._v(" "), _c("LikeButton", {
     attrs: {
       release: _vm.release
     }

@@ -75,7 +75,7 @@
                                 {{ getMode }}
                             </p>
                             <p
-                                class="text-sm text-zinc-600 font-light text-justify"
+                                class="text-sm text-zinc-600 font-light"
                             >
                                 {{ getDescription }}
                             </p>

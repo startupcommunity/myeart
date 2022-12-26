@@ -15,7 +15,7 @@
                             <div class="relative">
                                 <CollectiveAvatar
                                     :img="profile?.profile_image"
-                                    img-class="w-60 h-60"
+                                    img-class="w-60 h-60 border"
                                 />
                                 <div class="absolute top-5 left-5">
                                     <v-btn
@@ -24,12 +24,13 @@
                                         outlined
                                         color="#B2794C"
                                         class="bg-white"
+                                        @click.stop="openImageModal"
                                     >
                                         <v-icon>mdi-camera</v-icon>
                                     </v-btn>
                                 </div>
                             </div>
-                            <h2 class="font-bold text-lg md:text-4xl">
+                            <h2 class="font-bold text-lg md:text-4xl mt-5">
                                 {{ collective.name }}
                             </h2>
 
@@ -82,6 +83,12 @@
                             </div>
                             <!-- /links -->
                         </div>
+
+                        <ProfilePhotoCollectiveModal
+                            :show-modal="imageModal"
+                            :id-collective="collective.id"
+                            @close-modal="imageModal = false"
+                        />
                     </div>
                     <!-- /menu -->
 
@@ -104,6 +111,7 @@
 import MainLayout from "../layouts/MainLayout.vue";
 import Header from "../landing/sections/Header.vue";
 import CollectiveAvatar from "./components/CollectiveAvatar.vue";
+import ProfilePhotoCollectiveModal from "./components/ProfilePhotoCollectiveModal.vue";
 import profileMixin from "./modules/profile-mixin";
 import Info from "./sections/Info.vue";
 
@@ -115,6 +123,7 @@ export default {
         Header,
         CollectiveAvatar,
         Info,
+        ProfilePhotoCollectiveModal,
     },
 
     mounted() {

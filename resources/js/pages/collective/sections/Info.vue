@@ -1,6 +1,9 @@
 <template>
     <section class="animate-fade-in-down">
-        <FrontImage :bg="profile?.front_image" />
+        <FrontImage
+            :bg="profile?.front_image"
+            :id-collective="collective?.id"
+        />
         <div
             class="flex flex-col md:flex-row justify-end pt-5 gap-3 border-b border-gray-200 pb-4"
         >

@@ -12,7 +12,32 @@ export default {
                 member: false,
                 artwork: false,
             },
+
+            // control para abrir/cerra el modal de imagen de perfil
+            imageModal: false,
         };
+    },
+
+    computed: {
+        profile() {
+            return this.collective?.profile;
+        },
+
+        collective() {
+            return this.$store.getters.getCollective || {};
+        },
+    },
+
+    watch: {
+        sections: {
+            handler(val) {
+                if (val.profile) {
+                    const id = this.$route.params.id;
+                    this.$store.dispatch("getUserCollective", id);
+                }
+            },
+            deep: true,
+        },
     },
 
     methods: {
@@ -39,27 +64,9 @@ export default {
             };
             this.sections[section] = true;
         },
-    },
 
-    computed: {
-        profile() {
-            return this.collective?.profile;
-        },
-
-        collective() {
-            return this.$store.getters.getCollective || {};
-        },
-    },
-
-    watch: {
-        sections: {
-            handler(val) {
-                if (val.profile) {
-                    const id = this.$route.params.id;
-                    this.$store.dispatch("getUserCollective", id);
-                }
-            },
-            deep: true,
+        openImageModal() {
+            this.imageModal = true;
         },
     },
 };

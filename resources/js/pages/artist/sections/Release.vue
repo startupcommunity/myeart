@@ -23,17 +23,20 @@
                             :artist="artist"
                             :showArtist="true"
                             :showActions="false"
-                            :showShortInfo="true"
+                            :showShortInfo="false"
+                            :showCompleteInfo="true"
                             :showComments="false"
+                            :showBtnComment="false"
                             class="w-full md:w-1/2 md:pr-4 mb-4 animate-swing-in-top-fwd"
                         />
                     </div>
                 </div>
 
-                <div class="py-10 flex justify-center" v-if="releases.length">
+                <div class="py-10 flex justify-center" v-if="hasMore">
                     <button
                         class="bg-app-brown-1 px-6 py-4 uppercase text-gray-50 hover:animate-shadow-and-color-app rounded"
-                        @click="loadMore()"
+                        @click.stop="loadMore()"
+                        :disabled="loading"
                     >
                         Mostrar más
                     </button>
@@ -47,7 +50,7 @@
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 import CardRelease from "../../profile/components/CardRelease.vue";
 
-const LIMIT = 2;
+const INIT_RELEASES = 2;
 const LOAD_MORE = 2;
 
 export default {
@@ -73,87 +76,43 @@ export default {
         return {
             loading: false,
             releases: [],
-            originalReleases: [],
-            reminders: [],
+            original: [],
         };
     },
     mounted() {
         this.loadReleases();
+    },
+
+    computed: {
+        /**
+         * Verifica si hay mas publicaciones que cargar
+         */
+        hasMore() {
+            return this.releases.length < this.original.length;
+        },
     },
     methods: {
         /**
          * carga las publicaciones de un artista
          */
         loadReleases() {
-            // mockup de prueba para releases
-            const mockup = [
-                {
-                    id: 1,
-                    title: "Exposición de esculturas",
-                    text: "Mi nueva exposición de esculturas",
-                    date: "2021-05-25",
-                    time: "10:00",
-                    place: "Madrid, España",
-                    image: "https://picsum.photos/200/300",
-                    hashtag: "#arte #escultura",
-                    museum: "Roma",
-                },
-                {
-                    id: 2,
-                    title: "Exposición de esculturas",
-                    text: "Otra forma de hacer esculturas",
-                    date: "2021-05-25",
-                    time: "10:00",
-                    place: "Madrid, España",
-                    image: "https://picsum.photos/600/400",
-                    hashtag: "#arte #pintura",
-                    museum: "Madrid",
-                },
-                {
-                    id: 3,
-                    title: "Exposición de esculturas",
-                    text: "Amar es compartir",
-                    date: "2021-05-25",
-                    time: "10:00",
-                    place: "Madrid, España",
-                    image: "https://picsum.photos/100/100",
-                    hashtag: "#dibujo #oleo",
-                    museum: "París",
-                },
-                {
-                    id: 4,
-                    title: "Exposición de esculturas",
-                    text: "El arte de la escultura",
-                    date: "2021-05-25",
-                    time: "10:00",
-                    place: "Madrid, España",
-                    image: "https://picsum.photos/200/200",
-                    hashtag: "#dibujo #literatura",
-                    museum: "Londres",
-                },
-            ];
-
-            // original releases
-            this.originalReleases = JSON.parse(JSON.stringify(mockup));
-
-            // mostrar las releases
-            this.releases = this.originalReleases.slice(0, LIMIT);
-
-            // reminders
-            this.reminders = JSON.parse(
-                JSON.stringify(this.originalReleases.slice(LIMIT))
-            );
+            this.loading = true;
+            this.axios
+                .get(this.ep.releases.getAllUserForID + this.artist.id)
+                .then((resp) => {
+                    this.original = JSON.parse(JSON.stringify(resp.data));
+                    this.releases = resp.data.slice(0, INIT_RELEASES);
+                })
+                .catch((error) => this.manageError(error))
+                .finally(() => (this.loading = false));
         },
 
         /**
          * carga mas publicaciones
          */
         loadMore() {
-            const limit = this.releases.length + LOAD_MORE;
-            this.releases = this.originalReleases.slice(0, limit);
-            this.reminders = JSON.parse(
-                JSON.stringify(this.originalReleases.slice(limit))
-            );
+            const total = this.releases.length + LOAD_MORE;
+            this.releases = this.original.slice(0, total);
         },
     },
 };

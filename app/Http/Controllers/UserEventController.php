@@ -37,6 +37,22 @@ class UserEventController extends Controller
     }
 
     /**
+     * obtiene todos los eventos de un usuario
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getUserEvents(int $id): JsonResponse
+    {
+        try {
+            $events = $this->db->getUserEvents($id);
+            return $this->resp->json($events, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
      * Crea un nuevo evento
      *
      * @param  Request  $request
@@ -126,6 +142,9 @@ class UserEventController extends Controller
     {
         try {
             $event = $this->db->find($id);
+            if (!$event || !$event->isCurrent()) {
+                return $this->resp->json('Evento no encontrado', 404);
+            }
             return $this->resp->json($event, 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);

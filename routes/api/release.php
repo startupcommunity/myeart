@@ -8,7 +8,7 @@ Route::group(['prefix' => 'releases'], function () {
   /**
    * Devuelve todas las publicaciones del usuario logueado
    */
-  Route::get('/get-user-releases', [UserReleaseController::class, 'getUserRelease'])->name('getUserRelease');
+  Route::get('/get-user-releases/{id?}', [UserReleaseController::class, 'getUserRelease'])->name('getUserRelease');
 
   /**
    * Devuelve todas las publicaciones de los usuarios seguidos

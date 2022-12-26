@@ -44,7 +44,7 @@
                     </v-btn>
                 </div>
                 <div
-                    class="w-full lg:w-auto lg:px-4 border-b border-b-gray-300 lg:border-b-0"
+                    class="lg:border-r-2 lg:border-gray-800 lg:px-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
@@ -55,6 +55,20 @@
                         @click.stop="changeType(TYPEFAV.news)"
                     >
                         Noticias
+                    </v-btn>
+                </div>
+                <div
+                    class="w-full lg:w-auto lg:px-4 border-b border-b-gray-300 lg:border-b-0"
+                >
+                    <v-btn
+                        text
+                        depressed
+                        block
+                        class="uppercase tracking-wide"
+                        :class="states.events ? 'font-bold' : 'font-light'"
+                        @click.stop="changeType(TYPEFAV.events)"
+                    >
+                        Eventos
                     </v-btn>
                 </div>
             </div>
@@ -131,6 +145,31 @@
                 </div>
             </div>
             <!-- /publicaciones -->
+
+            <!-- eventos -->
+            <div class="py-6 w-full" v-if="states.events">
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch"
+                >
+                    <LoadingTailwind
+                        v-if="loading"
+                        css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
+                    />
+                    <CardEvent
+                        v-for="evt in events"
+                        :key="evt.id"
+                        :event="evt"
+                        class="w-full animate-fade-in-down md:mb-10"
+                        @interested="openReservationInfo"
+                    />
+                    <InfoReservationModal
+                        :event="event"
+                        :show="showReservation"
+                        @close-info="showReservation = false"
+                    />
+                </div>
+            </div>
+            <!-- /eventos -->
         </div>
     </div>
 </template>
@@ -144,13 +183,23 @@ import getDataMixin from "./../../../mixins/getDataMixin";
 import CardArtwork from "../../artwork/sections/CardArtwork.vue";
 import CardRelease from "../components/CardRelease.vue";
 import ReleaseCommentsDialog from "../../release/components/ReleaseCommentsDialog.vue";
+import CardEvent from "../../event/components/CardEvent.vue";
+import InfoReservationModal from "../../event/components/InfoReservationModal.vue";
 
 // cantidad de obras en aumento
 let counterArtists = 4;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind, CardArtist, CardArtwork, CardRelease, ReleaseCommentsDialog },
+    components: {
+    LoadingTailwind,
+    CardArtist,
+    CardArtwork,
+    CardRelease,
+    ReleaseCommentsDialog,
+    CardEvent,
+    InfoReservationModal
+},
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -161,11 +210,14 @@ export default {
         return {
             loading: false,
             showCommentDialog: false,
+            showReservation: false,
             release: {},
+            event: {},
             states: {
                 artist: false,
                 artwork: false,
                 news: false,
+                events: false,
             },
         };
     },
@@ -178,6 +230,9 @@ export default {
         },
         news() {
             return this.$store.getters.getFollowReleases || [];
+        },
+        events() {
+            return this.$store.getters.getFollowEvents || [];
         },
         artists() {
             const data = this.$store.getters.getFollowArtists || [];
@@ -197,6 +252,7 @@ export default {
             this.states.artist = state === this.TYPEFAV.artist;
             this.states.artwork = state === this.TYPEFAV.artwork;
             this.states.news = state === this.TYPEFAV.news;
+            this.states.events = state === this.TYPEFAV.events;
         },
 
         /**
@@ -208,6 +264,16 @@ export default {
             this.release = release;
             this.showCommentDialog = true;
         },
+
+        /**
+         * Activa el modal de info reservation
+         *
+         * @param {Object} event
+         */
+        openReservationInfo(event) {
+            this.event = event;
+            this.showReservation = true;
+        },
     },
     watch: {
         showSection(val) {
@@ -215,6 +281,7 @@ export default {
                 this.$store.dispatch("userFollowArtists");
                 this.$store.dispatch("userFollowArtworks");
                 this.$store.dispatch("userFavoriteReleases");
+                this.$store.dispatch("userFavoriteEvents");
             }
         },
     },

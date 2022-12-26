@@ -8,6 +8,7 @@
         <div class="flex gap-2 items-start justify-end">
             <CommentButton
                 @open-modal-comment="$emit('open-comment-modal', release)"
+                v-if="showBtnComment"
             />
             <LikeButton :release="release" />
             <FavButton :release="release" />
@@ -29,6 +30,10 @@ export default {
         release: {
             type: Object,
             default: () => {},
+        },
+        showBtnComment: {
+            type: Boolean,
+            default: true,
         },
     },
     filters: {

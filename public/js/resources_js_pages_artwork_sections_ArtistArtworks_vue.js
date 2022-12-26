@@ -338,6 +338,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       type: Boolean,
       "default": true,
       description: "define si el componente debe cargarse/cuando debe cargarse de data"
+    },
+    fluid: {
+      type: String,
+      "default": "container-fluid",
+      description: "define si el componente debe ser fluido o no"
     }
   },
   watch: {
@@ -780,9 +785,11 @@ var render = function render() {
     }],
     staticClass: "bg-white"
   }, [_c("div", {
-    staticClass: "container-fluid py-7 py-md-16"
+    staticClass: "py-7 py-md-16",
+    "class": _vm.fluid
   }, [_c("div", {
-    staticClass: "w-full md:w-4/5 mx-auto"
+    staticClass: "w-full mx-auto",
+    "class": _vm.fluid == "container-fluid" ? "md:w-4/5" : ""
   }, [_c("div", {
     staticClass: "mx-auto border-b pb-1 pb-md-2 border-zinc-800"
   }, [_c("h2", {
@@ -981,7 +988,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return {
         artist: 1,
         artwork: 2,
-        news: 3
+        news: 3,
+        events: 4
       };
     },
 
