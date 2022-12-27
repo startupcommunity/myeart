@@ -196,9 +196,14 @@ export const routes = [
     },
     {
         name: "collectiveShow",
-        path: "/colectivos/show/:id",
+        path: "/colectivos/ver/:id",
         component: importPage("collective/Show"),
         beforeEnter: ifAuthenticated,
+    },
+    {
+        name: "collectiveSlug",
+        path: "/colectivos/publico/:slug",
+        component: importPage("collective/Show"),
     },
     {
         name: "collectiveProfile",

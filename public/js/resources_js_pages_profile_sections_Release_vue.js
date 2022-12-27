@@ -3882,10 +3882,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       navigator.clipboard.writeText(text).then(function () {
         console.log("Async: Copying to clipboard was successful!");
+        this.noty("Copiado al portapapeles");
       }, function (err) {
         console.error("Async: Could not copy text: ", err);
       });
-      this.noty("Copiado al portapapeles");
     },
 
     /**

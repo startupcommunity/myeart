@@ -11,7 +11,10 @@
             </v-btn>
         </div>
 
-        <div :class="sections[0].personal ? 'mt-3' : 'mt-12'" class="flex flex-col justify-center gap-3">
+        <div
+            :class="sections[0].personal ? 'mt-3' : 'mt-12'"
+            class="flex flex-col justify-center gap-3"
+        >
             <v-btn
                 elevation="0"
                 color="#B2794C"
@@ -24,6 +27,7 @@
                 elevation="0"
                 color="#B2794C"
                 class="rounded-md"
+                @click.stop="$emit('openCollectivesModal')"
             >
                 <span class="text-white"> Ver mis colectivos </span>
             </v-btn>

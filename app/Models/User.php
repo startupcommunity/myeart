@@ -153,6 +153,17 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve los colectivos seguidos o que ha
+     * sido invitado por el usuario
+     *
+     * @return HasMany
+     */
+    public function guestCollectives(): HasMany
+    {
+        return $this->hasMany(GuestCollective::class);
+    }
+
+    /**
      * devuelve las publicaciones del usuario
      *
      * @return HasMany

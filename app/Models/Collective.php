@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Collective extends Model
 {
@@ -21,6 +22,20 @@ class Collective extends Model
         'location',
         'description',
     ];
+
+    /**
+     * crear slug
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($col) {
+            $col->slug = Str::slug($col->name);
+        });
+    }
 
     /**
      * Usuario perteneciente
@@ -44,5 +59,13 @@ class Collective extends Model
     public function profile(): HasOne
     {
         return $this->hasOne(CollectiveProfile::class);
+    }
+
+    /**
+     * Devuelve los colectivos a los cuales el usuario pertenece
+     */
+    public function guests(): HasMany
+    {
+        return $this->hasMany(GuestCollective::class);
     }
 }

@@ -8,7 +8,7 @@
 
         <!-- pre y header -->
         <PreHeader />
-        <Header />
+        <Header v-if="showHeader" />
         <!-- /pre y header -->
 
         <!-- sección hero -->
@@ -16,6 +16,7 @@
             :user="userProfile"
             @openDialogPP="dialogProfilePhoto = true"
             @openDialogFP="dialogFrontPhoto = true"
+            @openCollectivesModal="openCollective"
         />
         <!-- /sección hero -->
 
@@ -23,6 +24,7 @@
         <MobileKeypad
             @loadSection="loadSection"
             @editDataProfile="editDataProfile = !editDataProfile"
+            @openCollectivesModal="openCollective"
         />
         <!-- /tabs responsiva mobile -->
 
@@ -109,6 +111,12 @@
             :showModal="dialogProfilePhoto"
             @close-modal-edit-profile-photo="dialogProfilePhoto = false"
         />
+
+        <!-- modal mis colectivos -->
+        <MyCollectivesModal
+            :show="dialogCollectives"
+            @close-modal="closeCollectiveModal"
+        />
     </div>
 </template>
 <script>
@@ -133,6 +141,7 @@ import Favourite from "./sections/Favourite.vue";
 import DesktopKeypad from "./sections/DesktopKeypad.vue";
 import Release from "./sections/Release.vue";
 import HeroProfile from "./sections/HeroProfile.vue";
+import MyCollectivesModal from "./components/MyCollectivesModal.vue";
 
 // secciones como tabs
 const SECTIONS = {
@@ -164,12 +173,15 @@ export default {
         DesktopKeypad,
         Release,
         HeroProfile,
+        MyCollectivesModal,
     },
     data() {
         return {
             editDataProfile: false,
             dialogFrontPhoto: false,
             dialogProfilePhoto: false,
+            dialogCollectives: false,
+            showHeader: true,
 
             // secciones
             sections: {
@@ -237,6 +249,26 @@ export default {
             this.sections.pub = id == SECTIONS.pub;
             this.sections.fav = id == SECTIONS.fav;
             this.sections.direction = id == SECTIONS.direcciones;
+        },
+
+        /**
+         * Abrir El modal de colectivos
+         */
+        openCollective() {
+            this.dialogCollectives = true;
+
+            // ocultar el header
+            this.showHeader = false;
+        },
+
+        /**
+         * Cerrar el modal de colectivos
+         */
+        closeCollectiveModal() {
+            this.dialogCollectives = false;
+
+            // mostrar el header
+            this.showHeader = true;
         },
     },
     computed: {

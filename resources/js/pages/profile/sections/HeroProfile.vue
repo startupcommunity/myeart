@@ -11,7 +11,7 @@
         >
             <div class="">
                 <div
-                    class="flex flex-row items-center justify-center justify-md-between"
+                    class="flex flex-row items-center justify-center justify-md-evenly"
                 >
                     <div
                         class="relative w-full md:w-1/2 flex justify-center px-2 sm:px-0"
@@ -20,11 +20,7 @@
                             class="flex flex-col items-center md:-mb-10 md:gap-2"
                         >
                             <img
-                                :src="
-                                    user.profile_photo
-                                        ? profilePhoto
-                                        : '/img/avatar.png'
-                                "
+                                :src="getProfilePhoto"
                                 alt="profile-photo-myaert"
                                 class="rounded-full w-48 h-48 sm:w-56 sm:h-56 aspect-square"
                             />
@@ -45,7 +41,7 @@
                             </button>
                         </div>
                         <div
-                            class="absolute top-0 right-0 mt-14 block md:hidden"
+                            class="absolute top-0 right-0 mt-14 block lg:hidden"
                         >
                             <button
                                 class="font-bold text-xs md:text-lg text-white"
@@ -57,27 +53,30 @@
                         </div>
                     </div>
                     <div
-                        class="w-full md:w-1/2 justify-end gap-5 hidden md:flex"
+                        class="w-full md:w-1/2 justify-end gap-5 hidden lg:flex"
                     >
                         <button
-                            class="font-bold text-xs md:text-lg text-white"
+                            class="text-xs md:text-lg text-white"
                             type="button"
                             @click.stop="$emit('openDialogFP')"
                         >
                             <i class="fas fa-camera"></i> Editar portada
                         </button>
-                        <button
-                            class="btn btn-primary text-white px-3 py-2 rounded-lg uppercase"
-                            @click.stop="$router.push('/colectivos/crear')"
-                        >
-                            Crear colectivo
-                        </button>
-                        <button
-                            class="btn btn-primary text-white px-3 py-2 rounded-lg uppercase"
-                            @click.stop=""
+                        <v-btn
+                            class="text-xs md:text-xs xl:text-base"
+                            @click.stop="$emit('openCollectivesModal')"
+                            outlined
+                            color="grey lighten-5"
                         >
                             Ver mis colectivos
-                        </button>
+                        </v-btn>
+                        <v-btn
+                            class="text-xs md:text-xs xl:text-base text-white"
+                            @click.stop="$router.push('/colectivos/crear')"
+                            color="#B2794C"
+                        >
+                            Crear colectivo
+                        </v-btn>
                     </div>
                 </div>
             </div>
@@ -88,8 +87,11 @@
     </div>
 </template>
 <script>
+import MyCollectivesModal from "../components/MyCollectivesModal.vue";
+
 export default {
     name: "HeroProfile",
+    components: { MyCollectivesModal },
     props: {
         user: {
             type: Object,
@@ -102,12 +104,19 @@ export default {
         frontPhoto() {
             return `url('${this.pathFrontPhoto + this.user?.front_photo}')`;
         },
-
         /**
-         * Foto de perfil del usuario
+         * path de la Foto de perfil del usuario
          */
         profilePhoto() {
             return `${this.pathProfilePhoto + this.user?.profile_photo}`;
+        },
+        /**
+         * validar y mostrar foto de perfil del usuario
+         */
+        getProfilePhoto() {
+            return this.user?.profile_photo
+                ? this.profilePhoto
+                : "/img/avatar.png";
         },
     },
 };

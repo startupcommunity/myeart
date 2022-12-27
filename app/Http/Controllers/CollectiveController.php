@@ -106,4 +106,22 @@ class CollectiveController extends Controller
             return $this->resp->json($e->getMessage(), 500);
         }
     }
+
+    /**
+     * devuelve todos los colectivos del usuario autenticado
+     * o indicado por el parámetro
+     * incluye los colectivos creados e invitado
+     *
+     * @param int|null $id
+     * @return JsonResponse
+     */
+    public function getUserCollective(?int $id = null): JsonResponse
+    {
+        try {
+            $data = $this->db->getUserCollective($id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
 }

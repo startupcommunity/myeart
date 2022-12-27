@@ -194,6 +194,11 @@ const endpoints = {
 
         // actualiza la foto de portada de un colectivo / {id}
         updateFrontPhoto: `${API}/collectives/update-front-photo/`, // put
+
+        // devuelve todos los colectivos de un usuario / {id?}
+        // si no se envía el id, devuelve los colectivos del usuario logueado
+        // se devuelven todos los colectivos, invitado y administrador
+        getUserCollectives: `${API}/collectives/get-user-collectives/`, // get
     },
 };
 

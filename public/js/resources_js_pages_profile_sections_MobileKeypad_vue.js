@@ -124,6 +124,12 @@ var render = function render() {
     attrs: {
       elevation: "0",
       color: "#B2794C"
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.$emit("openCollectivesModal");
+      }
     }
   }, [_c("span", {
     staticClass: "text-white"

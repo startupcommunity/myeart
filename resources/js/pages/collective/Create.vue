@@ -252,6 +252,8 @@ export default {
                             text: "El colectivo se ha creado correctamente",
                         });
 
+                        this.$vuetify.theme.dark = false;
+
                         setTimeout(() => {
                             this.$router.push({
                                 name: "collectiveProfile",
