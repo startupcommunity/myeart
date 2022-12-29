@@ -54,7 +54,7 @@ class UserDB
     public function getFollowArtistsShortInfo(int $userID = null): ?Collection
     {
         $user = $userID ? $this->getUser($userID) : auth()->user();
-        $data = $user->load(['followingArtists.following']);
+        $data = $user->load(['followingArtists.following.collectiveInvitations']);
         return $data['followingArtists'];
     }
 

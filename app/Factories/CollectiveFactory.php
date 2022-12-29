@@ -155,4 +155,40 @@ class CollectiveFactory
 
     return $tran;
   }
+
+  /**
+   * Envía una invitación a un usuario para unirse a un colectivo
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function sendInvitation(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $user = auth()->user();
+      $data = $request->only(['user_id']);
+      $collective = Collective::find($request->collective_id);
+
+      // si el usuario no es el dueño del colectivo
+      if (!($collective->user_id === $user->id)) {
+        return false;
+      }
+
+      // si el creador ya invito a este usuario
+      $invitation = $collective->invitations()
+        ->where('user_id', $request->user_id)
+        ->first();
+
+      if ($invitation) {
+        return false;
+      }
+
+      // crear invitación
+      $collective->invitations()->create($data);
+
+      return true;
+    });
+
+    return $tran;
+  }
 }

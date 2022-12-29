@@ -70,11 +70,18 @@ class Collective extends Model
     }
 
     /**
-     * Devuelve los miembros del colectivo, las personas
-     * que siguen el colectivo
+     * Devuelve los miembros del colectivo
      */
     public function members(): HasMany
     {
         return $this->hasMany(MemberCollective::class);
+    }
+
+    /**
+     * Devuelve las invitaciones al colectivo
+     */
+    public function invitations(): HasMany
+    {
+        return $this->hasMany(CollectiveInvitation::class);
     }
 }

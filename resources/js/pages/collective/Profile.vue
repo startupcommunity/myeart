@@ -105,6 +105,11 @@
                             :profile="profile"
                             v-if="sections.release"
                         />
+                        <Member
+                            :collective="collective"
+                            :profile="profile"
+                            v-if="sections.member"
+                        />
                     </div>
                     <!-- content -->
                 </div>
@@ -121,6 +126,7 @@ import ProfilePhotoCollectiveModal from "./components/ProfilePhotoCollectiveModa
 import profileMixin from "./modules/profile-mixin";
 import Info from "./sections/Info.vue";
 import Release from "./sections/Release.vue";
+import Member from "./sections/Member.vue";
 
 export default {
     name: "Profile",
@@ -132,6 +138,7 @@ export default {
         Info,
         ProfilePhotoCollectiveModal,
         Release,
+        Member,
     },
 
     mounted() {

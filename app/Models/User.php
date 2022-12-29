@@ -226,6 +226,17 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve las invitaciones a colectivos
+     * que ha recibido el usuario
+     *
+     * @return HasMany
+     */
+    public function collectiveInvitations(): HasMany
+    {
+        return $this->hasMany(CollectiveInvitation::class);
+    }
+
+    /**
      * Determina si el usuario tiene foto de perfil
      * @luisandev
      * @return boolean      true si posee

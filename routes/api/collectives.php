@@ -49,4 +49,9 @@ Route::group(['prefix' => 'collectives'], function () {
    * actualiza la foto de portada de un colectivo
    */
   Route::put('/update-front-photo/{id}', [CollectiveController::class, 'updateFrontPhoto'])->name('updateFrontPhotoCollective');
+
+  /**
+   * Envía una invitación a un usuario para unirse a un colectivo
+   */
+  Route::post('/send-invitation', [CollectiveController::class, 'sendInvitation'])->name('sendInvitationCollective');
 });

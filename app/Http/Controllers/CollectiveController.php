@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateProfilePhotoCollectiveRequest;
 use App\Http\Requests\CreateFrontPhotoCollectiveRequest;
+use App\Http\Requests\SendInvitationCollectiveRequest;
 use App\Http\Requests\CreateCollectiveRequest;
 use App\Factories\CollectiveFactory;
 use Illuminate\Http\JsonResponse;
@@ -154,6 +155,22 @@ class CollectiveController extends Controller
         try {
             $data = $this->db->getReleaseCollectiveByOption($request, $id);
             return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Envía una invitación a un usuario para unirse al colectivo
+     *
+     * @param SendInvitationCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function sendInvitation(SendInvitationCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->sendInvitation($request);
+            return $this->resp->json($data, $data ? 201 : 204);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

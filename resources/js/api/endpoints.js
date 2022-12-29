@@ -205,6 +205,9 @@ const endpoints = {
 
         // devuelve las publicaciones de un colectivo filtradas por una opción / {id}
         getReleaseByOption: `${API}/collectives/get-collective-releases-by-option/`, // get
+
+        // envía una invitación a un usuario para unirse a un colectivo / {id}
+        sendInvitation: `${API}/collectives/send-invitation`, // post
     },
 };
 
