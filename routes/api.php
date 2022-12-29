@@ -1,30 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\UserEventController;
-use App\Http\Controllers\UserReleaseController;
 
 // sin middleware
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/register', [RegisterController::class, 'register']);
-
-/**
- * Devuelve los comentarios de una publicación a través del slug
- */
-Route::get('releases/get-comments-slug/{slug}', [UserReleaseController::class, 'getCommentsSlug'])
-    ->name('getReleaseCommentsSlug');
-
-/**
- * Muestra el detalle de un evento
- *
- * @param int|string $id
- */
-Route::get('events/show/{id}', [UserEventController::class, 'show'])->name('showEvent');
+require __DIR__ . '/api/public.php';
 
 /**
  * grupo de rutas protegidas
+ *
  * @luisandev
  */
 Route::middleware(['auth:api'])->group(function () {

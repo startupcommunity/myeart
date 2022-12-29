@@ -10,6 +10,7 @@ namespace App\Querys;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 class UserDB
 {
@@ -153,9 +154,9 @@ class UserDB
      * Devuelve los publicaciones guardadas como favoritos
      * por el usuario logueado
      *
-     * @return Collection
+     * @return Collection|SupportCollection
      */
-    public function getFollowReleases(): Collection
+    public function getFollowReleases(): Collection|SupportCollection
     {
         // user
         $user = auth()->user();

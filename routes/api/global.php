@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Rutas globales de diferentes módulos
+ * mayormente usado para obtener datos
+ * con su propio prefijo
+ *
+ * @luisandev
+ */
+
 use App\Http\Controllers\ArtisticActivitysController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;

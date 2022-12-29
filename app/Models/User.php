@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ProfileTypeEnum;
+use App\Enums\ReleaseTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -301,12 +302,16 @@ class User extends Authenticatable
      * @param Builder $query
      * @return void
      */
-    public function scopeFollowingArtistReleases($query)
+    public function scopeFollowingArtistReleases($query, ?int $type = null)
     {
         $artists = $this->followingArtists();
+        $releaseRelations = ['labels.user', 'likes.user', 'creator.artworks.categories', 'comments'];
+        $type = $type ?? ReleaseTypeEnum::ARTIST;
+
+        // indicar también el type del release
         $relations = [
             'following.releases' =>
-            fn ($rel) => $rel->with(['labels.user', 'likes.user', 'creator.artworks.categories', 'comments'])
+            fn ($rel) => $rel->with($releaseRelations)->where('type', $type),
         ];
 
         return $artists->with($relations);

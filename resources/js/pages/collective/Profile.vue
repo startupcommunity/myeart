@@ -25,6 +25,7 @@
                                         color="#B2794C"
                                         class="bg-white"
                                         @click.stop="openImageModal"
+                                        v-if="isOwner"
                                     >
                                         <v-icon>mdi-camera</v-icon>
                                     </v-btn>

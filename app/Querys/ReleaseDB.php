@@ -36,6 +36,7 @@ class ReleaseDB
 
   /**
    * Devuelve todas las publicaciones del usuario logueado
+   * del panel del perfil del artista
    *
    * @param integer $id
    * @return Collection|null
@@ -43,9 +44,8 @@ class ReleaseDB
   public function getUserRelease(int $id = null): ?Collection
   {
     $user = $id ? User::find($id) : auth()->user();
-    return $user->releases()->with([
-      'labels.user', 'likes.user', 'creator.artworks.categories', 'comments'
-    ])->get();
+    $relations = ['labels.user', 'likes.user', 'creator.artworks.categories', 'comments'];
+    return $user->releases()->with($relations)->commonType()->get();
   }
 
   /**

@@ -3,6 +3,7 @@
         <FrontImage
             :bg="profile?.front_image"
             :id-collective="collective?.id"
+            :creatorID="collective?.user_id"
         />
         <div
             class="flex flex-col md:flex-row justify-end pt-5 gap-3 border-b border-gray-200 pb-4"
@@ -15,14 +16,14 @@
             >
                 Ver mis colectivos
             </v-btn>
-            <v-btn
+            <!-- <v-btn
                 outlined
                 color="grey darken-1"
                 class="rounded-md"
                 @click.stop=""
             >
                 <i class="fas fa-plus"></i> Crear publicación
-            </v-btn>
+            </v-btn> -->
         </div>
 
         <div class="p-4 mt-5 border">

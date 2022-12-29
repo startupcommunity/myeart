@@ -85,10 +85,10 @@ class ReleaseFactory
       $data['image'] = $isFile ? $filename : $release->image;
       $updated = $release->update($data);
 
+      // delete
       // update labels or friends
+      $release->labels()->delete();
       if ($request->labels && $request->labels != 'null' && is_array($request->labels)) {
-        // delete
-        $release->labels()->delete();
         foreach ($request->labels as $label) {
           // create
           $release->labels()->create(['friend_id' => $label]);

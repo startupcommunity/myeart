@@ -26,6 +26,14 @@ export default {
         collective() {
             return this.$store.getters.getCollective || {};
         },
+
+        user() {
+            return this.$store.getters.getProfile;
+        },
+
+        isOwner() {
+            return this.collective?.user_id === this.user?.id;
+        },
     },
 
     watch: {
@@ -41,20 +49,6 @@ export default {
     },
 
     methods: {
-        // getCollective(id) {
-        //     const ep = this.ep.collectives.getCollective;
-        //     this.globalLoading = true;
-        //     this.axios
-        //         .get(`${ep + id}`)
-        //         .then((response) => {
-        //             if (response.status === 200) {
-        //                 this.collective = response.data;
-        //             }
-        //         })
-        //         .catch((error) => this.manageError(error))
-        //         .finally(() => (this.globalLoading = false));
-        // },
-
         activeSection(section) {
             this.sections = {
                 profile: false,

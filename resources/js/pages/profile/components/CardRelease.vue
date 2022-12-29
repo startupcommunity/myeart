@@ -5,9 +5,11 @@
             <InfoArtist
                 v-if="showArtist"
                 :artist="artist"
+                :release="release"
                 :location="release?.location"
                 :show-buttons-col="showButtonsCol"
                 :is-owner="isOwner"
+                @updated-release="updateRelease"
             />
 
             <!-- imagen -->
@@ -138,6 +140,9 @@ export default {
         },
         openModalComment() {
             this.$emit("showCommentDialog", this.release);
+        },
+        updateRelease() {
+            this.$emit("updated-release-success", this.release);
         },
     },
 };

@@ -66,13 +66,14 @@ class CollectiveDB
   public function getUserCollective(?int $id = null): array
   {
     $relations = $this->getAllCollectiveRelations();
+    $relationsGuest = ['collective.categories.category', 'collective.profile', 'collective.user'];
     $user = $id ? $this->user->find($id) : auth()->user();
 
     // primero obtener los colectivos creados
     $collectives = $user->collectives()->with($relations)->get();
 
     // luego obtener los colectivos a los que pertenece
-    $guests = $user->guestCollectives()->with(['collective.categories.category', 'collective.profile', 'collective.user'])->get();
+    $guests = $user->guestCollectives()->with($relationsGuest)->get();
 
     // unir los colectivos
     $collectives = $collectives->merge($guests);
@@ -101,6 +102,7 @@ class CollectiveDB
     return UserRelease::whereIn('user_id', $members)
       ->where('type', ReleaseTypeEnum::COLLECTIVE)
       ->with($releaseRelations)
+      ->orderByDesc('created_at')
       ->get();
   }
 

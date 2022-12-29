@@ -60,7 +60,10 @@
                 <v-btn block @click.stop="showDialog = true" depressed large>
                     <i class="fas fa-plus"></i> Crear una nueva publicación
                 </v-btn>
-                <div class="inline-flex items-center justify-center">
+                <div
+                    class="inline-flex items-center justify-center"
+                    v-if="isOwner"
+                >
                     <span
                         class="uppercase text-zinc-900 tracking-widest text-xs font-bold w-full text-right"
                     >
@@ -95,6 +98,7 @@
                     :show-buttons-col="true"
                     :is-owner="isCollectiveOwner(rel?.creator?.id)"
                     @showCommentDialog="activeCommentModal"
+                    @updated-release-success="getReleasesAccordingToUser"
                 />
             </div>
 
@@ -102,7 +106,13 @@
                 class="flex flex-col items-center justify-center"
                 v-if="releases.length < original.length"
             >
-                <v-btn color="grey darken-4" @click.stop="showMore" depressed large class="text-white">
+                <v-btn
+                    color="grey darken-4"
+                    @click.stop="showMore"
+                    depressed
+                    large
+                    class="text-white"
+                >
                     <i class="fas fa-plus"></i> Ver más publicaciones
                 </v-btn>
             </div>
@@ -120,7 +130,7 @@
         <CreateReleaseModal
             :show="showDialog"
             @close-modal="showDialog = false"
-            @created="getReleases"
+            @created="getReleasesAccordingToUser"
         />
     </section>
 </template>
@@ -174,7 +184,7 @@ export default {
     },
 
     created() {
-        this.getReleases();
+        this.getReleasesAccordingToUser();
     },
 
     computed: {
@@ -189,6 +199,12 @@ export default {
         },
         creatorID() {
             return this.collective?.user_id || 0;
+        },
+        user() {
+            return this.$store.getters.getProfile;
+        },
+        isOwner() {
+            return this.creatorID === this.user?.id;
         },
     },
 
@@ -239,6 +255,15 @@ export default {
                 })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.globalLoading = false));
+        },
+
+        /**
+         * Carga las publicaciones según el
+         * usuario que visite el colectivo
+         */
+        getReleasesAccordingToUser() {
+            if (this.isOwner) return this.getReleases();
+            return this.getFilterReleases(3);
         },
 
         /**

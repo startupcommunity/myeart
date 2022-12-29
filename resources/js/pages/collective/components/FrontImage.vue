@@ -7,7 +7,7 @@
     >
         <div
             class="absolute bottom-5 right-5 bg-white rounded-md"
-            v-if="changeFront"
+            v-if="changeFront && isOwner"
         >
             <v-btn text color="#B2794C" @click.stop="changeImage">
                 <v-icon>mdi-camera</v-icon> Cambiar portada
@@ -38,6 +38,10 @@ export default {
             type: Number,
             default: 0,
         },
+        creatorID: {
+            type: Number,
+            default: 0,
+        },
         changeFront: {
             type: Boolean,
             default: true,
@@ -54,6 +58,12 @@ export default {
         bgImage() {
             if (!this.bg) return `url('${this.$defaultFrontPhotoCollective}')`;
             return `url('${this.$pathFrontCollective + this.bg}')`;
+        },
+        user() {
+            return this.$store.getters.getProfile;
+        },
+        isOwner() {
+            return this.creatorID === this.user?.id;
         },
     },
 
