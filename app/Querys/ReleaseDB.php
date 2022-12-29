@@ -79,11 +79,6 @@ class ReleaseDB
     // hacer una búsqueda like a la cadena de texto de release.text
     $data = $request->hashtag ? $data->filter(fn ($release) => str_contains($release->text, $request->hashtag)) : $data;
 
-    // si la data es solo una publicación
-    // devolver como array
-    // dd($data->count());
-    // $data = $data->count() == 1 ? $data->toArray() : $data;
-
     return $data;
   }
 

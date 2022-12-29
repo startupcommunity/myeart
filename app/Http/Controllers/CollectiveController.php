@@ -124,4 +124,38 @@ class CollectiveController extends Controller
             return $this->resp->json($e->getMessage(), 500);
         }
     }
+
+    /**
+     * devuelve todos las publicaciones del colectivo
+     * tanto de los miembros como del creador
+     *
+     * @param int $id           id del colectivo
+     * @return JsonResponse
+     */
+    public function getReleaseCollective(int $id): JsonResponse
+    {
+        try {
+            $data = $this->db->getReleaseCollective($id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * devuelve las publicaciones del colectivo
+     * filtradas por la opción indicada
+     *
+     * @param int $id           id del colectivo
+     * @return JsonResponse
+     */
+    public function getReleaseCollectiveByOption(Request $request, int $id): JsonResponse
+    {
+        try {
+            $data = $this->db->getReleaseCollectiveByOption($request, $id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
 }

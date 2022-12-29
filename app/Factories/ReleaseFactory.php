@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Enums\ReleaseTypeEnum;
 use App\Models\Comment;
 use App\Models\FavoriteRelease;
 use App\Models\ReleaseLike;
@@ -36,6 +37,7 @@ class ReleaseFactory
       $data['image'] = $filename;
 
       // save publicación
+      $data['type'] = $request->type ?? ReleaseTypeEnum::ARTIST;
       $release = $user->releases()->create($data);
 
       // save labels or friends

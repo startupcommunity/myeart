@@ -68,4 +68,13 @@ class Collective extends Model
     {
         return $this->hasMany(GuestCollective::class);
     }
+
+    /**
+     * Devuelve los miembros del colectivo, las personas
+     * que siguen el colectivo
+     */
+    public function members(): HasMany
+    {
+        return $this->hasMany(MemberCollective::class);
+    }
 }

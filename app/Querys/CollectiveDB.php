@@ -2,8 +2,12 @@
 
 namespace App\Querys;
 
+use App\Enums\ReleaseTypeEnum;
 use App\Models\Collective;
 use App\Models\User;
+use App\Models\UserRelease;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class CollectiveDB
 {
@@ -14,6 +18,36 @@ class CollectiveDB
   }
 
   /**
+   * Devuelve todas las relaciones de los colectivos
+   *
+   * @return array
+   */
+  public function getAllCollectiveRelations(): array
+  {
+    return [
+      'categories.category',
+      'profile',
+      'user',
+      'members.user'
+    ];
+  }
+
+  /**
+   * Devuelve todos las relaciones de las publicaciones
+   *
+   * @return array
+   */
+  public function getAllReleaseRelations(): array
+  {
+    return [
+      'labels.user',
+      'likes.user',
+      'creator.artworks.categories',
+      'comments'
+    ];
+  }
+
+  /**
    * devuelve un colectivo
    *
    * @param int $id
@@ -21,7 +55,8 @@ class CollectiveDB
    */
   public function getCollective(int $id): Collective
   {
-    return $this->model->with(['categories.category', 'profile'])->findOrFail($id);
+    $relations = $this->getAllCollectiveRelations();
+    return $this->model->with($relations)->findOrFail($id);
   }
 
   /**
@@ -30,10 +65,11 @@ class CollectiveDB
    */
   public function getUserCollective(?int $id = null): array
   {
+    $relations = $this->getAllCollectiveRelations();
     $user = $id ? $this->user->find($id) : auth()->user();
 
     // primero obtener los colectivos creados
-    $collectives = $user->collectives()->with(['categories.category', 'profile', 'user'])->get();
+    $collectives = $user->collectives()->with($relations)->get();
 
     // luego obtener los colectivos a los que pertenece
     $guests = $user->guestCollectives()->with(['collective.categories.category', 'collective.profile', 'collective.user'])->get();
@@ -42,5 +78,63 @@ class CollectiveDB
     $collectives = $collectives->merge($guests);
 
     return $collectives->toArray();
+  }
+
+  /**
+   * Devuelve las publicaciones de un colectivo y sus miembros
+   * se filtra por type ReleaseTypeEnum::COLLECTIVE
+   *
+   * @param integer    id del colectivo
+   * @return Collection
+   */
+  public function getReleaseCollective(int $id): Collection
+  {
+    $relations = $this->getAllCollectiveRelations();
+    $releaseRelations = $this->getAllReleaseRelations();
+    $collective = $this->model->with($relations)->find($id);
+
+    // ids de los miembros del colectivo y el creador
+    $members = $collective->members()->pluck('user_id')->toArray();
+    $members[] = $collective->user_id;
+
+    // obtener las publicaciones de todos
+    return UserRelease::whereIn('user_id', $members)
+      ->where('type', ReleaseTypeEnum::COLLECTIVE)
+      ->with($releaseRelations)
+      ->get();
+  }
+
+  /**
+   * Devuelve las publicaciones de un colectivo
+   * filtradas por la opción indicada
+   *
+   * @param Request    request
+   * @param integer    id del colectivo
+   * @return Collection
+   */
+  public function getReleaseCollectiveByOption(Request $request, int $id): Collection
+  {
+    $option = intval($request->option ?? 0);
+    $creatorID = intval($request->creatorID ?? 0);
+
+    // publicaciones de un colectivo
+    $releases = $this->getReleaseCollective($id);
+
+    // filtrar todos
+    if ($option === 1) {
+      return $releases;
+    }
+
+    // filtrar solo las del creador
+    if ($option === 2) {
+      return $releases->where('user_id', $creatorID);
+    }
+
+    // filtrar la de los miembros
+    if ($option === 3) {
+      return $releases->where('user_id', '!=', $creatorID);
+    }
+
+    return new Collection();
   }
 }

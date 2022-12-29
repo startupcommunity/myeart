@@ -5,7 +5,10 @@
             'background-image': bgImage,
         }"
     >
-        <div class="absolute bottom-5 right-5 bg-white rounded-md">
+        <div
+            class="absolute bottom-5 right-5 bg-white rounded-md"
+            v-if="changeFront"
+        >
             <v-btn text color="#B2794C" @click.stop="changeImage">
                 <v-icon>mdi-camera</v-icon> Cambiar portada
             </v-btn>
@@ -15,6 +18,7 @@
             :show-modal="frontModal"
             :id-collective="idCollective"
             @close-modal="frontModal = false"
+            v-if="changeFront"
         />
     </div>
 </template>
@@ -33,6 +37,10 @@ export default {
         idCollective: {
             type: Number,
             default: 0,
+        },
+        changeFront: {
+            type: Boolean,
+            default: true,
         },
     },
 

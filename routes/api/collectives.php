@@ -21,6 +21,19 @@ Route::group(['prefix' => 'collectives'], function () {
   Route::get('/get-collective/{id}', [CollectiveController::class, 'getCollective'])->name('getCollective');
 
   /**
+   * Devuelve las publicaciones de un colectivo
+   * tanto de los miembros como del creador
+   */
+  Route::get('/get-collective-releases/{id}', [CollectiveController::class, 'getReleaseCollective'])->name('getReleaseCollective');
+
+  /**
+   * Devuelve las publicaciones de un colectivo
+   * filtradas por miembro o creador
+   */
+  Route::get('/get-collective-releases-by-option/{id}', [CollectiveController::class, 'getReleaseCollectiveByOption'])
+    ->name('getReleaseCollectiveByOption');
+
+  /**
    * devuelve todos los colectivos del usuario autenticado
    * o indicado por el parámetro
    * incluye los colectivos creados e invitado

@@ -66,11 +66,6 @@ __webpack_require__.r(__webpack_exports__);
     this.getFASI();
   },
   methods: {
-    // setPlace(place) {
-    //     this.form.location = place;
-    //     console.log(this.form.location);
-    // },
-
     /**
      * Devuelve los artistas seguidos por el usuario,
      * con la info corta y justa

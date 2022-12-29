@@ -199,6 +199,12 @@ const endpoints = {
         // si no se envía el id, devuelve los colectivos del usuario logueado
         // se devuelven todos los colectivos, invitado y administrador
         getUserCollectives: `${API}/collectives/get-user-collectives/`, // get
+
+        // devuelve todas las publicaciones de un colectivo / {id}
+        getAllRelease: `${API}/collectives/get-collective-releases/`, // get
+
+        // devuelve las publicaciones de un colectivo filtradas por una opción / {id}
+        getReleaseByOption: `${API}/collectives/get-collective-releases-by-option/`, // get
     },
 };
 

@@ -26,6 +26,9 @@ class UserRelease extends Model
      * @var array
      */
     protected $guarded = [];
+    // type = 1 => Artista
+    // type = 2 => Colectivo
+    // por defecto es artista
 
     // boot
     protected static function boot()

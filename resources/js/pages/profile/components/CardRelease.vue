@@ -6,6 +6,8 @@
                 v-if="showArtist"
                 :artist="artist"
                 :location="release?.location"
+                :show-buttons-col="showButtonsCol"
+                :is-owner="isOwner"
             />
 
             <!-- imagen -->
@@ -106,6 +108,17 @@ export default {
             type: Boolean,
             default: true,
             description: "muestra el botón para comentar ubicado en la info",
+        },
+        showButtonsCol: {
+            type: Boolean,
+            default: false,
+            description:
+                "Si se muestran los botones de editar y eliminar | solo para colectivos",
+        },
+        isOwner: {
+            type: Boolean,
+            default: false,
+            description: "Si es el dueño de la publicación",
         },
     },
     computed: {

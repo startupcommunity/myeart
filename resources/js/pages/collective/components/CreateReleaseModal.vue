@@ -1,85 +1,94 @@
 <template>
-    <div class="w-full md:w-3/4">
-        <div class="flex flex-col space-y-5 pt-5">
-            <div class="w-full">
-                <AnkaCropper
-                    :options="ankaOptions"
-                    @cropper-error="errorCropper"
-                    @cropper-saved="validateAndConfirm"
-                    class="anka-release"
-                />
-            </div>
-            <div class="w-full">
-                <v-textarea
-                    filled
-                    label="Escribe un pie para tu foto"
-                    v-model="form.text"
-                    color="#B2794C"
-                ></v-textarea>
-            </div>
-            <div class="w-full flex justify-start items-center gap-2">
-                <i class="fa-solid fa-user-plus"></i>
-                <v-autocomplete
-                    v-model="form.labels"
-                    deletable-chips
-                    multiple
-                    small-chips
-                    label="Etiqueta a tus amigos"
-                    item-value="following.id"
-                    item-text="following.name"
-                    :items="artists"
-                    color="#B2794C"
-                    item-color="#B2794C"
-                ></v-autocomplete>
-            </div>
-            <div class="w-full flex justify-start items-center gap-2">
-                <!-- <v-autocomplete
-                        v-model="form.location"
-                        label="Añade tu ubicación"
-                        color="#B2794C"
-                        item-color="#B2794C"
-                        id="mapSearch"
-                    ></v-autocomplete> -->
-                <!-- <vgm-places
-                        placeholder="This is a placeholder text"
-                        @place_changed="setPlace"
-                    >
-                    </vgm-places> -->
-                <i class="fa-solid fa-location-pin"></i>
-                <v-text-field
-                    v-model="form.location"
-                    label="Añade tu ubicación"
-                    color="#B2794C"
-                ></v-text-field>
-            </div>
+    <div class="text-center">
+        <v-dialog v-model="show" width="800" persistent>
+            <v-card>
+                <v-card-text>
+                    <div class="w-full py-5">
+                        <div class="flex flex-col space-y-5">
+                            <div class="w-full">
+                                <AnkaCropper
+                                    :options="ankaOptions"
+                                    @cropper-error="errorCropper"
+                                    @cropper-saved="validateAndConfirm"
+                                    class="anka-release"
+                                />
+                            </div>
+                            <div class="w-full">
+                                <v-textarea
+                                    filled
+                                    label="Escribe un pie para tu foto"
+                                    v-model="form.text"
+                                    color="#B2794C"
+                                ></v-textarea>
+                            </div>
+                            <div
+                                class="w-full flex justify-start items-center gap-2"
+                            >
+                                <i class="fa-solid fa-user-plus"></i>
+                                <v-autocomplete
+                                    v-model="form.labels"
+                                    deletable-chips
+                                    multiple
+                                    small-chips
+                                    label="Etiqueta a tus amigos"
+                                    item-value="following.id"
+                                    item-text="following.name"
+                                    :items="artists"
+                                    color="#B2794C"
+                                    item-color="#B2794C"
+                                ></v-autocomplete>
+                            </div>
+                            <div
+                                class="w-full flex justify-start items-center gap-2"
+                            >
+                                <i class="fa-solid fa-location-pin"></i>
+                                <v-text-field
+                                    v-model="form.location"
+                                    label="Añade tu ubicación"
+                                    color="#B2794C"
+                                ></v-text-field>
+                            </div>
 
-            <div class="w-full flex justify-center pb-5">
-                <v-btn
-                    class="text-white"
-                    depressed
-                    large
-                    @click.prevent="buttonClick"
-                    color="#B2794C"
-                >
-                    Publicar
-                </v-btn>
-            </div>
-        </div>
-
-        <!-- loader -->
-        <loading-overlay
-            :active="globalLoading"
-            :is-full-page="true"
-            loader="bars"
-        />
+                            <div class="w-full flex justify-center gap-5">
+                                <v-btn
+                                    class="text-white"
+                                    depressed
+                                    large
+                                    @click.prevent="buttonClick"
+                                    color="#B2794C"
+                                    :loading="globalLoading"
+                                    :disabled="!formIsValid || globalLoading"
+                                >
+                                    Publicar
+                                </v-btn>
+                                <v-btn
+                                    depressed
+                                    large
+                                    @click.stop="$emit('close-modal')"
+                                    :disabled="!formIsValid || globalLoading"
+                                >
+                                    Cancelar
+                                </v-btn>
+                            </div>
+                        </div>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
 import AnkaCropper from "vue-anka-cropper";
 export default {
-    name: "CreateRelease",
+    name: "CreateReleaseModal",
     components: { AnkaCropper },
+    props: {
+        show: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
             loading: false,
@@ -91,6 +100,7 @@ export default {
                 text: "",
                 labels: [],
                 location: "",
+                type: 2,
             },
             ankaOptions: {
                 aspectRatio: 1.5,
@@ -192,11 +202,6 @@ export default {
                 this.noty("Debe indicar una ubicación", "error");
                 this.formIsValid = false;
             }
-
-            // if (!form.labels.length) {
-            //     this.noty("Debe etiquetar algunos amigos", "error");
-            //     this.formIsValid = false;
-            // }
         },
 
         /**
@@ -228,6 +233,7 @@ export default {
                     data.append("image", croppedFile);
                     data.append("text", form.text);
                     data.append("location", form.location);
+                    data.append("type", form.type);
                     form.labels.forEach((label) =>
                         data.append(`labels[]`, label)
                     );
@@ -236,7 +242,7 @@ export default {
                         .post(ep, data, this.headerFormData)
                         .then((_) => {
                             this.notySwal({
-                                title: "¡Publicado!",
+                                title: "Éxito!",
                                 text: "La publicación ha sido publicada con éxito",
                                 icon: "success",
                             });

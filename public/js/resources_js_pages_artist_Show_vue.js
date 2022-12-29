@@ -1700,6 +1700,16 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": true,
       description: "muestra el botón para comentar ubicado en la info"
+    },
+    showButtonsCol: {
+      type: Boolean,
+      "default": false,
+      description: "Si se muestran los botones de editar y eliminar | solo para colectivos"
+    },
+    isOwner: {
+      type: Boolean,
+      "default": false,
+      description: "Si es el dueño de la publicación"
     }
   },
   computed: {
@@ -1878,6 +1888,16 @@ __webpack_require__.r(__webpack_exports__);
     location: {
       type: String,
       "default": ""
+    },
+    showButtonsCol: {
+      type: Boolean,
+      "default": false,
+      description: "Si se muestran botones de acción | solo aplicara para colectivos"
+    },
+    isOwner: {
+      type: Boolean,
+      "default": false,
+      description: "Si es el usuario creador de la publicación | solo aplicara para colectivos"
     }
   }
 });
@@ -3932,7 +3952,9 @@ var render = function render() {
   }, [_vm.showArtist ? _c("InfoArtist", {
     attrs: {
       artist: _vm.artist,
-      location: (_vm$release = _vm.release) === null || _vm$release === void 0 ? void 0 : _vm$release.location
+      location: (_vm$release = _vm.release) === null || _vm$release === void 0 ? void 0 : _vm$release.location,
+      "show-buttons-col": _vm.showButtonsCol,
+      "is-owner": _vm.isOwner
     }
   }) : _vm._e(), _vm._v(" "), _c("ImageActionRelease", {
     attrs: {
@@ -4142,7 +4164,9 @@ var render = function render() {
   return _c("div", {
     staticClass: "w-full"
   }, [_c("div", {
-    staticClass: "flex flex-row justify-start items-center"
+    staticClass: "flex flex-row justify-between items-center"
+  }, [_c("div", {
+    staticClass: "flex justify-start items-center"
   }, [_c("Avatar", {
     attrs: {
       artist: _vm.artist
@@ -4151,9 +4175,41 @@ var render = function render() {
     staticClass: "mt-4 ml-2"
   }, [_c("p", {
     staticClass: "font-medium text-gray-900 text-xs"
-  }, [_vm._v("\n                " + _vm._s((_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name) + "\n                "), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("\n                    " + _vm._s((_vm$artist = _vm.artist) === null || _vm$artist === void 0 ? void 0 : _vm$artist.name) + "\n                    "), _c("br"), _vm._v(" "), _c("span", {
     staticClass: "text-gray-400"
-  }, [_vm._v("\n                    " + _vm._s(_vm.location) + "\n                ")])])])], 1)]);
+  }, [_vm._v("\n                        " + _vm._s(_vm.location) + "\n                    ")])])])], 1), _vm._v(" "), _vm.showButtonsCol ? _c("div", {
+    staticClass: "flex justify-end items-center"
+  }, [_vm.isOwner ? _c("v-btn", {
+    staticClass: "text-xs",
+    attrs: {
+      text: "",
+      small: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-pencil"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "hidden md:block"
+  }, [_vm._v("Editar")])]) : _vm._e(), _vm._v(" "), _c("v-btn", {
+    staticClass: "text-xs",
+    attrs: {
+      text: "",
+      small: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-trash"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "hidden md:block"
+  }, [_vm._v("Eliminar")])])], 1) : _vm._e()])]);
 };
 
 var staticRenderFns = [];
@@ -5168,10 +5224,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       navigator.clipboard.writeText(text).then(function () {
         console.log("Async: Copying to clipboard was successful!");
-        this.noty("Copiado al portapapeles");
       }, function (err) {
         console.error("Async: Could not copy text: ", err);
       });
+      this.noty("Copiado al portapapeles");
     },
 
     /**

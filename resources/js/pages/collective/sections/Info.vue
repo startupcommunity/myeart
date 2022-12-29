@@ -7,10 +7,20 @@
         <div
             class="flex flex-col md:flex-row justify-end pt-5 gap-3 border-b border-gray-200 pb-4"
         >
-            <v-btn outlined color="grey darken-1" class="rounded-md">
+            <v-btn
+                outlined
+                color="grey darken-1"
+                class="rounded-md"
+                @click.stop="dialogCollectives = true"
+            >
                 Ver mis colectivos
             </v-btn>
-            <v-btn outlined color="grey darken-1" class="rounded-md">
+            <v-btn
+                outlined
+                color="grey darken-1"
+                class="rounded-md"
+                @click.stop=""
+            >
                 <i class="fas fa-plus"></i> Crear publicación
             </v-btn>
         </div>
@@ -21,16 +31,23 @@
             </h3>
             <FormCollective :data="collective" v-if="collective?.id" />
         </div>
+
+        <!-- modal mis colectivos -->
+        <MyCollectivesModal
+            :show="dialogCollectives"
+            @close-modal="dialogCollectives = false"
+        />
     </section>
 </template>
 
 <script>
+import MyCollectivesModal from "../../profile/components/MyCollectivesModal.vue";
 import FormCollective from "../components/FormCollective.vue";
 import FrontImage from "../components/FrontImage.vue";
 
 export default {
     name: "InfoCollective",
-    components: { FrontImage, FormCollective },
+    components: { FrontImage, FormCollective, MyCollectivesModal },
     props: {
         collective: {
             type: Object,
@@ -40,6 +57,12 @@ export default {
             type: Object,
             default: () => ({}),
         },
+    },
+
+    data() {
+        return {
+            dialogCollectives: false,
+        };
     },
 };
 </script>
