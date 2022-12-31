@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateProfilePhotoCollectiveRequest;
+use App\Http\Requests\RemoveMemberFromCollectiveRequest;
 use App\Http\Requests\CreateFrontPhotoCollectiveRequest;
 use App\Http\Requests\SendInvitationCollectiveRequest;
 use App\Http\Requests\CreateCollectiveRequest;
@@ -171,6 +172,38 @@ class CollectiveController extends Controller
         try {
             $data = $this->factory->sendInvitation($request);
             return $this->resp->json($data, $data ? 201 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * devuelve los miembros de un colectivo
+     *
+     * @param int $id           id del colectivo
+     * @return JsonResponse
+     */
+    public function getMembers(int $id): JsonResponse
+    {
+        try {
+            $data = $this->db->getMembers($id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * elimina un miembro del colectivo
+     *
+     * @param RemoveMemberFromCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function removeMember(RemoveMemberFromCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->removeMember($request);
+            return $this->resp->json($data, $data ? 200 : 204);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

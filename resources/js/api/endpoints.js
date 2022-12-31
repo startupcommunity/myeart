@@ -208,6 +208,12 @@ const endpoints = {
 
         // envía una invitación a un usuario para unirse a un colectivo / {id}
         sendInvitation: `${API}/collectives/send-invitation`, // post
+
+        // devuelve los miembros de un colectivo / {id}
+        members: `${API}/collectives/get-members/`, // get
+
+        // elimina un miembro de un colectivo / {id}
+        removeMember: `${API}/collectives/remove-member`, // post
     },
 };
 

@@ -84,4 +84,12 @@ class Collective extends Model
     {
         return $this->hasMany(CollectiveInvitation::class);
     }
+
+    /**
+     * Verifica si el usuario logueado es el creador del colectivo
+     */
+    public function isCreator(): bool
+    {
+        return $this->user_id === auth()->id();
+    }
 }

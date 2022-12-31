@@ -50,13 +50,28 @@ class CollectiveDB
   /**
    * devuelve un colectivo
    *
-   * @param int $id
+   * @param int $id       id del colectivo
+   * @param bool $with    relaciones
    * @return Collective
    */
-  public function getCollective(int $id): Collective
+  public function getCollective(int $id, bool $with = true): Collective
   {
-    $relations = $this->getAllCollectiveRelations();
+    $relations = $with ? $this->getAllCollectiveRelations() : [];
     return $this->model->with($relations)->findOrFail($id);
+  }
+
+  /**
+   * Devuelve los miembros de un colectivo
+   *
+   * @param int $id       id del colectivo
+   * @return Collection
+   */
+  public function getMembers(int $id): Collection
+  {
+    $collective = $this->getCollective($id, false);
+    $members = $collective->members()->with(['user.artworks.categories', 'user.profile'])->get();
+
+    return $members;
   }
 
   /**

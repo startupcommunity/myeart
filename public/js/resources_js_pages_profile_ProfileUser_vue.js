@@ -2228,6 +2228,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: Boolean,
       "default": false
     },
+    showButtonDeleteCollective: {
+      type: Boolean,
+      "default": false
+    },
     routerLink: {
       type: Boolean,
       "default": false
@@ -7317,7 +7321,23 @@ var render = function render() {
     attrs: {
       artist: _vm.artist
     }
-  })], 1)]) : _vm._e()])])])]);
+  })], 1)]) : _vm._e(), _vm._v(" "), _vm.showButtonDeleteCollective ? _c("div", {
+    staticClass: "py-8"
+  }, [_c("div", {
+    staticClass: "absolute bottom-5 inset-x-0 px-6"
+  }, [_c("v-btn", {
+    attrs: {
+      outlined: "",
+      block: "",
+      color: "grey darken-4"
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.$emit("remove-from-collective", _vm.artist);
+      }
+    }
+  }, [_vm._v("\n                            eliminar\n                        ")])], 1)]) : _vm._e()])])])]);
 };
 
 var staticRenderFns = [];

@@ -15,30 +15,36 @@
                 <h3 class="text-base font-bold text-zinc-900 uppercase">
                     Miembros del colectivo...
                 </h3>
-                <div v-if="members?.length">
-                    <img
-                        v-for="m in members"
+                <div v-if="members?.length" class="flex justify-start py-2">
+                    <Avatar
+                        custom="w-12 h-12 rounded-full object-cover object-center aspect-square border"
+                        v-for="(m, index) in members.slice(0, 5)"
                         :key="m.id"
-                        :src="getImageUser(m)"
-                        alt="miembros"
-                        class="w-10 h-10 rounded-full object-cover object-center aspect-square"
+                        :artist="m.user"
+                        :class="{
+                            '-ml-5': index > 0,
+                        }"
                     />
                 </div>
                 <span
                     class="text-primary font-light text-base uppercase"
-                    v-else
+                    v-else-if="!members?.length && !globalLoading"
                 >
                     No hay miembros todavía
                 </span>
             </div>
             <div class="flex flex-col items-md-end justify-center">
                 <div class="flex flex-col md:flex-row justify-md-end md:gap-5">
-                    <span class="text-primary font-light text-base uppercase">
+                    <span
+                        class="text-primary font-light text-base uppercase text-md-right text-center"
+                    >
                         tienes {{ likes }}
                         <i class="fa-regular fa-thumbs-up text-primary"></i>
                         Me gusta
                     </span>
-                    <span class="text-primary font-light text-base uppercase">
+                    <span
+                        class="text-primary font-light text-base uppercase text-md-right text-center"
+                    >
                         {{ followers }}
                         <i class="fa-solid fa-rss text-primary"></i>
                         Te siguen
@@ -136,6 +142,7 @@
 </template>
 
 <script>
+import Avatar from "../../../components/Avatar.vue";
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 import utilMixin from "../../../mixins/utilMixin";
 import CardRelease from "../../profile/components/CardRelease.vue";
@@ -154,6 +161,7 @@ export default {
         CardRelease,
         CreateReleaseModal,
         ReleaseCommentsDialog,
+        Avatar,
     },
     mixins: [utilMixin],
     props: {

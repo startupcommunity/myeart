@@ -74,11 +74,15 @@
                                                 v-else
                                                 class="text-zinc-900"
                                             >
-                                                <span v-if="isPending(artist)">
+                                                <span
+                                                    v-if="isPending(artist)"
+                                                    class="text-blue-600"
+                                                >
                                                     Invitación enviada
                                                 </span>
                                                 <span
                                                     v-else-if="isAccept(artist)"
+                                                    class="text-green-600"
                                                 >
                                                     Invitación aceptada
                                                 </span>
@@ -86,6 +90,7 @@
                                                     v-else-if="
                                                         isRejected(artist)
                                                     "
+                                                    class="text-red-600"
                                                 >
                                                     Invitación rechazada
                                                 </span>

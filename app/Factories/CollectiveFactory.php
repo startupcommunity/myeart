@@ -165,12 +165,11 @@ class CollectiveFactory
   public function sendInvitation(Request $request): ?bool
   {
     $tran = DB::transaction(function () use ($request) {
-      $user = auth()->user();
       $data = $request->only(['user_id']);
       $collective = Collective::find($request->collective_id);
 
       // si el usuario no es el dueño del colectivo
-      if (!($collective->user_id === $user->id)) {
+      if (!($collective->isCreator())) {
         return false;
       }
 
@@ -187,6 +186,32 @@ class CollectiveFactory
       $collective->invitations()->create($data);
 
       return true;
+    });
+
+    return $tran;
+  }
+
+  /**
+   * Elimina un miembro del colectivo
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function removeMember(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // si el usuario no es el dueño del colectivo
+      if (!($collective->isCreator())) {
+        return false;
+      }
+
+      // eliminar miembro
+      return $collective
+        ->members()
+        ->where('user_id', $request->user_id)
+        ->delete();
     });
 
     return $tran;

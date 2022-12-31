@@ -39,6 +39,18 @@
                             />
                         </div>
                     </div>
+                    <div class="py-8" v-if="showButtonDeleteCollective">
+                        <div class="absolute bottom-5 inset-x-0 px-6">
+                            <v-btn
+                                outlined
+                                block
+                                color="grey darken-4"
+                                @click.stop="$emit('remove-from-collective', artist)"
+                            >
+                                eliminar
+                            </v-btn>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,6 +76,10 @@ export default {
             default: {},
         },
         showButtonFollow: {
+            type: Boolean,
+            default: false,
+        },
+        showButtonDeleteCollective: {
             type: Boolean,
             default: false,
         },

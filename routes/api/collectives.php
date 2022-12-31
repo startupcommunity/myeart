@@ -41,6 +41,11 @@ Route::group(['prefix' => 'collectives'], function () {
   Route::get('/get-user-collectives/{id?}', [CollectiveController::class, 'getUserCollective'])->name('getUserCollective');
 
   /**
+   * Devuelve los miembros de un colectivo
+   */
+  Route::get('/get-members/{id}', [CollectiveController::class, 'getMembers'])->name('getCollectiveMembers');
+
+  /**
    * actualiza la foto de perfil de un colectivo
    */
   Route::put('/update-profile-photo/{id}', [CollectiveController::class, 'updateProfilePhoto'])->name('updateProfilePhotoCollective');
@@ -54,4 +59,9 @@ Route::group(['prefix' => 'collectives'], function () {
    * Envía una invitación a un usuario para unirse a un colectivo
    */
   Route::post('/send-invitation', [CollectiveController::class, 'sendInvitation'])->name('sendInvitationCollective');
+
+  /**
+   * elimina un miembro del colectivo
+   */
+  Route::post('/remove-member', [CollectiveController::class, 'removeMember'])->name('removeMemberCollective');
 });

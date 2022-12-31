@@ -2562,7 +2562,13 @@ var endpoints = {
     getReleaseByOption: "".concat(API, "/collectives/get-collective-releases-by-option/"),
     // get
     // envía una invitación a un usuario para unirse a un colectivo / {id}
-    sendInvitation: "".concat(API, "/collectives/send-invitation") // post
+    sendInvitation: "".concat(API, "/collectives/send-invitation"),
+    // post
+    // devuelve los miembros de un colectivo / {id}
+    members: "".concat(API, "/collectives/get-members/"),
+    // get
+    // elimina un miembro de un colectivo / {id}
+    removeMember: "".concat(API, "/collectives/remove-member") // post
 
   }
 };
