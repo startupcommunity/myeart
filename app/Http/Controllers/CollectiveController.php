@@ -208,4 +208,20 @@ class CollectiveController extends Controller
             return $this->resp->json($e->getMessage(), 500);
         }
     }
+
+    /**
+     * devuelve las obras de un colectivo
+     *
+     * @param int $id           id del colectivo
+     * @return JsonResponse
+     */
+    public function getArtworks(int $id): JsonResponse
+    {
+        try {
+            $data = $this->db->getArtworks($id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
 }

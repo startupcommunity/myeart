@@ -75,6 +75,25 @@ class CollectiveDB
   }
 
   /**
+   * Devuelve las obras de un colectivo
+   *
+   * @param int $id       id del colectivo
+   * @return Collection
+   */
+  public function getArtworks(int $id): Collection
+  {
+    // colectivo
+    $collective = $this->getCollective($id, false);
+
+    // ids de los miembros del colectivo y el creador
+    $members = $collective->members()->pluck('user_id')->toArray();
+    $members[] = $collective->user_id;
+
+    // obtener las obras de los miembros y del creador del colectivo
+    return ArtworkDB::getArtworksByUsers($members);
+  }
+
+  /**
    * Devuelve todos los colectivos del usuario
    * Ya sean creados o por invitación
    */
@@ -116,8 +135,8 @@ class CollectiveDB
     // obtener las publicaciones de todos
     return UserRelease::whereIn('user_id', $members)
       ->where('type', ReleaseTypeEnum::COLLECTIVE)
-      ->with($releaseRelations)
       ->orderByDesc('created_at')
+      ->with($releaseRelations)
       ->get();
   }
 

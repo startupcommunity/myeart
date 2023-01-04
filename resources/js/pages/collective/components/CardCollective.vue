@@ -27,6 +27,13 @@
                 >
                     <i class="fa-solid fa-cogs text-blue-800"></i>
                 </button>
+                <button
+                    v-else
+                    class="py-1 px-2 rounded-lg hover:bg-gray-200"
+                    @click.stop="goToCollectiveProfile"
+                >
+                    <i class="fa-solid fa-eye text-zinc-800"></i>
+                </button>
                 <button @click.stop="share">
                     <i class="fa-solid fa-share-nodes text-gray-400"></i>
                 </button>

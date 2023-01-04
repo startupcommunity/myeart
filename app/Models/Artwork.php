@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ArtworkStateEnum;
+use App\Enums\ArtworkTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -268,5 +269,27 @@ class Artwork extends Model
         if ($sortBy === 3) {
             return $query->orderByDesc('price');
         }
+    }
+
+    /**
+     * Devuelve las obras del tipo artista
+     *
+     * @param  Builder $query
+     * @return Builder
+     */
+    public function scopeTypeArtist($query)
+    {
+        return $query->where('type', ArtworkTypeEnum::ARTIST);
+    }
+
+    /**
+     * Devuelve las obras del tipo colectivo
+     *
+     * @param  Builder $query
+     * @return Builder
+     */
+    public function scopeTypeCollective($query)
+    {
+        return $query->where('type', ArtworkTypeEnum::COLLECTIVE);
     }
 }

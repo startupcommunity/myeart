@@ -6,13 +6,14 @@ const API = `${API_URL}api`;
 const endpoints = {
     // obras
     artworks: {
-        save: `${API}/artworks/create`,
-        edit: `${API}/artworks/edit/`,
-        update: `${API}/artworks/update/`,
-        getImage: `${API}/artworks/image/`,
-        getPublish: `${API}/artworks/publish`,
-        getUserPublish: `${API}/artworks/user/publish/`,
-        getPublishForCategory: `${API}/artworks/publish/category/`,
+        save: `${API}/artworks/create`, // post
+        edit: `${API}/artworks/edit/`, // get - params :id
+        update: `${API}/artworks/update/`, // put - params :id
+        delete: `${API}/artworks/delete/`, // delete - params :id
+        getImage: `${API}/artworks/image/`, // get - params :id
+        getPublish: `${API}/artworks/publish`, // get
+        getUserPublish: `${API}/artworks/user/publish/`, // get - params :id
+        getPublishForCategory: `${API}/artworks/publish/category/`, // get - params :id
         liked: `${API}/artworks/liked/`,
         disliked: `${API}/artworks/disliked/`,
         show: `${API}/artworks/show/`,
@@ -214,6 +215,9 @@ const endpoints = {
 
         // elimina un miembro de un colectivo / {id}
         removeMember: `${API}/collectives/remove-member`, // post
+
+        // devuelve las obras del colectivo / {id}
+        artworks: `${API}/collectives/get-artworks/`, // get
     },
 };
 

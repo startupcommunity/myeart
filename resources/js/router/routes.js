@@ -76,13 +76,13 @@ export const routes = [
     // ------------- Obras -------------
     {
         name: "createArtwork",
-        path: "/obras/crear",
+        path: "/obras/crear/:type?",
         component: importPage("artwork/CreateArtwork"),
         beforeEnter: ifAuthenticated,
     },
     {
         name: "editArtwork",
-        path: "/obras/editar/:id",
+        path: "/obras/editar/:id/:type?",
         component: importPage("artwork/EditArtwork"),
         beforeEnter: ifAuthenticated,
     },

@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Enums\ArtworkTypeEnum;
 use App\Models\Artwork;
 use App\Utils\AppStorage;
 use Illuminate\Support\Facades\DB;
@@ -132,6 +133,7 @@ class ArtworkFactory
 
       // datos de obras
       $fields = $this->selectFieldsToSave($data);
+      $fields['type'] = $data['type_artwork'] ?? ArtworkTypeEnum::ARTIST;
 
       // obra creada
       $artwork = $user->artworks()->create($fields);

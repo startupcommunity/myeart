@@ -333,6 +333,7 @@
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
                                     type="submit"
                                     @click.stop="isDraft = 3"
+                                    v-if="!isCollective"
                                 >
                                     Guardar como borrador
                                 </button>
@@ -426,6 +427,15 @@ export default {
         ...mapGetters({
             userProfile: "getProfile",
         }),
+
+        /**
+         * Verificar si el parámetro type de la ruta es igual a 2
+         * 1 = artista
+         * 2- colectivo
+         */
+        isCollective() {
+            return this.$route.params.type == 2;
+        },
     },
     methods: {
         /**
@@ -435,6 +445,9 @@ export default {
             if (this.isDraft === 1) {
                 if (!this.$refs.artworkForm.validate()) return;
             }
+
+            // evaluare parámetro type de ruta
+            const type_artwork = this.$route.params.type || 1;
 
             this.globalLoading = true;
 
@@ -452,6 +465,7 @@ export default {
             data.append("shipping", this.form.shipping);
             data.append("state", this.isDraft);
             data.append(`type`, JSON.stringify(this.form.type));
+            data.append(`type_artwork`, type_artwork);
 
             // data sync
             const files = this.uploadedFiles;
@@ -473,9 +487,19 @@ export default {
                         this.noty(text);
 
                         // redireccion
-                        this.$router.push(
-                            `/usuario/perfil/${this.userProfile.id}/obras`
-                        );
+                        // obra de artista
+                        if (type_artwork == 1) {
+                            this.$router.push(
+                                `/usuario/perfil/${this.userProfile.id}/obras`
+                            );
+                            return;
+                        }
+
+                        // obra de colectivo
+                        if (type_artwork == 2) {
+                            this.$router.go(-1);
+                            return;
+                        }
                     }
                 })
                 .catch((error) => this.showRequestErrors(error))

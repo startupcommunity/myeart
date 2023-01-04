@@ -116,10 +116,6 @@ export default {
             type: Object,
             default: () => ({}),
         },
-        profile: {
-            type: Object,
-            default: () => ({}),
-        },
     },
 
     data() {

@@ -100,9 +100,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     this.loadData();
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_11__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_11__.mapGetters)({
     user: "getProfile"
-  })),
+  })), {}, {
+    /**
+     * Verificar si el parámetro type de la ruta es igual a 2
+     * 1 = artista
+     * 2- colectivo
+     */
+    isCollective: function isCollective() {
+      return this.$route.params.type == 2;
+    }
+  }),
   methods: {
     /**
      * Cargar datos necesarios para la edición
@@ -201,9 +210,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var publishMsj = "Obra publicada con éxito";
           var text = state === 3 ? draftMsj : publishMsj;
 
-          _this2.noty(text);
+          _this2.noty(text); // si no es una obra de colectivo
 
-          _this2.$router.push("/usuario/perfil/".concat(_this2.user.id, "/obras"));
+
+          if (!_this2.isCollective) {
+            _this2.$router.push("/usuario/perfil/".concat(_this2.user.id, "/obras"));
+
+            return;
+          }
+
+          _this2.$router.go(-1);
         }
       })["catch"](function (error) {
         return _this2.showRequestErrors(error);

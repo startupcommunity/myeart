@@ -33,12 +33,15 @@ class ArtworkDB
     {
         return Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])
             ->where('state', ArtworkStateEnum::PUBLISHED)
+            ->typeArtist()
             ->orderBy('id', 'Desc')
             ->get();
     }
 
     /**
-     * Devuelve todas las obras publicadas de los usuarios
+     * Devuelve una obra ordenada por sus imagenes
+     *
+     * @param Int $id       id de la obra
      */
     public static function getArtworkForID($id): Artwork
     {
@@ -50,7 +53,7 @@ class ArtworkDB
 
     /**
      * Devuelve todas las obras publicadas del usuario indicado
-     * 
+     *
      * @param Int $userID           id del usuario
      * @param Int $artworkID        id de la obra a ignorar
      */
@@ -80,6 +83,7 @@ class ArtworkDB
         $data = Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])
             ->orderByDesc('id')
             ->published()
+            ->typeArtist()
             ->category($categoryID);
 
         // ignora el usuario indicada en caso de existir
@@ -160,6 +164,24 @@ class ArtworkDB
     }
 
     /**
+     * Devuelve las obras de respectivos usuarios
+     * filtradas por tipo colectivo
+     *
+     * @param array $ids            ids de los usuarios
+     * @return Collection
+     */
+    public static function getArtworksByUsers(array $ids): Collection
+    {
+        $relations = ['categories', 'subcategories', 'labels', 'gallery', 'user.profile', 'likes'];
+        return Artwork::with($relations)
+            ->whereIn('user_id', $ids)
+            ->published()
+            ->typeCollective()
+            ->orderByDesc('created_at')
+            ->get();
+    }
+
+    /**
      * Filtrar las obras publicadas de todos los usuarios
      *
      * @param array $filters            Filtros
@@ -168,7 +190,8 @@ class ArtworkDB
     public static function filterPublished(array $filters): LengthAwarePaginator
     {
         // query
-        $data = Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])->published();
+        $relations = ['categories', 'labels', 'gallery', 'user', 'likes'];
+        $data = Artwork::with($relations)->published()->typeArtist();
         $filter = (object) $filters;
 
         // conditions

@@ -82,9 +82,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.form.date_created = this.actualDate;
     this.getCategories();
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_11__.mapGetters)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_11__.mapGetters)({
     userProfile: "getProfile"
-  })),
+  })), {}, {
+    /**
+     * Verificar si el parámetro type de la ruta es igual a 2
+     * 1 = artista
+     * 2- colectivo
+     */
+    isCollective: function isCollective() {
+      return this.$route.params.type == 2;
+    }
+  }),
   methods: {
     /**
      * Guardar, publicar o borrador de la obra creada
@@ -94,8 +103,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.isDraft === 1) {
         if (!this.$refs.artworkForm.validate()) return;
-      }
+      } // evaluare parámetro type de ruta
 
+
+      var type_artwork = this.$route.params.type || 1;
       this.globalLoading = true;
       var data = new FormData();
       data.append("title", this.form.title);
@@ -110,7 +121,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       data.append("location", this.form.location);
       data.append("shipping", this.form.shipping);
       data.append("state", this.isDraft);
-      data.append("type", JSON.stringify(this.form.type)); // data sync
+      data.append("type", JSON.stringify(this.form.type));
+      data.append("type_artwork", type_artwork); // data sync
 
       var files = this.uploadedFiles;
       files.forEach(function (file) {
@@ -129,9 +141,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var text = _this.isDraft === 3 ? draftMsj : publishMsj;
 
           _this.noty(text); // redireccion
+          // obra de artista
 
 
-          _this.$router.push("/usuario/perfil/".concat(_this.userProfile.id, "/obras"));
+          if (type_artwork == 1) {
+            _this.$router.push("/usuario/perfil/".concat(_this.userProfile.id, "/obras"));
+
+            return;
+          } // obra de colectivo
+
+
+          if (type_artwork == 2) {
+            _this.$router.go(-1);
+
+            return;
+          }
         }
       })["catch"](function (error) {
         return _this.showRequestErrors(error);
@@ -895,7 +919,7 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "flex flex-wrap w-full sm:justify-end"
-  }, [_c("button", {
+  }, [!_vm.isCollective ? _c("button", {
     staticClass: "w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase",
     attrs: {
       type: "submit"
@@ -906,7 +930,7 @@ var render = function render() {
         _vm.isDraft = 3;
       }
     }
-  }, [_vm._v("\n                                Guardar como borrador\n                            ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                                Guardar como borrador\n                            ")]) : _vm._e(), _vm._v(" "), _c("button", {
     staticClass: "w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase",
     attrs: {
       type: "submit",

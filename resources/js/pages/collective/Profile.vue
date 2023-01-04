@@ -107,8 +107,11 @@
                         />
                         <Member
                             :collective="collective"
-                            :profile="profile"
                             v-if="sections.member"
+                        />
+                        <Artwork
+                            :collective="collective"
+                            v-if="sections.artwork"
                         />
                     </div>
                     <!-- content -->
@@ -119,14 +122,15 @@
 </template>
 
 <script>
+import ProfilePhotoCollectiveModal from "./components/ProfilePhotoCollectiveModal.vue";
+import CollectiveAvatar from "./components/CollectiveAvatar.vue";
 import MainLayout from "../layouts/MainLayout.vue";
 import Header from "../landing/sections/Header.vue";
-import CollectiveAvatar from "./components/CollectiveAvatar.vue";
-import ProfilePhotoCollectiveModal from "./components/ProfilePhotoCollectiveModal.vue";
 import profileMixin from "./modules/profile-mixin";
 import Info from "./sections/Info.vue";
 import Release from "./sections/Release.vue";
 import Member from "./sections/Member.vue";
+import Artwork from "./sections/Artwork.vue";
 
 export default {
     name: "Profile",
@@ -139,6 +143,7 @@ export default {
         ProfilePhotoCollectiveModal,
         Release,
         Member,
+        Artwork,
     },
 
     mounted() {

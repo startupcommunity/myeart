@@ -424,6 +424,15 @@ export default {
         ...mapGetters({
             user: "getProfile",
         }),
+
+        /**
+         * Verificar si el parámetro type de la ruta es igual a 2
+         * 1 = artista
+         * 2- colectivo
+         */
+        isCollective() {
+            return this.$route.params.type == 2;
+        },
     },
     methods: {
         /**
@@ -512,9 +521,16 @@ export default {
                         const text = state === 3 ? draftMsj : publishMsj;
                         this.noty(text);
 
-                        this.$router.push(
-                            `/usuario/perfil/${this.user.id}/obras`
-                        );
+                        // si no es una obra de colectivo
+                        if (!this.isCollective) {
+                            this.$router.push(
+                                `/usuario/perfil/${this.user.id}/obras`
+                            );
+
+                            return;
+                        }
+
+                        this.$router.go(-1);
                     }
                 })
                 .catch((error) => this.showRequestErrors(error))

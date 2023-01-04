@@ -5841,7 +5841,17 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-cogs text-blue-800"
-  })]) : _vm._e(), _vm._v(" "), _c("button", {
+  })]) : _c("button", {
+    staticClass: "py-1 px-2 rounded-lg hover:bg-gray-200",
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.goToCollectiveProfile.apply(null, arguments);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-eye text-zinc-800"
+  })]), _vm._v(" "), _c("button", {
     on: {
       click: function click($event) {
         $event.stopPropagation();

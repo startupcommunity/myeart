@@ -155,6 +155,7 @@ const MORE_RELEASES = 2;
 
 export default {
     name: "ReleaseCollective",
+    mixins: [utilMixin],
     components: {
         FrontImage,
         LoadingTailwind,
@@ -163,7 +164,6 @@ export default {
         ReleaseCommentsDialog,
         Avatar,
     },
-    mixins: [utilMixin],
     props: {
         collective: {
             type: Object,
