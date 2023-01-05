@@ -81,6 +81,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // mixin
     this.form.date_created = this.actualDate;
     this.getCategories();
+    console.log(this.collectiveId);
   },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_11__.mapGetters)({
     userProfile: "getProfile"
@@ -92,6 +93,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      */
     isCollective: function isCollective() {
       return this.$route.params.type == 2;
+    },
+
+    /**
+     * Id del colectivo
+     */
+    collectiveId: function collectiveId() {
+      return this.$route.params.collectiveID || null;
     }
   }),
   methods: {
@@ -99,14 +107,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * Guardar, publicar o borrador de la obra creada
      */
     saveArtwork: function saveArtwork() {
-      var _this = this;
+      var _this$$route$params$t,
+          _this = this;
 
       if (this.isDraft === 1) {
         if (!this.$refs.artworkForm.validate()) return;
       } // evaluare parámetro type de ruta
 
 
-      var type_artwork = this.$route.params.type || 1;
+      var type_artwork = (_this$$route$params$t = this.$route.params.type) !== null && _this$$route$params$t !== void 0 ? _this$$route$params$t : 1;
       this.globalLoading = true;
       var data = new FormData();
       data.append("title", this.form.title);
@@ -122,7 +131,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       data.append("shipping", this.form.shipping);
       data.append("state", this.isDraft);
       data.append("type", JSON.stringify(this.form.type));
-      data.append("type_artwork", type_artwork); // data sync
+      data.append("type_artwork", type_artwork);
+
+      if (this.collectiveId) {
+        data.append("collective_id", this.collectiveId);
+      } // data sync
+
 
       var files = this.uploadedFiles;
       files.forEach(function (file) {
@@ -152,9 +166,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
           if (type_artwork == 2) {
-            _this.$router.go(-1);
-
-            return;
+            _this.$router.push("/colectivos/perfil/".concat(_this.collectiveId, "/artwork"));
           }
         }
       })["catch"](function (error) {

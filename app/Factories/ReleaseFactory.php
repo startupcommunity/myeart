@@ -38,6 +38,7 @@ class ReleaseFactory
 
       // save publicación
       $data['type'] = $request->type ?? ReleaseTypeEnum::ARTIST;
+      $data['collective_id'] = $request->collective_id ?? null;
       $release = $user->releases()->create($data);
 
       // save labels or friends

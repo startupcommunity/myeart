@@ -218,6 +218,9 @@ const endpoints = {
 
         // devuelve las obras del colectivo / {id}
         artworks: `${API}/collectives/get-artworks/`, // get
+
+        // devuelve las obras del colectivo filtrada por request / {id}
+        filterArtworks: `${API}/collectives/get-filters-artworks/`, // get
     },
 };
 

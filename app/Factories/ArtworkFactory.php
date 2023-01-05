@@ -114,7 +114,8 @@ class ArtworkFactory
       'price',
       'state',
       'large_description',
-      'other_details'
+      'other_details',
+      'collective_id'
     ])->toArray();
   }
 

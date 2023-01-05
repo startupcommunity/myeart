@@ -76,13 +76,13 @@ export const routes = [
     // ------------- Obras -------------
     {
         name: "createArtwork",
-        path: "/obras/crear/:type?",
+        path: "/obras/crear/:type?/:collectiveID?",
         component: importPage("artwork/CreateArtwork"),
         beforeEnter: ifAuthenticated,
     },
     {
         name: "editArtwork",
-        path: "/obras/editar/:id/:type?",
+        path: "/obras/editar/:id/:type?/:collectiveID?",
         component: importPage("artwork/EditArtwork"),
         beforeEnter: ifAuthenticated,
     },
@@ -207,7 +207,7 @@ export const routes = [
     },
     {
         name: "collectiveProfile",
-        path: "/colectivos/perfil/:id",
+        path: "/colectivos/perfil/:id/:section?",
         component: importPage("collective/Profile"),
         beforeEnter: ifAuthenticated,
     },

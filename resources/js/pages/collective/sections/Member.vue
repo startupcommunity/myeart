@@ -150,6 +150,10 @@ export default {
         this.getMembers();
     },
 
+    mounted() {
+        window.scrollTo(0, 0);
+    },
+
     methods: {
         /**
          * carga las publicaciones del creador del colectivo

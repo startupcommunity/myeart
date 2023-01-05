@@ -167,14 +167,16 @@ class ArtworkDB
      * Devuelve las obras de respectivos usuarios
      * filtradas por tipo colectivo
      *
-     * @param array $ids            ids de los usuarios
+     * @param array $ids                ids de los usuarios
+     * @param integer $collectiveID     id del colectivo
      * @return Collection
      */
-    public static function getArtworksByUsers(array $ids): Collection
+    public static function getArtworksByUsers(array $ids, int $collectiveID): Collection
     {
         $relations = ['categories', 'subcategories', 'labels', 'gallery', 'user.profile', 'likes'];
         return Artwork::with($relations)
             ->whereIn('user_id', $ids)
+            ->where('collective_id', $collectiveID)
             ->published()
             ->typeCollective()
             ->orderByDesc('created_at')

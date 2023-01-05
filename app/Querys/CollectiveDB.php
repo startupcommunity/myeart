@@ -90,12 +90,61 @@ class CollectiveDB
     $members[] = $collective->user_id;
 
     // obtener las obras de los miembros y del creador del colectivo
-    return ArtworkDB::getArtworksByUsers($members);
+    return ArtworkDB::getArtworksByUsers($members, $id);
+  }
+
+  /**
+   * Devuelve las obras de un colectivo filtradas por usuario
+   * o por opción
+   *
+   * @param int $id             id del colectivo
+   * @param Request $request    datos del filtro
+   * @return Collection
+   */
+  public function getFilterArtworks(Request $request, int $id): Collection
+  {
+    // datos del filtro
+    $data = $request->only(['option', 'user_id']);
+    $option = intval($data['option']);
+    $user_id = intval($data['user_id']);
+
+    // verificar que el usuario pertenezca al colectivo
+    // o que sea el creador
+    $collective = $this->getCollective($id, false);
+    $isMember = $collective->isMember($user_id);
+    $isCreator = $collective->isCreator($user_id);
+
+    // devolver vacío si no pertenece al colectivo
+    if (!$isMember && !$isCreator) {
+      return new Collection();
+    }
+
+    // opción 1: todas las obras
+    if ($option === 1) {
+      return $this->getArtworks($id);
+    }
+
+    // opción 2: obras del usuario indicado
+    if ($option === 2) {
+      return ArtworkDB::getArtworksByUsers([$user_id], $id);
+    }
+
+    // opción 3: obras de los miembros del colectivo
+    if ($option === 3) {
+      // ids de los miembros del colectivo
+      $members = $collective->members()->pluck('user_id')->toArray();
+
+      // obtener las obras de los miembros
+      return ArtworkDB::getArtworksByUsers($members, $id);
+    }
   }
 
   /**
    * Devuelve todos los colectivos del usuario
    * Ya sean creados o por invitación
+   *
+   * @param integer    id del usuario
+   * @return array
    */
   public function getUserCollective(?int $id = null): array
   {
@@ -116,8 +165,8 @@ class CollectiveDB
   }
 
   /**
-   * Devuelve las publicaciones de un colectivo y sus miembros
-   * se filtra por type ReleaseTypeEnum::COLLECTIVE
+   * Devuelve las publicaciones de un colectivo y la de sus miembros
+   * se filtra por type (collective) y collective_id
    *
    * @param integer    id del colectivo
    * @return Collection
@@ -134,9 +183,10 @@ class CollectiveDB
 
     // obtener las publicaciones de todos
     return UserRelease::whereIn('user_id', $members)
-      ->where('type', ReleaseTypeEnum::COLLECTIVE)
-      ->orderByDesc('created_at')
       ->with($releaseRelations)
+      ->where('type', ReleaseTypeEnum::COLLECTIVE)
+      ->where('collective_id', $id)
+      ->orderByDesc('created_at')
       ->get();
   }
 

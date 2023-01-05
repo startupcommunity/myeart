@@ -162,7 +162,6 @@ export default {
         show(val) {
             if (val) {
                 this.getFASI();
-                // this.loadData();
             }
         },
     },
@@ -207,9 +206,6 @@ export default {
             // obtener los ids de los artistas etiquetados
             const ids = this.release.labels.map((label) => label.friend_id);
             this.form.labels = ids;
-            console.log(ids);
-            console.log(this.release);
-            console.log(this.artists);
         },
 
         /**
@@ -283,7 +279,6 @@ export default {
          * Confirmar y guardar o rechazar
          */
         confirmUpdate() {
-            console.log(this.form.labels);
             // ejecutar swalert de confirm
             this.confirmedDialog({
                 title: "¿Estás seguro de actualizar esta publicación?",

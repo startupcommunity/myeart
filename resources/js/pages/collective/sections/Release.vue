@@ -135,6 +135,7 @@
         <!-- modal para crear publicación -->
         <CreateReleaseModal
             :show="showDialog"
+            :collectiveID="collective?.id"
             @close-modal="showDialog = false"
             @created="getReleasesAccordingToUser"
         />
@@ -193,6 +194,10 @@ export default {
 
     created() {
         this.getReleasesAccordingToUser();
+    },
+
+    mounted() {
+        window.scrollTo(0, 0);
     },
 
     computed: {

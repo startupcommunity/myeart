@@ -8,6 +8,7 @@ use App\Http\Requests\CreateFrontPhotoCollectiveRequest;
 use App\Http\Requests\SendInvitationCollectiveRequest;
 use App\Http\Requests\CreateCollectiveRequest;
 use App\Factories\CollectiveFactory;
+use App\Http\Requests\FilterArtworkInCollectiveRequest;
 use Illuminate\Http\JsonResponse;
 use App\Querys\CollectiveDB;
 use Illuminate\Http\Request;
@@ -219,6 +220,23 @@ class CollectiveController extends Controller
     {
         try {
             $data = $this->db->getArtworks($id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * devuelve las obras de un colectivo, filtrada por request
+     *
+     * @param int $id           id del colectivo
+     * @param FilterArtworkInCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function getFilterArtworks(FilterArtworkInCollectiveRequest $request, int $id): JsonResponse
+    {
+        try {
+            $data = $this->db->getFilterArtworks($request, $id);
             return $this->resp->json($data, 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);

@@ -419,6 +419,8 @@ export default {
         // mixin
         this.form.date_created = this.actualDate;
         this.getCategories();
+
+        console.log(this.collectiveId);
     },
     computed: {
         /**
@@ -436,6 +438,13 @@ export default {
         isCollective() {
             return this.$route.params.type == 2;
         },
+
+        /**
+         * Id del colectivo
+         */
+        collectiveId() {
+            return this.$route.params.collectiveID || null;
+        },
     },
     methods: {
         /**
@@ -447,7 +456,7 @@ export default {
             }
 
             // evaluare parámetro type de ruta
-            const type_artwork = this.$route.params.type || 1;
+            const type_artwork = this.$route.params.type ?? 1;
 
             this.globalLoading = true;
 
@@ -466,6 +475,10 @@ export default {
             data.append("state", this.isDraft);
             data.append(`type`, JSON.stringify(this.form.type));
             data.append(`type_artwork`, type_artwork);
+
+            if (this.collectiveId) {
+                data.append(`collective_id`, this.collectiveId);
+            }
 
             // data sync
             const files = this.uploadedFiles;
@@ -497,8 +510,9 @@ export default {
 
                         // obra de colectivo
                         if (type_artwork == 2) {
-                            this.$router.go(-1);
-                            return;
+                            this.$router.push(
+                                `/colectivos/perfil/${this.collectiveId}/artwork`
+                            );
                         }
                     }
                 })

@@ -2580,7 +2580,10 @@ var endpoints = {
     removeMember: "".concat(API, "/collectives/remove-member"),
     // post
     // devuelve las obras del colectivo / {id}
-    artworks: "".concat(API, "/collectives/get-artworks/") // get
+    artworks: "".concat(API, "/collectives/get-artworks/"),
+    // get
+    // devuelve las obras del colectivo filtrada por request / {id}
+    filterArtworks: "".concat(API, "/collectives/get-filters-artworks/") // get
 
   }
 };
@@ -5321,12 +5324,12 @@ var routes = [{
 }, // ------------- Obras -------------
 {
   name: "createArtwork",
-  path: "/obras/crear/:type?",
+  path: "/obras/crear/:type?/:collectiveID?",
   component: importPage("artwork/CreateArtwork"),
   beforeEnter: ifAuthenticated
 }, {
   name: "editArtwork",
-  path: "/obras/editar/:id/:type?",
+  path: "/obras/editar/:id/:type?/:collectiveID?",
   component: importPage("artwork/EditArtwork"),
   beforeEnter: ifAuthenticated
 }, {
@@ -5425,7 +5428,7 @@ var routes = [{
   component: importPage("collective/Show")
 }, {
   name: "collectiveProfile",
-  path: "/colectivos/perfil/:id",
+  path: "/colectivos/perfil/:id/:section?",
   component: importPage("collective/Profile"),
   beforeEnter: ifAuthenticated
 }];

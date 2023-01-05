@@ -13,6 +13,25 @@
         </div>
         <!-- /title -->
 
+        <!-- filtro -->
+        <div class="flex items-center justify-end" v-if="isOwner">
+            <span
+                class="uppercase text-zinc-900 tracking-widest text-xs font-bold w-full text-right"
+            >
+                Filtrar por:
+            </span>
+            <v-select
+                :items="options"
+                item-text="text"
+                item-value="val"
+                color="#B2794C"
+                item-color="brown darken-2"
+                class="pl-2"
+                v-model="option"
+            ></v-select>
+        </div>
+        <!-- /filtro -->
+
         <!-- listado de obras -->
         <div class="py-8 py-md-0 pb-md-10">
             <LoadingTailwind v-if="globalLoading" />
@@ -25,6 +44,9 @@
                     :key="art.id"
                     :artwork="art"
                     :type="2"
+                    :collectiveID="collective.id"
+                    :showButtonEdit="canEdit(art)"
+                    :showButtonDelete="canDelete(art)"
                     @deleted="getArtworks"
                 />
             </div>
@@ -67,23 +89,46 @@ export default {
 
     data() {
         return {
+            option: 1,
             artworks: [],
             original: [],
+            options: [
+                { text: "Todas", val: 1 },
+                { text: "Solo mías", val: 2 },
+                { text: "Miembros", val: 3 },
+            ],
         };
     },
 
-    created() {
+    mounted() {
         this.getArtworks();
+
+        // scroll top
+        window.scrollTo(0, 0);
+    },
+
+    computed: {
+        creatorID() {
+            return this.collective?.user_id || 0;
+        },
+        user() {
+            return this.$store.getters.getProfile;
+        },
+        isOwner() {
+            return this.creatorID === this.user?.id;
+        },
+    },
+
+    watch: {
+        option(val) {
+            this.getFilterArtworks();
+        },
     },
 
     methods: {
-        goToCreate() {
-            this.$router.push({
-                name: "createArtwork",
-                params: { type: 2 },
-            });
-        },
-
+        /**
+         * Devuelve las obras del colectivo
+         */
         getArtworks() {
             this.globalLoading = true;
             this.axios
@@ -96,9 +141,69 @@ export default {
                 .finally(() => (this.globalLoading = false));
         },
 
+        /**
+         * Devuelve las obras del colectivo filtradas por las opciones
+         */
+        getFilterArtworks() {
+            this.globalLoading = true;
+
+            const params = {
+                option: this.option,
+                user_id: this.user?.id || 0,
+            };
+
+            const ep = this.ep.collectives.filterArtworks + this.collective.id;
+
+            this.axios
+                .get(ep, { params })
+                .then((res) => {
+                    this.original = JSON.parse(JSON.stringify(res.data));
+                    this.artworks = this.original.slice(0, INIT_ARTWORK);
+                })
+                .catch((err) => this.manageError(err))
+                .finally(() => (this.globalLoading = false));
+        },
+
+        /**
+         * LLeva a la vista de creación de obras
+         */
+        goToCreate() {
+            this.$router.push({
+                name: "createArtwork",
+                params: { type: 2, collectiveID: this.collective.id },
+            });
+        },
+
+        /**
+         * Muestra mas obras
+         */
         showMore() {
             const total = this.artworks.length + ADD_ARTWORK;
             this.artworks = this.original.slice(0, total);
+        },
+
+        /**
+         * Si el usuario puedo editar una obra
+         * para editar la obra debe ser el creador de la obra
+         *
+         * @param {Object} artwork
+         */
+        canEdit(artwork) {
+            return artwork.user_id === this.user?.id;
+        },
+
+        /**
+         * Si el usuario puedo eliminar una obra
+         * para eliminar la obra debe ser el creador de la obra
+         * o el creador del colectivo
+         *
+         * @param {Object} artwork
+         */
+        canDelete(artwork) {
+            return (
+                artwork.user_id === this.user?.id ||
+                this.creatorID === this.user?.id
+            );
         },
     },
 };

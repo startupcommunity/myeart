@@ -217,9 +217,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this2.$router.push("/usuario/perfil/".concat(_this2.user.id, "/obras"));
 
             return;
-          }
+          } // obra de colectivo
 
-          _this2.$router.go(-1);
+
+          if (_this2.isCollective) {
+            // obtener parámetro de la ruta anterior
+            var collectiveId = _this2.$route.params.collectiveID;
+
+            _this2.$router.push("/colectivos/perfil/".concat(collectiveId, "/artwork"));
+          }
         }
       })["catch"](function (error) {
         return _this2.showRequestErrors(error);

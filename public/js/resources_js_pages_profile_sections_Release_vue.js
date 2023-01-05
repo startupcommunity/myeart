@@ -162,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     show: function show(val) {
       if (val) {
-        this.getFASI(); // this.loadData();
+        this.getFASI();
       }
     }
   },
@@ -210,9 +210,6 @@ __webpack_require__.r(__webpack_exports__);
         return label.friend_id;
       });
       this.form.labels = ids;
-      console.log(ids);
-      console.log(this.release);
-      console.log(this.artists);
     },
 
     /**
@@ -287,8 +284,7 @@ __webpack_require__.r(__webpack_exports__);
     confirmUpdate: function confirmUpdate() {
       var _this2 = this;
 
-      console.log(this.form.labels); // ejecutar swalert de confirm
-
+      // ejecutar swalert de confirm
       this.confirmedDialog({
         title: "¿Estás seguro de actualizar esta publicación?",
         text: "Esta acción no se puede deshacer",

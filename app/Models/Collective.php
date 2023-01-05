@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\CollectiveTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,7 +12,7 @@ use Illuminate\Support\Str;
 
 class Collective extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, CollectiveTrait;
 
     protected $table = 'collectives';
 
@@ -86,10 +87,10 @@ class Collective extends Model
     }
 
     /**
-     * Verifica si el usuario logueado es el creador del colectivo
+     * Devolver las obras del colectivo
      */
-    public function isCreator(): bool
+    public function artworks(): HasMany
     {
-        return $this->user_id === auth()->id();
+        return $this->hasMany(Artwork::class);
     }
 }

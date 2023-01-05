@@ -36,10 +36,7 @@
                 <p class="text-gray-900">{{ artwork.price ?? 0 }} {{ euro }}</p>
             </div>
             <div class="flex flex-wrap py-4 justify-between items-center px-2">
-                <div
-                    class="w-full xl:w-1/2 mb-4 xl:pr-2"
-                    v-if="showButtonEdit && isCreator"
-                >
+                <div class="w-full xl:w-1/2 mb-4 xl:pr-2" v-if="showButtonEdit">
                     <router-link
                         class="text-sm uppercase font-bold tracking-wide border-[1.5px] border-gray-900 text-center px-9 h-11 flex min-w-full max-w-none justify-center items-center hover:animate-bg-gray-light text-black rounded-sm hover:no-underline"
                         :to="getPathEditArtwork"
@@ -49,7 +46,7 @@
                 </div>
                 <div
                     class="w-full xl:w-1/2 mb-4 xl:pl-2"
-                    v-if="showButtonDelete && isCreator"
+                    v-if="showButtonDelete"
                 >
                     <v-btn
                         outlined
@@ -93,6 +90,10 @@ export default {
         type: {
             type: Number | String,
             default: 1,
+        },
+        collectiveID: {
+            type: Number | String,
+            default: null,
         },
     },
     computed: {
@@ -145,7 +146,11 @@ export default {
         getPathEditArtwork() {
             return {
                 name: "editArtwork",
-                params: { id: this.artwork.id, type: this.type },
+                params: {
+                    id: this.artwork.id,
+                    type: this.type,
+                    collectiveID: this.collectiveID,
+                },
             };
         },
 
@@ -159,16 +164,16 @@ export default {
         /**
          * user logueado
          */
-        user() {
-            return this.$store.getters.getProfile;
-        },
+        // user() {
+        //     return this.$store.getters.getProfile;
+        // },
 
         /**
          * Verifica si es el creador de la obra
          */
-        isCreator() {
-            return this.user?.id === this.creator?.id;
-        },
+        // isCreator() {
+        //     return this.user?.id === this.creator?.id;
+        // },
     },
     methods: {
         /**

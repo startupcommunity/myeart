@@ -15,6 +15,9 @@ export default {
 
             // control para abrir/cerra el modal de imagen de perfil
             imageModal: false,
+
+            // muestra o no el header
+            showHeader: true,
         };
     },
 
@@ -39,10 +42,8 @@ export default {
     watch: {
         sections: {
             handler(val) {
-                if (val.profile) {
-                    const id = this.$route.params.id;
-                    this.$store.dispatch("getUserCollective", id);
-                }
+                const id = this.$route.params.id;
+                this.$store.dispatch("getUserCollective", id);
             },
             deep: true,
         },
