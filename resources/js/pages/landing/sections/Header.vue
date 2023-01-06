@@ -41,7 +41,7 @@
                             <div class="flex-fill hidden lg:block">
                                 <!-- menu start -->
                                 <nav class="main-menu lg:mr-8 xl:mr-32">
-                                    <ul class="text-left text-[9px] xl:text-xs">
+                                    <ul class="text-left text-[9px]">
                                         <li>
                                             <router-link
                                                 :to="{ name: 'listArtwork' }"
@@ -68,6 +68,15 @@
                                                 :to="{ name: 'indexCommunity' }"
                                             >
                                                 MI COMUNIDAD
+                                            </router-link>
+                                        </li>
+                                        <li>
+                                            <router-link
+                                                :to="{
+                                                    name: 'indexCollective',
+                                                }"
+                                            >
+                                                COLECTIVOS
                                             </router-link>
                                         </li>
 

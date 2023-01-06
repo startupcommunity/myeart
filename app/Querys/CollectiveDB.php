@@ -2,12 +2,14 @@
 
 namespace App\Querys;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Enums\ReleaseTypeEnum;
+use Illuminate\Http\Request;
+use App\Models\UserRelease;
 use App\Models\Collective;
 use App\Models\User;
-use App\Models\UserRelease;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class CollectiveDB
 {
@@ -28,7 +30,9 @@ class CollectiveDB
       'categories.category',
       'profile',
       'user',
-      'members.user'
+      'members.user',
+      'likes',
+      'artworks'
     ];
   }
 
@@ -58,6 +62,82 @@ class CollectiveDB
   {
     $relations = $with ? $this->getAllCollectiveRelations() : [];
     return $this->model->with($relations)->findOrFail($id);
+  }
+
+  /**
+   * Devuelve todos los colectivos del usuario
+   * Ya sean creados o por invitación
+   *
+   * @param integer    id del usuario
+   * @return array
+   */
+  public function getUserCollective(?int $id = null): array
+  {
+    $user = $id ? $this->user->find($id) : auth()->user();
+    $relations = $this->getAllCollectiveRelations();
+    $relationsGuest = ['collective.categories.category', 'collective.profile', 'collective.user', 'collective.likes'];
+
+    // primero obtener los colectivos creados
+    $collectives = $user->collectives()->with($relations)->get();
+
+    // luego obtener los colectivos a los que pertenece
+    $data = $user->memberCollective()->with($relationsGuest)->get();
+    $member = $data->map(fn ($item) => $item->collective);
+
+    // unir los colectivos
+    $collectives = $collectives->merge($member);
+
+    return $collectives->toArray();
+  }
+
+  /**
+   * Devuelve todos los colectivos de la app
+   *
+   * @return Builder
+   */
+  public function getAllCollectives(): Builder
+  {
+    $relations = $this->getAllCollectiveRelations();
+    return $this->model->with($relations);
+  }
+
+  /**
+   * Devuelve los colectivos de la app
+   * filtrados por algún parámetro y paginados
+   *
+   * @param Request $request
+   * @return LengthAwarePaginator
+   */
+  public function getAllCollectivesFilter(Request $request): LengthAwarePaginator
+  {
+    $collectives = $this->getAllCollectives();
+    $type = intval($request->type);
+    $category = intval($request->category);
+    $sortBy = intval($request->sortBy);
+
+    // filtrar por Categoria
+    if ($request->has('category') && $category) {
+      $collectives = $collectives->whereHas('categories', function ($query) use ($request) {
+        $query->where('category_id', intval($request->category));
+      });
+    }
+
+    // filtrar por tipo
+    if ($request->has('type') && $type) {
+      $collectives = $collectives->where('type', intval($request->type));
+    }
+
+    // ordenar por fecha de creación
+    if ($request->has('sortBy') && $sortBy === 1) {
+      $collectives = $collectives->orderByDesc('id');
+    }
+
+    // ordenar por orden alfabético
+    if ($request->has('sortBy') && $sortBy === 2) {
+      $collectives = $collectives->orderBy('name');
+    }
+
+    return $collectives->paginate(12, '*', 'page', $request->page ?? 1);
   }
 
   /**
@@ -137,31 +217,6 @@ class CollectiveDB
       // obtener las obras de los miembros
       return ArtworkDB::getArtworksByUsers($members, $id);
     }
-  }
-
-  /**
-   * Devuelve todos los colectivos del usuario
-   * Ya sean creados o por invitación
-   *
-   * @param integer    id del usuario
-   * @return array
-   */
-  public function getUserCollective(?int $id = null): array
-  {
-    $relations = $this->getAllCollectiveRelations();
-    $relationsGuest = ['collective.categories.category', 'collective.profile', 'collective.user'];
-    $user = $id ? $this->user->find($id) : auth()->user();
-
-    // primero obtener los colectivos creados
-    $collectives = $user->collectives()->with($relations)->get();
-
-    // luego obtener los colectivos a los que pertenece
-    $guests = $user->guestCollectives()->with($relationsGuest)->get();
-
-    // unir los colectivos
-    $collectives = $collectives->merge($guests);
-
-    return $collectives->toArray();
   }
 
   /**

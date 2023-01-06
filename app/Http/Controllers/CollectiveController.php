@@ -8,7 +8,9 @@ use App\Http\Requests\CreateFrontPhotoCollectiveRequest;
 use App\Http\Requests\SendInvitationCollectiveRequest;
 use App\Http\Requests\CreateCollectiveRequest;
 use App\Factories\CollectiveFactory;
+use App\Http\Requests\CreateLikeCollectiveRequest;
 use App\Http\Requests\FilterArtworkInCollectiveRequest;
+use App\Http\Requests\FilterCollectiveRequest;
 use Illuminate\Http\JsonResponse;
 use App\Querys\CollectiveDB;
 use Illuminate\Http\Request;
@@ -238,6 +240,54 @@ class CollectiveController extends Controller
         try {
             $data = $this->db->getFilterArtworks($request, $id);
             return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * devuelve todos los colectivos
+     *
+     * @param FilterCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function getAllCollectives(FilterCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->db->getAllCollectivesFilter($request);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Agrega un like al colectivo
+     *
+     * @param CreateLikeCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function addLike(CreateLikeCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->addLike($request);
+            return $this->resp->json($data, $data ? 201 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Elimina un like al colectivo
+     *
+     * @param CreateLikeCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function removeLike(CreateLikeCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->removeLike($request);
+            return $this->resp->json($data, $data ? 200 : 204);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

@@ -13419,6 +13419,9 @@ video {
 .pr-1{
   padding-right: 0.25rem;
 }
+.pb-7{
+  padding-bottom: 1.75rem;
+}
 .text-left{
   text-align: left;
 }
@@ -14672,6 +14675,9 @@ body {
   }
   .xl\:w-1\/2{
     width: 50%;
+  }
+  .xl\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .xl\:justify-start{
     justify-content: flex-start;

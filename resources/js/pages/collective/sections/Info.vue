@@ -7,6 +7,7 @@
         />
         <div
             class="flex flex-col md:flex-row justify-end pt-5 gap-3 border-b border-gray-200 pb-4"
+            v-if="isOwner"
         >
             <v-btn
                 outlined
@@ -26,7 +27,7 @@
             </v-btn> -->
         </div>
 
-        <div class="p-4 mt-5 border">
+        <div class="p-4 mt-5 border" v-if="isOwner">
             <h3 class="font-bold text-lg md:text-2xl mb-3">
                 Completa o edita la información de tu colectivo
             </h3>
@@ -37,6 +38,7 @@
         <MyCollectivesModal
             :show="dialogCollectives"
             @close-modal="closeDialogCollectives"
+            v-if="isOwner"
         />
     </section>
 </template>
@@ -57,6 +59,10 @@ export default {
         profile: {
             type: Object,
             default: () => ({}),
+        },
+        isOwner: {
+            type: Boolean,
+            default: false,
         },
     },
 

@@ -7,7 +7,13 @@
             <h3 class="text-lg md:text-3xl text-zinc-900 font-bold">
                 Obras del colectivo
             </h3>
-            <v-btn color="#B2794C" @click.stop="goToCreate" outlined large>
+            <v-btn
+                color="#B2794C"
+                @click.stop="goToCreate"
+                outlined
+                large
+                v-if="isCreatorOrMember"
+            >
                 <i class="fas fa-plus"></i> Agregar obra
             </v-btn>
         </div>
@@ -111,11 +117,24 @@ export default {
         creatorID() {
             return this.collective?.user_id || 0;
         },
+        members() {
+            return this.collective?.members || [];
+        },
         user() {
             return this.$store.getters.getProfile;
         },
         isOwner() {
             return this.creatorID === this.user?.id;
+        },
+
+        /**
+         * verifica si el usuario es el creador del colectivo
+         * o si es miembro del colectivo
+         */
+        isCreatorOrMember() {
+            return (
+                this.isOwner || this.members.some((m) => m.id === this.user?.id)
+            );
         },
     },
 

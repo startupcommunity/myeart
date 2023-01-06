@@ -216,4 +216,54 @@ class CollectiveFactory
 
     return $tran;
   }
+
+  /**
+   * Agrega un like a un colectivo
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function addLike(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // si el usuario ya dio like
+      $like = $collective->likes()
+        ->where('user_id', $request->user_id)
+        ->first();
+
+      if ($like) {
+        return false;
+      }
+
+      // crear like
+      $collective->likes()->create($request->only(['user_id']));
+
+      return true;
+    });
+
+    return $tran;
+  }
+
+  /**
+   * Elimina un like a un colectivo
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function removeLike(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // eliminar like
+      return $collective
+        ->likes()
+        ->where('user_id', $request->user_id)
+        ->delete();
+    });
+
+    return $tran;
+  }
 }

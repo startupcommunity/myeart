@@ -159,10 +159,21 @@ class User extends Authenticatable
      *
      * @return HasMany
      */
-    public function guestCollectives(): HasMany
+    // public function guestCollectives(): HasMany
+    // {
+    //     return $this->hasMany(GuestCollective::class);
+    // }
+
+    /**
+     * devuelve los colectivos a los que pertenece el usuario
+     *
+     * @return HasMany
+     */
+    public function memberCollective(): HasMany
     {
-        return $this->hasMany(GuestCollective::class);
+        return $this->hasMany(MemberCollective::class);
     }
+
 
     /**
      * devuelve las publicaciones del usuario

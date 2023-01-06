@@ -34,6 +34,7 @@
                 >
                     <i class="fa-solid fa-eye text-zinc-800"></i>
                 </button>
+                <LikeButtonCollective :collective="collective" />
                 <button @click.stop="share">
                     <i class="fa-solid fa-share-nodes text-gray-400"></i>
                 </button>
@@ -46,7 +47,7 @@
             <router-link :to="getPathShowCollective">
                 <img
                     :src="getFrontImage"
-                    class="w-full h-full object-cover object-center aspect-video"
+                    class="w-full h-full object-cover object-center aspect-square"
                     alt="imagen de portada del colectivo"
                 />
             </router-link>
@@ -55,7 +56,7 @@
 
         <!-- content -->
         <div>
-            <h3 class="font-bold text-lg">
+            <h3 class="font-bold text-lg mt-1">
                 {{ collective.name }}
             </h3>
             <div class="flex justify-between py-2">
@@ -69,7 +70,7 @@
                         followers
                     </span>
                 </div>
-                <div class="uppercase">
+                <!-- <div class="uppercase">
                     <span class="font-bold text-xs text-zinc-900">
                         {{ following }}
                     </span>
@@ -78,7 +79,7 @@
                     >
                         following
                     </span>
-                </div>
+                </div> -->
                 <div class="uppercase">
                     <span class="font-bold text-xs text-zinc-900">
                         {{ artworks }}
@@ -90,10 +91,15 @@
                     </span>
                 </div>
             </div>
-            <div>
+            <div class="flex justify-between items-center">
                 <div class="text-xs font-bold text-zinc-900">
-                    Colectivo de arte:
-                    <span class="text-primary">{{ categories }}</span>
+                    Tipo:
+                    <span class="text-primary">{{ getType }}</span>
+                </div>
+                <div v-if="followBtn">
+                    <v-btn color="#B2794C" x-small class="text-white">
+                        Seguir
+                    </v-btn>
                 </div>
             </div>
         </div>
@@ -102,17 +108,23 @@
 </template>
 
 <script>
+import getDataMixin from "../../../mixins/getDataMixin";
 import utilMixin from "../../../mixins/utilMixin";
 import CollectiveAvatar from "./CollectiveAvatar.vue";
+import LikeButtonCollective from "./LikeButtonCollective.vue";
 
 export default {
     name: "CardCollective",
-    components: { CollectiveAvatar },
-    mixins: [utilMixin],
+    components: { CollectiveAvatar, LikeButtonCollective },
+    mixins: [utilMixin, getDataMixin],
     props: {
         collective: {
             type: Object,
             default: () => ({}),
+        },
+        followBtn: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -139,23 +151,23 @@ export default {
             return this.collective?.followers?.length || 0;
         },
 
-        following() {
-            return this.collective?.following?.length || 0;
-        },
+        // following() {
+        //     return this.collective?.following?.length || 0;
+        // },
 
         artworks() {
             return this.collective?.artworks?.length || 0;
         },
 
-        categories() {
-            const categories = this.collective?.categories || [];
+        // categories() {
+        //     const categories = this.collective?.categories || [];
 
-            // obtener solo los nombres de las categorias
-            const names = categories.map((cat) => cat.category?.name);
+        //     // obtener solo los nombres de las categorias
+        //     const names = categories.map((cat) => cat.category?.name);
 
-            // convertir el array en string separado por comas
-            return names.join(", ");
-        },
+        //     // convertir el array en string separado por comas
+        //     return names.join(", ");
+        // },
 
         getPathShowCollective() {
             return {
@@ -168,6 +180,12 @@ export default {
 
         isWatchingCreator() {
             return this.user?.id === this.creator?.id;
+        },
+
+        getType() {
+            return this.collectiveTypes.filter(
+                (type) => type.value === this.collective?.type
+            )[0].text;
         },
     },
 

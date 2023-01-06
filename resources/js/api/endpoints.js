@@ -221,6 +221,16 @@ const endpoints = {
 
         // devuelve las obras del colectivo filtrada por request / {id}
         filterArtworks: `${API}/collectives/get-filters-artworks/`, // get
+
+        // devuelve todos los colectivos creados
+        // pueden estar filtrados por request
+        getAll: `${API}/collectives/get-all`, // get
+
+        // agrega un like a el colectivo
+        like: `${API}/collectives/like`, // post
+
+        // elimina un like del colectivo
+        dislike: `${API}/collectives/dislike`, // post
     },
 };
 

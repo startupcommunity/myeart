@@ -30,6 +30,7 @@
             <router-link :to="pathArtist"> ARTISTAS </router-link>
             <router-link :to="pathEvent"> EVENTOS </router-link>
             <router-link :to="pathCommunity">COMUNIDAD</router-link>
+            <router-link :to="pathCollective">COLECTIVOS</router-link>
         </div>
         <div class="sidenav_footer">
             <a href="#" @click.prevent="logout">CERRAR SESIÓN</a>
@@ -41,10 +42,14 @@
 export default {
     name: "MobileMenu",
     computed: {
+        // paths
         pathArtwork: () => ({ name: "listArtwork" }),
         pathArtist: () => ({ name: "listArtist" }),
         pathCommunity: () => ({ name: "indexCommunity" }),
+        pathCollective: () => ({ name: "indexCollective" }),
         pathEvent: () => ({ name: "eventList" }),
+
+        // store
         user() {
             return this.$store.getters.getProfile;
         },

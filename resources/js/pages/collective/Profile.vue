@@ -45,6 +45,7 @@
                                         'font-bold': sections.profile,
                                         'font-normal': !sections.profile,
                                     }"
+                                    v-if="isOwner"
                                 >
                                     Mi información
                                 </v-btn>
@@ -98,6 +99,7 @@
                         <Info
                             :collective="collective"
                             :profile="profile"
+                            :isOwner="isOwner"
                             v-if="sections.profile"
                             @dialog-collectives-opened="showHeader = false"
                             @dialog-collectives-closed="showHeader = true"

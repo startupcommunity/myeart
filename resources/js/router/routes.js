@@ -183,9 +183,9 @@ export const routes = [
 
     // ---------- colectivos --------------------
     {
-        name: "collectiveList",
+        name: "indexCollective",
         path: "/colectivos",
-        component: importPage("collective/List"),
+        component: importPage("collective/Index"),
         beforeEnter: ifAuthenticated,
     },
     {

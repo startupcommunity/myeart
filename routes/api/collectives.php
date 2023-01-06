@@ -56,6 +56,12 @@ Route::group(['prefix' => 'collectives'], function () {
   Route::get('/get-filters-artworks/{id}', [CollectiveController::class, 'getFilterArtworks'])->name('getCollectiveFilterArtworks');
 
   /**
+   * Devuelve todos los colectivos
+   * filtrados por request y paginados
+   */
+  Route::get('/get-all', [CollectiveController::class, 'getAllCollectives'])->name('getAllCollectives');
+
+  /**
    * actualiza la foto de perfil de un colectivo
    */
   Route::put('/update-profile-photo/{id}', [CollectiveController::class, 'updateProfilePhoto'])->name('updateProfilePhotoCollective');
@@ -74,4 +80,14 @@ Route::group(['prefix' => 'collectives'], function () {
    * elimina un miembro del colectivo
    */
   Route::post('/remove-member', [CollectiveController::class, 'removeMember'])->name('removeMemberCollective');
+
+  /**
+   * Agrega un like al colectivo
+   */
+  Route::post('/like', [CollectiveController::class, 'addLike'])->name('addLikeCollective');
+
+  /**
+   * Elimina un like al colectivo
+   */
+  Route::post('/dislike', [CollectiveController::class, 'removeLike'])->name('removeLikeCollective');
 });

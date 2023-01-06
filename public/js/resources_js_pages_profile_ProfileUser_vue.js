@@ -659,22 +659,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
-/* harmony import */ var _CollectiveAvatar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CollectiveAvatar.vue */ "./resources/js/pages/collective/components/CollectiveAvatar.vue");
+/* harmony import */ var _mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/getDataMixin */ "./resources/js/mixins/getDataMixin.js");
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+/* harmony import */ var _CollectiveAvatar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CollectiveAvatar.vue */ "./resources/js/pages/collective/components/CollectiveAvatar.vue");
+/* harmony import */ var _LikeButtonCollective_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LikeButtonCollective.vue */ "./resources/js/pages/collective/components/LikeButtonCollective.vue");
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CardCollective",
   components: {
-    CollectiveAvatar: _CollectiveAvatar_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    CollectiveAvatar: _CollectiveAvatar_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    LikeButtonCollective: _LikeButtonCollective_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     collective: {
       type: Object,
       "default": function _default() {
         return {};
       }
+    },
+    followBtn: {
+      type: Boolean,
+      "default": false
     }
   },
   computed: {
@@ -703,36 +712,28 @@ __webpack_require__.r(__webpack_exports__);
 
       return ((_this$collective3 = this.collective) === null || _this$collective3 === void 0 ? void 0 : (_this$collective3$fol = _this$collective3.followers) === null || _this$collective3$fol === void 0 ? void 0 : _this$collective3$fol.length) || 0;
     },
-    following: function following() {
-      var _this$collective4, _this$collective4$fol;
-
-      return ((_this$collective4 = this.collective) === null || _this$collective4 === void 0 ? void 0 : (_this$collective4$fol = _this$collective4.following) === null || _this$collective4$fol === void 0 ? void 0 : _this$collective4$fol.length) || 0;
-    },
+    // following() {
+    //     return this.collective?.following?.length || 0;
+    // },
     artworks: function artworks() {
-      var _this$collective5, _this$collective5$art;
+      var _this$collective4, _this$collective4$art;
 
-      return ((_this$collective5 = this.collective) === null || _this$collective5 === void 0 ? void 0 : (_this$collective5$art = _this$collective5.artworks) === null || _this$collective5$art === void 0 ? void 0 : _this$collective5$art.length) || 0;
+      return ((_this$collective4 = this.collective) === null || _this$collective4 === void 0 ? void 0 : (_this$collective4$art = _this$collective4.artworks) === null || _this$collective4$art === void 0 ? void 0 : _this$collective4$art.length) || 0;
     },
-    categories: function categories() {
-      var _this$collective6;
-
-      var categories = ((_this$collective6 = this.collective) === null || _this$collective6 === void 0 ? void 0 : _this$collective6.categories) || []; // obtener solo los nombres de las categorias
-
-      var names = categories.map(function (cat) {
-        var _cat$category;
-
-        return (_cat$category = cat.category) === null || _cat$category === void 0 ? void 0 : _cat$category.name;
-      }); // convertir el array en string separado por comas
-
-      return names.join(", ");
-    },
+    // categories() {
+    //     const categories = this.collective?.categories || [];
+    //     // obtener solo los nombres de las categorias
+    //     const names = categories.map((cat) => cat.category?.name);
+    //     // convertir el array en string separado por comas
+    //     return names.join(", ");
+    // },
     getPathShowCollective: function getPathShowCollective() {
-      var _this$collective7;
+      var _this$collective5;
 
       return {
         name: "collectiveShow",
         params: {
-          id: (_this$collective7 = this.collective) === null || _this$collective7 === void 0 ? void 0 : _this$collective7.id
+          id: (_this$collective5 = this.collective) === null || _this$collective5 === void 0 ? void 0 : _this$collective5.id
         }
       };
     },
@@ -740,24 +741,33 @@ __webpack_require__.r(__webpack_exports__);
       var _this$user, _this$creator;
 
       return ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id) === ((_this$creator = this.creator) === null || _this$creator === void 0 ? void 0 : _this$creator.id);
+    },
+    getType: function getType() {
+      var _this = this;
+
+      return this.collectiveTypes.filter(function (type) {
+        var _this$collective6;
+
+        return type.value === ((_this$collective6 = _this.collective) === null || _this$collective6 === void 0 ? void 0 : _this$collective6.type);
+      })[0].text;
     }
   },
   methods: {
     goToCollectiveProfile: function goToCollectiveProfile() {
-      var _this$collective8;
+      var _this$collective7;
 
       this.$router.push({
         name: "collectiveProfile",
         params: {
-          id: (_this$collective8 = this.collective) === null || _this$collective8 === void 0 ? void 0 : _this$collective8.id
+          id: (_this$collective7 = this.collective) === null || _this$collective7 === void 0 ? void 0 : _this$collective7.id
         }
       });
     },
     share: function share() {
-      var _this$collective$slug, _this$collective9;
+      var _this$collective$slug, _this$collective8;
 
       var path = this.secureUrl;
-      var slug = (_this$collective$slug = (_this$collective9 = this.collective) === null || _this$collective9 === void 0 ? void 0 : _this$collective9.slug) !== null && _this$collective$slug !== void 0 ? _this$collective$slug : "";
+      var slug = (_this$collective$slug = (_this$collective8 = this.collective) === null || _this$collective8 === void 0 ? void 0 : _this$collective8.slug) !== null && _this$collective$slug !== void 0 ? _this$collective$slug : "";
       var route = "/colectivos/publico/".concat(slug);
       var text = path + route;
       this.copyToClipboard(text);
@@ -1047,6 +1057,102 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "LikeButtonCollective",
+  data: function data() {
+    return {
+      loading: false,
+      liked: false,
+      likes: 0
+    };
+  },
+  props: {
+    collective: {
+      type: Object,
+      "default": function _default() {}
+    }
+  },
+  mounted: function mounted() {
+    this.isLiked();
+    this.getLikes();
+  },
+  computed: {
+    user: function user() {
+      return this.$store.getters.getProfile;
+    }
+  },
+  methods: {
+    /**
+     * Add like or dislike
+     */
+    addLikeOrDislike: function addLikeOrDislike() {
+      var _this = this;
+
+      var data = {
+        collective_id: this.collective.id,
+        user_id: this.user.id
+      };
+      var ep = this.liked ? this.ep.collectives.dislike : this.ep.collectives.like;
+      this.loading = true;
+      this.axios.post(ep, data).then(function (resp) {
+        if (_this.liked) {
+          _this.$emit("disliked-added");
+
+          _this.liked = false;
+          _this.likes--;
+        } else {
+          _this.$emit("liked-added", resp.data);
+
+          _this.liked = true;
+          _this.likes++;
+        }
+      })["catch"](function (error) {
+        return _this.manageError(error);
+      })["finally"](function () {
+        return _this.loading = false;
+      });
+    },
+
+    /**
+     * Chequear si el usuario ya dio like
+     */
+    isLiked: function isLiked() {
+      var _this$collective,
+          _this$collective$like,
+          _this2 = this;
+
+      var liked = (_this$collective = this.collective) === null || _this$collective === void 0 ? void 0 : (_this$collective$like = _this$collective.likes) === null || _this$collective$like === void 0 ? void 0 : _this$collective$like.some(function (like) {
+        var _this2$user;
+
+        return like.user_id === ((_this2$user = _this2.user) === null || _this2$user === void 0 ? void 0 : _this2$user.id);
+      });
+      this.liked = liked;
+    },
+
+    /**
+     * Obtener la cantidad de likes
+     */
+    getLikes: function getLikes() {
+      var _this$collective2, _this$collective2$lik;
+
+      this.likes = ((_this$collective2 = this.collective) === null || _this$collective2 === void 0 ? void 0 : (_this$collective2$lik = _this$collective2.likes) === null || _this$collective2$lik === void 0 ? void 0 : _this$collective2$lik.length) || 0;
     }
   }
 });
@@ -1561,6 +1667,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MobileMenu",
   computed: {
+    // paths
     pathArtwork: function pathArtwork() {
       return {
         name: "listArtwork"
@@ -1576,11 +1683,17 @@ __webpack_require__.r(__webpack_exports__);
         name: "indexCommunity"
       };
     },
+    pathCollective: function pathCollective() {
+      return {
+        name: "indexCollective"
+      };
+    },
     pathEvent: function pathEvent() {
       return {
         name: "eventList"
       };
     },
+    // store
     user: function user() {
       return this.$store.getters.getProfile;
     },
@@ -5847,7 +5960,11 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-eye text-zinc-800"
-  })]), _vm._v(" "), _c("button", {
+  })]), _vm._v(" "), _c("LikeButtonCollective", {
+    attrs: {
+      collective: _vm.collective
+    }
+  }), _vm._v(" "), _c("button", {
     on: {
       click: function click($event) {
         $event.stopPropagation();
@@ -5856,18 +5973,18 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa-solid fa-share-nodes text-gray-400"
-  })])])]), _vm._v(" "), _c("div", [_c("router-link", {
+  })])], 1)]), _vm._v(" "), _c("div", [_c("router-link", {
     attrs: {
       to: _vm.getPathShowCollective
     }
   }, [_c("img", {
-    staticClass: "w-full h-full object-cover object-center aspect-video",
+    staticClass: "w-full h-full object-cover object-center aspect-square",
     attrs: {
       src: _vm.getFrontImage,
       alt: "imagen de portada del colectivo"
     }
   })])], 1), _vm._v(" "), _c("div", [_c("h3", {
-    staticClass: "font-bold text-lg"
+    staticClass: "font-bold text-lg mt-1"
   }, [_vm._v("\n            " + _vm._s(_vm.collective.name) + "\n        ")]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between py-2"
   }, [_c("div", {
@@ -5880,19 +5997,21 @@ var render = function render() {
     staticClass: "uppercase"
   }, [_c("span", {
     staticClass: "font-bold text-xs text-zinc-900"
-  }, [_vm._v("\n                    " + _vm._s(_vm.following) + "\n                ")]), _vm._v(" "), _c("span", {
-    staticClass: "text-primary font-bold tracking-widest text-xs"
-  }, [_vm._v("\n                    following\n                ")])]), _vm._v(" "), _c("div", {
-    staticClass: "uppercase"
-  }, [_c("span", {
-    staticClass: "font-bold text-xs text-zinc-900"
   }, [_vm._v("\n                    " + _vm._s(_vm.artworks) + "\n                ")]), _vm._v(" "), _c("span", {
     staticClass: "text-primary font-bold tracking-widest text-xs"
-  }, [_vm._v("\n                    Obras\n                ")])])]), _vm._v(" "), _c("div", [_c("div", {
+  }, [_vm._v("\n                    Obras\n                ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex justify-between items-center"
+  }, [_c("div", {
     staticClass: "text-xs font-bold text-zinc-900"
-  }, [_vm._v("\n                Colectivo de arte:\n                "), _c("span", {
+  }, [_vm._v("\n                Tipo:\n                "), _c("span", {
     staticClass: "text-primary"
-  }, [_vm._v(_vm._s(_vm.categories))])])])])]);
+  }, [_vm._v(_vm._s(_vm.getType))])]), _vm._v(" "), _vm.followBtn ? _c("div", [_c("v-btn", {
+    staticClass: "text-white",
+    attrs: {
+      color: "#B2794C",
+      "x-small": ""
+    }
+  }, [_vm._v("\n                    Seguir\n                ")])], 1) : _vm._e()])])]);
 };
 
 var staticRenderFns = [];
@@ -6084,6 +6203,51 @@ var render = function render() {
       }
     }
   }, [_vm._v("\n                                Cancelar\n                            ")])], 1)])])])], 1)], 1)], 1);
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=template&id=cc7fb910&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=template&id=cc7fb910& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "mt-3"
+  }, [_c("button", {
+    attrs: {
+      disabled: _vm.loading
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.addLikeOrDislike.apply(null, arguments);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-regular fa-heart text-base",
+    "class": {
+      "text-red-600": _vm.liked,
+      "text-gray-500": !_vm.liked
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs text-gray-500 font-medium flex justify-center -mt-1"
+  }, [_c("span", [_vm._v(_vm._s(_vm.likes))])])]);
 };
 
 var staticRenderFns = [];
@@ -6638,7 +6802,7 @@ var render = function render() {
   }, [_c("nav", {
     staticClass: "main-menu lg:mr-8 xl:mr-32"
   }, [_c("ul", {
-    staticClass: "text-left text-[9px] xl:text-xs"
+    staticClass: "text-left text-[9px]"
   }, [_c("li", [_c("router-link", {
     attrs: {
       to: {
@@ -6663,7 +6827,13 @@ var render = function render() {
         name: "indexCommunity"
       }
     }
-  }, [_vm._v("\n                                            MI COMUNIDAD\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
+  }, [_vm._v("\n                                            MI COMUNIDAD\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("router-link", {
+    attrs: {
+      to: {
+        name: "indexCollective"
+      }
+    }
+  }, [_vm._v("\n                                            COLECTIVOS\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
     staticClass: "header-icons"
@@ -6928,7 +7098,11 @@ var render = function render() {
     attrs: {
       to: _vm.pathCommunity
     }
-  }, [_vm._v("COMUNIDAD")])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("COMUNIDAD")]), _vm._v(" "), _c("router-link", {
+    attrs: {
+      to: _vm.pathCollective
+    }
+  }, [_vm._v("COLECTIVOS")])], 1), _vm._v(" "), _c("div", {
     staticClass: "sidenav_footer"
   }, [_c("a", {
     attrs: {
@@ -11560,6 +11734,45 @@ component.options.__file = "resources/js/pages/collective/components/EditRelease
 
 /***/ }),
 
+/***/ "./resources/js/pages/collective/components/LikeButtonCollective.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/pages/collective/components/LikeButtonCollective.vue ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _LikeButtonCollective_vue_vue_type_template_id_cc7fb910___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LikeButtonCollective.vue?vue&type=template&id=cc7fb910& */ "./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=template&id=cc7fb910&");
+/* harmony import */ var _LikeButtonCollective_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LikeButtonCollective.vue?vue&type=script&lang=js& */ "./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _LikeButtonCollective_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _LikeButtonCollective_vue_vue_type_template_id_cc7fb910___WEBPACK_IMPORTED_MODULE_0__.render,
+  _LikeButtonCollective_vue_vue_type_template_id_cc7fb910___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/collective/components/LikeButtonCollective.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/pages/event/components/ButtonFavEvent.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/pages/event/components/ButtonFavEvent.vue ***!
@@ -13204,6 +13417,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LikeButtonCollective_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LikeButtonCollective.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LikeButtonCollective_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/pages/event/components/ButtonFavEvent.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************!*\
   !*** ./resources/js/pages/event/components/ButtonFavEvent.vue?vue&type=script&lang=js& ***!
@@ -13978,6 +14207,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditReleaseModal_vue_vue_type_template_id_4c081b91___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditReleaseModal_vue_vue_type_template_id_4c081b91___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditReleaseModal.vue?vue&type=template&id=4c081b91& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/EditReleaseModal.vue?vue&type=template&id=4c081b91&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=template&id=cc7fb910&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=template&id=cc7fb910& ***!
+  \**********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LikeButtonCollective_vue_vue_type_template_id_cc7fb910___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LikeButtonCollective_vue_vue_type_template_id_cc7fb910___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LikeButtonCollective_vue_vue_type_template_id_cc7fb910___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LikeButtonCollective.vue?vue&type=template&id=cc7fb910& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=template&id=cc7fb910&");
 
 
 /***/ }),

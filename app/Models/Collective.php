@@ -65,10 +65,10 @@ class Collective extends Model
     /**
      * Devuelve los colectivos a los cuales el usuario pertenece
      */
-    public function guests(): HasMany
-    {
-        return $this->hasMany(GuestCollective::class);
-    }
+    // public function guests(): HasMany
+    // {
+    //     return $this->hasMany(GuestCollective::class);
+    // }
 
     /**
      * Devuelve los miembros del colectivo
@@ -92,5 +92,21 @@ class Collective extends Model
     public function artworks(): HasMany
     {
         return $this->hasMany(Artwork::class);
+    }
+
+    /**
+     * Devuelve las publicaciones del colectivo
+     */
+    public function releases(): HasMany
+    {
+        return $this->hasMany(Release::class);
+    }
+
+    /**
+     * Devuelve los likes del colectivo
+     */
+    public function likes(): HasMany
+    {
+        return $this->hasMany(CollectiveLike::class);
     }
 }
