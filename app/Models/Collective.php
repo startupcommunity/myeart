@@ -109,4 +109,14 @@ class Collective extends Model
     {
         return $this->hasMany(CollectiveLike::class);
     }
+
+    /**
+     * Devuelve los seguidores del colectivo
+     *
+     * @return HasMany
+     */
+    public function followers(): HasMany
+    {
+        return $this->hasMany(FollowCollective::class);
+    }
 }

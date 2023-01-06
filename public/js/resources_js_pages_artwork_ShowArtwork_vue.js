@@ -3751,7 +3751,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         artist: 1,
         artwork: 2,
         news: 3,
-        events: 4
+        events: 4,
+        collectives: 5
       };
     },
 

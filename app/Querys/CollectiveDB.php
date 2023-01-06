@@ -20,7 +20,7 @@ class CollectiveDB
   }
 
   /**
-   * Devuelve todas las relaciones de los colectivos
+   * Devuelve todas las relaciones partiendo de model Collective
    *
    * @return array
    */
@@ -28,11 +28,12 @@ class CollectiveDB
   {
     return [
       'categories.category',
+      'members.user',
+      'followers',
+      'artworks',
       'profile',
       'user',
-      'members.user',
       'likes',
-      'artworks'
     ];
   }
 
@@ -48,6 +49,25 @@ class CollectiveDB
       'likes.user',
       'creator.artworks.categories',
       'comments'
+    ];
+  }
+
+  /**
+   * Devuelve las relaciones del colectivo desde otro modelo
+   * relacionado con model Collective
+   *
+   * @return array
+   */
+  public function getCollectiveRelFromAnotherModel(): array
+  {
+    return [
+      'collective.categories.category',
+      'collective.members.user',
+      'collective.followers',
+      'collective.artworks',
+      'collective.profile',
+      'collective.user',
+      'collective.likes',
     ];
   }
 
@@ -75,7 +95,7 @@ class CollectiveDB
   {
     $user = $id ? $this->user->find($id) : auth()->user();
     $relations = $this->getAllCollectiveRelations();
-    $relationsGuest = ['collective.categories.category', 'collective.profile', 'collective.user', 'collective.likes'];
+    $relationsGuest = $this->getCollectiveRelFromAnotherModel();
 
     // primero obtener los colectivos creados
     $collectives = $user->collectives()->with($relations)->get();
@@ -99,6 +119,22 @@ class CollectiveDB
   {
     $relations = $this->getAllCollectiveRelations();
     return $this->model->with($relations);
+  }
+
+  /**
+   * Devuelve los colectivos seguidos por el usuario
+   *
+   * @param integer|null    id del usuario
+   */
+  public function getFollowedCollectives(?int $id = null): array
+  {
+    $user = $id ? $this->user->find($id) : auth()->user();
+    $relations = $this->getCollectiveRelFromAnotherModel();
+
+    return $user->followedCollectives()
+      ->with($relations)
+      ->get()
+      ->toArray();
   }
 
   /**
@@ -149,9 +185,9 @@ class CollectiveDB
   public function getMembers(int $id): Collection
   {
     $collective = $this->getCollective($id, false);
-    $members = $collective->members()->with(['user.artworks.categories', 'user.profile'])->get();
-
-    return $members;
+    return $collective->members()
+      ->with(['user.artworks.categories', 'user.profile'])
+      ->get();
   }
 
   /**

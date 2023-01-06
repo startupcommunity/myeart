@@ -35,7 +35,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/getDataMixin */ "./resources/js/mixins/getDataMixin.js");
 /* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
 /* harmony import */ var _CollectiveAvatar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CollectiveAvatar.vue */ "./resources/js/pages/collective/components/CollectiveAvatar.vue");
-/* harmony import */ var _LikeButtonCollective_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LikeButtonCollective.vue */ "./resources/js/pages/collective/components/LikeButtonCollective.vue");
+/* harmony import */ var _FollowCollectiveButton_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FollowCollectiveButton.vue */ "./resources/js/pages/collective/components/FollowCollectiveButton.vue");
+/* harmony import */ var _LikeButtonCollective_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./LikeButtonCollective.vue */ "./resources/js/pages/collective/components/LikeButtonCollective.vue");
+
 
 
 
@@ -44,7 +46,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "CardCollective",
   components: {
     CollectiveAvatar: _CollectiveAvatar_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    LikeButtonCollective: _LikeButtonCollective_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    LikeButtonCollective: _LikeButtonCollective_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    FollowCollectiveButton: _FollowCollectiveButton_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
@@ -85,21 +88,11 @@ __webpack_require__.r(__webpack_exports__);
 
       return ((_this$collective3 = this.collective) === null || _this$collective3 === void 0 ? void 0 : (_this$collective3$fol = _this$collective3.followers) === null || _this$collective3$fol === void 0 ? void 0 : _this$collective3$fol.length) || 0;
     },
-    // following() {
-    //     return this.collective?.following?.length || 0;
-    // },
     artworks: function artworks() {
       var _this$collective4, _this$collective4$art;
 
       return ((_this$collective4 = this.collective) === null || _this$collective4 === void 0 ? void 0 : (_this$collective4$art = _this$collective4.artworks) === null || _this$collective4$art === void 0 ? void 0 : _this$collective4$art.length) || 0;
     },
-    // categories() {
-    //     const categories = this.collective?.categories || [];
-    //     // obtener solo los nombres de las categorias
-    //     const names = categories.map((cat) => cat.category?.name);
-    //     // convertir el array en string separado por comas
-    //     return names.join(", ");
-    // },
     getPathShowCollective: function getPathShowCollective() {
       var _this$collective5;
 
@@ -122,10 +115,20 @@ __webpack_require__.r(__webpack_exports__);
         var _this$collective6;
 
         return type.value === ((_this$collective6 = _this.collective) === null || _this$collective6 === void 0 ? void 0 : _this$collective6.type);
-      })[0].text;
-    }
+      })[0].text || "";
+    } // categories() {
+    //     const categories = this.collective?.categories || [];
+    //     // obtener solo los nombres de las categorias
+    //     const names = categories.map((cat) => cat.category?.name);
+    //     // convertir el array en string separado por comas
+    //     return names.join(", ");
+    // },
+
   },
   methods: {
+    /**
+     * Ir al perfil del colectivo, no es lo mismo que el detalle
+     */
     goToCollectiveProfile: function goToCollectiveProfile() {
       var _this$collective7;
 
@@ -136,6 +139,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+
+    /**
+     * Compartir colectivo
+     */
     share: function share() {
       var _this$collective$slug, _this$collective8;
 
@@ -144,6 +151,28 @@ __webpack_require__.r(__webpack_exports__);
       var route = "/colectivos/publico/".concat(slug);
       var text = path + route;
       this.copyToClipboard(text);
+    },
+
+    /**
+     * Agregar el usuario a la lista de followers
+     */
+    follow: function follow() {
+      this.collective.followers.push({
+        user_id: this.user.id,
+        collective_id: this.collective.id,
+        collective: this.collective
+      });
+    },
+
+    /**
+     * eliminar el usuario de la lista de followers
+     */
+    unfollow: function unfollow() {
+      var _this2 = this;
+
+      this.collective.followers = this.collective.followers.filter(function (follower) {
+        return follower.user_id !== _this2.user.id;
+      });
     }
   }
 });
@@ -179,6 +208,96 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.$defaultProfilePhotoCollective;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "FollowCollectiveButton",
+  props: {
+    collective: {
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
+    },
+    isCreator: {
+      type: Boolean,
+      "default": false
+    }
+  },
+  data: function data() {
+    return {
+      loading: false
+    };
+  },
+  computed: {
+    user: function user() {
+      return this.$store.getters.getProfile;
+    },
+    followedCollectives: function followedCollectives() {
+      return this.$store.getters.getFollowCollectives;
+    },
+    isFollowing: function isFollowing() {
+      var _this = this;
+
+      return this.followedCollectives.some(function (item) {
+        return item.user_id === _this.user.id && item.collective_id === _this.collective.id;
+      });
+    }
+  },
+  methods: {
+    followOrUnfollow: function followOrUnfollow() {
+      var _this2 = this;
+
+      if (this.isCreator) {
+        this.noty("No puedes seguir tu propio colectivo", "warning");
+        return;
+      }
+
+      var data = {
+        collective_id: this.collective.id,
+        user_id: this.user.id
+      };
+      var ep = this.isFollowing ? this.ep.collectives.unfollow : this.ep.collectives.follow;
+      this.loading = true;
+      this.axios.post(ep, data).then(function (resp) {
+        if (resp.status === 201 || resp.status === 200) {
+          if (_this2.isFollowing) {
+            _this2.noty("Has dejado de seguir este colectivo");
+
+            _this2.$emit("unfollow");
+          } else {
+            _this2.noty("Has seguido este colectivo");
+
+            _this2.$emit("follow");
+          } // actualizar los colectivos seguidos por el user
+
+
+          _this2.$store.dispatch("userFollowCollectives"); // actualizar el colectivo en cuestión
+          // this.$store.dispatch(
+          //     "getUserCollective",
+          //     this.collective.id
+          // );
+
+        }
+      })["catch"](function (error) {
+        return _this2.manageError(error);
+      })["finally"](function () {
+        return _this2.loading = false;
+      });
     }
   }
 });
@@ -524,15 +643,18 @@ var render = function render() {
     staticClass: "flex justify-between items-center"
   }, [_c("div", {
     staticClass: "text-xs font-bold text-zinc-900"
-  }, [_vm._v("\n                Tipo:\n                "), _c("span", {
-    staticClass: "text-primary"
-  }, [_vm._v(_vm._s(_vm.getType))])]), _vm._v(" "), _vm.followBtn ? _c("div", [_c("v-btn", {
-    staticClass: "text-white",
+  }, [_c("span", {
+    staticClass: "text-gray-900"
+  }, [_vm._v(_vm._s(_vm.getType))])]), _vm._v(" "), _vm.followBtn ? _c("div", [_c("FollowCollectiveButton", {
     attrs: {
-      color: "#B2794C",
-      "x-small": ""
+      collective: _vm.collective,
+      "is-creator": _vm.isWatchingCreator
+    },
+    on: {
+      follow: _vm.follow,
+      unfollow: _vm.unfollow
     }
-  }, [_vm._v("\n                    Seguir\n                ")])], 1) : _vm._e()])])]);
+  })], 1) : _vm._e()])])]);
 };
 
 var staticRenderFns = [];
@@ -564,6 +686,44 @@ var render = function render() {
       alt: "avatar-del-colectivo"
     }
   });
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=template&id=550bc452&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=template&id=550bc452& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("v-btn", {
+    staticClass: "text-white",
+    attrs: {
+      color: _vm.isFollowing ? "grey darken-3" : "#B2794C",
+      "x-small": "",
+      loading: _vm.loading,
+      disabled: _vm.loading || _vm.isCreator
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.followOrUnfollow.apply(null, arguments);
+      }
+    }
+  }, [!_vm.isFollowing ? _c("span", [_vm._v("Seguir")]) : _c("span", [_vm._v("Dejar de seguir")])]);
 };
 
 var staticRenderFns = [];
@@ -872,7 +1032,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         artist: 1,
         artwork: 2,
         news: 3,
-        events: 4
+        events: 4,
+        collectives: 5
       };
     },
 
@@ -1805,6 +1966,44 @@ component.options.__file = "resources/js/pages/collective/components/CollectiveA
 
 /***/ }),
 
+/***/ "./resources/js/pages/collective/components/FollowCollectiveButton.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/pages/collective/components/FollowCollectiveButton.vue ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _FollowCollectiveButton_vue_vue_type_template_id_550bc452___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FollowCollectiveButton.vue?vue&type=template&id=550bc452& */ "./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=template&id=550bc452&");
+/* harmony import */ var _FollowCollectiveButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FollowCollectiveButton.vue?vue&type=script&lang=js& */ "./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FollowCollectiveButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FollowCollectiveButton_vue_vue_type_template_id_550bc452___WEBPACK_IMPORTED_MODULE_0__.render,
+  _FollowCollectiveButton_vue_vue_type_template_id_550bc452___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/collective/components/FollowCollectiveButton.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/pages/collective/components/LikeButtonCollective.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/pages/collective/components/LikeButtonCollective.vue ***!
@@ -1964,6 +2163,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowCollectiveButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FollowCollectiveButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowCollectiveButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************!*\
   !*** ./resources/js/pages/collective/components/LikeButtonCollective.vue?vue&type=script&lang=js& ***!
@@ -2053,6 +2267,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CollectiveAvatar_vue_vue_type_template_id_70aed868___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CollectiveAvatar_vue_vue_type_template_id_70aed868___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CollectiveAvatar.vue?vue&type=template&id=70aed868& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/CollectiveAvatar.vue?vue&type=template&id=70aed868&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=template&id=550bc452&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=template&id=550bc452& ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowCollectiveButton_vue_vue_type_template_id_550bc452___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowCollectiveButton_vue_vue_type_template_id_550bc452___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FollowCollectiveButton_vue_vue_type_template_id_550bc452___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FollowCollectiveButton.vue?vue&type=template&id=550bc452& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/collective/components/FollowCollectiveButton.vue?vue&type=template&id=550bc452&");
 
 
 /***/ }),

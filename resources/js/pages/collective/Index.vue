@@ -1,6 +1,6 @@
 <template>
     <MainLayout :showHeader="false" :loading-overlay="globalLoading">
-        <div class="bg-zinc-900 pb-32">
+        <div class="bg-zinc-900 pb-32" v-if="!showOptionModal">
             <Header class="mt-5" />
         </div>
 
@@ -12,7 +12,7 @@
                         Descubre colectivos de tu interés
                     </h1>
                 </div>
-                <div class="flex justify-end">
+                <div class="flex justify-between justify-md-end items-center">
                     <div class="inline-flex items-center">
                         <label
                             class="uppercase text-zinc-900 tracking-widest text-xs font-bold"
@@ -28,6 +28,12 @@
                             class="pl-2"
                             v-model="filters.sortBy"
                         ></v-select>
+                    </div>
+                    <div class="block md:hidden">
+                        <v-btn text @click.stop="showOptionModal = true">
+                            <i class="fas fa-list"></i>
+                            Filtrar
+                        </v-btn>
                     </div>
                 </div>
             </div>
@@ -130,14 +136,14 @@
         <!-- /content -->
 
         <!-- modal de filtros para version mobile -->
-        <!-- <OptionsFilterModal
-            @close-dialog-options-filter="showOptionModal = !showOptionModal"
+        <FilterCollectiveModal
+            @close-dialog="showOptionModal = !showOptionModal"
             :show="showOptionModal"
             :options="filters"
-            :categories="categories"
-            :subcategories="subCategories"
-            :labels="subLabels"
-        /> -->
+            :cats="categories"
+            :subs="subCategories"
+            v-if="showOptionModal"
+        />
     </MainLayout>
 </template>
 
@@ -149,6 +155,7 @@ import CategoryTypeFilter from "../artwork/components/CategoryTypeFilter.vue";
 import Header from "../landing/sections/Header.vue";
 import MainLayout from "../layouts/MainLayout.vue";
 import CardCollective from "./components/CardCollective.vue";
+import FilterCollectiveModal from "./components/FilterCollectiveModal.vue";
 
 export default {
     name: "IndexCollective",
@@ -160,6 +167,7 @@ export default {
         LoadingTailwind,
         CardCollective,
         Paginator,
+        FilterCollectiveModal,
     },
 
     data() {
@@ -186,6 +194,9 @@ export default {
     created() {
         // @getDataMixin
         this.getCategories();
+
+        // consulta de colectivos que sigue el usuario
+        this.$store.dispatch("userFollowCollectives");
     },
 
     mounted() {
@@ -194,7 +205,7 @@ export default {
 
     watch: {
         filters: {
-            handler(filter) {
+            handler(_) {
                 // reset de la pagina a mostrar
                 this.showPage = 1;
 
@@ -203,21 +214,6 @@ export default {
             },
             deep: true,
         },
-
-        // cuando la subcategoria cambia
-        // se resetea el valor de la etiqueta
-        // "filters.subcategory"() {
-        //     this.filters.label = 0;
-        // },
-
-        // cargar las subcategorias unicamente
-        // cuando el valor se la categoría cambie
-        // "filters.category"(val) {
-        //     // if (val) {
-        //     //     // @getDataMixin
-        //     //     this.getSubCategories(val);
-        //     // }
-        // },
     },
 
     computed: {

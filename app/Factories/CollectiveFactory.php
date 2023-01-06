@@ -266,4 +266,59 @@ class CollectiveFactory
 
     return $tran;
   }
+
+  /**
+   * Sigue a un colectivo, si es el creador no lo puede seguir
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function followCollective(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // si el usuario es el creador del colectivo
+      if ($collective->isCreator($request->user_id)) {
+        return false;
+      }
+
+      // si el usuario ya sigue al colectivo
+      $follow = $collective->followers()
+        ->where('user_id', $request->user_id)
+        ->first();
+
+      if ($follow) {
+        return false;
+      }
+
+      // crear follow
+      $collective->followers()->create($request->only(['user_id']));
+
+      return true;
+    });
+
+    return $tran;
+  }
+
+  /**
+   * Deja de seguir a un colectivo
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function unfollowCollective(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // eliminar follow
+      return $collective
+        ->followers()
+        ->where('user_id', $request->user_id)
+        ->delete();
+    });
+
+    return $tran;
+  }
 }

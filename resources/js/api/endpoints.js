@@ -60,6 +60,9 @@ const endpoints = {
         // obtiene los eventos seguidos por el usuario
         getFollowEvents: `${API}/user/get-follow-events`, // get
 
+        // obtiene los colectivos seguidos por el usuario
+        getFollowCollectives: `${API}/user/get-follow-collectives`, // get
+
         // artistas seguidos por el usuario, info corta y necesaria
         getFASI: `${API}/user/get-follow-artists-short-info`, // get
 
@@ -231,6 +234,12 @@ const endpoints = {
 
         // elimina un like del colectivo
         dislike: `${API}/collectives/dislike`, // post
+
+        // seguir un colectivo
+        follow: `${API}/collectives/follow`, // post
+
+        // dejar de seguir un colectivo
+        unfollow: `${API}/collectives/unfollow`, // post
     },
 };
 

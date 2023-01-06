@@ -90,4 +90,14 @@ Route::group(['prefix' => 'collectives'], function () {
    * Elimina un like al colectivo
    */
   Route::post('/dislike', [CollectiveController::class, 'removeLike'])->name('removeLikeCollective');
+
+  /**
+   * Seguir un colectivo
+   */
+  Route::post('/follow', [CollectiveController::class, 'followCollective'])->name('followCollective');
+
+  /**
+   * Dejar de seguir un colectivo
+   */
+  Route::post('/unfollow', [CollectiveController::class, 'unfollowCollective'])->name('unfollowCollective');
 });

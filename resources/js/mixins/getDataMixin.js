@@ -40,6 +40,7 @@ export default {
                 artwork: 2,
                 news: 3,
                 events: 4,
+                collectives: 5,
             };
         },
 

@@ -70,16 +70,6 @@
                         followers
                     </span>
                 </div>
-                <!-- <div class="uppercase">
-                    <span class="font-bold text-xs text-zinc-900">
-                        {{ following }}
-                    </span>
-                    <span
-                        class="text-primary font-bold tracking-widest text-xs"
-                    >
-                        following
-                    </span>
-                </div> -->
                 <div class="uppercase">
                     <span class="font-bold text-xs text-zinc-900">
                         {{ artworks }}
@@ -93,13 +83,15 @@
             </div>
             <div class="flex justify-between items-center">
                 <div class="text-xs font-bold text-zinc-900">
-                    Tipo:
-                    <span class="text-primary">{{ getType }}</span>
+                    <span class="text-gray-900">{{ getType }}</span>
                 </div>
                 <div v-if="followBtn">
-                    <v-btn color="#B2794C" x-small class="text-white">
-                        Seguir
-                    </v-btn>
+                    <FollowCollectiveButton
+                        :collective="collective"
+                        :is-creator="isWatchingCreator"
+                        @follow="follow"
+                        @unfollow="unfollow"
+                    />
                 </div>
             </div>
         </div>
@@ -111,11 +103,16 @@
 import getDataMixin from "../../../mixins/getDataMixin";
 import utilMixin from "../../../mixins/utilMixin";
 import CollectiveAvatar from "./CollectiveAvatar.vue";
+import FollowCollectiveButton from "./FollowCollectiveButton.vue";
 import LikeButtonCollective from "./LikeButtonCollective.vue";
 
 export default {
     name: "CardCollective",
-    components: { CollectiveAvatar, LikeButtonCollective },
+    components: {
+        CollectiveAvatar,
+        LikeButtonCollective,
+        FollowCollectiveButton,
+    },
     mixins: [utilMixin, getDataMixin],
     props: {
         collective: {
@@ -151,23 +148,9 @@ export default {
             return this.collective?.followers?.length || 0;
         },
 
-        // following() {
-        //     return this.collective?.following?.length || 0;
-        // },
-
         artworks() {
             return this.collective?.artworks?.length || 0;
         },
-
-        // categories() {
-        //     const categories = this.collective?.categories || [];
-
-        //     // obtener solo los nombres de las categorias
-        //     const names = categories.map((cat) => cat.category?.name);
-
-        //     // convertir el array en string separado por comas
-        //     return names.join(", ");
-        // },
 
         getPathShowCollective() {
             return {
@@ -183,13 +166,28 @@ export default {
         },
 
         getType() {
-            return this.collectiveTypes.filter(
-                (type) => type.value === this.collective?.type
-            )[0].text;
+            return (
+                this.collectiveTypes.filter(
+                    (type) => type.value === this.collective?.type
+                )[0].text || ""
+            );
         },
+
+        // categories() {
+        //     const categories = this.collective?.categories || [];
+
+        //     // obtener solo los nombres de las categorias
+        //     const names = categories.map((cat) => cat.category?.name);
+
+        //     // convertir el array en string separado por comas
+        //     return names.join(", ");
+        // },
     },
 
     methods: {
+        /**
+         * Ir al perfil del colectivo, no es lo mismo que el detalle
+         */
         goToCollectiveProfile() {
             this.$router.push({
                 name: "collectiveProfile",
@@ -198,12 +196,36 @@ export default {
                 },
             });
         },
+
+        /**
+         * Compartir colectivo
+         */
         share() {
             const path = this.secureUrl;
             const slug = this.collective?.slug ?? "";
             const route = `/colectivos/publico/${slug}`;
             const text = path + route;
             this.copyToClipboard(text);
+        },
+
+        /**
+         * Agregar el usuario a la lista de followers
+         */
+        follow() {
+            this.collective.followers.push({
+                user_id: this.user.id,
+                collective_id: this.collective.id,
+                collective: this.collective,
+            });
+        },
+
+        /**
+         * eliminar el usuario de la lista de followers
+         */
+        unfollow() {
+            this.collective.followers = this.collective.followers.filter(
+                (follower) => follower.user_id !== this.user.id
+            );
         },
     },
 };

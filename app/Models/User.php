@@ -206,6 +206,16 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve los colectivos seguidos por el usuario
+     *
+     * @return HasMany
+     */
+    public function followedCollectives(): HasMany
+    {
+        return $this->hasMany(FollowCollective::class);
+    }
+
+    /**
      * devuelve las direcciones de envío del usuario
      *
      * @return HasMany

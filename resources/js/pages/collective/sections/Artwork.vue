@@ -39,7 +39,7 @@
         <!-- /filtro -->
 
         <!-- listado de obras -->
-        <div class="py-8 py-md-0 pb-md-10">
+        <div class="py-8 py-md-0 pb-md-10" v-if="artworks.length">
             <LoadingTailwind v-if="globalLoading" />
             <div
                 class="grid grid-cols-1 md:grid-cols-2 xl:md:grid-cols-3 gap-5 py-5"
@@ -73,6 +73,16 @@
                 </v-btn>
             </div>
         </div>
+
+        <!-- no hay obras -->
+        <div class="py-8 py-md-0 py-md-10" v-else>
+            <div class="flex flex-col items-center justify-center">
+                <h3 class="text-lg md:text-3xl text-zinc-900 font-bold">
+                    No hay obras para mostrar
+                </h3>
+            </div>
+        </div>
+        <!-- /no hay obras -->
     </section>
 </template>
 

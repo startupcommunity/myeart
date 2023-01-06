@@ -11,6 +11,7 @@ use App\Factories\CollectiveFactory;
 use App\Http\Requests\CreateLikeCollectiveRequest;
 use App\Http\Requests\FilterArtworkInCollectiveRequest;
 use App\Http\Requests\FilterCollectiveRequest;
+use App\Http\Requests\FollowCollectiveRequest;
 use Illuminate\Http\JsonResponse;
 use App\Querys\CollectiveDB;
 use Illuminate\Http\Request;
@@ -288,6 +289,38 @@ class CollectiveController extends Controller
         try {
             $data = $this->factory->removeLike($request);
             return $this->resp->json($data, $data ? 200 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Sigue a un colectivo
+     *
+     * @param FollowCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function followCollective(FollowCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $follow = $this->factory->followCollective($request);
+            return $this->resp->json($follow, $follow ? 201 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Deja de seguir a un colectivo
+     *
+     * @param FollowCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function unfollowCollective(FollowCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $unFollow = $this->factory->unfollowCollective($request);
+            return $this->resp->json($unFollow, $unFollow ? 200 : 204);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

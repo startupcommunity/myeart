@@ -12556,11 +12556,11 @@ video {
 .mb-7{
   margin-bottom: 1.75rem;
 }
-.-ml-5{
-  margin-left: -1.25rem;
-}
 .-mt-1{
   margin-top: -0.25rem;
+}
+.-ml-5{
+  margin-left: -1.25rem;
 }
 .mr-1{
   margin-right: 0.25rem;
@@ -13371,6 +13371,12 @@ video {
 .pt-12{
   padding-top: 3rem;
 }
+.pt-10{
+  padding-top: 2.5rem;
+}
+.pb-7{
+  padding-bottom: 1.75rem;
+}
 .pb-3{
   padding-bottom: 0.75rem;
 }
@@ -13388,9 +13394,6 @@ video {
 }
 .pb-10{
   padding-bottom: 2.5rem;
-}
-.pt-10{
-  padding-top: 2.5rem;
 }
 .pb-24{
   padding-bottom: 6rem;
@@ -13418,9 +13421,6 @@ video {
 }
 .pr-1{
   padding-right: 0.25rem;
-}
-.pb-7{
-  padding-bottom: 1.75rem;
 }
 .text-left{
   text-align: left;
@@ -14695,10 +14695,6 @@ body {
   .xl\:text-xl{
     font-size: 1.25rem;
     line-height: 1.75rem;
-  }
-  .xl\:text-xs{
-    font-size: 0.75rem;
-    line-height: 1rem;
   }
   @media (min-width: 768px){
     .xl\:md\:grid-cols-3{

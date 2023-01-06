@@ -2,33 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Factories\UserFactory;
 use App\Http\Requests\CreateFollowArtworkRequest;
-use App\Querys\UserDB;
-use App\Utils\ResponseJson;
-use Exception;
 use Illuminate\Http\JsonResponse;
+use App\Factories\UserFactory;
+use App\Querys\CollectiveDB;
 use Illuminate\Http\Request;
+use App\Utils\ResponseJson;
+use App\Querys\UserDB;
+use Exception;
 
 class UserController extends Controller
 {
-    // acceso a los datos
-    private $db;
-
-    // tipo de responde de la app
-    private $resp;
-
-    // lógica del negocio
-    private $userfactory;
-
     public function __construct(
-        UserFactory $userfactory,
-        ResponseJson $resp,
-        UserDB $db
+        private UserFactory $userfactory,
+        private ResponseJson $resp,
+        private UserDB $db,
+        private CollectiveDB $collectiveDB
     ) {
-        $this->userfactory = $userfactory;
-        $this->resp = $resp;
-        $this->db = $db;
+        // $this->userfactory = $userfactory;
+        // $this->resp = $resp;
+        // $this->db = $db;
         // $this->authorizeResource(Artwork::class, 'id');
     }
 
@@ -186,6 +179,21 @@ class UserController extends Controller
     {
         try {
             $resp = $this->db->getFollowEvents();
+            return $this->resp->json($resp, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Devuelve los colectivos seguidos por el usuario
+     *
+     * @return JsonResponse
+     */
+    public function getFollowCollectives(): JsonResponse
+    {
+        try {
+            $resp = $this->collectiveDB->getFollowedCollectives();
             return $this->resp->json($resp, 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
