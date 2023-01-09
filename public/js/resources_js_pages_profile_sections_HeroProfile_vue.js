@@ -224,8 +224,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "FollowCollectiveButton",
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     collective: {
       type: Object,
@@ -236,6 +239,22 @@ __webpack_require__.r(__webpack_exports__);
     isCreator: {
       type: Boolean,
       "default": false
+    },
+    outlined: {
+      type: Boolean,
+      "default": false
+    },
+    small: {
+      type: Boolean,
+      "default": true
+    },
+    icon: {
+      type: Boolean,
+      "default": false
+    },
+    custom: {
+      type: String,
+      "default": "text-white"
     }
   },
   data: function data() {
@@ -286,12 +305,7 @@ __webpack_require__.r(__webpack_exports__);
           } // actualizar los colectivos seguidos por el user
 
 
-          _this2.$store.dispatch("userFollowCollectives"); // actualizar el colectivo en cuestión
-          // this.$store.dispatch(
-          //     "getUserCollective",
-          //     this.collective.id
-          // );
-
+          _this2.$store.dispatch("userFollowCollectives");
         }
       })["catch"](function (error) {
         return _this2.manageError(error);
@@ -710,12 +724,14 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("v-btn", {
-    staticClass: "text-white",
+    "class": _vm.custom,
     attrs: {
       color: _vm.isFollowing ? "grey darken-3" : "#B2794C",
-      "x-small": "",
+      "x-small": _vm.small || _vm.isMobileMode,
+      small: _vm.isSmall,
       loading: _vm.loading,
-      disabled: _vm.loading || _vm.isCreator
+      disabled: _vm.loading || _vm.isCreator,
+      outlined: _vm.outlined
     },
     on: {
       click: function click($event) {
@@ -723,7 +739,9 @@ var render = function render() {
         return _vm.followOrUnfollow.apply(null, arguments);
       }
     }
-  }, [!_vm.isFollowing ? _c("span", [_vm._v("Seguir")]) : _c("span", [_vm._v("Dejar de seguir")])]);
+  }, [_vm.icon ? _c("i", {
+    staticClass: "fa-brands fa-nfc-symbol"
+  }) : _vm._e(), _vm._v(" "), !_vm.isFollowing ? _c("span", [_vm._v("Seguir")]) : _c("span", [_vm._v("Dejar de seguir")])]);
 };
 
 var staticRenderFns = [];
@@ -1586,6 +1604,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var format = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Y-m-d";
       var date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000);
       return date.toISOString().substr(0, 10);
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive md
+     */
+    isMd: function isMd() {
+      return this.$vuetify.breakpoint.md;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive sm
+     */
+    isSm: function isSm() {
+      return this.$vuetify.breakpoint.sm;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive lg
+     */
+    isLg: function isLg() {
+      return this.$vuetify.breakpoint.lg;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive xs
+     */
+    isXs: function isXs() {
+      return this.$vuetify.breakpoint.xs;
+    },
+
+    /**
+     * Verificar todos los responsives pequeños
+     */
+    isSmall: function isSmall() {
+      return this.isSm || this.isMd || this.isLg;
+    },
+
+    /**
+     * Si esta en modo mobile
+     */
+    isMobileMode: function isMobileMode() {
+      return this.isXs;
     }
   },
   methods: {

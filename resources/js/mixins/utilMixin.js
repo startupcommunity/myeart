@@ -23,6 +23,48 @@ export default {
 
             return date.toISOString().substr(0, 10);
         },
+
+        /**
+         * Verificar si la pantalla esta en modo responsive md
+         */
+        isMd() {
+            return this.$vuetify.breakpoint.md;
+        },
+
+        /**
+         * Verificar si la pantalla esta en modo responsive sm
+         */
+        isSm() {
+            return this.$vuetify.breakpoint.sm;
+        },
+
+        /**
+         * Verificar si la pantalla esta en modo responsive lg
+         */
+        isLg() {
+            return this.$vuetify.breakpoint.lg;
+        },
+
+        /**
+         * Verificar si la pantalla esta en modo responsive xs
+         */
+        isXs() {
+            return this.$vuetify.breakpoint.xs;
+        },
+
+        /**
+         * Verificar todos los responsives pequeños
+         */
+        isSmall() {
+            return this.isSm || this.isMd || this.isLg;
+        },
+
+        /**
+         * Si esta en modo mobile
+         */
+        isMobileMode() {
+            return this.isXs;
+        },
     },
 
     methods: {

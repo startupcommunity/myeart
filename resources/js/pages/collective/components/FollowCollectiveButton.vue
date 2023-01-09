@@ -1,20 +1,26 @@
 <template>
     <v-btn
         :color="isFollowing ? 'grey darken-3' : '#B2794C'"
-        x-small
-        class="text-white"
-        @click.stop="followOrUnfollow"
+        :x-small="small || isMobileMode"
+        :small="isSmall"
+        :class="custom"
         :loading="loading"
         :disabled="loading || isCreator"
+        :outlined="outlined"
+        @click.stop="followOrUnfollow"
     >
+        <i class="fa-brands fa-nfc-symbol" v-if="icon"></i>
         <span v-if="!isFollowing">Seguir</span>
         <span v-else>Dejar de seguir</span>
     </v-btn>
 </template>
 
 <script>
+import utilMixin from '../../../mixins/utilMixin';
+
 export default {
     name: "FollowCollectiveButton",
+    mixins: [utilMixin],
     props: {
         collective: {
             type: Object,
@@ -23,6 +29,22 @@ export default {
         isCreator: {
             type: Boolean,
             default: false,
+        },
+        outlined: {
+            type: Boolean,
+            default: false,
+        },
+        small: {
+            type: Boolean,
+            default: true,
+        },
+        icon: {
+            type: Boolean,
+            default: false,
+        },
+        custom: {
+            type: String,
+            default: "text-white",
         },
     },
 
@@ -81,12 +103,6 @@ export default {
 
                         // actualizar los colectivos seguidos por el user
                         this.$store.dispatch("userFollowCollectives");
-
-                        // actualizar el colectivo en cuestión
-                        // this.$store.dispatch(
-                        //     "getUserCollective",
-                        //     this.collective.id
-                        // );
                     }
                 })
                 .catch((error) => this.manageError(error))

@@ -28,9 +28,16 @@ class CollectiveDB
   {
     return [
       'categories.category',
-      'members.user',
+      'members.user.artworks.categories',
       'followers',
-      'artworks',
+      'artworks.user',
+      'artworks.gallery',
+      'artworks.categories',
+      'artworks.labels',
+      'releases.creator',
+      'releases.likes',
+      'releases.labels.user',
+      'releases.comments',
       'profile',
       'user',
       'likes',

@@ -99,7 +99,7 @@ class Collective extends Model
      */
     public function releases(): HasMany
     {
-        return $this->hasMany(Release::class);
+        return $this->hasMany(UserRelease::class);
     }
 
     /**

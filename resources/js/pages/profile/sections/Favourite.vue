@@ -16,7 +16,7 @@
             ></div>
             <div class="flex flex-wrap mt-4 sm:mt-0">
                 <div
-                    class="lg:border-r-2 lg:border-gray-800 lg:pr-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:border-r lg:border-gray-800 lg:pr-2 border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
@@ -30,7 +30,7 @@
                     </v-btn>
                 </div>
                 <div
-                    class="lg:border-r-2 lg:border-gray-800 lg:px-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:border-r lg:border-gray-800 lg:px-2 border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
@@ -44,7 +44,7 @@
                     </v-btn>
                 </div>
                 <div
-                    class="lg:border-r-2 lg:border-gray-800 lg:px-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:border-r lg:border-gray-800 lg:px-2 border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
@@ -58,7 +58,7 @@
                     </v-btn>
                 </div>
                 <div
-                    class="lg:border-r-2 lg:border-gray-800 lg:px-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:border-r lg:border-gray-800 lg:px-2 border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
@@ -72,7 +72,7 @@
                     </v-btn>
                 </div>
                 <div
-                    class="w-full lg:w-auto lg:px-4 border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:pl-2 border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
