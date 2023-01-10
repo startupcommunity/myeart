@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="w-full animate-fade-in-down">
         <div v-if="showProfile" class="mb-3">
             <div class="flex justify-between items-center">
                 <div class="flex justify-start items-center gap-2">

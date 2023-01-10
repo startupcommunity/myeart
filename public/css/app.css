@@ -13422,9 +13422,6 @@ video {
 .pr-1{
   padding-right: 0.25rem;
 }
-.pt-28{
-  padding-top: 7rem;
-}
 .text-left{
   text-align: left;
 }
@@ -14359,17 +14356,14 @@ body {
   .md\:gap-5{
     gap: 1.25rem;
   }
+  .md\:gap-12{
+    gap: 3rem;
+  }
   .md\:gap-2{
     gap: 0.5rem;
   }
   .md\:gap-16{
     gap: 4rem;
-  }
-  .md\:gap-8{
-    gap: 2rem;
-  }
-  .md\:gap-12{
-    gap: 3rem;
   }
   .md\:space-y-0 > :not([hidden]) ~ :not([hidden]){
     --tw-space-y-reverse: 0;
@@ -14554,11 +14548,11 @@ body {
   .lg\:mt-0{
     margin-top: 0px;
   }
-  .lg\:mr-8{
-    margin-right: 2rem;
-  }
   .lg\:-mt-60{
     margin-top: -15rem;
+  }
+  .lg\:mr-8{
+    margin-right: 2rem;
   }
   .lg\:block{
     display: block;
@@ -14632,6 +14626,10 @@ body {
     padding-left: 1.75rem;
     padding-right: 1.75rem;
   }
+  .lg\:px-0{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
   .lg\:py-28{
     padding-top: 7rem;
     padding-bottom: 7rem;
@@ -14644,24 +14642,20 @@ body {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
-  .lg\:px-0{
-    padding-left: 0px;
-    padding-right: 0px;
-  }
   .lg\:pb-24{
     padding-bottom: 6rem;
   }
   .lg\:pr-4{
     padding-right: 1rem;
   }
-  .lg\:pl-4{
-    padding-left: 1rem;
-  }
   .lg\:pr-2{
     padding-right: 0.5rem;
   }
   .lg\:pl-2{
     padding-left: 0.5rem;
+  }
+  .lg\:pl-4{
+    padding-left: 1rem;
   }
   .lg\:text-5xl{
     font-size: 3rem;
@@ -14704,9 +14698,6 @@ body {
   }
   .xl\:w-1\/2{
     width: 50%;
-  }
-  .xl\:w-auto{
-    width: auto;
   }
   .xl\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr));

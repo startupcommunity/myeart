@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Enums\StatusInvitationCollectiveEnum;
 use App\Models\Collective;
 use App\Utils\AppStorage;
 use Illuminate\Http\Request;
@@ -176,9 +177,15 @@ class CollectiveFactory
       // si el creador ya invito a este usuario
       $invitation = $collective->invitations()
         ->where('user_id', $request->user_id)
+        ->where('status', '<>', StatusInvitationCollectiveEnum::REJECTED)
         ->first();
 
-      if ($invitation) {
+      // si el usuario ya es miembro del colectivo
+      $member = $collective->members()
+        ->where('user_id', $request->user_id)
+        ->first();
+
+      if ($invitation || $member) {
         return false;
       }
 

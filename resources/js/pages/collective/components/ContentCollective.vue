@@ -9,25 +9,37 @@
                             color="#B2794C"
                             class="text-white font-medium"
                             block
-                            @click.stop=""
+                            @click.stop="openArtworks"
+                            v-if="!openSectionArtworks"
                         >
                             ver obras del colectivo
                         </v-btn>
+                        <v-btn
+                            class="font-medium"
+                            @click.stop="closeArtworks"
+                            text
+                            v-else
+                        >
+                            <i class="fas fa-arrow-left"></i>
+                            volver atrás
+                        </v-btn>
 
-                        <h3 class="uppercase font-bold text-zinc-900">
-                            Algunas obras del colectivo
-                        </h3>
+                        <div v-if="!openSectionArtworks">
+                            <h3 class="uppercase font-bold text-zinc-900 mb-3">
+                                Algunas obras del colectivo
+                            </h3>
 
-                        <div class="grid grid-cols-1">
-                            <CardArtwork
-                                v-for="art in lastArtworks"
-                                :key="art.id"
-                                :artwork="art"
-                                :showButtonDelete="false"
-                                :showButtonEdit="false"
-                                :type="2"
-                                :collectiveID="collective.id"
-                            />
+                            <div class="grid grid-cols-1">
+                                <CardArtwork
+                                    v-for="art in lastArtworks"
+                                    :key="art.id"
+                                    :artwork="art"
+                                    :showButtonDelete="false"
+                                    :showButtonEdit="false"
+                                    :type="2"
+                                    :collectiveID="collective.id"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,7 +55,10 @@
                             class="rounded-lg"
                         ></v-text-field>
 
-                        <div class="grid grid-cols-1">
+                        <div
+                            class="grid grid-cols-1"
+                            v-if="!openSectionArtworks"
+                        >
                             <CardRelease
                                 v-for="rel in releases"
                                 :key="rel.id"
@@ -60,14 +75,29 @@
                                 :showButtonsCol="false"
                                 @showCommentDialog="activeCommentModal"
                             />
+                            <!-- modal de comentarios -->
+                            <ReleaseCommentsDialog
+                                :show="showComments"
+                                :releaseID="release?.id"
+                                @close-comments="showComments = false"
+                            />
                         </div>
 
-                        <!-- modal de comentarios -->
-                        <ReleaseCommentsDialog
-                            :show="showComments"
-                            :releaseID="release?.id"
-                            @close-comments="showComments = false"
-                        />
+                        <div
+                            v-else
+                            class="grid grid-cols-1 md:grid-cols-2 gap-3"
+                        >
+                            <CardArtwork
+                                v-for="art in artworks"
+                                :key="art.id"
+                                :artwork="art"
+                                :showButtonDelete="false"
+                                :showButtonEdit="false"
+                                :type="2"
+                                :collectiveID="collective.id"
+                                class=""
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -122,10 +152,13 @@ export default {
 
     data() {
         return {
-            release: {},
             showComments: false,
+            openSectionArtworks: false,
+            release: {},
             releases: [],
             original: [],
+            artworks: [],
+            originalArtworks: [],
         };
     },
     computed: {
@@ -153,9 +186,9 @@ export default {
         /**
          * Todas las Obras del colectivo
          */
-        artworks() {
-            return this.collective?.artworks || [];
-        },
+        // artworks() {
+        //     return this.collective?.artworks || [];
+        // },
         /**
          * 3 ultimas obras del colectivo
          */
@@ -178,6 +211,12 @@ export default {
         const orderBy = releases.sort((a, b) => b.id - a.id);
         this.releases = orderBy;
         this.original = JSON.parse(JSON.stringify(orderBy));
+
+        // ordenar obras por fecha
+        const artworks = this.collective?.artworks || [];
+        const orderByArtworks = artworks.sort((a, b) => b.id - a.id);
+        this.artworks = orderByArtworks;
+        this.originalArtworks = JSON.parse(JSON.stringify(orderByArtworks));
     },
 
     methods: {
@@ -189,14 +228,29 @@ export default {
         search(event) {
             const text = event.toString().toLowerCase();
 
-            if (text.length > 0) {
-                this.releases = this.original.filter((release) => {
-                    const name = release.text.toLowerCase();
+            const searchArtworks = this.openSectionArtworks;
 
-                    return name.includes(text);
-                });
+            if (text.length > 0) {
+                // si la sección obras esta cerrada
+                // se busca en las publicaciones
+                if (!searchArtworks) {
+                    this.releases = this.original.filter((release) => {
+                        const name = release.text.toLowerCase();
+                        return name.includes(text);
+                    });
+                }
+
+                // si la sección obras esta abierta
+                // se busca en las obras
+                if (searchArtworks) {
+                    this.artworks = this.originalArtworks.filter((artwork) => {
+                        const name = artwork.title.toLowerCase();
+                        return name.includes(text);
+                    });
+                }
             } else {
                 this.releases = this.original;
+                this.artworks = this.originalArtworks;
             }
         },
 
@@ -217,6 +271,22 @@ export default {
          */
         isCollectiveOwner(creatorID) {
             return this.creatorID === creatorID;
+        },
+
+        /**
+         * Abrir Mini sección de obras del colectivo
+         * muestra todas las obras
+         */
+        openArtworks() {
+            this.openSectionArtworks = true;
+        },
+
+        /**
+         * Cerrar Mini sección de obras del colectivo
+         * muestra solo 3 obras
+         */
+        closeArtworks() {
+            this.openSectionArtworks = false;
         },
     },
 };
