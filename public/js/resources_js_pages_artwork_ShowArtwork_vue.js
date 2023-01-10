@@ -574,13 +574,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "FollowArtistButton",
@@ -595,9 +588,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       loadFollow: false
     };
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)({
-    user: "getProfile"
-  })), {}, {
+  computed: {
+    /**
+     * Usuario logueado
+     */
+    user: function user() {
+      return this.$store.getters.getProfile;
+    },
+
     /**
      * Comprueba si el usuario puede seguir al artista
      *
@@ -620,8 +618,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return (_this$user2 = this.user) === null || _this$user2 === void 0 ? void 0 : (_this$user2$following = _this$user2.following_artists) === null || _this$user2$following === void 0 ? void 0 : _this$user2$following.some(function (follow) {
         return follow.following_id === _this.artist.id;
       });
+    },
+    isGuest: function isGuest() {
+      var _this$user3, _this$user4, _this$user5, _this$user6;
+
+      return ((_this$user3 = this.user) === null || _this$user3 === void 0 ? void 0 : _this$user3.id) === undefined || ((_this$user4 = this.user) === null || _this$user4 === void 0 ? void 0 : _this$user4.id) === null || ((_this$user5 = this.user) === null || _this$user5 === void 0 ? void 0 : _this$user5.id) === "" || ((_this$user6 = this.user) === null || _this$user6 === void 0 ? void 0 : _this$user6.id) === 0;
     }
-  }),
+  },
   methods: {
     /**
      * Seguir o dejar de seguir a un artista
@@ -632,6 +635,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (!this.canFollowArtist) {
         this.noty("No es posible autoseguirte", "error");
+        return;
+      }
+
+      if (this.isGuest) {
+        this.noty("Debe iniciar sesión", "warning");
         return;
       }
 
@@ -4347,6 +4355,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      */
     isMobileMode: function isMobileMode() {
       return this.isXs;
+    },
+
+    /**
+     * Obtiene el usuario logueado actual
+     */
+    authUser: function authUser() {
+      return this.$store.getters.getProfile;
+    },
+
+    /**
+     * Devuelve si el usuario esta logueado
+     */
+    isUserGuest: function isUserGuest() {
+      var _this$authUser, _this$authUser2, _this$authUser3, _this$authUser4;
+
+      return ((_this$authUser = this.authUser) === null || _this$authUser === void 0 ? void 0 : _this$authUser.id) === undefined || ((_this$authUser2 = this.authUser) === null || _this$authUser2 === void 0 ? void 0 : _this$authUser2.id) === null || ((_this$authUser3 = this.authUser) === null || _this$authUser3 === void 0 ? void 0 : _this$authUser3.id) === "" || ((_this$authUser4 = this.authUser) === null || _this$authUser4 === void 0 ? void 0 : _this$authUser4.id) === 0;
     }
   },
   methods: {

@@ -348,6 +348,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _subcomponents_InfoCompleteRelease_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./subcomponents/InfoCompleteRelease.vue */ "./resources/js/pages/profile/components/subcomponents/InfoCompleteRelease.vue");
 /* harmony import */ var _subcomponents_InfoShortRelease_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./subcomponents/InfoShortRelease.vue */ "./resources/js/pages/profile/components/subcomponents/InfoShortRelease.vue");
 /* harmony import */ var _subcomponents_CommentRelease_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./subcomponents/CommentRelease.vue */ "./resources/js/pages/profile/components/subcomponents/CommentRelease.vue");
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+
 
 
 
@@ -355,6 +357,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CardReleaseProfile",
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_5__["default"]],
   components: {
     InfoArtist: _subcomponents_InfoArtist_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     ImageActionRelease: _subcomponents_ImageActionRelease_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -435,15 +438,35 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     editRelease: function editRelease() {
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
+
       this.$emit("activeEdit", this.release);
     },
     deleteRelease: function deleteRelease() {
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
+
       this.$emit("activeDelete", this.release);
     },
     openModalComment: function openModalComment() {
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
+
       this.$emit("showCommentDialog", this.release);
     },
     updateRelease: function updateRelease() {
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
+
       this.$emit("updated-release-success", this.release);
     }
   }
@@ -1759,8 +1782,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "FavButtonRelease",
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     release: {
       type: Object,
@@ -1784,6 +1810,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addOrRemoveFav: function addOrRemoveFav() {
       var _this = this;
+
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
 
       var data = {
         release_id: this.release.id,
@@ -1836,8 +1867,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "LikeButton",
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       loading: false,
@@ -1866,6 +1900,11 @@ __webpack_require__.r(__webpack_exports__);
      */
     addLikeOrDislike: function addLikeOrDislike() {
       var _this = this;
+
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
 
       var data = {
         release_id: this.release.id,
@@ -2158,6 +2197,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     share: function share() {
       var _this$release$slug, _this$release;
+
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
 
       var path = this.secureUrl;
       var slug = (_this$release$slug = (_this$release = this.release) === null || _this$release === void 0 ? void 0 : _this$release.slug) !== null && _this$release$slug !== void 0 ? _this$release$slug : "";
@@ -4340,6 +4384,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      */
     isMobileMode: function isMobileMode() {
       return this.isXs;
+    },
+
+    /**
+     * Obtiene el usuario logueado actual
+     */
+    authUser: function authUser() {
+      return this.$store.getters.getProfile;
+    },
+
+    /**
+     * Devuelve si el usuario esta logueado
+     */
+    isUserGuest: function isUserGuest() {
+      var _this$authUser, _this$authUser2, _this$authUser3, _this$authUser4;
+
+      return ((_this$authUser = this.authUser) === null || _this$authUser === void 0 ? void 0 : _this$authUser.id) === undefined || ((_this$authUser2 = this.authUser) === null || _this$authUser2 === void 0 ? void 0 : _this$authUser2.id) === null || ((_this$authUser3 = this.authUser) === null || _this$authUser3 === void 0 ? void 0 : _this$authUser3.id) === "" || ((_this$authUser4 = this.authUser) === null || _this$authUser4 === void 0 ? void 0 : _this$authUser4.id) === 0;
     }
   },
   methods: {

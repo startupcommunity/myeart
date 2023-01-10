@@ -1,6 +1,5 @@
 <template>
     <MainLayout :loading-overlay="globalLoading">
-
         <!-- Hero -->
         <Hero :photo="frontPhoto" />
 
@@ -48,9 +47,12 @@ export default {
 
     methods: {
         getCollective() {
+            const param = this.$route.params.slug || this.$route.params.id;
+
+            console.log(this.ep.collectives.getCollective + param);
             this.globalLoading = true;
             this.axios
-                .get(this.ep.collectives.getCollective + this.$route.params.id)
+                .get(this.ep.collectives.getCollective + param)
                 .then((resp) => {
                     if (resp.status === 200) {
                         this.collective = resp.data;

@@ -46,10 +46,10 @@ class CollectiveController extends Controller
     /**
      * devuelve un colectivo
      *
-     * @param int $id
+     * @param int|string $id
      * @return JsonResponse
      */
-    public function getCollective(int $id): JsonResponse
+    public function getCollective(int|string $id): JsonResponse
     {
         try {
             $data = $this->db->getCollective($id);

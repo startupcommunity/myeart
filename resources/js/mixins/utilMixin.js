@@ -65,6 +65,25 @@ export default {
         isMobileMode() {
             return this.isXs;
         },
+
+        /**
+         * Obtiene el usuario logueado actual
+         */
+        authUser() {
+            return this.$store.getters.getProfile;
+        },
+
+        /**
+         * Devuelve si el usuario esta logueado
+         */
+        isUserGuest() {
+            return (
+                this.authUser?.id === undefined ||
+                this.authUser?.id === null ||
+                this.authUser?.id === "" ||
+                this.authUser?.id === 0
+            );
+        },
     },
 
     methods: {

@@ -55,9 +55,11 @@ import ImageActionRelease from "./subcomponents/ImageActionRelease.vue";
 import InfoCompleteRelease from "./subcomponents/InfoCompleteRelease.vue";
 import InfoShortRelease from "./subcomponents/InfoShortRelease.vue";
 import CommentRelease from "./subcomponents/CommentRelease.vue";
+import utilMixin from "../../../mixins/utilMixin";
 
 export default {
     name: "CardReleaseProfile",
+    mixins: [utilMixin],
     components: {
         InfoArtist,
         ImageActionRelease,
@@ -133,15 +135,35 @@ export default {
     },
     methods: {
         editRelease() {
+            if (this.isUserGuest) {
+                this.noty("Debe iniciar sesión", "warning");
+                return;
+            }
+
             this.$emit("activeEdit", this.release);
         },
         deleteRelease() {
+            if (this.isUserGuest) {
+                this.noty("Debe iniciar sesión", "warning");
+                return;
+            }
+
             this.$emit("activeDelete", this.release);
         },
         openModalComment() {
+            if (this.isUserGuest) {
+                this.noty("Debe iniciar sesión", "warning");
+                return;
+            }
+
             this.$emit("showCommentDialog", this.release);
         },
         updateRelease() {
+            if (this.isUserGuest) {
+                this.noty("Debe iniciar sesión", "warning");
+                return;
+            }
+
             this.$emit("updated-release-success", this.release);
         },
     },

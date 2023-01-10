@@ -26,6 +26,11 @@ __webpack_require__.r(__webpack_exports__);
     share: function share() {
       var _this$release$slug, _this$release;
 
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
+
       var path = this.secureUrl;
       var slug = (_this$release$slug = (_this$release = this.release) === null || _this$release === void 0 ? void 0 : _this$release.slug) !== null && _this$release$slug !== void 0 ? _this$release$slug : "";
       var route = "/publicaciones/slug/".concat(slug);
@@ -147,6 +152,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      */
     isMobileMode: function isMobileMode() {
       return this.isXs;
+    },
+
+    /**
+     * Obtiene el usuario logueado actual
+     */
+    authUser: function authUser() {
+      return this.$store.getters.getProfile;
+    },
+
+    /**
+     * Devuelve si el usuario esta logueado
+     */
+    isUserGuest: function isUserGuest() {
+      var _this$authUser, _this$authUser2, _this$authUser3, _this$authUser4;
+
+      return ((_this$authUser = this.authUser) === null || _this$authUser === void 0 ? void 0 : _this$authUser.id) === undefined || ((_this$authUser2 = this.authUser) === null || _this$authUser2 === void 0 ? void 0 : _this$authUser2.id) === null || ((_this$authUser3 = this.authUser) === null || _this$authUser3 === void 0 ? void 0 : _this$authUser3.id) === "" || ((_this$authUser4 = this.authUser) === null || _this$authUser4 === void 0 ? void 0 : _this$authUser4.id) === 0;
     }
   },
   methods: {

@@ -220,11 +220,24 @@ export default {
         },
 
         /**
-         * Path de la url de la app
+         * Path de la url https de la app
          * @returns string
          */
         secureUrl() {
             const path = document.head.querySelector('meta[name="secure-url"]');
+            if (path) {
+                return path.content;
+            }
+
+            return "/";
+        },
+
+        /**
+         * Path de la url simple de la app
+         * @returns string
+         */
+        simpleUrl() {
+            const path = document.head.querySelector('meta[name="simple-url"]');
             if (path) {
                 return path.content;
             }

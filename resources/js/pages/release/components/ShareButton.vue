@@ -16,6 +16,11 @@ export default {
     },
     methods: {
         share() {
+            if (this.isUserGuest) {
+                this.noty("Debe iniciar sesión", "warning");
+                return;
+            }
+
             const path = this.secureUrl;
             const slug = this.release?.slug ?? "";
             const route = `/publicaciones/slug/${slug}`;

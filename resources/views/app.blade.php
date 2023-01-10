@@ -11,6 +11,7 @@
 
     {{--  path secure rul  --}}
     <meta name="secure-url" content="{{ secure_url('/') }}" />
+    <meta name="simple-url" content="{{ url('/') }}" />
 
     {{--  paths  --}}
     <meta name="front-photo" content="{{ config('storage.front_photo') }}" />

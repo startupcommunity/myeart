@@ -8,6 +8,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CollectiveController;
 use App\Http\Controllers\UserEventController;
 use App\Http\Controllers\UserReleaseController;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,10 @@ Route::get('releases/get-comments-slug/{slug}', [UserReleaseController::class, '
  * @param int|string $id
  */
 Route::get('events/show/{id}', [UserEventController::class, 'show'])->name('showEvent');
+
+/**
+ * devuelve la info completa de un colectivo
+ *
+ * @param int|string $id  id del colectivo o slug
+ */
+Route::get('collectives/get-collective/{id}', [CollectiveController::class, 'getCollective'])->name('getCollective');

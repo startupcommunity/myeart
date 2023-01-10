@@ -56,6 +56,7 @@
                             :collective="collective"
                             :small="false"
                             v-if="collective?.id"
+                            :disabled="isGuest"
                         />
                         <FollowCollectiveButton
                             :collective="collective"
@@ -65,10 +66,12 @@
                             :icon="true"
                             custom="text-primary"
                             v-if="collective?.id"
+                            :disabled="isGuest"
                         />
                         <ShareButtonCollective
                             :collective="collective"
                             :small="false"
+                            :disabled="isGuest"
                         />
                     </div>
                 </div>
@@ -104,6 +107,18 @@ export default {
          */
         user() {
             return this.$store.getters.getProfile;
+        },
+
+        /**
+         * Usuario no logueado
+         */
+        isGuest() {
+            return (
+                this.user?.id === undefined ||
+                this.user?.id === null ||
+                this.user?.id === "" ||
+                this.user?.id === 0
+            );
         },
         /**
          * Perfil del colectivo

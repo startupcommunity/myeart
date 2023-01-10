@@ -16,11 +16,6 @@ Route::group(['prefix' => 'collectives'], function () {
   Route::put('/update/{id}', [CollectiveController::class, 'update'])->name('collectiveUpdate');
 
   /**
-   * devuelve un colectivo
-   */
-  Route::get('/get-collective/{id}', [CollectiveController::class, 'getCollective'])->name('getCollective');
-
-  /**
    * Devuelve las publicaciones de un colectivo
    * tanto de los miembros como del creador
    */

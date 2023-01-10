@@ -81,14 +81,26 @@ class CollectiveDB
   /**
    * devuelve un colectivo
    *
-   * @param int $id       id del colectivo
+   * @param int|string $id       id del colectivo| slug del colectivo
    * @param bool $with    relaciones
    * @return Collective
    */
-  public function getCollective(int $id, bool $with = true): Collective
+  public function getCollective(int|string $id, bool $with = true): Collective
   {
     $relations = $with ? $this->getAllCollectiveRelations() : [];
-    return $this->model->with($relations)->findOrFail($id);
+
+    $isNumeric = is_numeric($id);
+    $isString = is_string($id);
+
+    if ($isNumeric) {
+      return $this->model->with($relations)->findOrFail($id);
+    }
+
+    if ($isString) {
+      return $this->model->with($relations)->where('slug', $id)->first();
+    }
+
+    return new Collective();
   }
 
   /**

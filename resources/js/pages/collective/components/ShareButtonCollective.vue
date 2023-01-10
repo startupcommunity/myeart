@@ -34,7 +34,7 @@ export default {
          * Compartir colectivo
          */
         share() {
-            const path = this.secureUrl;
+            const path = this.simpleUrl;
             const slug = this.collective?.slug ?? "";
             const route = `/colectivos/publico/${slug}`;
             const text = path + route;

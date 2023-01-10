@@ -4954,11 +4954,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
 
     /**
-     * Path de la url de la app
+     * Path de la url https de la app
      * @returns string
      */
     secureUrl: function secureUrl() {
       var path = document.head.querySelector('meta[name="secure-url"]');
+
+      if (path) {
+        return path.content;
+      }
+
+      return "/";
+    },
+
+    /**
+     * Path de la url simple de la app
+     * @returns string
+     */
+    simpleUrl: function simpleUrl() {
+      var path = document.head.querySelector('meta[name="simple-url"]');
 
       if (path) {
         return path.content;
