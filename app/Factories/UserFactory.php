@@ -2,6 +2,8 @@
 
 namespace App\Factories;
 
+use App\Events\NotificationEvent;
+use App\Models\Artwork;
 use App\Models\User;
 
 class UserFactory
@@ -31,7 +33,18 @@ class UserFactory
     $created = $follower->followingArtists()->create([
       'following_id' => $request->following_id
     ]);
+    
+    //Evento para Notificación de nuevo seguidor
+    $data = [
+      'user_id' => $follower->id,
+      'notifiable_id' => $request->following_id,
+      'url' => '',
+      'message' => "Ha comenzado a seguirte",
+      'type' => 'new-follower'
+    ];
 
+    event(new NotificationEvent($data));
+    
     return $created ? true : false;
   }
 
@@ -79,6 +92,18 @@ class UserFactory
 
     // caso contrario, se agrega
     $user->favoriteArtworks()->create(['artwork_id' => $request->artwork_id]);
+
+    //Evento para Notificación de respuesta a comentario
+    $art = Artwork::find($request->artwork_id);
+    $data = [
+      'user_id' => $user->id,
+      'notifiable_id' => $art->user_id,
+      'url' => '/obras/'.$art->id,
+      'message' => "Ha marcado una obra tuya como favorita",
+      'type' => 'new-like-artwork'
+    ];
+    event(new NotificationEvent($data));
+
 
     return true;
   }

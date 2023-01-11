@@ -60,6 +60,11 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/get-artist/{id}', [UserController::class, 'getArtist'])->name('getArtist');
 
   /**
+   * Devuelve las notitificaciones no leidas de un artista
+   */
+  // Route::get('/get-unread-notifications/{id}', [UserController::class, 'getUnreadNotifications'])->name('getUnreadNotifications');
+
+  /**
    * Agrega una obra a favoritos de los usuarios
    */
   Route::post('/add-favorite-artwork', [UserController::class, 'addFavoriteArtwork'])->name('addFavoriteArtwork');

@@ -164,7 +164,7 @@ class UserInformationsController extends Controller
     public function getAuthUser(Request $request)
     {
         $user = $request->user()->load([
-            'profile', 'followingArtists', 'socialNetwork', 'favoriteReleases', 'shoppingCart.artwork'
+            'profile', 'followingArtists', 'socialNetwork', 'favoriteReleases', 'shoppingCart.artwork', 'unreadNotifications'
         ]);
         return $user;
     }

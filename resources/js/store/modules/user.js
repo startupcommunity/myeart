@@ -15,6 +15,7 @@ export default {
             shopping_cart: [],
             following_artists: [],
             favorite_releases: [],
+            unread_notifications: [],
         },
     },
     getters: {

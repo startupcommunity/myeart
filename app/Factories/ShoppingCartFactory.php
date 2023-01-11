@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\ShoppingCart;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Events\NotificationEvent;
 
 class ShoppingCartFactory
 {
@@ -115,6 +116,16 @@ class ShoppingCartFactory
 
         // pasar los items a estado vendido
         $item->artwork->update(['state' => ArtworkStateEnum::SOLD]);
+
+        // Evento de notificacion para compra
+        $data = [
+          'user_id' => $user->id,
+          'notifiable_id' => $item->artwork->user_id,
+          'url' => '/obras/'.$item->artwork->id,
+          'message' => "Ha comprado su obra",
+          'type' => 'new-buy'
+        ];
+        event(new NotificationEvent($data));
       }
 
       // registrar la dirección de envío

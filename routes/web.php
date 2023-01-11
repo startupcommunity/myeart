@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\NewFollowerEvent;
 use Illuminate\Support\Facades\Route;
 
 /*

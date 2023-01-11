@@ -1,3 +1,4 @@
+//require('./bootstrap');
 import vue from "vue";
 import App from "./App.vue";
 window.Vue = vue;
@@ -37,6 +38,18 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 // maps
 import * as VueGoogleMaps from "vue2-google-maps";
+
+//echo
+import Echo from 'laravel-echo';
+
+window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});
 
 Vue.use(VueGoogleMaps, {
     load: {
