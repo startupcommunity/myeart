@@ -46,7 +46,7 @@
                 </button>
             </div>
             <div class="flex flex-wrap gap-4 items-center justify-start py-6">
-                <button type="button" @click="showSection('pedidos')">
+                <button type="button" @click="showSection('order')">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span
                         class="tracking-tight uppercase"

@@ -153,6 +153,9 @@ const endpoints = {
     orders: {
         // obtiene los artículos del pedido
         getItems: `${API}/orders/get-items/`, // get
+
+        // obtiene las ordenes del usuario logueado o indicado / {id?}
+        getUserOrders: `${API}/orders/get-user-orders/`, // get
     },
 
     // eventos

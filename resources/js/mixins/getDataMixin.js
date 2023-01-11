@@ -74,6 +74,18 @@ export default {
                 { text: "Otras Organizaciones", value: 5 },
             ];
         },
+
+        /**
+         * Estado de las ordenes
+         * @returns Object
+         */
+        ORDER_STATES() {
+            return {
+                pending: { text: "Pendiente", val: 1 },
+                delivered: { text: "Entregado", val: 5 },
+                canceled: { text: "Cancelado", val: 3 },
+            };
+        },
     },
     methods: {
         /**

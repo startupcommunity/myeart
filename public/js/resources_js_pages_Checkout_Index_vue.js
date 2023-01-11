@@ -2884,6 +2884,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Otras Organizaciones",
         value: 5
       }];
+    },
+
+    /**
+     * Estado de las ordenes
+     * @returns Object
+     */
+    ORDER_STATES: function ORDER_STATES() {
+      return {
+        pending: {
+          text: "Pendiente",
+          val: 1
+        },
+        delivered: {
+          text: "Entregado",
+          val: 5
+        },
+        canceled: {
+          text: "Cancelado",
+          val: 3
+        }
+      };
     }
   },
   methods: {
