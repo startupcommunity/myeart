@@ -156,6 +156,12 @@ const endpoints = {
 
         // obtiene las ordenes del usuario logueado o indicado / {id?}
         getUserOrders: `${API}/orders/get-user-orders/`, // get
+
+        // cancelar una orden / {id}
+        cancel: `${API}/orders/cancel/`, // put
+
+        // confirma una orden y marca como entregada
+        confirm: `${API}/orders/confirm`, // post
     },
 
     // eventos

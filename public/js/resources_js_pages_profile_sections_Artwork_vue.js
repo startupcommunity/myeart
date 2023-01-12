@@ -673,6 +673,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           val: 3
         }
       };
+    },
+
+    /**
+     * Estado de las ordenes
+     * @returns Object
+     */
+    SHIPPING_TYPE: function SHIPPING_TYPE() {
+      return {
+        seller: {
+          text: "Acordar con el vendedor",
+          val: 1
+        }
+      };
     }
   },
   methods: {

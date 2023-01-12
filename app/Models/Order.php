@@ -79,4 +79,12 @@ class Order extends Model
     {
         return $this->hasOne(ShippingMethod::class, 'order_id');
     }
+
+    /**
+     * Devuelve el rating que se le ha dado a la orden
+     */
+    public function rating(): ?HasOne
+    {
+        return $this->hasOne(RatingOrder::class);
+    }
 }

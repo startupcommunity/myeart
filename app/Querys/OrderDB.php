@@ -57,7 +57,8 @@ class OrderDB
 
     $data = $user->orders()->with([
       'items.artwork.gallery',
-      'shippingAddress'
+      'shippingAddress',
+      'shippingMethod'
     ]);
 
     if ($option) {

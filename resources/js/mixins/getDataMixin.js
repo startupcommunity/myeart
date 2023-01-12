@@ -86,6 +86,16 @@ export default {
                 canceled: { text: "Cancelado", val: 3 },
             };
         },
+
+        /**
+         * Estado de las ordenes
+         * @returns Object
+         */
+        SHIPPING_TYPE() {
+            return {
+                seller: { text: "Acordar con el vendedor", val: 1 },
+            };
+        },
     },
     methods: {
         /**

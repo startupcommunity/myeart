@@ -2905,6 +2905,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           val: 3
         }
       };
+    },
+
+    /**
+     * Estado de las ordenes
+     * @returns Object
+     */
+    SHIPPING_TYPE: function SHIPPING_TYPE() {
+      return {
+        seller: {
+          text: "Acordar con el vendedor",
+          val: 1
+        }
+      };
     }
   },
   methods: {
@@ -3732,6 +3745,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // el primer hashtag
 
       return result.replace(/<a/, "<br><a");
+    },
+
+    /**
+     * Devuelve la imagen de portada de una obra
+     * en caso de no existir ninguna se devuelve
+     * una imagen por defecto
+     */
+    getFrontArtwork: function getFrontArtwork(art) {
+      var artwork = art.artwork || {};
+      var gallery = (artwork === null || artwork === void 0 ? void 0 : artwork.gallery) || [];
+      var front_page = gallery.find(function (pic) {
+        return (pic === null || pic === void 0 ? void 0 : pic.front_page) === 1;
+      });
+      if (!gallery.length) return this.getURLDefaultFrontArtwork;
+      return "".concat(this.pathArtworkGallery + front_page.picture);
+    },
+
+    /**
+     * Devuelve el numero de orden
+     * de un pedido u orden de compra
+     */
+    getOrderNumber: function getOrderNumber(id) {
+      return "000" + id;
+    },
+
+    /**
+     * devuelve la fecha de una orden de compra
+     *
+     * Formato: 7 de enero de 2023
+     */
+    getOrderDate: function getOrderDate(created_at) {
+      var date = new Date(created_at); // const day = date.toLocaleString("es-ES", { weekday: "long" });
+
+      var dayNumber = date.toLocaleString("es-ES", {
+        day: "numeric"
+      });
+      var month = date.toLocaleString("es-ES", {
+        month: "long"
+      });
+      var year = date.toLocaleString("es-ES", {
+        year: "numeric"
+      }); // nombre de dia y meses en PascalCase
+
+      var monthPascal = month.charAt(0).toUpperCase() + month.slice(1); // imprimir el formato, ejemplo: 7 de enero de 2023
+
+      return "".concat(dayNumber, " de ").concat(monthPascal, " de ").concat(year);
     }
   }
 });

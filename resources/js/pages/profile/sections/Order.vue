@@ -4,7 +4,7 @@
         id="order"
         v-show="showSection"
     >
-        <div class="sm:px-5">
+        <div class="sm:px-5" v-if="!showPurchase && !showConfirmOrder">
             <h3
                 class="font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
             >
@@ -94,24 +94,33 @@
                         :key="order.id"
                         :order="order"
                         class="animate-fade-in-down w-full"
+                        @see-purchase="seePurchase"
+                        @confirm-order="seeConfirmOrder"
                     />
-
-                    <!-- <div
-                            class="w-full text-center"
-                            v-if="remainingArtworks.length"
-                        >
-                            <button
-                                class="w-auto px-6 py-3 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
-                                type="button"
-                                @click.stop="showMoreArtworks(SHOW_ARTWORKS)"
-                            >
-                                Ver más
-                            </button>
-                        </div> -->
                 </div>
             </div>
             <!-- /obras -->
         </div>
+
+        <!-- ver compra -->
+        <PurchaseDetail
+            v-if="showPurchase"
+            class="sm:px-5 animate-fade-in-down"
+            :order="order"
+            @back-to-orders="goToInit"
+            @cancel-order="goToInit"
+            @confirm-order="seeConfirmOrder"
+        />
+        <!-- /ver compra -->
+
+        <!-- confirmar compra -->
+        <ConfirmPurchase
+            v-if="showConfirmOrder"
+            :order="order"
+            @back-to-orders="goToInit"
+            @confirmed-order="goToInit"
+        />
+        <!-- /confirmar compra -->
     </section>
 </template>
 
@@ -119,10 +128,12 @@
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 import utilMixin from "../../../mixins/utilMixin";
 import CardOrder from "../components/CardOrder.vue";
+import PurchaseDetail from "../components/PurchaseDetail.vue";
+import ConfirmPurchase from "../components/ConfirmPurchase.vue";
 
 export default {
     name: "OrderSection",
-    components: { LoadingTailwind, CardOrder },
+    components: { LoadingTailwind, CardOrder, PurchaseDetail, ConfirmPurchase },
     mixins: [utilMixin],
     props: {
         showSection: {
@@ -133,9 +144,12 @@ export default {
     data() {
         return {
             loading: false,
+            showPurchase: false,
+            showConfirmOrder: false,
             selectedOption: 1,
             orders: [],
             original: [],
+            order: {},
             status: {
                 pending: false,
                 delivered: false,
@@ -156,12 +170,11 @@ export default {
         };
     },
 
-    computed: {},
-
     watch: {
         showSection(val) {
             if (val) {
                 this.status.pending = true;
+                this.showPurchase = false;
                 this.getOrders();
             }
         },
@@ -250,6 +263,33 @@ export default {
                     (order) => order.status === this.statusEnum.canceled
                 );
             }
+        },
+
+        /**
+         * Ver detalle de la compra
+         */
+        seePurchase(order) {
+            this.showConfirmOrder = false;
+            this.showPurchase = true;
+            this.order = order;
+        },
+
+        /**
+         * Confirmar orden
+         */
+        seeConfirmOrder(order) {
+            this.showPurchase = false;
+            this.showConfirmOrder = true;
+            this.order = order;
+        },
+
+        /**
+         * Ir al principio
+         */
+        goToInit() {
+            this.showConfirmOrder = false;
+            this.showPurchase = false;
+            this.getOrders();
         },
     },
 };

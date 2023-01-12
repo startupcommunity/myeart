@@ -56,7 +56,7 @@
                             color="#B2794C"
                             large
                             class="text-white"
-                            @click.stop=""
+                            @click.stop="$emit('see-purchase', order)"
                         >
                             Ver compra
                         </v-btn>
@@ -65,7 +65,8 @@
                             large
                             outlined
                             class="text-zinc-900"
-                            @click.stop=""
+                            @click.stop="$emit('confirm-order', order)"
+                            v-if="status === ORDER_STATES.pending.val"
                         >
                             Confirmar pedido
                         </v-btn>

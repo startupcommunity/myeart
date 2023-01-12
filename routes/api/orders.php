@@ -14,4 +14,16 @@ Route::group(['prefix' => 'orders'], function () {
    * Obtiene las ordenes de un usuario
    */
   Route::get('/get-user-orders/{id?}', [OrderController::class, 'getUserOrders'])->name('getUserOrders');
+
+  /**
+   * Cancelar una orden
+   *
+   * @param id  Id de la orden
+   */
+  Route::put('/cancel/{id}', [OrderController::class, 'cancelOrders'])->name('cancelOrders');
+
+  /**
+   * Confirma una orden de compra
+   */
+  Route::post('/confirm', [OrderController::class, 'confirmOrders'])->name('confirmOrders');
 });

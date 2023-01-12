@@ -297,5 +297,46 @@ export default {
             // el primer hashtag
             return result.replace(/<a/, "<br><a");
         },
+
+        /**
+         * Devuelve la imagen de portada de una obra
+         * en caso de no existir ninguna se devuelve
+         * una imagen por defecto
+         */
+        getFrontArtwork(art) {
+            const artwork = art.artwork || {};
+            const gallery = artwork?.gallery || [];
+            const front_page = gallery.find((pic) => pic?.front_page === 1);
+            if (!gallery.length) return this.getURLDefaultFrontArtwork;
+            return `${this.pathArtworkGallery + front_page.picture}`;
+        },
+
+        /**
+         * Devuelve el numero de orden
+         * de un pedido u orden de compra
+         */
+        getOrderNumber(id) {
+            return "000" + id;
+        },
+
+        /**
+         * devuelve la fecha de una orden de compra
+         *
+         * Formato: 7 de enero de 2023
+         */
+        getOrderDate(created_at) {
+            const date = new Date(created_at);
+
+            // const day = date.toLocaleString("es-ES", { weekday: "long" });
+            const dayNumber = date.toLocaleString("es-ES", { day: "numeric" });
+            const month = date.toLocaleString("es-ES", { month: "long" });
+            const year = date.toLocaleString("es-ES", { year: "numeric" });
+
+            // nombre de dia y meses en PascalCase
+            const monthPascal = month.charAt(0).toUpperCase() + month.slice(1);
+
+            // imprimir el formato, ejemplo: 7 de enero de 2023
+            return `${dayNumber} de ${monthPascal} de ${year}`;
+        },
     },
 };
