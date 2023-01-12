@@ -7,100 +7,42 @@
             href="#"
         >
           <div class="position-relative">
-            <span class="badge badge-super rounded bg-danger" v-if="notifications.length > 0">
+            <span class="badge badge-super rounded bg-danger" v-if="user.unread_notifications.length > 0">
               <span class="visually-hidden">unread messages</span>
             </span>
             <i class="fas fa-bell"></i>
           </div>
         </a>
     </div>
-    <ul class="sub-menu large"  v-if="notifications.length > 0">
-      <div class="bg-white">
-        <table class="table-notifications">
-          <tr v-for="notification in notifications" :key="notification.id">
-            <td>
-             <img :src="notification.data.user_profile_photo" class="rounded border" >
-            </td>
-            <td>
-              <p class="user-name">
-                {{notification.data.user_username}}
-              </p>
-              <p class="message">
-                {{notification.data.message}}
-              </p>
-            </td>
-            <td>
-              <timeago class="time" :datetime="notification.data.created_at" :auto-update="60"></timeago>
-            </td>
-            <td>
-              <button class="btn btn-primary btn-sm" v-if="notification.data.type != 'new-follower'"
-              @click="actionButton(notification.data.url, notification.data.type)"
-              >
-              {{setNamebutton(notification.data.type)}}
-             </button>
-            </td>
-          </tr>
-        </table>        
-      </div>
+    <ul class="sub-menu-notification"  v-if="user.unread_notifications.length > 0">
+      <table class="table-notifications">
+        <tr v-for="notification in user.unread_notifications" :key="notification.id">
+          <td class="px-2"style="width:10%">
+            <img :src="notification.data.user_profile_photo" class="rounded" >
+          </td>
+          <td class="px-2" style="width:50%">
+            <p class="user-name">
+              {{notification.data.user_username}}
+            </p>
+            <p class="message">
+              {{notification.data.message}}
+            </p>
+          </td>
+          <td style="width:30%">
+            <timeago class="time" :datetime="notification.data.created_at" :auto-update="60"></timeago>
+          </td>
+          <td class="px-2" style="width:10%">
+            <button class="btn btn-primary btn-sm btn-block"
+            v-if="notification.data.type != 'new-follower'"
+            @click="actionButton(notification.data.url, notification.data.type)"
+            >
+            {{setNamebutton(notification.data.type)}}
+            </button>
+          </td>
+        </tr>
+      </table>        
     </ul>
 </li>
-<!-- <v-row justify="center">
-  <v-dialog v-model="showModal" persistent width="800">
-      <v-card class="bg-gray-one mt-12">
-          <v-card-title class="hidden sm:block">
-              <div class="flex justify-end">
-                  <button
-                      type="button"
-                      @click="$emit('close-modal-edit-front-photo')"
-                  >
-                      <i class="fa fa-times text-primary"></i>
-                  </button>
-              </div>
-          </v-card-title>
-          <v-card-text>
-              <AnkaCropper
-                  :options="ankaOptions"
-                  @cropper-error="errorCropper"
-                  @cropper-saved="savedCropper"
-                  :key="ankaKey"
-              />
-          </v-card-text>
-          <v-card-actions class="bg-white">
-              <div class="flex flex-wrap w-full">
-                  <div class="w-full md:w-3/6">
-                      <v-btn
-                          class="text-primary"
-                          depressed
-                          block
-                          large
-                          text
-                          @click="clickBtnSaved()"
-                      >
-                          Cambiar imagen
-                      </v-btn>
-                  </div>
-                  <div class="w-full md:w-3/6">
-                      <v-btn
-                          class="text-dark"
-                          block
-                          large
-                          depressed
-                          text
-                          @click="
-                              $emit('close-modal-edit-front-photo')
-                          "
-                      >
-                          Cancelar
-                      </v-btn>
-                  </div>
-              </div>
-          </v-card-actions>
-      </v-card>
-  </v-dialog>
-</v-row> -->
-
-<!-- </div> -->
-
 </template>
 
 <script>
@@ -113,40 +55,33 @@ Vue.use(VueTimeago, {
 export default {
   name:'Notifications',
   props: [
-      'notifications'
+      'user'
   ],
   mounted() {
     window.Echo.channel('notification-channel')
-      .listen('NotificationEvent', (e) => {
-        console.log(e)
-        this.notifications.unshift({
-        data : {
-          user_id : e.data.user_id,
-          user_profile_photo: e.data.user_profile_photo,
-          user_username : e.data.user_username,
-          type : e.data.type,
-          message : e.data.message,
-          url : e.data.url,
-          created_at : new Date()
-        }
-      })
+    .listen('NotificationEvent', (e) => {
+      console.log(e.data)
+      if(e.data.notifiable_id == this.user.id) {
+        this.user.unread_notifications.unshift({
+          data : {
+            user_id : e.data.user_id,
+            user_profile_photo: 'img/avatar.png',
+            user_username : 'user',
+            type : e.data.type,
+            message : e.data.message,
+            url : e.data.url,
+            created_at : new Date()
+          }
+        })
+      }
     });
-  },
-  computed: {
-      /**
-       * Acceder a los getters necesarios
-       * user profile
-       */
-      ...mapGetters({
-          user: "getProfile",
-      }),
   },
   methods: {
     actionButton(url, type) {
       if(type == 'new-follower') {
         this.followArtist
       } else {
-        router.push(url)
+        this.$router.push(url)
       }
     },
     setNamebutton(type) {
@@ -155,45 +90,49 @@ export default {
       } else {
         return 'Ir'
       }
+    },
+    followArtist() {
+      //
     }
   }
 }
 </script>
 
 <style>
-.bg-white {
+.dashboard nav.main-menu ul ul.sub-menu-notification {
+  width: 500px !important;
+  color: #000;
+
+  position: absolute;
   background-color: #fff;
+  padding: .5em;
+  left: -300px;
+  top: 50px;
+  border: 1px solid;
+  border-radius: 3px;
+  transition: 0.3s;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 0 20px #555555;
 }
-.large {
-  width: 400px !important;
-}
+
 .user-name {
-  font-family: 'Montserrat';
-  font-style: normal;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px !important;
   line-height: 133.9%;
-  text-align: center;
   color: #1D1D1C;
 }
 
 .message {
-  font-family: 'Montserrat';
-  font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 9px;
   line-height: 133.9%;
-  color: #1D1D1C;
-
-  margin-block-start: 0;
-  margin-block-end: 0;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
 }
 
 .time {
-  font-size: 12px;
+  font-size: 8px;
   color: #000;
+  font-weight: 900;
 }
 
 .visually-hidden {

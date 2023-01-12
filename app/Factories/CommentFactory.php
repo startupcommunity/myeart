@@ -19,14 +19,15 @@ class CommentFactory
     $data = $request->only(['comment', 'user_id']);
 
     //Evento para Notificación de nuevo comentario
-    $data = [
+    $data2 = [
       'user_id' => $request->user_id,
       'notifiable_id' => $art->user_id,
       'url' => '/obras/'.$art->id,
       'message' => "Realizó un comentario",
       'type' => 'new-question'
     ];
-    event(new NotificationEvent($data));
+
+    event(new NotificationEvent($data2));
 
     return $art->comments()->create($data);
   }
@@ -63,14 +64,14 @@ class CommentFactory
       $url = '/comunidad';
     }
     
-    $data = [
+    $data2 = [
       'user_id' => $request->user_id,
       'notifiable_id' => $comment->user_id,
       'url' => $url,
       'message' => "Ha respondido su comentario",
       'type' => 'new-answer'
     ];
-    event(new NotificationEvent($data));
+    event(new NotificationEvent($data2));
 
     return $comment->answer()->create($data);
   }
@@ -92,14 +93,14 @@ class CommentFactory
     }
     
     //Evento para Notificación de Like a comentario de publicacion
-    $data = [
+    $data2 = [
       'user_id' => $request->user_id,
       'notifiable_id' => $comment->user_id,
       'url' => '/comunidad',
       'message' => "Le gustó tu comentario",
       'type' => 'new-like-comment'
     ];
-    event(new NotificationEvent($data));
+    event(new NotificationEvent($data2));
 
     return $comment->likes()->create($data);
   }
@@ -139,14 +140,14 @@ class CommentFactory
     } else {
       $url = '/comunidad';
     }
-    $data = [
+    $data2 = [
       'user_id' => $request->user_id,
       'notifiable_id' => $comment->user_id,
       'url' => $url,
       'message' => "Ha respondido su comentario",
       'type' => 'new-answer'
     ];
-    event(new NotificationEvent($data));
+    event(new NotificationEvent($data2));
 
     return $comment->answer()->create($data);
   }

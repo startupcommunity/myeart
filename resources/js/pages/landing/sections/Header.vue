@@ -109,7 +109,9 @@
                                                     </ul>
                                                 </li>
 
-                                                <Notifications :notifications="user.unread_notifications"/>
+                                                <Notifications 
+                                                :user="user"
+                                                />
 
                                                 <li>
                                                     <div class="header-icons">

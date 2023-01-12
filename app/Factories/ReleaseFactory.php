@@ -229,7 +229,7 @@ class ReleaseFactory
       'comment' => $request->comment
     ]);
 
-    //Evento para Notificación de respuesta a comentario
+    //Evento para Notificación de comentario
     $data = [
       'user_id' => $request->user_id,
       'notifiable_id' => $release->user_id,

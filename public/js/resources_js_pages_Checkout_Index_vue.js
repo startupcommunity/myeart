@@ -1245,13 +1245,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue_timeago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-timeago */ "./node_modules/vue-timeago/dist/vue-timeago.es.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
@@ -1260,35 +1253,34 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Notifications',
-  props: ['notifications'],
+  props: ['user'],
   mounted: function mounted() {
     var _this = this;
 
     window.Echo.channel('notification-channel').listen('NotificationEvent', function (e) {
-      console.log(e);
+      console.log(e.data);
 
-      _this.notifications.unshift({
-        data: {
-          user_id: e.data.user_id,
-          user_profile_photo: e.data.user_profile_photo,
-          user_username: e.data.user_username,
-          type: e.data.type,
-          message: e.data.message,
-          url: e.data.url,
-          created_at: new Date()
-        }
-      });
+      if (e.data.notifiable_id == _this.user.id) {
+        _this.user.unread_notifications.unshift({
+          data: {
+            user_id: e.data.user_id,
+            user_profile_photo: 'img/avatar.png',
+            user_username: 'user',
+            type: e.data.type,
+            message: e.data.message,
+            url: e.data.url,
+            created_at: new Date()
+          }
+        });
+      }
     });
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
-    user: "getProfile"
-  })),
   methods: {
     actionButton: function actionButton(url, type) {
       if (type == 'new-follower') {
         this.followArtist;
       } else {
-        router.push(url);
+        this.$router.push(url);
       }
     },
     setNamebutton: function setNamebutton(type) {
@@ -1297,6 +1289,8 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
       } else {
         return 'Ir';
       }
+    },
+    followArtist: function followArtist() {//
     }
   }
 });
@@ -2579,7 +2573,7 @@ var render = function render() {
     }
   }, [_vm._v("\n                                                            Cerrar sesión\n                                                        ")])])])]), _vm._v(" "), _c("Notifications", {
     attrs: {
-      notifications: _vm.user.unread_notifications
+      user: _vm.user
     }
   }), _vm._v(" "), _c("li", [_c("div", {
     staticClass: "header-icons"
@@ -2706,45 +2700,62 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "position-relative"
-  }, [_vm.notifications.length > 0 ? _c("span", {
+  }, [_vm.user.unread_notifications.length > 0 ? _c("span", {
     staticClass: "badge badge-super rounded bg-danger"
   }, [_c("span", {
     staticClass: "visually-hidden"
   }, [_vm._v("unread messages")])]) : _vm._e(), _vm._v(" "), _c("i", {
     staticClass: "fas fa-bell"
-  })])])]), _vm._v(" "), _vm.notifications.length > 0 ? _c("ul", {
-    staticClass: "sub-menu large"
-  }, [_c("div", {
-    staticClass: "bg-white"
+  })])])]), _vm._v(" "), _vm.user.unread_notifications.length > 0 ? _c("ul", {
+    staticClass: "sub-menu-notification"
   }, [_c("table", {
     staticClass: "table-notifications"
-  }, _vm._l(_vm.notifications, function (notification) {
+  }, _vm._l(_vm.user.unread_notifications, function (notification) {
     return _c("tr", {
       key: notification.id
-    }, [_c("td", [_c("img", {
-      staticClass: "rounded border",
+    }, [_c("td", {
+      staticClass: "px-2",
+      staticStyle: {
+        width: "10%"
+      }
+    }, [_c("img", {
+      staticClass: "rounded",
       attrs: {
         src: notification.data.user_profile_photo
       }
-    })]), _vm._v(" "), _c("td", [_c("p", {
+    })]), _vm._v(" "), _c("td", {
+      staticClass: "px-2",
+      staticStyle: {
+        width: "50%"
+      }
+    }, [_c("p", {
       staticClass: "user-name"
-    }, [_vm._v("\r\n                " + _vm._s(notification.data.user_username) + "\r\n              ")]), _vm._v(" "), _c("p", {
+    }, [_vm._v("\r\n              " + _vm._s(notification.data.user_username) + "\r\n            ")]), _vm._v(" "), _c("p", {
       staticClass: "message"
-    }, [_vm._v("\r\n                " + _vm._s(notification.data.message) + "\r\n              ")])]), _vm._v(" "), _c("td", [_c("timeago", {
+    }, [_vm._v("\r\n              " + _vm._s(notification.data.message) + "\r\n            ")])]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "30%"
+      }
+    }, [_c("timeago", {
       staticClass: "time",
       attrs: {
         datetime: notification.data.created_at,
         "auto-update": 60
       }
-    })], 1), _vm._v(" "), _c("td", [notification.data.type != "new-follower" ? _c("button", {
-      staticClass: "btn btn-primary btn-sm",
+    })], 1), _vm._v(" "), _c("td", {
+      staticClass: "px-2",
+      staticStyle: {
+        width: "10%"
+      }
+    }, [notification.data.type != "new-follower" ? _c("button", {
+      staticClass: "btn btn-primary btn-sm btn-block",
       on: {
         click: function click($event) {
           return _vm.actionButton(notification.data.url, notification.data.type);
         }
       }
-    }, [_vm._v("\r\n              " + _vm._s(_vm.setNamebutton(notification.data.type)) + "\r\n             ")]) : _vm._e()])]);
-  }), 0)])]) : _vm._e()]);
+    }, [_vm._v("\r\n            " + _vm._s(_vm.setNamebutton(notification.data.type)) + "\r\n            ")]) : _vm._e()])]);
+  }), 0)]) : _vm._e()]);
 };
 
 var staticRenderFns = [];
@@ -3840,7 +3851,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.bg-white {\r\n  background-color: #fff;\n}\n.large {\r\n  width: 400px !important;\n}\n.user-name {\r\n  font-family: 'Montserrat';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-size: 14px;\r\n  line-height: 133.9%;\r\n  text-align: center;\r\n  color: #1D1D1C;\n}\n.message {\r\n  font-family: 'Montserrat';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-size: 14px;\r\n  line-height: 133.9%;\r\n  color: #1D1D1C;\r\n\r\n  -webkit-margin-before: 0;\r\n\r\n          margin-block-start: 0;\r\n  -webkit-margin-after: 0;\r\n          margin-block-end: 0;\r\n  -webkit-margin-start: 0;\r\n          margin-inline-start: 0;\r\n  -webkit-margin-end: 0;\r\n          margin-inline-end: 0;\n}\n.time {\r\n  font-size: 12px;\r\n  color: #000;\n}\n.visually-hidden {\r\n  position: absolute!important;\r\n  width: 1px!important;\r\n  height: 1px!important;\r\n  padding: 0!important;\r\n  margin: -1px!important;\r\n  overflow: hidden!important;\r\n  clip: rect(0,0,0,0)!important;\r\n  white-space: nowrap!important;\r\n  border: 0!important;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.dashboard nav.main-menu ul ul.sub-menu-notification {\r\n  width: 500px !important;\r\n  color: #000;\r\n\r\n  position: absolute;\r\n  background-color: #fff;\r\n  padding: .5em;\r\n  left: -300px;\r\n  top: 50px;\r\n  border: 1px solid;\r\n  border-radius: 3px;\r\n  transition: 0.3s;\r\n  opacity: 0;\r\n  visibility: hidden;\r\n  box-shadow: 0 0 20px #555555;\n}\n.user-name {\r\n  font-weight: 600;\r\n  font-size: 12px !important;\r\n  line-height: 133.9%;\r\n  color: #1D1D1C;\n}\n.message {\r\n  font-weight: 400;\r\n  font-size: 9px;\r\n  line-height: 133.9%;\n}\n.time {\r\n  font-size: 8px;\r\n  color: #000;\r\n  font-weight: 900;\n}\n.visually-hidden {\r\n  position: absolute!important;\r\n  width: 1px!important;\r\n  height: 1px!important;\r\n  padding: 0!important;\r\n  margin: -1px!important;\r\n  overflow: hidden!important;\r\n  clip: rect(0,0,0,0)!important;\r\n  white-space: nowrap!important;\r\n  border: 0!important;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
