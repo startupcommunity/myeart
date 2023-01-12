@@ -12,6 +12,7 @@
                 @click.stop="showModal = true"
                 outlined
                 large
+                v-if="isOwner"
             >
                 <i class="fas fa-plus"></i> Agregar miembro
             </v-btn>
@@ -39,12 +40,14 @@
             </p>
             <p
                 class="text-lg md:text-3xl text-zinc-900 font-extra-light text-center"
+                v-if="isOwner"
             >
                 ¿Por qué no empieza ahora?
             </p>
             <v-btn
                 color="#B2794C"
                 @click.stop="showModal = true"
+                v-if="isOwner"
                 outlined
                 large
             >
@@ -148,6 +151,10 @@ export default {
 
     created() {
         this.getMembers();
+    },
+
+    mounted() {
+        window.scrollTo(0, 0);
     },
 
     methods: {

@@ -502,13 +502,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "FollowArtistButton",
@@ -523,9 +516,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       loadFollow: false
     };
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)({
-    user: "getProfile"
-  })), {}, {
+  computed: {
+    /**
+     * Usuario logueado
+     */
+    user: function user() {
+      return this.$store.getters.getProfile;
+    },
+
     /**
      * Comprueba si el usuario puede seguir al artista
      *
@@ -548,8 +546,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return (_this$user2 = this.user) === null || _this$user2 === void 0 ? void 0 : (_this$user2$following = _this$user2.following_artists) === null || _this$user2$following === void 0 ? void 0 : _this$user2$following.some(function (follow) {
         return follow.following_id === _this.artist.id;
       });
+    },
+    isGuest: function isGuest() {
+      var _this$user3, _this$user4, _this$user5, _this$user6;
+
+      return ((_this$user3 = this.user) === null || _this$user3 === void 0 ? void 0 : _this$user3.id) === undefined || ((_this$user4 = this.user) === null || _this$user4 === void 0 ? void 0 : _this$user4.id) === null || ((_this$user5 = this.user) === null || _this$user5 === void 0 ? void 0 : _this$user5.id) === "" || ((_this$user6 = this.user) === null || _this$user6 === void 0 ? void 0 : _this$user6.id) === 0;
     }
-  }),
+  },
   methods: {
     /**
      * Seguir o dejar de seguir a un artista
@@ -560,6 +563,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (!this.canFollowArtist) {
         this.noty("No es posible autoseguirte", "error");
+        return;
+      }
+
+      if (this.isGuest) {
+        this.noty("Debe iniciar sesión", "warning");
         return;
       }
 
@@ -1106,7 +1114,7 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     show: function show(val) {
       if (val) {
-        this.getFASI(); // this.loadData();
+        this.getFASI();
       }
     }
   },
@@ -1154,9 +1162,6 @@ __webpack_require__.r(__webpack_exports__);
         return label.friend_id;
       });
       this.form.labels = ids;
-      console.log(ids);
-      console.log(this.release);
-      console.log(this.artists);
     },
 
     /**
@@ -1231,8 +1236,7 @@ __webpack_require__.r(__webpack_exports__);
     confirmUpdate: function confirmUpdate() {
       var _this2 = this;
 
-      console.log(this.form.labels); // ejecutar swalert de confirm
-
+      // ejecutar swalert de confirm
       this.confirmedDialog({
         title: "¿Estás seguro de actualizar esta publicación?",
         text: "Esta acción no se puede deshacer",
@@ -1855,6 +1859,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MobileMenu",
   computed: {
+    // paths
     pathArtwork: function pathArtwork() {
       return {
         name: "listArtwork"
@@ -1870,11 +1875,17 @@ __webpack_require__.r(__webpack_exports__);
         name: "indexCommunity"
       };
     },
+    pathCollective: function pathCollective() {
+      return {
+        name: "indexCollective"
+      };
+    },
     pathEvent: function pathEvent() {
       return {
         name: "eventList"
       };
     },
+    // store
     user: function user() {
       return this.$store.getters.getProfile;
     },
@@ -1984,6 +1995,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _subcomponents_InfoCompleteRelease_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./subcomponents/InfoCompleteRelease.vue */ "./resources/js/pages/profile/components/subcomponents/InfoCompleteRelease.vue");
 /* harmony import */ var _subcomponents_InfoShortRelease_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./subcomponents/InfoShortRelease.vue */ "./resources/js/pages/profile/components/subcomponents/InfoShortRelease.vue");
 /* harmony import */ var _subcomponents_CommentRelease_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./subcomponents/CommentRelease.vue */ "./resources/js/pages/profile/components/subcomponents/CommentRelease.vue");
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+
 
 
 
@@ -1991,6 +2004,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CardReleaseProfile",
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_5__["default"]],
   components: {
     InfoArtist: _subcomponents_InfoArtist_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     ImageActionRelease: _subcomponents_ImageActionRelease_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -2071,15 +2085,35 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     editRelease: function editRelease() {
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
+
       this.$emit("activeEdit", this.release);
     },
     deleteRelease: function deleteRelease() {
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
+
       this.$emit("activeDelete", this.release);
     },
     openModalComment: function openModalComment() {
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
+
       this.$emit("showCommentDialog", this.release);
     },
     updateRelease: function updateRelease() {
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
+
       this.$emit("updated-release-success", this.release);
     }
   }
@@ -2513,8 +2547,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "FavButtonRelease",
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     release: {
       type: Object,
@@ -2538,6 +2575,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addOrRemoveFav: function addOrRemoveFav() {
       var _this = this;
+
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
 
       var data = {
         release_id: this.release.id,
@@ -2590,8 +2632,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "LikeButton",
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       loading: false,
@@ -2620,6 +2665,11 @@ __webpack_require__.r(__webpack_exports__);
      */
     addLikeOrDislike: function addLikeOrDislike() {
       var _this = this;
+
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
 
       var data = {
         release_id: this.release.id,
@@ -2700,6 +2750,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     share: function share() {
       var _this$release$slug, _this$release;
+
+      if (this.isUserGuest) {
+        this.noty("Debe iniciar sesión", "warning");
+        return;
+      }
 
       var path = this.secureUrl;
       var slug = (_this$release$slug = (_this$release = this.release) === null || _this$release === void 0 ? void 0 : _this$release.slug) !== null && _this$release$slug !== void 0 ? _this$release$slug : "";
@@ -4216,7 +4271,7 @@ var render = function render() {
   }, [_c("nav", {
     staticClass: "main-menu lg:mr-8 xl:mr-32"
   }, [_c("ul", {
-    staticClass: "text-left text-[9px] xl:text-xs"
+    staticClass: "text-left text-[9px]"
   }, [_c("li", [_c("router-link", {
     attrs: {
       to: {
@@ -4241,7 +4296,13 @@ var render = function render() {
         name: "indexCommunity"
       }
     }
-  }, [_vm._v("\n                                            MI COMUNIDAD\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
+  }, [_vm._v("\n                                            MI COMUNIDAD\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("router-link", {
+    attrs: {
+      to: {
+        name: "indexCollective"
+      }
+    }
+  }, [_vm._v("\n                                            COLECTIVOS\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
     staticClass: "header-icons"
@@ -4601,7 +4662,11 @@ var render = function render() {
     attrs: {
       to: _vm.pathCommunity
     }
-  }, [_vm._v("COMUNIDAD")])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("COMUNIDAD")]), _vm._v(" "), _c("router-link", {
+    attrs: {
+      to: _vm.pathCollective
+    }
+  }, [_vm._v("COLECTIVOS")])], 1), _vm._v(" "), _c("div", {
     staticClass: "sidenav_footer"
   }, [_c("a", {
     attrs: {
@@ -5269,7 +5334,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         artist: 1,
         artwork: 2,
         news: 3,
-        events: 4
+        events: 4,
+        collectives: 5
       };
     },
 
@@ -5313,6 +5379,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Otras Organizaciones",
         value: 5
       }];
+    },
+
+    /**
+     * Estado de las ordenes
+     * @returns Object
+     */
+    ORDER_STATES: function ORDER_STATES() {
+      return {
+        pending: {
+          text: "Pendiente",
+          val: 1
+        },
+        delivered: {
+          text: "Entregado",
+          val: 5
+        },
+        canceled: {
+          text: "Cancelado",
+          val: 3
+        }
+      };
     }
   },
   methods: {
@@ -5823,6 +5910,64 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var format = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Y-m-d";
       var date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000);
       return date.toISOString().substr(0, 10);
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive md
+     */
+    isMd: function isMd() {
+      return this.$vuetify.breakpoint.md;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive sm
+     */
+    isSm: function isSm() {
+      return this.$vuetify.breakpoint.sm;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive lg
+     */
+    isLg: function isLg() {
+      return this.$vuetify.breakpoint.lg;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive xs
+     */
+    isXs: function isXs() {
+      return this.$vuetify.breakpoint.xs;
+    },
+
+    /**
+     * Verificar todos los responsives pequeños
+     */
+    isSmall: function isSmall() {
+      return this.isSm || this.isMd || this.isLg;
+    },
+
+    /**
+     * Si esta en modo mobile
+     */
+    isMobileMode: function isMobileMode() {
+      return this.isXs;
+    },
+
+    /**
+     * Obtiene el usuario logueado actual
+     */
+    authUser: function authUser() {
+      return this.$store.getters.getProfile;
+    },
+
+    /**
+     * Devuelve si el usuario esta logueado
+     */
+    isUserGuest: function isUserGuest() {
+      var _this$authUser, _this$authUser2, _this$authUser3, _this$authUser4;
+
+      return ((_this$authUser = this.authUser) === null || _this$authUser === void 0 ? void 0 : _this$authUser.id) === undefined || ((_this$authUser2 = this.authUser) === null || _this$authUser2 === void 0 ? void 0 : _this$authUser2.id) === null || ((_this$authUser3 = this.authUser) === null || _this$authUser3 === void 0 ? void 0 : _this$authUser3.id) === "" || ((_this$authUser4 = this.authUser) === null || _this$authUser4 === void 0 ? void 0 : _this$authUser4.id) === 0;
     }
   },
   methods: {

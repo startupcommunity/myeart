@@ -16,11 +16,6 @@ Route::group(['prefix' => 'collectives'], function () {
   Route::put('/update/{id}', [CollectiveController::class, 'update'])->name('collectiveUpdate');
 
   /**
-   * devuelve un colectivo
-   */
-  Route::get('/get-collective/{id}', [CollectiveController::class, 'getCollective'])->name('getCollective');
-
-  /**
    * Devuelve las publicaciones de un colectivo
    * tanto de los miembros como del creador
    */
@@ -46,9 +41,20 @@ Route::group(['prefix' => 'collectives'], function () {
   Route::get('/get-members/{id}', [CollectiveController::class, 'getMembers'])->name('getCollectiveMembers');
 
   /**
-   * Devuelve los miembros de un colectivo
+   * Devuelve las obras de un colectivo
    */
   Route::get('/get-artworks/{id}', [CollectiveController::class, 'getArtworks'])->name('getCollectiveArtworks');
+
+  /**
+   * Devuelve las obras de un colectivo filtrado por request
+   */
+  Route::get('/get-filters-artworks/{id}', [CollectiveController::class, 'getFilterArtworks'])->name('getCollectiveFilterArtworks');
+
+  /**
+   * Devuelve todos los colectivos
+   * filtrados por request y paginados
+   */
+  Route::get('/get-all', [CollectiveController::class, 'getAllCollectives'])->name('getAllCollectives');
 
   /**
    * actualiza la foto de perfil de un colectivo
@@ -69,4 +75,24 @@ Route::group(['prefix' => 'collectives'], function () {
    * elimina un miembro del colectivo
    */
   Route::post('/remove-member', [CollectiveController::class, 'removeMember'])->name('removeMemberCollective');
+
+  /**
+   * Agrega un like al colectivo
+   */
+  Route::post('/like', [CollectiveController::class, 'addLike'])->name('addLikeCollective');
+
+  /**
+   * Elimina un like al colectivo
+   */
+  Route::post('/dislike', [CollectiveController::class, 'removeLike'])->name('removeLikeCollective');
+
+  /**
+   * Seguir un colectivo
+   */
+  Route::post('/follow', [CollectiveController::class, 'followCollective'])->name('followCollective');
+
+  /**
+   * Dejar de seguir un colectivo
+   */
+  Route::post('/unfollow', [CollectiveController::class, 'unfollowCollective'])->name('unfollowCollective');
 });

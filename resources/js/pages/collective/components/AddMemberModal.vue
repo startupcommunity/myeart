@@ -71,30 +71,44 @@
                                                 small
                                                 disabled
                                                 color="grey darken-4"
-                                                v-else
+                                                v-else-if="isPending(artist)"
                                                 class="text-zinc-900"
                                             >
-                                                <span
-                                                    v-if="isPending(artist)"
-                                                    class="text-blue-600"
-                                                >
+                                                <span class="text-blue-600">
                                                     Invitación enviada
                                                 </span>
-                                                <span
-                                                    v-else-if="isAccept(artist)"
-                                                    class="text-green-600"
-                                                >
-                                                    Invitación aceptada
-                                                </span>
-                                                <span
-                                                    v-else-if="
-                                                        isRejected(artist)
-                                                    "
-                                                    class="text-red-600"
-                                                >
-                                                    Invitación rechazada
+                                            </v-btn>
+                                            <v-btn
+                                                outlined
+                                                small
+                                                disabled
+                                                color="grey darken-4"
+                                                v-else-if="isAccept(artist)"
+                                                class="text-zinc-900"
+                                            >
+                                                <span class="text-green-600">
+                                                    Usuario miembro
                                                 </span>
                                             </v-btn>
+                                            <span
+                                                v-else-if="isRejected(artist)"
+                                                class="text-red-600"
+                                            >
+                                                rechazada |
+
+                                                <v-btn
+                                                    color="#B2794C"
+                                                    @click.stop="
+                                                        sendInvitation(artist)
+                                                    "
+                                                    outlined
+                                                    small
+                                                    :disabled="globalLoading"
+                                                    :loading="artist.loading"
+                                                >
+                                                    Agregar
+                                                </v-btn>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -237,17 +251,14 @@ export default {
          */
         getFriends() {
             this.globalLoading = true;
-            const ep = this.ep.user.getFASI;
             this.friends = [];
 
             this.axios
-                .get(ep)
+                .get(this.ep.user.getFASI)
                 .then((resp) => {
                     this.friends = resp.data;
 
-                    this.friends = this.friends.map((friend) => {
-                        return friend.following;
-                    });
+                    this.friends = this.friends.map((f) => f.following);
 
                     this.original = JSON.parse(JSON.stringify(this.friends));
                 })

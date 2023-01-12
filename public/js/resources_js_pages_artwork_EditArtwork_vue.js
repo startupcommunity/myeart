@@ -217,9 +217,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this2.$router.push("/usuario/perfil/".concat(_this2.user.id, "/obras"));
 
             return;
-          }
+          } // obra de colectivo
 
-          _this2.$router.go(-1);
+
+          if (_this2.isCollective) {
+            // obtener parámetro de la ruta anterior
+            var collectiveId = _this2.$route.params.collectiveID;
+
+            _this2.$router.push("/colectivos/perfil/".concat(collectiveId, "/artwork"));
+          }
         }
       })["catch"](function (error) {
         return _this2.showRequestErrors(error);
@@ -746,6 +752,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MobileMenu",
   computed: {
+    // paths
     pathArtwork: function pathArtwork() {
       return {
         name: "listArtwork"
@@ -761,11 +768,17 @@ __webpack_require__.r(__webpack_exports__);
         name: "indexCommunity"
       };
     },
+    pathCollective: function pathCollective() {
+      return {
+        name: "indexCollective"
+      };
+    },
     pathEvent: function pathEvent() {
       return {
         name: "eventList"
       };
     },
+    // store
     user: function user() {
       return this.$store.getters.getProfile;
     },
@@ -1642,7 +1655,7 @@ var render = function render() {
   }, [_c("nav", {
     staticClass: "main-menu lg:mr-8 xl:mr-32"
   }, [_c("ul", {
-    staticClass: "text-left text-[9px] xl:text-xs"
+    staticClass: "text-left text-[9px]"
   }, [_c("li", [_c("router-link", {
     attrs: {
       to: {
@@ -1667,7 +1680,13 @@ var render = function render() {
         name: "indexCommunity"
       }
     }
-  }, [_vm._v("\n                                            MI COMUNIDAD\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
+  }, [_vm._v("\n                                            MI COMUNIDAD\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("router-link", {
+    attrs: {
+      to: {
+        name: "indexCollective"
+      }
+    }
+  }, [_vm._v("\n                                            COLECTIVOS\n                                        ")])], 1), _vm._v(" "), _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
     staticClass: "header-icons"
@@ -2027,7 +2046,11 @@ var render = function render() {
     attrs: {
       to: _vm.pathCommunity
     }
-  }, [_vm._v("COMUNIDAD")])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("COMUNIDAD")]), _vm._v(" "), _c("router-link", {
+    attrs: {
+      to: _vm.pathCollective
+    }
+  }, [_vm._v("COLECTIVOS")])], 1), _vm._v(" "), _c("div", {
     staticClass: "sidenav_footer"
   }, [_c("a", {
     attrs: {
@@ -2104,7 +2127,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         artist: 1,
         artwork: 2,
         news: 3,
-        events: 4
+        events: 4,
+        collectives: 5
       };
     },
 
@@ -2148,6 +2172,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Otras Organizaciones",
         value: 5
       }];
+    },
+
+    /**
+     * Estado de las ordenes
+     * @returns Object
+     */
+    ORDER_STATES: function ORDER_STATES() {
+      return {
+        pending: {
+          text: "Pendiente",
+          val: 1
+        },
+        delivered: {
+          text: "Entregado",
+          val: 5
+        },
+        canceled: {
+          text: "Cancelado",
+          val: 3
+        }
+      };
     }
   },
   methods: {
@@ -2658,6 +2703,64 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var format = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Y-m-d";
       var date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000);
       return date.toISOString().substr(0, 10);
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive md
+     */
+    isMd: function isMd() {
+      return this.$vuetify.breakpoint.md;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive sm
+     */
+    isSm: function isSm() {
+      return this.$vuetify.breakpoint.sm;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive lg
+     */
+    isLg: function isLg() {
+      return this.$vuetify.breakpoint.lg;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive xs
+     */
+    isXs: function isXs() {
+      return this.$vuetify.breakpoint.xs;
+    },
+
+    /**
+     * Verificar todos los responsives pequeños
+     */
+    isSmall: function isSmall() {
+      return this.isSm || this.isMd || this.isLg;
+    },
+
+    /**
+     * Si esta en modo mobile
+     */
+    isMobileMode: function isMobileMode() {
+      return this.isXs;
+    },
+
+    /**
+     * Obtiene el usuario logueado actual
+     */
+    authUser: function authUser() {
+      return this.$store.getters.getProfile;
+    },
+
+    /**
+     * Devuelve si el usuario esta logueado
+     */
+    isUserGuest: function isUserGuest() {
+      var _this$authUser, _this$authUser2, _this$authUser3, _this$authUser4;
+
+      return ((_this$authUser = this.authUser) === null || _this$authUser === void 0 ? void 0 : _this$authUser.id) === undefined || ((_this$authUser2 = this.authUser) === null || _this$authUser2 === void 0 ? void 0 : _this$authUser2.id) === null || ((_this$authUser3 = this.authUser) === null || _this$authUser3 === void 0 ? void 0 : _this$authUser3.id) === "" || ((_this$authUser4 = this.authUser) === null || _this$authUser4 === void 0 ? void 0 : _this$authUser4.id) === 0;
     }
   },
   methods: {

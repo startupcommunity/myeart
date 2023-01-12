@@ -16,7 +16,7 @@
             ></div>
             <div class="flex flex-wrap mt-4 sm:mt-0">
                 <div
-                    class="lg:border-r-2 lg:border-gray-800 lg:pr-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:border-r lg:border-gray-800 lg:pr-2 border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
@@ -30,7 +30,7 @@
                     </v-btn>
                 </div>
                 <div
-                    class="lg:border-r-2 lg:border-gray-800 lg:px-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:border-r lg:border-gray-800 lg:px-2 border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
@@ -44,7 +44,7 @@
                     </v-btn>
                 </div>
                 <div
-                    class="lg:border-r-2 lg:border-gray-800 lg:px-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:border-r lg:border-gray-800 lg:px-2 border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
@@ -58,7 +58,7 @@
                     </v-btn>
                 </div>
                 <div
-                    class="w-full lg:w-auto lg:px-4 border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:border-r lg:border-gray-800 lg:px-2 border-b border-b-gray-300 lg:border-b-0"
                 >
                     <v-btn
                         text
@@ -69,6 +69,20 @@
                         @click.stop="changeType(TYPEFAV.events)"
                     >
                         Eventos
+                    </v-btn>
+                </div>
+                <div
+                    class="w-full lg:w-auto lg:pl-2 border-b border-b-gray-300 lg:border-b-0"
+                >
+                    <v-btn
+                        text
+                        depressed
+                        block
+                        class="uppercase tracking-wide"
+                        :class="states.collectives ? 'font-bold' : 'font-light'"
+                        @click.stop="changeType(TYPEFAV.collectives)"
+                    >
+                        Colectivos
                     </v-btn>
                 </div>
             </div>
@@ -170,6 +184,26 @@
                 </div>
             </div>
             <!-- /eventos -->
+
+            <!-- eventos -->
+            <div class="py-6 w-full" v-if="states.collectives">
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch"
+                >
+                    <LoadingTailwind
+                        v-if="loading"
+                        css="w-full md:w-1/2 mb-10 sm:px-4 animate-swing-in-top-fwd"
+                    />
+                    <CardCollective
+                        v-for="col in collectives"
+                        :key="col.id"
+                        :collective="col.collective"
+                        :follow-btn="true"
+                        class="w-full animate-fade-in-down md:mb-10"
+                    />
+                </div>
+            </div>
+            <!-- /eventos -->
         </div>
     </div>
 </template>
@@ -185,6 +219,7 @@ import CardRelease from "../components/CardRelease.vue";
 import ReleaseCommentsDialog from "../../release/components/ReleaseCommentsDialog.vue";
 import CardEvent from "../../event/components/CardEvent.vue";
 import InfoReservationModal from "../../event/components/InfoReservationModal.vue";
+import CardCollective from "../../collective/components/CardCollective.vue";
 
 // cantidad de obras en aumento
 let counterArtists = 4;
@@ -192,14 +227,15 @@ let counterArtists = 4;
 export default {
     name: "Artwork",
     components: {
-    LoadingTailwind,
-    CardArtist,
-    CardArtwork,
-    CardRelease,
-    ReleaseCommentsDialog,
-    CardEvent,
-    InfoReservationModal
-},
+        LoadingTailwind,
+        CardArtist,
+        CardArtwork,
+        CardRelease,
+        ReleaseCommentsDialog,
+        CardEvent,
+        InfoReservationModal,
+        CardCollective,
+    },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -218,6 +254,7 @@ export default {
                 artwork: false,
                 news: false,
                 events: false,
+                collectives: false,
             },
         };
     },
@@ -240,6 +277,9 @@ export default {
             // sacar los artistas  de following
             return data.map((item) => item.following);
         },
+        collectives() {
+            return this.$store.getters.getFollowCollectives || [];
+        },
     },
     methods: {
         /**
@@ -253,6 +293,7 @@ export default {
             this.states.artwork = state === this.TYPEFAV.artwork;
             this.states.news = state === this.TYPEFAV.news;
             this.states.events = state === this.TYPEFAV.events;
+            this.states.collectives = state === this.TYPEFAV.collectives;
         },
 
         /**
@@ -282,6 +323,7 @@ export default {
                 this.$store.dispatch("userFollowArtworks");
                 this.$store.dispatch("userFavoriteReleases");
                 this.$store.dispatch("userFavoriteEvents");
+                this.$store.dispatch("userFollowCollectives");
             }
         },
     },

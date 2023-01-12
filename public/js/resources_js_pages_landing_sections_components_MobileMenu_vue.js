@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MobileMenu",
   computed: {
+    // paths
     pathArtwork: function pathArtwork() {
       return {
         name: "listArtwork"
@@ -29,11 +30,17 @@ __webpack_require__.r(__webpack_exports__);
         name: "indexCommunity"
       };
     },
+    pathCollective: function pathCollective() {
+      return {
+        name: "indexCollective"
+      };
+    },
     pathEvent: function pathEvent() {
       return {
         name: "eventList"
       };
     },
+    // store
     user: function user() {
       return this.$store.getters.getProfile;
     },
@@ -159,7 +166,11 @@ var render = function render() {
     attrs: {
       to: _vm.pathCommunity
     }
-  }, [_vm._v("COMUNIDAD")])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("COMUNIDAD")]), _vm._v(" "), _c("router-link", {
+    attrs: {
+      to: _vm.pathCollective
+    }
+  }, [_vm._v("COLECTIVOS")])], 1), _vm._v(" "), _c("div", {
     staticClass: "sidenav_footer"
   }, [_c("a", {
     attrs: {

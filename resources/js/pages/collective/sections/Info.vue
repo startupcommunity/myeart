@@ -7,12 +7,13 @@
         />
         <div
             class="flex flex-col md:flex-row justify-end pt-5 gap-3 border-b border-gray-200 pb-4"
+            v-if="isOwner"
         >
             <v-btn
                 outlined
                 color="grey darken-1"
                 class="rounded-md"
-                @click.stop="dialogCollectives = true"
+                @click.stop="openDialogCollectives"
             >
                 Ver mis colectivos
             </v-btn>
@@ -26,7 +27,7 @@
             </v-btn> -->
         </div>
 
-        <div class="p-4 mt-5 border">
+        <div class="p-4 mt-5 border" v-if="isOwner">
             <h3 class="font-bold text-lg md:text-2xl mb-3">
                 Completa o edita la información de tu colectivo
             </h3>
@@ -36,7 +37,8 @@
         <!-- modal mis colectivos -->
         <MyCollectivesModal
             :show="dialogCollectives"
-            @close-modal="dialogCollectives = false"
+            @close-modal="closeDialogCollectives"
+            v-if="isOwner"
         />
     </section>
 </template>
@@ -58,12 +60,32 @@ export default {
             type: Object,
             default: () => ({}),
         },
+        isOwner: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
         return {
             dialogCollectives: false,
         };
+    },
+
+    mounted() {
+        window.scrollTo(0, 0);
+    },
+
+    methods: {
+        openDialogCollectives() {
+            this.dialogCollectives = true;
+            this.$emit("dialog-collectives-opened");
+        },
+
+        closeDialogCollectives() {
+            this.dialogCollectives = false;
+            this.$emit("dialog-collectives-closed");
+        },
     },
 };
 </script>

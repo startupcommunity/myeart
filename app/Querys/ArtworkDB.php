@@ -7,6 +7,7 @@ use App\Models\Artwork;
 use App\Models\ArtworkLike;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use App\Events\NotificationEvent;
 
 class ArtworkDB
 {
@@ -146,6 +147,16 @@ class ArtworkDB
 
         $created = $artwork->likes()->create(['user_id' => $user->id]);
 
+        //Evento para Notificación de Like a obra
+        $data = [
+        'user_id' => $user->id,
+        'notifiable_id' => $artwork->user_id,
+        'url' => '/obras/'.$artwork->id,
+        'message' => "Le gustó tu obra",
+        'type' => 'new-like-artwork'
+        ];
+        event(new NotificationEvent($data));
+
         return is_object($created);
     }
 
@@ -167,14 +178,16 @@ class ArtworkDB
      * Devuelve las obras de respectivos usuarios
      * filtradas por tipo colectivo
      *
-     * @param array $ids            ids de los usuarios
+     * @param array $ids                ids de los usuarios
+     * @param integer $collectiveID     id del colectivo
      * @return Collection
      */
-    public static function getArtworksByUsers(array $ids): Collection
+    public static function getArtworksByUsers(array $ids, int $collectiveID): Collection
     {
         $relations = ['categories', 'subcategories', 'labels', 'gallery', 'user.profile', 'likes'];
         return Artwork::with($relations)
             ->whereIn('user_id', $ids)
+            ->where('collective_id', $collectiveID)
             ->published()
             ->typeCollective()
             ->orderByDesc('created_at')

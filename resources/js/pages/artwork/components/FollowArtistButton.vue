@@ -26,12 +26,11 @@ export default {
     },
     computed: {
         /**
-         * Acceder a los getters necesarios
-         * user profile
+         * Usuario logueado
          */
-        ...mapGetters({
-            user: "getProfile",
-        }),
+        user() {
+            return this.$store.getters.getProfile;
+        },
 
         /**
          * Comprueba si el usuario puede seguir al artista
@@ -50,6 +49,15 @@ export default {
                 (follow) => follow.following_id === this.artist.id
             );
         },
+
+        isGuest() {
+            return (
+                this.user?.id === undefined ||
+                this.user?.id === null ||
+                this.user?.id === "" ||
+                this.user?.id === 0
+            );
+        },
     },
     methods: {
         /**
@@ -58,6 +66,11 @@ export default {
         followArtist() {
             if (!this.canFollowArtist) {
                 this.noty("No es posible autoseguirte", "error");
+                return;
+            }
+
+            if (this.isGuest) {
+                this.noty("Debe iniciar sesión", "warning");
                 return;
             }
 

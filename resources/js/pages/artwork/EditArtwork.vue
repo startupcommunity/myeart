@@ -530,7 +530,16 @@ export default {
                             return;
                         }
 
-                        this.$router.go(-1);
+                        // obra de colectivo
+                        if (this.isCollective) {
+                            // obtener parámetro de la ruta anterior
+                            const collectiveId =
+                                this.$route.params.collectiveID;
+
+                            this.$router.push(
+                                `/colectivos/perfil/${collectiveId}/artwork`
+                            );
+                        }
                     }
                 })
                 .catch((error) => this.showRequestErrors(error))

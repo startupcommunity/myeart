@@ -8,6 +8,10 @@ use App\Http\Requests\CreateFrontPhotoCollectiveRequest;
 use App\Http\Requests\SendInvitationCollectiveRequest;
 use App\Http\Requests\CreateCollectiveRequest;
 use App\Factories\CollectiveFactory;
+use App\Http\Requests\CreateLikeCollectiveRequest;
+use App\Http\Requests\FilterArtworkInCollectiveRequest;
+use App\Http\Requests\FilterCollectiveRequest;
+use App\Http\Requests\FollowCollectiveRequest;
 use Illuminate\Http\JsonResponse;
 use App\Querys\CollectiveDB;
 use Illuminate\Http\Request;
@@ -42,10 +46,10 @@ class CollectiveController extends Controller
     /**
      * devuelve un colectivo
      *
-     * @param int $id
+     * @param int|string $id
      * @return JsonResponse
      */
-    public function getCollective(int $id): JsonResponse
+    public function getCollective(int|string $id): JsonResponse
     {
         try {
             $data = $this->db->getCollective($id);
@@ -220,6 +224,103 @@ class CollectiveController extends Controller
         try {
             $data = $this->db->getArtworks($id);
             return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * devuelve las obras de un colectivo, filtrada por request
+     *
+     * @param int $id           id del colectivo
+     * @param FilterArtworkInCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function getFilterArtworks(FilterArtworkInCollectiveRequest $request, int $id): JsonResponse
+    {
+        try {
+            $data = $this->db->getFilterArtworks($request, $id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * devuelve todos los colectivos
+     *
+     * @param FilterCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function getAllCollectives(FilterCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->db->getAllCollectivesFilter($request);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Agrega un like al colectivo
+     *
+     * @param CreateLikeCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function addLike(CreateLikeCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->addLike($request);
+            return $this->resp->json($data, $data ? 201 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Elimina un like al colectivo
+     *
+     * @param CreateLikeCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function removeLike(CreateLikeCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->removeLike($request);
+            return $this->resp->json($data, $data ? 200 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Sigue a un colectivo
+     *
+     * @param FollowCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function followCollective(FollowCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $follow = $this->factory->followCollective($request);
+            return $this->resp->json($follow, $follow ? 201 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Deja de seguir a un colectivo
+     *
+     * @param FollowCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function unfollowCollective(FollowCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $unFollow = $this->factory->unfollowCollective($request);
+            return $this->resp->json($unFollow, $unFollow ? 200 : 204);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

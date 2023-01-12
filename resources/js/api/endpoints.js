@@ -60,6 +60,9 @@ const endpoints = {
         // obtiene los eventos seguidos por el usuario
         getFollowEvents: `${API}/user/get-follow-events`, // get
 
+        // obtiene los colectivos seguidos por el usuario
+        getFollowCollectives: `${API}/user/get-follow-collectives`, // get
+
         // artistas seguidos por el usuario, info corta y necesaria
         getFASI: `${API}/user/get-follow-artists-short-info`, // get
 
@@ -150,6 +153,9 @@ const endpoints = {
     orders: {
         // obtiene los artículos del pedido
         getItems: `${API}/orders/get-items/`, // get
+
+        // obtiene las ordenes del usuario logueado o indicado / {id?}
+        getUserOrders: `${API}/orders/get-user-orders/`, // get
     },
 
     // eventos
@@ -218,6 +224,25 @@ const endpoints = {
 
         // devuelve las obras del colectivo / {id}
         artworks: `${API}/collectives/get-artworks/`, // get
+
+        // devuelve las obras del colectivo filtrada por request / {id}
+        filterArtworks: `${API}/collectives/get-filters-artworks/`, // get
+
+        // devuelve todos los colectivos creados
+        // pueden estar filtrados por request
+        getAll: `${API}/collectives/get-all`, // get
+
+        // agrega un like a el colectivo
+        like: `${API}/collectives/like`, // post
+
+        // elimina un like del colectivo
+        dislike: `${API}/collectives/dislike`, // post
+
+        // seguir un colectivo
+        follow: `${API}/collectives/follow`, // post
+
+        // dejar de seguir un colectivo
+        unfollow: `${API}/collectives/unfollow`, // post
     },
 };
 

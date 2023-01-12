@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Enums\StatusInvitationCollectiveEnum;
 use App\Models\Collective;
 use App\Utils\AppStorage;
 use Illuminate\Http\Request;
@@ -176,9 +177,15 @@ class CollectiveFactory
       // si el creador ya invito a este usuario
       $invitation = $collective->invitations()
         ->where('user_id', $request->user_id)
+        ->where('status', '<>', StatusInvitationCollectiveEnum::REJECTED)
         ->first();
 
-      if ($invitation) {
+      // si el usuario ya es miembro del colectivo
+      $member = $collective->members()
+        ->where('user_id', $request->user_id)
+        ->first();
+
+      if ($invitation || $member) {
         return false;
       }
 
@@ -210,6 +217,111 @@ class CollectiveFactory
       // eliminar miembro
       return $collective
         ->members()
+        ->where('user_id', $request->user_id)
+        ->delete();
+    });
+
+    return $tran;
+  }
+
+  /**
+   * Agrega un like a un colectivo
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function addLike(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // si el usuario ya dio like
+      $like = $collective->likes()
+        ->where('user_id', $request->user_id)
+        ->first();
+
+      if ($like) {
+        return false;
+      }
+
+      // crear like
+      $collective->likes()->create($request->only(['user_id']));
+
+      return true;
+    });
+
+    return $tran;
+  }
+
+  /**
+   * Elimina un like a un colectivo
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function removeLike(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // eliminar like
+      return $collective
+        ->likes()
+        ->where('user_id', $request->user_id)
+        ->delete();
+    });
+
+    return $tran;
+  }
+
+  /**
+   * Sigue a un colectivo, si es el creador no lo puede seguir
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function followCollective(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // si el usuario es el creador del colectivo
+      if ($collective->isCreator($request->user_id)) {
+        return false;
+      }
+
+      // si el usuario ya sigue al colectivo
+      $follow = $collective->followers()
+        ->where('user_id', $request->user_id)
+        ->first();
+
+      if ($follow) {
+        return false;
+      }
+
+      // crear follow
+      $collective->followers()->create($request->only(['user_id']));
+
+      return true;
+    });
+
+    return $tran;
+  }
+
+  /**
+   * Deja de seguir a un colectivo
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function unfollowCollective(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // eliminar follow
+      return $collective
+        ->followers()
         ->where('user_id', $request->user_id)
         ->delete();
     });

@@ -21,4 +21,16 @@ class OrderPolicy
   {
     return $user->id === $order->user_id;
   }
+
+  /**
+   * Determina si el usuario puede ver sus ordenes
+   *
+   * @param  \App\Models\User  $user
+   * @return \Illuminate\Auth\Access\Response|bool
+   */
+  public function getUserOrders(User $user)
+  {
+    $auth = auth()->user();
+    return $user->id === $auth->id;
+  }
 }

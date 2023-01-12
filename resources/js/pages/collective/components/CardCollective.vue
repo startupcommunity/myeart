@@ -34,6 +34,7 @@
                 >
                     <i class="fa-solid fa-eye text-zinc-800"></i>
                 </button>
+                <LikeButtonCollective :collective="collective" />
                 <button @click.stop="share">
                     <i class="fa-solid fa-share-nodes text-gray-400"></i>
                 </button>
@@ -46,7 +47,7 @@
             <router-link :to="getPathShowCollective">
                 <img
                     :src="getFrontImage"
-                    class="w-full h-full object-cover object-center aspect-video"
+                    class="w-full h-full object-cover object-center aspect-square"
                     alt="imagen de portada del colectivo"
                 />
             </router-link>
@@ -55,7 +56,7 @@
 
         <!-- content -->
         <div>
-            <h3 class="font-bold text-lg">
+            <h3 class="font-bold text-lg mt-1">
                 {{ collective.name }}
             </h3>
             <div class="flex justify-between py-2">
@@ -71,16 +72,6 @@
                 </div>
                 <div class="uppercase">
                     <span class="font-bold text-xs text-zinc-900">
-                        {{ following }}
-                    </span>
-                    <span
-                        class="text-primary font-bold tracking-widest text-xs"
-                    >
-                        following
-                    </span>
-                </div>
-                <div class="uppercase">
-                    <span class="font-bold text-xs text-zinc-900">
                         {{ artworks }}
                     </span>
                     <span
@@ -90,10 +81,17 @@
                     </span>
                 </div>
             </div>
-            <div>
+            <div class="flex justify-between items-center">
                 <div class="text-xs font-bold text-zinc-900">
-                    Colectivo de arte:
-                    <span class="text-primary">{{ categories }}</span>
+                    <span class="text-gray-900">{{ getType }}</span>
+                </div>
+                <div v-if="followBtn">
+                    <FollowCollectiveButton
+                        :collective="collective"
+                        :is-creator="isWatchingCreator"
+                        @follow="follow"
+                        @unfollow="unfollow"
+                    />
                 </div>
             </div>
         </div>
@@ -102,17 +100,28 @@
 </template>
 
 <script>
+import getDataMixin from "../../../mixins/getDataMixin";
 import utilMixin from "../../../mixins/utilMixin";
 import CollectiveAvatar from "./CollectiveAvatar.vue";
+import FollowCollectiveButton from "./FollowCollectiveButton.vue";
+import LikeButtonCollective from "./LikeButtonCollective.vue";
 
 export default {
     name: "CardCollective",
-    components: { CollectiveAvatar },
-    mixins: [utilMixin],
+    components: {
+        CollectiveAvatar,
+        LikeButtonCollective,
+        FollowCollectiveButton,
+    },
+    mixins: [utilMixin, getDataMixin],
     props: {
         collective: {
             type: Object,
             default: () => ({}),
+        },
+        followBtn: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -139,22 +148,8 @@ export default {
             return this.collective?.followers?.length || 0;
         },
 
-        following() {
-            return this.collective?.following?.length || 0;
-        },
-
         artworks() {
             return this.collective?.artworks?.length || 0;
-        },
-
-        categories() {
-            const categories = this.collective?.categories || [];
-
-            // obtener solo los nombres de las categorias
-            const names = categories.map((cat) => cat.category?.name);
-
-            // convertir el array en string separado por comas
-            return names.join(", ");
         },
 
         getPathShowCollective() {
@@ -169,9 +164,30 @@ export default {
         isWatchingCreator() {
             return this.user?.id === this.creator?.id;
         },
+
+        getType() {
+            return (
+                this.collectiveTypes.filter(
+                    (type) => type.value === this.collective?.type
+                )[0].text || ""
+            );
+        },
+
+        // categories() {
+        //     const categories = this.collective?.categories || [];
+
+        //     // obtener solo los nombres de las categorias
+        //     const names = categories.map((cat) => cat.category?.name);
+
+        //     // convertir el array en string separado por comas
+        //     return names.join(", ");
+        // },
     },
 
     methods: {
+        /**
+         * Ir al perfil del colectivo, no es lo mismo que el detalle
+         */
         goToCollectiveProfile() {
             this.$router.push({
                 name: "collectiveProfile",
@@ -180,12 +196,36 @@ export default {
                 },
             });
         },
+
+        /**
+         * Compartir colectivo
+         */
         share() {
             const path = this.secureUrl;
             const slug = this.collective?.slug ?? "";
             const route = `/colectivos/publico/${slug}`;
             const text = path + route;
             this.copyToClipboard(text);
+        },
+
+        /**
+         * Agregar el usuario a la lista de followers
+         */
+        follow() {
+            this.collective.followers.push({
+                user_id: this.user.id,
+                collective_id: this.collective.id,
+                collective: this.collective,
+            });
+        },
+
+        /**
+         * eliminar el usuario de la lista de followers
+         */
+        unfollow() {
+            this.collective.followers = this.collective.followers.filter(
+                (follower) => follower.user_id !== this.user.id
+            );
         },
     },
 };

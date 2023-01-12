@@ -12,8 +12,11 @@
 </template>
 
 <script>
+import utilMixin from '../../../mixins/utilMixin';
+
 export default {
     name: "FavButtonRelease",
+    mixins: [utilMixin],
     props: {
         release: {
             type: Object,
@@ -36,6 +39,11 @@ export default {
     },
     methods: {
         addOrRemoveFav() {
+            if (this.isUserGuest) {
+                this.noty("Debe iniciar sesión", "warning");
+                return;
+            }
+
             const data = {
                 release_id: this.release.id,
                 user_id: this.user.id,

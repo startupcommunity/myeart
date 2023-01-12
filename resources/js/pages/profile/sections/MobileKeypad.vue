@@ -103,14 +103,12 @@
                 <button
                     type="button"
                     class="flex flex-col items-center justify-start space-y-2"
-                    @click="changeEmitAndClass(mobileSection.pedidos)"
+                    @click="changeEmitAndClass(mobileSection.order)"
                 >
                     <i class="fas fa-shopping-cart text-primary fa-2x"></i>
                     <span
                         class="tracking-tight"
-                        :class="
-                            sections[0].pedidos ? 'font-black' : 'font-light'
-                        "
+                        :class="sections[0].order ? 'font-black' : 'font-light'"
                     >
                         Pedidos
                     </span>
@@ -195,7 +193,7 @@ export default {
                     pub: false,
                     obras: false,
                     fav: false,
-                    pedidos: false,
+                    order: false,
                     direcciones: false,
                     pagos: false,
                     seguridad: false,
@@ -209,7 +207,7 @@ export default {
                     pub: false,
                     obras: false,
                     fav: false,
-                    pedidos: false,
+                    order: false,
                     direcciones: false,
                     pagos: false,
                     seguridad: false,
@@ -222,7 +220,7 @@ export default {
                 pub: "pub",
                 obras: "obras",
                 fav: "fav",
-                pedidos: "pedidos",
+                order: "order",
                 direcciones: "direcciones",
                 pagos: "pagos",
                 seguridad: "seguridad",

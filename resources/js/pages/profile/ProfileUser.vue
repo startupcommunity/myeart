@@ -77,6 +77,13 @@
                     />
                     <!-- /sección favoritos -->
 
+                    <!-- sección pedidos -->
+                    <Order
+                        :showSection="sections.order"
+                        class="sm:min-h-[52rem]"
+                    />
+                    <!-- /sección pedidos -->
+
                     <!-- sección direcciones -->
                     <Address
                         :showSection="sections.direction"
@@ -140,6 +147,7 @@ import Address from "./sections/Address.vue";
 import Favourite from "./sections/Favourite.vue";
 import DesktopKeypad from "./sections/DesktopKeypad.vue";
 import Release from "./sections/Release.vue";
+import Order from "./sections/Order.vue";
 import HeroProfile from "./sections/HeroProfile.vue";
 import MyCollectivesModal from "./components/MyCollectivesModal.vue";
 
@@ -149,7 +157,7 @@ const SECTIONS = {
     obras: "obras",
     pub: "pub",
     fav: "fav",
-    pedidos: "pedidos",
+    order: "order",
     direcciones: "direcciones",
     pagos: "pagos",
     seguridad: "seguridad",
@@ -172,6 +180,7 @@ export default {
         Favourite,
         DesktopKeypad,
         Release,
+        Order,
         HeroProfile,
         MyCollectivesModal,
     },
@@ -248,6 +257,7 @@ export default {
             this.sections.artwork = id == SECTIONS.obras;
             this.sections.pub = id == SECTIONS.pub;
             this.sections.fav = id == SECTIONS.fav;
+            this.sections.order = id == SECTIONS.order;
             this.sections.direction = id == SECTIONS.direcciones;
         },
 

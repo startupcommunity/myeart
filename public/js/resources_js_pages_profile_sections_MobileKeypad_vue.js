@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
         pub: false,
         obras: false,
         fav: false,
-        pedidos: false,
+        order: false,
         direcciones: false,
         pagos: false,
         seguridad: false
@@ -32,7 +32,7 @@ __webpack_require__.r(__webpack_exports__);
         pub: false,
         obras: false,
         fav: false,
-        pedidos: false,
+        order: false,
         direcciones: false,
         pagos: false,
         seguridad: false
@@ -43,7 +43,7 @@ __webpack_require__.r(__webpack_exports__);
         pub: "pub",
         obras: "obras",
         fav: "fav",
-        pedidos: "pedidos",
+        order: "order",
         direcciones: "direcciones",
         pagos: "pagos",
         seguridad: "seguridad"
@@ -202,14 +202,14 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.changeEmitAndClass(_vm.mobileSection.pedidos);
+        return _vm.changeEmitAndClass(_vm.mobileSection.order);
       }
     }
   }, [_c("i", {
     staticClass: "fas fa-shopping-cart text-primary fa-2x"
   }), _vm._v(" "), _c("span", {
     staticClass: "tracking-tight",
-    "class": _vm.sections[0].pedidos ? "font-black" : "font-light"
+    "class": _vm.sections[0].order ? "font-black" : "font-light"
   }, [_vm._v("\n                    Pedidos\n                ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap justify-center items-start text-primary text-xs gap-3 mt-5"
   }, [_c("div", [_c("button", {

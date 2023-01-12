@@ -88,6 +88,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        collectiveID: {
+            type: Number,
+            default: 0,
+        },
     },
     data() {
         return {
@@ -237,6 +241,10 @@ export default {
                     form.labels.forEach((label) =>
                         data.append(`labels[]`, label)
                     );
+
+                    if (this.collectiveID) {
+                        data.append("collective_id", this.collectiveID);
+                    }
 
                     this.axios
                         .post(ep, data, this.headerFormData)

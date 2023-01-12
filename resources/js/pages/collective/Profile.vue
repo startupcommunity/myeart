@@ -1,7 +1,7 @@
 <template>
     <MainLayout :show-header="false" :loading-overlay="globalLoading">
         <!-- header -->
-        <div class="bg-zinc-900 pb-32">
+        <div class="bg-zinc-900 pb-32" v-if="showHeader">
             <Header class="mt-5" />
         </div>
         <!-- /header -->
@@ -45,6 +45,7 @@
                                         'font-bold': sections.profile,
                                         'font-normal': !sections.profile,
                                     }"
+                                    v-if="isOwner"
                                 >
                                     Mi información
                                 </v-btn>
@@ -98,7 +99,10 @@
                         <Info
                             :collective="collective"
                             :profile="profile"
+                            :isOwner="isOwner"
                             v-if="sections.profile"
+                            @dialog-collectives-opened="showHeader = false"
+                            @dialog-collectives-closed="showHeader = true"
                         />
                         <Release
                             :collective="collective"
@@ -111,7 +115,7 @@
                         />
                         <Artwork
                             :collective="collective"
-                            v-if="sections.artwork"
+                            v-if="sections.artwork && collective?.id"
                         />
                     </div>
                     <!-- content -->
@@ -147,6 +151,12 @@ export default {
     },
 
     mounted() {
+        // verificar si se recibe parámetro section en la url
+        if (this.$route.params.section) {
+            this.activeSection(this.$route.params.section);
+            return;
+        }
+
         this.sections.profile = true;
     },
 };

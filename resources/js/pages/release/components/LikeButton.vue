@@ -18,8 +18,11 @@
 </template>
 
 <script>
+import utilMixin from "../../../mixins/utilMixin";
+
 export default {
     name: "LikeButton",
+    mixins: [utilMixin],
     data() {
         return {
             loading: false,
@@ -47,6 +50,11 @@ export default {
          * Add like or dislike
          */
         addLikeOrDislike() {
+            if (this.isUserGuest) {
+                this.noty("Debe iniciar sesión", "warning");
+                return;
+            }
+
             const data = {
                 release_id: this.release.id,
                 user_id: this.user.id,

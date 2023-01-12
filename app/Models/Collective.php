@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\CollectiveTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,7 +12,7 @@ use Illuminate\Support\Str;
 
 class Collective extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, CollectiveTrait;
 
     protected $table = 'collectives';
 
@@ -64,10 +65,10 @@ class Collective extends Model
     /**
      * Devuelve los colectivos a los cuales el usuario pertenece
      */
-    public function guests(): HasMany
-    {
-        return $this->hasMany(GuestCollective::class);
-    }
+    // public function guests(): HasMany
+    // {
+    //     return $this->hasMany(GuestCollective::class);
+    // }
 
     /**
      * Devuelve los miembros del colectivo
@@ -86,10 +87,36 @@ class Collective extends Model
     }
 
     /**
-     * Verifica si el usuario logueado es el creador del colectivo
+     * Devolver las obras del colectivo
      */
-    public function isCreator(): bool
+    public function artworks(): HasMany
     {
-        return $this->user_id === auth()->id();
+        return $this->hasMany(Artwork::class);
+    }
+
+    /**
+     * Devuelve las publicaciones del colectivo
+     */
+    public function releases(): HasMany
+    {
+        return $this->hasMany(UserRelease::class);
+    }
+
+    /**
+     * Devuelve los likes del colectivo
+     */
+    public function likes(): HasMany
+    {
+        return $this->hasMany(CollectiveLike::class);
+    }
+
+    /**
+     * Devuelve los seguidores del colectivo
+     *
+     * @return HasMany
+     */
+    public function followers(): HasMany
+    {
+        return $this->hasMany(FollowCollective::class);
     }
 }

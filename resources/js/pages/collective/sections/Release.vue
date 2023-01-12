@@ -63,7 +63,13 @@
             <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5 content-center place-items-center h-28"
             >
-                <v-btn block @click.stop="showDialog = true" depressed large>
+                <v-btn
+                    block
+                    @click.stop="showDialog = true"
+                    depressed
+                    large
+                    v-if="isCreatorOrMember"
+                >
                     <i class="fas fa-plus"></i> Crear una nueva publicación
                 </v-btn>
                 <div
@@ -135,6 +141,7 @@
         <!-- modal para crear publicación -->
         <CreateReleaseModal
             :show="showDialog"
+            :collectiveID="collective?.id"
             @close-modal="showDialog = false"
             @created="getReleasesAccordingToUser"
         />
@@ -195,6 +202,10 @@ export default {
         this.getReleasesAccordingToUser();
     },
 
+    mounted() {
+        window.scrollTo(0, 0);
+    },
+
     computed: {
         likes() {
             return this.collective?.likes?.length || 0;
@@ -213,6 +224,17 @@ export default {
         },
         isOwner() {
             return this.creatorID === this.user?.id;
+        },
+
+        /**
+         * verifica si el usuario es el creador del colectivo
+         * o si es miembro del colectivo
+         */
+        isCreatorOrMember() {
+            return (
+                this.creatorID === this.user?.id ||
+                this.members.some((m) => m.id === this.user?.id)
+            );
         },
     },
 

@@ -3,12 +3,13 @@ import endpoints from "../../api/endpoints";
 
 export default {
     state: {
-        status: "",
-        following_artists: [],
-        following_artworks: [],
-        following_releases: [],
-        following_events: [],
-        collective: {},
+        status: "", // estado de la petición
+        following_artists: [], // artistas seguidos
+        following_artworks: [], // obras seguidas
+        following_releases: [], // publicaciones seguidas
+        following_events: [], // eventos seguidos
+        following_collectives: [], // colectivos seguidos
+        collective: {}, // datos del colectivo
         profile: {
             profile: {},
             social_network: {},
@@ -23,6 +24,7 @@ export default {
         getFollowArtworks: (state) => state.following_artworks,
         getFollowReleases: (state) => state.following_releases,
         getFollowEvents: (state) => state.following_events,
+        getFollowCollectives: (state) => state.following_collectives,
         getCollective: (state) => state.collective,
         getProfile: (state) => state.profile,
         isProfileLoaded: (state) => !!state.profile.name,
@@ -102,6 +104,18 @@ export default {
                 .then((resp) => commit("setCollective", resp.data))
                 .catch((err) => console.log(err));
         },
+
+        /**
+         * Obtener los colectivos seguidos por el usuario
+         * @param {Commit} param
+         */
+        userFollowCollectives: ({ commit }) => {
+            commit("userRequest");
+            Vue.axios
+                .get(endpoints.user.getFollowCollectives)
+                .then((resp) => commit("setFollowCollectives", resp.data))
+                .catch((err) => console.log(err));
+        },
     },
     mutations: {
         userRequest: (state) => {
@@ -128,6 +142,10 @@ export default {
         },
         setFollowEvents: async (state, resp) => {
             await Vue.set(state, "following_events", resp);
+            state.status = "success";
+        },
+        setFollowCollectives: async (state, resp) => {
+            await Vue.set(state, "following_collectives", resp);
             state.status = "success";
         },
         setCollective: async (state, resp) => {

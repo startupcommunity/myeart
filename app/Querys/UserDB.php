@@ -170,8 +170,16 @@ class UserDB
         ]);
 
         // return especific data
-        return $data['favoriteReleases']
-            ->map(fn ($item) => $item->release);
+        $releases = $data['favoriteReleases']
+            ->map(fn ($item) => $item->release)
+            ->filter(fn ($item) => $item);
+
+        // eliminar registros vacíos
+        // $releases = $releases->filter(fn ($item) => $item);
+
+        // dd($releases->toArray());
+
+        return $releases;
     }
 
     /**

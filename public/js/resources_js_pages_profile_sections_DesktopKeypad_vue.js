@@ -119,7 +119,7 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.showSection("pedidos");
+        return _vm.showSection("order");
       }
     }
   }, [_c("i", {

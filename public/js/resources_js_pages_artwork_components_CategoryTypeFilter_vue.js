@@ -187,6 +187,64 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var format = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Y-m-d";
       var date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000);
       return date.toISOString().substr(0, 10);
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive md
+     */
+    isMd: function isMd() {
+      return this.$vuetify.breakpoint.md;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive sm
+     */
+    isSm: function isSm() {
+      return this.$vuetify.breakpoint.sm;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive lg
+     */
+    isLg: function isLg() {
+      return this.$vuetify.breakpoint.lg;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive xs
+     */
+    isXs: function isXs() {
+      return this.$vuetify.breakpoint.xs;
+    },
+
+    /**
+     * Verificar todos los responsives pequeños
+     */
+    isSmall: function isSmall() {
+      return this.isSm || this.isMd || this.isLg;
+    },
+
+    /**
+     * Si esta en modo mobile
+     */
+    isMobileMode: function isMobileMode() {
+      return this.isXs;
+    },
+
+    /**
+     * Obtiene el usuario logueado actual
+     */
+    authUser: function authUser() {
+      return this.$store.getters.getProfile;
+    },
+
+    /**
+     * Devuelve si el usuario esta logueado
+     */
+    isUserGuest: function isUserGuest() {
+      var _this$authUser, _this$authUser2, _this$authUser3, _this$authUser4;
+
+      return ((_this$authUser = this.authUser) === null || _this$authUser === void 0 ? void 0 : _this$authUser.id) === undefined || ((_this$authUser2 = this.authUser) === null || _this$authUser2 === void 0 ? void 0 : _this$authUser2.id) === null || ((_this$authUser3 = this.authUser) === null || _this$authUser3 === void 0 ? void 0 : _this$authUser3.id) === "" || ((_this$authUser4 = this.authUser) === null || _this$authUser4 === void 0 ? void 0 : _this$authUser4.id) === 0;
     }
   },
   methods: {

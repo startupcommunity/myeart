@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Querys\OrderDB;
-use App\Utils\ResponseJson;
-use Exception;
 use Illuminate\Http\JsonResponse;
+use App\Utils\ResponseJson;
+use App\Querys\OrderDB;
+use Exception;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -28,6 +28,23 @@ class OrderController extends Controller
             $this->authorize('getItems', $this->db->getOrder($id));
             $items = $this->db->getItems($id);
             return $this->resp->json($items, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Devuelve todas las ordenes del usuario logueado
+     *
+     * @param Request $request
+     * @param integer|null $id       ID del usuario
+     * @return JsonResponse
+     */
+    public function getUserOrders(Request $request, ?int $id = null): JsonResponse
+    {
+        try {
+            $orders = $this->db->getUserOrders($request, $id);
+            return $this->resp->json($orders, 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }
