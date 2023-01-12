@@ -117,6 +117,11 @@
                                                         </li>
                                                     </ul>
                                                 </li>
+
+                                                <Notifications 
+                                                :user="user"
+                                                />
+
                                                 <li>
                                                     <div class="header-icons">
                                                         <router-link
@@ -182,10 +187,11 @@
 </template>
 <script>
 import MobileMenu from "./components/MobileMenu.vue";
+import Notifications from './Notifications.vue';
 
 export default {
     name: "Header",
-    components: { MobileMenu },
+    components: { MobileMenu, Notifications },
     methods: {
         logout() {
             this.$store.dispatch("authLogout").then(() => {
@@ -233,6 +239,6 @@ export default {
             // devolver la cantidad de artículos en el carrito
             return shoppingCart.length || 0;
         },
-    },
+    }
 };
 </script>

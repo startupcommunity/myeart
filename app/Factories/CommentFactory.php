@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Events\NotificationEvent;
 use App\Models\Answer;
 use App\Models\Artwork;
 use App\Models\Comment;
@@ -16,6 +17,18 @@ class CommentFactory
   {
     $art = Artwork::find($request->artwork_id);
     $data = $request->only(['comment', 'user_id']);
+
+    //Evento para Notificación de nuevo comentario
+    $data2 = [
+      'user_id' => $request->user_id,
+      'notifiable_id' => $art->user_id,
+      'url' => '/obras/'.$art->id,
+      'message' => "Realizó un comentario",
+      'type' => 'new-question'
+    ];
+
+    event(new NotificationEvent($data2));
+
     return $art->comments()->create($data);
   }
 
@@ -42,6 +55,24 @@ class CommentFactory
   {
     $comment = Comment::find($request->comment_id);
     $data = $request->only(['answer', 'user_id']);
+
+    //Evento para Notificación de respuesta a comentario
+
+    if($comment->commentable_type == 'App\Models\Artwork') {
+      $url = '/obras/'.$comment->commentable_id;
+    } else {
+      $url = '/comunidad';
+    }
+    
+    $data2 = [
+      'user_id' => $request->user_id,
+      'notifiable_id' => $comment->user_id,
+      'url' => $url,
+      'message' => "Ha respondido su comentario",
+      'type' => 'new-answer'
+    ];
+    event(new NotificationEvent($data2));
+
     return $comment->answer()->create($data);
   }
 
@@ -60,6 +91,16 @@ class CommentFactory
     if ($comment->likes()->where('user_id', $request->user_id)->exists()) {
       return null;
     }
+    
+    //Evento para Notificación de Like a comentario de publicacion
+    $data2 = [
+      'user_id' => $request->user_id,
+      'notifiable_id' => $comment->user_id,
+      'url' => '/comunidad',
+      'message' => "Le gustó tu comentario",
+      'type' => 'new-like-comment'
+    ];
+    event(new NotificationEvent($data2));
 
     return $comment->likes()->create($data);
   }
@@ -92,6 +133,22 @@ class CommentFactory
   {
     $comment = Comment::find($request->comment_id);
     $data = $request->only(['answer', 'user_id']);
+
+    //Evento para Notificación de respuesta a comentario
+    if($comment->commentable_type == 'App\Models\Artwork') {
+      $url = '/obras/'.$comment->commentable_id;
+    } else {
+      $url = '/comunidad';
+    }
+    $data2 = [
+      'user_id' => $request->user_id,
+      'notifiable_id' => $comment->user_id,
+      'url' => $url,
+      'message' => "Ha respondido su comentario",
+      'type' => 'new-answer'
+    ];
+    event(new NotificationEvent($data2));
+
     return $comment->answer()->create($data);
   }
 }

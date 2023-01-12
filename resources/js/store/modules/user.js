@@ -11,12 +11,12 @@ export default {
         following_collectives: [], // colectivos seguidos
         collective: {}, // datos del colectivo
         profile: {
-            // datos del perfil
-            profile: {}, // datos adicionales del perfil
-            social_network: {}, // redes sociales del perfil
-            shopping_cart: [], // carrito de compras
-            following_artists: [], // artistas seguidos
-            favorite_releases: [], // publicaciones favoritas
+            profile: {},
+            social_network: {},
+            shopping_cart: [],
+            following_artists: [],
+            favorite_releases: [],
+            unread_notifications: [],
         },
     },
     getters: {

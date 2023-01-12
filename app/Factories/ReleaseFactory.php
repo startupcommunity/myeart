@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Events\NotificationEvent;
 use App\Enums\ReleaseTypeEnum;
 use App\Models\Comment;
 use App\Models\FavoriteRelease;
@@ -141,6 +142,16 @@ class ReleaseFactory
       return null;
     }
 
+    //Evento para Notificar Like de publicación
+    $data = [
+      'user_id' => $request->user_id,
+      'notifiable_id' => $release->user_id,
+      'url' => '/comunidad',
+      'message' => "Le gustó tu publicación",
+      'type' => 'new-like-release'
+    ];
+    event(new NotificationEvent($data));
+
     // si no, crear like
     return $release->likes()->create(['user_id' => $request->user_id]);
   }
@@ -219,6 +230,16 @@ class ReleaseFactory
       'comment' => $request->comment
     ]);
 
+    //Evento para Notificación de comentario
+    $data = [
+      'user_id' => $request->user_id,
+      'notifiable_id' => $release->user_id,
+      'url' => '/comunidad',
+      'message' => "Ha comantado tu publicación",
+      'type' => 'new-comment'
+    ];
+    event(new NotificationEvent($data));
+    
     return $comment;
   }
 }
