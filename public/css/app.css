@@ -12568,14 +12568,14 @@ video {
 .mb-0{
   margin-bottom: 0px;
 }
+.-mb-1{
+  margin-bottom: -0.25rem;
+}
 .mt-6{
   margin-top: 1.5rem;
 }
 .ml-0{
   margin-left: 0px;
-}
-.-mb-1{
-  margin-bottom: -0.25rem;
 }
 .block{
   display: block;

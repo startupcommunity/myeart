@@ -36,7 +36,7 @@ class UserFactory
     
     //Evento para Notificación de nuevo seguidor
     $data = [
-      'user_id' => $follower->id,
+      'user' => $follower,
       'notifiable_id' => $request->following_id,
       'url' => '',
       'message' => "Ha comenzado a seguirte",

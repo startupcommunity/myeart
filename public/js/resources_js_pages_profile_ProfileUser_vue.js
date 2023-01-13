@@ -1793,27 +1793,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue_timeago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-timeago */ "./node_modules/vue-timeago/dist/vue-timeago.es.js");
+/* harmony import */ var _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../artwork/components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
+
 
 
 Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
   name: 'Timeago',
-  locale: 'es'
+  locale: 'es_ES'
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Notifications',
+  components: {
+    FollowArtistButton: _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   props: ['user'],
   mounted: function mounted() {
     var _this = this;
 
+    console.log('unread');
+    console.log(JSON.stringify(this.user.unread_notifications));
     window.Echo.channel('notification-channel').listen('NotificationEvent', function (e) {
       console.log(e.data);
 
       if (e.data.notifiable_id == _this.user.id) {
         _this.user.unread_notifications.unshift({
           data: {
-            user_id: e.data.user_id,
-            user_profile_photo: 'img/avatar.png',
-            user_username: 'user',
+            user: e.data.user,
+            user_profile_photo: e.data.user.profile_photo ? e.data.user.profile_photo : '/img/avatar.png',
+            user_username: e.data.user.username,
             type: e.data.type,
             message: e.data.message,
             url: e.data.url,
@@ -1824,21 +1831,23 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
     });
   },
   methods: {
-    actionButton: function actionButton(url, type) {
-      if (type == 'new-follower') {
-        this.followArtist;
-      } else {
-        this.$router.push(url);
-      }
+    actionButton: function actionButton(url, id) {
+      this.markAsRead(id);
+      this.$router.push(url);
     },
     setNamebutton: function setNamebutton(type) {
-      if (type == 'new-follower') {
-        return 'Seguir';
-      } else {
+      if (type != 'new-follower') {
         return 'Ir';
       }
     },
-    followArtist: function followArtist() {//
+    markAsRead: function markAsRead(id) {
+      var _this2 = this;
+
+      this.axios.get(this.ep.notifications.markAsRead + id).then(function (resp) {
+        console.log('eliminado');
+      })["catch"](function (error) {
+        return _this2.showRequestErrors(error);
+      });
     }
   }
 });
@@ -7586,6 +7595,9 @@ var render = function render() {
     staticClass: "mobile-hide search-bar-icon uppercase hover:no-underline",
     attrs: {
       href: "#"
+    },
+    on: {
+      click: _vm.markAsRead
     }
   }, [_c("div", {
     staticClass: "position-relative"
@@ -7597,7 +7609,7 @@ var render = function render() {
     staticClass: "fas fa-bell"
   })])])]), _vm._v(" "), _vm.user.unread_notifications.length > 0 ? _c("ul", {
     staticClass: "sub-menu-notification"
-  }, [_c("table", {
+  }, [_vm._m(0), _vm._v(" "), _c("table", {
     staticClass: "table-notifications"
   }, _vm._l(_vm.user.unread_notifications, function (notification) {
     return _c("tr", {
@@ -7636,18 +7648,36 @@ var render = function render() {
       staticStyle: {
         width: "10%"
       }
-    }, [notification.data.type != "new-follower" ? _c("button", {
-      staticClass: "btn btn-primary btn-sm btn-block",
+    }, [notification.data.type == "new-follower" ? _c("FollowArtistButton", {
+      attrs: {
+        artist: notification.data.user
+      },
       on: {
         click: function click($event) {
-          return _vm.actionButton(notification.data.url, notification.data.type);
+          return _vm.markAsRead(notification.id);
         }
       }
-    }, [_vm._v("\r\n            " + _vm._s(_vm.setNamebutton(notification.data.type)) + "\r\n            ")]) : _vm._e()])]);
+    }) : _c("button", {
+      staticClass: "btn btn-primary btn-sm text-xxs px-4 uppercase btn-block",
+      on: {
+        click: function click($event) {
+          return _vm.actionButton(notification.data.url, notification.id);
+        }
+      }
+    }, [_vm._v("\r\n            " + _vm._s(_vm.setNamebutton(notification.data.type)) + "\r\n            ")])], 1)]);
   }), 0)]) : _vm._e()]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "p-3"
+  }, [_c("h2", {
+    staticClass: "text-center"
+  }, [_vm._v("NOTIFICACIONES")])]);
+}];
 render._withStripped = true;
 
 
