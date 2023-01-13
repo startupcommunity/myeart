@@ -24,7 +24,7 @@ class Alert extends Notification
 
         $this->data = $data;
 
-        $this->user = $data['user'];
+        $this->user = User::find($data['user_id']);
 
     }
 

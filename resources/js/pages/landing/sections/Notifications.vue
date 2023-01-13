@@ -68,18 +68,40 @@ export default {
   props: [
       'user'
   ],
+  data() {
+    return {
+        artist: {
+            profile: {},
+            social_network: {},
+        },
+    };
+  },
   mounted() {
     console.log('unread')
     console.log(JSON.stringify(this.user.unread_notifications))
     window.Echo.channel('notification-channel')
     .listen('NotificationEvent', (e) => {
-      console.log(e.data)
+      console.log('ok')
+      this.axios
+      .get(this.ep.user.getArtist + e.data.user_id)
+      .then((res) => {
+        if (res.status !== 200) return false;
+          console.log('res')
+          console.log(res)
+          this.artist = res.data;
+          console.log('info del artista')
+          console.log(this.artist)
+      })
+      .catch((resp) => this.manageError(resp))
+      .finally(() => (this.globalLoading = false));
+
+
       if(e.data.notifiable_id == this.user.id) {
         this.user.unread_notifications.unshift({
           data : {
-            user : e.data.user,
-            user_profile_photo: e.data.user.profile_photo ? e.data.user.profile_photo : '/img/avatar.png',
-            user_username : e.data.user.username,
+            user_id : e.data.user_id,
+            user_profile_photo: this.artist.profile_photo ? this.artist.profile_photo : '/img/avatar.png',
+            user_username : this.artist.username,
             type : e.data.type,
             message : e.data.message,
             url : e.data.url,

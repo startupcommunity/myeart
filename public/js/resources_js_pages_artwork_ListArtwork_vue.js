@@ -860,20 +860,41 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
     FollowArtistButton: _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: ['user'],
+  data: function data() {
+    return {
+      artist: {
+        profile: {},
+        social_network: {}
+      }
+    };
+  },
   mounted: function mounted() {
     var _this = this;
 
     console.log('unread');
     console.log(JSON.stringify(this.user.unread_notifications));
     window.Echo.channel('notification-channel').listen('NotificationEvent', function (e) {
-      console.log(e.data);
+      console.log('ok');
+
+      _this.axios.get(_this.ep.user.getArtist + e.data.user_id).then(function (res) {
+        if (res.status !== 200) return false;
+        console.log('res');
+        console.log(res);
+        _this.artist = res.data;
+        console.log('info del artista');
+        console.log(_this.artist);
+      })["catch"](function (resp) {
+        return _this.manageError(resp);
+      })["finally"](function () {
+        return _this.globalLoading = false;
+      });
 
       if (e.data.notifiable_id == _this.user.id) {
         _this.user.unread_notifications.unshift({
           data: {
-            user: e.data.user,
-            user_profile_photo: e.data.user.profile_photo ? e.data.user.profile_photo : '/img/avatar.png',
-            user_username: e.data.user.username,
+            user_id: e.data.user_id,
+            user_profile_photo: _this.artist.profile_photo ? _this.artist.profile_photo : '/img/avatar.png',
+            user_username: _this.artist.username,
             type: e.data.type,
             message: e.data.message,
             url: e.data.url,
