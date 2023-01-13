@@ -92,7 +92,7 @@ export default {
   methods: {
     actionButton(url, id) {
       this.markAsRead(id)
-      this.$router.push(url)
+      if (this.$route.path !== url) this.$router.push(url)
     },
     setNamebutton(type) {
       if(type != 'new-follower') {
@@ -103,7 +103,8 @@ export default {
       this.axios
         .get(this.ep.notifications.markAsRead+id)
         .then((resp) => {
-          console.log('eliminado')
+          index = this.user.unread_notifications.indexOf({id: id})
+          this.user.unread_notifications.splice(index, 1)
         })
         .catch((error) => this.showRequestErrors(error))
     }

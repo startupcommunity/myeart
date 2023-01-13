@@ -283,7 +283,7 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
   methods: {
     actionButton: function actionButton(url, id) {
       this.markAsRead(id);
-      this.$router.push(url);
+      if (this.$route.path !== url) this.$router.push(url);
     },
     setNamebutton: function setNamebutton(type) {
       if (type != 'new-follower') {
@@ -294,7 +294,11 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
       var _this2 = this;
 
       this.axios.get(this.ep.notifications.markAsRead + id).then(function (resp) {
-        console.log('eliminado');
+        index = _this2.user.unread_notifications.indexOf({
+          id: id
+        });
+
+        _this2.user.unread_notifications.splice(index, 1);
       })["catch"](function (error) {
         return _this2.showRequestErrors(error);
       });
