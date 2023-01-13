@@ -562,30 +562,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../artwork/components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
 
 
-
 Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
-  name: 'Timeago',
-  locale: 'es_ES'
+  name: "Timeago",
+  locale: "es_ES"
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'Notifications',
+  name: "Notifications",
   components: {
     FollowArtistButton: _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ['user'],
+  props: ["user"],
   mounted: function mounted() {
     var _this = this;
 
-    console.log('unread');
+    console.log("unread");
     console.log(JSON.stringify(this.user.unread_notifications));
-    window.Echo.channel('notification-channel').listen('NotificationEvent', function (e) {
+    window.Echo.channel("notification-channel").listen("NotificationEvent", function (e) {
       console.log(e.data);
 
       if (e.data.notifiable_id == _this.user.id) {
         _this.user.unread_notifications.unshift({
           data: {
             user: e.data.user,
-            user_profile_photo: e.data.user.profile_photo ? e.data.user.profile_photo : '/img/avatar.png',
+            user_profile_photo: e.data.user.profile_photo ? e.data.user.profile_photo : "/img/avatar.png",
             user_username: e.data.user.username,
             type: e.data.type,
             message: e.data.message,
@@ -602,8 +601,8 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
       if (this.$route.path !== url) this.$router.push(url);
     },
     setNamebutton: function setNamebutton(type) {
-      if (type != 'new-follower') {
-        return 'Ir';
+      if (type != "new-follower") {
+        return "Ir";
       }
     },
     markAsRead: function markAsRead(id) {
@@ -1836,9 +1835,9 @@ var render = function render() {
       }
     }, [_c("p", {
       staticClass: "user-name"
-    }, [_vm._v("\r\n              " + _vm._s(notification.data.user_username) + "\r\n            ")]), _vm._v(" "), _c("p", {
+    }, [_vm._v("\n                        " + _vm._s(notification.data.user_username) + "\n                    ")]), _vm._v(" "), _c("p", {
       staticClass: "message"
-    }, [_vm._v("\r\n              " + _vm._s(notification.data.message) + "\r\n            ")])]), _vm._v(" "), _c("td", {
+    }, [_vm._v("\n                        " + _vm._s(notification.data.message) + "\n                    ")])]), _vm._v(" "), _c("td", {
       staticStyle: {
         width: "30%"
       }
@@ -1869,7 +1868,7 @@ var render = function render() {
           return _vm.actionButton(notification.data.url, notification.id);
         }
       }
-    }, [_vm._v("\r\n            " + _vm._s(_vm.setNamebutton(notification.data.type)) + "\r\n            ")])], 1)]);
+    }, [_vm._v("\n                        " + _vm._s(_vm.setNamebutton(notification.data.type)) + "\n                    ")])], 1)]);
   }), 0)]) : _vm._e()]);
 };
 
@@ -3353,7 +3352,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.dashboard nav.main-menu ul ul.sub-menu-notification {\r\n  width: 500px !important;\r\n  color: #000;\r\n\r\n  position: absolute;\r\n  background-color: #fff;\r\n  padding: .5em;\r\n  left: -300px;\r\n  top: 50px;\r\n  border: 1px solid;\r\n  border-radius: 3px;\r\n  transition: 0.3s;\r\n  opacity: 0;\r\n  visibility: hidden;\r\n  box-shadow: 0 0 20px #555555;\n}\n.user-name {\r\n  font-weight: 600;\r\n  font-size: 12px !important;\r\n  line-height: 133.9%;\r\n  color: #1D1D1C;\n}\n.message {\r\n  font-weight: 400;\r\n  font-size: 9px;\r\n  line-height: 133.9%;\n}\n.time {\r\n  font-size: 8px;\r\n  color: #000;\r\n  font-weight: 900;\n}\n.visually-hidden {\r\n  position: absolute!important;\r\n  width: 1px!important;\r\n  height: 1px!important;\r\n  padding: 0!important;\r\n  margin: -1px!important;\r\n  overflow: hidden!important;\r\n  clip: rect(0,0,0,0)!important;\r\n  white-space: nowrap!important;\r\n  border: 0!important;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.dashboard nav.main-menu ul ul.sub-menu-notification {\r\n    width: 500px !important;\r\n    color: #000;\r\n\r\n    position: absolute;\r\n    background-color: #fff;\r\n    padding: 0.5em;\r\n    left: -300px;\r\n    top: 50px;\r\n    border: 1px solid;\r\n    border-radius: 3px;\r\n    transition: 0.3s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    box-shadow: 0 0 20px #555555;\n}\n.user-name {\r\n    font-weight: 600;\r\n    font-size: 12px !important;\r\n    line-height: 133.9%;\r\n    color: #1d1d1c;\n}\n.message {\r\n    font-weight: 400;\r\n    font-size: 9px;\r\n    line-height: 133.9%;\n}\n.time {\r\n    font-size: 8px;\r\n    color: #000;\r\n    font-weight: 900;\n}\n.visually-hidden {\r\n    position: absolute !important;\r\n    width: 1px !important;\r\n    height: 1px !important;\r\n    padding: 0 !important;\r\n    margin: -1px !important;\r\n    overflow: hidden !important;\r\n    clip: rect(0, 0, 0, 0) !important;\r\n    white-space: nowrap !important;\r\n    border: 0 !important;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
