@@ -5,6 +5,7 @@ namespace App\Querys;
 use App\Enums\ArtworkStateEnum;
 use App\Models\Artwork;
 use App\Models\ArtworkLike;
+use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use App\Events\NotificationEvent;
@@ -149,7 +150,7 @@ class ArtworkDB
 
         //Evento para Notificación de Like a obra
         $data = [
-        'user_id' => $user->id,
+        'user' => User::find($user->id),
         'notifiable_id' => $artwork->user_id,
         'url' => '/obras/'.$artwork->id,
         'message' => "Le gustó tu obra",

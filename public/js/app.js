@@ -2613,6 +2613,10 @@ var endpoints = {
     // dejar de seguir un colectivo
     unfollow: "".concat(API, "/collectives/unfollow") // post
 
+  },
+  notifications: {
+    markAsRead: "".concat(API, "/notifications/mark-as-read/") //get
+
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (endpoints);

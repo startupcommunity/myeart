@@ -14,6 +14,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaisesController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 // categorías
@@ -44,3 +45,8 @@ Route::group(['prefix' => 'labels'], function () {
 Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/paises', [PaisesController::class, 'getAll']);
 Route::get('/artistics', [ArtisticActivitysController::class, 'getAll']);
+
+/**
+ * Actualiza los datos de una obra
+ */
+Route::get('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('mark-as-read');

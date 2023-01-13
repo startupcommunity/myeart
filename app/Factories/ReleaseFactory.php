@@ -144,7 +144,7 @@ class ReleaseFactory
 
     //Evento para Notificar Like de publicación
     $data = [
-      'user_id' => $request->user_id,
+      'user' => User::find($request->user_id),
       'notifiable_id' => $release->user_id,
       'url' => '/comunidad',
       'message' => "Le gustó tu publicación",
@@ -232,14 +232,14 @@ class ReleaseFactory
 
     //Evento para Notificación de comentario
     $data = [
-      'user_id' => $request->user_id,
+      'user_id' => User::find($request->user_id),
       'notifiable_id' => $release->user_id,
       'url' => '/comunidad',
-      'message' => "Ha comantado tu publicación",
+      'message' => "Ha comentado tu publicación",
       'type' => 'new-comment'
     ];
     event(new NotificationEvent($data));
-    
+
     return $comment;
   }
 }

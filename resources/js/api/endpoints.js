@@ -250,6 +250,10 @@ const endpoints = {
         // dejar de seguir un colectivo
         unfollow: `${API}/collectives/unfollow`, // post
     },
+
+    notifications: {
+        markAsRead: `${API}/notifications/mark-as-read/`, //get
+    }
 };
 
 export default endpoints;

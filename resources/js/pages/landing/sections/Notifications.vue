@@ -5,6 +5,7 @@
         <a
             class="mobile-hide search-bar-icon uppercase hover:no-underline"
             href="#"
+            @click="markAsRead"
         >
           <div class="position-relative">
             <span class="badge badge-super rounded bg-danger" v-if="user.unread_notifications.length > 0">
@@ -15,9 +16,12 @@
         </a>
     </div>
     <ul class="sub-menu-notification"  v-if="user.unread_notifications.length > 0">
+      <div class="p-3">
+        <h2 class="text-center">NOTIFICACIONES</h2>
+      </div>
       <table class="table-notifications">
         <tr v-for="notification in user.unread_notifications" :key="notification.id">
-          <td class="px-2"style="width:10%">
+          <td class="px-2" style="width:10%">
             <img :src="notification.data.user_profile_photo" class="rounded" >
           </td>
           <td class="px-2" style="width:50%">
@@ -32,9 +36,14 @@
             <timeago class="time" :datetime="notification.data.created_at" :auto-update="60"></timeago>
           </td>
           <td class="px-2" style="width:10%">
-            <button class="btn btn-primary btn-sm btn-block"
-            v-if="notification.data.type != 'new-follower'"
-            @click="actionButton(notification.data.url, notification.data.type)"
+            <FollowArtistButton
+            @click="markAsRead(notification.id)"
+            v-if="notification.data.type == 'new-follower'"
+            :artist="notification.data.user"
+            />
+            <button class="btn btn-primary btn-sm text-xxs px-4 uppercase btn-block"
+            v-else
+            @click="actionButton(notification.data.url, notification.id)"
             >
             {{setNamebutton(notification.data.type)}}
             </button>
@@ -48,25 +57,29 @@
 <script>
 import VueTimeago from 'vue-timeago'
 import { mapGetters } from "vuex";
+import FollowArtistButton from "../../artwork/components/FollowArtistButton.vue";
 Vue.use(VueTimeago, {
   name: 'Timeago',
-  locale: 'es', 
+  locale: 'es_ES', 
 })
 export default {
   name:'Notifications',
+  components: { FollowArtistButton },
   props: [
       'user'
   ],
   mounted() {
+    console.log('unread')
+    console.log(JSON.stringify(this.user.unread_notifications))
     window.Echo.channel('notification-channel')
     .listen('NotificationEvent', (e) => {
       console.log(e.data)
       if(e.data.notifiable_id == this.user.id) {
         this.user.unread_notifications.unshift({
           data : {
-            user_id : e.data.user_id,
-            user_profile_photo: 'img/avatar.png',
-            user_username : 'user',
+            user : e.data.user,
+            user_profile_photo: e.data.user.profile_photo ? e.data.user.profile_photo : '/img/avatar.png',
+            user_username : e.data.user.username,
             type : e.data.type,
             message : e.data.message,
             url : e.data.url,
@@ -77,22 +90,23 @@ export default {
     });
   },
   methods: {
-    actionButton(url, type) {
-      if(type == 'new-follower') {
-        this.followArtist
-      } else {
-        this.$router.push(url)
-      }
+    actionButton(url, id) {
+      this.markAsRead(id)
+      if (this.$route.path !== url) this.$router.push(url)
     },
     setNamebutton(type) {
-      if(type == 'new-follower') {
-        return 'Seguir'
-      } else {
+      if(type != 'new-follower') {
         return 'Ir'
       }
     },
-    followArtist() {
-      //
+    markAsRead(id) {
+      this.axios
+        .get(this.ep.notifications.markAsRead+id)
+        .then((resp) => {
+          index = this.user.unread_notifications.indexOf({id: id})
+          this.user.unread_notifications.splice(index, 1)
+        })
+        .catch((error) => this.showRequestErrors(error))
     }
   }
 }

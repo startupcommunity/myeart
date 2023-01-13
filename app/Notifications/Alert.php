@@ -24,7 +24,7 @@ class Alert extends Notification
 
         $this->data = $data;
 
-        $this->user = User::find($data['user_id']);
+        $this->user = $data['user'];
 
     }
 
@@ -62,7 +62,7 @@ class Alert extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user_id' => $this->user->id,
+            'user' => $this->user,
             'user_profile_photo' => $this->user->profile_photo ? : '/img/avatar.png',
             'user_username' => $this->user->username? : $this->user->email,
             'type' => $this->data['type'],
