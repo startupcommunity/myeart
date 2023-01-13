@@ -7,6 +7,7 @@ use App\Models\Artwork;
 use App\Models\ArtworkLike;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use App\Events\NotificationEvent;
 
 class ArtworkDB
 {
@@ -145,6 +146,16 @@ class ArtworkDB
         $user = auth()->user();
 
         $created = $artwork->likes()->create(['user_id' => $user->id]);
+
+        //Evento para Notificación de Like a obra
+        $data = [
+        'user_id' => $user->id,
+        'notifiable_id' => $artwork->user_id,
+        'url' => '/obras/'.$artwork->id,
+        'message' => "Le gustó tu obra",
+        'type' => 'new-like-artwork'
+        ];
+        event(new NotificationEvent($data));
 
         return is_object($created);
     }

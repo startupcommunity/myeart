@@ -93,18 +93,6 @@ class UserFactory
     // caso contrario, se agrega
     $user->favoriteArtworks()->create(['artwork_id' => $request->artwork_id]);
 
-    //Evento para Notificación de respuesta a comentario
-    $art = Artwork::find($request->artwork_id);
-    $data = [
-      'user_id' => $user->id,
-      'notifiable_id' => $art->user_id,
-      'url' => '/obras/'.$art->id,
-      'message' => "Ha marcado una obra tuya como favorita",
-      'type' => 'new-like-artwork'
-    ];
-    event(new NotificationEvent($data));
-
-
     return true;
   }
 
