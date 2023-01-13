@@ -150,7 +150,7 @@ class ArtworkDB
 
         //Evento para Notificación de Like a obra
         $data = [
-        'user' => User::find($user->id),
+        'user_id' => $user->id,
         'notifiable_id' => $artwork->user_id,
         'url' => '/obras/'.$artwork->id,
         'message' => "Le gustó tu obra",

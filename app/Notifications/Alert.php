@@ -62,7 +62,7 @@ class Alert extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user' => $this->user,
+            'user_id' => $this->user->id,
             'user_profile_photo' => $this->user->profile_photo ? : '/img/avatar.png',
             'user_username' => $this->user->username? : $this->user->email,
             'type' => $this->data['type'],

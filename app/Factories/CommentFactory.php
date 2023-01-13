@@ -21,7 +21,7 @@ class CommentFactory
 
     //Evento para Notificación de nuevo comentario
     $data2 = [
-      'user' => User::find($request->user_id),
+      'user_id' => $request->user_id,
       'notifiable_id' => $art->user_id,
       'url' => '/obras/'.$art->id,
       'message' => "Realizó un comentario",
@@ -67,7 +67,7 @@ class CommentFactory
     
     //Respuesta a comentario de una obra
     $data2 = [
-      'user' => User::find($request->user_id),
+      'user_id' => $request->user_id,
       'notifiable_id' => $comment->user_id,
       'url' => $url,
       'message' => "Ha respondido su comentario",
@@ -96,7 +96,7 @@ class CommentFactory
     
     //Evento para Notificación de Like a comentario de publicacion
     $data2 = [
-      'user' => User::find($request->user_id),
+      'user_id' => $request->user_id,
       'notifiable_id' => $comment->user_id,
       'url' => '/comunidad',
       'message' => "Le gustó tu comentario",
@@ -143,7 +143,7 @@ class CommentFactory
       $url = '/comunidad';
     }
     $data2 = [
-      'user' => User::find($request->user_id),
+      'user_id' => $request->user_id,
       'notifiable_id' => $comment->user_id,
       'url' => $url,
       'message' => "Ha respondido su comentario",
