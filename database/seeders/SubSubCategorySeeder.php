@@ -14,8 +14,7 @@ class SubSubCategorySeeder extends Seeder
      */
     public function run()
     {
-        // SubSubCategory::truncate();
-
+        SubSubCategory::truncate();
         // 3er nivel de categorías
         if (SubSubCategory::count() == 0) {
             SubSubCategory::insert([

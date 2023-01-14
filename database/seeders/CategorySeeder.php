@@ -15,8 +15,8 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        // Category::truncate();
-        // SubCategory::truncate();
+        Category::truncate();
+        SubCategory::truncate();
         if (Category::count() == 0) {
             Category::insert([
                 [

@@ -33,7 +33,7 @@ class UserFactory
     $created = $follower->followingArtists()->create([
       'following_id' => $request->following_id
     ]);
-    
+
     //Evento para Notificación de nuevo seguidor
     $data = [
       'user_id' => $follower->id,
@@ -44,7 +44,7 @@ class UserFactory
     ];
 
     event(new NotificationEvent($data));
-    
+
     return $created ? true : false;
   }
 

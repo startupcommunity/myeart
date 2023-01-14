@@ -13956,6 +13956,9 @@ body {
   .sm\:h-56{
     height: 14rem;
   }
+  .sm\:h-12{
+    height: 3rem;
+  }
   .sm\:max-h-\[750px\]{
     max-height: 750px;
   }
@@ -13988,6 +13991,9 @@ body {
   }
   .sm\:w-4\/5{
     width: 80%;
+  }
+  .sm\:w-12{
+    width: 3rem;
   }
   .sm\:max-w-full{
     max-width: 100%;

@@ -481,28 +481,29 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
   components: {
     FollowArtistButton: _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ["user"],
+  computed: {
+    /**
+     * Usuario logueado
+     */
+    user: function user() {
+      return this.$store.getters.getProfile;
+    },
+
+    /**
+     * Notificaciones del usuario logueado
+     */
+    notifications: function notifications() {
+      var _this$user;
+
+      return ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.unread_notifications) || [];
+    }
+  },
   mounted: function mounted() {
     var _this = this;
 
-    console.log("unread");
-    console.log(JSON.stringify(this.user.unread_notifications));
-    window.Echo.channel("notification-channel").listen("NotificationEvent", function (e) {
-      console.log(e.data);
-
-      if (e.data.notifiable_id == _this.user.id) {
-        _this.user.unread_notifications.unshift({
-          data: {
-            user: e.data.user,
-            user_profile_photo: e.data.user.profile_photo ? e.data.user.profile_photo : "/img/avatar.png",
-            user_username: e.data.user.username,
-            type: e.data.type,
-            message: e.data.message,
-            url: e.data.url,
-            created_at: new Date()
-          }
-        });
-      }
+    var LaraEcho = globalThis.Echo;
+    LaraEcho.channel("notification-channel").listen("NotificationEvent", function (e) {
+      _this.$store.dispatch("userRequest");
     });
   },
   methods: {
@@ -510,23 +511,61 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
       this.markAsRead(id);
       if (this.$route.path !== url) this.$router.push(url);
     },
+
+    /**
+     * Nombre del botón según el tipo de notificacion
+     *
+     * @param {String} type   Tipo de notificacion
+     */
     setNamebutton: function setNamebutton(type) {
       if (type != "new-follower") {
         return "Ir";
       }
     },
+
+    /**
+     * Marca una notificacion como leída
+     *
+     * @param {Int} id    Id de la notificacion
+     */
     markAsRead: function markAsRead(id) {
       var _this2 = this;
 
       this.axios.get(this.ep.notifications.markAsRead + id).then(function (resp) {
-        index = _this2.user.unread_notifications.indexOf({
-          id: id
-        });
-
-        _this2.user.unread_notifications.splice(index, 1);
+        // dispatch
+        if (resp.data === 1) {
+          _this2.$store.dispatch("userRequest");
+        }
       })["catch"](function (error) {
-        return _this2.showRequestErrors(error);
+        return _this2.manageError(error);
       });
+    },
+
+    /**
+     * Marcar todas como leídas
+     */
+    markAllAsRead: function markAllAsRead() {
+      var _this3 = this;
+
+      var data = {
+        user_id: this.user.id
+      };
+      this.axios.post(this.ep.notifications.markAllAsRead, data).then(function (resp) {
+        // dispatch
+        if (resp.data === 1) {
+          _this3.$store.dispatch("userRequest");
+        }
+      })["catch"](function (error) {
+        return _this3.manageError(error);
+      });
+    },
+
+    /**
+     * Path de la foto de perfil del usuario
+     */
+    profilePhoto: function profilePhoto(data) {
+      if (!data.user_profile_photo) return "/img/avatar.png";
+      return "".concat(this.pathProfilePhoto + data.user_profile_photo);
     }
   }
 });
@@ -1911,11 +1950,7 @@ var render = function render() {
         return _vm.logout.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                                                            Cerrar sesión\n                                                        ")])])])]), _vm._v(" "), _c("Notifications", {
-    attrs: {
-      user: _vm.user
-    }
-  }), _vm._v(" "), _c("li", [_c("div", {
+  }, [_vm._v("\n                                                            Cerrar sesión\n                                                        ")])])])]), _vm._v(" "), _c("Notifications"), _vm._v(" "), _c("li", [_c("div", {
     staticClass: "header-icons"
   }, [_c("router-link", {
     staticClass: "hover:no-underline",
@@ -2658,64 +2693,50 @@ var render = function render() {
     staticClass: "header-icons"
   }, [_c("a", {
     staticClass: "mobile-hide search-bar-icon uppercase hover:no-underline",
-    attrs: {
-      href: "#"
-    },
     on: {
-      click: _vm.markAsRead
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.markAllAsRead.apply(null, arguments);
+      }
     }
   }, [_c("div", {
     staticClass: "position-relative"
-  }, [_vm.user.unread_notifications.length > 0 ? _c("span", {
+  }, [_vm.notifications.length > 0 ? _c("span", {
     staticClass: "badge badge-super rounded bg-danger"
   }, [_c("span", {
     staticClass: "visually-hidden"
   }, [_vm._v("unread messages")])]) : _vm._e(), _vm._v(" "), _c("i", {
     staticClass: "fas fa-bell"
-  })])])]), _vm._v(" "), _vm.user.unread_notifications.length > 0 ? _c("ul", {
+  })])])]), _vm._v(" "), _vm.notifications.length > 0 ? _c("ul", {
     staticClass: "sub-menu-notification"
-  }, [_vm._m(0), _vm._v(" "), _c("table", {
-    staticClass: "table-notifications"
-  }, _vm._l(_vm.user.unread_notifications, function (notification) {
-    return _c("tr", {
-      key: notification.id
-    }, [_c("td", {
-      staticClass: "px-2",
-      staticStyle: {
-        width: "10%"
-      }
-    }, [_c("img", {
-      staticClass: "rounded",
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "w-full px-3"
+  }, _vm._l(_vm.notifications, function (notification) {
+    return _c("div", {
+      key: notification.id,
+      staticClass: "flex items-center gap-3 mb-5"
+    }, [_c("div", [_c("img", {
+      staticClass: "rounded-full w-10 h-10 sm:w-12 sm:h-12 aspect-square",
       attrs: {
-        src: notification.data.user_profile_photo
+        src: _vm.profilePhoto(notification.data)
       }
-    })]), _vm._v(" "), _c("td", {
-      staticClass: "px-2",
-      staticStyle: {
-        width: "50%"
-      }
-    }, [_c("p", {
-      staticClass: "user-name"
-    }, [_vm._v("\n                        " + _vm._s(notification.data.user_username) + "\n                    ")]), _vm._v(" "), _c("p", {
-      staticClass: "message"
-    }, [_vm._v("\n                        " + _vm._s(notification.data.message) + "\n                    ")])]), _vm._v(" "), _c("td", {
-      staticStyle: {
-        width: "30%"
-      }
-    }, [_c("timeago", {
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "flex flex-col justify-center"
+    }, [_c("span", {
+      staticClass: "font-bold text-xs"
+    }, [_vm._v("\n                        " + _vm._s(notification.data.user_username) + "\n                    ")]), _vm._v(" "), _c("span", {
+      staticClass: "text-[9px] font-light"
+    }, [_vm._v("\n                        " + _vm._s(notification.data.message) + "\n                    ")])]), _vm._v(" "), _c("div", [_c("timeago", {
       staticClass: "time",
       attrs: {
         datetime: notification.data.created_at,
         "auto-update": 60
       }
-    })], 1), _vm._v(" "), _c("td", {
-      staticClass: "px-2",
-      staticStyle: {
-        width: "10%"
-      }
-    }, [notification.data.type == "new-follower" ? _c("FollowArtistButton", {
+    })], 1), _vm._v(" "), _c("div", [notification.data.type == "new-follower" ? _c("FollowArtistButton", {
       attrs: {
-        artist: notification.data.user
+        artist: {
+          id: notification.data.user_id
+        }
       },
       on: {
         click: function click($event) {

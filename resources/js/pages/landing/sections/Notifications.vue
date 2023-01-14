@@ -4,13 +4,12 @@
         <div class="header-icons">
             <a
                 class="mobile-hide search-bar-icon uppercase hover:no-underline"
-                href="#"
-                @click="markAsRead"
+                @click.stop="markAllAsRead"
             >
                 <div class="position-relative">
                     <span
                         class="badge badge-super rounded bg-danger"
-                        v-if="user.unread_notifications.length > 0"
+                        v-if="notifications.length > 0"
                     >
                         <span class="visually-hidden">unread messages</span>
                     </span>
@@ -18,44 +17,42 @@
                 </div>
             </a>
         </div>
-        <ul
-            class="sub-menu-notification"
-            v-if="user.unread_notifications.length > 0"
-        >
+        <ul class="sub-menu-notification" v-if="notifications.length > 0">
             <div class="p-3">
                 <h2 class="text-center">NOTIFICACIONES</h2>
             </div>
-            <table class="table-notifications">
-                <tr
-                    v-for="notification in user.unread_notifications"
+            <div class="w-full px-3">
+                <div
+                    v-for="notification in notifications"
                     :key="notification.id"
+                    class="flex items-center gap-3 mb-5"
                 >
-                    <td class="px-2" style="width: 10%">
+                    <div>
                         <img
-                            :src="notification.data.user_profile_photo"
-                            class="rounded"
+                            :src="profilePhoto(notification.data)"
+                            class="rounded-full w-10 h-10 sm:w-12 sm:h-12 aspect-square"
                         />
-                    </td>
-                    <td class="px-2" style="width: 50%">
-                        <p class="user-name">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <span class="font-bold text-xs">
                             {{ notification.data.user_username }}
-                        </p>
-                        <p class="message">
+                        </span>
+                        <span class="text-[9px] font-light">
                             {{ notification.data.message }}
-                        </p>
-                    </td>
-                    <td style="width: 30%">
+                        </span>
+                    </div>
+                    <div>
                         <timeago
                             class="time"
                             :datetime="notification.data.created_at"
                             :auto-update="60"
                         ></timeago>
-                    </td>
-                    <td class="px-2" style="width: 10%">
+                    </div>
+                    <div>
                         <FollowArtistButton
                             @click="markAsRead(notification.id)"
                             v-if="notification.data.type == 'new-follower'"
-                            :artist="notification.data.user"
+                            :artist="{ id: notification.data.user_id }"
                         />
                         <button
                             class="btn btn-primary btn-sm text-xxs px-4 uppercase btn-block"
@@ -69,9 +66,9 @@
                         >
                             {{ setNamebutton(notification.data.type) }}
                         </button>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
         </ul>
     </li>
 </template>
@@ -79,36 +76,34 @@
 <script>
 import VueTimeago from "vue-timeago";
 import FollowArtistButton from "../../artwork/components/FollowArtistButton.vue";
-Vue.use(VueTimeago, {
-    name: "Timeago",
-    locale: "es_ES",
-});
+Vue.use(VueTimeago, { name: "Timeago", locale: "es_ES" });
+
 export default {
     name: "Notifications",
     components: { FollowArtistButton },
-    props: ["user"],
+    computed: {
+        /**
+         * Usuario logueado
+         */
+        user() {
+            return this.$store.getters.getProfile;
+        },
+
+        /**
+         * Notificaciones del usuario logueado
+         */
+        notifications() {
+            return this.user?.unread_notifications || [];
+        },
+    },
+
     mounted() {
-        console.log("unread");
-        console.log(JSON.stringify(this.user.unread_notifications));
-        window.Echo.channel("notification-channel").listen(
+        const LaraEcho = globalThis.Echo;
+
+        LaraEcho.channel("notification-channel").listen(
             "NotificationEvent",
             (e) => {
-                console.log(e.data);
-                if (e.data.notifiable_id == this.user.id) {
-                    this.user.unread_notifications.unshift({
-                        data: {
-                            user: e.data.user,
-                            user_profile_photo: e.data.user.profile_photo
-                                ? e.data.user.profile_photo
-                                : "/img/avatar.png",
-                            user_username: e.data.user.username,
-                            type: e.data.type,
-                            message: e.data.message,
-                            url: e.data.url,
-                            created_at: new Date(),
-                        },
-                    });
-                }
+                this.$store.dispatch("userRequest");
             }
         );
     },
@@ -117,19 +112,57 @@ export default {
             this.markAsRead(id);
             if (this.$route.path !== url) this.$router.push(url);
         },
+
+        /**
+         * Nombre del botón según el tipo de notificacion
+         *
+         * @param {String} type   Tipo de notificacion
+         */
         setNamebutton(type) {
             if (type != "new-follower") {
                 return "Ir";
             }
         },
+
+        /**
+         * Marca una notificacion como leída
+         *
+         * @param {Int} id    Id de la notificacion
+         */
         markAsRead(id) {
             this.axios
                 .get(this.ep.notifications.markAsRead + id)
                 .then((resp) => {
-                    index = this.user.unread_notifications.indexOf({ id: id });
-                    this.user.unread_notifications.splice(index, 1);
+                    // dispatch
+                    if (resp.data === 1) {
+                        this.$store.dispatch("userRequest");
+                    }
                 })
-                .catch((error) => this.showRequestErrors(error));
+                .catch((error) => this.manageError(error));
+        },
+
+        /**
+         * Marcar todas como leídas
+         */
+        markAllAsRead() {
+            const data = { user_id: this.user.id };
+            this.axios
+                .post(this.ep.notifications.markAllAsRead, data)
+                .then((resp) => {
+                    // dispatch
+                    if (resp.data === 1) {
+                        this.$store.dispatch("userRequest");
+                    }
+                })
+                .catch((error) => this.manageError(error));
+        },
+
+        /**
+         * Path de la foto de perfil del usuario
+         */
+        profilePhoto(data) {
+            if (!data.user_profile_photo) return "/img/avatar.png";
+            return `${this.pathProfilePhoto + data.user_profile_photo}`;
         },
     },
 };

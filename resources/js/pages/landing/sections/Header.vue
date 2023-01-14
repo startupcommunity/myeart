@@ -118,9 +118,7 @@
                                                     </ul>
                                                 </li>
 
-                                                <Notifications 
-                                                :user="user"
-                                                />
+                                                <Notifications />
 
                                                 <li>
                                                     <div class="header-icons">
@@ -187,7 +185,7 @@
 </template>
 <script>
 import MobileMenu from "./components/MobileMenu.vue";
-import Notifications from './Notifications.vue';
+import Notifications from "./Notifications.vue";
 
 export default {
     name: "Header",
@@ -239,6 +237,6 @@ export default {
             // devolver la cantidad de artículos en el carrito
             return shoppingCart.length || 0;
         },
-    }
+    },
 };
 </script>

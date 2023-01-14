@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\User;
-use Carbon\Carbon;
 
 class Alert extends Notification
 {
@@ -21,11 +20,8 @@ class Alert extends Notification
      */
     public function __construct($data)
     {
-
         $this->data = $data;
-
-        $this->user = $data['user'];
-
+        $this->user = User::find($data['user_id']);
     }
 
     /**
@@ -48,9 +44,9 @@ class Alert extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -63,12 +59,12 @@ class Alert extends Notification
     {
         return [
             'user_id' => $this->user->id,
-            'user_profile_photo' => $this->user->profile_photo ? : '/img/avatar.png',
-            'user_username' => $this->user->username? : $this->user->email,
+            'user_profile_photo' => $this->user->profile_photo,
+            'user_username' => $this->user->username ?? $this->user->name,
             'type' => $this->data['type'],
             'message' => $this->data['message'],
             'url' => $this->data['url'],
-            'created_at' => Carbon::now()
+            'created_at' => now()
         ];
     }
 }

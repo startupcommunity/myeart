@@ -47,6 +47,11 @@ Route::get('/paises', [PaisesController::class, 'getAll']);
 Route::get('/artistics', [ArtisticActivitysController::class, 'getAll']);
 
 /**
- * Actualiza los datos de una obra
+ * Marca una notificacion como leída
  */
 Route::get('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
+
+/**
+ * Marca todas las notificaciones como leídas
+ */
+Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('markAllAsReadNotifications');

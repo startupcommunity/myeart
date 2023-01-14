@@ -253,6 +253,9 @@ const endpoints = {
 
     notifications: {
         markAsRead: `${API}/notifications/mark-as-read/`, //get
+
+        // marcas todas las notificaciones como leídas
+        markAllAsRead: `${API}/notifications/mark-all-as-read`, //post
     }
 };
 

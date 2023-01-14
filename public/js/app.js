@@ -2615,7 +2615,10 @@ var endpoints = {
 
   },
   notifications: {
-    markAsRead: "".concat(API, "/notifications/mark-as-read/") //get
+    markAsRead: "".concat(API, "/notifications/mark-as-read/"),
+    //get
+    // marcas todas las notificaciones como leídas
+    markAllAsRead: "".concat(API, "/notifications/mark-all-as-read") //post
 
   }
 };
