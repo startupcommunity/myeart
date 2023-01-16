@@ -233,7 +233,7 @@ export default {
         isCreatorOrMember() {
             return (
                 this.creatorID === this.user?.id ||
-                this.members.some((m) => m.id === this.user?.id)
+                this.members.some((m) => m.user_id === this.user?.id)
             );
         },
     },

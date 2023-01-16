@@ -95,4 +95,14 @@ Route::group(['prefix' => 'collectives'], function () {
    * Dejar de seguir un colectivo
    */
   Route::post('/unfollow', [CollectiveController::class, 'unfollowCollective'])->name('unfollowCollective');
+
+  /**
+   * Acepta la invitación a un colectivo
+   */
+  Route::post('/accept-invitation', [CollectiveController::class, 'acceptInvitation'])->name('acceptInvitationCollective');
+
+  /**
+   * Rechaza la invitación a un colectivo
+   */
+  Route::post('/decline-invitation', [CollectiveController::class, 'declineInvitation'])->name('declineInvitationCollective');
 });

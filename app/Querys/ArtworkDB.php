@@ -3,6 +3,7 @@
 namespace App\Querys;
 
 use App\Enums\ArtworkStateEnum;
+use App\Enums\TypeNotificationEnum;
 use App\Models\Artwork;
 use App\Models\ArtworkLike;
 use App\Models\User;
@@ -149,14 +150,17 @@ class ArtworkDB
         $created = $artwork->likes()->create(['user_id' => $user->id]);
 
         //Evento para Notificación de Like a obra
-        $data = [
-        'user_id' => $user->id,
-        'notifiable_id' => $artwork->user_id,
-        'url' => '/obras/'.$artwork->id,
-        'message' => "Le gustó tu obra",
-        'type' => 'new-like-artwork'
-        ];
-        event(new NotificationEvent($data));
+        if ($artwork->user_id != $user->id) {
+            $noty = [
+                'user_id' => $user->id,
+                'notifiable_id' => $artwork->user_id,
+                'url' => '/obras/' . $artwork->id,
+                'message' => "Le gustó tu obra",
+                'type' => TypeNotificationEnum::LIKE_ARTWORK //'new-like-artwork'
+            ];
+
+            event(new NotificationEvent($noty));
+        }
 
         return is_object($created);
     }

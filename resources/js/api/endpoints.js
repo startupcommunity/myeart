@@ -249,6 +249,12 @@ const endpoints = {
 
         // dejar de seguir un colectivo
         unfollow: `${API}/collectives/unfollow`, // post
+
+        // aceptar invitación al colectivo
+        acceptInvitation: `${API}/collectives/accept-invitation`, // post
+
+        // rechazar invitación al colectivo
+        declineInvitation: `${API}/collectives/decline-invitation`, // post
     },
 
     notifications: {
@@ -256,7 +262,7 @@ const endpoints = {
 
         // marcas todas las notificaciones como leídas
         markAllAsRead: `${API}/notifications/mark-all-as-read`, //post
-    }
+    },
 };
 
 export default endpoints;

@@ -481,6 +481,28 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
   components: {
     FollowArtistButton: _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  data: function data() {
+    return {
+      typeNoty: {
+        QUESTION: 1,
+        COMMENT: 2,
+        ANSWER: 3,
+        FOLLOW: 4,
+        BUY: 5,
+        LIKE_ARTWORK: 6,
+        LIKE_RELEASE: 7,
+        LIKE_QUESTION: 8,
+        LIKE_COLLECTIVE: 9,
+        LIKE_COMMENT: 10,
+        LIKE_ANSWER: 11,
+        LIKE_ARTIST: 12,
+        INVITATION_COLLECTIVE: 13,
+        DECLINE_INVITATION_COLLECTIVE: 14,
+        ACCEPT_INVITATION_COLLECTIVE: 15,
+        UNFOLLOW: 16
+      }
+    };
+  },
   computed: {
     /**
      * Usuario logueado
@@ -507,8 +529,20 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
     });
   },
   methods: {
+    /**
+     * Marca como leída y redirige a la url indicada
+     *
+     * @param {String} url  Url a la que se redirige
+     * @param {Number} id        Id de la notificacion
+     * @param {Number} type      Tipo de notificacion
+     */
     actionButton: function actionButton(url, id) {
-      this.markAsRead(id);
+      var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+      if (!this.isInvitationCollective(type)) {
+        this.markAsRead(id);
+      }
+
       if (this.$route.path !== url) this.$router.push(url);
     },
 
@@ -518,9 +552,23 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
      * @param {String} type   Tipo de notificacion
      */
     setNamebutton: function setNamebutton(type) {
-      if (type != "new-follower") {
+      if (!this.isFollowOrUnfollow(type)) {
         return "Ir";
       }
+    },
+
+    /**
+     * Valida si es de tipo follow o unfollow
+     */
+    isFollowOrUnfollow: function isFollowOrUnfollow(type) {
+      return type === this.typeNoty.FOLLOW || type === this.typeNoty.UNFOLLOW;
+    },
+
+    /**
+     * Si es una invitación a un colectivo
+     */
+    isInvitationCollective: function isInvitationCollective(type) {
+      return type === this.typeNoty.INVITATION_COLLECTIVE;
     },
 
     /**
@@ -547,6 +595,7 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
     markAllAsRead: function markAllAsRead() {
       var _this3 = this;
 
+      if (!this.notifications.length) return false;
       var data = {
         user_id: this.user.id
       };
@@ -557,6 +606,117 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
         }
       })["catch"](function (error) {
         return _this3.manageError(error);
+      });
+    },
+
+    /**
+     * Mensaje de confirmación
+     * aceptar invitación
+     */
+    confirmAcceptInvitation: function confirmAcceptInvitation(arr) {
+      var _this4 = this;
+
+      // tomar el id de la url
+      var obj = arr.data;
+      var collective_id = obj.url.split("/").pop();
+      var data = {
+        user_id: this.user.id,
+        collective_id: collective_id,
+        notification_id: arr.id
+      };
+      var dialog = this.confirmedDialog({
+        title: "¿Aceptar invitación?",
+        text: "Estás a punto de aceptar la invitación al colectivo",
+        confirmButtonText: "Aceptar",
+        cancelButtonText: "Volver"
+      });
+      dialog.then(function (result) {
+        if (result.isConfirmed) {
+          _this4.acceptInvitation(data);
+        }
+      });
+    },
+
+    /**
+     * Acepta la invitación al colectivo
+     */
+    acceptInvitation: function acceptInvitation(data) {
+      var _this5 = this;
+
+      this.globalLoading = true;
+      this.axios.post(this.ep.collectives.acceptInvitation, data).then(function (resp) {
+        if (resp.status === 200) {
+          var _resp$data$name, _resp$data;
+
+          var name = (_resp$data$name = (_resp$data = resp.data) === null || _resp$data === void 0 ? void 0 : _resp$data.name) !== null && _resp$data$name !== void 0 ? _resp$data$name : "";
+
+          _this5.notySwal({
+            title: "¡Bienvenido al colectivo!",
+            text: "Ahora eres miembro del colectivo " + name
+          });
+
+          _this5.markAsRead(data.notification_id);
+        }
+
+        if (resp.status === 204) {
+          _this5.notySwal({
+            icon: "warning",
+            title: "¡Hubo un problema!",
+            text: "Parece que ya perteneces a este colectivo o no fuiste invitado"
+          });
+        }
+      })["catch"](function (error) {
+        return _this5.manageError(error);
+      })["finally"](function () {
+        return _this5.globalLoading = false;
+      });
+    },
+
+    /**
+     * Mensaje de confirmación
+     * rechazar invitación
+     */
+    confirmDeclineInvitation: function confirmDeclineInvitation(arr) {
+      var _this6 = this;
+
+      var data = {
+        user_id: this.user.id,
+        collective_id: arr.data.url.split("/").pop(),
+        notification_id: arr.id
+      };
+      var dialog = this.confirmedDialog({
+        title: "¿Rechazar invitación?",
+        text: "Estás a punto de rechazar la invitación al colectivo",
+        confirmButtonText: "Rechazar",
+        cancelButtonText: "Volver"
+      });
+      dialog.then(function (result) {
+        if (result.isConfirmed) {
+          _this6.declineInvitation(data);
+        }
+      });
+    },
+
+    /**
+     * Rechaza la invitación al colectivo
+     */
+    declineInvitation: function declineInvitation(data) {
+      var _this7 = this;
+
+      this.globalLoading = true;
+      this.axios.post(this.ep.collectives.declineInvitation, data).then(function (resp) {
+        if (resp.status === 200) {
+          _this7.notySwal({
+            title: "¡Invitación rechazada!",
+            text: "Has rechazado la invitación al colectivo"
+          });
+
+          _this7.markAsRead(data.notification_id);
+        }
+      })["catch"](function (error) {
+        return _this7.manageError(error);
+      })["finally"](function () {
+        return _this7.globalLoading = false;
       });
     },
 
@@ -2708,49 +2868,78 @@ var render = function render() {
   }, [_vm._v("unread messages")])]) : _vm._e(), _vm._v(" "), _c("i", {
     staticClass: "fas fa-bell"
   })])])]), _vm._v(" "), _vm.notifications.length > 0 ? _c("ul", {
-    staticClass: "sub-menu-notification"
+    staticClass: "sub-menu-notification w-full md:w-[600px] text-zinc-900"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "w-full px-3"
-  }, _vm._l(_vm.notifications, function (notification) {
+    staticClass: "w-full"
+  }, _vm._l(_vm.notifications, function (noty) {
     return _c("div", {
-      key: notification.id,
-      staticClass: "flex items-center gap-3 mb-5"
-    }, [_c("div", [_c("img", {
+      key: noty.id,
+      staticClass: "flex items-center gap-3 hover:bg-gray-100 transition-all duration-300 ease-in-out p-3"
+    }, [_c("div", {
+      staticClass: "min-w-[50px]"
+    }, [_c("img", {
       staticClass: "rounded-full w-10 h-10 sm:w-12 sm:h-12 aspect-square",
       attrs: {
-        src: _vm.profilePhoto(notification.data)
+        src: _vm.profilePhoto(noty.data)
       }
     })]), _vm._v(" "), _c("div", {
       staticClass: "flex flex-col justify-center"
     }, [_c("span", {
       staticClass: "font-bold text-xs"
-    }, [_vm._v("\n                        " + _vm._s(notification.data.user_username) + "\n                    ")]), _vm._v(" "), _c("span", {
-      staticClass: "text-[9px] font-light"
-    }, [_vm._v("\n                        " + _vm._s(notification.data.message) + "\n                    ")])]), _vm._v(" "), _c("div", [_c("timeago", {
-      staticClass: "time",
+    }, [_vm._v("\n                        " + _vm._s(noty.data.user_username) + "\n                    ")]), _vm._v(" "), _c("span", {
+      staticClass: "text-[10px] font-normal tracking-wide",
+      domProps: {
+        innerHTML: _vm._s(noty.data.message)
+      }
+    })]), _vm._v(" "), _c("div", [_c("timeago", {
+      staticClass: "text-[10px] font-bold tracking-wide text-gray-900",
       attrs: {
-        datetime: notification.data.created_at,
+        datetime: noty.data.created_at,
         "auto-update": 60
       }
-    })], 1), _vm._v(" "), _c("div", [notification.data.type == "new-follower" ? _c("FollowArtistButton", {
+    })], 1), _vm._v(" "), _c("div", {
+      staticClass: "max-w-[100px]"
+    }, [_vm.isFollowOrUnfollow(noty.data.type) ? _c("FollowArtistButton", {
       attrs: {
         artist: {
-          id: notification.data.user_id
+          id: noty.data.user_id
         }
       },
       on: {
         click: function click($event) {
-          return _vm.markAsRead(notification.id);
+          return _vm.markAsRead(noty.id);
         }
       }
     }) : _c("button", {
-      staticClass: "btn btn-primary btn-sm text-xxs px-4 uppercase btn-block",
+      staticClass: "btn btn-primary btn-sm text-xs px-4 uppercase btn-block",
       on: {
         click: function click($event) {
-          return _vm.actionButton(notification.data.url, notification.id);
+          return _vm.actionButton(noty.data.url, noty.id, noty.data.type);
         }
       }
-    }, [_vm._v("\n                        " + _vm._s(_vm.setNamebutton(notification.data.type)) + "\n                    ")])], 1)]);
+    }, [_vm._v("\n                        " + _vm._s(_vm.setNamebutton(noty.data.type)) + "\n                    ")]), _vm._v(" "), _vm.isInvitationCollective(noty.data.type) ? _c("div", {
+      staticClass: "pt-2 flex gap-2 justify-center"
+    }, [_c("button", {
+      staticClass: "btn btn-success btn-sm text-xs px-4 uppercase",
+      on: {
+        click: function click($event) {
+          $event.stopPropagation();
+          return _vm.confirmAcceptInvitation(noty);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-check text-white"
+    })]), _vm._v(" "), _c("button", {
+      staticClass: "btn btn-danger btn-sm text-xs px-4 uppercase",
+      on: {
+        click: function click($event) {
+          $event.stopPropagation();
+          return _vm.confirmDeclineInvitation(noty);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-times text-white"
+    })])]) : _vm._e()], 1)]);
   }), 0)]) : _vm._e()]);
 };
 
@@ -2761,8 +2950,8 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "p-3"
   }, [_c("h2", {
-    staticClass: "text-center"
-  }, [_vm._v("NOTIFICACIONES")])]);
+    staticClass: "text-center font-bold uppercase text-gray-900 tracking-wider text-base"
+  }, [_vm._v("\n                NOTIFICACIONES\n            ")])]);
 }];
 render._withStripped = true;
 
@@ -3198,7 +3387,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.dashboard nav.main-menu ul ul.sub-menu-notification {\r\n    width: 500px !important;\r\n    color: #000;\r\n\r\n    position: absolute;\r\n    background-color: #fff;\r\n    padding: 0.5em;\r\n    left: -300px;\r\n    top: 50px;\r\n    border: 1px solid;\r\n    border-radius: 3px;\r\n    transition: 0.3s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    box-shadow: 0 0 20px #555555;\n}\n.user-name {\r\n    font-weight: 600;\r\n    font-size: 12px !important;\r\n    line-height: 133.9%;\r\n    color: #1d1d1c;\n}\n.message {\r\n    font-weight: 400;\r\n    font-size: 9px;\r\n    line-height: 133.9%;\n}\n.time {\r\n    font-size: 8px;\r\n    color: #000;\r\n    font-weight: 900;\n}\n.visually-hidden {\r\n    position: absolute !important;\r\n    width: 1px !important;\r\n    height: 1px !important;\r\n    padding: 0 !important;\r\n    margin: -1px !important;\r\n    overflow: hidden !important;\r\n    clip: rect(0, 0, 0, 0) !important;\r\n    white-space: nowrap !important;\r\n    border: 0 !important;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.dashboard nav.main-menu ul ul.sub-menu-notification {\r\n    position: absolute;\r\n    background-color: #fff;\r\n    padding: 0.5em;\r\n    left: -300px;\r\n    top: 50px;\r\n    border: 1px solid;\r\n    border-radius: 3px;\r\n    transition: 0.3s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    box-shadow: 0 0 20px #555555;\n}\n.user-name {\r\n    font-weight: 600;\r\n    font-size: 12px !important;\r\n    line-height: 133.9%;\r\n    color: #1d1d1c;\n}\n.message {\r\n    font-weight: 400;\r\n    font-size: 9px;\r\n    line-height: 133.9%;\n}\r\n\r\n/* .time {\r\n    font-size: 8px;\r\n    color: #000;\r\n    font-weight: 900;\r\n} */\n.visually-hidden {\r\n    position: absolute !important;\r\n    width: 1px !important;\r\n    height: 1px !important;\r\n    padding: 0 !important;\r\n    margin: -1px !important;\r\n    overflow: hidden !important;\r\n    clip: rect(0, 0, 0, 0) !important;\r\n    white-space: nowrap !important;\r\n    border: 0 !important;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

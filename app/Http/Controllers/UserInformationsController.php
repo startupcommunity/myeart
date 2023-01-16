@@ -73,7 +73,11 @@ class UserInformationsController extends Controller
     public function getAll(Request $request)
     {
         $user = $request->user();
-        $users = User::select("users.*", DB::raw('DATE_FORMAT(users.created_at, "%Y-%m-%d %H:%i") as created_up'), DB::raw('DATE_FORMAT(users.updated_at, "%Y-%m-%d %H:%i") as updated_up'))->where("id", "!=", $user->id)->get();
+        $users = User::select(
+            "users.*",
+            DB::raw('DATE_FORMAT(users.created_at, "%Y-%m-%d %H:%i") as created_up'),
+            DB::raw('DATE_FORMAT(users.updated_at, "%Y-%m-%d %H:%i") as updated_up')
+        )->where("id", "!=", $user->id)->get();
         return $users;
     }
 
@@ -163,9 +167,13 @@ class UserInformationsController extends Controller
      */
     public function getAuthUser(Request $request)
     {
-        $user = $request->user()->load([
-            'profile', 'followingArtists', 'socialNetwork', 'favoriteReleases', 'shoppingCart.artwork', 'unreadNotifications'
+        return $request->user()->load([
+            'profile',
+            'followingArtists',
+            'socialNetwork',
+            'favoriteReleases',
+            'shoppingCart.artwork',
+            'unreadNotifications'
         ]);
-        return $user;
     }
 }

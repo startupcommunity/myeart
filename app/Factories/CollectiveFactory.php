@@ -3,7 +3,9 @@
 namespace App\Factories;
 
 use App\Enums\StatusInvitationCollectiveEnum;
+use App\Enums\TypeNotificationEnum;
 use App\Models\Collective;
+use App\Utils\AppNotification;
 use App\Utils\AppStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -192,6 +194,15 @@ class CollectiveFactory
       // crear invitación
       $collective->invitations()->create($data);
 
+      //notificar al usuario invitado
+      AppNotification::sendNoty([
+        'user_id' => $collective->user_id,
+        'notifiable_id' => $request->user_id,
+        'url' => '/colectivos/ver/' . $collective->id,
+        'msj' => "Te esta invitando a unirte al colectivo <b>{$collective->name}</b>",
+        'type' => TypeNotificationEnum::INVITATION_COLLECTIVE //'invitation-collective'
+      ]);
+
       return true;
     });
 
@@ -246,6 +257,15 @@ class CollectiveFactory
 
       // crear like
       $collective->likes()->create($request->only(['user_id']));
+
+      //Evento para Notificar Like del colectivo
+      AppNotification::sendNoty([
+        'user_id' => $request->user_id,
+        'notifiable_id' => $collective->user_id,
+        'url' => '/colectivos/ver/' . $collective->id,
+        'msj' => "Le gustó tu colectivo",
+        'type' => TypeNotificationEnum::LIKE_COLLECTIVE //'new-like-collective'
+      ]);
 
       return true;
     });
@@ -324,6 +344,92 @@ class CollectiveFactory
         ->followers()
         ->where('user_id', $request->user_id)
         ->delete();
+    });
+
+    return $tran;
+  }
+
+  /**
+   * Acepta la invitación a un colectivo
+   *
+   * @param Request $request
+   * @return bool|Collective
+   */
+  public function acceptInvitation(Request $request): bool|Collective
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // verificar si el usuario ya pertenece al colectivo
+      $member = $collective->members()
+        ->where('user_id', $request->user_id)
+        ->first();
+
+      // verificar si el usuario ha sido invitado al colectivo
+      $invitation = $collective->invitations()
+        ->where('user_id', $request->user_id)
+        ->where('status', StatusInvitationCollectiveEnum::PENDING)
+        ->first();
+
+      if (!$invitation || $member) {
+        return false;
+      }
+
+      // agregar el usuario a la lista de miembros
+      $collective->members()->create(['user_id' => $request->user_id]);
+
+      // cambiar el estado de la invitación
+      $invitation->update(['status' => StatusInvitationCollectiveEnum::ACCEPTED]);
+
+      // Evento para Notificar Aceptación de invitación al colectivo
+      AppNotification::sendNoty([
+        'user_id' => $request->user_id,
+        'notifiable_id' => $collective->user_id,
+        'url' => '/colectivos/ver/' . $collective->id,
+        'msj' => "Ahora es miembro del colectivo <b>{$collective->name}</b>",
+        'type' => TypeNotificationEnum::ACCEPT_INVITATION_COLLECTIVE //'accept-invitation-collective'
+      ]);
+
+      return $collective;
+    });
+
+    return $tran;
+  }
+
+  /**
+   * Rechaza la invitación a un colectivo
+   *
+   * @param Request $request
+   * @return bool
+   */
+  public function declineInvitation(Request $request): ?bool
+  {
+    $tran = DB::transaction(function () use ($request) {
+      $collective = Collective::find($request->collective_id);
+
+      // verificar si el usuario ha sido invitado al colectivo
+      $invitation = $collective->invitations()
+        ->where('user_id', $request->user_id)
+        ->where('status', StatusInvitationCollectiveEnum::PENDING)
+        ->first();
+
+      if (!$invitation) {
+        return false;
+      }
+
+      // cambiar el estado de la invitación
+      $updated = $invitation->update(['status' => StatusInvitationCollectiveEnum::REJECTED]);
+
+      // Evento para Notificar rechazo de invitación al colectivo
+      AppNotification::sendNoty([
+        'user_id' => $request->user_id,
+        'notifiable_id' => $collective->user_id,
+        'url' => '/colectivos/ver/' . $collective->id,
+        'msj' => "Rechazó su invitación al colectivo <b>{$collective->name}</b>",
+        'type' => TypeNotificationEnum::DECLINE_INVITATION_COLLECTIVE //'decline-invitation-collective'
+      ]);
+
+      return $updated;
     });
 
     return $tran;

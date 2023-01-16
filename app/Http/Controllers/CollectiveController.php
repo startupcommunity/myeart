@@ -8,6 +8,7 @@ use App\Http\Requests\CreateFrontPhotoCollectiveRequest;
 use App\Http\Requests\SendInvitationCollectiveRequest;
 use App\Http\Requests\CreateCollectiveRequest;
 use App\Factories\CollectiveFactory;
+use App\Http\Requests\AcceptInvitationCollectiveRequest;
 use App\Http\Requests\CreateLikeCollectiveRequest;
 use App\Http\Requests\FilterArtworkInCollectiveRequest;
 use App\Http\Requests\FilterCollectiveRequest;
@@ -321,6 +322,38 @@ class CollectiveController extends Controller
         try {
             $unFollow = $this->factory->unfollowCollective($request);
             return $this->resp->json($unFollow, $unFollow ? 200 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Acepta la invitación a un colectivo
+     *
+     * @param AcceptInvitationCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function acceptInvitation(AcceptInvitationCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->acceptInvitation($request);
+            return $this->resp->json($data, $data ? 200 : 204);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * rechaza la invitación a un colectivo
+     *
+     * @param AcceptInvitationCollectiveRequest $request
+     * @return JsonResponse
+     */
+    public function declineInvitation(AcceptInvitationCollectiveRequest $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->declineInvitation($request);
+            return $this->resp->json($data, $data ? 200 : 204);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Enums\TypeNotificationEnum;
 use App\Events\NotificationEvent;
 use App\Models\Artwork;
 use App\Models\User;
@@ -30,9 +31,9 @@ class UserFactory
       return false;
     }
 
-    $created = $follower->followingArtists()->create([
-      'following_id' => $request->following_id
-    ]);
+    $created = $follower
+      ->followingArtists()
+      ->create(['following_id' => $request->following_id]);
 
     //Evento para Notificación de nuevo seguidor
     $data = [
@@ -40,7 +41,7 @@ class UserFactory
       'notifiable_id' => $request->following_id,
       'url' => '',
       'message' => "Ha comenzado a seguirte",
-      'type' => 'new-follower'
+      'type' => TypeNotificationEnum::FOLLOW //'new-follower'
     ];
 
     event(new NotificationEvent($data));
@@ -62,6 +63,18 @@ class UserFactory
     $deleted = $follower->followingArtists()
       ->where('following_id', $request->following_id)
       ->delete();
+
+
+    //Evento para Notificación dejo de seguir
+    $data = [
+      'user_id' => $follower->id,
+      'notifiable_id' => $request->following_id,
+      'url' => '',
+      'message' => "Ha dejado de seguirte",
+      'type' => TypeNotificationEnum::UNFOLLOW //'unfollow'
+    ];
+
+    event(new NotificationEvent($data));
 
     return $deleted;
   }

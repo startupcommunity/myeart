@@ -4,6 +4,7 @@ namespace App\Factories;
 
 use App\Enums\ArtworkStateEnum;
 use App\Enums\OrderStatusEnum;
+use App\Enums\TypeNotificationEnum;
 use App\Models\Artwork;
 use App\Models\Order;
 use App\Models\ShoppingCart;
@@ -123,8 +124,9 @@ class ShoppingCartFactory
           'notifiable_id' => $item->artwork->user_id,
           'url' => '/obras/'.$item->artwork->id,
           'message' => "Ha comprado su obra",
-          'type' => 'new-buy'
+          'type' => TypeNotificationEnum::BUY //'new-buy'
         ];
+
         event(new NotificationEvent($data));
       }
 

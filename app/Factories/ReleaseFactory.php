@@ -4,6 +4,7 @@ namespace App\Factories;
 
 use App\Events\NotificationEvent;
 use App\Enums\ReleaseTypeEnum;
+use App\Enums\TypeNotificationEnum;
 use App\Models\Comment;
 use App\Models\FavoriteRelease;
 use App\Models\ReleaseLike;
@@ -143,14 +144,17 @@ class ReleaseFactory
     }
 
     //Evento para Notificar Like de publicación
-    $data = [
-      'user_id' => $request->user_id,
-      'notifiable_id' => $release->user_id,
-      'url' => '/comunidad',
-      'message' => "Le gustó tu publicación",
-      'type' => 'new-like-release'
-    ];
-    event(new NotificationEvent($data));
+    if ($release->user_id != $request->user_id) {
+      $noty = [
+        'user_id' => $request->user_id,
+        'notifiable_id' => $release->user_id,
+        'url' => '/comunidad',
+        'message' => "Le gustó tu publicación",
+        'type' => TypeNotificationEnum::LIKE_RELEASE //'new-like-release'
+      ];
+
+      event(new NotificationEvent($noty));
+    }
 
     // si no, crear like
     return $release->likes()->create(['user_id' => $request->user_id]);
@@ -236,7 +240,7 @@ class ReleaseFactory
       'notifiable_id' => $release->user_id,
       'url' => '/comunidad',
       'message' => "Ha comentado tu publicación",
-      'type' => 'new-comment'
+      'type' => TypeNotificationEnum::COMMENT //'new-comment'
     ];
     event(new NotificationEvent($data));
 

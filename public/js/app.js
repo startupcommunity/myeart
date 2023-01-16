@@ -2611,7 +2611,13 @@ var endpoints = {
     follow: "".concat(API, "/collectives/follow"),
     // post
     // dejar de seguir un colectivo
-    unfollow: "".concat(API, "/collectives/unfollow") // post
+    unfollow: "".concat(API, "/collectives/unfollow"),
+    // post
+    // aceptar invitación al colectivo
+    acceptInvitation: "".concat(API, "/collectives/accept-invitation"),
+    // post
+    // rechazar invitación al colectivo
+    declineInvitation: "".concat(API, "/collectives/decline-invitation") // post
 
   },
   notifications: {

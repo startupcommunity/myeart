@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Enums\TypeNotificationEnum;
 use App\Events\NotificationEvent;
 use App\Models\Answer;
 use App\Models\Artwork;
@@ -20,15 +21,15 @@ class CommentFactory
     $data = $request->only(['comment', 'user_id']);
 
     //Evento para Notificación de nuevo comentario
-    $data2 = [
+    $noty = [
       'user_id' => $request->user_id,
       'notifiable_id' => $art->user_id,
-      'url' => '/obras/'.$art->id,
-      'message' => "Realizó un comentario",
-      'type' => 'new-question'
+      'url' => '/obras/' . $art->id,
+      'message' => "Realizó una pregunta sobre tu obra",
+      'type' => TypeNotificationEnum::QUESTION //'new-question'
     ];
 
-    event(new NotificationEvent($data2));
+    event(new NotificationEvent($noty));
 
     return $art->comments()->create($data);
   }
@@ -58,22 +59,21 @@ class CommentFactory
     $data = $request->only(['answer', 'user_id']);
 
     //Evento para Notificación de respuesta a comentario
-
-    if($comment->commentable_type == 'App\Models\Artwork') {
-      $url = '/obras/'.$comment->commentable_id;
+    if ($comment->commentable_type == 'App\Models\Artwork') {
+      $url = '/obras/' . $comment->commentable_id;
     } else {
       $url = '/comunidad';
     }
-    
+
     //Respuesta a comentario de una obra
-    $data2 = [
+    $noty = [
       'user_id' => $request->user_id,
       'notifiable_id' => $comment->user_id,
       'url' => $url,
-      'message' => "Ha respondido su comentario",
-      'type' => 'new-answer'
+      'message' => "Ha respondido su pregunta",
+      'type' => TypeNotificationEnum::ANSWER //'new-answer'
     ];
-    event(new NotificationEvent($data2));
+    event(new NotificationEvent($noty));
 
     return $comment->answer()->create($data);
   }
@@ -93,16 +93,18 @@ class CommentFactory
     if ($comment->likes()->where('user_id', $request->user_id)->exists()) {
       return null;
     }
-    
-    //Evento para Notificación de Like a comentario de publicacion
-    $data2 = [
-      'user_id' => $request->user_id,
-      'notifiable_id' => $comment->user_id,
-      'url' => '/comunidad',
-      'message' => "Le gustó tu comentario",
-      'type' => 'new-like-comment'
-    ];
-    event(new NotificationEvent($data2));
+
+    //Evento para Notificación de Like a comentario de publicación
+    if ($request->user_id != $comment->user_id) {
+      $noty = [
+        'user_id' => $request->user_id,
+        'notifiable_id' => $comment->user_id,
+        'url' => '/comunidad',
+        'message' => "Le gustó tu comentario",
+        'type' => TypeNotificationEnum::LIKE_COMMENT //'new-like-comment'
+      ];
+      event(new NotificationEvent($noty));
+    }
 
     return $comment->likes()->create($data);
   }
@@ -137,19 +139,21 @@ class CommentFactory
     $data = $request->only(['answer', 'user_id']);
 
     //Evento para Notificación de respuesta a comentario
-    if($comment->commentable_type == 'App\Models\Artwork') {
-      $url = '/obras/'.$comment->commentable_id;
+    if ($comment->commentable_type == 'App\Models\Artwork') {
+      $url = '/obras/' . $comment->commentable_id;
     } else {
       $url = '/comunidad';
     }
-    $data2 = [
+
+    $noty = [
       'user_id' => $request->user_id,
       'notifiable_id' => $comment->user_id,
       'url' => $url,
       'message' => "Ha respondido su comentario",
-      'type' => 'new-answer'
+      'type' => TypeNotificationEnum::ANSWER //'new-answer'
     ];
-    event(new NotificationEvent($data2));
+
+    event(new NotificationEvent($noty));
 
     return $comment->answer()->create($data);
   }
