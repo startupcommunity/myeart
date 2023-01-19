@@ -16,7 +16,6 @@
                     <h3
                         class="text-xl font-medium tracking-wide text-gray-900 pt-3"
                     >
-                        ({{ artwork.id }})
                         {{ artwork.title }}
                     </h3>
                 </div>

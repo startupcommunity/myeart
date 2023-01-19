@@ -90,7 +90,7 @@ var render = function render() {
     staticClass: "space-y-2"
   }, [_c("h3", {
     staticClass: "text-xl font-medium tracking-wide text-gray-900 pt-3"
-  }, [_vm._v("\n                    (" + _vm._s(_vm.artwork.id) + ")\n                    " + _vm._s(_vm.artwork.title) + "\n                ")])])])], 1)]);
+  }, [_vm._v("\n                    " + _vm._s(_vm.artwork.title) + "\n                ")])])])], 1)]);
 };
 
 var staticRenderFns = [];
