@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd">
+    <div :class="principalClass">
         <div
             class="rounded-md w-full hover:animate-shadow-drop-center relative"
             :class="classCard"
@@ -123,6 +123,10 @@ export default {
         classImage: {
             type: String,
             default: "",
+        },
+        principalClass: {
+            type: String,
+            default: "w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd",
         },
     },
     computed: {

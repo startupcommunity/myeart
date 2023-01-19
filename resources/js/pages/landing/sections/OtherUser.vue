@@ -8,6 +8,7 @@
                     >
                         Artistas que quizás te puedan interesar...
                     </h2>
+                    <LoadingTailwind class="text-white mt-5" v-if="loading" />
                 </div>
             </div>
         </div>
@@ -15,359 +16,14 @@
         <div class="container">
             <div class="row md:-mr-60">
                 <div class="col-12">
-                    <div>
-                        <div id="slider-user" class="mb-5">
-                            <div>
-                                <div
-                                    class="card border-0 w-full sm:max-w-[240px] hover:animate-shadow-drop-center"
-                                >
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-12 d-flex justify-content-center"
-                                            >
-                                                <img
-                                                    src="/images/avatar_artista.png"
-                                                    class="img-thumbnail border-0"
-                                                />
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <h5
-                                                    class="font-black mb-0 text-base leading-5"
-                                                >
-                                                    Inés Alfonzo
-                                                </h5>
-                                                <span class="text-primary text-sm">
-                                                    Pintora
-                                                </span>
-                                                <p
-                                                    class="text-sm italic font-thin leading-relaxed hidden sm:block"
-                                                >
-                                                    “Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit.
-                                                    Nulla et elementum nisl.
-                                                    Maecenas accumsan...”
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <button
-                                                    class="btn btn-primary w-full btn-sm"
-                                                >
-                                                    SEGUIR
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div
-                                    class="card border-0 w-full sm:max-w-[240px] hover:animate-shadow-drop-center"
-                                >
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-12 d-flex justify-content-center"
-                                            >
-                                                <img
-                                                    src="/images/avatar_artista.png"
-                                                    class="img-thumbnail border-0"
-                                                />
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <h5
-                                                    class="font-black mb-0 text-base leading-5"
-                                                >
-                                                    Inés Alfonzo
-                                                </h5>
-                                                <span class="text-primary text-sm">
-                                                    Pintora
-                                                </span>
-                                                <p
-                                                    class="text-sm italic font-thin leading-relaxed hidden sm:block"
-                                                >
-                                                    “Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit.
-                                                    Nulla et elementum nisl.
-                                                    Maecenas accumsan...”
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <button
-                                                    class="btn btn-primary w-full btn-sm"
-                                                >
-                                                    SEGUIR
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div
-                                    class="card border-0 w-full sm:max-w-[240px] hover:animate-shadow-drop-center"
-                                >
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-12 d-flex justify-content-center"
-                                            >
-                                                <img
-                                                    src="/images/avatar_artista.png"
-                                                    class="img-thumbnail border-0"
-                                                />
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <h5
-                                                    class="font-black mb-0 text-base leading-5"
-                                                >
-                                                    Inés Alfonzo
-                                                </h5>
-                                                <span class="text-primary text-sm">
-                                                    Pintora
-                                                </span>
-                                                <p
-                                                    class="text-sm italic font-thin leading-relaxed hidden sm:block"
-                                                >
-                                                    “Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit.
-                                                    Nulla et elementum nisl.
-                                                    Maecenas accumsan...”
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <button
-                                                    class="btn btn-primary w-full btn-sm"
-                                                >
-                                                    SEGUIR
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div
-                                    class="card border-0 w-full sm:max-w-[240px] hover:animate-shadow-drop-center"
-                                >
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-12 d-flex justify-content-center"
-                                            >
-                                                <img
-                                                    src="/images/avatar_artista.png"
-                                                    class="img-thumbnail border-0"
-                                                />
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <h5
-                                                    class="font-black mb-0 text-base leading-5"
-                                                >
-                                                    Inés Alfonzo
-                                                </h5>
-                                                <span class="text-primary text-sm">
-                                                    Pintora
-                                                </span>
-                                                <p
-                                                    class="text-sm italic font-thin leading-relaxed hidden sm:block"
-                                                >
-                                                    “Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit.
-                                                    Nulla et elementum nisl.
-                                                    Maecenas accumsan...”
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <button
-                                                    class="btn btn-primary w-full btn-sm"
-                                                >
-                                                    SEGUIR
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div
-                                    class="card border-0 w-full sm:max-w-[240px] hover:animate-shadow-drop-center"
-                                >
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-12 d-flex justify-content-center"
-                                            >
-                                                <img
-                                                    src="/images/avatar_artista.png"
-                                                    class="img-thumbnail border-0"
-                                                />
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <h5
-                                                    class="font-black mb-0 text-base leading-5"
-                                                >
-                                                    Inés Alfonzo
-                                                </h5>
-                                                <span class="text-primary text-sm">
-                                                    Pintora
-                                                </span>
-                                                <p
-                                                    class="text-sm italic font-thin leading-relaxed hidden sm:block"
-                                                >
-                                                    “Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit.
-                                                    Nulla et elementum nisl.
-                                                    Maecenas accumsan...”
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <button
-                                                    class="btn btn-primary w-full btn-sm"
-                                                >
-                                                    SEGUIR
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div
-                                    class="card border-0 w-full sm:max-w-[240px] hover:animate-shadow-drop-center"
-                                >
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-12 d-flex justify-content-center"
-                                            >
-                                                <img
-                                                    src="/images/avatar_artista.png"
-                                                    class="img-thumbnail border-0"
-                                                />
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <h5
-                                                    class="font-black mb-0 text-base leading-5"
-                                                >
-                                                    Inés Alfonzo
-                                                </h5>
-                                                <span class="text-primary text-sm">
-                                                    Pintora
-                                                </span>
-                                                <p
-                                                    class="text-sm italic font-thin leading-relaxed hidden sm:block"
-                                                >
-                                                    “Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit.
-                                                    Nulla et elementum nisl.
-                                                    Maecenas accumsan...”
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <button
-                                                    class="btn btn-primary w-full btn-sm"
-                                                >
-                                                    SEGUIR
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div
-                                    class="card border-0 w-full sm:max-w-[240px] hover:animate-shadow-drop-center"
-                                >
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-12 d-flex justify-content-center"
-                                            >
-                                                <img
-                                                    src="/images/avatar_artista.png"
-                                                    class="img-thumbnail border-0"
-                                                />
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <h5
-                                                    class="font-black mb-0 text-base leading-5"
-                                                >
-                                                    Inés Alfonzo
-                                                </h5>
-                                                <span class="text-primary text-sm">
-                                                    Pintora
-                                                </span>
-                                                <p
-                                                    class="text-sm italic font-thin leading-relaxed hidden sm:block"
-                                                >
-                                                    “Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit.
-                                                    Nulla et elementum nisl.
-                                                    Maecenas accumsan...”
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <button
-                                                    class="btn btn-primary w-full btn-sm"
-                                                >
-                                                    SEGUIR
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div
-                                    class="card border-0 w-full sm:max-w-[240px] hover:animate-shadow-drop-center"
-                                >
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-12 d-flex justify-content-center"
-                                            >
-                                                <img
-                                                    src="/images/avatar_artista.png"
-                                                    class="img-thumbnail border-0"
-                                                />
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <h5
-                                                    class="font-black mb-0 text-base leading-5"
-                                                >
-                                                    Inés Alfonzo
-                                                </h5>
-                                                <span class="text-primary text-sm">
-                                                    Pintora
-                                                </span>
-                                                <p
-                                                    class="text-sm italic font-thin leading-relaxed hidden sm:block"
-                                                >
-                                                    “Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit.
-                                                    Nulla et elementum nisl.
-                                                    Maecenas accumsan...”
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12 text-center">
-                                                <button
-                                                    class="btn btn-primary w-full btn-sm"
-                                                >
-                                                    SEGUIR
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div id="slider-user" class="mb-5">
+                        <div v-for="artist in artists" :key="artist.id">
+                            <CardArtist
+                                :routerLink="true"
+                                :showButtonFollow="true"
+                                :artist="artist"
+                                class="bg-white sm:max-w-[240px] rounded-lg"
+                            />
                         </div>
                     </div>
                 </div>
@@ -377,48 +33,83 @@
 </template>
 <script>
 import { tns } from "tiny-slider";
+import CardArtist from "../../profile/components/CardArtist.vue";
+import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 export default {
     name: "OtherUser",
-    mounted() {
-        tns({
-            container: "#slider-user",
-            mode: "carousel",
-            speed: 800,
-            gutter: 20,
-            items: 7,
-            autoplay: true,
-            mouseDrag: true,
-            autoplayButtonOutput: false,
-            autoplayHoverPause: true,
-            lazyload: true,
-            controls: false,
-            responsive: {
-                0: {
-                    items: 2,
-                    edgePadding: 10,
+    components: { CardArtist, LoadingTailwind },
+    data() {
+        return {
+            artists: [],
+            loading: false,
+        };
+    },
+
+    created() {
+        this.loadArtists();
+    },
+
+    methods: {
+        /**
+         * Load artistas
+         */
+        loadArtists() {
+            const params = { all: 1, limit: 10 };
+            this.loading = true;
+            this.axios
+                .get(this.ep.user.getRandomArtists, { params })
+                .then((response) => {
+                    this.artists = response.data;
+                })
+                .then(() => this.loadTNS())
+                .catch((error) => this.manageError(error))
+                .finally(() => (this.loading = false));
+        },
+
+        /**
+         * Load TNS
+         */
+        loadTNS() {
+            tns({
+                container: "#slider-user",
+                mode: "carousel",
+                speed: 800,
+                gutter: 20,
+                items: 7,
+                autoplay: true,
+                mouseDrag: true,
+                autoplayButtonOutput: false,
+                autoplayHoverPause: true,
+                lazyload: true,
+                controls: false,
+                responsive: {
+                    0: {
+                        items: 2,
+                        edgePadding: 10,
+                    },
+                    500: {
+                        items: 2,
+                        edgePadding: 30,
+                    },
+                    700: {
+                        items: 3,
+                        edgePadding: 30,
+                    },
+                    900: {
+                        items: 4,
+                        edgePadding: 30,
+                    },
+                    1100: {
+                        items: 5,
+                        edgePadding: 30,
+                    },
+                    1300: {
+                        items: 7,
+                        edgePadding: 0,
+                    },
                 },
-                500: {
-                    items: 2,
-                    edgePadding: 30,
-                },
-                700: {
-                    items: 3,
-                    edgePadding: 30,
-                },
-                900: {
-                    items: 4,
-                    edgePadding: 30,
-                },
-                1100: {
-                    items: 5,
-                    edgePadding: 30,
-                },
-                1300: {
-                    items: 7,
-                    edgePadding: 0,
-                },
-            },
-        });
+            });
+        },
     },
 };
 </script>

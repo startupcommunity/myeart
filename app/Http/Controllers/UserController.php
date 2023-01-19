@@ -99,8 +99,8 @@ class UserController extends Controller
         try {
             $resp = $this->db->getArtists($request->all());
             return $this->resp->json($resp, 200);
-        } catch (Exception $th) {
-            return $this->resp->json($th, 500);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
         }
     }
 

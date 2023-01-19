@@ -37,7 +37,7 @@ class ArtworkDB
         return Artwork::with(['categories', 'labels', 'gallery', 'user', 'likes'])
             ->where('state', ArtworkStateEnum::PUBLISHED)
             ->typeArtist()
-            ->orderBy('id', 'Desc')
+            ->orderByDesc('id')
             ->get();
     }
 

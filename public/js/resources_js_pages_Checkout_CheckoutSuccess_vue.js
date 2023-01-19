@@ -539,6 +539,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     classImage: {
       type: String,
       "default": ""
+    },
+    principalClass: {
+      type: String,
+      "default": "w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd"
     }
   },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)({
@@ -1687,7 +1691,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "w-full md:w-1/2 lg:w-1/3 mb-10 animate-swing-in-top-fwd"
+    "class": _vm.principalClass
   }, [_c("div", {
     staticClass: "rounded-md w-full hover:animate-shadow-drop-center relative",
     "class": _vm.classCard

@@ -53,6 +53,22 @@ class UserReleaseController extends Controller
             return $this->resp->json($e, 500);
         }
     }
+
+    /**
+     * Devuelve todas las publicaciones de la app
+     *
+     * @return JsonResponse
+     */
+    public function getAllReleases(): JsonResponse
+    {
+        try {
+            $data = $this->db->getAllReleases();
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e, 500);
+        }
+    }
+
     /**
      * Display the specified resource.
      *

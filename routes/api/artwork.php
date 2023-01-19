@@ -11,7 +11,7 @@ Route::group(['prefix' => 'artworks'], function () {
   Route::get('/', [ArtworkController::class, 'getArtworks'])->name('getArtworks');
 
   /**
-   * Devuelve las obras publicadas del usuario logueado
+   * Devuelve las obras publicadas de todos los usuarios
    */
   Route::get('/publish', [ArtworkController::class, 'getPublish'])->name('getAllArtworks');
 

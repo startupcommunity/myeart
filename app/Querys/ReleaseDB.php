@@ -24,6 +24,18 @@ class ReleaseDB
   }
 
   /**
+   * Devuelve todas las publicaciones de la app
+   *
+   * @return Collection
+   */
+  public function getAllReleases(): Collection
+  {
+    return UserRelease::with([
+      'labels.user', 'likes.user', 'creator.artworks.categories', 'comments'
+    ])->get();
+  }
+
+  /**
    * Devuelve una publicación por su slug
    *
    * @param string $slug

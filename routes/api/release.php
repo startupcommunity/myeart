@@ -11,6 +11,11 @@ Route::group(['prefix' => 'releases'], function () {
   Route::get('/get-user-releases/{id?}', [UserReleaseController::class, 'getUserRelease'])->name('getUserRelease');
 
   /**
+   * Devuelve todas las publicaciones de la app
+   */
+  Route::get('/get-all-releases', [UserReleaseController::class, 'getAllReleases'])->name('getAllReleases');
+
+  /**
    * Devuelve todas las publicaciones de los usuarios seguidos
    */
   Route::get('/get-follow-artists-releases', [UserReleaseController::class, 'getReleaseFollowArtists'])

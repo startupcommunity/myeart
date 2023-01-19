@@ -109,6 +109,9 @@ const endpoints = {
         // obtiene todas las publicaciones de un artista especifico - {id}
         getAllUserForID: `${API}/releases/get-user-releases/`, // get
 
+        // obtiene todas las publicaciones de la app
+        getAll: `${API}/releases/get-all-releases`, // get
+
         // get publicaciones de artistas seguidos
         followArtists: `${API}/releases/get-follow-artists-releases`, // get
 

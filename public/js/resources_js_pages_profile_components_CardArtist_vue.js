@@ -185,11 +185,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "CardArtist",
   components: {
     FollowArtistButton: _artwork_components_FollowArtistButton__WEBPACK_IMPORTED_MODULE_1__["default"],
     Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  name: "CardArtist",
   data: function data() {
     return {
       loadLiked: false,

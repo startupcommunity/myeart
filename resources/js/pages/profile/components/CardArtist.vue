@@ -62,8 +62,8 @@ import Avatar from "../../../components/Avatar.vue";
 import FollowArtistButton from "./../../artwork/components/FollowArtistButton";
 
 export default {
-    components: { FollowArtistButton, Avatar },
     name: "CardArtist",
+    components: { FollowArtistButton, Avatar },
     data() {
         return {
             loadLiked: false,

@@ -98,14 +98,21 @@ class UserDB
      */
     public function getRandomArtists(): Collection
     {
+        $authUserID = auth()->id();
+        $request = request()->all();
+        $all = isset($request['all']) ? $request['all'] : null;
+
         $query = User::with(['profile', 'artworks.categories'])
             ->withCount('artworks')
             ->having('artworks_count', '>', 0)
             ->inRandomOrder()
-            ->notUser(auth()->user()->id)
             ->limit(10);
 
-        return $query->get();
+        if ($all) {
+            return $query->get();
+        }
+
+        return $query->notUser($authUserID)->get();
     }
 
     /**

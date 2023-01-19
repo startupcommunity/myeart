@@ -18,9 +18,9 @@
         <Hero />
         <!-- /hero area -->
 
-        <!-- ¿Aún no te decides?  -->
+        <!-- ¿Aún no te decides? obras  -->
         <LastPost />
-        <!-- /¿Aún no te decides?  -->
+        <!-- /¿Aún no te decides? obras  -->
 
         <!-- Artistas que quizás te puedan interesar -->
         <OtherUser />
@@ -35,7 +35,7 @@
         <!-- /border separador -->
 
         <!-- Últimas noticias en el mundo del arte -->
-        <BreakingNews />
+        <!-- <BreakingNews /> -->
         <!-- /Últimas noticias en el mundo del arte -->
 
         <!-- El newsletter para grandes artistas -->
@@ -62,7 +62,7 @@ import AppFooter from "./sections/Footer.vue";
 import LastPost from "./sections/LastPost.vue";
 import OtherUser from "./sections/OtherUser.vue";
 import Community from "./sections/Community.vue";
-import BreakingNews from "./sections/BreakingNews.vue";
+// import BreakingNews from "./sections/BreakingNews.vue";
 import Hero from "./sections/Hero.vue";
 
 export default {
@@ -76,7 +76,7 @@ export default {
         LastPost,
         OtherUser,
         Community,
-        BreakingNews,
+        // BreakingNews,
         Hero,
     },
     computed: {
