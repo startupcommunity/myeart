@@ -148,8 +148,8 @@ class ReleaseFactory
       $noty = [
         'user_id' => $request->user_id,
         'notifiable_id' => $release->user_id,
-        'url' => '/comunidad',
-        'message' => "Le gustó tu publicación",
+        'url' => '/usuario/perfil/' . $release->user_id . '/pub',
+        'message' => "Le gustó tu publicación <br/> <b>{$release->text}</b>",
         'type' => TypeNotificationEnum::LIKE_RELEASE //'new-like-release'
       ];
 
@@ -238,8 +238,8 @@ class ReleaseFactory
     $data = [
       'user_id' => $request->user_id,
       'notifiable_id' => $release->user_id,
-      'url' => '/comunidad',
-      'message' => "Ha comentado tu publicación",
+      'url' => '/usuario/perfil/' . $release->user_id . '/pub',
+      'message' => "Ha comentado tu publicación <br/> <b>{$release->text}</b>",
       'type' => TypeNotificationEnum::COMMENT //'new-comment'
     ];
     event(new NotificationEvent($data));

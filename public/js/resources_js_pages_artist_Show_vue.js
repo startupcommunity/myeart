@@ -1781,6 +1781,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_timeago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-timeago */ "./node_modules/vue-timeago/dist/vue-timeago.es.js");
 /* harmony import */ var _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../artwork/components/FollowArtistButton.vue */ "./resources/js/pages/artwork/components/FollowArtistButton.vue");
+/* harmony import */ var _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/Avatar.vue */ "./resources/js/components/Avatar.vue");
+
 
 
 Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
@@ -1790,7 +1792,8 @@ Vue.use(vue_timeago__WEBPACK_IMPORTED_MODULE_0__["default"], {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Notifications",
   components: {
-    FollowArtistButton: _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    FollowArtistButton: _artwork_components_FollowArtistButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Avatar: _components_Avatar_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -4692,12 +4695,15 @@ var render = function render() {
       staticClass: "flex items-center gap-3 hover:bg-gray-100 transition-all duration-300 ease-in-out p-3"
     }, [_c("div", {
       staticClass: "min-w-[50px]"
-    }, [_c("img", {
-      staticClass: "rounded-full w-10 h-10 sm:w-12 sm:h-12 aspect-square",
+    }, [_c("Avatar", {
       attrs: {
-        src: _vm.profilePhoto(noty.data)
+        artist: {
+          id: noty.data.user_id,
+          profile_photo: noty.data.user_profile_photo
+        },
+        defaultClass: "w-10 h-10 sm:w-12 sm:h-12 aspect-square border"
       }
-    })]), _vm._v(" "), _c("div", {
+    })], 1), _vm._v(" "), _c("div", {
       staticClass: "flex flex-col justify-center"
     }, [_c("span", {
       staticClass: "font-bold text-xs"

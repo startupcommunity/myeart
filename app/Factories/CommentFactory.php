@@ -99,7 +99,7 @@ class CommentFactory
       $noty = [
         'user_id' => $request->user_id,
         'notifiable_id' => $comment->user_id,
-        'url' => '/comunidad',
+        'url' => '/usuario/perfil/' . $comment->user_id . '/pub',
         'message' => "Le gustó tu comentario",
         'type' => TypeNotificationEnum::LIKE_COMMENT //'new-like-comment'
       ];
@@ -142,6 +142,7 @@ class CommentFactory
     if ($comment->commentable_type == 'App\Models\Artwork') {
       $url = '/obras/' . $comment->commentable_id;
     } else {
+      // $url = '/usuario/perfil/' . $comment->user_id . '/pub';
       $url = '/comunidad';
     }
 

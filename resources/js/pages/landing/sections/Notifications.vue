@@ -35,9 +35,16 @@
                     class="flex items-center gap-3 hover:bg-gray-100 transition-all duration-300 ease-in-out p-3"
                 >
                     <div class="min-w-[50px]">
-                        <img
+                        <!-- <img
                             :src="profilePhoto(noty.data)"
                             class="rounded-full w-10 h-10 sm:w-12 sm:h-12 aspect-square"
+                        /> -->
+                        <Avatar
+                            :artist="{
+                                id: noty.data.user_id,
+                                profile_photo: noty.data.user_profile_photo,
+                            }"
+                            defaultClass="w-10 h-10 sm:w-12 sm:h-12 aspect-square border"
                         />
                     </div>
                     <div class="flex flex-col justify-center">
@@ -104,11 +111,12 @@
 <script>
 import VueTimeago from "vue-timeago";
 import FollowArtistButton from "../../artwork/components/FollowArtistButton.vue";
+import Avatar from "../../../components/Avatar.vue";
 Vue.use(VueTimeago, { name: "Timeago", locale: "es_ES" });
 
 export default {
     name: "Notifications",
-    components: { FollowArtistButton },
+    components: { FollowArtistButton, Avatar },
 
     data() {
         return {
