@@ -141,7 +141,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         price: 0,
         date_created: "",
         location: "",
-        shipping: "",
+        // shipping: "",
         state: "",
         gallery: [],
         type: {
@@ -151,7 +151,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       formIsValid: true,
       menuPicker: false,
-      loadingGallery: false
+      loadingGallery: false,
+      publish: false
     };
   },
   mounted: function mounted() {
@@ -236,8 +237,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       f.width = f.width == "null" ? "" : f.width;
       f.large = f.large == "null" ? "" : f.large;
       f.weight = f.weight == "null" ? "" : f.large;
-      f.price = f.price == "null" ? "" : f.price;
-      f.shipping = f.shipping == "null" ? "" : f.shipping;
+      f.price = f.price == "null" ? "" : f.price; // f.shipping = f.shipping == "null" ? "" : f.shipping;
+
       f.date_created = dateFormat(f.date_created);
     },
 
@@ -247,14 +248,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     updateArtwork: function updateArtwork() {
       var _this2 = this;
 
-      if (this.form.state === 1) {
-        if (!this.$refs.artworkForm.validate()) return;
+      if (this.form.state === 1 || this.publish) {
+        if (!this.$refs.artworkForm.validate()) {
+          this.noty("Por favor, revisa los campos, algunos son requeridos", "error", 5000);
+          return;
+        }
       } // loading
 
 
       this.globalLoading = true; // cambiar estado
-
-      this.changeState(); // cargar datos
+      // this.changeState();
+      // cargar datos
 
       var data = this.loadFormData(); // request
 
@@ -319,7 +323,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * Cargar los datos para ser enviados al backend
      */
     loadFormData: function loadFormData() {
-      var _form$description, _this$form$large_desc, _this$form$other_deta, _form$width, _form$large, _form$weight, _form$price, _form$location, _form$shipping;
+      var _form$description, _this$form$large_desc, _this$form$other_deta, _form$width, _form$large, _form$weight, _form$price, _form$location;
 
       var form = this.form;
       var files = this.uploadedFiles;
@@ -334,9 +338,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       data.append("weight", (_form$weight = form.weight) !== null && _form$weight !== void 0 ? _form$weight : "");
       data.append("price", (_form$price = form.price) !== null && _form$price !== void 0 ? _form$price : "");
       data.append("date_created", form.date_created);
-      data.append("location", (_form$location = form.location) !== null && _form$location !== void 0 ? _form$location : "");
-      data.append("shipping", (_form$shipping = form.shipping) !== null && _form$shipping !== void 0 ? _form$shipping : "");
-      data.append("state", form.state);
+      data.append("location", (_form$location = form.location) !== null && _form$location !== void 0 ? _form$location : ""); // data.append("shipping", form.shipping ?? "");
+
+      data.append("state", this.publish ? 1 : form.state);
       data.append("type", JSON.stringify(this.form.type)); // data sync
 
       files.forEach(function (file) {
@@ -351,16 +355,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      *
      * - estado publicado
      */
-    changeState: function changeState() {
-      var form = this.form;
-      var files = this.uploadedFiles;
-
-      if (form.title && form.description && form.width && form.large && form.weight && form.price && form.date_created && form.location && form.shipping && form.type && files.length) {
-        if (form.state == this.STATEARTWORK.draft) {
-          form.state = this.STATEARTWORK.published;
-        }
-      }
-    },
+    // changeState() {
+    //     const form = this.form;
+    //     const files = this.uploadedFiles;
+    //     if (
+    //         form.title &&
+    //         form.description &&
+    //         form.width &&
+    //         form.large &&
+    //         form.weight &&
+    //         form.price &&
+    //         form.date_created &&
+    //         form.location &&
+    //         // form.shipping &&
+    //         form.type &&
+    //         files.length
+    //     ) {
+    //         if (form.state == this.STATEARTWORK.draft) {
+    //             form.state = this.STATEARTWORK.published;
+    //         }
+    //     }
+    // },
 
     /**
      * Carga las categorías
@@ -1574,24 +1589,7 @@ var render = function render() {
     slot: "label"
   }, [_c("span", {
     staticClass: "font-black tracking-wide uppercase text-gray-900"
-  }, [_vm._v("\n                                        Ubicación\n                                    ")])])], 2), _vm._v(" "), _c("v-text-field", {
-    attrs: {
-      rules: _vm.dateRules,
-      counter: 100,
-      required: ""
-    },
-    model: {
-      value: _vm.form.shipping,
-      callback: function callback($$v) {
-        _vm.$set(_vm.form, "shipping", $$v);
-      },
-      expression: "form.shipping"
-    }
-  }, [_c("template", {
-    slot: "label"
-  }, [_c("span", {
-    staticClass: "font-black tracking-wide uppercase text-gray-900"
-  }, [_vm._v("\n                                        Envío\n                                    ")])])], 2)], 1)]), _vm._v(" "), _c("v-col", {
+  }, [_vm._v("\n                                        Ubicación\n                                    ")])])], 2)], 1)]), _vm._v(" "), _c("v-col", {
     attrs: {
       cols: "12",
       md: "8"
@@ -1645,8 +1643,26 @@ var render = function render() {
     attrs: {
       type: "submit",
       disabled: !_vm.formIsValid
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        _vm.publish = false;
+      }
     }
-  }, [_vm._v("\n                                Actualizar\n                            ")])])])], 1)], 1)], 1)], 1), _vm._v(" "), _c("Newletter"), _vm._v(" "), _c("ExtraInfo"), _vm._v(" "), _c("Footer")], 1);
+  }, [_vm._v("\n                                Actualizar\n                            ")]), _vm._v(" "), _vm.form.state === 3 ? _c("button", {
+    staticClass: "w-full sm:w-auto px-7 py-4 bg-gray-700 text-gray-50 border border-gray-900 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase",
+    attrs: {
+      type: "submit",
+      disabled: !_vm.formIsValid
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        _vm.publish = true;
+      }
+    }
+  }, [_vm._v("\n                                Actualizar y publicar\n                            ")]) : _vm._e()])])], 1)], 1)], 1)], 1), _vm._v(" "), _c("Newletter"), _vm._v(" "), _c("ExtraInfo"), _vm._v(" "), _c("Footer")], 1);
 };
 
 var staticRenderFns = [];

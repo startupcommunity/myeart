@@ -239,42 +239,26 @@ var render = function render() {
   }, [_vm._v("\n                            " + _vm._s(_vm._f("numberK")(_vm.artist.artworks_count)) + "\n                        ")]), _vm._v(" "), _c("span", {
     staticClass: "font-bold text-xs md:text-base text-primary uppercase"
   }, [_vm._v("\n                            Obras\n                        ")])])]), _vm._v(" "), _vm.isUserLogged ? _c("div", {
-    staticClass: "flex justify-between gap-3 px-10 px-md-0 mt-5 md:mt-7"
+    staticClass: "flex justify-center px-10 px-md-0 mt-5 md:mt-7"
   }, [_c("div", {
-    staticClass: "w-1/2"
+    staticClass: "w-full"
   }, [_c("v-btn", {
-    staticClass: "rounded-md hidden md:block",
-    attrs: {
-      outlined: "",
-      block: "",
-      color: "#B2794C"
-    }
-  }, [_vm._v("\n                            Ir a mi blog\n                        ")]), _vm._v(" "), _c("v-btn", {
-    staticClass: "rounded-md block md:hidden",
-    attrs: {
-      outlined: "",
-      small: "",
-      color: "#B2794C"
-    }
-  }, [_vm._v("\n                            Ir a mi blog\n                        ")])], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-1/2"
-  }, [_c("v-btn", {
-    staticClass: "rounded-md hidden md:flex",
+    staticClass: "rounded-md hover:no-underline hidden md:flex",
     attrs: {
       outlined: "",
       block: "",
       color: "#B2794C",
       to: _vm.getPathProfile
     }
-  }, [_vm._v("\n                            Ir a mi post\n                        ")]), _vm._v(" "), _c("v-btn", {
-    staticClass: "rounded-md flex md:hidden",
+  }, [_vm._v("\n                            Editar mi perfil\n                        ")]), _vm._v(" "), _c("v-btn", {
+    staticClass: "rounded-md hover:no-underline flex md:hidden",
     attrs: {
       outlined: "",
       small: "",
       color: "#B2794C",
       to: _vm.getPathProfile
     }
-  }, [_vm._v("\n                            Ir a mi post\n                        ")])], 1)]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                            Editar mi perfil\n                        ")])], 1)]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "w-full md:w-1/3 order-1 order-md-2 -mt-48 md:-mt-60"
   }, [_c("div", {
     staticClass: "flex flex-col justify-center"
@@ -334,7 +318,7 @@ var render = function render() {
     staticClass: "fa-brands fa-square-facebook text-zinc-300 fa-2x hover:text-zinc-500"
   })]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "w-full md:w-1/3 order-2 order-md-3 md:px-0 mb-5"
-  }, [_c("div", {
+  }, [!_vm.isUserLogged ? _c("div", {
     staticClass: "flex gap-3 justify-center px-10"
   }, [_c("div", {
     staticClass: "w-40 md:w-1/2 mb-3 md:mb-0"
@@ -343,19 +327,10 @@ var render = function render() {
     attrs: {
       artist: _vm.artist
     }
-  })], 1), _vm._v(" "), _vm._m(0)])])])])]);
+  })], 1)]) : _vm._e()])])])]);
 };
 
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "w-40 md:w-1/2 mb-3 md:mb-0"
-  }, [_c("button", {
-    staticClass: "btn btn-primary btn-sm uppercase rounded-xl md:rounded-md w-full h-6 md:h-full md:py-2 text-xxs md:text-xs text-white"
-  }, [_c("span", [_vm._v(" enviar mensaje ")])])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

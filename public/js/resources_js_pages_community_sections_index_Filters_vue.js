@@ -62,11 +62,11 @@ var render = function render() {
     staticClass: "py-5 md:py-10 container px-5 px-md-0"
   }, [_c("div", {
     staticClass: "flex flex-col md:flex-row justify-center items-center md:gap-16 md:border-b border-zinc-700 md:pb-5"
-  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
-    staticClass: "order-1 order-md-3"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "order-1 order-md-2"
   }, [_c("div", {
     staticClass: "flex flex-wrap items-center"
-  }, [_vm._m(2), _vm._v(" "), _c("v-select", {
+  }, [_vm._m(1), _vm._v(" "), _c("v-select", {
     staticClass: "pl-2 uppercase w-52 text-sm md:text-base mt-2 md:mt-0",
     attrs: {
       items: _vm.sortBy,
@@ -92,25 +92,12 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "md:border-r border-gray-900 h-full md:pr-16 order-2 order-md-1"
   }, [_c("button", {
-    staticClass: "hover:animate-bg-gray-light rounded-md p-2"
+    staticClass: "rounded-md p-2"
   }, [_c("span", {
     staticClass: "text-zinc-900 font-bold tracking-normal uppercase text-sm md:text-base"
   }, [_c("i", {
     staticClass: "fas fa-user text-zinc-900"
   }), _vm._v("\n                        Publicaciones de amigos\n                    ")])])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "md:border-r border-gray-900 h-full md:pr-16 order-3 order-md-2"
-  }, [_c("button", {
-    staticClass: "hover:animate-bg-gray-light rounded-md p-2"
-  }, [_c("span", {
-    staticClass: "text-zinc-400 font-bold tracking-normal uppercase text-sm md:text-base"
-  }, [_c("i", {
-    staticClass: "fa-solid fa-bars-staggered text-zinc-400"
-  }), _vm._v("\n                        Blog\n                    ")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;

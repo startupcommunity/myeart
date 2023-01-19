@@ -1585,7 +1585,7 @@ var render = function render() {
       "class": index % 1 == 0 ? "sm:px-4" : "",
       attrs: {
         artwork: artwork,
-        classCard: "min-h-[32rem] bg-gray-50"
+        classCard: "min-h-[34rem] bg-gray-50"
       }
     });
   })], 2), _vm._v(" "), this.artworkPublished.length ? _c("Paginator", {

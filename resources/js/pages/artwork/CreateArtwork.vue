@@ -276,7 +276,7 @@
                                         </span>
                                     </template>
                                 </v-autocomplete>
-                                <v-text-field
+                                <!-- <v-text-field
                                     v-model="form.shipping"
                                     :rules="dateRules"
                                     :counter="100"
@@ -289,7 +289,7 @@
                                             Envío
                                         </span>
                                     </template>
-                                </v-text-field>
+                                </v-text-field> -->
                             </div>
                         </v-col>
                         <v-col cols="12" md="8">
@@ -402,7 +402,7 @@ export default {
                 price: "",
                 date_created: "",
                 location: "",
-                shipping: "",
+                // shipping: "",
                 large_description: "",
                 other_details: "",
                 type: {
@@ -419,8 +419,6 @@ export default {
         // mixin
         this.form.date_created = this.actualDate;
         this.getCategories();
-
-        console.log(this.collectiveId);
     },
     computed: {
         /**
@@ -448,11 +446,18 @@ export default {
     },
     methods: {
         /**
-         * Guardar, publicar o borrador de la obra creada
+         * Guardar, publicar o guardar como borrador
          */
         saveArtwork() {
             if (this.isDraft === 1) {
-                if (!this.$refs.artworkForm.validate()) return;
+                if (!this.$refs.artworkForm.validate()) {
+                    this.noty(
+                        "Por favor, revisa los campos, algunos son requeridos",
+                        "error",
+                        5000
+                    );
+                    return;
+                }
             }
 
             // evaluare parámetro type de ruta
@@ -471,7 +476,6 @@ export default {
             data.append("price", this.form.price);
             data.append("date_created", this.form.date_created);
             data.append("location", this.form.location);
-            data.append("shipping", this.form.shipping);
             data.append("state", this.isDraft);
             data.append(`type`, JSON.stringify(this.form.type));
             data.append(`type_artwork`, type_artwork);

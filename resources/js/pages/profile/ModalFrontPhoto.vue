@@ -1,13 +1,19 @@
 <template>
     <div>
         <v-row justify="center">
-            <v-dialog v-model="showModal" persistent width="800">
-                <v-card class="bg-gray-one mt-12">
+            <v-dialog
+                v-model="showModal"
+                persistent
+                width="800"
+                content-class="mt-14"
+            >
+                <v-card class="bg-gray-one">
                     <v-card-title class="hidden sm:block">
                         <div class="flex justify-end">
                             <button
                                 type="button"
                                 @click="$emit('close-modal-edit-front-photo')"
+                                :disabled="globalLoading"
                             >
                                 <i class="fa fa-times text-primary"></i>
                             </button>
@@ -31,6 +37,8 @@
                                     large
                                     text
                                     @click="clickBtnSaved()"
+                                    :loading="globalLoading"
+                                    :disabled="globalLoading"
                                 >
                                     Cambiar imagen
                                 </v-btn>
@@ -45,6 +53,7 @@
                                     @click="
                                         $emit('close-modal-edit-front-photo')
                                     "
+                                    :disabled="globalLoading"
                                 >
                                     Cancelar
                                 </v-btn>
@@ -153,6 +162,7 @@ export default {
          * Guardar imagen
          */
         savedCropper(file) {
+            this.globalLoading = true;
             // imagen cortada
             const croppedFile = new File(
                 [file.croppedFile],
@@ -190,9 +200,8 @@ export default {
                         this.clickBtnClear();
                     }
                 })
-                .catch((error) => {
-                    this.showRequestErrors(error);
-                });
+                .catch((error) => this.showRequestErrors(error))
+                .finally(() => (this.globalLoading = false));
         },
         /**
          * incrementar la propiedad ankaKey + 1

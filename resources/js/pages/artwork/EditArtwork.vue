@@ -274,7 +274,7 @@
                                         </span>
                                     </template>
                                 </v-autocomplete>
-                                <v-text-field
+                                <!-- <v-text-field
                                     v-model="form.shipping"
                                     :rules="dateRules"
                                     :counter="100"
@@ -287,7 +287,7 @@
                                             Envío
                                         </span>
                                     </template>
-                                </v-text-field>
+                                </v-text-field> -->
                             </div>
                         </v-col>
                         <v-col cols="12" md="8">
@@ -332,8 +332,18 @@
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
                                     type="submit"
                                     :disabled="!formIsValid"
+                                    @click.stop="publish = false"
                                 >
                                     Actualizar
+                                </button>
+                                <button
+                                    class="w-full sm:w-auto px-7 py-4 bg-gray-700 text-gray-50 border border-gray-900 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
+                                    type="submit"
+                                    :disabled="!formIsValid"
+                                    @click.stop="publish = true"
+                                    v-if="form.state === 3"
+                                >
+                                    Actualizar y publicar
                                 </button>
                             </div>
                         </v-col>
@@ -397,7 +407,7 @@ export default {
                 price: 0,
                 date_created: "",
                 location: "",
-                shipping: "",
+                // shipping: "",
                 state: "",
                 gallery: [],
                 type: {
@@ -408,6 +418,7 @@ export default {
             formIsValid: true,
             menuPicker: false,
             loadingGallery: false,
+            publish: false,
         };
     },
     mounted() {
@@ -484,7 +495,7 @@ export default {
             f.large = f.large == "null" ? "" : f.large;
             f.weight = f.weight == "null" ? "" : f.large;
             f.price = f.price == "null" ? "" : f.price;
-            f.shipping = f.shipping == "null" ? "" : f.shipping;
+            // f.shipping = f.shipping == "null" ? "" : f.shipping;
             f.date_created = dateFormat(f.date_created);
         },
 
@@ -492,15 +503,22 @@ export default {
          * Guardar, publicar o borrador de la obra creada
          */
         updateArtwork() {
-            if (this.form.state === 1) {
-                if (!this.$refs.artworkForm.validate()) return;
+            if (this.form.state === 1 || this.publish) {
+                if (!this.$refs.artworkForm.validate()) {
+                    this.noty(
+                        "Por favor, revisa los campos, algunos son requeridos",
+                        "error",
+                        5000
+                    );
+                    return;
+                }
             }
 
             // loading
             this.globalLoading = true;
 
             // cambiar estado
-            this.changeState();
+            // this.changeState();
 
             // cargar datos
             const data = this.loadFormData();
@@ -586,8 +604,8 @@ export default {
             data.append("price", form.price ?? "");
             data.append("date_created", form.date_created);
             data.append("location", form.location ?? "");
-            data.append("shipping", form.shipping ?? "");
-            data.append("state", form.state);
+            // data.append("shipping", form.shipping ?? "");
+            data.append("state", this.publish ? 1 : form.state);
             data.append(`type`, JSON.stringify(this.form.type));
 
             // data sync
@@ -602,27 +620,27 @@ export default {
          *
          * - estado publicado
          */
-        changeState() {
-            const form = this.form;
-            const files = this.uploadedFiles;
-            if (
-                form.title &&
-                form.description &&
-                form.width &&
-                form.large &&
-                form.weight &&
-                form.price &&
-                form.date_created &&
-                form.location &&
-                form.shipping &&
-                form.type &&
-                files.length
-            ) {
-                if (form.state == this.STATEARTWORK.draft) {
-                    form.state = this.STATEARTWORK.published;
-                }
-            }
-        },
+        // changeState() {
+        //     const form = this.form;
+        //     const files = this.uploadedFiles;
+        //     if (
+        //         form.title &&
+        //         form.description &&
+        //         form.width &&
+        //         form.large &&
+        //         form.weight &&
+        //         form.price &&
+        //         form.date_created &&
+        //         form.location &&
+        //         // form.shipping &&
+        //         form.type &&
+        //         files.length
+        //     ) {
+        //         if (form.state == this.STATEARTWORK.draft) {
+        //             form.state = this.STATEARTWORK.published;
+        //         }
+        //     }
+        // },
 
         /**
          * Carga las categorías

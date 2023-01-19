@@ -1455,11 +1455,11 @@ var render = function render() {
       attrs: {
         id: "row-artist-mobile-" + artist.id
       }
-    }, _vm._l(artist.artworks, function (artwork) {
+    }, _vm._l(artist.artworks, function (art) {
       return _c("RowArtwork", {
-        key: artwork.id,
+        key: art.id,
         attrs: {
-          artwork: artwork
+          artwork: art
         }
       });
     }), 1)])]);
@@ -1618,7 +1618,7 @@ var render = function render() {
     staticClass: "space-y-2"
   }, [_c("h3", {
     staticClass: "text-xl font-medium tracking-wide text-gray-900 pt-3"
-  }, [_vm._v("\n                    " + _vm._s(_vm.artwork.title) + "\n                ")])])])], 1)]);
+  }, [_vm._v("\n                    (" + _vm._s(_vm.artwork.id) + ")\n                    " + _vm._s(_vm.artwork.title) + "\n                ")])])])], 1)]);
 };
 
 var staticRenderFns = [];
@@ -3746,11 +3746,17 @@ var addArtist = 3;
         params: this.filters
       };
       this.axios.get(this.ep.user.getArtists, params).then(function (resp) {
-        _this.totalRecords = resp.data.total;
-        _this.artists = resp.data.data; // solo para vista mobile
+        var availableArtists = resp.data.data.filter(function (artist) {
+          var art = _this.filterByTypeAndStatus(artist);
+
+          return art.length;
+        });
+        _this.artists = availableArtists;
+        _this.totalRecords = availableArtists.length; // console.log(availableArtists);
+        // solo para vista mobile
 
         if (_this.aspectMobile) {
-          _this.originalArtists = JSON.parse(JSON.stringify(resp.data.data)); // aumentar los artistas a mostrar
+          _this.originalArtists = JSON.parse(JSON.stringify(availableArtists)); // aumentar los artistas a mostrar
 
           var ADD_COUNT = addArtist + _this.artists.length;
           _this.artists = _this.originalArtists.slice(0, ADD_COUNT);
@@ -3843,6 +3849,19 @@ var addArtist = 3;
       this.filters.all = 1;
       this.aspectMobile = true;
       this.loadArtist();
+    },
+
+    /**
+     * Filtrar por tipo de obra y por estado de la obra
+     *
+     * @param {Object} artist
+     * @returns Array
+     */
+    filterByTypeAndStatus: function filterByTypeAndStatus(artist) {
+      var data = artist.artworks.filter(function (a) {
+        return a.state === 1 && a.type === 1;
+      });
+      return data;
     },
 
     /**

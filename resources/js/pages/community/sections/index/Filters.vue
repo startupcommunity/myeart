@@ -7,7 +7,7 @@
                 <div
                     class="md:border-r border-gray-900 h-full md:pr-16 order-2 order-md-1"
                 >
-                    <button class="hover:animate-bg-gray-light rounded-md p-2">
+                    <button class="rounded-md p-2">
                         <span
                             class="text-zinc-900 font-bold tracking-normal uppercase text-sm md:text-base"
                         >
@@ -16,7 +16,7 @@
                         </span>
                     </button>
                 </div>
-                <div
+                <!-- <div
                     class="md:border-r border-gray-900 h-full md:pr-16 order-3 order-md-2"
                 >
                     <button class="hover:animate-bg-gray-light rounded-md p-2">
@@ -28,8 +28,8 @@
                             Blog
                         </span>
                     </button>
-                </div>
-                <div class="order-1 order-md-3">
+                </div> -->
+                <div class="order-1 order-md-2">
                     <div class="flex flex-wrap items-center">
                         <div class="w-auto">
                             <span

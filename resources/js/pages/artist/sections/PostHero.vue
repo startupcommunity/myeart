@@ -38,10 +38,10 @@
                         </div>
                     </div>
                     <div
-                        class="flex justify-between gap-3 px-10 px-md-0 mt-5 md:mt-7"
+                        class="flex justify-center px-10 px-md-0 mt-5 md:mt-7"
                         v-if="isUserLogged"
                     >
-                        <div class="w-1/2">
+                        <!-- <div class="w-1/2">
                             <v-btn
                                 outlined
                                 block
@@ -58,25 +58,25 @@
                             >
                                 Ir a mi blog
                             </v-btn>
-                        </div>
-                        <div class="w-1/2">
+                        </div> -->
+                        <div class="w-full">
                             <v-btn
                                 outlined
                                 block
                                 color="#B2794C"
-                                class="rounded-md hidden md:flex"
+                                class="rounded-md hover:no-underline hidden md:flex"
                                 :to="getPathProfile"
                             >
-                                Ir a mi post
+                                Editar mi perfil
                             </v-btn>
                             <v-btn
                                 outlined
                                 small
                                 color="#B2794C"
-                                class="rounded-md flex md:hidden"
+                                class="rounded-md hover:no-underline flex md:hidden"
                                 :to="getPathProfile"
                             >
-                                Ir a mi post
+                                Editar mi perfil
                             </v-btn>
                         </div>
                     </div>
@@ -157,20 +157,20 @@
                     </div>
                 </div>
                 <div class="w-full md:w-1/3 order-2 order-md-3 md:px-0 mb-5">
-                    <div class="flex gap-3 justify-center px-10">
+                    <div class="flex gap-3 justify-center px-10" v-if="!isUserLogged">
                         <div class="w-40 md:w-1/2 mb-3 md:mb-0">
                             <FollowArtistButton
                                 :artist="artist"
                                 class="md:text-xs w-full h-6 md:h-full rounded-xl md:rounded-md md:py-2"
                             />
                         </div>
-                        <div class="w-40 md:w-1/2 mb-3 md:mb-0">
+                        <!-- <div class="w-40 md:w-1/2 mb-3 md:mb-0">
                             <button
                                 class="btn btn-primary btn-sm uppercase rounded-xl md:rounded-md w-full h-6 md:h-full md:py-2 text-xxs md:text-xs text-white"
                             >
                                 <span> enviar mensaje </span>
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

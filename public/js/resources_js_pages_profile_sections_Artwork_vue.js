@@ -76,6 +76,25 @@ var counterArtworks = 4;
       }]
     };
   },
+  computed: {
+    /**
+     * Obtiene el estado que se encuentra en true
+     * puede ser publicado, vendido o borrador
+     */
+    getStateActive: function getStateActive() {
+      if (this.stateActivePub) {
+        return this.STATEARTWORK.published;
+      }
+
+      if (this.stateActiveSold) {
+        return this.STATEARTWORK.sold;
+      }
+
+      if (this.stateActiveDraft) {
+        return this.STATEARTWORK.draft;
+      }
+    }
+  },
   methods: {
     /**
      * devuelve las obras del usuario logueado
@@ -84,7 +103,7 @@ var counterArtworks = 4;
       var _this = this;
 
       this.loading = true;
-      this.axios.get("/api/artworks").then( /*#__PURE__*/function () {
+      return this.axios.get("/api/artworks").then( /*#__PURE__*/function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(resp) {
           var remaining;
           return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -121,7 +140,9 @@ var counterArtworks = 4;
         return function (_x) {
           return _ref.apply(this, arguments);
         };
-      }())["catch"](function (error) {
+      }()).then(function (_) {
+        return _this.filterToState(_this.getStateActive);
+      })["catch"](function (error) {
         return console.log(error);
       })["finally"](function () {
         return _this.loading = false;
@@ -240,6 +261,7 @@ var counterArtworks = 4;
     deleteArtwork: function deleteArtwork(id) {
       var _this2 = this;
 
+      console.log(this.getStateActive);
       this.$swal.fire({
         title: "¿Desea eliminar definitivamente?",
         text: "Esta opción no se puede revertir.",
@@ -321,7 +343,7 @@ var counterArtworks = 4;
   watch: {
     showSection: function showSection(val) {
       if (val) {
-        this.changeStateArtwork();
+        this.stateActivePub = true;
         this.resetData();
         this.getArtworks();
       }
@@ -493,7 +515,7 @@ var render = function render() {
       staticClass: "w-full border-t-2 border-gray-800 my-4"
     }), _vm._v(" "), _c("p", {
       staticClass: "text-gray-900"
-    }, [_vm._v("\n                                    " + _vm._s((_art$price = art.price) !== null && _art$price !== void 0 ? _art$price : 0) + " " + _vm._s(_vm.symbol) + "\n                                ")])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                    " + _vm._s((_art$price = art.price) !== null && _art$price !== void 0 ? _art$price : 0) + " " + _vm._s(_vm.symbol) + "\n                                ")])]), _vm._v(" "), art.state !== _vm.STATEARTWORK.sold ? _c("div", {
       staticClass: "flex flex-wrap py-4 justify-between items-center px-2"
     }, [_c("div", {
       staticClass: "w-full xl:w-1/2 mb-4 xl:pr-2"
@@ -518,7 +540,7 @@ var render = function render() {
           return _vm.deleteArtwork(art.id);
         }
       }
-    }, [_vm._v("\n                                        Eliminar\n                                    ")])], 1)])])], 1)]);
+    }, [_vm._v("\n                                        Eliminar\n                                    ")])], 1)]) : _vm._e()])], 1)]);
   }), _vm._v(" "), _vm.remainingArtworks.length ? _c("div", {
     staticClass: "w-full text-center"
   }, [_c("button", {

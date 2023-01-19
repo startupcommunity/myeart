@@ -124,7 +124,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         price: "",
         date_created: "",
         location: "",
-        shipping: "",
+        // shipping: "",
         large_description: "",
         other_details: "",
         type: {
@@ -141,7 +141,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // mixin
     this.form.date_created = this.actualDate;
     this.getCategories();
-    console.log(this.collectiveId);
   },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_11__.mapGetters)({
     userProfile: "getProfile"
@@ -164,14 +163,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   methods: {
     /**
-     * Guardar, publicar o borrador de la obra creada
+     * Guardar, publicar o guardar como borrador
      */
     saveArtwork: function saveArtwork() {
       var _this$$route$params$t,
           _this = this;
 
       if (this.isDraft === 1) {
-        if (!this.$refs.artworkForm.validate()) return;
+        if (!this.$refs.artworkForm.validate()) {
+          this.noty("Por favor, revisa los campos, algunos son requeridos", "error", 5000);
+          return;
+        }
       } // evaluare parámetro type de ruta
 
 
@@ -188,7 +190,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       data.append("price", this.form.price);
       data.append("date_created", this.form.date_created);
       data.append("location", this.form.location);
-      data.append("shipping", this.form.shipping);
       data.append("state", this.isDraft);
       data.append("type", JSON.stringify(this.form.type));
       data.append("type_artwork", type_artwork);
@@ -1360,24 +1361,7 @@ var render = function render() {
     slot: "label"
   }, [_c("span", {
     staticClass: "font-black tracking-wide uppercase text-gray-900"
-  }, [_vm._v("\n                                        Ubicación\n                                    ")])])], 2), _vm._v(" "), _c("v-text-field", {
-    attrs: {
-      rules: _vm.dateRules,
-      counter: 100,
-      required: ""
-    },
-    model: {
-      value: _vm.form.shipping,
-      callback: function callback($$v) {
-        _vm.$set(_vm.form, "shipping", $$v);
-      },
-      expression: "form.shipping"
-    }
-  }, [_c("template", {
-    slot: "label"
-  }, [_c("span", {
-    staticClass: "font-black tracking-wide uppercase text-gray-900"
-  }, [_vm._v("\n                                        Envío\n                                    ")])])], 2)], 1)]), _vm._v(" "), _c("v-col", {
+  }, [_vm._v("\n                                        Ubicación\n                                    ")])])], 2)], 1)]), _vm._v(" "), _c("v-col", {
     attrs: {
       cols: "12",
       md: "8"

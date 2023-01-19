@@ -110,7 +110,8 @@ __webpack_require__.r(__webpack_exports__);
     savedCropper: function savedCropper(file) {
       var _this = this;
 
-      // imagen cortada
+      this.globalLoading = true; // imagen cortada
+
       var croppedFile = new File([file.croppedFile], file.croppedFile.name); // datos para el backend
 
       var formData = new FormData();
@@ -140,7 +141,9 @@ __webpack_require__.r(__webpack_exports__);
           _this.clickBtnClear();
         }
       })["catch"](function (error) {
-        _this.showRequestErrors(error);
+        return _this.showRequestErrors(error);
+      })["finally"](function () {
+        return _this.globalLoading = false;
       });
     },
 
@@ -201,7 +204,8 @@ var render = function render() {
   }, [_c("v-dialog", {
     attrs: {
       persistent: "",
-      width: "800"
+      width: "800",
+      "content-class": "mt-14"
     },
     model: {
       value: _vm.showModal,
@@ -211,14 +215,15 @@ var render = function render() {
       expression: "showModal"
     }
   }, [_c("v-card", {
-    staticClass: "bg-gray-one mt-12"
+    staticClass: "bg-gray-one"
   }, [_c("v-card-title", {
     staticClass: "hidden sm:block"
   }, [_c("div", {
     staticClass: "flex justify-end"
   }, [_c("button", {
     attrs: {
-      type: "button"
+      type: "button",
+      disabled: _vm.globalLoading
     },
     on: {
       click: function click($event) {
@@ -248,7 +253,9 @@ var render = function render() {
       depressed: "",
       block: "",
       large: "",
-      text: ""
+      text: "",
+      loading: _vm.globalLoading,
+      disabled: _vm.globalLoading
     },
     on: {
       click: function click($event) {
@@ -263,7 +270,8 @@ var render = function render() {
       block: "",
       large: "",
       depressed: "",
-      text: ""
+      text: "",
+      disabled: _vm.globalLoading
     },
     on: {
       click: function click($event) {

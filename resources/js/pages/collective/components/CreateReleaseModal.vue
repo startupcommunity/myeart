@@ -1,9 +1,21 @@
 <template>
     <div class="text-center">
-        <v-dialog v-model="show" width="800" persistent>
+        <v-dialog
+            v-model="show"
+            width="800"
+            persistent
+            :content-class="contentClass"
+            :fullscreen="fullScreen"
+        >
             <v-card>
                 <v-card-text>
-                    <div class="w-full py-5">
+                    <div
+                        class="w-full"
+                        :class="{
+                            'pt-10 md:p-10': fullScreen,
+                            'py-5': !fullScreen,
+                        }"
+                    >
                         <div class="flex flex-col space-y-5">
                             <div class="w-full">
                                 <AnkaCropper
@@ -89,8 +101,24 @@ export default {
             default: false,
         },
         collectiveID: {
-            type: Number,
-            default: 0,
+            type: Number | String,
+            default: null,
+        },
+        type: {
+            type: Number | String,
+            default: null,
+            description:
+                "1: publicación de artista, 2: publicación de colectivo",
+        },
+        contentClass: {
+            type: String,
+            default: "",
+            description: "Clase para el contenido del modal",
+        },
+        fullScreen: {
+            type: Boolean,
+            default: false,
+            description: "Modal en pantalla completa",
         },
     },
     data() {
@@ -237,12 +265,13 @@ export default {
                     data.append("image", croppedFile);
                     data.append("text", form.text);
                     data.append("location", form.location);
-                    data.append("type", form.type);
+                    data.append("type", this.type ? this.type : form.type);
                     form.labels.forEach((label) =>
                         data.append(`labels[]`, label)
                     );
 
                     if (this.collectiveID) {
+                        console.log("entro al colectivo");
                         data.append("collective_id", this.collectiveID);
                     }
 

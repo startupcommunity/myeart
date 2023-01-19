@@ -1,6 +1,6 @@
 <template>
     <section class="bg-white">
-        <div class="pt-20 container">
+        <div class="pt-10 container">
             <div class="flex justify-center items-center">
                 <div
                     class="w-full border-b border-zinc-300 pb-4 md:border-0 md:pb-0"

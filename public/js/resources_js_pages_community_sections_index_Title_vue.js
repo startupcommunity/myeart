@@ -41,7 +41,7 @@ var render = function render() {
   return _c("section", {
     staticClass: "bg-white"
   }, [_c("div", {
-    staticClass: "pt-20 container"
+    staticClass: "pt-10 container"
   }, [_c("div", {
     staticClass: "flex justify-center items-center"
   }, [_c("div", {

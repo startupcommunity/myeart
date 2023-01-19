@@ -7,6 +7,7 @@
 
 namespace App\Querys;
 
+use App\Enums\ArtworkTypeEnum;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -74,8 +75,15 @@ class UserDB
 
         // query
         $query = User::with(['userArtistic', 'profile', 'artworks.gallery', 'artworks.categories'])
+            ->whereHas('artworks', function ($art) {
+                return $art->typeArtist();
+            })
             ->withCount('artworks')
             ->having('artworks_count', '>', 0);
+
+        // devolver solo las obras type 1
+
+        // dd($query->get()->toArray());
 
         // si se recibe algunas de las categorías
         if ($cat || $sub || $label) {

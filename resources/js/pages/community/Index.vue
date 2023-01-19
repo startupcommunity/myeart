@@ -1,9 +1,14 @@
 <template>
     <MainLayout :showHeader="false" :loadingOverlay="loading">
         <!-- header -->
-        <div class="bg-zinc-900 pb-32">
+        <div class="bg-zinc-900 pb-32" v-if="isModalClose">
             <Header class="mt-5" />
         </div>
+
+        <CreateReleaseSection
+            @open-modal-create-release="isModalClose = false"
+            @close-modal-create-release="isModalClose = true"
+        />
 
         <!-- section title -->
         <Title :hashtag="hashtag" />
@@ -13,7 +18,7 @@
 
         <!-- content -->
         <section class="bg-white">
-            <div class="container pt-5">
+            <div class="container pt-5 pb-20">
                 <div class="flex flex-wrap justify-between items-start">
                     <!-- eventos -->
                     <div class="w-full md:w-1/4 hidden md:block">
@@ -21,18 +26,25 @@
                             Eventos
                         </h3>
                         <div class="flex flex-col py-5 mt-3">
-                            <CardEvent
-                                v-for="event in events"
-                                :key="event.id"
-                                :event="event"
-                                class="w-full animate-fade-in-down md:mb-8"
-                                @interested="openReservationInfo"
-                            />
-                            <InfoReservationModal
-                                :event="event"
-                                :show="showReservation"
-                                @close-info="showReservation = false"
-                            />
+                            <div v-if="events.length">
+                                <CardEvent
+                                    v-for="event in events"
+                                    :key="event.id"
+                                    :event="event"
+                                    class="w-full animate-fade-in-down md:mb-8"
+                                    @interested="openReservationInfo"
+                                />
+                                <InfoReservationModal
+                                    :event="event"
+                                    :show="showReservation"
+                                    @close-info="showReservation = false"
+                                />
+                            </div>
+                            <div v-else>
+                                <span class="text-zinc-400 text-sm">
+                                    No hay eventos próximos
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <!-- /eventos -->
@@ -40,30 +52,42 @@
                     <!-- publicaciones -->
                     <div class="w-full md:w-1/2 px-5">
                         <div class="flex flex-col -mt-5 pb-5 md:px-10">
-                            <CardRelease
-                                v-for="release in releases"
-                                :key="release.id"
-                                :release="release"
-                                :artist="release?.creator"
-                                :showArtist="true"
-                                :showCompleteInfo="true"
-                                :showShortInfo="false"
-                                :show-actions="false"
-                                class="mb-5"
-                                @showCommentDialog="activeCommentDialog"
-                            />
+                            <div v-if="releases.length">
+                                <CardRelease
+                                    v-for="release in releases"
+                                    :key="release.id"
+                                    :release="release"
+                                    :artist="release?.creator"
+                                    :showArtist="true"
+                                    :showCompleteInfo="true"
+                                    :showShortInfo="false"
+                                    :show-actions="false"
+                                    class="mb-5"
+                                    @showCommentDialog="activeCommentDialog"
+                                />
 
-                            <div
-                                class="py-5 flex justify-center"
-                                v-if="isMoreReleasesToShow"
-                            >
-                                <button
-                                    class="bg-zinc-900 px-5 py-3 uppercase text-gray-50 hover:animate-shadow-and-color-app rounded text-sm"
-                                    @click="showMoreReleases"
+                                <div
+                                    class="py-5 flex justify-center"
+                                    v-if="isMoreReleasesToShow"
                                 >
-                                    Ver más publicaciones
-                                </button>
+                                    <button
+                                        class="bg-zinc-900 px-5 py-3 uppercase text-gray-50 hover:animate-shadow-and-color-app rounded text-sm"
+                                        @click="showMoreReleases"
+                                    >
+                                        Ver más publicaciones
+                                    </button>
+                                </div>
                             </div>
+                            <div v-else class="md:pt-5">
+                                <span class="text-zinc-400 text-sm">
+                                    No hay publicaciones de tus amigos para
+                                    mostrar
+                                </span>
+                            </div>
+                            <LoadingTailwind
+                                v-if="loadingReleases"
+                                class="pt-3"
+                            />
                         </div>
                     </div>
                     <!-- /publicaciones -->
@@ -74,11 +98,18 @@
                             Artistas que te pueden interesar
                         </h3>
                         <div class="flex flex-col space-y-5 mt-3">
-                            <MiniCardArtist
-                                v-for="artist in artists"
-                                :key="artist.id"
-                                :artist="artist"
-                            />
+                            <div v-if="artists.length">
+                                <MiniCardArtist
+                                    v-for="artist in artists"
+                                    :key="artist.id"
+                                    :artist="artist"
+                                />
+                            </div>
+                            <div v-else>
+                                <span class="text-zinc-400 text-sm">
+                                    No hay artistas que te puedan interesar
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <!-- /artistas -->
@@ -104,6 +135,8 @@ import ReleaseCommentsDialog from "../release/components/ReleaseCommentsDialog.v
 import CardRelease from "../profile/components/CardRelease.vue";
 import CardEvent from "../event/components/CardEvent.vue";
 import InfoReservationModal from "../event/components/InfoReservationModal.vue";
+import LoadingTailwind from "../../components/LoadingTailwind.vue";
+import CreateReleaseSection from "./sections/index/CreateReleaseSection.vue";
 
 const MAX_EVENTS = 3;
 const RANDOM_ARTIST = 6;
@@ -123,6 +156,8 @@ export default {
         CardRelease,
         CardEvent,
         InfoReservationModal,
+        LoadingTailwind,
+        CreateReleaseSection,
     },
     data() {
         return {
@@ -134,7 +169,9 @@ export default {
             event: {},
             showReservation: false,
             loading: false,
+            loadingReleases: false,
             show: false,
+            isModalClose: true,
             hashtag: "",
         };
     },
@@ -176,7 +213,7 @@ export default {
                 this.hashtag = this.$route.params.hashtag;
             }
 
-            this.loading = true;
+            this.loadingReleases = true;
             this.axios
                 .get(this.ep.releases.followArtists, { params: filters })
                 .then(async (resp) => {
@@ -189,7 +226,7 @@ export default {
                     this.original = JSON.parse(JSON.stringify(await resp.data));
                 })
                 .catch((error) => this.manageError(error))
-                .finally(() => (this.loading = false));
+                .finally(() => (this.loadingReleases = false));
         },
 
         /**

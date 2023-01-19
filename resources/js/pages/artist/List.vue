@@ -280,9 +280,9 @@
                                                     class="mt-3 w-full"
                                                 >
                                                     <RowArtwork
-                                                        v-for="artwork in artist.artworks"
-                                                        :key="artwork.id"
-                                                        :artwork="artwork"
+                                                        v-for="art in artist.artworks"
+                                                        :key="art.id"
+                                                        :artwork="art"
                                                     />
                                                 </div>
                                             </div>

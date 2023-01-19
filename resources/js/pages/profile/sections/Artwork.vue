@@ -113,6 +113,7 @@
                                 </div>
                                 <div
                                     class="flex flex-wrap py-4 justify-between items-center px-2"
+                                    v-if="art.state !== STATEARTWORK.sold"
                                 >
                                     <div class="w-full xl:w-1/2 mb-4 xl:pr-2">
                                         <router-link
@@ -195,13 +196,34 @@ export default {
             ],
         };
     },
+
+    computed: {
+        /**
+         * Obtiene el estado que se encuentra en true
+         * puede ser publicado, vendido o borrador
+         */
+        getStateActive() {
+            if (this.stateActivePub) {
+                return this.STATEARTWORK.published;
+            }
+
+            if (this.stateActiveSold) {
+                return this.STATEARTWORK.sold;
+            }
+
+            if (this.stateActiveDraft) {
+                return this.STATEARTWORK.draft;
+            }
+        },
+    },
+
     methods: {
         /**
          * devuelve las obras del usuario logueado
          */
         getArtworks() {
             this.loading = true;
-            this.axios
+            return this.axios
                 .get("/api/artworks")
                 .then(async (resp) => {
                     if (resp.status === 200) {
@@ -218,6 +240,7 @@ export default {
                         this.loadRemainingArtworks(remaining);
                     }
                 })
+                .then((_) => this.filterToState(this.getStateActive))
                 .catch((error) => console.log(error))
                 .finally(() => (this.loading = false));
         },
@@ -336,6 +359,7 @@ export default {
          * @params id Number
          */
         deleteArtwork(id) {
+            console.log(this.getStateActive);
             this.$swal
                 .fire({
                     title: "¿Desea eliminar definitivamente?",
@@ -411,7 +435,7 @@ export default {
     watch: {
         showSection(val) {
             if (val) {
-                this.changeStateArtwork();
+                this.stateActivePub = true;
                 this.resetData();
                 this.getArtworks();
             }

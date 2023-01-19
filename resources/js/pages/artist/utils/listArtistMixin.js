@@ -137,13 +137,20 @@ export default {
             this.axios
                 .get(this.ep.user.getArtists, params)
                 .then((resp) => {
-                    this.totalRecords = resp.data.total;
-                    this.artists = resp.data.data;
+                    const availableArtists = resp.data.data.filter((artist) => {
+                        const art = this.filterByTypeAndStatus(artist);
+                        return art.length;
+                    });
+
+                    this.artists = availableArtists;
+                    this.totalRecords = availableArtists.length;
+
+                    // console.log(availableArtists);
 
                     // solo para vista mobile
                     if (this.aspectMobile) {
                         this.originalArtists = JSON.parse(
-                            JSON.stringify(resp.data.data)
+                            JSON.stringify(availableArtists)
                         );
 
                         // aumentar los artistas a mostrar
@@ -237,6 +244,19 @@ export default {
             this.aspectMobile = true;
 
             this.loadArtist();
+        },
+
+        /**
+         * Filtrar por tipo de obra y por estado de la obra
+         *
+         * @param {Object} artist
+         * @returns Array
+         */
+        filterByTypeAndStatus(artist) {
+            const data = artist.artworks.filter(
+                (a) => a.state === 1 && a.type === 1
+            );
+            return data;
         },
 
         /**

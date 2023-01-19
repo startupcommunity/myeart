@@ -2,7 +2,6 @@
     <v-btn
         color="#B2794C"
         class="uppercase tracking-widest text-white hover:no-underline"
-        x-large
         type="button"
         :to="{ name: 'eventCreate' }"
     >
