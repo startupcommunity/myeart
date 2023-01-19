@@ -1599,7 +1599,10 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "w-full h-full animate-swing-in-top-fwd"
+    staticClass: "w-full h-full animate-swing-in-top-fwd artwork-container",
+    attrs: {
+      "data-artid": _vm.artwork.id
+    }
   }, [_c("div", {
     staticClass: "rounded-md hover:animate-shadow-drop-center"
   }, [_c("router-link", {
@@ -3749,7 +3752,11 @@ var addArtist = 3;
         var availableArtists = resp.data.data.filter(function (artist) {
           var art = _this.filterByTypeAndStatus(artist);
 
-          return art.length;
+          if (art.length) {
+            // console.log(art);
+            var user = artist;
+            return user.artworks = art;
+          }
         });
         _this.artists = availableArtists;
         _this.totalRecords = availableArtists.length; // console.log(availableArtists);
@@ -3815,22 +3822,32 @@ var addArtist = 3;
       } // modo fila
 
 
-      this.loadingArtist = true;
       this.mode.row = true;
       this.mode.col = false; // init TNS
 
-      this.artists.forEach(function (art, index) {
+      this.artists.forEach(function (art) {
         if (art.artworks.length) {
+          // console.log(art);
           _this2.showTNS("#row-artist-" + art.id);
 
           _this2.showTNS("#row-artist-mobile-" + art.id);
-        } // detener loading
-
-
-        if (index === _this2.artists.length - 1) {
-          _this2.loadingArtist = false;
         }
-      });
+      }); // eliminar obras duplicadas en la visualización
+      // de las tarjetas
+
+      var divArtwork = document.getElementsByClassName("artwork-container");
+
+      for (var i = 0; i < divArtwork.length; i++) {
+        var div = divArtwork[i]; // obtener el id de la obra por medio del dataset
+
+        var id = div.dataset.artid; // obtener el elemento con el mismo id
+
+        var el = document.querySelector("[data-artid=\"".concat(id, "\"]")); // si existe mas de uno, eliminarlo y dejar solo uno
+
+        if (el && el === div) {
+          el.remove();
+        }
+      }
     },
 
     /**

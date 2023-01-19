@@ -139,7 +139,11 @@ export default {
                 .then((resp) => {
                     const availableArtists = resp.data.data.filter((artist) => {
                         const art = this.filterByTypeAndStatus(artist);
-                        return art.length;
+                        if (art.length) {
+                            // console.log(art);
+                            const user = artist;
+                            return (user.artworks = art);
+                        }
                     });
 
                     this.artists = availableArtists;
@@ -208,22 +212,36 @@ export default {
             }
 
             // modo fila
-            this.loadingArtist = true;
             this.mode.row = true;
             this.mode.col = false;
 
             // init TNS
-            this.artists.forEach((art, index) => {
+            this.artists.forEach((art) => {
                 if (art.artworks.length) {
+                    // console.log(art);
                     this.showTNS("#row-artist-" + art.id);
                     this.showTNS("#row-artist-mobile-" + art.id);
                 }
-
-                // detener loading
-                if (index === this.artists.length - 1) {
-                    this.loadingArtist = false;
-                }
             });
+
+            // eliminar obras duplicadas en la visualización
+            // de las tarjetas
+            const divArtwork =
+                document.getElementsByClassName("artwork-container");
+            for (let i = 0; i < divArtwork.length; i++) {
+                const div = divArtwork[i];
+
+                // obtener el id de la obra por medio del dataset
+                const id = div.dataset.artid;
+
+                // obtener el elemento con el mismo id
+                const el = document.querySelector(`[data-artid="${id}"]`);
+
+                // si existe mas de uno, eliminarlo y dejar solo uno
+                if (el && el === div) {
+                    el.remove();
+                }
+            }
         },
 
         /**

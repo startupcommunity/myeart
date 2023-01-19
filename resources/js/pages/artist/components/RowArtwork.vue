@@ -1,5 +1,8 @@
 <template>
-    <div class="w-full h-full animate-swing-in-top-fwd">
+    <div
+        class="w-full h-full animate-swing-in-top-fwd artwork-container"
+        :data-artid="artwork.id"
+    >
         <div class="rounded-md hover:animate-shadow-drop-center">
             <router-link :to="routerPath">
                 <img

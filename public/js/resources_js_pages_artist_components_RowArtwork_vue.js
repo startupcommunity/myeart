@@ -68,7 +68,10 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "w-full h-full animate-swing-in-top-fwd"
+    staticClass: "w-full h-full animate-swing-in-top-fwd artwork-container",
+    attrs: {
+      "data-artid": _vm.artwork.id
+    }
   }, [_c("div", {
     staticClass: "rounded-md hover:animate-shadow-drop-center"
   }, [_c("router-link", {
