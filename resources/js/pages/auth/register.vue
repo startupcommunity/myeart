@@ -44,7 +44,7 @@
                         <input
                             v-model="email"
                             type="text"
-                            placeholder="Correo electronico"
+                            placeholder="Correo electrónico"
                             class="input100"
                         />
                         <span class="focus-input100 email-input"></span>
@@ -111,23 +111,23 @@
                         />
                         <label
                             for="default-checkbox-one"
-                            class="ml-2 mt-2 text-base font-semibold text-gray-900 dark:text-gray-300"
+                            class="ml-2 mt-2 text-base font-light text-gray-100"
                         >
-                            Acepto los
-                            <b class="border-b border-white">
-                                Términos y Condiciones
-                            </b>
+                            <span>Acepto los</span>
                         </label>
+                        <button
+                            class="font-bold hover:underline"
+                            type="button"
+                            @click.stop="showTermsAndCondition"
+                        >
+                            Términos y Condiciones
+                        </button>
+                        <Terms
+                            :show="showTerms"
+                            :fullScreen="true"
+                            @close="showTerms = false"
+                        />
                     </div>
-                    <!-- <div>
-                        <v-checkbox
-                            v-model="accept"
-                            label="Acepto los Términos y Condiciones"
-                            color="orange darken-3"
-                            value="orange darken-3"
-                            hide-details
-                        ></v-checkbox>
-                    </div> -->
 
                     <br />
 
@@ -137,7 +137,7 @@
                             type="button"
                             v-on:click="register"
                         >
-                            Registrate
+                            Regístrate
                         </button>
                     </div>
 
@@ -159,87 +159,88 @@
 
 <script>
 import { mapState } from "vuex";
-//data
-function data() {
-    return {
-        action: "register",
-        username: "",
-        name: "",
-        email: "",
-        password: "",
-        password_confirmation: "",
-        accept: false,
-    };
-}
-//computed
-function authErrors() {
-    return this.$store.getters.authErrors;
-}
-//methods
-function register() {
-    if (this.accept) {
-        const {
-            action,
-            username,
-            name,
-            email,
-            password,
-            password_confirmation,
-        } = this;
-        this.$store
-            .dispatch("authRequest", {
-                action,
-                username,
-                name,
-                email,
-                password,
-                password_confirmation,
-            })
-            .then(() => {
-                this.$notify({
-                    group: "container",
-                    text: "Usuario registrado",
-                    type: "success",
-                });
-                this.$router.push("/perfil");
-            });
-    } else {
-        this.$notify({
-            group: "container",
-            title: "¡Error!",
-            text: "Porfavor aceptar los terminos y condiciones",
-            type: "error",
-        });
-    }
-}
-//computed
-function apiStateFormLoading() {
-    return this.status === "loading";
-}
-//watch
-function statusEvents() {
-    if (this.status === "success") {
-        this.$router.push("/perfil");
-    }
-}
+import Terms from "./components/Terms.vue";
+
 export default {
     name: "register",
-    data,
-    methods: {
-        register,
+    components: { Terms },
+    data() {
+        return {
+            action: "register",
+            username: "",
+            name: "",
+            email: "",
+            password: "",
+            password_confirmation: "",
+            accept: false,
+            showTerms: false,
+        };
     },
     beforeDestroy() {
         this.authErrors.clear();
     },
     computed: {
-        authErrors,
-        apiStateFormLoading,
+        apiStateFormLoading() {
+            return this.status === "loading";
+        },
         ...mapState({
             status: (state) => state.auth.status,
         }),
+        authErrors() {
+            return this.$store.getters.authErrors;
+        },
     },
     watch: {
-        statusEvents,
+        statusEvents() {
+            if (this.status === "success") {
+                this.$router.push("/perfil");
+            }
+        },
+    },
+    methods: {
+        register() {
+            if (this.accept) {
+                const {
+                    action,
+                    username,
+                    name,
+                    email,
+                    password,
+                    password_confirmation,
+                } = this;
+                this.$store
+                    .dispatch("authRequest", {
+                        action,
+                        username,
+                        name,
+                        email,
+                        password,
+                        password_confirmation,
+                    })
+                    .then(() => {
+                        this.$notify({
+                            group: "container",
+                            text: "Usuario registrado",
+                            type: "success",
+                        });
+                        this.$router.push("/perfil");
+                    });
+
+                return;
+            }
+
+            this.$notify({
+                group: "container",
+                title: "¡Error!",
+                text: "Por favor aceptar los términos y condiciones",
+                type: "error",
+            });
+        },
+
+        showTermsAndCondition() {
+            this.showTerms = true;
+            console.log(this.showTerms);
+        },
     },
 };
 </script>
