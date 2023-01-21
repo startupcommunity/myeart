@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <div
+        :id="'order_' + order.id"
+        :class="{ 'animate-fade-in-down': !loadingPdf }"
+    >
         <div
             class="p-3 w-full text-white"
             :class="{
@@ -34,7 +37,9 @@
                     <div
                         v-for="art in items"
                         :key="art.id"
-                        class="animate-fade-in-both"
+                        :class="{
+                            'animate-fade-in-both': !loadingPdf,
+                        }"
                     >
                         <div class="flex justify-start gap-5 mb-3">
                             <img
@@ -51,12 +56,24 @@
                     </div>
                 </div>
                 <div class="w-full lg:w-[30%]">
-                    <div class="flex flex-col gap-3">
+                    <!-- <LoadingTailwind v-if="loadingPdf" /> -->
+                    <div class="flex flex-col gap-3" v-if="!loadingPdf">
+                        <v-btn
+                            color="gray darken-1"
+                            large
+                            outlined
+                            class="text-zinc-900"
+                            @click.stop="$emit('see-purchase', order)"
+                            v-if="status === ORDER_STATES.canceled.val"
+                        >
+                            Ver detalles
+                        </v-btn>
                         <v-btn
                             color="#B2794C"
                             large
                             class="text-white"
                             @click.stop="$emit('see-purchase', order)"
+                            v-if="status !== ORDER_STATES.canceled.val"
                         >
                             Ver compra
                         </v-btn>
@@ -75,7 +92,8 @@
                             large
                             outlined
                             class="text-zinc-900"
-                            @click.stop=""
+                            @click.stop="downloadPdf"
+                            v-if="status !== ORDER_STATES.canceled.val"
                         >
                             <span class="block md:hidden">
                                 Descargar certificado
@@ -106,16 +124,25 @@
 
 <script>
 import getDataMixin from "../../../mixins/getDataMixin";
+import html2pdf from "html2pdf.js";
+import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 
 export default {
     name: "CardOrder",
     mixins: [getDataMixin],
+    components: { LoadingTailwind },
 
     props: {
         order: {
             type: Object,
             default: () => ({}),
         },
+    },
+
+    data() {
+        return {
+            loadingPdf: false,
+        };
     },
 
     computed: {
@@ -208,6 +235,31 @@ export default {
             const front_page = gallery.filter((pic) => pic.front_page === 1);
 
             return `${this.pathArtworkGallery + front_page[0]?.picture}`;
+        },
+
+        downloadPdf() {
+            this.loadingPdf = true;
+
+            const element = document.getElementById("order_" + this.order.id);
+            const opt = {
+                margin: 1,
+                filename: "invoice.pdf",
+                image: { type: "jpeg", quality: 0.98 },
+                html2canvas: { scale: 3 },
+                jsPDF: {
+                    unit: "in",
+                    format: "letter",
+                    orientation: "portrait",
+                },
+            };
+
+            // New Promise-based usage:
+            const pdf = html2pdf().from(element).set(opt);
+            pdf.save();
+
+            setTimeout(() => {
+                this.loadingPdf = false;
+            }, 1000);
         },
     },
 };

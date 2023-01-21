@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Factories\OrderFactory;
 use App\Http\Requests\ConfirmOrdenRequest;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\JsonResponse;
+use App\Factories\OrderFactory;
+use Illuminate\Http\Request;
 use App\Utils\ResponseJson;
 use App\Querys\OrderDB;
 use Exception;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -85,5 +86,20 @@ class OrderController extends Controller
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }
+    }
+
+
+    /**
+     * Descargar un certificado con los datos de la orden
+     * formato pdf
+     * @param integer $id       ID de la orden
+     * @return
+     */
+    public function downloadPdf(int $id)
+    {
+        // obtiene la orden y sus items
+        $order = $this->db->getItems($id);
+        $pdf = PDF::loadView('pdf.orders.index', $order);
+        return $pdf->stream('invoice.pdf');
     }
 }

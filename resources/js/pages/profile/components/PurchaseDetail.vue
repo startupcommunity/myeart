@@ -17,7 +17,7 @@
             <h3
                 class="text-3xl uppercase font-bold text-zinc-900 tracking-wider"
             >
-                Detalle de la compra
+                {{ title }}
             </h3>
             <p class="uppercase text-2xl font-medium">Nº {{ orderNumber }}</p>
             <p class="text-base font-medium">{{ orderDate }}</p>
@@ -113,6 +113,10 @@ export default {
         order: {
             type: Object,
             default: () => ({}),
+        },
+        title: {
+            type: String,
+            default: "Detalle de la compra",
         },
     },
 

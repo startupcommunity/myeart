@@ -93,7 +93,7 @@
                         v-for="order in orders"
                         :key="order.id"
                         :order="order"
-                        class="animate-fade-in-down w-full"
+                        class="w-full"
                         @see-purchase="seePurchase"
                         @confirm-order="seeConfirmOrder"
                     />
@@ -104,9 +104,10 @@
 
         <!-- ver compra -->
         <PurchaseDetail
-            v-if="showPurchase"
             class="sm:px-5 animate-fade-in-down"
+            v-if="showPurchase"
             :order="order"
+            :title="setTitle"
             @back-to-orders="goToInit"
             @cancel-order="goToInit"
             @confirm-order="seeConfirmOrder"
@@ -168,6 +169,14 @@ export default {
                 { text: "Ultimo año", val: 5 },
             ],
         };
+    },
+
+    computed: {
+        setTitle() {
+            return this.order?.status === this.statusEnum.canceled
+                ? "Detalle del pedido/cancelado"
+                : "Detalle de la compra";
+        },
     },
 
     watch: {
