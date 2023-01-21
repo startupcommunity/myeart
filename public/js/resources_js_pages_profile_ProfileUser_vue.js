@@ -2954,6 +2954,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loadingPdf = true;
+      this.noty("Descargando certificado...", "info", 5000);
       var element = document.getElementById("order_" + this.order.id);
       var opt = {
         margin: 1,

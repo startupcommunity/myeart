@@ -239,6 +239,7 @@ export default {
 
         downloadPdf() {
             this.loadingPdf = true;
+            this.noty("Descargando certificado...", "info", 5000);
 
             const element = document.getElementById("order_" + this.order.id);
             const opt = {
