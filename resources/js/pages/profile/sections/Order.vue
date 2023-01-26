@@ -238,8 +238,6 @@ export default {
                         const concatItems = [].concat.apply([], mapItems);
                         this.items = concatItems;
                         this.original = JSON.parse(JSON.stringify(concatItems));
-
-                        console.log(this.items);
                         this.filterOrders();
                     }
                 })

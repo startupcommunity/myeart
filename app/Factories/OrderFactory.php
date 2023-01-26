@@ -63,13 +63,7 @@ class OrderFactory
 
       // si el usuario no es el dueño/creador de la orden
       // no se puede cancelar
-      if ($order->user_id !== $request->user_id) {
-        return false;
-      }
-
-      // si el pedido ya fue cancelado
-      // no se puede cancelar el item
-      if ($order->status === OrderStatusEnum::CANCELED) {
+      if (!$order->isOwner($request->user_id) || $order->isCanceled()) {
         return false;
       }
 
