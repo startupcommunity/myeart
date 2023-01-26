@@ -23,7 +23,27 @@ Route::group(['prefix' => 'orders'], function () {
   Route::put('/cancel/{id}', [OrderController::class, 'cancelOrders'])->name('cancelOrders');
 
   /**
+   * Cancela el item de una orden
+   */
+  Route::post('/cancel-item', [OrderController::class, 'cancelItem'])->name('cancelItemOrders');
+
+  /**
+   * Confirma el item de una orden
+   */
+  Route::post('/confirm-item', [OrderController::class, 'confirmItem'])->name('confirmItemOrders');
+
+  /**
    * Confirma una orden de compra
    */
   Route::post('/confirm', [OrderController::class, 'confirmOrders'])->name('confirmOrders');
+
+
+  // -------------------------------------
+  // ventas - también cuenta como ordenes
+  // -------------------------------------
+
+  /**
+   * Obtiene las ventas de un usuario
+   */
+  Route::get('/get-user-sales/{id?}', [OrderController::class, 'getUserSales'])->name('getUserSales');
 });

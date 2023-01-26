@@ -125,6 +125,23 @@
                 <button
                     type="button"
                     class="flex flex-col items-center justify-start space-y-2"
+                    @click="changeEmitAndClass(mobileSection.sale)"
+                >
+                    <i
+                        class="fa-solid fa-share-from-square text-primary fa-2x"
+                    ></i>
+                    <span
+                        class="tracking-tight"
+                        :class="sections[0].sale ? 'font-black' : 'font-light'"
+                    >
+                        Ventas
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button
+                    type="button"
+                    class="flex flex-col items-center justify-start space-y-2"
                     @click="changeEmitAndClass(mobileSection.direcciones)"
                 >
                     <i class="fas fa-location-arrow text-primary fa-2x"></i>
@@ -194,6 +211,7 @@ export default {
                     obras: false,
                     fav: false,
                     order: false,
+                    sale: false,
                     direcciones: false,
                     pagos: false,
                     seguridad: false,
@@ -208,6 +226,7 @@ export default {
                     obras: false,
                     fav: false,
                     order: false,
+                    sale: false,
                     direcciones: false,
                     pagos: false,
                     seguridad: false,
@@ -221,6 +240,7 @@ export default {
                 obras: "obras",
                 fav: "fav",
                 order: "order",
+                sale: "sale",
                 direcciones: "direcciones",
                 pagos: "pagos",
                 seguridad: "seguridad",

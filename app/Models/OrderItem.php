@@ -20,11 +20,15 @@ class OrderItem extends Model
      * @var array
      */
     protected $fillable = [
-        'order_id',
-        'artwork_id',
-        'title',
-        'quantity',
-        'price'
+        'number',       // int
+        'order_id',     // int
+        'artwork_id',   // int
+        'user_id',      // int
+        'title',        // string
+        'quantity',     // int
+        'price',        // decimal
+        'photo',        // string
+        'status',       // tinyint '0' => 'pending', '1' => 'shipped', '2' => 'delivered', '3' => 'cancelled
     ];
 
     /**
@@ -45,5 +49,15 @@ class OrderItem extends Model
     public function artwork(): BelongsTo
     {
         return $this->belongsTo(Artwork::class);
+    }
+
+    /**
+     * Devuelve el usuario creador de la obra o item
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

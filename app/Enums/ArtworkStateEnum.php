@@ -17,23 +17,4 @@ final class ArtworkStateEnum
 
     // en carrito
     public const IN_CART = 4;
-
-    /**
-     * Conversion a string
-     *
-     * @return string
-     */
-    public function __toString(): string
-    {
-        switch ($this->value) {
-            case self::PUBLISHED:
-                return Lang::get('Publicada');
-            case self::SOLD:
-                return Lang::get('Vendida');
-            case self::DRAFT:
-                return Lang::get('Borrador');
-            case self::IN_CART:
-                return Lang::get('En carrito');
-        }
-    }
 }

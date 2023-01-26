@@ -57,6 +57,17 @@
                 </button>
             </div>
             <div class="flex flex-wrap gap-4 items-center justify-start py-6">
+                <button type="button" @click="showSection('sale')">
+                    <i class="fa-solid fa-share-from-square text-primary"></i>
+                    <span
+                        class="tracking-tight uppercase"
+                        :class="sections.sale ? 'font-black' : 'font-light'"
+                    >
+                        Mis Ventas
+                    </span>
+                </button>
+            </div>
+            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
                 <button type="button" @click="showSection('direcciones')">
                     <i class="fas fa-location-arrow text-primary"></i>
                     <span

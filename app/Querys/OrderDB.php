@@ -2,9 +2,12 @@
 
 namespace App\Querys;
 
+use App\Enums\ArtworkStateEnum;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection as SupportCollection;
 
 class OrderDB
 {
@@ -18,7 +21,7 @@ class OrderDB
   {
     $order = $this->getOrder($orderID);
     return $order->load([
-      'items.artwork.gallery', 'items.artwork.categories', 'items.artwork.user'
+      'items.artwork.categories', 'items.user'
     ]);
   }
 
@@ -55,8 +58,10 @@ class OrderDB
       abort(404);
     }
 
-    $data = $user->orders()->with([
-      'items.artwork.gallery',
+    $orders = $user->orders()->with([
+      'items.order.shippingAddress',
+      'items.order.shippingMethod',
+      'items.user',
       'shippingAddress',
       'shippingMethod'
     ]);
@@ -66,12 +71,12 @@ class OrderDB
 
       // todas las ordenes
       if ($opt === 1) {
-        return $data->get();
+        return $orders->get();
       }
 
       // ordenes de la semana en curso
       if ($opt === 2) {
-        $data->whereBetween('created_at', [
+        $orders->whereBetween('created_at', [
           now()->startOfWeek(),
           now()->endOfWeek()
         ])->get();
@@ -79,7 +84,7 @@ class OrderDB
 
       // ordenes del mes en curso
       if ($opt === 3) {
-        $data->whereBetween('created_at', [
+        $orders->whereBetween('created_at', [
           now()->startOfMonth(),
           now()->endOfMonth()
         ])->get();
@@ -87,7 +92,7 @@ class OrderDB
 
       // ordenes del mes pasado
       if ($opt === 4) {
-        $data->whereBetween('created_at', [
+        $orders->whereBetween('created_at', [
           now()->subMonth()->startOfMonth(),
           now()->subMonth()->endOfMonth()
         ])->get();
@@ -95,13 +100,56 @@ class OrderDB
 
       // ordenes del año en curso
       if ($opt === 5) {
-        $data->whereBetween('created_at', [
+        $orders->whereBetween('created_at', [
           now()->startOfYear(),
           now()->endOfYear()
         ])->get();
       }
     }
 
-    return $data->get();
+    return $orders->get();
+  }
+
+  /**
+   * Obtiene las ventas de un usuario
+   * artículos, ordenes, etc
+   *
+   * @param integer|null $id
+   * @return Collection|array|SupportCollection
+   */
+  public function getUserSales(?int $id = null): Collection|array|SupportCollection
+  {
+    $user = $id ? User::find($id) : auth()->user();
+
+    if (!$user) {
+      abort(404);
+    }
+
+    // primero obtener los artículos vendidos
+    $artworks = $user->artworks()->where('state', ArtworkStateEnum::SOLD)->get();
+
+    // obtener las ordenes de los artículos y sus relaciones
+    $orders = OrderItem::whereIn('artwork_id', $artworks->pluck('id'))
+      ->with([
+        'artwork.gallery',
+        'order.shippingAddress',
+        'order.shippingMethod'
+      ])
+      ->orderByDesc('created_at')
+      ->get();
+
+    // agrupar artículos por la misma orden
+    $orders = $orders->groupBy('order_id');
+
+    // obtener un array de las ordenes
+    // con sus artículos
+    $orders = $orders->map(function ($item, $key) {
+      return [
+        'order' => $item[0]->order,
+        'artworks' => $item
+      ];
+    });
+
+    return $orders->values();
   }
 }

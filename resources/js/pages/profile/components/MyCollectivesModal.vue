@@ -88,8 +88,6 @@ export default {
                 .then((resp) => {
                     if (resp.status === 200) {
                         this.collectives = resp.data;
-
-                        console.log(this.collectives);
                     }
                 })
                 .catch((error) => this.manageError(error))

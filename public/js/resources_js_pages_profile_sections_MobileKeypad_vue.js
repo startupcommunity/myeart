@@ -22,6 +22,7 @@ __webpack_require__.r(__webpack_exports__);
         obras: false,
         fav: false,
         order: false,
+        sale: false,
         direcciones: false,
         pagos: false,
         seguridad: false
@@ -33,6 +34,7 @@ __webpack_require__.r(__webpack_exports__);
         obras: false,
         fav: false,
         order: false,
+        sale: false,
         direcciones: false,
         pagos: false,
         seguridad: false
@@ -44,6 +46,7 @@ __webpack_require__.r(__webpack_exports__);
         obras: "obras",
         fav: "fav",
         order: "order",
+        sale: "sale",
         direcciones: "direcciones",
         pagos: "pagos",
         seguridad: "seguridad"
@@ -213,6 +216,21 @@ var render = function render() {
   }, [_vm._v("\n                    Pedidos\n                ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap justify-center items-start text-primary text-xs gap-3 mt-5"
   }, [_c("div", [_c("button", {
+    staticClass: "flex flex-col items-center justify-start space-y-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.changeEmitAndClass(_vm.mobileSection.sale);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-share-from-square text-primary fa-2x"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].sale ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Ventas\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"

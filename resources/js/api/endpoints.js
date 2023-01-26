@@ -163,8 +163,20 @@ const endpoints = {
         // cancelar una orden / {id}
         cancel: `${API}/orders/cancel/`, // put
 
+        // cancela el item de una orden // params: {user_id, item_id, order_id}
+        cancelItem: `${API}/orders/cancel-item`, // post
+
+        // confirma el item de una orden // params: {user_id, item_id, order_id}
+        confirmItem: `${API}/orders/confirm-item`, // post
+
         // confirma una orden y marca como entregada
         confirm: `${API}/orders/confirm`, // post
+    },
+
+    // ventas
+    sales: {
+        // devuelve las ventas de un usuario / {id?}
+        getUserSales: `${API}/orders/get-user-sales/`, // get
     },
 
     // eventos
@@ -260,7 +272,9 @@ const endpoints = {
         declineInvitation: `${API}/collectives/decline-invitation`, // post
     },
 
+    // notificaciones de la app
     notifications: {
+        // marca una notificación como leída / {id}
         markAsRead: `${API}/notifications/mark-as-read/`, //get
 
         // marcas todas las notificaciones como leídas

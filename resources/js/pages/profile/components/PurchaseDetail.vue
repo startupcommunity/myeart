@@ -28,20 +28,16 @@
         <div class="w-full pb-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-3">
                 <div>
-                    <div
-                        v-for="art in items"
-                        :key="art.id"
-                        class="animate-fade-in-both"
-                    >
+                    <div class="animate-fade-in-both">
                         <div class="flex justify-start gap-5 mb-3">
                             <img
-                                :src="getImage(art)"
+                                :src="getImage"
                                 alt="obra-de-arte"
                                 class="w-28 h-28 object-cover object-center aspect-square"
                             />
                             <div>
                                 <p class="text-xl font-bold text-zinc-900">
-                                    {{ art.artwork?.title }}
+                                    {{ item.title }}
                                 </p>
                             </div>
                         </div>
@@ -88,7 +84,7 @@
                             small
                             outlined
                             class="text-zinc-900"
-                            @click.stop="$emit('confirm-order', order)"
+                            @click.stop="$emit('confirm-order', item)"
                             :disabled="loading"
                             v-if="!isDelivered"
                         >
@@ -110,7 +106,7 @@ export default {
     mixins: [getDataMixin],
 
     props: {
-        order: {
+        item: {
             type: Object,
             default: () => ({}),
         },
@@ -131,14 +127,14 @@ export default {
          * Numero de orden
          */
         orderNumber() {
-            return "000" + this.order.id;
+            return this.item.number;
         },
 
         /**
          * Formato: 7 de enero de 2023
          */
         orderDate() {
-            const date = new Date(this.order.created_at);
+            const date = new Date(this.item.created_at);
 
             // const day = date.toLocaleString("es-ES", { weekday: "long" });
             const dayNumber = date.toLocaleString("es-ES", { day: "numeric" });
@@ -153,17 +149,17 @@ export default {
         },
 
         /**
-         * Artículos de la orden
-         */
-        items() {
-            return this.order.items || [];
-        },
-
-        /**
          * Tipo de envío
          */
         shippingMethod() {
-            return this.order.shipping_method || {};
+            return this.item?.order?.shipping_method || {};
+        },
+
+        /**
+         * Dirección de entrega
+         */
+        shippingAddress() {
+            return this.item?.order?.shipping_address || {};
         },
 
         /**
@@ -174,13 +170,6 @@ export default {
             return this.SHIPPING_TYPE.seller.val === this.shippingMethod.type
                 ? this.SHIPPING_TYPE.seller
                 : "";
-        },
-
-        /**
-         * Dirección de entrega
-         */
-        shippingAddress() {
-            return this.order.shipping_address || {};
         },
 
         /**
@@ -198,53 +187,64 @@ export default {
          * Total de la orden
          */
         total() {
-            return this.order.total || 0;
+            return this.item.price || 0;
         },
 
         /**
          * Si los botones de acción son visibles
          */
         isVisibleButtons() {
-            return this.order.status !== this.ORDER_STATES.canceled.val;
+            return this.item.status !== this.ITEM_STATES.canceled.val;
         },
 
         /**
          * Esta la orden entregada
          */
         isDelivered() {
-            return this.order.status === this.ORDER_STATES.delivered.val;
+            return this.item.status === this.ITEM_STATES.delivered.val;
+        },
+
+        /**
+         * Foto de portada de la obra
+         */
+        getImage() {
+            const photo = this.item.photo;
+            if (!photo) return this.getURLDefaultFrontArtwork;
+            return `${this.pathArtworkGallery + photo}`;
+        },
+
+        /**
+         * Usuario logueado
+         */
+        user() {
+            return this.$store.getters.getProfile;
         },
     },
 
     methods: {
-        getImage(art) {
-            const artwork = art.artwork || {};
-            const gallery = artwork?.gallery || [];
-
-            if (!gallery.length) return this.getURLDefaultFrontArtwork;
-
-            const front_page = gallery.filter((pic) => pic.front_page === 1);
-
-            return `${this.pathArtworkGallery + front_page[0]?.picture}`;
-        },
-
         /**
          * Cancela la orden
          */
         cancelOrder() {
-            const alert = this.confirmedDialog({
+            const dialog = this.confirmedDialog({
                 title: "¿Desea cancelar su pedido?",
                 text: "Su pedido se visualizará en el panel de cancelados y podrá volver a comprarlo.",
                 confirmButtonText: "Sí, cancelar",
                 cancelButtonText: "No, volver",
             });
 
-            alert.then((resp) => {
+            dialog.then((resp) => {
                 if (resp.isConfirmed) {
                     this.loading = true;
-                    const data = { _method: "PUT" };
+
+                    const data = {
+                        item_id: this.item.id,
+                        order_id: this.item.order_id,
+                        user_id: this.user.id,
+                    };
+
                     this.axios
-                        .post(this.ep.orders.cancel + this.order.id, data)
+                        .post(this.ep.orders.cancelItem, data)
                         .then((resp) => {
                             if (resp.status === 200) {
                                 this.notySwal({
@@ -253,6 +253,14 @@ export default {
                                 });
 
                                 this.$emit("cancel-order");
+                            }
+
+                            if (resp.status === 204) {
+                                this.notySwal({
+                                    title: "No se pudo cancelar el pedido",
+                                    text: "Hubo un problema al procesar su petición.",
+                                    icon: "error",
+                                });
                             }
                         })
                         .catch((error) => this.manageError(error))

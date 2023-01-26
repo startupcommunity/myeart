@@ -19,11 +19,9 @@
             >
                 Confirmar pedido
             </h3>
-            <p class="uppercase text-2xl font-medium">
-                Nº {{ getOrderNumber(order.id) }}
-            </p>
+            <p class="uppercase text-2xl font-medium">Nº {{ item.number }}</p>
             <p class="text-base font-medium">
-                {{ getOrderDate(order.created_at) }}
+                {{ getOrderDate(item.created_at) }}
             </p>
         </div>
         <!-- /detalles de la compra -->
@@ -32,17 +30,13 @@
         <div class="w-full pb-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-3">
                 <div>
-                    <div
-                        v-for="art in items"
-                        :key="art.id"
-                        class="animate-fade-in-both"
-                    >
+                    <div class="animate-fade-in-both">
                         <div class="flex flex-col justify-start gap-2 mb-5">
                             <h2 class="text-xl font-bold text-zinc-900">
-                                {{ art.artwork?.title }}
+                                {{ item.title }}
                             </h2>
                             <img
-                                :src="getFrontArtwork(art)"
+                                :src="getImage"
                                 alt="obra-de-arte"
                                 class="w-28 h-28 object-cover object-center aspect-square"
                             />
@@ -61,16 +55,16 @@
                         >
                             <v-radio value="1" color="#B2794C">
                                 <template v-slot:label>
-                                    <span class="font-bold mt-2 text-gray-900"
-                                        >SI</span
-                                    >
+                                    <span class="font-bold mt-2 text-gray-900">
+                                        SI
+                                    </span>
                                 </template>
                             </v-radio>
                             <v-radio value="2" color="#B2794C">
                                 <template v-slot:label>
-                                    <span class="font-bold mt-2 text-gray-900"
-                                        >No</span
-                                    >
+                                    <span class="font-bold mt-2 text-gray-900">
+                                        No
+                                    </span>
                                 </template>
                             </v-radio>
                         </v-radio-group>
@@ -82,9 +76,9 @@
                     ¿Como valoras tu experiencia?
                 </label> -->
 
-                <label class="font-light text-gray-900"
-                    >Envía un comentario</label
-                >
+                <label class="font-light text-gray-900">
+                    Envía un comentario
+                </label>
                 <v-textarea
                     v-model="form.comment"
                     color="#B2794C"
@@ -96,7 +90,7 @@
                     <v-btn
                         large
                         color="#B2794C"
-                        @click.stop="confirmOrder"
+                        @click.stop="confirmItem"
                         :loading="globalLoading"
                         :disabled="globalLoading"
                         class="text-white"
@@ -118,7 +112,7 @@ export default {
     mixins: [utilMixin],
 
     props: {
-        order: {
+        item: {
             type: Object,
             default: () => ({}),
         },
@@ -127,7 +121,8 @@ export default {
     data() {
         return {
             form: {
-                order_id: this.order.id,
+                order_id: this.item.order_id,
+                item_id: this.item.id,
                 delivered: null,
                 rating: null,
                 comment: null,
@@ -137,26 +132,43 @@ export default {
 
     computed: {
         /**
-         * Artículos de la orden
+         * Foto de portada de la obra
          */
-        items() {
-            return this.order.items || [];
+        getImage() {
+            const photo = this.item.photo;
+            if (!photo) return this.getURLDefaultFrontArtwork;
+            return `${this.pathArtworkGallery + photo}`;
+        },
+
+        /**
+         * Usuario logueado
+         */
+        user() {
+            return this.$store.getters.getProfile;
         },
     },
 
     methods: {
-        confirmOrder() {
+        confirmItem() {
             this.globalLoading = true;
+            this.form.user_id = this.user.id;
             this.axios
-                .post(this.ep.orders.confirm, this.form)
+                .post(this.ep.orders.confirmItem, this.form)
                 .then((resp) => {
                     if (resp.status === 200) {
                         this.notySwal({
-                            title: "Agradecemos tu tiempo",
-                            text: "Confirmado con éxito.",
+                            title: "Agradecemos tu tiempo!",
+                            text: "Obra confirmada con éxito.",
                         });
 
                         this.$emit("confirmed-order");
+                    }
+
+                    if (resp.status === 204) {
+                        this.notySwal({
+                            title: "No podemos confirmar tu pedido",
+                            text: "Hubo un problema al confirmar tu pedido.",
+                        });
                     }
                 })
                 .catch((error) => this.manageError(error))

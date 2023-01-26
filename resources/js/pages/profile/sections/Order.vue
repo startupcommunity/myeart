@@ -4,7 +4,7 @@
         id="order"
         v-show="showSection"
     >
-        <div class="sm:px-5" v-if="!showPurchase && !showConfirmOrder">
+        <div class="sm:px-5" v-if="!showPurchase && !showConfirmItem">
             <h3
                 class="font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
             >
@@ -27,9 +27,9 @@
                                 block
                                 class="uppercase tracking-wide"
                                 :class="
-                                    status.pending ? 'font-bold' : 'font-light'
+                                    status.shipped ? 'font-bold' : 'font-light'
                                 "
-                                @click.stop="filterToState(statusEnum.pending)"
+                                @click.stop="filterToState(ITEM_STATES.shipped)"
                             >
                                 En curso
                             </v-btn>
@@ -48,7 +48,7 @@
                                         : 'font-light'
                                 "
                                 @click.stop="
-                                    filterToState(statusEnum.delivered)
+                                    filterToState(ITEM_STATES.delivered)
                                 "
                             >
                                 Finalizadas
@@ -65,7 +65,9 @@
                                 :class="
                                     status.canceled ? 'font-bold' : 'font-light'
                                 "
-                                @click.stop="filterToState(statusEnum.canceled)"
+                                @click.stop="
+                                    filterToState(ITEM_STATES.canceled)
+                                "
                             >
                                 Canceladas
                             </v-btn>
@@ -89,10 +91,11 @@
             <div class="py-6 w-full">
                 <div class="flex flex-wrap h-full items-stretch">
                     <LoadingTailwind v-if="loading" />
-                    <CardOrder
-                        v-for="order in orders"
-                        :key="order.id"
-                        :order="order"
+                    <CardItem
+                        v-for="art in items"
+                        :key="art.id"
+                        :item="art"
+                        :shippingAddress="art.order?.shipping_address"
                         class="w-full"
                         @see-purchase="seePurchase"
                         @confirm-order="seeConfirmOrder"
@@ -106,7 +109,7 @@
         <PurchaseDetail
             class="sm:px-5 animate-fade-in-down"
             v-if="showPurchase"
-            :order="order"
+            :item="item"
             :title="setTitle"
             @back-to-orders="goToInit"
             @cancel-order="goToInit"
@@ -116,8 +119,8 @@
 
         <!-- confirmar compra -->
         <ConfirmPurchase
-            v-if="showConfirmOrder"
-            :order="order"
+            v-if="showConfirmItem"
+            :item="item"
             @back-to-orders="goToInit"
             @confirmed-order="goToInit"
         />
@@ -128,14 +131,15 @@
 <script>
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 import utilMixin from "../../../mixins/utilMixin";
-import CardOrder from "../components/CardOrder.vue";
+import CardItem from "../components/CardItem.vue";
 import PurchaseDetail from "../components/PurchaseDetail.vue";
 import ConfirmPurchase from "../components/ConfirmPurchase.vue";
+import getDataMixin from "../../../mixins/getDataMixin";
 
 export default {
     name: "OrderSection",
-    components: { LoadingTailwind, CardOrder, PurchaseDetail, ConfirmPurchase },
-    mixins: [utilMixin],
+    components: { LoadingTailwind, CardItem, PurchaseDetail, ConfirmPurchase },
+    mixins: [utilMixin, getDataMixin],
     props: {
         showSection: {
             type: Boolean,
@@ -146,20 +150,17 @@ export default {
         return {
             loading: false,
             showPurchase: false,
-            showConfirmOrder: false,
+            showConfirmItem: false,
             selectedOption: 1,
-            orders: [],
+            // orders: [],
+            items: [],
             original: [],
-            order: {},
+            item: {},
+            // order: {},
             status: {
-                pending: false,
+                shipped: false,
                 delivered: false,
                 canceled: false,
-            },
-            statusEnum: {
-                pending: 1,
-                delivered: 5,
-                canceled: 3,
             },
             sortBy: [
                 { text: "Ver todos", val: 1 },
@@ -173,7 +174,7 @@ export default {
 
     computed: {
         setTitle() {
-            return this.order?.status === this.statusEnum.canceled
+            return this.item?.status === this.ITEM_STATES.canceled
                 ? "Detalle del pedido/cancelado"
                 : "Detalle de la compra";
         },
@@ -182,7 +183,7 @@ export default {
     watch: {
         showSection(val) {
             if (val) {
-                this.status.pending = true;
+                this.status.shipped = true;
                 this.showPurchase = false;
                 this.getOrders();
             }
@@ -199,7 +200,7 @@ export default {
          */
         resetStatus() {
             this.status = {
-                pending: false,
+                shipped: false,
                 delivered: false,
                 canceled: false,
             };
@@ -212,9 +213,9 @@ export default {
          */
         filterToState(state) {
             this.resetStatus();
-            this.status.pending = state === this.statusEnum.pending;
-            this.status.delivered = state === this.statusEnum.delivered;
-            this.status.canceled = state === this.statusEnum.canceled;
+            this.status.shipped = state === this.ITEM_STATES.shipped;
+            this.status.delivered = state === this.ITEM_STATES.delivered;
+            this.status.canceled = state === this.ITEM_STATES.canceled;
             this.filterOrders();
         },
 
@@ -227,8 +228,18 @@ export default {
                 .get(this.ep.orders.getUserOrders, { params })
                 .then((resp) => {
                     if (resp.status === 200) {
-                        this.orders = resp.data;
-                        this.original = JSON.parse(JSON.stringify(this.orders));
+                        // obtener  ordenes
+                        // guardar ordenes originales
+                        // this.original = JSON.parse(JSON.stringify(this.orders));
+
+                        // obtener solo los items de todas las ordenes
+                        // this.orders = resp.data;
+                        const mapItems = resp.data.map((order) => order.items);
+                        const concatItems = [].concat.apply([], mapItems);
+                        this.items = concatItems;
+                        this.original = JSON.parse(JSON.stringify(concatItems));
+
+                        console.log(this.items);
                         this.filterOrders();
                     }
                 })
@@ -241,9 +252,7 @@ export default {
          * filtradas según la opción seleccionada
          */
         getFilterOrders() {
-            const params = {
-                option: this.selectedOption,
-            };
+            const params = { option: this.selectedOption };
 
             this.getOrders(params);
         },
@@ -252,51 +261,55 @@ export default {
          * Filtrar las ordenes según el estado seleccionado
          */
         filterOrders() {
-            // pendientes - en curso
-            if (this.status.pending) {
-                this.orders = this.original.filter(
-                    (or) => or.status === this.statusEnum.pending
+            // pendientes - enviadas
+            if (this.status.shipped) {
+                this.items = this.original.filter(
+                    (i) => i.status === this.ITEM_STATES.shipped.val
                 );
             }
 
             // finalizadas - delivered
             if (this.status.delivered) {
-                this.orders = this.original.filter(
-                    (order) => order.status === this.statusEnum.delivered
+                this.items = this.original.filter(
+                    (i) => i.status === this.ITEM_STATES.delivered.val
                 );
             }
 
             // canceladas
             if (this.status.canceled) {
-                this.orders = this.original.filter(
-                    (order) => order.status === this.statusEnum.canceled
+                this.items = this.original.filter(
+                    (i) => i.status === this.ITEM_STATES.canceled.val
                 );
             }
         },
 
         /**
          * Ver detalle de la compra
+         *
+         * @param {Object} item     item de la orden
          */
-        seePurchase(order) {
-            this.showConfirmOrder = false;
+        seePurchase(item) {
+            this.showConfirmItem = false;
             this.showPurchase = true;
-            this.order = order;
+            this.item = item;
         },
 
         /**
          * Confirmar orden
+         *
+         * @param {Object} item     item de la orden
          */
-        seeConfirmOrder(order) {
+        seeConfirmOrder(item) {
             this.showPurchase = false;
-            this.showConfirmOrder = true;
-            this.order = order;
+            this.showConfirmItem = true;
+            this.item = item;
         },
 
         /**
          * Ir al principio
          */
         goToInit() {
-            this.showConfirmOrder = false;
+            this.showConfirmItem = false;
             this.showPurchase = false;
             this.getOrders();
         },

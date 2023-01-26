@@ -84,6 +84,13 @@
                     />
                     <!-- /sección pedidos -->
 
+                    <!-- sección ventas -->
+                    <Sale
+                        :showSection="sections.sale"
+                        class="sm:min-h-[52rem]"
+                    />
+                    <!-- /sección ventas -->
+
                     <!-- sección direcciones -->
                     <Address
                         :showSection="sections.direction"
@@ -150,6 +157,7 @@ import Release from "./sections/Release.vue";
 import Order from "./sections/Order.vue";
 import HeroProfile from "./sections/HeroProfile.vue";
 import MyCollectivesModal from "./components/MyCollectivesModal.vue";
+import Sale from "./sections/Sale.vue";
 
 // secciones como tabs
 const SECTIONS = {
@@ -158,6 +166,7 @@ const SECTIONS = {
     pub: "pub",
     fav: "fav",
     order: "order",
+    sale: "sale",
     direcciones: "direcciones",
     pagos: "pagos",
     seguridad: "seguridad",
@@ -183,6 +192,7 @@ export default {
         Order,
         HeroProfile,
         MyCollectivesModal,
+        Sale,
     },
     data() {
         return {
@@ -199,6 +209,7 @@ export default {
                 pub: false,
                 fav: false,
                 order: false,
+                sale: false,
                 direction: false,
                 payment: false,
                 security: false,
@@ -258,6 +269,7 @@ export default {
             this.sections.pub = id == SECTIONS.pub;
             this.sections.fav = id == SECTIONS.fav;
             this.sections.order = id == SECTIONS.order;
+            this.sections.sale = id == SECTIONS.sale;
             this.sections.direction = id == SECTIONS.direcciones;
         },
 

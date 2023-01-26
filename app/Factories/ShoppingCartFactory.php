@@ -3,6 +3,7 @@
 namespace App\Factories;
 
 use App\Enums\ArtworkStateEnum;
+use App\Enums\ItemStatusEnum;
 use App\Enums\OrderStatusEnum;
 use App\Enums\TypeNotificationEnum;
 use App\Models\Artwork;
@@ -108,11 +109,18 @@ class ShoppingCartFactory
 
       // agregar los items a la orden
       foreach ($items as $item) {
+        $random = $item->artwork->id . date('Ymd');
+        $frontPhoto = $item->artwork->getFrontPhoto();
+
         $order->items()->create([
-          'artwork_id' => $item->artwork_id,
-          'price' => $item->artwork->price,
-          'quantity' => 1,
-          'title' => $item->artwork->title,
+          'number'      => $random,
+          'artwork_id'  => $item->artwork_id,
+          'user_id'     => $item->artwork->user_id,
+          'price'       => $item->artwork->price,
+          'quantity'    => 1,
+          'title'       => $item->artwork->title,
+          'photo'       => $frontPhoto,
+          'status'      => ItemStatusEnum::SHIPPED,
         ]);
 
         // pasar los items a estado vendido
@@ -122,7 +130,7 @@ class ShoppingCartFactory
         $data = [
           'user_id' => $user->id,
           'notifiable_id' => $item->artwork->user_id,
-          'url' => '/obras/'.$item->artwork->id,
+          'url' => '/obras/' . $item->artwork->id,
           'message' => "Ha comprado su obra",
           'type' => TypeNotificationEnum::BUY //'new-buy'
         ];
@@ -132,16 +140,14 @@ class ShoppingCartFactory
 
       // registrar la dirección de envío
       $order->shippingAddress()->create([
-        'name' => $user->name,
-        'address' => $request->address,
-        'city' => $request->city,
+        'name'        => $user->name,
+        'address'     => $request->address,
+        'city'        => $request->city,
         'postal_code' => $request->postal_code,
       ]);
 
       // registrar el método de envió
-      $order->shippingMethod()->create([
-        'type' => $request->shipping_method,
-      ]);
+      $order->shippingMethod()->create(['type' => $request->shipping_method]);
 
       // eliminar los items del carrito de compras
       $user->shoppingCart()->delete();

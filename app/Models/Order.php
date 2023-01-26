@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ItemStatusEnum;
+use App\Enums\OrderStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,12 +24,12 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'subtotal',
-        'tax',
-        'shipping',
-        'total',
-        'status'
+        'user_id',  // int
+        'subtotal', // decimal
+        'tax',      // decimal
+        'shipping', // decimal
+        'total',    // decimal
+        'status'    // tinyint
     ];
 
     /**
@@ -86,5 +88,68 @@ class Order extends Model
     public function rating(): ?HasOne
     {
         return $this->hasOne(RatingOrder::class);
+    }
+
+    /**
+     * Verificar si todos los items fueron cancelados
+     *
+     * @return bool
+     */
+    public function allItemsCanceled(): bool
+    {
+        $totalItems = $this->items()->count();
+        $cancelledItems = $this->items()->get()->filter(
+            fn ($item) => $item->status === ItemStatusEnum::CANCELED
+        )->count();
+
+        return $cancelledItems === $totalItems;
+    }
+
+    /**
+     * Verifica si todas los items fueron aprobados
+     *
+     * @return bool
+     */
+    public function allItemsApproved(): bool
+    {
+        $totalItems = $this->items()->count();
+        $approvedItems = $this->items()->get()->filter(
+            fn ($item) => $item->status === ItemStatusEnum::DELIVERED
+        )->count();
+
+        return $approvedItems === $totalItems;
+    }
+
+    /**
+     * Verifica si la orden fue cancelada
+     *
+     * @return bool
+     */
+    public function isCanceled(): bool
+    {
+        return $this->status === OrderStatusEnum::CANCELED;
+    }
+
+    /**
+     * Verifica si la orden fue aprobada
+     *
+     * @return bool
+     */
+    public function isApproved(): bool
+    {
+        return $this->status === OrderStatusEnum::DELIVERED;
+    }
+
+    /**
+     * Verifica si la orden la esta consultando el
+     * usuario creador
+     *
+     * @param int|null $user_id         Id del usuario
+     * @return bool
+     */
+    public function isOwner(?int $user_id): bool
+    {
+        $userID = $user_id ?? auth()->id();
+        return $this->user_id === $user_id;
     }
 }

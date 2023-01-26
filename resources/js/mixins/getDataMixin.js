@@ -76,13 +76,14 @@ export default {
         },
 
         /**
-         * Estado de las ordenes
+         * Estado de los items de una orden
          * @returns Object
          */
-        ORDER_STATES() {
+        ITEM_STATES() {
             return {
-                pending: { text: "Pendiente", val: 1 },
-                delivered: { text: "Entregado", val: 5 },
+                pending: { text: "Pendiente", val: 0 },
+                shipped: { text: "Enviado", val: 1 },
+                delivered: { text: "Entregado", val: 2 },
                 canceled: { text: "Cancelado", val: 3 },
             };
         },

@@ -140,6 +140,16 @@ class Artwork extends Model
         return $this->state === ArtworkStateEnum::SOLD;
     }
 
+    /**
+     * Obtiene la foto de portada de la galeria de fotos
+     *
+     * @return string|null
+     */
+    public function getFrontPhoto(): ?string
+    {
+        return $this->gallery()->where('front_page', 1)->first()?->picture ?? '';
+    }
+
     // -------------------------
     // ----- local scopes ------
     // -------------------------
