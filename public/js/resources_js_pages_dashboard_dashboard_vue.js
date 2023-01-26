@@ -4094,7 +4094,7 @@ var render = function render() {
   }, [_vm._v("unread messages")])]) : _vm._e(), _vm._v(" "), _c("i", {
     staticClass: "fas fa-bell"
   })])])]), _vm._v(" "), _vm.notifications.length > 0 ? _c("ul", {
-    staticClass: "sub-menu-notification w-full md:w-[600px] text-zinc-900"
+    staticClass: "sub-menu-notification w-full md:w-[600px] text-zinc-900 h-80 overflow-y-auto"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "w-full"
   }, _vm._l(_vm.notifications, function (noty) {

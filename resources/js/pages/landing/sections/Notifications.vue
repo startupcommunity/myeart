@@ -18,7 +18,7 @@
             </a>
         </div>
         <ul
-            class="sub-menu-notification w-full md:w-[600px] text-zinc-900"
+            class="sub-menu-notification w-full md:w-[600px] text-zinc-900 h-80 overflow-y-auto"
             v-if="notifications.length > 0"
         >
             <div class="p-3">

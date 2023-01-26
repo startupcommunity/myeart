@@ -194,7 +194,11 @@ export default {
          * Si los botones de acción son visibles
          */
         isVisibleButtons() {
-            return this.item.status !== this.ITEM_STATES.canceled.val;
+            console.log(this.user.id, this.item.user_id);
+            return (
+                this.item.status !== this.ITEM_STATES.canceled.val &&
+                this.user.id !== this.item.user_id
+            );
         },
 
         /**

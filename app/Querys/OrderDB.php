@@ -117,7 +117,7 @@ class OrderDB
    * @param integer|null $id
    * @return Collection|array|SupportCollection
    */
-  public function getUserSales(?int $id = null): Collection|array|SupportCollection
+  public function getUserSales(?int $id = null): array
   {
     $user = $id ? User::find($id) : auth()->user();
 
@@ -133,23 +133,26 @@ class OrderDB
       ->with([
         'artwork.gallery',
         'order.shippingAddress',
-        'order.shippingMethod'
+        'order.shippingMethod',
+        // 'user'
       ])
       ->orderByDesc('created_at')
       ->get();
 
     // agrupar artículos por la misma orden
-    $orders = $orders->groupBy('order_id');
+    // $orders = $orders->groupBy('order_id');
 
-    // obtener un array de las ordenes
-    // con sus artículos
-    $orders = $orders->map(function ($item, $key) {
-      return [
-        'order' => $item[0]->order,
-        'artworks' => $item
-      ];
-    });
+    // // obtener un array de las ordenes
+    // // con sus artículos
+    // $orders = $orders->map(function ($item, $key) {
+    //   return [
+    //     'order' => $item[0]->order,
+    //     'artworks' => $item
+    //   ];
+    // });
 
-    return $orders->values();
+    // dd($orders->toArray());
+
+    return $orders->toArray();
   }
 }

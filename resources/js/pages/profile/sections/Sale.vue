@@ -4,7 +4,7 @@
         id="sale"
         v-show="showSection"
     >
-        <div class="sm:px-5">
+        <div class="sm:px-5" v-if="!showDetails">
             <h3
                 class="font-black text-xl sm:text-lg md:text-3xl tracking-tight uppercase text-gray-900"
             >
@@ -27,9 +27,11 @@
                                 block
                                 class="uppercase tracking-wide"
                                 :class="
-                                    status.pending ? 'font-bold' : 'font-light'
+                                    status.shipped ? 'font-bold' : 'font-light'
                                 "
-                                @click.stop="filterToState(statusEnum.pending)"
+                                @click.stop="
+                                    filterToState(ITEM_STATES.shipped.val)
+                                "
                             >
                                 En curso
                             </v-btn>
@@ -48,7 +50,7 @@
                                         : 'font-light'
                                 "
                                 @click.stop="
-                                    filterToState(statusEnum.delivered)
+                                    filterToState(ITEM_STATES.delivered.val)
                                 "
                             >
                                 Finalizadas
@@ -75,28 +77,42 @@
             <div class="py-6 w-full">
                 <div class="flex flex-wrap h-full items-stretch">
                     <LoadingTailwind v-if="loading" />
-                    <CardItem
-                        v-for="order in sales"
-                        :key="order.id"
-                        :order="order"
+                    <CardSale
+                        v-for="art in sales"
+                        :key="art.id"
+                        :item="art"
                         class="w-full"
                         @see-purchase="seePurchase"
-                        @confirm-order="seeConfirmItems"
                     />
                 </div>
             </div>
             <!-- /obras -->
         </div>
+
+        <!-- ver compra -->
+        <PurchaseDetail
+            class="sm:px-5 animate-fade-in-down"
+            v-if="showDetails"
+            :item="item"
+            :title="setTitle"
+            @back-to-orders="goToInit"
+            @cancel-order="goToInit"
+        />
+        <!-- /ver compra -->
     </section>
 </template>
 
 <script>
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
-import CardItem from "../components/CardItem.vue";
+import getDataMixin from "../../../mixins/getDataMixin";
+import CardSale from "../components/CardSale.vue";
+import PurchaseDetail from "../components/PurchaseDetail.vue";
 
 export default {
     name: "SaleSection",
-    components: { LoadingTailwind, CardItem },
+    components: { LoadingTailwind, CardSale, PurchaseDetail },
+    mixins: [getDataMixin],
+
     props: {
         showSection: {
             type: Boolean,
@@ -106,20 +122,15 @@ export default {
     data() {
         return {
             loading: false,
-            showPurchase: false,
+            showDetails: false,
             showConfirmItems: false,
             sales: [],
             original: [],
-            sale: {},
+            item: {},
             status: {
-                pending: false,
+                shipped: false,
                 delivered: false,
                 canceled: false,
-            },
-            statusEnum: {
-                pending: 1,
-                delivered: 5,
-                canceled: 3,
             },
         };
     },
@@ -127,8 +138,18 @@ export default {
     watch: {
         showSection(val) {
             if (val) {
+                this.status.shipped = true;
+                this.showDetails = false;
                 this.getSales();
             }
+        },
+    },
+
+    computed: {
+        setTitle() {
+            return this.item?.status === this.ITEM_STATES.canceled
+                ? "Detalle de la venta/cancelado"
+                : "Detalle de la venta";
         },
     },
 
@@ -138,7 +159,7 @@ export default {
          */
         resetStatus() {
             this.status = {
-                pending: false,
+                shipped: false,
                 delivered: false,
                 canceled: false,
             };
@@ -151,9 +172,9 @@ export default {
          */
         filterToState(state) {
             this.resetStatus();
-            this.status.pending = state === this.statusEnum.pending;
-            this.status.delivered = state === this.statusEnum.delivered;
-            this.status.canceled = state === this.statusEnum.canceled;
+            this.status.shipped = state === this.ITEM_STATES.shipped.val;
+            this.status.delivered = state === this.ITEM_STATES.delivered.val;
+            this.status.canceled = state === this.ITEM_STATES.canceled.val;
             this.filterOrders();
         },
 
@@ -162,16 +183,16 @@ export default {
          */
         filterOrders() {
             // pendientes - en curso
-            if (this.status.pending) {
+            if (this.status.shipped) {
                 this.sales = this.original.filter(
-                    (or) => or.status === this.statusEnum.pending
+                    (i) => i.status === this.ITEM_STATES.shipped.val
                 );
             }
 
             // finalizadas - delivered
             if (this.status.delivered) {
                 this.sales = this.original.filter(
-                    (or) => or.status === this.statusEnum.delivered
+                    (i) => i.status === this.ITEM_STATES.delivered
                 );
             }
         },
@@ -179,27 +200,27 @@ export default {
         /**
          * Ver detalle de la compra
          */
-        seePurchase(order) {
+        seePurchase(item) {
             this.showConfirmItems = false;
-            this.showPurchase = true;
-            this.order = order;
+            this.showDetails = true;
+            this.item = item;
         },
 
         /**
          * Confirmar  articulo(s)
          */
-        seeConfirmItems(order) {
-            this.showPurchase = false;
-            this.showConfirmItems = true;
-            this.order = order;
-        },
+        // seeConfirmItems(item) {
+        //     this.showDetails = false;
+        //     this.showConfirmItems = true;
+        //     this.item = item;
+        // },
 
         /**
          * Ir al principio
          */
         goToInit() {
             this.showConfirmItems = false;
-            this.showPurchase = false;
+            this.showDetails = false;
             this.getSales();
         },
 
@@ -214,17 +235,8 @@ export default {
                 .get(this.ep.sales.getUserSales)
                 .then((resp) => {
                     if (resp.status === 200) {
-                        // this.sales = resp.data;
-                        this.sales = resp.data.map((item) => {
-                            item.order.items = item.artworks.map((artwork) => {
-                                return artwork.artwork;
-                            });
-                            delete item.artworks;
-                            return item.order;
-                        });
-
+                        this.sales = resp.data;
                         this.original = JSON.parse(JSON.stringify(this.sales));
-                        console.log(this.sales);
                         return;
                     }
 
