@@ -12,7 +12,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Hero"
+  name: "Hero",
+  data: function data() {
+    return {
+      searchText: "",
+      loading: false
+    };
+  },
+  methods: {
+    /**
+     * Buscar obras por el texto indicado
+     */
+    search: function search() {
+      var _this = this;
+
+      this.loading = true; // enviar a la vista de obras
+
+      this.$router.push({
+        name: "listArtwork",
+        query: {
+          keyword: this.searchText
+        }
+      }); // cuando se cargue el otro componente detener el loading
+
+      this.$nextTick(function () {
+        _this.loading = false;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -32,13 +59,6 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
   return _c("div", {
     staticClass: "h-[30rem] sm:h-[48rem] z-[1] hero-area hero-bg"
   }, [_c("div", {
@@ -51,43 +71,58 @@ var staticRenderFns = [function () {
     staticClass: "hero-text"
   }, [_c("div", {
     staticClass: "hero-text-tablecell"
-  }, [_c("h1", {
-    staticClass: "text-white lg:text-2xl"
-  }, [_vm._v("\n                            El\n                            "), _c("span", {
-    staticClass: "text-primary"
-  }, [_vm._v("arte")]), _vm._v(" que todos\n                            llevamos dentro\n                        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "hero-btns d-flex justify-content-center"
-  }, [_c("div", {
-    staticClass: "input-group",
-    staticStyle: {
-      width: "80%"
+  }, [_c("v-form", {
+    staticClass: "w-full flex justify-center",
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.search.apply(null, arguments);
+      }
     }
+  }, [_c("div", {
+    staticClass: "input-group w-4/5"
   }, [_c("input", {
-    staticClass: "form-control",
-    staticStyle: {
-      height: "50px"
-    },
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.searchText,
+      expression: "searchText"
+    }],
+    staticClass: "form-control h-12",
     attrs: {
-      type: "text",
-      "aria-label": "Text input with dropdown button"
+      type: "text"
+    },
+    domProps: {
+      value: _vm.searchText
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.searchText = $event.target.value;
+      }
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "input-group-append"
   }, [_c("button", {
-    staticClass: "btn btn-primary px-5 dropdown-toggle",
-    attrs: {
-      "data-toggle": "dropdown",
-      "aria-haspopup": "true",
-      "aria-expanded": "false"
-    }
-  }, [_vm._v("\n                                        OBRAS\n                                    ")]), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-menu"
-  }, [_c("a", {
-    staticClass: "dropdown-item",
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("\n                                            Action\n                                        ")])])])])])])])])])])]);
+    staticClass: "btn btn-primary px-5 h-12"
+  }, [_c("i", {
+    staticClass: "fas fa-search"
+  }), _vm._v("\n                                            Buscar\n                                        ")])]), _vm._v(" "), _vm.loading ? _c("div", {
+    staticClass: "ml-2 spinner-border animate-spin inline-block w-12 h-12 border-2 rounded-full text-white"
+  }) : _vm._e()])])], 1)])])])])])]);
+};
+
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("h1", {
+    staticClass: "text-white lg:text-2xl"
+  }, [_vm._v("\n                            El\n                            "), _c("span", {
+    staticClass: "text-primary"
+  }, [_vm._v("arte")]), _vm._v(" que todos\n                            llevamos dentro\n                        ")]);
 }];
 render._withStripped = true;
 

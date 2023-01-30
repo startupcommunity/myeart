@@ -12565,9 +12565,6 @@ video {
 .mr-1{
   margin-right: 0.25rem;
 }
-.-mb-1{
-  margin-bottom: -0.25rem;
-}
 .mt-6{
   margin-top: 1.5rem;
 }
@@ -13423,6 +13420,9 @@ video {
 .pb-10{
   padding-bottom: 2.5rem;
 }
+.pt-6{
+  padding-top: 1.5rem;
+}
 .pb-24{
   padding-bottom: 6rem;
 }
@@ -13431,9 +13431,6 @@ video {
 }
 .pb-2{
   padding-bottom: 0.5rem;
-}
-.pt-6{
-  padding-top: 1.5rem;
 }
 .pr-6{
   padding-right: 1.5rem;
@@ -13502,6 +13499,10 @@ video {
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
+}
+.text-6xl{
+  font-size: 3.75rem;
+  line-height: 1;
 }
 .text-\[9px\]{
   font-size: 9px;
@@ -13774,6 +13775,9 @@ video {
 }
 .ease-in-out{
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ease-out{
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 html,
 body {

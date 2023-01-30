@@ -13,29 +13,32 @@
                             <div
                                 class="hero-btns d-flex justify-content-center"
                             >
-                                <div class="input-group" style="width: 80%">
-                                    <input
-                                        type="text"
-                                        style="height: 50px"
-                                        class="form-control"
-                                        aria-label="Text input with dropdown button"
-                                    />
-                                    <div class="input-group-append">
-                                        <button
-                                            class="btn btn-primary px-5 dropdown-toggle"
-                                            data-toggle="dropdown"
-                                            aria-haspopup="true"
-                                            aria-expanded="false"
-                                        >
-                                            OBRAS
-                                        </button>
-                                        <div class="dropdown-menu">
+                                <v-form @submit.prevent="search" class="w-full flex justify-center">
+                                    <div class="input-group w-4/5">
+                                        <input
+                                            type="text"
+                                            class="form-control h-12"
+                                            v-model="searchText"
+                                        />
+                                        <div class="input-group-append">
+                                            <button
+                                                class="btn btn-primary px-5 h-12"
+                                            >
+                                                <i class="fas fa-search"></i>
+                                                Buscar
+                                            </button>
+                                            <!-- <div class="dropdown-menu">
                                             <a class="dropdown-item" href="#">
                                                 Action
                                             </a>
+                                        </div> -->
                                         </div>
+                                        <div
+                                            class="ml-2 spinner-border animate-spin inline-block w-12 h-12 border-2 rounded-full text-white"
+                                            v-if="loading"
+                                        ></div>
                                     </div>
-                                </div>
+                                </v-form>
                             </div>
                         </div>
                     </div>
@@ -47,5 +50,32 @@
 <script>
 export default {
     name: "Hero",
+    data() {
+        return {
+            searchText: "",
+            loading: false,
+        };
+    },
+    methods: {
+        /**
+         * Buscar obras por el texto indicado
+         */
+        search() {
+            this.loading = true;
+
+            // enviar a la vista de obras
+            this.$router.push({
+                name: "listArtwork",
+                query: {
+                    keyword: this.searchText,
+                },
+            });
+
+            // cuando se cargue el otro componente detener el loading
+            this.$nextTick(() => {
+                this.loading = false;
+            });
+        },
+    },
 };
 </script>

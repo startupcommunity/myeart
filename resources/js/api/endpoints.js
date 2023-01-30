@@ -80,6 +80,9 @@ const endpoints = {
 
         // eliminar obra de favoritos
         removeArtworkToFav: `${API}/user/remove-favorite-artwork`, // post
+
+        // obtiene las calificaciones del artista (params :id)
+        getArtistRatings: `${API}/user/get-artist-ratings/`, // get
     },
 
     // comentarios

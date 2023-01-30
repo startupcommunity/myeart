@@ -19,10 +19,6 @@ class UserController extends Controller
         private UserDB $db,
         private CollectiveDB $collectiveDB
     ) {
-        // $this->userfactory = $userfactory;
-        // $this->resp = $resp;
-        // $this->db = $db;
-        // $this->authorizeResource(Artwork::class, 'id');
     }
 
     /**
@@ -237,6 +233,22 @@ class UserController extends Controller
             }
 
             return $this->resp->json('obra removida a favoritos con éxito', 200);
+        } catch (Exception $th) {
+            return $this->resp->json($th, 500);
+        }
+    }
+
+    /**
+     * Devolver las calificaciones de un usuario
+     *
+     * @param int $id           id del usuario
+     * @return JsonResponse
+     */
+    public function getUserRatings(int $id): JsonResponse
+    {
+        try {
+            $resp = $this->db->getUserRatings($id);
+            return $this->resp->json($resp, 200);
         } catch (Exception $th) {
             return $this->resp->json($th, 500);
         }

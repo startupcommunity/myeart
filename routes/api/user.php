@@ -73,7 +73,7 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/get-artist/{id}', [UserController::class, 'getArtist'])->name('getArtist');
 
   /**
-   * Devuelve las notitificaciones no leidas de un artista
+   * Devuelve las notificaciones no leídas de un artista
    */
   // Route::get('/get-unread-notifications/{id}', [UserController::class, 'getUnreadNotifications'])->name('getUnreadNotifications');
 
@@ -86,4 +86,9 @@ Route::group(['prefix' => 'user'], function () {
    * Elimina una obra de favoritos de los usuarios
    */
   Route::post('/remove-favorite-artwork', [UserController::class, 'removeFavoriteArtwork'])->name('removeFavoriteArtwork');
+
+  /**
+   * Devuelve las calificaciones de un usuario
+   */
+  Route::get('/get-artist-ratings/{id}', [UserController::class, 'getUserRatings'])->name('getUserRatings');
 });

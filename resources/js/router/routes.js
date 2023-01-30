@@ -88,7 +88,7 @@ export const routes = [
     },
     {
         name: "listArtwork",
-        path: "/obras",
+        path: "/obras/:keyword?",
         component: importPage("artwork/ListArtwork"),
         beforeEnter: ifAuthenticated,
     },

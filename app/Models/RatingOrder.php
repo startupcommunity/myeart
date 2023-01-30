@@ -38,12 +38,20 @@ class RatingOrder extends Model
     }
 
     /**
-     * Get the user that owns the rating order.
+     * El usuario dueño de la obra
      *
      * @return BelongsTo
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Devuelve el item de la orden/ la obra
+     */
+    public function artwork(): BelongsTo
+    {
+        return $this->belongsTo(Artwork::class, 'item_id');
     }
 }

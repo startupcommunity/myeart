@@ -16,7 +16,7 @@ use Illuminate\Support\Collection as SupportCollection;
 class UserDB
 {
     private const PAGINATE_ARTIST = 8;
-    private const PAGINATE_ALL_ARTIST = 999999;
+    private const PAGINATE_ALL_ARTIST = 1000000;
 
     /**
      * Devuelve un usuario por su id
@@ -72,30 +72,21 @@ class UserDB
         $sub = isset($data['subcategory']) ? $data['subcategory'] : null;
         $label = isset($data['label']) ? $data['label'] : null;
         $all = isset($data['all']) ? $data['all'] : null;
+        $paginate = $all ? self::PAGINATE_ALL_ARTIST : self::PAGINATE_ARTIST;
+        $relations = ['userArtistic', 'profile', 'artworks.gallery', 'artworks.categories', 'ratings'];
 
         // query
-        $query = User::with(['userArtistic', 'profile', 'artworks.gallery', 'artworks.categories'])
-            ->whereHas('artworks', function ($art) {
-                return $art->typeArtist();
-            })
+        $query = User::with($relations)
+            ->whereHas('artworks', fn ($art) => $art->typeArtist())
             ->withCount('artworks')
             ->having('artworks_count', '>', 0);
-
-        // devolver solo las obras type 1
-
-        // dd($query->get()->toArray());
 
         // si se recibe algunas de las categorías
         if ($cat || $sub || $label) {
             $query->artworkCategory($cat, $sub, $label);
         }
 
-        // si se desea todos los artistas
-        if ($all) {
-            return $query->paginate(self::PAGINATE_ALL_ARTIST, '*', 'page', $data['page']);
-        }
-
-        return $query->paginate(self::PAGINATE_ARTIST, '*', 'page', $data['page']);
+        return $query->paginate($paginate, '*', 'page', $data['page']);
     }
 
     /**
@@ -110,7 +101,7 @@ class UserDB
         $request = request()->all();
         $all = isset($request['all']) ? $request['all'] : null;
 
-        $query = User::with(['profile', 'artworks.categories'])
+        $query = User::with(['profile', 'artworks.categories', 'ratings'])
             ->withCount('artworks')
             ->having('artworks_count', '>', 0)
             ->inRandomOrder()
@@ -132,7 +123,7 @@ class UserDB
     public function getArtist(int $id): ?User
     {
         return User::with([
-            'profile', 'artworks.gallery', 'socialNetwork'
+            'profile', 'artworks.gallery', 'socialNetwork', 'ratings',
         ])
             ->withCount('artworks')
             ->withCount('followingArtists')
@@ -189,11 +180,6 @@ class UserDB
             ->map(fn ($item) => $item->release)
             ->filter(fn ($item) => $item);
 
-        // eliminar registros vacíos
-        // $releases = $releases->filter(fn ($item) => $item);
-
-        // dd($releases->toArray());
-
         return $releases;
     }
 
@@ -216,5 +202,26 @@ class UserDB
         // return especific data
         return $data['favoriteEvents']
             ->map(fn ($item) => $item->event);
+    }
+
+    /**
+     * Devolver las calificaciones de un usuario
+     *
+     * @param int $id       id del usuario
+     * @return SupportCollection
+     */
+    public function getUserRatings(int $id): SupportCollection
+    {
+        $user = $this->getUser($id);
+
+        // devolver id, rating, comment y fecha de creación
+        return $user->ratings()
+            ->get()
+            ->map(fn ($item) => [
+                'id' => $item->id,
+                'rating' => $item->rating,
+                'comment' => $item->comment,
+                'created_at' => $item->created_at,
+            ]);
     }
 }

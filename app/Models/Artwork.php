@@ -302,4 +302,50 @@ class Artwork extends Model
     {
         return $query->where('type', ArtworkTypeEnum::COLLECTIVE);
     }
+
+    /**
+     * Filtrar por keyword
+     *
+     * @param  Builder $query
+     * @param  String $keyword
+     * @return Builder
+     */
+    public function scopeKeyword($query, $keyword = null)
+    {
+        if (!$keyword) return $query;
+
+        // filtrar por titulo
+        $data = $query->where('title', 'like', "%$keyword%");
+
+        // filtrar por descripcion
+        $data = $data->orWhere('description', 'like', "%$keyword%");
+
+        // filtrar por large_description
+        $data = $data->orWhere('large_description', 'like', "%$keyword%");
+
+        // filtrar por other_details
+        $data = $data->orWhere('other_details', 'like', "%$keyword%");
+
+        // filtrar por nombre del artista
+        $data = $data->orWhereHas('user', function ($artist) use ($keyword) {
+            $artist->where('name', 'like', "%$keyword%");
+        });
+
+        // filtrar por nombre de la Categoria
+        $data = $data->orWhereHas('categories', function ($cat) use ($keyword) {
+            $cat->where('name', 'like', "%$keyword%");
+        });
+
+        // filtrar por sub Categoria
+        $data = $data->orWhereHas('subcategories', function ($cat) use ($keyword) {
+            $cat->where('name', 'like', "%$keyword%");
+        });
+
+        // filtrar por etiquetas
+        $data = $data->orWhereHas('labels', function ($cat) use ($keyword) {
+            $cat->where('name', 'like', "%$keyword%");
+        });
+
+        return $data;
+    }
 }

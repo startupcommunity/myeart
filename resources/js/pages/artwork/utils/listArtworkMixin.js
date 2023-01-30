@@ -31,6 +31,7 @@ export default {
                 large: 0,
                 weight: 0,
                 sortBy: "",
+                keyword: "",
             },
 
             sortBy: [
@@ -92,6 +93,7 @@ export default {
         // se resetea el valor de la etiqueta
         "filters.subcategory"() {
             this.filters.label = 0;
+            this.filters.keyword = "";
         },
 
         // cargar las subcategorias unicamente
@@ -99,6 +101,7 @@ export default {
         "filters.category"(val) {
             if (val) {
                 // @getDataMixin
+                this.filters.keyword = "";
                 this.getSubCategories(val);
             }
         },
@@ -135,8 +138,26 @@ export default {
          * según los filtros por defecto
          */
         initArtworks() {
+            // verificar si hay query params
+            const keyword = this.checkQueryParams();
+
+            if (keyword) {
+                this.filters.keyword = keyword;
+                return;
+            }
+
             // 1 => mas reciente
             this.filters.sortBy = 1;
+        },
+
+        /**
+         * Verificar si hay query params
+         * en la url
+         */
+        checkQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            const keyword = params.get("keyword");
+            return keyword ?? null;
         },
 
         /**

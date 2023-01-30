@@ -25,6 +25,21 @@
                     >
                         {{ artist.name }}
                     </h3>
+                    <div
+                        class="hover:cursor-pointer flex justify-center items-center"
+                        @click.stop="openRatings"
+                    >
+                        <v-icon
+                            v-for="i in 5"
+                            :key="i"
+                            :color="i <= averageRating ? 'yellow' : 'gray'"
+                        >
+                            mdi-star
+                        </v-icon>
+                        <span class="text-gray-600 text-xs">
+                            ({{ ratings }})
+                        </span>
+                    </div>
                     <p class="text-primary text-xs">
                         {{ getNameCategory }}
                     </p>
@@ -45,7 +60,9 @@
                                 outlined
                                 block
                                 color="grey darken-4"
-                                @click.stop="$emit('remove-from-collective', artist)"
+                                @click.stop="
+                                    $emit('remove-from-collective', artist)
+                                "
                             >
                                 eliminar
                             </v-btn>
@@ -54,20 +71,28 @@
                 </div>
             </div>
         </div>
+
+        <!-- modal ratings -->
+        <RatingModal
+            :id="artist.id"
+            :show="showRating"
+            @close="showRating = false"
+        />
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import Avatar from "../../../components/Avatar.vue";
+import RatingModal from "../../artist/components/RatingModal.vue";
 import FollowArtistButton from "./../../artwork/components/FollowArtistButton";
 
 export default {
     name: "CardArtist",
-    components: { FollowArtistButton, Avatar },
+    components: { FollowArtistButton, Avatar, RatingModal },
     data() {
         return {
             loadLiked: false,
             isLike: false,
+            showRating: false,
         };
     },
     props: {
@@ -93,9 +118,32 @@ export default {
          * Acceder a los getters necesarios
          * user profile
          */
-        ...mapGetters({
-            user: "getProfile",
-        }),
+        user() {
+            return this.$store.getters.getProfile;
+        },
+
+        /**
+         * promediar el rating del usuario por ventas
+         *
+         * @returns {Number}
+         */
+        averageRating() {
+            const ratings = this.artist.ratings || [];
+
+            if (ratings.length === 0) return 0;
+            const sum = ratings.reduce((a, b) => a + b.rating, 0);
+            const total = sum / ratings.length;
+
+            // redondear el resultado, ejemplo 4.6 => 5, 4.4 => 4
+            return Math.round(total * 2) / 2;
+        },
+
+        /**
+         * calificaciones
+         */
+        ratings() {
+            return this.artist.ratings?.length || 0;
+        },
 
         /**
          * devuelve los calificativos del artista
@@ -136,5 +184,20 @@ export default {
             return `${this.pathProfilePhoto + artist.profile_photo}`;
         },
     },
+
+    methods: {
+        /**
+         * Abrir la modal de calificaciones
+         */
+        openRatings() {
+            this.showRating = true;
+        },
+    },
 };
 </script>
+
+<style scoped>
+.v-icon.v-icon {
+    font-size: 16px !important;
+}
+</style>

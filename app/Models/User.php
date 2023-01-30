@@ -258,6 +258,16 @@ class User extends Authenticatable
     }
 
     /**
+     * devuelve las calificaciones que ha recibido el usuario
+     *
+     * @return HasMany
+     */
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(RatingOrder::class);
+    }
+
+    /**
      * Determina si el usuario tiene foto de perfil
      * @luisandev
      * @return boolean      true si posee

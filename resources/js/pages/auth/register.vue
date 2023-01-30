@@ -141,7 +141,7 @@
                         </button>
                     </div>
 
-                    <div class="container-login-form-btn">
+                    <!-- <div class="container-login-form-btn">
                         <button class="btn btn-primary google-form-btn">
                             Entrar Con
                             <img
@@ -150,7 +150,7 @@
                                 style="margin-top: 4px"
                             />
                         </button>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>
@@ -223,7 +223,8 @@ export default {
                             text: "Usuario registrado",
                             type: "success",
                         });
-                        this.$router.push("/perfil");
+                        this.$store.dispatch("userRequest");
+                        this.$router.push("/");
                     });
 
                 return;
@@ -239,7 +240,6 @@ export default {
 
         showTermsAndCondition() {
             this.showTerms = true;
-            console.log(this.showTerms);
         },
     },
 };

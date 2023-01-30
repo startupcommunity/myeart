@@ -7,7 +7,9 @@
             <h1
                 class="font-black tracking-[0.3rem] text-white text-2xl sm:text-4xl uppercase text-center"
             >
-                {{ objCategory ? objCategory.name : 'Obras' }}
+                {{
+                    objCategory ? objCategory.name : keyword ? keyword : "Obra"
+                }}
             </h1>
         </div>
         <!-- <div
@@ -23,6 +25,11 @@ export default {
             type: Number,
             default: 0,
             description: "la categoría seleccionada",
+        },
+        keyword: {
+            type: String,
+            default: "",
+            description: "la palabra clave para la búsqueda",
         },
         categories: {
             type: Array,

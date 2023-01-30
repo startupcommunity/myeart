@@ -216,6 +216,7 @@ class ArtworkDB
         $hasCategory = property_exists($filter, 'category');
         $hasCatAndSub = $hasCategory && property_exists($filter, 'subcategory');
         $hasCatAndSubAndLabel = $hasCategory && $hasCatAndSub && property_exists($filter, 'label');
+        $hasKeyword = property_exists($filter, 'keyword');
 
         // orden
         $data->sortByOption($filter->sortBy);
@@ -228,6 +229,9 @@ class ArtworkDB
 
         // por etiqueta
         !$hasCatAndSubAndLabel ?: $data->category($filter->category, $filter->subcategory, $filter->label);
+
+        // filtrar por keyword
+        !$hasKeyword ?: $data->keyword($filter->keyword);
 
         // filtros numéricos
         $data->weight($filter->weight)

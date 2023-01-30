@@ -19,6 +19,11 @@ __webpack_require__.r(__webpack_exports__);
       "default": 0,
       description: "la categoría seleccionada"
     },
+    keyword: {
+      type: String,
+      "default": "",
+      description: "la palabra clave para la búsqueda"
+    },
     categories: {
       type: Array,
       "default": [],
@@ -61,7 +66,7 @@ var render = function render() {
     staticClass: "absolute w-full h-full flex justify-center items-center"
   }, [_c("h1", {
     staticClass: "font-black tracking-[0.3rem] text-white text-2xl sm:text-4xl uppercase text-center"
-  }, [_vm._v("\n            " + _vm._s(_vm.objCategory ? _vm.objCategory.name : "Obras") + "\n        ")])])]);
+  }, [_vm._v("\n            " + _vm._s(_vm.objCategory ? _vm.objCategory.name : _vm.keyword ? _vm.keyword : "Obra") + "\n        ")])])]);
 };
 
 var staticRenderFns = [];

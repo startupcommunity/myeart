@@ -97,6 +97,21 @@
                         >
                             {{ artist.name }}
                         </h3>
+                        <div
+                            class="hover:cursor-pointer flex justify-center items-center"
+                            @click.stop="showRating = true"
+                        >
+                            <v-icon
+                                v-for="i in 5"
+                                :key="i"
+                                :color="i <= averageRating ? 'yellow' : 'gray'"
+                            >
+                                mdi-star
+                            </v-icon>
+                            <span class="text-gray-600 text-xs">
+                                ({{ ratings }})
+                            </span>
+                        </div>
                         <p
                             class="uppercase text-lg font-medium text-center"
                             v-if="profile?.web_url"
@@ -157,7 +172,10 @@
                     </div>
                 </div>
                 <div class="w-full md:w-1/3 order-2 order-md-3 md:px-0 mb-5">
-                    <div class="flex gap-3 justify-center px-10" v-if="!isUserLogged">
+                    <div
+                        class="flex gap-3 justify-center px-10"
+                        v-if="!isUserLogged"
+                    >
                         <div class="w-40 md:w-1/2 mb-3 md:mb-0">
                             <FollowArtistButton
                                 :artist="artist"
@@ -175,17 +193,25 @@
                 </div>
             </div>
         </div>
+
+        <!-- modal ratings -->
+        <RatingModal
+            :id="artist.id"
+            :show="showRating"
+            @close="showRating = false"
+        />
     </section>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import getDataMixin from "../../../mixins/getDataMixin";
 import FollowArtistButton from "../../artwork/components/FollowArtistButton.vue";
+import RatingModal from "../components/RatingModal.vue";
 
 export default {
-    components: { FollowArtistButton },
+    components: { FollowArtistButton, RatingModal },
     name: "PostHero",
     mixins: [getDataMixin],
+
     props: {
         artist: {
             type: Object,
@@ -200,10 +226,17 @@ export default {
             default: () => {},
         },
     },
+
+    data() {
+        return {
+            showRating: false,
+        };
+    },
+
     computed: {
-        ...mapGetters({
-            user: "getProfile",
-        }),
+        user() {
+            return this.$store.getters.getProfile;
+        },
 
         isUserLogged() {
             return this.user?.id === this.artist?.id;
@@ -231,7 +264,31 @@ export default {
                 },
             };
         },
+
+        /**
+         * promediar el rating del usuario por ventas
+         *
+         * @returns {Number}
+         */
+        averageRating() {
+            const ratings = this.artist.ratings || [];
+
+            if (ratings.length === 0) return 0;
+            const sum = ratings.reduce((a, b) => a + b.rating, 0);
+            const total = sum / ratings.length;
+
+            // redondear el resultado, ejemplo 4.6 => 5, 4.4 => 4
+            return Math.round(total * 2) / 2;
+        },
+
+        /**
+         * calificaciones
+         */
+        ratings() {
+            return this.artist.ratings?.length || 0;
+        },
     },
+
     filters: {
         /**
          * Si el numero pasa de 1000, se convierte a K

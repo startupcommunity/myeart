@@ -12,6 +12,7 @@
         <!-- visible: md + -->
         <HeroList
             :category="filters.category"
+            :keyword="filters.keyword"
             :categories="categories"
             class="hidden md:block"
         />
@@ -272,6 +273,7 @@ import listArtworkMixin from "./utils/listArtworkMixin";
 
 export default {
     name: "ListArtwork",
+    mixins: [getDataMixin, utilMixin, listArtworkMixin],
     components: {
         MainLayout,
         Header,
@@ -282,7 +284,6 @@ export default {
         Paginator,
         CategoryTypeFilter,
     },
-    mixins: [getDataMixin, utilMixin, listArtworkMixin],
     mounted() {
         // @getDataMixin
         this.getCategories();

@@ -72,9 +72,46 @@
                 </div>
             </div>
             <div class="w-full">
-                <!-- <label class="font-light text-gray-900">
-                    ¿Como valoras tu experiencia?
-                </label> -->
+                <label class="font-light text-gray-900">
+                    ¿Como calificas al artista?
+                </label>
+                <div class="mb-5">
+                    <i
+                        class="fa-regular fa-star hover:cursor-pointer hover:text-zinc-500 fa-2x transition-all ease-out"
+                        :class="{
+                            'text-primary': form.rating >= 1,
+                        }"
+                        @click.stop="setRating(1)"
+                    ></i>
+                    <i
+                        class="fa-regular fa-star hover:cursor-pointer hover:text-zinc-500 fa-2x transition-all ease-out"
+                        :class="{
+                            'text-primary': form.rating >= 2,
+                        }"
+                        @click.stop="setRating(2)"
+                    ></i>
+                    <i
+                        class="fa-regular fa-star hover:cursor-pointer hover:text-zinc-500 fa-2x transition-all ease-out"
+                        :class="{
+                            'text-primary': form.rating >= 3,
+                        }"
+                        @click.stop="setRating(3)"
+                    ></i>
+                    <i
+                        class="fa-regular fa-star hover:cursor-pointer hover:text-zinc-500 fa-2x transition-all ease-out"
+                        :class="{
+                            'text-primary': form.rating >= 4,
+                        }"
+                        @click.stop="setRating(4)"
+                    ></i>
+                    <i
+                        class="fa-regular fa-star hover:cursor-pointer hover:text-zinc-500 fa-2x transition-all ease-out"
+                        :class="{
+                            'text-primary': form.rating >= 5,
+                        }"
+                        @click.stop="setRating(5)"
+                    ></i>
+                </div>
 
                 <label class="font-light text-gray-900">
                     Envía un comentario
@@ -122,9 +159,10 @@ export default {
         return {
             form: {
                 order_id: this.item.order_id,
+                artwork_id: this.item.artwork_id,
                 item_id: this.item.id,
                 delivered: null,
-                rating: null,
+                rating: 0,
                 comment: null,
             },
         };
@@ -149,6 +187,16 @@ export default {
     },
 
     methods: {
+        /**
+         * Agregar el rating indicado
+         */
+        setRating(rating) {
+            this.form.rating = rating;
+        },
+
+        /**
+         * Confirmar la compra
+         */
         confirmItem() {
             this.globalLoading = true;
             this.form.user_id = this.user.id;

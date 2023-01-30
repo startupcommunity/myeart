@@ -100,10 +100,12 @@ class OrderFactory
   {
     $tra = DB::transaction(function () use ($request) {
       $order = $this->model->find($request->order_id);
+      $artwork = Artwork::find($request->artwork_id);
+      $isNotValid = !$order->isOwner($request->user_id) || $order->isCanceled() || !$artwork;
 
       // si el usuario no es el dueño/creador de la orden
       // no se puede cancelar
-      if (!$order->isOwner($request->user_id) || $order->isCanceled()) {
+      if ($isNotValid) {
         return false;
       }
 
@@ -117,7 +119,7 @@ class OrderFactory
       $order->rating()->create([
         'rating' => $request->rating,
         'comment' => $request->comment,
-        'user_id' => $order->user_id,
+        'user_id' => $artwork->user_id,
         'item_id' => $request->item_id,
       ]);
 
