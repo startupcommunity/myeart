@@ -19,6 +19,27 @@
         />
         <!-- /sección cesta -->
 
+        <section class="bg-white">
+            <div class="container py-10">
+                <!-- <text-field id="card-holder-name" label="Holder name"> </text-field> -->
+                <!-- <v-text-field color="#B2794C" id="card-holder-name">
+                    <template #label>
+                        <span class="font-medium"> Holder name </span>
+                    </template>
+                </v-text-field> -->
+
+                <!-- Stripe Elements Placeholder -->
+                <div id="card-element" class="py-3 border mb-3"></div>
+
+                <button
+                    class="px-3 py-2 bg-gray-900 text-white hover:text-gray-200 transition-all ease-out"
+                    @click.stop="processPayment"
+                >
+                    Procesar pago
+                </button>
+            </div>
+        </section>
+
         <!-- otras obras -->
         <OtherArtworks
             :categoryID="artwork?.categories[0]?.id"
@@ -40,9 +61,12 @@ import UseDefaultAddress from "./components/UseDefaultAddress.vue";
 import UseFormAddress from "./components/UseFormAddress.vue";
 import UseShippingMethod from "./components/UseShippingMethod.vue";
 import OrderSection from "./sections/OrderSection.vue";
+import utilMixin from "../../mixins/utilMixin";
+import { loadStripe } from "@stripe/stripe-js";
 
 export default {
     name: "IndexShoppingCart",
+    mixins: [utilMixin],
     components: {
         MainLayout,
         Header,
@@ -57,6 +81,11 @@ export default {
         return {
             loading: false,
             defaultAddress: 1,
+            client_secret: null,
+            intent: null,
+            stripe: null,
+            cardElement: null,
+            paymentMethod: null,
             shipping: 0,
             tax: 0,
             typeMethod: 1,
@@ -69,6 +98,16 @@ export default {
             },
         };
     },
+
+    created() {
+        this.getItems();
+        this.getIntent();
+        this.getShippingAddress();
+        window.scrollTo(0, 0);
+    },
+
+    async mounted() {},
+
     computed: {
         /**
          * Devuelve una de las obras al azar
@@ -97,11 +136,7 @@ export default {
             return address && postal_code && city;
         },
     },
-    created() {
-        this.getItems();
-        this.getShippingAddress();
-        window.scrollTo(0, 0);
-    },
+
     methods: {
         /**
          * productos del carrito
@@ -110,7 +145,35 @@ export default {
             this.loading = true;
             this.axios
                 .get(this.ep.carts.getItems)
-                .then((response) => (this.items = response.data))
+                .then((response) => {
+                    const data = response.data;
+                    this.intent = data[data.length - 1].intent;
+                    this.items = data;
+                })
+                .catch((error) => this.manageError(error))
+                .finally(() => (this.loading = false));
+        },
+
+        getIntent() {
+            this.axios
+                .get(this.ep.carts.intent)
+                .then((resp) => {
+                    this.client_secret = resp.data;
+                })
+                .then(async (_) => {
+                    console.log(this.client_secret);
+                    this.stripe = await loadStripe(process.env.MIX_STRIPE_KEY);
+                    const options = {
+                        clientSecret: this.client_secret,
+                    };
+                    const elements = this.stripe.elements(options);
+                    this.cardElement = elements.create("card", {
+                        classes: {
+                            base: "bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 p-3 leading-8 transition-colors duration-200 ease-in-out",
+                        },
+                    });
+                    this.cardElement.mount("#card-element");
+                })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));
         },
@@ -183,6 +246,7 @@ export default {
                 shipping_method: parseInt(this.typeMethod || 1),
                 tax: this.tax,
                 shipping: this.shipping,
+                payment_method_id: this.paymentMethod?.id || null,
             };
 
             this.axios
@@ -206,6 +270,27 @@ export default {
                 })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));
+        },
+
+        async processPayment() {
+            const { paymentMethod, error } =
+                await this.stripe.createPaymentMethod(
+                    "card",
+                    this.cardElement,
+                    {
+                        billing_details: { name: this.user.name },
+                    }
+                );
+
+            if (error) {
+                const msj = this.manageStripeErrors(error);
+                this.noty(msj, "error");
+                return;
+            }
+
+            // procesar pago
+            this.paymentMethod = paymentMethod;
+            this.finalPurchase();
         },
     },
 };

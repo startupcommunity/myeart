@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +30,7 @@ class User extends Authenticatable
         'password',
         'profile_photo',
         'front_photo',
+        'stripe_account_id', // id de la cuenta de stripe del usuario - vendedor
     ];
 
     /**
@@ -265,6 +267,26 @@ class User extends Authenticatable
     public function ratings(): HasMany
     {
         return $this->hasMany(RatingOrder::class);
+    }
+
+    /**
+     * devuelve los métodos de pago del usuario
+     *
+     * @return HasMany
+     */
+    public function paymentMethods(): HasMany
+    {
+        return $this->hasMany(PaymentMethod::class);
+    }
+
+    /**
+     * devuelve los métodos de cobro del usuario
+     *
+     * @return HasMany
+     */
+    public function chargingMethods(): HasMany
+    {
+        return $this->hasMany(ChargingMethod::class);
     }
 
     /**

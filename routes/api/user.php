@@ -91,4 +91,14 @@ Route::group(['prefix' => 'user'], function () {
    * Devuelve las calificaciones de un usuario
    */
   Route::get('/get-artist-ratings/{id}', [UserController::class, 'getUserRatings'])->name('getUserRatings');
+
+  /**
+   * obtiene los métodos de pago del usuario
+   */
+  Route::get('/get-user-payment-methods/{id}', [UserController::class, 'getUserPaymentMethods'])->name('getUserPaymentMethods');
+
+  /**
+   * obtiene los métodos de cobro del usuario
+   */
+  Route::get('/get-user-charge-methods/{id}', [UserController::class, 'getUserChargingMethods'])->name('getUserChargingMethods');
 });

@@ -224,4 +224,30 @@ class UserDB
                 'created_at' => $item->created_at,
             ]);
     }
+
+    /**
+     * Devuelve los métodos de pagos del artista
+     *
+     * @param int $id       id del usuario
+     * @return Collection
+     */
+    public function getUserPaymentMethods(int $id): Collection
+    {
+        $user = $this->getUser($id);
+
+        return $user->paymentMethods;
+    }
+
+    /**
+     * Devuelve todos los métodos de cobro del artista
+     *
+     * @param int $id
+     * @return Collection
+     */
+    public function getUserChargingMethods(int $id): Collection
+    {
+        $user = $this->getUser($id);
+
+        return $user->chargingMethods;
+    }
 }

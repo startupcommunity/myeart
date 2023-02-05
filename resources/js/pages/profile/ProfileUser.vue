@@ -52,51 +52,65 @@
                         @editDataProfilePersonal="
                             editDataProfile = !editDataProfile
                         "
-                        class="sm:min-h-[52rem]"
+                        class="sm:min-h-[54rem]"
                     />
                     <!-- /sección datos personales -->
 
                     <!-- publicaciones -->
                     <Release
                         :showSection="sections.pub"
-                        class="sm:min-h-[52rem]"
+                        class="sm:min-h-[54rem]"
                     />
                     <!-- /publicaciones -->
 
                     <!-- sección obras -->
                     <Artwork
                         :showSection="sections.artwork"
-                        class="sm:min-h-[52rem]"
+                        class="sm:min-h-[54rem]"
                     />
                     <!-- /sección obras -->
 
                     <!-- sección favoritos -->
                     <Favourite
                         :showSection="sections.fav"
-                        class="sm:min-h-[52rem]"
+                        class="sm:min-h-[54rem]"
                     />
                     <!-- /sección favoritos -->
 
                     <!-- sección pedidos -->
                     <Order
                         :showSection="sections.order"
-                        class="sm:min-h-[52rem]"
+                        class="sm:min-h-[54rem]"
                     />
                     <!-- /sección pedidos -->
 
                     <!-- sección ventas -->
                     <Sale
                         :showSection="sections.sale"
-                        class="sm:min-h-[52rem]"
+                        class="sm:min-h-[54rem]"
                     />
                     <!-- /sección ventas -->
 
                     <!-- sección direcciones -->
                     <Address
                         :showSection="sections.direction"
-                        class="sm:min-h-[52rem]"
+                        class="sm:min-h-[54rem]"
                     />
                     <!-- /sección direcciones -->
+
+                    <!-- métodos de pago -->
+                    <PaymentMethod
+                        :showSection="sections.payment"
+                        class="sm:min-h-[54rem]"
+                    />
+                    <!-- /métodos de pago -->
+
+                    <!-- métodos de cobro -->
+                    <ChargingMethod
+                        :showSection="sections.charging"
+                        class="sm:min-h-[54rem]"
+                    />
+                    <!-- /métodos de pago -->
                 </div>
             </div>
         </div>
@@ -158,6 +172,8 @@ import Order from "./sections/Order.vue";
 import HeroProfile from "./sections/HeroProfile.vue";
 import MyCollectivesModal from "./components/MyCollectivesModal.vue";
 import Sale from "./sections/Sale.vue";
+import PaymentMethod from "./sections/PaymentMethod.vue";
+import ChargingMethod from "./sections/ChargingMethod.vue";
 
 // secciones como tabs
 const SECTIONS = {
@@ -168,7 +184,8 @@ const SECTIONS = {
     order: "order",
     sale: "sale",
     direcciones: "direcciones",
-    pagos: "pagos",
+    payment: "payment",
+    charging: "charging",
     seguridad: "seguridad",
 };
 
@@ -193,6 +210,8 @@ export default {
         HeroProfile,
         MyCollectivesModal,
         Sale,
+        PaymentMethod,
+        ChargingMethod,
     },
     data() {
         return {
@@ -212,6 +231,7 @@ export default {
                 sale: false,
                 direction: false,
                 payment: false,
+                charging: false,
                 security: false,
             },
         };
@@ -271,6 +291,8 @@ export default {
             this.sections.order = id == SECTIONS.order;
             this.sections.sale = id == SECTIONS.sale;
             this.sections.direction = id == SECTIONS.direcciones;
+            this.sections.payment = id == SECTIONS.payment;
+            this.sections.charging = id == SECTIONS.charging;
         },
 
         /**

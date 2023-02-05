@@ -253,4 +253,36 @@ class UserController extends Controller
             return $this->resp->json($th, 500);
         }
     }
+
+    /**
+     * Devuelve los métodos de pago del artista
+     *
+     * @param int $id           id del usuario
+     * @return JsonResponse
+     */
+    public function getUserPaymentMethods(int $id): JsonResponse
+    {
+        try {
+            $resp = $this->db->getUserPaymentMethods($id);
+            return $this->resp->json($resp, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Devuelve los métodos de cobro del artista
+     *
+     * @param int $id           id del usuario
+     * @return JsonResponse
+     */
+    public function getUserChargingMethods(int $id): JsonResponse
+    {
+        try {
+            $resp = $this->db->getUserChargingMethods($id);
+            return $this->resp->json($resp, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
 }

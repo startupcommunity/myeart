@@ -25,6 +25,7 @@
     <!-- CDNs de Font-Awesome -->
     <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
     <script src="{{ mix('js/app.js') }}" type="text/javascript" defer></script>
+    {{--  <script src="https://js.stripe.com/v3/" type="text/javascript"></script>  --}}
 
     {{--  favicon  --}}
     <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon/favicon-16x16.png') }}" />

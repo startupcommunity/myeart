@@ -83,6 +83,12 @@ const endpoints = {
 
         // obtiene las calificaciones del artista (params :id)
         getArtistRatings: `${API}/user/get-artist-ratings/`, // get
+
+        // obtiene los métodos de pago del usuario - {id}
+        getUserPaymentMethods: `${API}/user/get-user-payment-methods/`, // get
+
+        // obtiene los métodos de cobro del usuario - {id}
+        getUserChargeMethods: `${API}/user/get-user-charge-methods/`, // get
     },
 
     // comentarios
@@ -153,6 +159,9 @@ const endpoints = {
 
         // finalizar compra
         finish: `${API}/cart/finish-shop`, // post
+
+        // intento de pago
+        intent: `${API}/cart/intent`, // get
     },
 
     // pedidos - ordenes
@@ -282,6 +291,24 @@ const endpoints = {
 
         // marcas todas las notificaciones como leídas
         markAllAsRead: `${API}/notifications/mark-all-as-read`, //post
+    },
+
+    // métodos de pago
+    paymentMethods: {
+        // Agrega un método de pago al usuario
+        store: `${API}/payment-methods/store`, // post
+
+        // eliminar un método de pago del usuario / {id}
+        delete: `${API}/payment-methods/delete/`, // delete
+    },
+
+    // métodos de cobro
+    chargingMethods: {
+        // Agrega un método de cobro al usuario
+        store: `${API}/charging-methods/store`, // post
+
+        // eliminar un método de cobro del usuario / {id}
+        delete: `${API}/charging-methods/delete/`, // delete
     },
 };
 

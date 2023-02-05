@@ -157,19 +157,35 @@
                     </span>
                 </button>
             </div>
-            <div>
+            <!-- <div>
                 <button
                     type="button"
                     class="flex flex-col items-center justify-start space-y-2"
-                    @click="changeEmitAndClass(mobileSection.pagos)"
+                    @click="changeEmitAndClass(mobileSection.payment)"
                 >
                     <i class="fas fa-money-check text-primary fa-2x"></i>
                     <span
                         class="tracking-tight"
-                        :class="sections[0].pagos ? 'font-black' : 'font-light'"
+                        :class="sections[0].payment ? 'font-black' : 'font-light'"
                     >
                         Métodos de <br />
                         Pago
+                    </span>
+                </button>
+            </div> -->
+            <div>
+                <button
+                    type="button"
+                    class="flex flex-col items-center justify-start space-y-2"
+                    @click="changeEmitAndClass(mobileSection.charging)"
+                >
+                    <i class="fas fa-bank text-primary fa-2x"></i>
+                    <span
+                        class="tracking-tight"
+                        :class="sections[0].charging ? 'font-black' : 'font-light'"
+                    >
+                        Métodos de <br />
+                        Cobro
                     </span>
                 </button>
             </div>
@@ -213,7 +229,8 @@ export default {
                     order: false,
                     sale: false,
                     direcciones: false,
-                    pagos: false,
+                    payment: false,
+                    charging: false,
                     seguridad: false,
                 },
             ],
@@ -228,7 +245,8 @@ export default {
                     order: false,
                     sale: false,
                     direcciones: false,
-                    pagos: false,
+                    payment: false,
+                    charging: false,
                     seguridad: false,
                 },
             ],
@@ -242,7 +260,8 @@ export default {
                 order: "order",
                 sale: "sale",
                 direcciones: "direcciones",
-                pagos: "pagos",
+                payment: "payment",
+                charging: "charging",
                 seguridad: "seguridad",
             },
         };

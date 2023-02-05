@@ -338,5 +338,53 @@ export default {
             // imprimir el formato, ejemplo: 7 de enero de 2023
             return `${dayNumber} de ${monthPascal} de ${year}`;
         },
+
+        /**
+         * Verifica si el usuario ingreso los datos
+         * de la tarjeta de crédito correctamente
+         *
+         * @param {Object} error
+         * @returns
+         */
+        manageStripeErrors(error) {
+            if (error?.code) {
+                switch (error.code) {
+                    case "card_declined":
+                        return "La tarjeta ha sido rechazada";
+                    case "incomplete_zip":
+                        return "El código postal es incorrecto";
+                    case "incomplete_cvc":
+                        return "El código de seguridad es incorrecto";
+                    case "incomplete_expiry":
+                        return "La fecha de expiración es incorrecta";
+                    case "incomplete_number":
+                        return "El número de tarjeta es incorrecto";
+                    case "expired_card":
+                        return "La tarjeta ha expirado";
+                    case "incorrect_cvc":
+                        return "El código de seguridad es incorrecto";
+                    case "incorrect_number":
+                        return "El número de tarjeta es incorrecto";
+                    case "invalid_cvc":
+                        return "El código de seguridad es inválido";
+                    case "invalid_expiry_month":
+                        return "El mes de expiración es inválido";
+                    case "invalid_expiry_year":
+                        return "El año de expiración es inválido";
+                    case "invalid_number":
+                        return "El número de tarjeta es inválido";
+                    case "missing":
+                        return "Falta un campo requerido";
+                    case "processing_error":
+                        return "Error al procesar el pago";
+                    case "rate_limit":
+                        return "Demasiadas solicitudes en un periodo de tiempo";
+                    default:
+                        return "Error desconocido, verifique los datos de la tarjeta";
+                }
+            }
+
+            return "Error desconocido, verifique los datos de la tarjeta";
+        },
     },
 };

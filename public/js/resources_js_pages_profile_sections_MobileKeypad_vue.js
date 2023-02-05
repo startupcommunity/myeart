@@ -24,7 +24,8 @@ __webpack_require__.r(__webpack_exports__);
         order: false,
         sale: false,
         direcciones: false,
-        pagos: false,
+        payment: false,
+        charging: false,
         seguridad: false
       }],
       // original secciones
@@ -36,7 +37,8 @@ __webpack_require__.r(__webpack_exports__);
         order: false,
         sale: false,
         direcciones: false,
-        pagos: false,
+        payment: false,
+        charging: false,
         seguridad: false
       }],
       // id de secciones
@@ -48,7 +50,8 @@ __webpack_require__.r(__webpack_exports__);
         order: "order",
         sale: "sale",
         direcciones: "direcciones",
-        pagos: "pagos",
+        payment: "payment",
+        charging: "charging",
         seguridad: "seguridad"
       }
     };
@@ -252,15 +255,15 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.changeEmitAndClass(_vm.mobileSection.pagos);
+        return _vm.changeEmitAndClass(_vm.mobileSection.charging);
       }
     }
   }, [_c("i", {
-    staticClass: "fas fa-money-check text-primary fa-2x"
+    staticClass: "fas fa-bank text-primary fa-2x"
   }), _vm._v(" "), _c("span", {
     staticClass: "tracking-tight",
-    "class": _vm.sections[0].pagos ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Métodos de "), _c("br"), _vm._v("\n                    Pago\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+    "class": _vm.sections[0].charging ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Métodos de "), _c("br"), _vm._v("\n                    Cobro\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"

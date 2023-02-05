@@ -16,6 +16,11 @@ Route::group(['prefix' => 'cart'], function () {
   Route::get('/get-items', [ShoppingCartController::class, 'getItems'])->name('getItems');
 
   /**
+   * Obtiene el intent de pago
+   */
+  Route::get('/intent', [ShoppingCartController::class, 'intent'])->name('getIntent');
+
+  /**
    * Elimina un item del carrito
    *
    * @param integer $artwork_id

@@ -150,6 +150,6 @@ class Order extends Model
     public function isOwner(?int $user_id): bool
     {
         $userID = $user_id ?? auth()->id();
-        return $this->user_id === $user_id;
+        return $this->user_id === $userID;
     }
 }

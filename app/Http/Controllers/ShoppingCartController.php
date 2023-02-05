@@ -73,6 +73,22 @@ class ShoppingCartController extends Controller
     }
 
     /**
+     * crea el intento de pago
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function intent(): JsonResponse
+    {
+        try {
+            $intent = $this->factory->intent();
+            return $this->resp->json($intent, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
      * Finaliza la compra
      *
      * @param Request $request
@@ -83,9 +99,9 @@ class ShoppingCartController extends Controller
         try {
             $order = $this->factory->finishShop($request);
 
-            if ($order) {
-                return $this->resp->json($order, 200);
-            }
+            return $this->resp->json($order, 200);
+            // if ($order) {
+            // }
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

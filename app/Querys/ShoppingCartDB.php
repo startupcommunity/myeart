@@ -15,8 +15,10 @@ class ShoppingCartDB
   public function getItemsOfAuthUser(): Collection
   {
     $user = auth()->user();
-    return $user->shoppingCart()->with([
+    $items = $user->shoppingCart()->with([
       'artwork.gallery', 'artwork.user.artworks.categories', 'artwork.categories'
     ])->get();
+
+    return $items;
   }
 }

@@ -44,4 +44,10 @@ Route::middleware(['auth:api'])->group(function () {
 
     // globales
     require __DIR__ . '/api/global.php';
+
+    // métodos de pago
+    require __DIR__ . '/api/payment_methods.php';
+
+    // métodos de cobro
+    require __DIR__ . '/api/charging_methods.php';
 });
