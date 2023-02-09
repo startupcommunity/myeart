@@ -77,7 +77,7 @@ var render = function render() {
   return _c("div", {
     staticClass: "flex flex-col md:flex-row items-start justify-start"
   }, [_c("div", {}, [_c("img", {
-    staticClass: "w-full md:w-36 md:h-36 object-cover object-center",
+    staticClass: "w-full md:max-w-36 md:max-h-36 object-cover object-center aspect-square",
     attrs: {
       src: _vm.getPathImage,
       alt: "imagen-obra-de-arte"
@@ -85,7 +85,7 @@ var render = function render() {
   })]), _vm._v(" "), _c("div", {
     staticClass: "md:pl-3"
   }, [_c("h3", {
-    staticClass: "text-lg md:text-3xl font-bold text-zinc-900 text-left"
+    staticClass: "text-lg md:text-xl font-bold text-zinc-900 text-left"
   }, [_vm._v("\n            " + _vm._s(_vm.artwork.title) + "\n            "), _vm.title ? _c("div", {
     staticClass: "font-light text-lg"
   }, [_vm._v("\n                " + _vm._s(_vm.title) + "\n            ")]) : _vm._e()]), _vm._v(" "), !_vm.isAvailable && _vm.showAlert ? _c("div", [_vm._m(0)]) : _vm._e()])]);

@@ -309,6 +309,26 @@ class User extends Authenticatable
         return !is_null($this->front_photo);
     }
 
+    /**
+     * Verificar si tiene obras publicadas
+     *
+     * @return boolean
+     */
+    public function hasPublishedArtworks(): bool
+    {
+        return $this->artworks()->get()->filter(fn ($art) => $art->isAvailable())->count() > 0;
+    }
+
+    /**
+     * Verifica si solo tiene un método de cobro en la BD
+     *
+     * @return boolean
+     */
+    public function hasOnlyOneChargingMethod(): bool
+    {
+        return $this->chargingMethods()->count() <= 1;
+    }
+
     // ------------------------------------------------
     // ------------- Local Scopes ---------------------
     // ------------------------------------------------

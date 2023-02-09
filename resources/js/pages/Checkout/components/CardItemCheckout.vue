@@ -3,12 +3,12 @@
         <div class="">
             <img
                 :src="getPathImage"
-                class="w-full md:w-36 md:h-36 object-cover object-center"
+                class="w-full md:max-w-36 md:max-h-36 object-cover object-center aspect-square"
                 alt="imagen-obra-de-arte"
             />
         </div>
         <div class="md:pl-3">
-            <h3 class="text-lg md:text-3xl font-bold text-zinc-900 text-left">
+            <h3 class="text-lg md:text-xl font-bold text-zinc-900 text-left">
                 {{ artwork.title }}
                 <div class="font-light text-lg" v-if="title">
                     {{ title }}

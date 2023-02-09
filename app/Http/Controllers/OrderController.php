@@ -155,4 +155,17 @@ class OrderController extends Controller
             return $this->resp->json($e->getMessage(), 500);
         }
     }
+
+    /**
+     * Procesa las transferencias
+     */
+    public function processTransfers(Request $request): JsonResponse
+    {
+        try {
+            $this->factory->processTransfers($request);
+            return $this->resp->json('Transferencias procesadas', 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
 }

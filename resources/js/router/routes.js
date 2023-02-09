@@ -151,7 +151,7 @@ export const routes = [
     },
     {
         name: "checkoutSuccess",
-        path: "/checkout/success/:id",
+        path: "/checkout/success",
         component: importPage("Checkout/CheckoutSuccess"),
         beforeEnter: ifAuthenticated,
     },

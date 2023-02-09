@@ -61,9 +61,16 @@ class ChargingMethodController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateChargingMethodRequest $request, $id): JsonResponse
     {
-        //
+        try {
+            $resp = $this->factory->updateMethod($request, $id);
+            $msj = $resp ? 'Método de cobro actualizado' : 'No se pudo actualizar el método de cobro';
+            $status = $resp ? 200 : 204;
+            return $this->resp->json($msj, $status);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
     }
 
     /**
@@ -76,9 +83,7 @@ class ChargingMethodController extends Controller
     {
         try {
             $resp = $this->factory->deleteMethod($id);
-            $msj = $resp ? 'Método de cobro eliminado' : 'No se pudo eliminar el método de cobro';
-            $status = $resp ? 200 : 204;
-            return $this->resp->json($msj, $status);
+            return $this->resp->json($resp['msj'], $resp['status']);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

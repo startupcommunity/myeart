@@ -24,12 +24,17 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',  // int
-        'subtotal', // decimal
-        'tax',      // decimal
-        'shipping', // decimal
-        'total',    // decimal
-        'status'    // tinyint
+        'user_id',                          // int
+        'subtotal',                         // decimal
+        'tax',                              // decimal
+        'shipping',                         // decimal
+        'total',                            // decimal
+        'status',                           // tinyint
+        'payment_method',                   // string
+        'payment_intent_id',                // string
+        'payment_intent_client_secret_id',  // string
+        'transfer_group',                   // string
+        'source_transaction',               // string
     ];
 
     /**

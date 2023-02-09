@@ -4,6 +4,7 @@ namespace App\Factories;
 
 use App\Models\ChargingMethod;
 use App\Models\User;
+use App\Utils\Payment\Stripe;
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
 
@@ -14,7 +15,7 @@ class ChargingMethodFactory
   public function __construct(
     private ChargingMethod $charging,
   ) {
-    $this->stripeClient = new StripeClient(env('STRIPE_SECRET'));
+    $this->stripeClient = new Stripe();
   }
 
   /**
@@ -28,23 +29,15 @@ class ChargingMethodFactory
     // obtiene el usuario
     $user = User::find($request->user_id);
 
+    $data = [
+      'account_id' => $user->stripe_account_id,
+      'account_holder_name' => $user->name,
+      'account_number' => $request->account_number,
+    ];
+
     // conecta con stripe
     // colocar el método de cobro como predeterminado en stripe
-    $resp = $this->stripeClient->accounts->createExternalAccount(
-      $user->stripe_account_id,
-      [
-        'external_account' => [
-          'object' => 'bank_account',
-          'country' => 'ES',
-          'currency' => 'eur',
-          'account_holder_name' => $user->name,
-          'account_holder_type' => 'individual',
-          'account_number' => $request->account_number,
-        ],
-        'default_for_currency' => true,
-      ]
-    );
-
+    $resp = $this->stripeClient->createBankAccount($data);
 
     // si se creo la cuenta de banco
     if ($resp->object == 'bank_account') {
@@ -67,7 +60,9 @@ class ChargingMethodFactory
    */
   public function setAllMethodsAsNotDefault(int $user_id): void
   {
-    $this->charging->where('user_id', $user_id)->update(['default' => 0]);
+    $this->charging->where('user_id', $user_id)->get()->each(function ($item) {
+      $item->update(['default' => 0]);
+    });
   }
 
   /**
@@ -79,8 +74,11 @@ class ChargingMethodFactory
    */
   public function setLastMethodAsDefault(int $user_id): void
   {
-    $this->charging->where('user_id', $user_id)
-      ->latest()->first()->update(['default' => 1]);
+    $this->charging
+      ->where('user_id', $user_id)
+      ->latest()
+      ->first()
+      ->update(['default' => 1]);
   }
 
   /**
@@ -98,16 +96,13 @@ class ChargingMethodFactory
     // si existe el método de cobro
     if ($charging) {
       // conecta con stripe
-      $resp = $this->stripeClient->accounts->updateExternalAccount(
+      $resp = $this->stripeClient->setDefaultBank(
         $charging->user->stripe_account_id,
         $charging->stripe_bank_account_id,
-        [
-          'default_for_currency' => true,
-        ]
       );
 
       // si se actualizo el método de cobro en stripe
-      if ($resp->object == 'bank_account') {
+      if ($resp) {
         // actualiza el método de cobro en la base de datos
         $this->setAllMethodsAsNotDefault($charging->user_id);
         $charging->update(['default' => 1]);
@@ -122,75 +117,121 @@ class ChargingMethodFactory
    * Elimina un método de cobro
    *
    * @param int $id   Id del método de pago
-   * @return bool
+   * @return array
    */
-  public function deleteMethod(int $id): bool
+  public function deleteMethod(int $id): array
   {
-    // conectar con stripe
+    // obtiene la cuenta de banco
     $charging = $this->charging->find($id);
-    $resp = $this->stripeClient->accounts->deleteExternalAccount(
+    $user = $charging->user;
+
+    // verificar si el usuario tiene obras publicadas
+    if ($user->hasPublishedArtworks() && $user->hasOnlyOneChargingMethod()) {
+      return [
+        'status' => 201,
+        'msj' => 'No puede eliminar el método de cobro porque tiene obras publicadas, debe tener al menos un método de cobro registrado',
+      ];
+    }
+
+    // obtiene la cuenta de banco de stripe
+    $bankAccount = $this->stripeClient->getBankAccount(
       $charging->user->stripe_account_id,
       $charging->stripe_bank_account_id,
     );
 
-    if ($resp->deleted) {
-      // selecciona de stripe el método de cobro predeterminado
-      $retrieve = $this->stripeClient->accounts->allExternalAccounts(
-        $charging->user->stripe_account_id,
-        [
-          'object' => 'bank_account',
-          'default_for_currency' => true,
-        ]
-      );
+    // si el método de cobro es predeterminado
+    if ($bankAccount->default_for_currency) {
 
-      // verificar cual esta predeterminado
-      dd(
-        $retrieve->data,
-      );
+      // seleccionar los métodos de cobro del usuario de stripe
+      $getBanks = $this->stripeClient->getBanks($charging->user->stripe_account_id);
 
+      // si hay más de un método de cobro
+      if (count($getBanks['data']) > 1) {
+        // filtrar los métodos de cobro que no sean predeterminados
+        $filterBanks = array_filter($getBanks['data'], fn ($bank) => !$bank['default_for_currency']);
 
-      $deleted =  $charging->delete();
+        // seleccionar el primero de la lista
+        $bankID = array_values($filterBanks)[0]['id'];
 
-      // actualizar el predeterminado
-      $this->setAllMethodsAsNotDefault($charging->user_id);
-      $this->setLastMethodAsDefault($charging->user_id);
-      return $deleted;
+        // actualizar el default_for_currency en stripe a true
+        $this->stripeClient->setDefaultBank(
+          $charging->user->stripe_account_id,
+          $bankID,
+          true,
+        );
+
+        // eliminar el banco anterior de stripe
+        $deleteBank = $this->stripeClient->deleteBank(
+          $charging->user->stripe_account_id,
+          $charging->stripe_bank_account_id,
+        );
+
+        if ($deleteBank) {
+          // actualizar en la BD el banco predeterminado
+          $this->setAllMethodsAsNotDefault($charging->user_id);
+          $activeCharging = $this->charging->where('stripe_bank_account_id', $bankID)->first();
+          $updated = $activeCharging ? $activeCharging->update(['default' => 1]) : false;
+
+          // eliminar el método de cobro
+          $deleted = $updated ? $charging->delete() : false;
+
+          return $deleted ?
+            ['msj' => 'Método de cobro eliminado', 'status' => 200] :
+            ['msj' => 'No se pudo eliminar el método de cobro', 'status' => 201];
+        }
+
+        // no se puedo eliminar el método de cobro
+        return ['msj' => 'No se pudo eliminar el método de cobro', 'status' => 201];
+      }
+
+      // en caso de solo haber un método de cobro
+      // no se puede eliminar
+      return ['msj' => 'Debe tener un método de cobro registrado', 'status' => 201];
     }
 
-    return false;
+    // si el método de cobro no es predeterminado
+    // eliminar el método de cobro de stripe
+    $deleteBank = $this->stripeClient->deleteBank(
+      $charging->user->stripe_account_id,
+      $charging->stripe_bank_account_id,
+    );
+
+    // eliminar el método de cobro de la BD
+    $deleteCharging = $deleteBank ? $charging->delete() : false;
+
+    return $deleteCharging ?
+      ['msj' => 'Método de cobro eliminado', 'status' => 200] :
+      ['msj' => 'No se pudo eliminar el método de cobro', 'status' => 201];
   }
 
   /**
    * Actualizar método de cobro
    *
-   * @param Request $request
+   * @param Request $request    Request
+   * @param int $id             Id del método de cobro
    * @return bool
    */
-  public function updateMethod(Request $request): bool
+  public function updateMethod(Request $request, int $id): bool
   {
-    $charging = $this->charging->find($request->id);
+    $charging = $this->charging->find($id);
     $user = $charging->user;
 
-    // conectar con stripe
-    $resp = $this->stripeClient->accounts->updateExternalAccount(
+    // actualizar el método de cobro en stripe
+    $resp = $this->stripeClient->updateBank(
       $user->stripe_account_id,
       $charging->stripe_bank_account_id,
       [
-        'external_account' => [
-          'object' => 'bank_account',
-          'country' => 'ES',
-          'currency' => 'eur',
-          'account_holder_name' => $user->name,
-          'account_holder_type' => 'individual',
-          'account_number' => $request->account_number,
-        ]
+        'account_holder_name' => $request->account_holder_name,
+        'account_number' => $request->account_number,
       ]
     );
 
-    if ($resp->object == 'bank_account') {
+    // si se actualizo el método de cobro en stripe
+    if ($resp->id) {
+      // actualizar el método de cobro en la base de datos
       return $charging->update([
+        'account_holder_name' => $request->account_holder_name,
         'account_number' => $request->account_number,
-        'account_holder_name' => $resp->account_holder_name,
       ]);
     }
 

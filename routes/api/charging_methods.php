@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'charging-methods'], function () {
   /**
+   * Obtiene los métodos de cobro de un usuario
+   */
+  // Route::get('/get-user-charging-methods/{id}', [ChargingMethodController::class, 'getUserChargingMethods'])
+  //   ->name('getUserChargingMethods');
+
+  /**
    * Agrega un método de cobro
    */
   Route::post('/store', [ChargingMethodController::class, 'store'])->name('addChargingMethod');

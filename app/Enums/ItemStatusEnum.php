@@ -8,6 +8,7 @@ final class ItemStatusEnum
   const SHIPPED = 1;
   const DELIVERED = 2;
   const CANCELED = 3;
+  const UNDELIVERED = 4;
 
   public static function getValues(): array
   {
@@ -16,6 +17,7 @@ final class ItemStatusEnum
       self::SHIPPED,
       self::DELIVERED,
       self::CANCELED,
+      self::UNDELIVERED,
     ];
   }
 
@@ -26,6 +28,7 @@ final class ItemStatusEnum
       self::SHIPPED => 'Enviado',
       self::DELIVERED => 'Entregado',
       self::CANCELED => 'Cancelado',
+      self::UNDELIVERED => 'No entregado',
     ];
   }
 }

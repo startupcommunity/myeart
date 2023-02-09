@@ -16,6 +16,7 @@
                 @submit.prevent="saveArtwork"
                 ref="artworkForm"
                 lazy-validation
+                :class="disabledForm ? 'opacity-50 pointer-events-none' : ''"
             >
                 <v-container>
                     <v-row>
@@ -324,7 +325,7 @@
                         <!-- ------------------- -->
                         <!-- borrador o publicar -->
                         <!-- ------------------- -->
-                        <v-col cols="12">
+                        <v-col cols="12" v-if="!disabledForm">
                             <!-- <div
                                 class="w-full border-t border-gray-700 mt-8 pb-8"
                             ></div> -->
@@ -411,6 +412,7 @@ export default {
                 },
             },
             formIsValid: true,
+            disabledForm: false,
             menuPicker: false,
             isDraft: 3,
         };
@@ -419,6 +421,10 @@ export default {
         // mixin
         this.form.date_created = this.actualDate;
         this.getCategories();
+
+        if (this.userProfile.id) {
+            this.haveAChargingMethod();
+        }
     },
     computed: {
         /**
@@ -444,7 +450,49 @@ export default {
             return this.$route.params.collectiveID || null;
         },
     },
+
+    watch: {
+        userProfile(val) {
+            if (val.id) {
+                this.haveAChargingMethod();
+            }
+        },
+    },
+
     methods: {
+        /**
+         * Verifica si el usuario tiene agregado algún método de cobro
+         * si no lo tiene se desactiva el formulario
+         */
+        haveAChargingMethod() {
+            this.axios
+                .get(this.ep.user.getUserChargeMethods + this.userProfile.id)
+                .then((resp) => {
+                    if (resp.data.length === 0) {
+                        this.formIsValid = false;
+                        this.disabledForm = true;
+                        this.confirmedDialog({
+                            title: "Agrega un método de cobro",
+                            text: "Para poder publicar una obra debes agregar un método de cobro primero",
+                            icon: "warning",
+                            confirmButtonText: "Agregar método de cobro",
+                            cancelButtonText: "No, gracias",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                this.$router.push({
+                                    name: "userProfile",
+                                    params: {
+                                        id: this.userProfile.id,
+                                        section: "charging",
+                                    },
+                                });
+                            }
+                        });
+                    }
+                })
+                .catch((error) => this.manageError(error));
+        },
+
         /**
          * Guardar, publicar o guardar como borrador
          */

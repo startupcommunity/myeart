@@ -24,12 +24,8 @@ class CreateOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'address' => 'required|string',
-            'postal_code' => 'required|string',
-            'city' => 'required|string',
-            'shipping_method' => 'required|integer',
-            'tax' => 'required|numeric',
-            'shipping' => 'required|numeric',
+            'payment_intent' => 'required|string',
+            'payment_intent_client_secret' => 'required|string',
         ];
     }
 
@@ -41,12 +37,8 @@ class CreateOrderRequest extends FormRequest
     public function messages()
     {
         return [
-            'address.required' => 'La dirección es requerida',
-            'postal_code.required' => 'El código postal es requerido',
-            'city.required' => 'La ciudad es requerida',
-            'shipping_method.required' => 'El método de envío es requerido',
-            'tax.required' => 'El impuesto es requerido',
-            'shipping.required' => 'El costo de envío es requerido',
+            'payment_intent.required' => 'El intento de pago es requerido',
+            'payment_intent_client_secret.required' => 'El secreto del intento de pago es requerido',
         ];
     }
 }

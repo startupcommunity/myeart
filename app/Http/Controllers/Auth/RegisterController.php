@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use App\Utils\Payment\Stripe;
 use Illuminate\Http\Request;
-use Validator;
 use App\Models\User;
+use Validator;
 use Exception;
-use Stripe\StripeClient;
 
 class RegisterController extends Controller
 {
@@ -21,88 +22,42 @@ class RegisterController extends Controller
     {
         $validator = Validator::make($request->all(), $this->rules());
 
-        // return $validator->fails();
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
             ], 422);
         }
 
-        try {
-            // crear usuario
-            $user = new User();
-            $user->name = $request->name;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->password = bcrypt($request->password);
-            $user->save();
-
+        // transaction
+        $db = DB::transaction(function () use ($request) {
             // crear cuenta de stripe
-            $stripe = new StripeClient(env('STRIPE_SECRET'));
-            $resp = $stripe->accounts->create(
-                [
-                    'country' => 'ES',
-                    'type' => 'custom',
-                    'capabilities' => [
-                        'card_payments' => ['requested' => true],
-                        'transfers' => ['requested' => true],
-                    ],
-                    'business_type' => 'individual',
-                    'business_profile' => [
-                        'url' => env('APP_URL'),
-                        'mcc' => '5971',
-                    ],
-                    'individual' => [
-                        'email' => $request->email,
-                        'first_name' => $request->name,
-                        'last_name' => $request->name,
-                        'phone' => '+34 616 97 97 31',
+            $stripe = new Stripe();
+            $arr = $stripe->setDefaultAccountData($request);
+            $resp = $stripe->createAccount($arr);
 
-                        // fecha de nacimiento
-                        'dob' => [
-                            'day' => 1,
-                            'month' => 1,
-                            'year' => 1990,
-                        ],
+            // si se genero la cuenta de stripe
+            if ($resp->id) {
+                // crear usuario
+                User::create([
+                    'name' => $request->name,
+                    'username' => $request->username,
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password),
+                    'stripe_account_id' => $resp->id,
+                ]);
+                return true;
+            } else {
+                throw new Exception('Error al crear la cuenta de stripe');
+            }
+        });
 
-                        // address
-                        'address' => [
-                            'city' => 'Madrid',
-                            'country' => 'ES',
-                            'line1' => 'Calle de la calle',
-                            'line2' => 'Calle de la calle',
-                            'postal_code' => '28001',
-                            'state' => 'Madrid',
-                        ],
-                    ],
-
-                    // agregar cuenta bancaria
-                    'external_account' => [
-                        'object' => 'bank_account',
-                        'country' => 'ES',
-                        'currency' => 'eur',
-                        'account_holder_name' => 'Usuario de prueba',
-                        'account_holder_type' => 'individual',
-                        'account_number' => 'ES9121000418450200051332',
-                    ],
-
-                    // aprobar los términos de servicio
-                    'tos_acceptance' => [
-                        'date' => time(),
-                        'ip' => $request->ip(),
-                    ],
-                ]
-            );
-
-            // guardar id de cuenta de stripe en la tabla users
-            $user->update(['stripe_account_id' => $resp->id]);
-        } catch (Exception $e) {
+        if ($db) {
+            return (new LoginController())->login($request);
+        } else {
             return response()->json([
-                'error' => $e->getMessage()
+                'message' => 'Error al registrar el usuario'
             ], 500);
         }
-
-        return (new LoginController())->login($request);
     }
 
     /**

@@ -6,7 +6,7 @@
         </div>
 
         <!-- sección cesta -->
-        <section class="bg-white">
+        <section class="bg-white" v-if="orderCreated">
             <div class="container pt-12">
                 <h1 class="uppercase text-3xl text-zinc-900 font-bold mb-8">
                     <i class="far fa-check-circle"></i>
@@ -41,19 +41,25 @@
         <!-- /sección cesta -->
 
         <!-- conoce mas al artista -->
-        <section class="bg-[#B2794C]">
+        <section class="bg-[#B2794C]" v-if="items.length > 0">
             <div class="container py-20">
                 <div class="flex justify-center w-full">
                     <div class="flex flex-wrap justify-center">
-                        <div class="w-full md:w-1/2 flex justify-center justify-md-end">
+                        <div
+                            class="w-full md:w-1/2 flex justify-center justify-md-end"
+                        >
                             <Avatar
                                 :artist="artist"
                                 custom="w-32 h-32 md:w-52 md:h-52 border"
                             />
                         </div>
                         <div class="w-full md:w-1/2 flex justify-center">
-                            <div class="flex flex-col md:pl-4 justify-center items-center md:items-start">
-                                <span class="py-0 text-white text-lg md:text-2xl mb-3 text-center text-md-left">
+                            <div
+                                class="flex flex-col md:pl-4 justify-center items-center md:items-start"
+                            >
+                                <span
+                                    class="py-0 text-white text-lg md:text-2xl mb-3 text-center text-md-left"
+                                >
                                     Conoce mas al artista
                                     <span class="font-bold">
                                         {{ artist?.name }}
@@ -75,11 +81,12 @@
 
         <!-- otras obras -->
         <OtherArtworks
-            :categoryID="artwork?.categories[0]?.id"
+            :categoryID="1"
             :ignoreUser="user"
             :center="true"
             :borderBottom="true"
             title="+ obras que te pueden interesar"
+            v-if="items.length > 0"
         />
         <!-- /otras obras -->
     </MainLayout>
@@ -91,10 +98,26 @@ import OtherArtworks from "../artwork/sections/OtherArtworks.vue";
 import Header from "../landing/sections/Header.vue";
 import MainLayout from "../layouts/MainLayout.vue";
 import CardItemCheckout from "./components/CardItemCheckout.vue";
+import { loadStripe } from "@stripe/stripe-js";
 
 export default {
     name: "CheckoutSuccess",
     components: { OtherArtworks, MainLayout, Header, CardItemCheckout, Avatar },
+
+    data() {
+        return {
+            stripe: null,
+            loading: false,
+            orderCreated: false,
+            payment_intent: "",
+            payment_intent_cs: "",
+            redirect_status: "",
+            order: {
+                items: [],
+            },
+        };
+    },
+
     computed: {
         /**
          * Devuelve el usuario logueado
@@ -116,6 +139,13 @@ export default {
             };
 
             return random;
+        },
+
+        /**
+         * Devuelve el id de la Categoria a buscar
+         */
+        categoryID() {
+            return this.artwork?.categories[0]?.id || 1;
         },
 
         /**
@@ -148,29 +178,98 @@ export default {
             };
         },
     },
-    data() {
-        return {
-            order: {
-                items: [],
-            },
-            loading: false,
-        };
-    },
 
-    created() {
-        this.getItems();
+    mounted() {
+        // parámetros que llegan de stripe
+        const params = new URLSearchParams(window.location.search);
+        this.payment_intent = params.get("payment_intent");
+        this.payment_intent_cs = params.get("payment_intent_client_secret");
+        this.redirect_status = params.get("redirect_status");
+        this.processTransfer();
     },
 
     methods: {
         /**
-         * productos del carrito
+         * Crear la orden y terminar de procesar la compra
          */
-        getItems() {
-            console.log(this.$route.params.id);
+        async processTransfer() {
+            if (!this.payment_intent || !this.payment_intent_cs) {
+                this.notySwal({
+                    title: "Error",
+                    text: "No se pudo procesar el pago.",
+                    icon: "error",
+                });
+                return;
+            }
+
             this.loading = true;
+            this.stripe = await loadStripe(process.env.MIX_STRIPE_KEY);
+
+            // datos del intento de pago
+            this.stripe
+                .retrievePaymentIntent(this.payment_intent_cs)
+                .then(({ paymentIntent }) => {
+                    switch (paymentIntent.status) {
+                        case "succeeded":
+                            this.createOrder();
+                            break;
+
+                        case "processing":
+                            this.notySwal({
+                                title: "Aviso",
+                                text: "El pago se esta procesando. Te notificaremos cuando se reciba el pago.",
+                                icon: "info",
+                            });
+                            this.loading = false;
+                            break;
+
+                        case "requires_payment_method":
+                            this.notySwal({
+                                title: "Error",
+                                text: "El pago fue rechazado. Intenta con otro método de pago.",
+                                icon: "error",
+                            });
+                            this.loading = false;
+                            break;
+
+                        default:
+                            this.notySwal({
+                                title: "Error",
+                                text: "El pago no se pudo procesar. Intenta con otro método de pago.",
+                                icon: "error",
+                            });
+                            this.loading = false;
+                            break;
+                    }
+                });
+        },
+
+        /**
+         * Crear la orden y finalizar la compra
+         */
+        createOrder() {
+            this.loading = true;
+
+            const data = {
+                payment_intent: this.payment_intent,
+                payment_intent_client_secret: this.payment_intent_cs,
+            };
+
             this.axios
-                .get(this.ep.orders.getItems + this.$route.params.id)
-                .then((response) => (this.order = response.data))
+                .post(this.ep.carts.finish, data)
+                .then((resp) => {
+                    if (resp.status === 200) {
+                        this.order = resp.data;
+                        this.$store.dispatch("userRequest");
+                        this.orderCreated = true;
+                        return;
+                    }
+
+                    this.noty(
+                        "Hubo un problema para finalizar su pedido",
+                        "error"
+                    );
+                })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));
         },

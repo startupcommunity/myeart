@@ -25,7 +25,7 @@
                         block
                         rounded
                         height="100%"
-                        @click.stop="showModal = true"
+                        @click.stop="createPayment"
                     >
                         <div class="flex flex-col space-y-4">
                             <i class="fas fa-plus text-gray-300 fa-4x"></i>
@@ -54,22 +54,24 @@
                             <p class="text-base font-light leading-5">
                                 <span class="font-semibold">
                                     Número de cuenta:
-                                    <v-btn @click.stop="changeVisibilityNumber(pay.id)" small icon>
-                                      <v-icon>
-                                        mdi-eye
-                                      </v-icon>
+                                    <v-btn
+                                        @click.stop="
+                                            changeVisibilityNumber(pay.id)
+                                        "
+                                        small
+                                        icon
+                                    >
+                                        <v-icon>mdi-eye</v-icon>
                                     </v-btn>
                                 </span>
-                                <p :id="'show_account_' + pay.id">
+                            </p>
+                            <p class="text-base font-light leading-5">
+                                <span :id="'show_account_' + pay.id">
                                     {{ pay.account_number }}
-                                </p>
-                                <p :id="'hide_account_' + pay.id">
-                                    {{ pay.account_number.slice(0, 4) }}
-                                    <span class="text-gray-400">
-                                        **** **** **** ****
-                                    </span>
-                                    {{ pay.account_number.slice(-4) }}
-                                </p>
+                                </span>
+                                <span :id="'hide_account_' + pay.id">
+                                    {{ pay.account_number | secretNumber }}
+                                </span>
                             </p>
                             <p class="text-base font-light leading-5">
                                 <span class="font-semibold">Titular:</span>
@@ -77,16 +79,16 @@
                             </p>
                         </div>
                         <div class="flex justify-start items-end">
-                            <v-btn
+                            <!-- <v-btn
                                 depressed
                                 text
                                 @click.stop="editPayment(pay.id)"
                             >
                                 Editar
-                            </v-btn>
-                            <div
+                            </v-btn> -->
+                            <!-- <div
                                 class="border-r border-gray-600 h-8 my-0"
-                            ></div>
+                            ></div> -->
                             <v-btn
                                 depressed
                                 text
@@ -153,8 +155,20 @@ export default {
         },
     },
 
-    methods: {
+    filters: {
+        /**
+         * Aplicar slice a los números de cuenta bancaria
+         *
+         * @param {String} value        Número de cuenta bancaria
+         */
+        secretNumber(value) {
+            return (
+                value.slice(0, 4) + " **** **** **** **** " + value.slice(-4)
+            );
+        },
+    },
 
+    methods: {
         /**
          * Obtiene los métodos de cobro del usuario
          */
@@ -166,10 +180,14 @@ export default {
                 .then((_) => {
                     if (this.chargings.length > 0) {
                         this.chargings.forEach((pay) => {
-                          const invisible = document.getElementById('hide_account_' + pay.id);
-                          const visible = document.getElementById('show_account_' + pay.id);
-                          invisible.style.display = "block";
-                          visible.style.display = "none";
+                            const invisible = document.getElementById(
+                                "hide_account_" + pay.id
+                            );
+                            const visible = document.getElementById(
+                                "show_account_" + pay.id
+                            );
+                            invisible.style.display = "block";
+                            visible.style.display = "none";
                         });
                     }
                 })
@@ -183,16 +201,16 @@ export default {
          * @param {Object} id
          */
         changeVisibilityNumber(id) {
-          const visible = document.getElementById('show_account_' + id);
-          const invisible = document.getElementById('hide_account_' + id);
+            const visible = document.getElementById("show_account_" + id);
+            const invisible = document.getElementById("hide_account_" + id);
 
-          if (visible.style.display === "none") {
-            visible.style.display = "block";
-            invisible.style.display = "none";
-          } else {
-            visible.style.display = "none";
-            invisible.style.display = "block";
-          }
+            if (visible.style.display === "none") {
+                visible.style.display = "block";
+                invisible.style.display = "none";
+            } else {
+                visible.style.display = "none";
+                invisible.style.display = "block";
+            }
         },
 
         /**
@@ -203,6 +221,14 @@ export default {
         editPayment(id) {
             this.charging = this.chargings.find((pay) => pay.id === id);
             this.editCharging = true;
+            this.showModal = true;
+        },
+
+        /**
+         * Crear un nuevo método de cobro
+         */
+        createPayment() {
+            this.editCharging = false;
             this.showModal = true;
         },
 
@@ -230,10 +256,12 @@ export default {
                                 return;
                             }
 
-                            if (resp.status === 204) {
+                            console.log(resp);
+
+                            if (resp.status === 201) {
                                 this.notySwal({
                                     title: "¡No se pudo eliminar!",
-                                    text: "El método de cobro no se ha podido eliminar",
+                                    text: resp.data,
                                     icon: "warning",
                                 });
 

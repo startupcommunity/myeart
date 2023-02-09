@@ -21,9 +21,7 @@
                             <div class="flex flex-col">
                                 <v-radio-group
                                     v-model="defaultAddress"
-                                    @change="
-                                        $emit('setAddress', $event)
-                                    "
+                                    @change="$emit('setAddress', $event)"
                                     mandatory
                                 >
                                     <v-radio value="1" color="#B2794C">
@@ -98,22 +96,31 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap">
-                    <div class="w-full md:w-1/2">
+                    <div class="w-full">
                         <UseShippingMethod
                             @changedMethod="$emit('changedMethod')"
                         />
                     </div>
-                    <div class="w-full md:w-1/2 mb-5">
-                        <div class="flex justify-center justify-md-end md:pr-4">
+                    <div class="w-full py-5">
+                        <form id="payment-form">
+                            <div>
+                                <div id="payment-element"></div>
+                            </div>
+                        </form>
+                        <div class="py-5 flex justify-end">
                             <v-btn
                                 x-large
                                 color="grey darken-4"
-                                @click.stop="$emit('finalPurchase')"
+                                @click.stop="
+                                    $emit('processPayment', stripe, elements)
+                                "
                                 :loading="loading"
-                                :disabled="!allPublished || loading"
+                                :disabled="
+                                    !allPublished || loading || loadingStripe
+                                "
                             >
                                 <span class="uppercase text-white">
-                                    Continuar
+                                    Procesar pago
                                 </span>
                             </v-btn>
                         </div>
@@ -139,20 +146,28 @@ import CardItemCheckout from "../components/CardItemCheckout.vue";
 import UseDefaultAddress from "../components/UseDefaultAddress.vue";
 import UseFormAddress from "../components/UseFormAddress.vue";
 import UseShippingMethod from "../components/UseShippingMethod.vue";
+import { loadStripe } from "@stripe/stripe-js";
 
 export default {
     name: "OrderSection",
+
     components: {
         UseFormAddress,
         CardItemCheckout,
         UseShippingMethod,
         UseDefaultAddress,
     },
+
     data() {
         return {
             defaultAddress: 1,
+            stripe: null,
+            elements: null,
+            cardElement: null,
+            loadingStripe: false,
         };
     },
+
     props: {
         loading: {
             type: Boolean,
@@ -178,6 +193,14 @@ export default {
             type: Object,
             default: () => {},
         },
+        clientSecret: {
+            type: String,
+            default: "",
+        },
+    },
+
+    async mounted() {
+        await this.initStripe();
     },
 
     filters: {
@@ -207,12 +230,17 @@ export default {
          * los artículos en la cesta
          */
         subtotal() {
-            return this.items.reduce((total, item) => {
+            const sub = this.items.reduce((total, item) => {
                 const one = parseFloat(total);
                 const two = parseFloat(item.artwork?.price);
                 const result = one + two;
                 return parseFloat(result).toFixed(2);
             }, 0);
+
+            // incluir el impuesto
+            const subTax = (sub * this.tax) / 100;
+            const subTotal = parseFloat(sub) + parseFloat(subTax);
+            return subTotal.toFixed(2);
         },
 
         /**
@@ -236,6 +264,24 @@ export default {
          */
         isDefAddr() {
             return this.defaultAddress == 1;
+        },
+    },
+
+    methods: {
+        async initStripe() {
+            if (!this.clientSecret) {
+                return false;
+            }
+
+            this.loadingStripe = true;
+            const CS = this.clientSecret;
+            this.stripe = await loadStripe(process.env.MIX_STRIPE_KEY, {
+                locale: "es",
+            });
+            this.elements = this.stripe.elements({ clientSecret: CS });
+            this.cardElement = this.elements.create("payment");
+            this.cardElement.mount("#payment-element");
+            this.loadingStripe = false;
         },
     },
 };

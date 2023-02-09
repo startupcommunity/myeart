@@ -21,7 +21,10 @@ class OrderDB
   {
     $order = $this->getOrder($orderID);
     return $order->load([
-      'items.artwork.categories', 'items.user'
+      'items.artwork.categories',
+      'items.artwork.gallery',
+      'items.artwork.user',
+      'items.user',
     ]);
   }
 

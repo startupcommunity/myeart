@@ -7,8 +7,12 @@ use App\Enums\ItemStatusEnum;
 use App\Enums\OrderStatusEnum;
 use App\Models\Artwork;
 use App\Models\Order;
+use App\Utils\Payment\Stripe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use Stripe\Stripe;
+// use Stripe\StripeClient;
+// use Stripe\Transfer;
 
 class OrderFactory
 {
@@ -102,30 +106,49 @@ class OrderFactory
       $order = $this->model->find($request->order_id);
       $artwork = Artwork::find($request->artwork_id);
       $isNotValid = !$order->isOwner($request->user_id) || $order->isCanceled() || !$artwork;
+      $item = $order->items()->where('id', $request->item_id)->first();
+      $delivered = intval($request->delivered);
+      $isDelivered = $delivered === 1;
 
-      // si el usuario no es el dueño/creador de la orden
-      // no se puede cancelar
-      if ($isNotValid) {
+      // no se pudo cancelar
+      if ($isNotValid || !$item) {
         return false;
       }
 
-      // Aprobar el item, cambiar estado
-      $order
-        ->items()
-        ->where('id', $request->item_id)
-        ->update(['status' => ItemStatusEnum::DELIVERED]);
+      // actualizar estado del item
+      $item->update([
+        'status' => $isDelivered ? ItemStatusEnum::DELIVERED : ItemStatusEnum::UNDELIVERED,
+      ]);
 
       // agrega el rating a la orden
-      $order->rating()->create([
-        'rating' => $request->rating,
-        'comment' => $request->comment,
-        'user_id' => $artwork->user_id,
-        'item_id' => $request->item_id,
-      ]);
+      $order->rating()->create($request->all());
 
       // si todos los items fueron aprobadas, la orden cambia su estado
       if ($order->allItemsApproved()) {
         $order->update(['status' => OrderStatusEnum::DELIVERED]);
+      }
+
+      // dd($artwork->user->stripe_account_id);
+
+      // realizar el pago al vendedor
+      if ($isDelivered) {
+        $stripe = new Stripe();   // instancia de stripe
+        $price = $item->price;    // precio del item
+        $amount = $price * 100;   // cantidad a pagar
+        $balance = $stripe->getBalance(); // saldo de la cuenta
+        $available = $balance['available'][0]['amount']; // saldo disponible
+        $available = $available / 100;                // saldo disponible en euros
+        $isAvailableBalance = $available >= $price;   // si el saldo disponible es mayor o igual al precio del item
+
+        $stripe->createTransfer([
+          'amount' => $amount,
+          'destination' => $artwork->user->stripe_account_id,
+          'transfer_group' => $order->transfer_group,
+
+          // si hay saldo disponible se ejecuta la transferencia de inmediato
+          // si no se deja como pendiente hasta que haya saldo disponible
+          'source_transaction' => $isAvailableBalance ? null : $order->source_transaction,
+        ]);
       }
 
       return true;
@@ -170,5 +193,60 @@ class OrderFactory
     });
 
     return $tra;
+  }
+
+  /**
+   * Procesar las transferencias luego del checkout exitoso
+   *
+   * @param Request $request
+   * @return boolean
+   */
+  public function processTransfers(Request $request): ?bool
+  {
+    // $stripe = new Stripe();
+    // $user = auth()->user();
+    // $items = $user->shoppingCart()->get();
+    // $stripeBalance = $stripe->getBalance();
+
+    // request
+    // $clientSecretId = $request->payment_intent_client_secret;
+    // $paymentIntentId = $request->payment_intent;
+
+    // obtener el intento de pago
+    // $payment = $stripe->getPaymentIntent($paymentIntentId);
+
+    // cargo
+    // $source = $payment->latest_charge;
+
+    // obtener los metadatos
+    // $group = $payment->metadata['group'];
+    // $shipping = $payment->shipping->toArray();
+
+    // antes de transferir verificar el saldo disponible de la cuenta
+    // una vez el usuario comprador confirme el articulo, la transferencia sera ejecutada
+
+    // comisiones por cargo: 2.9% + 0.30€
+    // con conversion de moneda: 1%
+    // comisión por transferencia: 0.25% + 25 centavos
+    // por tener una cuenta conectada: 2$
+
+    // el dinero se transfiere a la cuenta del vendedor
+    // pasado un tiempo de 3 -7 días
+
+    // foreach ($items as $item) {
+    //   $price = floatval(number_format($item->artwork->price, 2, ',', ''));
+    //   $total = $price * 100;
+    //   $total = floatval(number_format($total, 2, ',', ''));
+    //   $transfer = $stripe->createTransfer([
+    //     'amount' => $total,
+    //     'destination' => $item->artwork->user->stripe_account_id,
+    //     'transfer_group' => $group,
+    //     'source_transaction' => null,
+    //   ]);
+
+    //   dd($transfer->toArray());
+    // }
+
+    return true;
   }
 }

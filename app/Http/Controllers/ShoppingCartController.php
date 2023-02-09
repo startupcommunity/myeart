@@ -98,10 +98,7 @@ class ShoppingCartController extends Controller
     {
         try {
             $order = $this->factory->finishShop($request);
-
             return $this->resp->json($order, 200);
-            // if ($order) {
-            // }
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

@@ -117,12 +117,16 @@ export default {
                 return parseFloat(result).toFixed(2);
             }, 0);
 
+            // aplicar impuesto
+            const tax = (total * this.appTax) / 100;
+            const totalTax = parseFloat(total) + parseFloat(tax);
+
             // si el numero es miles, se le agrega un punto
             // para indicar que es miles
             return new Intl.NumberFormat("de-DE", {
                 style: "currency",
                 currency: "EUR",
-            }).format(total);
+            }).format(totalTax);
         },
 
         /**
@@ -154,10 +158,21 @@ export default {
         allPublished() {
             return this.items.every((item) => item.artwork?.state === 1);
         },
+
+        /**
+         * Impuesto cobrado por la app 15%
+         *
+         * @returns {Number}
+         */
+        appTax() {
+            return 15;
+        },
     },
+
     created() {
         this.getItems();
     },
+
     methods: {
         getItems() {
             this.loading = true;

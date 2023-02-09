@@ -216,6 +216,7 @@ export default {
                         this.notySwal({
                             title: "No podemos confirmar tu pedido",
                             text: "Hubo un problema al confirmar tu pedido.",
+                            icon: "error",
                         });
                     }
                 })

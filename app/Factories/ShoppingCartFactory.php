@@ -12,14 +12,13 @@ use App\Models\ShoppingCart;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Events\NotificationEvent;
-use Exception;
-use Stripe\PaymentIntent;
-use Stripe\Stripe;
-use Stripe\StripeClient;
-use Stripe\Transfer;
+use App\Querys\OrderDB;
+use App\Utils\Payment\Stripe;
+use Illuminate\Support\Str;
 
 class ShoppingCartFactory
 {
+  private $tax = 15;    // 15% de impuesto por la app
 
   /**
    * Verifica si el item esta disponible
@@ -81,140 +80,143 @@ class ShoppingCartFactory
     return $item->delete();
   }
 
-  public function intent()
+  /**
+   * Crea un intento de pago con los datos
+   * del carrito y el usuario que paga
+   *
+   * @return string
+   */
+  public function intent(): ?string
   {
-    Stripe::setApiKey(env('STRIPE_SECRET'));
-
+    $tripe = new Stripe();
     $user = auth()->user();
+    $tax = $this->tax;
 
     // obtener los items del carrito de compras
     $items = $user->shoppingCart()->get();
+
+    if ($items == null || $items->count() == 0) {
+      return "";
+    }
 
     // obtener el total y subtotal de la compra
     $subtotal = $items->sum('artwork.price');
 
     // agregar el impuesto y el envío y los decimales
-    $total = $subtotal;
-    $total = floatval(number_format($total, 2, ',', ''));
-    $platformTax = 15;
-    $calc = ($total * $platformTax) / 100;
-    $totalFinal = ($total + $calc) * 100;
+    $subT = floatval(number_format($subtotal, 2, ',', ''));   // subtotal formateado
+    $calc = ($subT * $tax) / 100;                             // calculo del impuesto
+    $totalFinal = ($subT + $calc) * 100;                      // total final en céntimos
+    $random = Str::random(40);                                // random para el grupo de transferencia
 
     // crear intento de pago
-    $intent = PaymentIntent::create([
+    $intent = $tripe->createPaymentIntent([
       'amount' => $totalFinal,
       'currency' => 'eur',
       'payment_method_types' => ['card'],
-      'transfer_group' => 'ORDER_' . $user->id,
-      'customer' => $user->stripe_customer_id,
+      'transfer_group' => 'INTENT_' . $random,
+      'metadata' => [
+        'account_id' => $user->stripe_account_id,
+        'group' => 'INTENT_' . $random,
+      ],
     ]);
 
-    return $intent->client_secret;
+    return $intent ? $intent->client_secret : null;
   }
 
   /**
    * Finaliza la compra
    *
    * @param Request $request
-   * @return order $order     devuelve la orden creada
+   * @return Order $order     devuelve la orden creada
    */
-  public function finishShop($request): bool
+  public function finishShop($request): ?Order
   {
     $tra = DB::transaction(function () use ($request) {
-      // obtener el usuario
-      $user = auth()->user();
+      $user = auth()->user();   // usuario logueado
+      $tax = $this->tax;        // tax en % de la app
+      $stripe = new Stripe();   // instancia de stripe
+      $orderDB = new OrderDB(); // instancia de la clase de consultas de ordenes
 
-      // obtener los items del carrito de compras
-      $items = $user->shoppingCart()->get();
+      // request
+      $paymentIntentId = $request->payment_intent;                  // id del intento de pago
+      $paymentIntentCSId = $request->payment_intent_client_secret;  // id del intento de pago cliente secreto
 
-      // obtener el total y subtotal de la compra
-      $subtotal = $items->sum('artwork.price');
-
-      // agregar el impuesto y el envío y los decimales
-      $total = $subtotal + $request->tax + $request->shipping;
-      $total = floatval(number_format($total, 2, ',', ''));
-      $platformTax = 15;
-      $calc = ($total * $platformTax) / 100;
-      $totalFinal = ($total + $calc) * 100;
-
-
-      // conecta a stripe
-      Stripe::setApiKey(env('STRIPE_SECRET'));
-      // $stripe = new StripeClient(env('STRIPE_SECRET'));
-
-      // payment method id
-      // $paymentMethodID = $request->payment_method_id;
-
-      foreach ($items as $item) {
-        // crea la transferencia a la cuenta conectada
-        $formatPrice = floatval(number_format($item->artwork->price, 2, ',', ''));
-        $transfer = Transfer::create([
-          'amount' => $formatPrice,
-          'currency' => 'eur',
-          'destination' => $item->artwork->user->stripe_account_id,
-          'transfer_group' => 'ORDER_' . $user->id,
-        ]);
+      // verificar si ya existe una orden con este intento de pago
+      // si existe no se crea otra orden
+      $ord = Order::where('payment_intent_id', $paymentIntentId)->first();
+      if ($ord) {
+        return $orderDB->getItems($ord->id);
       }
 
-      return true;
+      // obtener el intento de pago
+      $payment = $stripe->getPaymentIntent($paymentIntentId);   // intento de pago procesado
+      $group = $payment->metadata['group'];                     // grupo de transferencia
+      $shipping = $payment->shipping->toArray();                // datos de envío
+      $source = $payment->latest_charge;                        // datos del pago, solo usar si es un pago pendiente
 
-      // dd($request->all(), $intent, $checkout_session);
+      $items = $user->shoppingCart()->get();                    // items u obras del carrito de compras
+      $subtotal = $items->sum('artwork.price');                 // subtotal
+      $calTax = ($subtotal * $tax) / 100;                       // calcular el impuesto
+      $total = $subtotal + $calTax;                             // total
 
       // crear la orden
-      // $order = $user->orders()->create([
-      //   'status' => OrderStatusEnum::PENDING,
-      //   'subtotal' => $subtotal,
-      //   'tax' => $request->tax,
-      //   'shipping' => $request->shipping,
-      //   'total' => $total,
-      // ]);
+      $order = $user->orders()->create([
+        'subtotal' => $subtotal,
+        'tax' => $tax,
+        'shipping' => 0,
+        'total' => $total,
+        'status' => OrderStatusEnum::PENDING,
+        'payment_method' => 'stripe',
+        'payment_intent_id' => $paymentIntentId,
+        'payment_intent_client_secret_id' => $paymentIntentCSId,
+        'transfer_group'  => $group,
+        'source_transaction' => $source,
+      ]);
 
       // agregar los items a la orden
-      // foreach ($items as $item) {
-      //   $random = $item->artwork->id . date('Ymd');
-      //   $frontPhoto = $item->artwork->getFrontPhoto();
+      foreach ($items as $item) {
+        $random = $item->artwork->id . date('Ymd');
+        $frontPhoto = $item->artwork->getFrontPhoto();
 
-      //   $order->items()->create([
-      //     'number'      => $random,
-      //     'artwork_id'  => $item->artwork_id,
-      //     'user_id'     => $item->artwork->user_id,
-      //     'price'       => $item->artwork->price,
-      //     'quantity'    => 1,
-      //     'title'       => $item->artwork->title,
-      //     'photo'       => $frontPhoto,
-      //     'status'      => ItemStatusEnum::SHIPPED,
-      //   ]);
+        $order->items()->create([
+          'number'      => $random,
+          'artwork_id'  => $item->artwork_id,
+          'user_id'     => $item->artwork->user_id,
+          'price'       => $item->artwork->price,
+          'quantity'    => 1,
+          'title'       => $item->artwork->title,
+          'photo'       => $frontPhoto,
+          'status'      => ItemStatusEnum::SHIPPED,
+        ]);
 
-      //   // pasar los items a estado vendido
-      //   $item->artwork->update(['state' => ArtworkStateEnum::SOLD]);
+        // pasar los items a estado vendido
+        $item->artwork->update(['state' => ArtworkStateEnum::SOLD]);
 
-      //   // Evento de notificacion para compra
-      //   $data = [
-      //     'user_id' => $user->id,
-      //     'notifiable_id' => $item->artwork->user_id,
-      //     'url' => '/obras/' . $item->artwork->id,
-      //     'message' => "Ha comprado su obra",
-      //     'type' => TypeNotificationEnum::BUY //'new-buy'
-      //   ];
+        // Evento de notificacion para compra
+        $data = [
+          'user_id' => $user->id,
+          'notifiable_id' => $item->artwork->user_id,
+          'url' => '/obras/' . $item->artwork->id,
+          'message' => "Ha comprado su obra",
+          'type' => TypeNotificationEnum::BUY //'new-buy'
+        ];
 
-      //   event(new NotificationEvent($data));
-      // }
+        event(new NotificationEvent($data));
+      }
 
       // registrar la dirección de envío
-      // $order->shippingAddress()->create([
-      //   'name'        => $user->name,
-      //   'address'     => $request->address,
-      //   'city'        => $request->city,
-      //   'postal_code' => $request->postal_code,
-      // ]);
+      $order->shippingAddress()->create([
+        'name'        => $user->name,
+        'address'     => $shipping['address']['line1'],
+        'city'        => $shipping['address']['city'],
+        'postal_code' => $shipping['address']['postal_code'],
+      ]);
 
-      // registrar el método de envió
-      // $order->shippingMethod()->create(['type' => $request->shipping_method]);
+      $order->shippingMethod()->create(['type' => 1]);    // 1 = envío gratis
+      $user->shoppingCart()->delete();                    // eliminar el carrito de compras
 
-      // eliminar los items del carrito de compras
-      // $user->shoppingCart()->delete();
-
-      // return $order;
+      // consultar la orden recién creada
+      return $orderDB->getItems($order->id);
     });
 
     return $tra;
