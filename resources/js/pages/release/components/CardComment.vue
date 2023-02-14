@@ -139,6 +139,11 @@ export default {
             type: Object,
             default: () => {},
         },
+        slug: {
+            type: String,
+            default: "",
+            description: "slug de la publicación",
+        },
     },
     data() {
         return {
@@ -298,6 +303,7 @@ export default {
                 comment_id: this.comment.id,
                 user_id: this.user.id,
                 answer: this.releaseAnswer,
+                slug: this.slug,
             };
 
             // request

@@ -21,7 +21,7 @@
             </div>
             <div class="flex gap-3 justify-end">
                 <button
-                    v-if="isWatchingCreator"
+                    v-if="isWatchingCreator || isUserInCollective"
                     class="py-1 px-2 rounded-lg hover:bg-gray-200"
                     @click.stop="goToCollectiveProfile"
                 >
@@ -171,6 +171,20 @@ export default {
                     (type) => type.value === this.collective?.type
                 )[0].text || ""
             );
+        },
+
+        members() {
+            return this.collective?.members || [];
+        },
+
+        /**
+         * Verifica si el usuario actual pertenece al colectivo
+         *
+         * @returns {Boolean}
+         */
+        isUserInCollective() {
+            const userId = this.user?.id;
+            return this.members?.some((obj) => obj.user_id === userId);
         },
 
         // categories() {

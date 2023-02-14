@@ -56,9 +56,8 @@ export default {
          * Comprueba si ya se sigue la obra seleccionada
          */
         isFollowingArtwork() {
-            return this.followArtworks?.some(
-                (follow) => follow.artwork_id === this.artworkID
-            );
+            const id = this.artworkID;
+            return this.followArtworks?.some((fav) => fav.id === id);
         },
 
         /**

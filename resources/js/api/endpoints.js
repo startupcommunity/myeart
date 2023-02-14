@@ -183,9 +183,6 @@ const endpoints = {
 
         // confirma una orden y marca como entregada
         confirm: `${API}/orders/confirm`, // post
-
-        // procesa las transferencias de un nuevo checkout
-        processTransfer: `${API}/orders/process-transfer`, // post
     },
 
     // ventas
@@ -318,6 +315,18 @@ const endpoints = {
 
         // obtiene los métodos de cobro del usuario / {id}
         // getUserChargingMethods: `${API}/charging-methods/get-user-charging-methods/`, // get
+    },
+
+    // contacto
+    contact: {
+        // envía un mensaje de contacto
+        send: `${API}/contact/send`, // post
+    },
+
+    // newsletter
+    newsletter: {
+        // envía un mensaje de contacto
+        suscribe: `${API}/newsletter/suscribe`, // post
     },
 };
 

@@ -37,7 +37,7 @@
                             </v-btn>
                         </div>
                         <div
-                            class="w-full lg:w-auto lg:border-r-2 lg:border-gray-800 lg:px-4 border-b border-b-gray-300 lg:border-b-0"
+                            class="w-full lg:w-auto lg:px-4 border-b border-b-gray-300 lg:border-b-0"
                         >
                             <v-btn
                                 text
@@ -192,7 +192,7 @@ export default {
             // finalizadas - delivered
             if (this.status.delivered) {
                 this.sales = this.original.filter(
-                    (i) => i.status === this.ITEM_STATES.delivered
+                    (i) => i.status === this.ITEM_STATES.delivered.val
                 );
             }
         },
@@ -242,6 +242,7 @@ export default {
 
                     this.noty("Error al obtener las ventas", "error");
                 })
+                .then((_) => this.filterOrders())
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));
         },

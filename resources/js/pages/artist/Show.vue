@@ -29,6 +29,13 @@
 
         <!-- publications -->
         <Release :artist="artist" title="Publicaciones del artista" />
+
+        <!-- calificaciones -->
+        <RatingUserSection
+            :artist="artist"
+            title="Calificaciones del artista"
+            v-if="artist?.id"
+        />
     </MainLayout>
 </template>
 <script>
@@ -41,11 +48,12 @@ import Hero from "./sections/Hero.vue";
 import PostHero from "./sections/PostHero.vue";
 import AboutMe from "./sections/AboutMe.vue";
 import ArtistArtworks from "../artwork/sections/ArtistArtworks.vue";
-// import Blog from "./sections/Blog.vue";
 import EventSection from "./sections/Event.vue";
 import Release from "./sections/Release.vue";
+import RatingUserSection from "./sections/RatingSection.vue";
 
 export default {
+    name: "Show",
     components: {
         MainLayout,
         Hero,
@@ -54,8 +62,8 @@ export default {
         ArtistArtworks,
         EventSection,
         Release,
+        RatingUserSection,
     },
-    name: "Show",
     mixins: [getDataMixin],
     data() {
         return {

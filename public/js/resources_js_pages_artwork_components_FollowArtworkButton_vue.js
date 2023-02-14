@@ -51,11 +51,11 @@ __webpack_require__.r(__webpack_exports__);
      * Comprueba si ya se sigue la obra seleccionada
      */
     isFollowingArtwork: function isFollowingArtwork() {
-      var _this$followArtworks,
-          _this = this;
+      var _this$followArtworks;
 
-      return (_this$followArtworks = this.followArtworks) === null || _this$followArtworks === void 0 ? void 0 : _this$followArtworks.some(function (follow) {
-        return follow.artwork_id === _this.artworkID;
+      var id = this.artworkID;
+      return (_this$followArtworks = this.followArtworks) === null || _this$followArtworks === void 0 ? void 0 : _this$followArtworks.some(function (fav) {
+        return fav.id === id;
       });
     },
 
@@ -78,7 +78,7 @@ __webpack_require__.r(__webpack_exports__);
      * Seguir o dejar de seguir a una obra
      */
     followOrUnfollow: function followOrUnfollow() {
-      var _this2 = this;
+      var _this = this;
 
       if (!this.canFollowArtwork) {
         this.noty("No es posible auto seguir tus obras", "error");
@@ -91,22 +91,22 @@ __webpack_require__.r(__webpack_exports__);
         artwork_id: this.artworkID
       }).then(function (resp) {
         if (resp.status === 204) {
-          _this2.noty(resp.data, "error");
+          _this.noty(resp.data, "error");
 
           return;
         }
 
-        if (_this2.isFollowingArtwork) {
-          _this2.noty("Obra eliminada de favoritos", "success");
+        if (_this.isFollowingArtwork) {
+          _this.noty("Obra eliminada de favoritos", "success");
         } else {
-          _this2.noty("Obra agregada a favoritos", "success");
+          _this.noty("Obra agregada a favoritos", "success");
         }
 
-        _this2.$store.dispatch("userFollowArtworks");
+        _this.$store.dispatch("userFollowArtworks");
       })["catch"](function (error) {
-        return _this2.manageError(error);
+        return _this.manageError(error);
       })["finally"](function () {
-        return _this2.loadFollow = false;
+        return _this.loadFollow = false;
       });
     }
   }

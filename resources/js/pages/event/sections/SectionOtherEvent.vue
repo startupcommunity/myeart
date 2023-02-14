@@ -60,7 +60,10 @@ export default {
             this.globalLoading = true;
             this.axios
                 .get(this.ep.events.getAll, {
-                    params: { sortBy: 1 },
+                    params: {
+                        sortBy: 1,
+                        exclude: this.$route.params.id,
+                    },
                 })
                 .then((resp) => (this.events = resp.data))
                 .then(() => this.showTNS())

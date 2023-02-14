@@ -182,10 +182,29 @@
                     <i class="fas fa-bank text-primary fa-2x"></i>
                     <span
                         class="tracking-tight"
-                        :class="sections[0].charging ? 'font-black' : 'font-light'"
+                        :class="
+                            sections[0].charging ? 'font-black' : 'font-light'
+                        "
                     >
                         Métodos de <br />
                         Cobro
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button
+                    type="button"
+                    class="flex flex-col items-center justify-start space-y-2"
+                    @click="changeEmitAndClass(mobileSection.rating)"
+                >
+                    <i class="fas fa-star text-primary fa-2x"></i>
+                    <span
+                        class="tracking-tight"
+                        :class="
+                            sections[0].rating ? 'font-black' : 'font-light'
+                        "
+                    >
+                        Calificaciones
                     </span>
                 </button>
             </div>
@@ -231,6 +250,7 @@ export default {
                     direcciones: false,
                     payment: false,
                     charging: false,
+                    rating: false,
                     seguridad: false,
                 },
             ],
@@ -247,6 +267,7 @@ export default {
                     direcciones: false,
                     payment: false,
                     charging: false,
+                    rating: false,
                     seguridad: false,
                 },
             ],
@@ -262,6 +283,7 @@ export default {
                 direcciones: "direcciones",
                 payment: "payment",
                 charging: "charging",
+                rating: "rating",
                 seguridad: "seguridad",
             },
         };

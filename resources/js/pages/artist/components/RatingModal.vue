@@ -42,34 +42,40 @@
                                 </div>
                             </div>
                             <div class="py-5">
-                                <div class="flex flex-coi gap-3">
+                                <div class="flex flex-wrap gap-3">
                                     <div
-                                        class="flex justify-between items-start"
+                                        class="w-full"
                                         v-for="r in data"
                                         :key="r.id"
                                     >
-                                        <div class="flex flex-col gap-1">
-                                            <div>
-                                                <v-icon
-                                                    v-for="i in 5"
-                                                    :key="i"
-                                                    :color="
-                                                        i <= r.rating
-                                                            ? 'yellow'
-                                                            : 'gray'
-                                                    "
-                                                >
-                                                    mdi-star
-                                                </v-icon>
-                                            </div>
-                                            <div class="text-sm text-gray-900">
-                                                {{ r.comment }}
-                                            </div>
-                                        </div>
                                         <div
-                                            class="text-xs text-gray-900 mt-2 font-light"
+                                            class="flex justify-between items-start"
                                         >
-                                            {{ r.created_at | dateFormat }}
+                                            <div class="flex flex-col gap-1">
+                                                <div>
+                                                    <v-icon
+                                                        v-for="i in 5"
+                                                        :key="i"
+                                                        :color="
+                                                            i <= r.rating
+                                                                ? 'yellow'
+                                                                : 'gray'
+                                                        "
+                                                    >
+                                                        mdi-star
+                                                    </v-icon>
+                                                </div>
+                                                <div
+                                                    class="text-sm text-gray-900"
+                                                >
+                                                    {{ r.comment }}
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="text-xs text-gray-900 mt-2 font-light"
+                                            >
+                                                {{ r.created_at | dateFormat }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

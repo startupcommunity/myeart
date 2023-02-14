@@ -541,10 +541,12 @@ var render = function render() {
   }, [_vm._v("\n                                    (" + _vm._s(_vm.data.length) + ") calificaciones\n                                ")])])]), _vm._v(" "), _c("div", {
     staticClass: "py-5"
   }, [_c("div", {
-    staticClass: "flex flex-coi gap-3"
+    staticClass: "flex flex-wrap gap-3"
   }, _vm._l(_vm.data, function (r) {
     return _c("div", {
       key: r.id,
+      staticClass: "w-full"
+    }, [_c("div", {
       staticClass: "flex justify-between items-start"
     }, [_c("div", {
       staticClass: "flex flex-col gap-1"
@@ -554,12 +556,12 @@ var render = function render() {
         attrs: {
           color: i <= r.rating ? "yellow" : "gray"
         }
-      }, [_vm._v("\n                                                mdi-star\n                                            ")]);
+      }, [_vm._v("\n                                                    mdi-star\n                                                ")]);
     }), 1), _vm._v(" "), _c("div", {
       staticClass: "text-sm text-gray-900"
-    }, [_vm._v("\n                                            " + _vm._s(r.comment) + "\n                                        ")])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                " + _vm._s(r.comment) + "\n                                            ")])]), _vm._v(" "), _c("div", {
       staticClass: "text-xs text-gray-900 mt-2 font-light"
-    }, [_vm._v("\n                                        " + _vm._s(_vm._f("dateFormat")(r.created_at)) + "\n                                    ")])]);
+    }, [_vm._v("\n                                            " + _vm._s(_vm._f("dateFormat")(r.created_at)) + "\n                                        ")])])]);
   }), 0)])])], 1)])], 1)], 1)], 1);
 };
 

@@ -8,7 +8,7 @@ require __DIR__ . '/api/public.php';
 /**
  * grupo de rutas protegidas
  *
- * @luisandev
+ * @luisandev https://luisan.dev
  */
 Route::middleware(['auth:api'])->group(function () {
 
@@ -50,4 +50,10 @@ Route::middleware(['auth:api'])->group(function () {
 
     // métodos de cobro
     require __DIR__ . '/api/charging_methods.php';
+
+    // contacto
+    require __DIR__ . '/api/contact.php';
+
+    // newsletter
+    require __DIR__ . '/api/newsletter.php';
 });

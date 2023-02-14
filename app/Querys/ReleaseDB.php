@@ -103,7 +103,11 @@ class ReleaseDB
   public function getComments(int|string $id): ?UserRelease
   {
     // verifica si el parámetro es un id o un slug
-    $release = is_numeric($id) ? $this->getReleaseById($id) : $this->getReleaseBySlug($id);
+    $release = is_numeric($id) ? $this->getReleaseById($id) : $this->getReleaseBySlug(trim($id));
+
+    if (!$release) {
+      return null;
+    }
 
     // publicaciones con sus comentarios y likes
     // comentarios con sus likes y respuestas

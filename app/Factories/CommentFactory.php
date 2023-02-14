@@ -9,6 +9,8 @@ use App\Models\Artwork;
 use App\Models\Comment;
 use App\Models\CommentLike;
 use App\Models\User;
+use App\Models\UserRelease;
+use App\Utils\AppNotification;
 
 class CommentFactory
 {
@@ -142,19 +144,22 @@ class CommentFactory
     if ($comment->commentable_type == 'App\Models\Artwork') {
       $url = '/obras/' . $comment->commentable_id;
     } else {
-      // $url = '/usuario/perfil/' . $comment->user_id . '/pub';
-      $url = '/comunidad';
+      $release = UserRelease::where('slug', $request->slug)->first();
+      if ($release) {
+        $url = '/publicaciones/slug/' . $release->slug;
+      } else {
+        $url = '/comunidad';
+      }
     }
 
-    $noty = [
+    // enviar la notificacion al usuario
+    AppNotification::sendNoty([
       'user_id' => $request->user_id,
       'notifiable_id' => $comment->user_id,
       'url' => $url,
-      'message' => "Ha respondido su comentario",
-      'type' => TypeNotificationEnum::ANSWER //'new-answer'
-    ];
-
-    event(new NotificationEvent($noty));
+      'msj' => "Ha respondido su comentario",
+      'type' => TypeNotificationEnum::ANSWER,
+    ]);
 
     return $comment->answer()->create($data);
   }

@@ -73,6 +73,11 @@ class EventDB
       }
     }
 
+    // excluir el id enviado
+    if ($request->has('exclude')) {
+      $events->where('id', '!=', $request->exclude);
+    }
+
     // ordenar por
     if ($request->has('sortBy')) {
 

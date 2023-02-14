@@ -37,11 +37,6 @@ Route::group(['prefix' => 'orders'], function () {
    */
   Route::post('/confirm', [OrderController::class, 'confirmOrders'])->name('confirmOrders');
 
-  /**
-   * Procesa las transferencias
-   */
-  Route::post('/process-transfer', [OrderController::class, 'processTransfers'])->name('processTransfers');
-
 
   // -------------------------------------
   // ventas - también cuenta como ordenes

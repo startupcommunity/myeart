@@ -89,6 +89,11 @@ __webpack_require__.r(__webpack_exports__);
     owner: {
       type: Object,
       "default": function _default() {}
+    },
+    slug: {
+      type: String,
+      "default": "",
+      description: "slug de la publicación"
     }
   },
   data: function data() {
@@ -255,7 +260,8 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         comment_id: this.comment.id,
         user_id: this.user.id,
-        answer: this.releaseAnswer
+        answer: this.releaseAnswer,
+        slug: this.slug
       }; // request
 
       this.axios.post(this.ep.comments.addAnswerRelease, data).then(function () {

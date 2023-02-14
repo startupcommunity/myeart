@@ -12,7 +12,51 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "NewLetter"
+  name: "NewLetter",
+  data: function data() {
+    return {
+      loading: false,
+      isValid: true,
+      email: ""
+    };
+  },
+  computed: {
+    user: function user() {
+      return this.$store.getters.getProfile || {};
+    }
+  },
+  methods: {
+    sendNewLetter: function sendNewLetter() {
+      var _this$user,
+          _this = this;
+
+      if (!this.email) {
+        return this.notySwal({
+          icon: "error",
+          title: "Error",
+          text: "Por favor, debe indicar un email válido"
+        });
+      }
+
+      this.loading = true;
+      this.axios.post(this.ep.newsletter.suscribe, {
+        email: this.email,
+        user_id: (_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id
+      }).then(function (_) {
+        _this.notySwal({
+          title: "¡Gracias!",
+          text: "Ahora estás suscrito a nuestro newsletter, recibirás información sobre nuestros próximos eventos y novedades."
+        }); // limpiar campos
+
+
+        _this.email = "";
+      })["catch"](function (error) {
+        return _this.manageError(error);
+      })["finally"](function () {
+        return _this.loading = false;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -32,13 +76,6 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
   return _c("div", {
     staticClass: "lg:py-28 bg-mobile-newsletter md:bg-newsletter bg-cover bg-no-repeat bg-center"
   }, [_c("div", {
@@ -47,22 +84,67 @@ var staticRenderFns = [function () {
     staticClass: "font-black text-xl lg:text-3xl leading-10 text-white text-center"
   }, [_vm._v("\n            El newsletter para grandes artistas\n        ")]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-center items-center"
+  }, [_c("v-form", {
+    ref: "newForm",
+    staticClass: "w-full lg:w-1/2 py-8",
+    attrs: {
+      "lazy-validation": ""
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.sendNewLetter.apply(null, arguments);
+      }
+    },
+    model: {
+      value: _vm.isValid,
+      callback: function callback($$v) {
+        _vm.isValid = $$v;
+      },
+      expression: "isValid"
+    }
   }, [_c("div", {
-    staticClass: "input-group w-full lg:w-1/2 py-8"
+    staticClass: "input-group"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.email,
+      expression: "email"
+    }],
     staticClass: "form-control h-14",
     attrs: {
       type: "text",
       "aria-label": "Text input with dropdown button"
+    },
+    domProps: {
+      value: _vm.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.email = $event.target.value;
+      }
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "input-group-append"
   }, [_c("button", {
-    staticClass: "btn btn-dark px-5 text-gray-200"
-  }, [_vm._v("SUSCRÍBETE")])])])]), _vm._v(" "), _c("h5", {
+    staticClass: "btn btn-dark px-5 text-gray-200",
+    attrs: {
+      disabled: _vm.loading
+    }
+  }, [_vm._v("\n                            SUSCRÍBETE\n                        ")])])])])], 1), _vm._v(" "), _c("h5", {
     staticClass: "text-white font-light tracking-wider text-sm text-center uppercase"
-  }, [_vm._v("100% arte, 0% spam, lo prometemos.")])])]);
-}];
+  }, [_vm._v("\n            100% arte, 0% spam, lo prometemos.\n        ")])]), _vm._v(" "), _c("loading-overlay", {
+    attrs: {
+      active: _vm.loading,
+      "is-full-page": true,
+      loader: "bars"
+    }
+  })], 1);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 

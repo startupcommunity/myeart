@@ -2,9 +2,11 @@
 
 namespace App\Factories;
 
+use App\Enums\TypeNotificationEnum;
 use App\Models\FavoriteEvent;
 use App\Models\User;
 use App\Models\UserEvent;
+use App\Utils\AppNotification;
 use App\Utils\AppStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +15,8 @@ class EventFactory
 {
 
   /**
+   * Almacena un nuevo evento
+   *
    * @param Request $data
    * @return UserEvent
    */
@@ -78,7 +82,8 @@ class EventFactory
   }
 
   /**
-   * agrega un like
+   * agrega un like a un evento
+   *
    * @param Request $request
    * @return bool
    */
@@ -94,6 +99,17 @@ class EventFactory
 
     // si no, agregar like
     $created = $event->likes()->create(['user_id' => $request->user_id]);
+
+    if ($created) {
+      // enviar la notificacion al usuario
+      AppNotification::sendNoty([
+        'user_id' => $request->user_id,
+        'notifiable_id' => $event->user_id,
+        'url' => 'eventos/show/' . $event->id,
+        'msj' => 'Le ha gustado tu evento',
+        'type' => TypeNotificationEnum::LIKE_EVENT,
+      ]);
+    }
 
     return is_object($created);
   }

@@ -25,7 +25,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      email: "contacto@myeart.com",
+      email: "info@myeart.org",
       updateDate: "2023-01-20",
       domain: "https://myeart.org"
     };

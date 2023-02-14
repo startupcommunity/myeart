@@ -111,6 +111,13 @@
                         class="sm:min-h-[54rem]"
                     />
                     <!-- /métodos de pago -->
+
+                    <!-- calificaciones -->
+                    <Rating
+                        :showSection="sections.rating"
+                        class="sm:min-h-[54rem]"
+                    />
+                    <!-- /calificaciones -->
                 </div>
             </div>
         </div>
@@ -162,11 +169,11 @@ import ModalProfilePhoto from "./ModalProfilePhoto.vue";
 
 // secciones
 import Artwork from "./sections/Artwork.vue";
+import DesktopKeypad from "./sections/DesktopKeypad.vue";
 import MobileKeypad from "./sections/MobileKeypad.vue";
 import PersonalData from "./sections/PersonalData.vue";
 import Address from "./sections/Address.vue";
 import Favourite from "./sections/Favourite.vue";
-import DesktopKeypad from "./sections/DesktopKeypad.vue";
 import Release from "./sections/Release.vue";
 import Order from "./sections/Order.vue";
 import HeroProfile from "./sections/HeroProfile.vue";
@@ -174,6 +181,7 @@ import MyCollectivesModal from "./components/MyCollectivesModal.vue";
 import Sale from "./sections/Sale.vue";
 import PaymentMethod from "./sections/PaymentMethod.vue";
 import ChargingMethod from "./sections/ChargingMethod.vue";
+import Rating from "./sections/Rating.vue";
 
 // secciones como tabs
 const SECTIONS = {
@@ -186,33 +194,35 @@ const SECTIONS = {
     direcciones: "direcciones",
     payment: "payment",
     charging: "charging",
+    rating: "rating",
     seguridad: "seguridad",
 };
 
 export default {
     name: "ProfileUser",
     components: {
-        Header,
-        PreHeader,
-        Newletter,
-        ExtraInfo,
-        Footer,
-        ModalFrontPhoto,
-        ModalProfilePhoto,
-        MobileKeypad,
-        Artwork,
-        PersonalData,
-        Address,
-        Favourite,
-        DesktopKeypad,
-        Release,
-        Order,
-        HeroProfile,
-        MyCollectivesModal,
-        Sale,
-        PaymentMethod,
-        ChargingMethod,
-    },
+    Header,
+    PreHeader,
+    Newletter,
+    ExtraInfo,
+    Footer,
+    ModalFrontPhoto,
+    ModalProfilePhoto,
+    MobileKeypad,
+    Artwork,
+    PersonalData,
+    Address,
+    Favourite,
+    DesktopKeypad,
+    Release,
+    Order,
+    HeroProfile,
+    MyCollectivesModal,
+    Sale,
+    PaymentMethod,
+    ChargingMethod,
+    Rating
+},
     data() {
         return {
             editDataProfile: false,
@@ -232,6 +242,7 @@ export default {
                 direction: false,
                 payment: false,
                 charging: false,
+                rating: false,
                 security: false,
             },
         };
@@ -293,6 +304,7 @@ export default {
             this.sections.direction = id == SECTIONS.direcciones;
             this.sections.payment = id == SECTIONS.payment;
             this.sections.charging = id == SECTIONS.charging;
+            this.sections.rating = id == SECTIONS.rating;
         },
 
         /**

@@ -196,7 +196,7 @@ class ShoppingCartFactory
         $data = [
           'user_id' => $user->id,
           'notifiable_id' => $item->artwork->user_id,
-          'url' => '/obras/' . $item->artwork->id,
+          'url' => '/usuario/perfil/' . $item->artwork->user_id . '/sale',
           'message' => "Ha comprado su obra",
           'type' => TypeNotificationEnum::BUY //'new-buy'
         ];

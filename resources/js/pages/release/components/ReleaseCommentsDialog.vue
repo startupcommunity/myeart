@@ -93,6 +93,7 @@
                                         <CardComment
                                             :comment="comment"
                                             :owner="creator"
+                                            :slug="release.slug"
                                             @addAnswer="getComments"
                                         />
                                     </div>

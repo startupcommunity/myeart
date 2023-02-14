@@ -211,6 +211,14 @@ export const routes = [
         component: importPage("collective/Profile"),
         beforeEnter: ifAuthenticated,
     },
+
+    // ---------- contacto --------------------
+    {
+        name: "contact",
+        path: "/contacto",
+        component: importPage("contact/Index"),
+        beforeEnter: ifAuthenticated,
+    },
 ];
 
 const config = new VueRouter({

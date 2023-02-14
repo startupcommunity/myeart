@@ -10,6 +10,7 @@ use App\Models\FavoriteRelease;
 use App\Models\ReleaseLike;
 use App\Models\User;
 use App\Models\UserRelease;
+use App\Utils\AppNotification;
 use App\Utils\AppStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,6 +48,15 @@ class ReleaseFactory
       if ($request->labels && $request->labels != 'null' && is_array($request->labels)) {
         foreach ($request->labels as $label) {
           $release->labels()->create(['friend_id' => $label]);
+
+          // enviar la notificacion al usuario etiquetado
+          AppNotification::sendNoty([
+            'user_id' => $user->id,
+            'notifiable_id' => $label,
+            'url' => '/publicaciones/slug/ ' . $release->slug,
+            'msj' => 'Te ha etiquetado en una publicación',
+            'type' => TypeNotificationEnum::TAGGED,
+          ]);
         }
       }
 
@@ -95,6 +105,15 @@ class ReleaseFactory
         foreach ($request->labels as $label) {
           // create
           $release->labels()->create(['friend_id' => $label]);
+
+          // enviar la notificacion al usuario etiquetado
+          AppNotification::sendNoty([
+            'user_id' => $release->user_id,
+            'notifiable_id' => $label,
+            'url' => '/publicaciones/slug/ ' . $release->slug,
+            'msj' => 'Te ha etiquetado en una publicación',
+            'type' => TypeNotificationEnum::TAGGED,
+          ]);
         }
       }
 

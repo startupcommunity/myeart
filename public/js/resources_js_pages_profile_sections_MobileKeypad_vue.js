@@ -26,6 +26,7 @@ __webpack_require__.r(__webpack_exports__);
         direcciones: false,
         payment: false,
         charging: false,
+        rating: false,
         seguridad: false
       }],
       // original secciones
@@ -39,6 +40,7 @@ __webpack_require__.r(__webpack_exports__);
         direcciones: false,
         payment: false,
         charging: false,
+        rating: false,
         seguridad: false
       }],
       // id de secciones
@@ -52,6 +54,7 @@ __webpack_require__.r(__webpack_exports__);
         direcciones: "direcciones",
         payment: "payment",
         charging: "charging",
+        rating: "rating",
         seguridad: "seguridad"
       }
     };
@@ -264,6 +267,21 @@ var render = function render() {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].charging ? "font-black" : "font-light"
   }, [_vm._v("\n                    Métodos de "), _c("br"), _vm._v("\n                    Cobro\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+    staticClass: "flex flex-col items-center justify-start space-y-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.changeEmitAndClass(_vm.mobileSection.rating);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-star text-primary fa-2x"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].rating ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Calificaciones\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"

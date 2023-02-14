@@ -734,7 +734,7 @@ export default {
 
             this.axios
                 .post(this.ep.artworks.addVisit, data)
-                .then(() => console.log("visita agregada con éxito"))
+                .then((_) => console.info("visita agregada con éxito"))
                 .catch((error) => console.log(error));
         },
 

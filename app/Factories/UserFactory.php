@@ -103,6 +103,7 @@ class UserFactory
       return false;
     }
 
+
     // caso contrario, se agrega
     $user->favoriteArtworks()->create(['artwork_id' => $request->artwork_id]);
 

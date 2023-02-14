@@ -183,6 +183,22 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
+        return _vm.showSection("rating");
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-star text-primary"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.rating ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Mis calificaciones\n                ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
+  }, [_c("button", {
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
         return _vm.showSection("seguridad");
       }
     }

@@ -103,6 +103,17 @@
                 </button>
             </div>
             <div class="flex flex-wrap gap-4 items-center justify-start py-6">
+                <button type="button" @click="showSection('rating')">
+                    <i class="fas fa-star text-primary"></i>
+                    <span
+                        class="tracking-tight uppercase"
+                        :class="sections.rating ? 'font-black' : 'font-light'"
+                    >
+                        Mis calificaciones
+                    </span>
+                </button>
+            </div>
+            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
                 <button type="button" @click="showSection('seguridad')">
                     <i class="fas fa-shield text-primary"></i>
                     <span

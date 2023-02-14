@@ -13,7 +13,7 @@
                         class="w-40 sm:w-56 mx-auto"
                     />
                 </div>
-                <div
+                <!-- <div
                     class="col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
                 >
                     <h5 class="text-gray-900 mb-2 font-black">
@@ -34,30 +34,44 @@
                     >
                         Pregunta Frecuentes
                     </p>
-                </div>
+                </div> -->
                 <div
                     class="col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
                 >
                     <h5 class="text-gray-900 mb-2 font-black">POLÍTICAS</h5>
-                    <p
-                        class="mb-1 font-light uppercase text-xs leading-relaxed"
-                    >
-                        Politicas de Envio
+                    <p class="mb-1">
+                        <button
+                            @click.prevent="toggleTerms"
+                            class="text-zinc-800 hover:underline font-light uppercase text-xs leading-relaxed"
+                        >
+                            Políticas de Envío
+                        </button>
                     </p>
-                    <p
-                        class="mb-1 font-light uppercase text-xs leading-relaxed"
-                    >
-                        Politicas de Privacidad
+                    <p class="mb-1">
+                        <button
+                            @click.prevent="toggleTerms"
+                            class="text-zinc-800 hover:underline font-light uppercase text-xs leading-relaxed"
+                        >
+                            Políticas de Privacidad
+                        </button>
                     </p>
-                    <p
-                        class="mb-1 font-light uppercase text-xs leading-relaxed"
-                    >
-                        Terminos y Condiciones
+                    <p class="mb-1">
+                        <button
+                            @click.prevent="toggleTerms"
+                            class="text-zinc-800 hover:underline font-light uppercase text-xs leading-relaxed"
+                        >
+                            Términos y Condiciones
+                        </button>
                     </p>
-                    <p
-                        class="mb-1 font-light uppercase text-xs leading-relaxed"
-                    >
-                        Soporte
+                    <p class="mb-1">
+                        <router-link
+                            :to="{ name: 'contact' }"
+                            class="text-zinc-800 hover:underline font-light uppercase text-xs leading-relaxed"
+                        >
+                            <span class="text-zinc-800">
+                                Soporte
+                            </span>
+                        </router-link>
                     </p>
                 </div>
                 <div
@@ -67,15 +81,12 @@
                     <p
                         class="mb-1 font-light uppercase text-xs leading-relaxed"
                     >
-                        Call Us: 344-755-111
-                    </p>
-                    <p
-                        class="mb-1 font-light uppercase text-xs leading-relaxed"
-                    >
-                        support@aazztech.com
+                        <a href="mailto:info@myeart.org">info@myeart.org</a>
                     </p>
                 </div>
-                <div class="col-lg-4 col-md-6 d-flex align-items-center md:-mt-10">
+                <div
+                    class="col-lg-4 col-md-6 d-flex align-items-center md:-mt-10"
+                >
                     <div class="flex flex-wrap justify-center items-center">
                         <div class="w-2/6 md:w-1/5 px-1">
                             <img
@@ -118,11 +129,26 @@
                 </div>
             </div>
         </div>
+
+        <Terms :show="showTerms" :full-screen="true" @close="toggleTerms" />
     </div>
 </template>
 
 <script>
+import Terms from "../../auth/components/Terms.vue";
+
 export default {
     name: "Footer",
+    components: { Terms },
+    data() {
+        return {
+            showTerms: false,
+        };
+    },
+    methods: {
+        toggleTerms() {
+            this.showTerms = !this.showTerms;
+        },
+    },
 };
 </script>

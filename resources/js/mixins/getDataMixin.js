@@ -85,6 +85,7 @@ export default {
                 shipped: { text: "Enviado", val: 1 },
                 delivered: { text: "Entregado", val: 2 },
                 canceled: { text: "Cancelado", val: 3 },
+                undelivered: { text: "No entregado", val: 4 },
             };
         },
 

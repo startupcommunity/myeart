@@ -5,14 +5,13 @@ namespace App\Factories;
 use App\Enums\ArtworkStateEnum;
 use App\Enums\ItemStatusEnum;
 use App\Enums\OrderStatusEnum;
+use App\Enums\TypeNotificationEnum;
 use App\Models\Artwork;
 use App\Models\Order;
+use App\Utils\AppNotification;
 use App\Utils\Payment\Stripe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use Stripe\Stripe;
-// use Stripe\StripeClient;
-// use Stripe\Transfer;
 
 class OrderFactory
 {
@@ -149,6 +148,15 @@ class OrderFactory
           // si no se deja como pendiente hasta que haya saldo disponible
           'source_transaction' => $isAvailableBalance ? null : $order->source_transaction,
         ]);
+
+        // enviar la notificacion al vendedor
+        AppNotification::sendNoty([
+          // 'user_id' => $artwork->user_id,
+          'notifiable_id' => $artwork->user_id,
+          'url' => '/usuario/perfil/' . $item->artwork->user_id . '/sale',
+          'msj' => '¡Tu obra ha sido entregada! Recibirás el pago en unos días.',
+          'type' => TypeNotificationEnum::ITEM_DELIVERED,
+        ]);
       }
 
       return true;
@@ -193,60 +201,5 @@ class OrderFactory
     });
 
     return $tra;
-  }
-
-  /**
-   * Procesar las transferencias luego del checkout exitoso
-   *
-   * @param Request $request
-   * @return boolean
-   */
-  public function processTransfers(Request $request): ?bool
-  {
-    // $stripe = new Stripe();
-    // $user = auth()->user();
-    // $items = $user->shoppingCart()->get();
-    // $stripeBalance = $stripe->getBalance();
-
-    // request
-    // $clientSecretId = $request->payment_intent_client_secret;
-    // $paymentIntentId = $request->payment_intent;
-
-    // obtener el intento de pago
-    // $payment = $stripe->getPaymentIntent($paymentIntentId);
-
-    // cargo
-    // $source = $payment->latest_charge;
-
-    // obtener los metadatos
-    // $group = $payment->metadata['group'];
-    // $shipping = $payment->shipping->toArray();
-
-    // antes de transferir verificar el saldo disponible de la cuenta
-    // una vez el usuario comprador confirme el articulo, la transferencia sera ejecutada
-
-    // comisiones por cargo: 2.9% + 0.30€
-    // con conversion de moneda: 1%
-    // comisión por transferencia: 0.25% + 25 centavos
-    // por tener una cuenta conectada: 2$
-
-    // el dinero se transfiere a la cuenta del vendedor
-    // pasado un tiempo de 3 -7 días
-
-    // foreach ($items as $item) {
-    //   $price = floatval(number_format($item->artwork->price, 2, ',', ''));
-    //   $total = $price * 100;
-    //   $total = floatval(number_format($total, 2, ',', ''));
-    //   $transfer = $stripe->createTransfer([
-    //     'amount' => $total,
-    //     'destination' => $item->artwork->user->stripe_account_id,
-    //     'transfer_group' => $group,
-    //     'source_transaction' => null,
-    //   ]);
-
-    //   dd($transfer->toArray());
-    // }
-
-    return true;
   }
 }

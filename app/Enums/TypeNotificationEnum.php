@@ -26,6 +26,9 @@ final class TypeNotificationEnum
   const DECLINE_INVITATION_COLLECTIVE = 14;
   const ACCEPT_INVITATION_COLLECTIVE = 15;
   const UNFOLLOW = 16;
+  const ITEM_DELIVERED = 17;
+  const TAGGED = 18;
+  const LIKE_EVENT = 19;
 
   public static function getValues(): array
   {
@@ -46,6 +49,9 @@ final class TypeNotificationEnum
       self::DECLINE_INVITATION_COLLECTIVE,
       self::ACCEPT_INVITATION_COLLECTIVE,
       self::UNFOLLOW,
+      self::ITEM_DELIVERED,
+      self::TAGGED,
+      self::LIKE_EVENT,
     ];
   }
 
@@ -68,6 +74,9 @@ final class TypeNotificationEnum
       self::DECLINE_INVITATION_COLLECTIVE => 'Rechazo invitación a colectivo',
       self::ACCEPT_INVITATION_COLLECTIVE => 'Acepto invitación a colectivo',
       self::UNFOLLOW => 'Dejar de seguir',
+      self::ITEM_DELIVERED => 'Artículo entregado',
+      self::TAGGED => 'Etiquetado',
+      self::LIKE_EVENT => 'Me gusta evento',
     ];
   }
 }
