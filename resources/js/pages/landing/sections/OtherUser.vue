@@ -35,9 +35,11 @@
 import { tns } from "tiny-slider";
 import CardArtist from "../../profile/components/CardArtist.vue";
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
+import utilMixin from "../../../mixins/utilMixin";
 export default {
     name: "OtherUser",
     components: { CardArtist, LoadingTailwind },
+    mixins: [utilMixin],
     data() {
         return {
             artists: [],
@@ -54,10 +56,14 @@ export default {
          * Load artistas
          */
         loadArtists() {
+            const ep = this.isUserGuest
+                ? this.ep.guest.getRandomArtists
+                : this.ep.user.getRandomArtists;
+
             const params = { all: 1, limit: 10 };
             this.loading = true;
             this.axios
-                .get(this.ep.user.getRandomArtists, { params })
+                .get(ep, { params })
                 .then((response) => {
                     this.artists = response.data;
                 })

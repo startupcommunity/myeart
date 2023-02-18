@@ -76,7 +76,7 @@ export default {
             this.axios
                 .post(this.ep.newsletter.suscribe, {
                     email: this.email,
-                    user_id: this.user?.id,
+                    user_id: this.user?.id || null,
                 })
                 .then((_) => {
                     this.notySwal({

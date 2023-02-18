@@ -189,6 +189,10 @@ export default {
          * a la obra seleccionada
          */
         likeOrDislike(id) {
+            if (this.isUserGuest) {
+                return this.noty("Debes iniciar sesión", "warning");
+            }
+
             this.loadLiked = true;
             const endpoint = this.isLike
                 ? this.ep.artworks.disliked

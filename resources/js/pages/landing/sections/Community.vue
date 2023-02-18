@@ -26,7 +26,8 @@
                                 :showArtist="true"
                                 :showCompleteInfo="true"
                                 :isOwner="
-                                    user && user.id === release.creator.id
+                                    authUser &&
+                                    authUser?.id === release.creator.id
                                 "
                                 class="hover:shadow-2xl px-2 transition-all duration-500"
                                 @showCommentDialog="openComments"
@@ -58,6 +59,7 @@
 import CardRelease from "../../profile/components/CardRelease.vue";
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 import ReleaseCommentsDialog from "../../release/components/ReleaseCommentsDialog.vue";
+import utilMixin from "../../../mixins/utilMixin";
 
 const INIT_RELEASES = 4;
 const SHOW_MORE = 4;
@@ -65,6 +67,7 @@ const SHOW_MORE = 4;
 export default {
     name: "Community",
     components: { LoadingTailwind, CardRelease, ReleaseCommentsDialog },
+    mixins: [utilMixin],
     data() {
         return {
             loading: false,
@@ -79,23 +82,18 @@ export default {
         this.loadReleases();
     },
 
-    computed: {
-        /**
-         * Get the endpoint
-         */
-        user() {
-            return this.$store.getters.getProfile;
-        },
-    },
-
     methods: {
         /**
-         * load artworks
+         * load releases - publicaciones
          */
         loadReleases() {
+            const ep = this.isUserGuest
+                ? this.ep.guest.getAllReleases
+                : this.ep.releases.getAll;
+
             this.loading = true;
             this.axios
-                .get(this.ep.releases.getAll)
+                .get(ep)
                 .then((response) => {
                     this.releases = response.data.slice(0, INIT_RELEASES);
                     this.original = JSON.parse(JSON.stringify(response.data));

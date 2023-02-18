@@ -41,7 +41,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       this.axios.post(this.ep.newsletter.suscribe, {
         email: this.email,
-        user_id: (_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id
+        user_id: ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.id) || null
       }).then(function (_) {
         _this.notySwal({
           title: "¡Gracias!",

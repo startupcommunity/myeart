@@ -16,8 +16,11 @@
 </template>
 
 <script>
+import utilMixin from "../../../mixins/utilMixin";
+
 export default {
     name: "FollowArtworkButton",
+    mixins: [utilMixin],
     props: {
         artworkID: {
             type: Number,
@@ -80,6 +83,10 @@ export default {
          * Seguir o dejar de seguir a una obra
          */
         followOrUnfollow() {
+            if (this.isUserGuest) {
+                return this.noty("Debes iniciar sesión", "warning");
+            }
+
             if (!this.canFollowArtwork) {
                 this.noty("No es posible auto seguir tus obras", "error");
                 return;

@@ -23,6 +23,7 @@ const ifAuthenticated = (to, from, next) => {
 };
 
 export const routes = [
+    // ----------- errors -----------
     {
         path: "*", // 404
         name: "NotFound",
@@ -33,6 +34,8 @@ export const routes = [
         name: "ServerError",
         component: importPage("errors/500"),
     },
+
+    // ----------- guest -----------
     {
         name: "home",
         path: "/home",
@@ -52,20 +55,30 @@ export const routes = [
         beforeEnter: ifNotAuthenticated,
     },
     {
+        name: "guestHome",
+        path: "/guest-home", // guest home
+        component: importPage("landing/guest/Index"),
+        // beforeEnter: ifNotAuthenticated,
+    },
+
+    // ----------- dashboard -----------
+    {
         name: "dashboard",
         path: "/",
         component: importPage("dashboard/dashboard"),
         beforeEnter: ifAuthenticated,
     },
+
+    // pasos para terminar de crear un usuario (en desuso)
     {
         name: "perfil",
         path: "/perfil",
         component: importPage("auth/perfil"),
         beforeEnter: ifAuthenticated,
-        meta: {
-            title: "perfil",
-        },
+        meta: { title: "perfil" },
     },
+
+    // ----------- user profile -----------
     {
         name: "userProfile",
         path: "/usuario/perfil/:id/:section?",
@@ -217,7 +230,7 @@ export const routes = [
         name: "contact",
         path: "/contacto",
         component: importPage("contact/Index"),
-        beforeEnter: ifAuthenticated,
+        // beforeEnter: ifAuthenticated,
     },
 ];
 

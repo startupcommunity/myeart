@@ -39,10 +39,12 @@
 import { tns } from "tiny-slider/src/tiny-slider";
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 import CardArtwork from "../../artwork/sections/CardArtwork.vue";
+import utilMixin from "../../../mixins/utilMixin";
 
 export default {
     name: "LastPost",
     components: { LoadingTailwind, CardArtwork },
+    mixins: [utilMixin],
     data() {
         return {
             loading: false,
@@ -59,12 +61,14 @@ export default {
          * load artworks
          */
         loadArtworks() {
+            const ep = this.isUserGuest
+                ? this.ep.guest.getPublishedArtworks
+                : this.ep.artworks.getPublish;
+
             this.loading = true;
             this.axios
-                .get(this.ep.artworks.getPublish)
-                .then((response) => {
-                    this.artworks = response.data;
-                })
+                .get(ep)
+                .then((resp) => (this.artworks = resp.data))
                 .then(() => this.loadTNS())
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));

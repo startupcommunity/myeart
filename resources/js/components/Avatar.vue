@@ -1,15 +1,18 @@
 <template>
-    <router-link :to="getPathProfile">
+    <a @click.stop="showProfile">
         <img
             class="rounded-full"
             :class="custom || defaultClass"
             :src="profilePhoto"
         />
-    </router-link>
+    </a>
 </template>
 <script>
+import utilMixin from "../mixins/utilMixin";
+
 export default {
     name: "Avatar",
+    mixins: [utilMixin],
     props: {
         artist: {
             type: Object,
@@ -49,6 +52,21 @@ export default {
                     id: this.artist?.id,
                 },
             };
+        },
+    },
+
+    methods: {
+        showProfile() {
+            if (this.isUserGuest) {
+                return this.noty("Debes iniciar sesión", "warning");
+            }
+
+            this.$router.push({
+                name: "showArtist",
+                params: {
+                    id: this.artist?.id,
+                },
+            });
         },
     },
 };

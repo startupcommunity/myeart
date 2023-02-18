@@ -34,6 +34,8 @@ module.exports = {
                 "woman-black": "url('/img/layout/bg-woman.webp')",
                 "woman-black-mobile": "url('/img/layout/bg-woman-mobile.webp')",
                 "default-front-collective": "url('/img/collective/default-front.webp')",
+                "quienes-somos": "url('/img/home/somos.webp')",
+                "joined": "url('/img/home/joined.webp')",
             },
             animation: {
                 "fade-in-both":

@@ -32,15 +32,18 @@
             <router-link :to="pathCommunity">COMUNIDAD</router-link>
             <router-link :to="pathCollective">COLECTIVOS</router-link>
         </div>
-        <div class="sidenav_footer">
+        <div class="sidenav_footer" v-if="!isUserGuest">
             <a href="#" @click.prevent="logout">CERRAR SESIÓN</a>
         </div>
     </div>
 </template>
 
 <script>
+import utilMixin from "../../../../mixins/utilMixin";
+
 export default {
     name: "MobileMenu",
+    mixins: [utilMixin],
     computed: {
         // paths
         pathArtwork: () => ({ name: "listArtwork" }),
@@ -48,13 +51,11 @@ export default {
         pathCommunity: () => ({ name: "indexCommunity" }),
         pathCollective: () => ({ name: "indexCollective" }),
         pathEvent: () => ({ name: "eventList" }),
-
-        // store
-        user() {
-            return this.$store.getters.getProfile;
-        },
         profilePhoto() {
-            return `${this.pathFrontPhoto + this.user?.front_photo}`;
+            if (!this.authUser?.front_photo) {
+                return `/img/avatar.png`;
+            }
+            return `${this.pathFrontPhoto + this.authUser?.front_photo}`;
         },
     },
     methods: {

@@ -11,8 +11,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Avatar",
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     artist: {
       type: Object,
@@ -54,6 +57,22 @@ __webpack_require__.r(__webpack_exports__);
           id: (_this$artist2 = this.artist) === null || _this$artist2 === void 0 ? void 0 : _this$artist2.id
         }
       };
+    }
+  },
+  methods: {
+    showProfile: function showProfile() {
+      var _this$artist3;
+
+      if (this.isUserGuest) {
+        return this.noty("Debes iniciar sesión", "warning");
+      }
+
+      this.$router.push({
+        name: "showArtist",
+        params: {
+          id: (_this$artist3 = this.artist) === null || _this$artist3 === void 0 ? void 0 : _this$artist3.id
+        }
+      });
     }
   }
 });
@@ -529,8 +548,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../mixins/utilMixin */ "./resources/js/mixins/utilMixin.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MobileMenu",
+  mixins: [_mixins_utilMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   computed: {
     // paths
     pathArtwork: function pathArtwork() {
@@ -558,14 +580,14 @@ __webpack_require__.r(__webpack_exports__);
         name: "eventList"
       };
     },
-    // store
-    user: function user() {
-      return this.$store.getters.getProfile;
-    },
     profilePhoto: function profilePhoto() {
-      var _this$user;
+      var _this$authUser, _this$authUser2;
 
-      return "".concat(this.pathFrontPhoto + ((_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.front_photo));
+      if (!((_this$authUser = this.authUser) !== null && _this$authUser !== void 0 && _this$authUser.front_photo)) {
+        return "/img/avatar.png";
+      }
+
+      return "".concat(this.pathFrontPhoto + ((_this$authUser2 = this.authUser) === null || _this$authUser2 === void 0 ? void 0 : _this$authUser2.front_photo));
     }
   },
   methods: {
@@ -612,9 +634,12 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("router-link", {
-    attrs: {
-      to: _vm.getPathProfile
+  return _c("a", {
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.showProfile.apply(null, arguments);
+      }
     }
   }, [_c("img", {
     staticClass: "rounded-full",
@@ -1064,7 +1089,7 @@ var render = function render() {
     attrs: {
       to: _vm.pathCollective
     }
-  }, [_vm._v("COLECTIVOS")])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("COLECTIVOS")])], 1), _vm._v(" "), !_vm.isUserGuest ? _c("div", {
     staticClass: "sidenav_footer"
   }, [_c("a", {
     attrs: {
@@ -1076,12 +1101,484 @@ var render = function render() {
         return _vm.logout.apply(null, arguments);
       }
     }
-  }, [_vm._v("CERRAR SESIÓN")])])]);
+  }, [_vm._v("CERRAR SESIÓN")])]) : _vm._e()]);
 };
 
 var staticRenderFns = [];
 render._withStripped = true;
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/utilMixin.js":
+/*!******************************************!*\
+  !*** ./resources/js/mixins/utilMixin.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  computed: {
+    /**
+     * Fecha máxima permitida para el picker de fecha de nacimiento
+     *
+     * toma la fecha actual y la convierte en un formato aceptado
+     * por el picker
+     */
+    dateMaxPicker: function dateMaxPicker() {
+      var date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000);
+      return date.toISOString().substr(0, 10);
+    },
+
+    /**
+     * Devuelve la fecha actual en el formato indicado
+     */
+    actualDate: function actualDate() {
+      var format = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Y-m-d";
+      var date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000);
+      return date.toISOString().substr(0, 10);
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive md
+     */
+    isMd: function isMd() {
+      return this.$vuetify.breakpoint.md;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive sm
+     */
+    isSm: function isSm() {
+      return this.$vuetify.breakpoint.sm;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive lg
+     */
+    isLg: function isLg() {
+      return this.$vuetify.breakpoint.lg;
+    },
+
+    /**
+     * Verificar si la pantalla esta en modo responsive xs
+     */
+    isXs: function isXs() {
+      return this.$vuetify.breakpoint.xs;
+    },
+
+    /**
+     * Verificar todos los responsives pequeños
+     */
+    isSmall: function isSmall() {
+      return this.isSm || this.isMd || this.isLg;
+    },
+
+    /**
+     * Si esta en modo mobile
+     */
+    isMobileMode: function isMobileMode() {
+      return this.isXs;
+    },
+
+    /**
+     * Obtiene el usuario logueado actual
+     */
+    authUser: function authUser() {
+      return this.$store.getters.getProfile;
+    },
+
+    /**
+     * Devuelve si el usuario esta logueado
+     */
+    isUserGuest: function isUserGuest() {
+      var _this$authUser, _this$authUser2, _this$authUser3, _this$authUser4;
+
+      return ((_this$authUser = this.authUser) === null || _this$authUser === void 0 ? void 0 : _this$authUser.id) === undefined || ((_this$authUser2 = this.authUser) === null || _this$authUser2 === void 0 ? void 0 : _this$authUser2.id) === null || ((_this$authUser3 = this.authUser) === null || _this$authUser3 === void 0 ? void 0 : _this$authUser3.id) === "" || ((_this$authUser4 = this.authUser) === null || _this$authUser4 === void 0 ? void 0 : _this$authUser4.id) === 0;
+    }
+  },
+  methods: {
+    /**
+     * Devuelve el icono que corresponde según
+     * el nombre de la categoría
+     * @param {String} name
+     * @returns         LA clase del icono
+     */
+    setIcon: function setIcon(name) {
+      if (name == "Literatura") {
+        return "fas fa-book";
+      }
+
+      if (name == "Pintura") {
+        return "fas fa-palette";
+      }
+
+      if (name == "Escultura") {
+        return "fas fa-hanukiah";
+      }
+
+      if (name == "Dibujo") {
+        return "fas fa-pencil";
+      }
+
+      if (name == "Fotografía") {
+        return "fas fa-camera";
+      }
+
+      if (name == "Artesanía y Manualidades") {
+        return "fas fa-glass-water";
+      }
+
+      if (name == "Audios") {
+        return "fas fa-volume-up";
+      }
+
+      if (name == "Arte Digital") {
+        return "fas fa-square-pen";
+      }
+
+      if (name == "Otros") {
+        return "fas fa-plus";
+      }
+
+      if (name == "Libros") {
+        return "fas fa-book-reader";
+      }
+
+      return "fas fa-info";
+    },
+
+    /**
+     * Devuelve una fecha en el formato indicado
+     * @param {String} string
+     * @param {String} format
+     * @returns
+     */
+    dateFormat: function dateFormat(string) {
+      var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Y-m-d";
+      var date = new Date(string);
+      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    },
+
+    /**
+     * Devuelve un archivo file en formato entendible para el front
+     */
+    getFileImage: function getFileImage(path, _ref) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var id, picture, config;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                id = _ref.id, picture = _ref.picture;
+                config = {
+                  responseType: "blob"
+                };
+                _context2.next = 4;
+                return _this.axios(path, config).then( /*#__PURE__*/function () {
+                  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(response) {
+                    var contentType, blob, file, endpoint, image, data;
+                    return _regeneratorRuntime().wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            contentType = response.headers["content-type"];
+                            _context.next = 3;
+                            return response.data;
+
+                          case 3:
+                            blob = _context.sent;
+                            file = new File([blob], picture, {
+                              contentType: contentType
+                            }); // obtener datos de la imagen
+
+                            endpoint = _this.ep.artworks.getImage + id;
+                            _context.next = 8;
+                            return _this.axios.get(endpoint);
+
+                          case 8:
+                            image = _context.sent;
+                            _context.next = 11;
+                            return image.data;
+
+                          case 11:
+                            data = _context.sent;
+                            return _context.abrupt("return", {
+                              file: file,
+                              front: data.front_page
+                            });
+
+                          case 13:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+
+                  return function (_x) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
+
+              case 4:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+
+    /**
+     * Copia en el portapapeles el texto indicado
+     *
+     * @param {String} text      texto a ser copiado
+     */
+    copyToClipboard: function copyToClipboard(text) {
+      // opción 1 - execCommand
+      if (!navigator.clipboard) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text; // Avoid scrolling to bottom
+
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        return this.noty("Copiado al portapapeles");
+      } // opción 2 - navigator
+
+
+      navigator.clipboard.writeText(text).then(function () {
+        console.log("Async: Copying to clipboard was successful!");
+      }, function (err) {
+        console.error("Async: Could not copy text: ", err);
+      });
+      this.noty("Copiado al portapapeles");
+    },
+
+    /**
+     * Comparte una obra públicamente
+     */
+    sharePublicArtwork: function sharePublicArtwork(artwork) {
+      var _artwork$slug;
+
+      var url = this.secureUrl;
+      var slug = (_artwork$slug = artwork.slug) !== null && _artwork$slug !== void 0 ? _artwork$slug : "";
+      var route = "/obras/slug/" + slug;
+      var text = url + route;
+      this.copyToClipboard(text);
+    },
+
+    /**
+     * Agrupa un array de acuerdo al callback indicado
+     *
+     * @param {Array} arr                       Array de datos
+     * @param {CallableFunction} keyGetter      función callback o key
+     * @returns Array agrupado por la key
+     */
+    groupBy: function groupBy(arr, keyGetter) {
+      var map = new Map();
+      arr.forEach(function (item) {
+        var key = keyGetter(item);
+        var collection = map.get(key);
+
+        if (!collection) {
+          map.set(key, [item]);
+        } else {
+          collection.push(item);
+        }
+      });
+      return map;
+    },
+
+    /**
+     * devuelve los calificativos del artista
+     * según las categorías de sus obras
+     */
+    getArtistQualifying: function getArtistQualifying(artist) {
+      var _artist$artworks;
+
+      var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var one = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var artworks = (_artist$artworks = artist === null || artist === void 0 ? void 0 : artist.artworks) !== null && _artist$artworks !== void 0 ? _artist$artworks : [];
+      var categories = artworks.map(function (artwork) {
+        var _artwork$categories;
+
+        return artwork === null || artwork === void 0 ? void 0 : (_artwork$categories = artwork.categories) === null || _artwork$categories === void 0 ? void 0 : _artwork$categories.map(function (category) {
+          return category.qualified;
+        });
+      }); // eliminar las redundancias
+
+      var categoriesUnique = categories.flat().filter(function (v, i, a) {
+        return a.indexOf(v) === i;
+      }); // si solo se quiere un calificativo
+
+      if (one) {
+        return categoriesUnique[0];
+      } // si max es tiene valor, se devuelven los primeros indicados
+
+
+      if (max) {
+        return categoriesUnique.slice(0, max).join(", ");
+      }
+
+      return categoriesUnique.join(", ");
+    },
+
+    /**
+     * Filtrar el texto de la publicación, para
+     * convertir los hashtags en un router-link
+     * con class text-primary
+     *
+     * @param {String} text
+     */
+    hashTag: function hashTag(text) {
+      var regex = /#(\w+)/g;
+      var matches = text.match(regex);
+      if (!matches) return text;
+      var result = text.replace(regex, function (match) {
+        // match sin el #
+        var matchWithoutHash = match.replace("#", ""); // result
+
+        return "<a class=\"text-primary\" href=\"/comunidad/".concat(matchWithoutHash, "\">").concat(match, "</a>");
+      }); // agregar un solo br al momento de encontrar
+      // el primer hashtag
+
+      return result.replace(/<a/, "<br><a");
+    },
+
+    /**
+     * Devuelve la imagen de portada de una obra
+     * en caso de no existir ninguna se devuelve
+     * una imagen por defecto
+     */
+    getFrontArtwork: function getFrontArtwork(art) {
+      var artwork = art.artwork || {};
+      var gallery = (artwork === null || artwork === void 0 ? void 0 : artwork.gallery) || [];
+      var front_page = gallery.find(function (pic) {
+        return (pic === null || pic === void 0 ? void 0 : pic.front_page) === 1;
+      });
+      if (!gallery.length) return this.getURLDefaultFrontArtwork;
+      return "".concat(this.pathArtworkGallery + front_page.picture);
+    },
+
+    /**
+     * Devuelve el numero de orden
+     * de un pedido u orden de compra
+     */
+    getOrderNumber: function getOrderNumber(id) {
+      return "000" + id;
+    },
+
+    /**
+     * devuelve la fecha de una orden de compra
+     *
+     * Formato: 7 de enero de 2023
+     */
+    getOrderDate: function getOrderDate(created_at) {
+      var date = new Date(created_at); // const day = date.toLocaleString("es-ES", { weekday: "long" });
+
+      var dayNumber = date.toLocaleString("es-ES", {
+        day: "numeric"
+      });
+      var month = date.toLocaleString("es-ES", {
+        month: "long"
+      });
+      var year = date.toLocaleString("es-ES", {
+        year: "numeric"
+      }); // nombre de dia y meses en PascalCase
+
+      var monthPascal = month.charAt(0).toUpperCase() + month.slice(1); // imprimir el formato, ejemplo: 7 de enero de 2023
+
+      return "".concat(dayNumber, " de ").concat(monthPascal, " de ").concat(year);
+    },
+
+    /**
+     * Verifica si el usuario ingreso los datos
+     * de la tarjeta de crédito correctamente
+     *
+     * @param {Object} error
+     * @returns
+     */
+    manageStripeErrors: function manageStripeErrors(error) {
+      if (error !== null && error !== void 0 && error.code) {
+        switch (error.code) {
+          case "card_declined":
+            return "La tarjeta ha sido rechazada";
+
+          case "incomplete_zip":
+            return "El código postal es incorrecto";
+
+          case "incomplete_cvc":
+            return "El código de seguridad es incorrecto";
+
+          case "incomplete_expiry":
+            return "La fecha de expiración es incorrecta";
+
+          case "incomplete_number":
+            return "El número de tarjeta es incorrecto";
+
+          case "expired_card":
+            return "La tarjeta ha expirado";
+
+          case "incorrect_cvc":
+            return "El código de seguridad es incorrecto";
+
+          case "incorrect_number":
+            return "El número de tarjeta es incorrecto";
+
+          case "invalid_cvc":
+            return "El código de seguridad es inválido";
+
+          case "invalid_expiry_month":
+            return "El mes de expiración es inválido";
+
+          case "invalid_expiry_year":
+            return "El año de expiración es inválido";
+
+          case "invalid_number":
+            return "El número de tarjeta es inválido";
+
+          case "missing":
+            return "Falta un campo requerido";
+
+          case "processing_error":
+            return "Error al procesar el pago";
+
+          case "rate_limit":
+            return "Demasiadas solicitudes en un periodo de tiempo";
+
+          default:
+            return "Error desconocido, verifique los datos de la tarjeta";
+        }
+      }
+
+      return "Error desconocido, verifique los datos de la tarjeta";
+    }
+  }
+});
 
 /***/ }),
 

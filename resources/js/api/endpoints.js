@@ -328,6 +328,18 @@ const endpoints = {
         // envía un mensaje de contacto
         suscribe: `${API}/newsletter/suscribe`, // post
     },
+
+    // endpoints públicos sin middleware
+    guest: {
+        // devuelve todas las obras publicadas de la app
+        getPublishedArtworks: `${API}/guest/artworks/published`, // get
+
+        // devuelve todos losa artistas activos, de forma random
+        getRandomArtists: `${API}/guest/artists/random`, // get
+
+        // devuelve las publicaciones de la app
+        getAllReleases: `${API}/guest/releases`, // get
+    },
 };
 
 export default endpoints;
