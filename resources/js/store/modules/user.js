@@ -41,7 +41,7 @@ export default {
                 .then(async (resp) => await commit("userSuccess", resp.data))
                 .catch((err) => {
                     commit("userError");
-                    dispatch("authLogout");
+                    // dispatch("authLogout");
                 });
         },
 
@@ -50,7 +50,7 @@ export default {
          * @param {Commit} param
          */
         userFollowArtists: ({ commit }) => {
-            commit("userRequest");
+            // commit("userRequest");
             Vue.axios
                 .get(endpoints.user.getFollowArtists)
                 .then((resp) => commit("setFollowArtists", resp.data))
@@ -62,7 +62,7 @@ export default {
          * @param {Commit} param
          */
         userFollowArtworks: ({ commit }) => {
-            commit("userRequest");
+            // commit("userRequest");
             Vue.axios
                 .get(endpoints.user.getFollowArtworks)
                 .then((resp) => commit("setFollowArtworks", resp.data))
@@ -74,7 +74,7 @@ export default {
          * @param {Commit} param
          */
         userFavoriteReleases: ({ commit }) => {
-            commit("userRequest");
+            // commit("userRequest");
             Vue.axios
                 .get(endpoints.user.getFollowReleases)
                 .then((resp) => commit("setFollowReleases", resp.data))
@@ -86,7 +86,7 @@ export default {
          * @param {Commit} param
          */
         userFavoriteEvents: ({ commit }) => {
-            commit("userRequest");
+            // commit("userRequest");
             Vue.axios
                 .get(endpoints.user.getFollowEvents)
                 .then((resp) => commit("setFollowEvents", resp.data))
@@ -98,7 +98,7 @@ export default {
          * @param {Commit} param
          */
         getUserCollective: ({ commit }, id) => {
-            commit("userRequest");
+            // commit("userRequest");
             Vue.axios
                 .get(endpoints.collectives.getCollective + id)
                 .then((resp) => commit("setCollective", resp.data))
@@ -110,11 +110,19 @@ export default {
          * @param {Commit} param
          */
         userFollowCollectives: ({ commit }) => {
-            commit("userRequest");
+            // commit("userRequest");
             Vue.axios
                 .get(endpoints.user.getFollowCollectives)
                 .then((resp) => commit("setFollowCollectives", resp.data))
                 .catch((err) => console.log(err));
+        },
+
+        /**
+         * Limpiar el state de profile
+         * @param {Commit} param
+         */
+        userClearProfile: ({ commit }) => {
+            commit("clearProfile");
         },
     },
     mutations: {
@@ -151,6 +159,20 @@ export default {
         setCollective: async (state, resp) => {
             await Vue.set(state, "collective", resp);
             state.status = "success";
+        },
+
+        /**
+         * Limpiar el state de profile
+         */
+        clearProfile: (state) => {
+            state.profile = {
+                profile: {},
+                social_network: {},
+                shopping_cart: [],
+                following_artists: [],
+                favorite_releases: [],
+                unread_notifications: [],
+            };
         },
     },
 };

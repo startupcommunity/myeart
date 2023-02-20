@@ -24,6 +24,18 @@
                     >
                         REGÍSTRATE ahora
                     </v-btn>
+                    <v-btn
+                        :to="{
+                            name: 'userProfile',
+                            params: { id: authUser.id },
+                        }"
+                        class="text-xs text-white hover:no-underline"
+                        color="#B2794C"
+                        large
+                        v-else
+                    >
+                        Ir a mi perfil
+                    </v-btn>
                 </div>
             </div>
         </div>

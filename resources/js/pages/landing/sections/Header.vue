@@ -193,7 +193,7 @@ export default {
     methods: {
         logout() {
             this.$store.dispatch("authLogout").then(() => {
-                this.$router.push("/home");
+                this.$router.push("/");
             });
         },
         openNav() {

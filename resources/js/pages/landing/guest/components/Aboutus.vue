@@ -1,5 +1,5 @@
 <template>
-    <section class="bg-white">
+    <section class="bg-white" id="about-us">
         <div class="w-full">
             <div class="grid grid-cols-1 md:grid-cols-2">
                 <div class="bg-quienes-somos bg-no-repeat bg-cover"></div>

@@ -11,7 +11,7 @@ const ifNotAuthenticated = (to, from, next) => {
         next();
         return;
     }
-    next("/");
+    next("/dashboard");
 };
 
 const ifAuthenticated = (to, from, next) => {
@@ -19,7 +19,7 @@ const ifAuthenticated = (to, from, next) => {
         next();
         return;
     }
-    next("/home");
+    next("/");
 };
 
 export const routes = [
@@ -56,15 +56,15 @@ export const routes = [
     },
     {
         name: "guestHome",
-        path: "/guest-home", // guest home
+        path: "/", // guest home
         component: importPage("landing/guest/Index"),
-        // beforeEnter: ifNotAuthenticated,
+        beforeEnter: ifNotAuthenticated,
     },
 
     // ----------- dashboard -----------
     {
         name: "dashboard",
-        path: "/",
+        path: "/dashboard",
         component: importPage("dashboard/dashboard"),
         beforeEnter: ifAuthenticated,
     },

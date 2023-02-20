@@ -1,5 +1,5 @@
 <template>
-    <section class="bg-white">
+    <section class="bg-white" id="faqs">
         <div class="container py-12">
             <div class="w-full flex flex-col items-center md:items-start mb-5">
                 <h2

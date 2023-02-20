@@ -1,10 +1,10 @@
 <template>
-    <section class="bg-black">
+    <section class="bg-black" id="home">
         <div class="w-full p-3">
             <div class="container">
                 <div class="flex justify-between items-center">
                     <!-- solo mobile -->
-                    <div class="block lg:hidden">
+                    <!-- <div class="block lg:hidden">
                         <div
                             class="w-100 d-flex justify-content-center -mt-4 xl:-mt-0"
                         >
@@ -13,14 +13,14 @@
                                 @click="openNav()"
                             ></i>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- logo all -->
                     <div>
                         <div
                             class="flex justify-center justify-md-start max-w-[180px] -mr-16"
                         >
-                            <router-link :to="{ name: 'dashboard' }">
+                            <router-link :to="{ name: 'guestHome' }">
                                 <img
                                     src="/images/Logo_Myeart.svg"
                                     alt="my-eart"
@@ -62,28 +62,28 @@
                                 class="flex justify-start uppercase text-white font-light text-sm gap-8"
                             >
                                 <li>
-                                    <router-link
-                                        :to="{ name: 'guestHome' }"
+                                    <a
+                                        @click.stop="goToScroll('#home')"
                                         class="hover:no-underline text-white"
                                     >
                                         HOME
-                                    </router-link>
+                                    </a>
                                 </li>
                                 <li>
-                                    <router-link
-                                        to="#"
+                                    <a
+                                        @click.stop="goToScroll('#about-us')"
                                         class="hover:no-underline text-white"
                                     >
                                         Quienes somos
-                                    </router-link>
+                                    </a>
                                 </li>
                                 <li>
-                                    <router-link
-                                        to="#"
+                                    <a
+                                        @click.stop="goToScroll('#faqs')"
                                         class="hover:no-underline text-white"
                                     >
                                         Faqs
-                                    </router-link>
+                                    </a>
                                 </li>
                             </ul>
                         </nav>
@@ -136,6 +136,14 @@ export default {
         openNav() {
             document.getElementById("mySidenav").style.display = "block";
             document.getElementById("mySidenav").style.width = "80%";
+        },
+
+        goToScroll(id) {
+            const element = document.querySelector(id);
+
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+            }
         },
     },
 };

@@ -43,7 +43,7 @@
         <!-- /CTA -->
 
         <!-- extra info -->
-        <ExtraInfo />
+        <Service />
         <!-- /extra info -->
 
         <!-- footer -->
@@ -55,7 +55,6 @@
 <script>
 import Header from "./components/Header.vue";
 import Hero from "./components/Hero.vue";
-import ExtraInfo from "../sections/ExtraInfo.vue";
 import AppFooter from "../sections/Footer.vue";
 import Benefit from "./components/Benefit.vue";
 import Aboutus from "./components/Aboutus.vue";
@@ -65,13 +64,13 @@ import OtherThing from "./components/OtherThing.vue";
 import AccessArtwork from "./components/AccessArtwork.vue";
 import Faq from "./components/Faq.vue";
 import CTA from "./components/CTA.vue";
+import Service from "./components/Service.vue";
 
 export default {
     name: "Landing",
     components: {
         Header,
         Hero,
-        ExtraInfo,
         AppFooter,
         Benefit,
         Aboutus,
@@ -81,6 +80,11 @@ export default {
         AccessArtwork,
         Faq,
         CTA,
+        Service,
+    },
+
+    created() {
+        // this.$store.dispatch("userRequest");
     },
 };
 </script>

@@ -26,77 +26,64 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
- //data
-
-function data() {
-  return {
-    user: {
-      email: '',
-      password: '',
-      remember: false
-    }
-  };
-} //methods
-
-
-function login() {
-  var _this = this;
-
-  var _this$user = this.user,
-      email = _this$user.email,
-      password = _this$user.password,
-      remember = _this$user.remember;
-  this.$store.dispatch('authRequest', {
-    email: email,
-    password: password,
-    remember: remember
-  }).then( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.next = 2;
-            return _this.$store.dispatch('userRequest');
-
-          case 2:
-            _this.$notify({
-              group: 'container',
-              text: 'Logeado con exito',
-              type: "success"
-            });
-
-            _this.$router.push('/');
-
-          case 4:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  })));
-} //computed
-
+ //computed
 
 function authErrors() {
   return this.$store.getters.authErrors;
 }
 
 function apiStateFormLoading() {
-  return this.status === 'loading';
-} //watch
-
-
-function statusEvents() {
-  if (this.status === 'success') {
-    this.$router.push('/dashboard');
-  }
+  return this.status === "loading";
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'login',
-  data: data,
+  name: "login",
+  data: function data() {
+    return {
+      user: {
+        email: "",
+        password: "",
+        remember: false
+      }
+    };
+  },
   methods: {
-    login: login
+    login: function login() {
+      var _this = this;
+
+      var _this$user = this.user,
+          email = _this$user.email,
+          password = _this$user.password,
+          remember = _this$user.remember;
+      this.$store.dispatch("authRequest", {
+        email: email,
+        password: password,
+        remember: remember
+      }).then( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.$store.dispatch("userRequest");
+
+              case 2:
+                _this.$notify({
+                  group: "container",
+                  text: "Logueado con éxito",
+                  type: "success"
+                });
+
+                _this.$router.push("/dashboard");
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
+    }
   },
   beforeDestroy: function beforeDestroy() {
     this.authErrors.clear();
@@ -108,10 +95,7 @@ function statusEvents() {
     status: function status(state) {
       return state.auth.status;
     }
-  })),
-  watch: {
-    statusEvents: statusEvents
-  }
+  }))
 });
 
 /***/ }),
@@ -162,7 +146,7 @@ var render = function render() {
     staticClass: "login-icon"
   }, [_c("router-link", {
     staticStyle: {
-      color: "#FFF"
+      color: "#fff"
     },
     attrs: {
       "exact-active-class": "active",
@@ -246,17 +230,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 password-input"
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "container-login-form-btn"
-  }, [_c("button", {
-    staticClass: "btn btn-primary login-form-btn",
-    attrs: {
-      to: {
-        name: "register"
-      },
-      type: "submit"
-    }
-  }, [_vm._v("\n\t\t\t\t\t\t\tIniciar sesión\n\t\t\t\t\t\t")])]), _vm._v(" "), _vm._m(0)])])])], 1);
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])])])], 1);
 };
 
 var staticRenderFns = [function () {
@@ -266,8 +240,20 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "container-login-form-btn"
   }, [_c("button", {
+    staticClass: "btn btn-primary login-form-btn",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("\n                        Iniciar sesión\n                    ")])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "container-login-form-btn"
+  }, [_c("button", {
     staticClass: "btn btn-primary google-form-btn"
-  }, [_vm._v("\n\t\t\t\t\t\t\tEntrar Con "), _c("img", {
+  }, [_vm._v("\n                        Entrar Con\n                        "), _c("img", {
     staticStyle: {
       "margin-top": "4px"
     },
@@ -309,7 +295,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.user-input[data-v-42c42d6a]::after {\n    content: \"\\f007\";\n}\n.password-input[data-v-42c42d6a]::after {\n    content: \"\\f023\";\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.user-input[data-v-42c42d6a]::after {\r\n    content: \"\\f007\";\n}\n.password-input[data-v-42c42d6a]::after {\r\n    content: \"\\f023\";\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

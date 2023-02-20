@@ -121,7 +121,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this.$store.dispatch("userRequest");
 
-          _this.$router.push("/");
+          _this.$router.push("/dashboard");
         });
         return;
       }

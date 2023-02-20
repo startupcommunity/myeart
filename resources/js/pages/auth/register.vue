@@ -224,7 +224,7 @@ export default {
                             type: "success",
                         });
                         this.$store.dispatch("userRequest");
-                        this.$router.push("/");
+                        this.$router.push("/dashboard");
                     });
 
                 return;

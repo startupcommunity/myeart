@@ -36,7 +36,7 @@
                     </p>
                 </div> -->
                 <div
-                    class="col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
+                    class="col-lg-2 col-md-6 col-sm-12 mb-4 sm:mb-0 text-center text-md-left"
                 >
                     <h5 class="text-gray-900 mb-2 font-black">POLÍTICAS</h5>
                     <p class="mb-1">
@@ -75,7 +75,7 @@
                     </p>
                 </div>
                 <div
-                    class="col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
+                    class="col-lg-2 col-md-6 col-sm-12 mb-4 sm:mb-0 text-center text-md-left"
                 >
                     <h5 class="text-gray-900 mb-2 font-black">CONTACTO</h5>
                     <p

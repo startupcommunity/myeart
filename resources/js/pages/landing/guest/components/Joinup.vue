@@ -8,8 +8,26 @@
                             ¡Únete a la comunidad!
                         </h2>
                         <div class="py-5 flex justify-center">
-                            <v-btn color="black" class="text-white" large>
+                            <v-btn
+                                color="black"
+                                class="text-white hover:no-underline"
+                                large
+                                :to="{ name: 'register' }"
+                                v-if="isUserGuest"
+                            >
                                 Registrarme
+                            </v-btn>
+                            <v-btn
+                                color="black"
+                                class="text-white hover:no-underline"
+                                large
+                                :to="{
+                                    name: 'userProfile',
+                                    params: { id: authUser.id },
+                                }"
+                                v-else
+                            >
+                                Ir a mi perfil
                             </v-btn>
                         </div>
                         <p class="text-gray-200 font-thin text-center">
@@ -27,7 +45,10 @@
 </template>
 
 <script>
+import utilMixin from "../../../../mixins/utilMixin";
+
 export default {
     name: "Joinup",
+    mixins: [utilMixin],
 };
 </script>

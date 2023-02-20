@@ -1,5 +1,5 @@
 <template>
-    <section class="bg-white">
+    <section class="bg-white" id="beneficios">
         <div class="container py-12">
             <div class="w-full flex flex-col items-center md:items-start">
                 <h2 class="text-zinc-900 text-4xl font-bold text-center text-md-left">

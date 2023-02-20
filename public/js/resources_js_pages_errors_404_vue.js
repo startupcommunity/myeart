@@ -322,7 +322,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row g-5 justify-content-md-center"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 mb-4 sm:mb-0 text-center text-md-left"
   }, [_c("h5", {
     staticClass: "text-gray-900 mb-2 font-black"
   }, [_vm._v("POLÍTICAS")]), _vm._v(" "), _c("p", {
@@ -395,7 +395,7 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "col-lg-2 col-md-6 col-sm-12 center-mobile mb-4 sm:mb-0"
+    staticClass: "col-lg-2 col-md-6 col-sm-12 mb-4 sm:mb-0 text-center text-md-left"
   }, [_c("h5", {
     staticClass: "text-gray-900 mb-2 font-black"
   }, [_vm._v("CONTACTO")]), _vm._v(" "), _c("p", {
