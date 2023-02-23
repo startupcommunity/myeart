@@ -5,7 +5,7 @@
                 <h2
                     class="text-zinc-900 text-4xl font-bold text-center text-md-left"
                 >
-                    Que otras cosas puedes hacer en {{ appNAme }}
+                    Nuestra comunidad te da muchas más opciones
                 </h2>
                 <p class="text-zinc-500 font-thin">
                     Echa un vistazo a las últimas publicaciones...
@@ -20,14 +20,12 @@
                         alt="infórmate"
                         class="w-40 h-40 aspect-square mx-auto"
                     />
-                    <h3
-                        class="text-xl text-zinc-900 font-semibold text-center"
-                    >
+                    <h3 class="text-xl text-zinc-900 font-semibold text-center">
                         Infórmate
                     </h3>
                     <p class="text-zinc-500 font-thin text-center">
-                        Lorem ipsum dolor sit amet, consectetur adr adipiscing
-                        elit. Nulla et e adipiscing elit.
+                        Conoce las noticias del mundo del arte y los eventos
+                        próximos a realizarse.
                     </p>
                 </div>
                 <div class="flex flex-col gap-3 max-w-xs">
@@ -36,14 +34,12 @@
                         alt="infórmate"
                         class="w-40 h-40 aspect-square mx-auto"
                     />
-                    <h3
-                        class="text-xl text-zinc-900 font-semibold text-center"
-                    >
+                    <h3 class="text-xl text-zinc-900 font-semibold text-center">
                         Vende
                     </h3>
                     <p class="text-zinc-500 font-thin text-center">
-                        Lorem ipsum dolor sit amet, consectetur adr adipiscing
-                        elit. Nulla et e adipiscing elit.
+                        El tiempo y trabajo que invertiste en una obra vale,
+                        véndela al mejor postor.
                     </p>
                 </div>
                 <div class="flex flex-col gap-3 max-w-xs">
@@ -52,14 +48,12 @@
                         alt="infórmate"
                         class="w-40 h-40 aspect-square mx-auto"
                     />
-                    <h3
-                        class="text-xl text-zinc-900 font-semibold text-center"
-                    >
+                    <h3 class="text-xl text-zinc-900 font-semibold text-center">
                         Compra
                     </h3>
                     <p class="text-zinc-500 font-thin text-center">
-                        Lorem ipsum dolor sit amet, consectetur adr adipiscing
-                        elit. Nulla et e adipiscing elit.
+                        Los coleccionistas y amantes del arte también tienen un
+                        espacio en nuestra comunidad.
                     </p>
                 </div>
             </div>

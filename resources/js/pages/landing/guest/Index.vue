@@ -55,7 +55,6 @@
 <script>
 import Header from "./components/Header.vue";
 import Hero from "./components/Hero.vue";
-import AppFooter from "../sections/Footer.vue";
 import Benefit from "./components/Benefit.vue";
 import Aboutus from "./components/Aboutus.vue";
 import Connect from "./components/Connect.vue";
@@ -65,6 +64,7 @@ import AccessArtwork from "./components/AccessArtwork.vue";
 import Faq from "./components/Faq.vue";
 import CTA from "./components/CTA.vue";
 import Service from "./components/Service.vue";
+import AppFooter from "../sections/Footer.vue";
 
 export default {
     name: "Landing",
@@ -81,10 +81,6 @@ export default {
         Faq,
         CTA,
         Service,
-    },
-
-    created() {
-        // this.$store.dispatch("userRequest");
     },
 };
 </script>

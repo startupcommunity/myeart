@@ -3,9 +3,9 @@
         <div class="w-full">
             <div class="grid grid-cols-1 md:grid-cols-2">
                 <div class="py-12 bg-[#B2794C]">
-                    <div class="max-w-md mx-auto">
+                    <div class="max-w-lg mx-auto">
                         <h2 class="text-white text-4xl font-bold text-center">
-                            ¡Únete a la comunidad!
+                            ¡Esta comunidad es para ti!
                         </h2>
                         <div class="py-5 flex justify-center">
                             <v-btn
@@ -31,10 +31,9 @@
                             </v-btn>
                         </div>
                         <p class="text-gray-200 font-thin text-center">
-                            Aqui es para que publico va dllit non deserunt
-                            ullamco est sit aliqua dolor do amet sint. Velit
-                            officia consequat duis enim velit mollit.
-                            Exercitation veniam consequat sunt nostrud amet.
+                            Únete y conoce las maravillosas obras de muchos
+                            artistas como tú, date a conocer mediante tu arte y
+                            llévate el reconocimiento que mereces.
                         </p>
                     </div>
                 </div>

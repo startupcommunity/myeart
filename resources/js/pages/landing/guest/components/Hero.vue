@@ -5,14 +5,13 @@
         <div class="absolute inset-0 top-32 container">
             <div class="max-w-2xl mx-auto flex flex-col gap-5">
                 <h1 class="text-white text-center text-5xl">
-                    La
-                    <span class="text-primary">red</span> para el arte
+                    Conecta con el
+                    <span class="text-primary">Arte</span>
                 </h1>
                 <p class="text-gray-300 text-center font-thin">
-                    Aquí es para que publico va dllit non deserunt ullamco est
-                    sit aliqua dolor do amet sint. Velit officia consequat duis
-                    enim velit mollit. Exercitation veniam consequat sunt
-                    nostrud amet.
+                    Bienvenido a la primera comunidad más grande de artistas en
+                    todo el mundo, un espacio donde la creatividad, la
+                    inspiración y el amor por el arte reinan.
                 </p>
                 <div class="flex justify-center pt-10">
                     <v-btn

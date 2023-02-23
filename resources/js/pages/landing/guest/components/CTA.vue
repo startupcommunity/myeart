@@ -4,7 +4,9 @@
     >
         <div class="container py-12">
             <h2 class="font-bold text-4xl leading-10 text-white text-center">
-                <span v-if="isUserGuest"> ¿Aun no te decides? </span>
+                <span v-if="isUserGuest">
+                    Nuestra comunidad te está esperando
+                </span>
                 <span v-else> Comienza a publicar tus obras </span>
             </h2>
             <div class="flex justify-center py-5">

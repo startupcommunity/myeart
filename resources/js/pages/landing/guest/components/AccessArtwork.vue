@@ -5,13 +5,15 @@
                 <h2
                     class="text-zinc-900 text-4xl font-bold text-center text-md-left"
                 >
-                    Accede a obras y piezas artísticas
+                    Adéntrate en el mundo del Arte
                 </h2>
                 <p class="text-zinc-500 font-thin">
-                    Echa un vistazo a las últimas obras de arte...
+                    Echa un vistazo a las últimas obras y piezas artísticas...
                 </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-8">
+            <div
+                class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-8"
+            >
                 <div>
                     <img
                         src="/img/home/artwork/art_1.webp"
@@ -63,13 +65,9 @@
             </div>
             <div class="w-full">
                 <p class="text-zinc-500 font-thin text-center text-md-left">
-                    “Loremr adipiscing elit. Nulla et elementum nir adipiscing
-                    elit. Nulla et elementum nir lla et elementum nir adipiscing
-                    elit. Nlit. elementum nir adipiscing elit. Nulla et
-                    elementum nir a et elementum nir adipiscing elit. Nlit.
-                    Nulla et elemscing elit. Nulla et elemscing elit. Nulla et
-                    elementum nir adipiscing elit. Nulla et element. Nlit. Nulla
-                    et elementum nisl. Maecenas accumsan...”
+                    Tenemos una de cantidad obras esperando ser vistas por ti.
+                    La categoría que más te interese está aquí. Comenta, conoce
+                    y disfruta del buen arte.
                 </p>
             </div>
         </div>

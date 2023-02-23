@@ -66,24 +66,24 @@ export default {
             activeTab: 0,
             faq: [
                 {
-                    title: "¿Puedo publicar mis obras en esta plataforma y venderlas?",
+                    title: "¿Puedo publicar cualquier tipo de arte?",
                     description:
-                        "Si, puedes publicar tus obras en esta plataforma y venderlas. Para publicar tus obras, debes registrarte en la plataforma y luego iniciar sesión. Una vez que hayas iniciado sesión, podrás publicar tus obras.",
+                        "Si, puedes publicar tus obras en esta plataforma y venderlas. No obstante, debes tener en cuenta que las obras que se publican en esta plataforma deben ser originales y no pueden ser copias de obras de otros artistas.",
+                },
+                {
+                    title: "¿Cómo puedo vender mis obras dentro de MyeArt?",
+                    description:
+                        "Para vender tus obras, debes registrarte en la plataforma y luego iniciar sesión. Una vez que hayas iniciado sesión, debes cargar un método de cobro y publicar una obra.",
+                },
+                {
+                    title: "¿Cómo recibo el pago de mis obras?",
+                    description:
+                        "Una vez que una obra es vendida, el pago se realiza a través de la plataforma. El dinero se deposita en tu cuenta bancaria al cabo de 3 a 7 días hábiles.",
                 },
                 {
                     title: "¿Cómo puedo comprar una obra?",
                     description:
-                        "Para comprar una obra, debes registrarte en la plataforma y luego iniciar sesión. Una vez que hayas iniciado sesión, podrás comprar una obra.",
-                },
-                {
-                    title: "¿Cómo puedo vender una obra?",
-                    description:
-                        "Para vender una obra, debes registrarte en la plataforma y luego iniciar sesión. Una vez que hayas iniciado sesión, debes cargar un método de cobro y publicar una obra.",
-                },
-                {
-                    title: "¿Cómo puedo contactar a un artista?",
-                    description:
-                        "Para contactar a un artista, debes registrarte en la plataforma y luego iniciar sesión. Una vez que hayas iniciado sesión, podrás contactar a un artista comprando su obra publicada.",
+                        "Para comprar una obra, debes registrarte en la plataforma y luego iniciar sesión. Una vez que hayas iniciado sesión, debes buscar la obra que deseas comprar. añadirla al carrito de compras y luego proceder al pago con tu tarjeta.",
                 },
             ],
         };

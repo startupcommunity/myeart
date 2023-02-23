@@ -12848,6 +12848,9 @@ video {
 .max-w-md{
   max-width: 28rem;
 }
+.max-w-lg{
+  max-width: 32rem;
+}
 .flex-auto{
   flex: 1 1 auto;
 }

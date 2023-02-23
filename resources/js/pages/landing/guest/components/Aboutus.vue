@@ -6,16 +6,15 @@
                 <div class="py-12 bg-[#B2794C]">
                     <div class="max-w-xs mx-auto">
                         <h2 class="text-white text-4xl font-bold text-center">
-                            ¿Quienes somos?
+                            ¿Qué es {{ appName }} ?
                         </h2>
                         <p class="text-gray-200 font-thin text-center pt-3">
-                            Aqui es para que publico va dllit non deserunt
-                            ullamco est sit aliqua dolor do amet sint. Velit
-                            officia consequat duis enim velit que publico va
-                            dllit non deserunt ullamco est sit aliqua dolor do
-                            amet sint. Velit officia consequat duis enim velit
-                            mollit. Exercitation veniam consequat sunt nomollit.
-                            Exercitation veniam consequat sunt nostrud amet.
+                            Somos la comunidad más grande de artistas en la web,
+                            dedicados a compartir experiencias y relacionar a
+                            personas únicas mediante su arte.
+                            <span class="italic">
+                                “Una comunidad de artistas hecha por artistas”.
+                            </span>
                         </p>
                     </div>
                 </div>
@@ -27,5 +26,10 @@
 <script>
 export default {
     name: "Aboutus",
+    data() {
+        return {
+            appName: process.env.MIX_APP_NAME,
+        };
+    },
 };
 </script>
