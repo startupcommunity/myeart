@@ -162,6 +162,23 @@ class OrderFactory
       return true;
     });
 
+    // COMISIONES DE STRIPE
+    // por cargo: 2.9% + 0.25€
+    // por transferencia: 1.4% + 0.25€
+    // por transferencia inmediata: 0.5% + 0.25€
+    // por mantenimiento de cuentas conectadas: 2€ al mes si recibe una transferencia
+
+    // SALDO Y TRANSFERENCIAS
+    // no existe una retención del dinero en stripe
+    // el dinero se "retiene" hasta que se realiza la transferencia
+    // pero si este es retirado de stripe, la transferencia queda como pendiente
+    // siempre que haya saldo disponible se ejecuta la transferencia de inmediato
+    // si no se deja como pendiente hasta que haya saldo disponible.
+    // por lo tanto, se debe manipular de forma manual el saldo de stripe
+    // es decir, el saldo que se retira de stripe a la cuenta bancaria principal
+    // debe ser solo el ganado por comisión (15%)
+    // este punto ya Miguel decidirá cuanto y cuando se retira el dinero ganado por venta
+
     return $tra;
   }
 

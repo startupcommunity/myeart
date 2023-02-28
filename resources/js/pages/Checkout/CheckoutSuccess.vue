@@ -215,6 +215,7 @@ export default {
                             break;
 
                         case "processing":
+                            this.createOrder();
                             this.notySwal({
                                 title: "Aviso",
                                 text: "El pago se esta procesando. Te notificaremos cuando se reciba el pago.",

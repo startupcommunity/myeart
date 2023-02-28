@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Events\NotificationEvent;
 use App\Querys\OrderDB;
 use App\Utils\Payment\Stripe;
+use Exception;
 use Illuminate\Support\Str;
 
 class ShoppingCartFactory
@@ -109,18 +110,22 @@ class ShoppingCartFactory
     $random = Str::random(40);                                // random para el grupo de transferencia
 
     // crear intento de pago
-    $intent = $tripe->createPaymentIntent([
-      'amount' => $totalFinal,
-      'currency' => 'eur',
-      'payment_method_types' => ['card'],
-      'transfer_group' => 'INTENT_' . $random,
-      'metadata' => [
-        'account_id' => $user->stripe_account_id,
-        'group' => 'INTENT_' . $random,
-      ],
-    ]);
+    try {
+      $intent = $tripe->createPaymentIntent([
+        'amount' => $totalFinal,
+        'currency' => 'eur',
+        'payment_method_types' => ['card'],
+        'transfer_group' => 'INTENT_' . $random,
+        'metadata' => [
+          'account_id' => $user->stripe_account_id,
+          'group' => 'INTENT_' . $random,
+        ],
+      ]);
 
-    return $intent ? $intent->client_secret : null;
+      return $intent->client_secret;
+    } catch (Exception $e) {
+      return null;
+    }
   }
 
   /**
