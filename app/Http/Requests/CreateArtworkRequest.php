@@ -33,7 +33,7 @@ class CreateArtworkRequest extends FormRequest
             'date_created' => 'nullable|string|max:10',
             'location' => 'nullable|string|max:100',
             'shipping' => 'nullable|string|max:100',
-            'state' => 'required|numeric|max:3',
+            'state' => 'required|numeric|max:5',
             'type' => 'nullable',
             'gallery' => 'nullable',
             'large_description' => 'nullable',

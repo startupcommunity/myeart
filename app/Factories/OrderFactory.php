@@ -179,6 +179,21 @@ class OrderFactory
     // debe ser solo el ganado por comisión (15%)
     // este punto ya Miguel decidirá cuanto y cuando se retira el dinero ganado por venta
 
+    // orden del menu
+    // PUBLICACIONES
+    // MIS OBRAS
+    // MIS PEDIDOS
+    // MIS VENTAS
+    // FAVORITOS
+    // MIS CALIFICACIONES
+    // DATOS PERSONALES
+    // MIS DIRECCIONES
+    // MÉTODOS DE COBRO
+    // PRIVACIDAD Y SEGURIDAD
+
+    // al editar un borrador
+    // en colectivos, la ubicacion no es requerida
+
     return $tra;
   }
 

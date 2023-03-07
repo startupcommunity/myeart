@@ -44,7 +44,7 @@
                     </v-btn>
                 </div>
                 <div
-                    class="w-full lg:w-auto lg:px-4 border-b border-b-gray-300 lg:border-b-0"
+                    class="w-full lg:w-auto lg:px-4 border-b border-b-gray-300 lg:border-b-0 relative"
                 >
                     <v-btn
                         text
@@ -56,6 +56,14 @@
                     >
                         Borradores
                     </v-btn>
+                    <span
+                        class="absolute top-0 right-20 md:right-2 py-1 px-2 bg-red-700 rounded-full text-xs text-white"
+                        :class="{
+                            'md:right-1': draftArtworks.length > 9,
+                        }"
+                    >
+                        {{ draftArtworks.length }}
+                    </span>
                 </div>
             </div>
             <div class="py-6 w-full sm:w-3/5">
@@ -67,6 +75,7 @@
                     Subir obra
                 </router-link>
             </div>
+            <AlertPayment v-if="!hasPaymentMethod" class="py-6 w-full" />
 
             <!-- obras -->
             <div class="py-6 w-full">
@@ -160,6 +169,7 @@
 </template>
 <script>
 // componentes
+import AlertPayment from "../../artwork/components/AlertPayment.vue";
 import LoadingTailwind from "./../../../components/LoadingTailwind.vue";
 
 // mixin
@@ -170,7 +180,7 @@ let counterArtworks = 4;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind },
+    components: { LoadingTailwind, AlertPayment },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -184,6 +194,7 @@ export default {
             stateActivePub: false,
             stateActiveSold: false,
             stateActiveDraft: false,
+            hasPaymentMethod: true,
             artworks: [],
             originalArtworks: [],
             remainingArtworks: [],
@@ -214,6 +225,24 @@ export default {
             if (this.stateActiveDraft) {
                 return this.STATEARTWORK.draft;
             }
+        },
+
+        /**
+         * Usuario logueado
+         */
+        user() {
+            return this.$store.getters.getProfile;
+        },
+
+        /**
+         * Obras borradores
+         */
+        draftArtworks() {
+            return this.originalArtworks.filter(
+                (art) =>
+                    art.state === this.STATEARTWORK.draft ||
+                    art.state === this.STATEARTWORK.paused
+            );
         },
     },
 
@@ -259,9 +288,16 @@ export default {
             this.stateActiveDraft = state === this.STATEARTWORK.draft;
 
             // filtrar por estado
-            const artworks = this.originalArtworks.filter(
-                (art) => art.state === state
-            );
+            const artworks = this.originalArtworks.filter((art) => {
+                if (this.stateActiveDraft) {
+                    return (
+                        art.state === this.STATEARTWORK.draft ||
+                        art.state === this.STATEARTWORK.paused
+                    );
+                }
+
+                return art.state === state;
+            });
 
             // tomar las restantes
             this.artworks = artworks;
@@ -431,6 +467,15 @@ export default {
                 params: { id },
             };
         },
+
+        haveAChargingMethod() {
+            this.axios
+                .get(this.ep.user.getUserChargeMethods + this.user.id)
+                .then((r) => {
+                    this.hasPaymentMethod = r.data.length === 0 ? false : true;
+                })
+                .catch((error) => this.manageError(error));
+        },
     },
     watch: {
         showSection(val) {
@@ -438,6 +483,7 @@ export default {
                 this.stateActivePub = true;
                 this.resetData();
                 this.getArtworks();
+                this.haveAChargingMethod();
             }
         },
     },

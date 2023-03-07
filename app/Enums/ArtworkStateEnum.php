@@ -17,4 +17,7 @@ final class ArtworkStateEnum
 
     // en carrito
     public const IN_CART = 4;
+
+    // en pausa (no publicada)
+    public const PAUSED = 5;
 }

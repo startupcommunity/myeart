@@ -27,6 +27,8 @@ export default {
                 published: 1,
                 sold: 2,
                 draft: 3,
+                in_cart: 4,
+                paused: 5,
             };
         },
 

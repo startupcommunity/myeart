@@ -327,6 +327,10 @@
                             <!-- <div
                                 class="w-full border-t border-gray-700 mt-8 pb-8"
                             ></div> -->
+                            <AlertPayment
+                                v-if="!hasPaymentMethod"
+                                class="pb-5"
+                            />
                             <div class="flex flex-wrap w-full sm:justify-end">
                                 <button
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
@@ -334,14 +338,13 @@
                                     :disabled="!formIsValid"
                                     @click.stop="publish = false"
                                 >
-                                    Actualizar
+                                    Guardar borrador
                                 </button>
                                 <button
-                                    class="w-full sm:w-auto px-7 py-4 bg-gray-700 text-gray-50 border border-gray-900 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
+                                    class="w-full sm:w-auto px-7 py-4 bg-green-700 text-gray-50 border border-green-900 hover:bg-green-900 transition-all text-base font-light rounded-md uppercase"
                                     type="submit"
                                     :disabled="!formIsValid"
                                     @click.stop="publish = true"
-                                    v-if="form.state === 3"
                                 >
                                     Actualizar y publicar
                                 </button>
@@ -381,9 +384,18 @@ import uploadFilesMixin from "./utils/uploadFilesMixin";
 import utilMixin from "../../mixins/utilMixin";
 import getDataMixin from "../../mixins/getDataMixin";
 import requestErrorsMixin from "../../mixins/requestErrorsMixin";
+import AlertPayment from "./components/AlertPayment.vue";
 
 export default {
-    components: { Header, PreHeader, Newletter, ExtraInfo, Footer, Category },
+    components: {
+        Header,
+        PreHeader,
+        Newletter,
+        ExtraInfo,
+        Footer,
+        Category,
+        AlertPayment,
+    },
     name: "EditArtwork",
     mixins: [
         createRules,
@@ -419,6 +431,7 @@ export default {
             menuPicker: false,
             loadingGallery: false,
             publish: false,
+            hasPaymentMethod: true,
         };
     },
     mounted() {
@@ -473,6 +486,9 @@ export default {
 
                     // galeria
                     this.loadGallery(gallery);
+
+                    // comprobar si ya ha cargado un método de cobro
+                    this.haveAChargingMethod();
                 })
                 .catch((error) => console.log(error))
                 .finally(() => {
@@ -523,6 +539,8 @@ export default {
             // cargar datos
             const data = this.loadFormData();
 
+            console.log(data.get("state"));
+
             // request
             this.axios
                 .post(this.ep.artworks.update + this.form.id, data, {
@@ -532,12 +550,19 @@ export default {
                 })
                 .then((resp) => {
                     if (resp.status === 200) {
-                        // mensaje
-                        const state = this.form.state;
+                        // mensajes
                         const draftMsj = "Obra guardada como borrador";
                         const publishMsj = "Obra publicada con éxito";
-                        const text = state === 3 ? draftMsj : publishMsj;
-                        this.noty(text);
+                        const inPauseMsj =
+                            "Obra en pausa hasta que se agregue un método de cobro";
+
+                        if (data.get("state") == 1) {
+                            this.noty(publishMsj);
+                        } else if (data.get("state") == 5) {
+                            this.noty(inPauseMsj);
+                        } else if (data.get("state") == 3) {
+                            this.noty(draftMsj);
+                        }
 
                         // si no es una obra de colectivo
                         if (!this.isCollective) {
@@ -568,14 +593,20 @@ export default {
          * Confirmar si se desea actualizar o no la obra
          */
         confirmUpdate() {
+            const msj = this.publish
+                ? "¿Esta seguro de publicar esta obra?"
+                : "¿Esta seguro de guardar esta obra como borrador?";
+
+            const msjBtn = this.publish ? "Si, Publicar" : "Si, Guardar";
+
             this.$swal
                 .fire({
-                    title: "¿Esta seguro de editar esta obra?",
-                    icon: "warning",
+                    title: msj,
+                    // icon: "info",
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
+                    confirmButtonColor: "#00BF30",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Si, editar",
+                    confirmButtonText: msjBtn,
                     cancelButtonText: "Cancelar",
                 })
                 .then((result) => {
@@ -592,6 +623,20 @@ export default {
             const form = this.form;
             const files = this.uploadedFiles;
             const data = new FormData();
+            let state = 1;
+
+            // si se guarda como borrador
+            if (!this.publish) {
+                state = 3;
+
+                // si se quiere publicar
+            } else if (this.publish && !this.hasPaymentMethod) {
+                state = 5;
+
+                // si cumple con todo, se publica
+            } else {
+                state = 1;
+            }
 
             data.append("_method", "PUT");
             data.append("title", form.title);
@@ -604,8 +649,7 @@ export default {
             data.append("price", form.price ?? "");
             data.append("date_created", form.date_created);
             data.append("location", form.location ?? "");
-            // data.append("shipping", form.shipping ?? "");
-            data.append("state", this.publish ? 1 : form.state);
+            data.append("state", state);
             data.append(`type`, JSON.stringify(this.form.type));
 
             // data sync
@@ -613,34 +657,6 @@ export default {
 
             return data;
         },
-
-        /**
-         * Cambia el estado de la obra si todos los campos
-         * estas llenos
-         *
-         * - estado publicado
-         */
-        // changeState() {
-        //     const form = this.form;
-        //     const files = this.uploadedFiles;
-        //     if (
-        //         form.title &&
-        //         form.description &&
-        //         form.width &&
-        //         form.large &&
-        //         form.weight &&
-        //         form.price &&
-        //         form.date_created &&
-        //         form.location &&
-        //         // form.shipping &&
-        //         form.type &&
-        //         files.length
-        //     ) {
-        //         if (form.state == this.STATEARTWORK.draft) {
-        //             form.state = this.STATEARTWORK.published;
-        //         }
-        //     }
-        // },
 
         /**
          * Carga las categorías
@@ -691,6 +707,21 @@ export default {
                     this.addFileToUploadFilesWithFront(data);
                 });
             });
+        },
+
+        /**
+         * Verifica si el usuario tiene agregado algún método de cobro
+         * si no lo tiene todas las obras se guardan como borrador
+         */
+        haveAChargingMethod() {
+            this.axios
+                .get(this.ep.user.getUserChargeMethods + this.user.id)
+                .then((resp) => {
+                    if (resp.data.length === 0) {
+                        this.hasPaymentMethod = false;
+                    }
+                })
+                .catch((error) => this.manageError(error));
         },
     },
 };

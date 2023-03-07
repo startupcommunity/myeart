@@ -135,6 +135,7 @@ class ArtworkFactory
       // datos de obras
       $fields = $this->selectFieldsToSave($data);
       $fields['type'] = $data['type_artwork'] ?? ArtworkTypeEnum::ARTIST;
+      $fields['in_pause'] = $data['in_pause'] ?? 0;
 
       // obra creada
       $artwork = $user->artworks()->create($fields);

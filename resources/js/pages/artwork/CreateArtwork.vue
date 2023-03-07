@@ -326,6 +326,11 @@
                         <!-- borrador o publicar -->
                         <!-- ------------------- -->
                         <v-col cols="12" v-if="!disabledForm">
+                            <AlertPayment
+                                v-if="!hasPaymentMethod"
+                                class="pb-5"
+                            />
+
                             <!-- <div
                                 class="w-full border-t border-gray-700 mt-8 pb-8"
                             ></div> -->
@@ -381,9 +386,18 @@ import uploadFilesMixin from "./utils/uploadFilesMixin";
 import utilMixin from "../../mixins/utilMixin";
 import getDataMixin from "../../mixins/getDataMixin";
 import requestErrorsMixin from "../../mixins/requestErrorsMixin";
+import AlertPayment from "./components/AlertPayment.vue";
 
 export default {
-    components: { Header, PreHeader, Newletter, ExtraInfo, Footer, Category },
+    components: {
+        Header,
+        PreHeader,
+        Newletter,
+        ExtraInfo,
+        Footer,
+        Category,
+        AlertPayment,
+    },
     name: "CreateArtwork",
     mixins: [
         createRules,
@@ -413,6 +427,7 @@ export default {
             },
             formIsValid: true,
             disabledForm: false,
+            hasPaymentMethod: true,
             menuPicker: false,
             isDraft: 3,
         };
@@ -469,25 +484,26 @@ export default {
                 .get(this.ep.user.getUserChargeMethods + this.userProfile.id)
                 .then((resp) => {
                     if (resp.data.length === 0) {
-                        this.formIsValid = false;
-                        this.disabledForm = true;
-                        this.confirmedDialog({
-                            title: "Agrega un método de cobro",
-                            text: "Para poder publicar una obra debes agregar un método de cobro primero",
-                            icon: "warning",
-                            confirmButtonText: "Agregar método de cobro",
-                            cancelButtonText: "No, gracias",
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                this.$router.push({
-                                    name: "userProfile",
-                                    params: {
-                                        id: this.userProfile.id,
-                                        section: "charging",
-                                    },
-                                });
-                            }
-                        });
+                        this.hasPaymentMethod = false;
+                        // this.formIsValid = false;
+                        // this.disabledForm = true;
+                        // this.confirmedDialog({
+                        //     title: "Agrega un método de cobro",
+                        //     text: "Para poder publicar una obra debes agregar un método de cobro primero",
+                        //     icon: "warning",
+                        //     confirmButtonText: "Agregar método de cobro",
+                        //     cancelButtonText: "No, gracias",
+                        // }).then((result) => {
+                        //     if (result.isConfirmed) {
+                        //         this.$router.push({
+                        //             name: "userProfile",
+                        //             params: {
+                        //                 id: this.userProfile.id,
+                        //                 section: "charging",
+                        //             },
+                        //         });
+                        //     }
+                        // });
                     }
                 })
                 .catch((error) => this.manageError(error));
@@ -514,6 +530,9 @@ export default {
             this.globalLoading = true;
 
             const data = new FormData();
+            const state =
+                this.isDraft === 1 ? (!this.hasPaymentMethod ? 5 : 1) : 3;
+            // const in_pause = !this.hasPaymentMethod && this.isDraft === 1 ? 1 : 0;
             data.append("title", this.form.title);
             data.append("description", this.form.description);
             data.append("large_description", this.form.large_description);
@@ -524,7 +543,8 @@ export default {
             data.append("price", this.form.price);
             data.append("date_created", this.form.date_created);
             data.append("location", this.form.location);
-            data.append("state", this.isDraft);
+            data.append("state", state);
+            // data.append("in_pause", in_pause);
             data.append(`type`, JSON.stringify(this.form.type));
             data.append(`type_artwork`, type_artwork);
 
@@ -548,8 +568,16 @@ export default {
                         // mensaje
                         const draftMsj = "Obra guardada como borrador";
                         const publishMsj = "Obra publicada con éxito";
-                        const text = this.isDraft === 3 ? draftMsj : publishMsj;
-                        this.noty(text);
+                        const inPauseMsj =
+                            "Obra en pausa hasta que se agregue un método de cobro";
+
+                        if (data.get("state") == 1) {
+                            this.noty(publishMsj);
+                        } else if (data.get("state") == 5) {
+                            this.noty(inPauseMsj);
+                        } else if (data.get("state") == 3) {
+                            this.noty(draftMsj);
+                        }
 
                         // redireccion
                         // obra de artista

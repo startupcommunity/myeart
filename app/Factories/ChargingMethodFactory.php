@@ -46,6 +46,7 @@ class ChargingMethodFactory
       $data['account_holder_name'] = $resp->account_holder_name;
 
       $this->setAllMethodsAsNotDefault($request->user_id);
+      $user->setPausedArtworksAsPublished(); // establecer las obras en pausa como publicadas
       return $this->charging->create($data);
     }
 

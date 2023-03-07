@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ArtworkStateEnum;
 use App\Enums\ProfileTypeEnum;
 use App\Enums\ReleaseTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
@@ -327,6 +328,16 @@ class User extends Authenticatable
     public function hasOnlyOneChargingMethod(): bool
     {
         return $this->chargingMethods()->count() <= 1;
+    }
+
+    /**
+     * Colocar las obras en pausa comp publicadas
+     */
+    public function setPausedArtworksAsPublished(): bool
+    {
+        return $this->artworks()
+            ->where('state', ArtworkStateEnum::PAUSED)
+            ->update(['state' => ArtworkStateEnum::PUBLISHED]);
     }
 
     // ------------------------------------------------
