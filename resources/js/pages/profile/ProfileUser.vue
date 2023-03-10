@@ -52,70 +52,70 @@
                         @editDataProfilePersonal="
                             editDataProfile = !editDataProfile
                         "
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /sección datos personales -->
 
                     <!-- publicaciones -->
                     <Release
                         :showSection="sections.pub"
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /publicaciones -->
 
                     <!-- sección obras -->
                     <Artwork
                         :showSection="sections.artwork"
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /sección obras -->
 
                     <!-- sección favoritos -->
                     <Favourite
                         :showSection="sections.fav"
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /sección favoritos -->
 
                     <!-- sección pedidos -->
                     <Order
                         :showSection="sections.order"
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /sección pedidos -->
 
                     <!-- sección ventas -->
                     <Sale
                         :showSection="sections.sale"
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /sección ventas -->
 
                     <!-- sección direcciones -->
                     <Address
                         :showSection="sections.direction"
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /sección direcciones -->
 
                     <!-- métodos de pago -->
                     <PaymentMethod
                         :showSection="sections.payment"
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /métodos de pago -->
 
                     <!-- métodos de cobro -->
                     <ChargingMethod
                         :showSection="sections.charging"
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /métodos de pago -->
 
                     <!-- calificaciones -->
                     <Rating
                         :showSection="sections.rating"
-                        class="sm:min-h-[54rem]"
+                        class="sm:min-h-[60rem]"
                     />
                     <!-- /calificaciones -->
                 </div>
@@ -250,10 +250,10 @@ export default {
     mounted() {
         // desactivar modo oscuro
         this.$vuetify.theme.dark = false;
-        this.sections.personal = true;
+        this.sections.pub = true;
 
         this.loadSectionForParameter();
-        globalThis.scrollTo(0, 0);
+        // globalThis.scrollTo(0, 0);
     },
     methods: {
         /**

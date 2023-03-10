@@ -55,22 +55,6 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.showSection("personal");
-      }
-    }
-  }, [_c("i", {
-    staticClass: "fa fa-user text-primary"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight uppercase",
-    "class": _vm.sections.personal ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Datos personales\n                ")])])]), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
-  }, [_c("button", {
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
         return _vm.showSection("pub");
       }
     }
@@ -96,22 +80,6 @@ var render = function render() {
     staticClass: "tracking-tight uppercase",
     "class": _vm.sections.artwork ? "font-black" : "font-light"
   }, [_vm._v("\n                    Mis obras\n                ")])])]), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
-  }, [_c("button", {
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.showSection("fav");
-      }
-    }
-  }, [_c("i", {
-    staticClass: "fa-solid fa-bookmark text-primary"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight uppercase",
-    "class": _vm.sections.fav ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Favoritos\n                ")])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
   }, [_c("button", {
     attrs: {
@@ -151,6 +119,54 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
+        return _vm.showSection("fav");
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-bookmark text-primary"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.fav ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Favoritos\n                ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
+  }, [_c("button", {
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.showSection("rating");
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-star text-primary"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.rating ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Mis calificaciones\n                ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
+  }, [_c("button", {
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.showSection("personal");
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-user text-primary"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.personal ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Datos personales\n                ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
+  }, [_c("button", {
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
         return _vm.showSection("direcciones");
       }
     }
@@ -176,22 +192,6 @@ var render = function render() {
     staticClass: "tracking-tight uppercase",
     "class": _vm.sections.charging ? "font-black" : "font-light"
   }, [_vm._v("\n                    Métodos de cobro\n                ")])])]), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
-  }, [_c("button", {
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.showSection("rating");
-      }
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-star text-primary"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight uppercase",
-    "class": _vm.sections.rating ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Mis calificaciones\n                ")])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
   }, [_c("button", {
     attrs: {

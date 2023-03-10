@@ -153,6 +153,20 @@
                                         </span>
                                     </template>
                                 </v-text-field>
+                                <v-textarea
+                                    v-model="form.large_description"
+                                    :counter="2000"
+                                    :rules="largeDescriptionRules"
+                                    rows="2"
+                                >
+                                    <template slot="label">
+                                        <span
+                                            class="font-black tracking-wide uppercase text-gray-900"
+                                        >
+                                            Descripción larga
+                                        </span>
+                                    </template>
+                                </v-textarea>
                                 <v-text-field
                                     v-model="form.width"
                                     :rules="dimensionRules"
@@ -211,6 +225,18 @@
                                         </span>
                                     </template>
                                 </v-text-field>
+                                <div
+                                    class="flex justify-end items-left gap-5 flex-col md:flex-row"
+                                >
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Comisión por venta (15%)
+                                    </span>
+                                    <span class="text-lg text-primary">
+                                        {{ euro }} {{ calTax }}
+                                    </span>
+                                </div>
                             </div>
                         </v-col>
 
@@ -274,20 +300,6 @@
                                         </span>
                                     </template>
                                 </v-autocomplete>
-                                <!-- <v-text-field
-                                    v-model="form.shipping"
-                                    :rules="dateRules"
-                                    :counter="100"
-                                    required
-                                >
-                                    <template slot="label">
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Envío
-                                        </span>
-                                    </template>
-                                </v-text-field> -->
                             </div>
                         </v-col>
                         <v-col cols="12" md="8">
@@ -296,17 +308,6 @@
                                 :dataCategories="categories"
                                 :edit="true"
                             />
-                        </v-col>
-                        <v-col cols="12">
-                            <v-textarea v-model="form.large_description">
-                                <template slot="label">
-                                    <span
-                                        class="font-black tracking-wide uppercase text-gray-900"
-                                    >
-                                        Descripción larga
-                                    </span>
-                                </template>
-                            </v-textarea>
                         </v-col>
                         <v-col cols="12">
                             <v-textarea v-model="form.other_details">
@@ -419,7 +420,6 @@ export default {
                 price: 0,
                 date_created: "",
                 location: "",
-                // shipping: "",
                 state: "",
                 gallery: [],
                 type: {
@@ -432,6 +432,8 @@ export default {
             loadingGallery: false,
             publish: false,
             hasPaymentMethod: true,
+            calTax: 0,
+            tax: 15,
         };
     },
     mounted() {
@@ -441,13 +443,22 @@ export default {
         // load data
         this.loadData();
     },
+    watch: {
+        /**
+         * Calcular el impuesto de la app (15%)
+         * cada vez que cambie el precio de la obra
+         */
+        "form.price"(val) {
+            this.calTax = (val * this.tax) / 100;
+        },
+    },
     computed: {
         /**
-         * Acceder a los getters necesarios
+         * Usuario logueado
          */
-        ...mapGetters({
-            user: "getProfile",
-        }),
+        user() {
+            return this.$store.getters.getProfile;
+        },
 
         /**
          * Verificar si el parámetro type de la ruta es igual a 2
@@ -456,6 +467,13 @@ export default {
          */
         isCollective() {
             return this.$route.params.type == 2;
+        },
+
+        /**
+         * Id del colectivo (si lo hay)
+         */
+        collectiveId() {
+            return this.$route.params.collectiveID || null;
         },
     },
     methods: {
@@ -511,7 +529,6 @@ export default {
             f.large = f.large == "null" ? "" : f.large;
             f.weight = f.weight == "null" ? "" : f.large;
             f.price = f.price == "null" ? "" : f.price;
-            // f.shipping = f.shipping == "null" ? "" : f.shipping;
             f.date_created = dateFormat(f.date_created);
         },
 
@@ -521,33 +538,24 @@ export default {
         updateArtwork() {
             if (this.form.state === 1 || this.publish) {
                 if (!this.$refs.artworkForm.validate()) {
-                    this.noty(
+                    return this.noty(
                         "Por favor, revisa los campos, algunos son requeridos",
                         "error",
                         5000
                     );
-                    return;
                 }
             }
 
             // loading
             this.globalLoading = true;
 
-            // cambiar estado
-            // this.changeState();
-
             // cargar datos
             const data = this.loadFormData();
-
-            console.log(data.get("state"));
+            const ep = this.ep.artworks.update + this.form.id;
 
             // request
             this.axios
-                .post(this.ep.artworks.update + this.form.id, data, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                })
+                .post(ep, data, this.headerFormData)
                 .then((resp) => {
                     if (resp.status === 200) {
                         // mensajes
@@ -564,28 +572,23 @@ export default {
                             this.noty(draftMsj);
                         }
 
-                        // si no es una obra de colectivo
+                        // --------------------
+                        // redireccion
+                        // --------------------
                         if (!this.isCollective) {
-                            this.$router.push(
-                                `/usuario/perfil/${this.user.id}/obras`
-                            );
-
-                            return;
+                            // obra de artista
+                            const url = `/usuario/perfil/${this.user.id}/obras`;
+                            this.$router.push(url);
                         }
 
-                        // obra de colectivo
                         if (this.isCollective) {
-                            // obtener parámetro de la ruta anterior
-                            const collectiveId =
-                                this.$route.params.collectiveID;
-
-                            this.$router.push(
-                                `/colectivos/perfil/${collectiveId}/artwork`
-                            );
+                            // obra de colectivo
+                            const url = `/colectivos/perfil/${this.collectiveId}/artwork`;
+                            this.$router.push(url);
                         }
                     }
                 })
-                .catch((error) => this.showRequestErrors(error))
+                .catch((error) => this.manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
 
@@ -602,7 +605,6 @@ export default {
             this.$swal
                 .fire({
                     title: msj,
-                    // icon: "info",
                     showCancelButton: true,
                     confirmButtonColor: "#00BF30",
                     cancelButtonColor: "#d33",

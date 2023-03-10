@@ -11,6 +11,7 @@
             </v-btn>
         </div>
 
+        <!-- btn colectivo -->
         <div
             :class="sections[0].personal ? 'mt-3' : 'mt-12'"
             class="flex flex-col justify-center gap-3"
@@ -32,28 +33,12 @@
                 <span class="text-white"> Ver mis colectivos </span>
             </v-btn>
         </div>
+        <!-- /btn colectivo -->
+
         <!-- botonera -->
         <div
             class="flex flex-wrap justify-center items-start mt-6 text-primary text-xs gap-3"
         >
-            <!-- <div class=""> -->
-            <div>
-                <button
-                    type="button"
-                    class="flex flex-col items-center justify-start space-y-2"
-                    @click="changeEmitAndClass(mobileSection.personal)"
-                >
-                    <i class="fa fa-user fa-2x text-primary"></i>
-                    <span
-                        class="tracking-tight"
-                        :class="
-                            sections[0].personal ? 'font-black' : 'font-light'
-                        "
-                    >
-                        Datos
-                    </span>
-                </button>
-            </div>
             <div>
                 <button
                     type="button"
@@ -88,21 +73,6 @@
                 <button
                     type="button"
                     class="flex flex-col items-center justify-start space-y-2"
-                    @click="changeEmitAndClass(mobileSection.fav)"
-                >
-                    <i class="fa-solid fa-bookmark text-primary fa-2x"></i>
-                    <span
-                        class="tracking-tight"
-                        :class="sections[0].fav ? 'font-black' : 'font-light'"
-                    >
-                        Favoritos
-                    </span>
-                </button>
-            </div>
-            <div>
-                <button
-                    type="button"
-                    class="flex flex-col items-center justify-start space-y-2"
                     @click="changeEmitAndClass(mobileSection.order)"
                 >
                     <i class="fas fa-shopping-cart text-primary fa-2x"></i>
@@ -114,13 +84,6 @@
                     </span>
                 </button>
             </div>
-            <!-- </div> -->
-        </div>
-
-        <!-- segunda hilera -->
-        <div
-            class="flex flex-wrap justify-center items-start text-primary text-xs gap-3 mt-5"
-        >
             <div>
                 <button
                     type="button"
@@ -135,6 +98,61 @@
                         :class="sections[0].sale ? 'font-black' : 'font-light'"
                     >
                         Ventas
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button
+                    type="button"
+                    class="flex flex-col items-center justify-start space-y-2"
+                    @click="changeEmitAndClass(mobileSection.fav)"
+                >
+                    <i class="fa-solid fa-bookmark text-primary fa-2x"></i>
+                    <span
+                        class="tracking-tight"
+                        :class="sections[0].fav ? 'font-black' : 'font-light'"
+                    >
+                        Favoritos
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- segunda hilera -->
+        <div
+            class="flex flex-wrap justify-center items-start text-primary text-xs gap-3 mt-5"
+        >
+            <div>
+                <button
+                    type="button"
+                    class="flex flex-col items-center justify-start space-y-2"
+                    @click="changeEmitAndClass(mobileSection.rating)"
+                >
+                    <i class="fas fa-star text-primary fa-2x"></i>
+                    <span
+                        class="tracking-tight"
+                        :class="
+                            sections[0].rating ? 'font-black' : 'font-light'
+                        "
+                    >
+                        Calificaciones
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button
+                    type="button"
+                    class="flex flex-col items-center justify-start space-y-2"
+                    @click="changeEmitAndClass(mobileSection.personal)"
+                >
+                    <i class="fa fa-user fa-2x text-primary"></i>
+                    <span
+                        class="tracking-tight"
+                        :class="
+                            sections[0].personal ? 'font-black' : 'font-light'
+                        "
+                    >
+                        Datos
                     </span>
                 </button>
             </div>
@@ -157,22 +175,6 @@
                     </span>
                 </button>
             </div>
-            <!-- <div>
-                <button
-                    type="button"
-                    class="flex flex-col items-center justify-start space-y-2"
-                    @click="changeEmitAndClass(mobileSection.payment)"
-                >
-                    <i class="fas fa-money-check text-primary fa-2x"></i>
-                    <span
-                        class="tracking-tight"
-                        :class="sections[0].payment ? 'font-black' : 'font-light'"
-                    >
-                        Métodos de <br />
-                        Pago
-                    </span>
-                </button>
-            </div> -->
             <div>
                 <button
                     type="button"
@@ -188,23 +190,6 @@
                     >
                         Métodos de <br />
                         Cobro
-                    </span>
-                </button>
-            </div>
-            <div>
-                <button
-                    type="button"
-                    class="flex flex-col items-center justify-start space-y-2"
-                    @click="changeEmitAndClass(mobileSection.rating)"
-                >
-                    <i class="fas fa-star text-primary fa-2x"></i>
-                    <span
-                        class="tracking-tight"
-                        :class="
-                            sections[0].rating ? 'font-black' : 'font-light'
-                        "
-                    >
-                        Calificaciones
                     </span>
                 </button>
             </div>
@@ -289,7 +274,7 @@ export default {
         };
     },
     mounted() {
-        this.sections[0].personal = true;
+        this.sections[0].pub = true;
     },
     methods: {
         /**

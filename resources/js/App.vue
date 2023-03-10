@@ -16,5 +16,21 @@
 <script>
 export default {
     name: "App",
+    methods: {
+        /**
+         * Siempre desde el inicio de la página
+         */
+        scrollOnTop() {
+            globalThis.scrollTo(0, 0);
+        },
+    },
+
+    // cada vez que se cargue una ruta, se va a ejecutar este método
+    created() {
+        this.$router.beforeEach((to, from, next) => {
+            this.scrollOnTop();
+            next();
+        });
+    },
 };
 </script>

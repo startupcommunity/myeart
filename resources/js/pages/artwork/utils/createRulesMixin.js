@@ -21,6 +21,13 @@ export default {
                     (v && v.length <= 230) ||
                     "La descripción no debe tener mas de 200 caracteres",
             ],
+            largeDescriptionRules: [
+                // (v) => !!v || "La descripción es requerido",
+                // menos de 2000 caracteres
+                // (v) =>
+                //     (v && v.length <= 2000) ||
+                //     "La descripción no debe tener mas de 2000 caracteres",
+            ],
             dimensionRules: [
                 (v) => !!v || "Las dimensiones son requeridas",
                 // (v) =>

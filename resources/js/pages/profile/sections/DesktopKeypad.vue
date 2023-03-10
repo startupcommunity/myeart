@@ -2,17 +2,6 @@
     <div class="flex justify-center">
         <div class="text-gray-800 sm:text-xs md:text-sm lg:text-lg">
             <div class="flex flex-wrap gap-4 items-center justify-start py-6">
-                <button type="button" @click="showSection('personal')">
-                    <i class="fa fa-user text-primary"></i>
-                    <span
-                        class="tracking-tight uppercase"
-                        :class="sections.personal ? 'font-black' : 'font-light'"
-                    >
-                        Datos personales
-                    </span>
-                </button>
-            </div>
-            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
                 <button type="button" @click="showSection('pub')">
                     <i class="fas fa-camera text-primary"></i>
                     <span
@@ -35,17 +24,6 @@
                 </button>
             </div>
             <div class="flex flex-wrap gap-4 items-center justify-start py-6">
-                <button type="button" @click="showSection('fav')">
-                    <i class="fa-solid fa-bookmark text-primary"></i>
-                    <span
-                        class="tracking-tight uppercase"
-                        :class="sections.fav ? 'font-black' : 'font-light'"
-                    >
-                        Favoritos
-                    </span>
-                </button>
-            </div>
-            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
                 <button type="button" @click="showSection('order')">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span
@@ -64,6 +42,39 @@
                         :class="sections.sale ? 'font-black' : 'font-light'"
                     >
                         Mis Ventas
+                    </span>
+                </button>
+            </div>
+            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
+                <button type="button" @click="showSection('fav')">
+                    <i class="fa-solid fa-bookmark text-primary"></i>
+                    <span
+                        class="tracking-tight uppercase"
+                        :class="sections.fav ? 'font-black' : 'font-light'"
+                    >
+                        Favoritos
+                    </span>
+                </button>
+            </div>
+            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
+                <button type="button" @click="showSection('rating')">
+                    <i class="fas fa-star text-primary"></i>
+                    <span
+                        class="tracking-tight uppercase"
+                        :class="sections.rating ? 'font-black' : 'font-light'"
+                    >
+                        Mis calificaciones
+                    </span>
+                </button>
+            </div>
+            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
+                <button type="button" @click="showSection('personal')">
+                    <i class="fa fa-user text-primary"></i>
+                    <span
+                        class="tracking-tight uppercase"
+                        :class="sections.personal ? 'font-black' : 'font-light'"
+                    >
+                        Datos personales
                     </span>
                 </button>
             </div>
@@ -99,17 +110,6 @@
                         :class="sections.charging ? 'font-black' : 'font-light'"
                     >
                         Métodos de cobro
-                    </span>
-                </button>
-            </div>
-            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
-                <button type="button" @click="showSection('rating')">
-                    <i class="fas fa-star text-primary"></i>
-                    <span
-                        class="tracking-tight uppercase"
-                        :class="sections.rating ? 'font-black' : 'font-light'"
-                    >
-                        Mis calificaciones
                     </span>
                 </button>
             </div>

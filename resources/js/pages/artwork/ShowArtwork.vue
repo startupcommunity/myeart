@@ -164,7 +164,7 @@
                                 </span>
                                 <br />
                                 <span class="text-2xl font-bold">
-                                    {{ artwork.price }} {{ euro }}
+                                    {{ euro }} {{ artwork.total }}
                                 </span>
                             </p>
                         </div>

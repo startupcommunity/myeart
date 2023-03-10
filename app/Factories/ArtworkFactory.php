@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Enums\AppTax;
 use App\Enums\ArtworkTypeEnum;
 use App\Models\Artwork;
 use App\Utils\AppStorage;
@@ -135,7 +136,11 @@ class ArtworkFactory
       // datos de obras
       $fields = $this->selectFieldsToSave($data);
       $fields['type'] = $data['type_artwork'] ?? ArtworkTypeEnum::ARTIST;
-      $fields['in_pause'] = $data['in_pause'] ?? 0;
+
+      // calcular total
+      $fields['tax'] = AppTax::FOR_SALE;
+      $commission = $fields['price'] * $fields['tax'] / 100;
+      $fields['total'] = $fields['price'] + $commission;
 
       // obra creada
       $artwork = $user->artworks()->create($fields);
@@ -171,11 +176,18 @@ class ArtworkFactory
       // datos de obras
       $fields = $this->selectFieldsToSave($data);
 
-      // obra actualizada
+      // obra
       $artwork = $this->artwork->findOrFail($id);
+
+      // calcular total
+      $fields['tax'] = AppTax::FOR_SALE;
+      $commission = $fields['price'] * $fields['tax'] / 100;
+      $fields['total'] = $fields['price'] + $commission;
+
+      // actualizar obra
       $artwork->update($fields);
 
-      // attach data
+      // attach categories
       // eliminar o separa por categoría o por etiquetas
       $artwork->categories()->detach();
       $artwork->labels()->detach();

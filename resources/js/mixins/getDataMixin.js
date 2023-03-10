@@ -140,6 +140,20 @@ export default {
         },
 
         /**
+         * Verificar si el usuario tiene métodos de cobro agregados
+         *
+         * @param {Int} user_id
+         * @returns Promise
+         */
+        userHaveChargingMethod(user_id) {
+            if (!user_id) return false;
+            return this.axios
+                .get(this.ep.user.getUserChargeMethods + user_id)
+                .then((resp) => resp.data)
+                .catch((error) => this.manageError(error));
+        },
+
+        /**
          * Obras publicadas por categoría
          * opcional: ignora un usuario en particular
          */

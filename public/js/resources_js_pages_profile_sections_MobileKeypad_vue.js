@@ -60,7 +60,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.sections[0].personal = true;
+    this.sections[0].pub = true;
   },
   methods: {
     /**
@@ -151,21 +151,6 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.changeEmitAndClass(_vm.mobileSection.personal);
-      }
-    }
-  }, [_c("i", {
-    staticClass: "fa fa-user fa-2x text-primary"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight",
-    "class": _vm.sections[0].personal ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Datos\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
-    staticClass: "flex flex-col items-center justify-start space-y-2",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
         return _vm.changeEmitAndClass(_vm.mobileSection.pub);
       }
     }
@@ -196,21 +181,6 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.changeEmitAndClass(_vm.mobileSection.fav);
-      }
-    }
-  }, [_c("i", {
-    staticClass: "fa-solid fa-bookmark text-primary fa-2x"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight",
-    "class": _vm.sections[0].fav ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Favoritos\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
-    staticClass: "flex flex-col items-center justify-start space-y-2",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
         return _vm.changeEmitAndClass(_vm.mobileSection.order);
       }
     }
@@ -219,9 +189,7 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].order ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Pedidos\n                ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-wrap justify-center items-start text-primary text-xs gap-3 mt-5"
-  }, [_c("div", [_c("button", {
+  }, [_vm._v("\n                    Pedidos\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
@@ -237,6 +205,53 @@ var render = function render() {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].sale ? "font-black" : "font-light"
   }, [_vm._v("\n                    Ventas\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+    staticClass: "flex flex-col items-center justify-start space-y-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.changeEmitAndClass(_vm.mobileSection.fav);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-bookmark text-primary fa-2x"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].fav ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Favoritos\n                ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap justify-center items-start text-primary text-xs gap-3 mt-5"
+  }, [_c("div", [_c("button", {
+    staticClass: "flex flex-col items-center justify-start space-y-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.changeEmitAndClass(_vm.mobileSection.rating);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-star text-primary fa-2x"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].rating ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Calificaciones\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+    staticClass: "flex flex-col items-center justify-start space-y-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.changeEmitAndClass(_vm.mobileSection.personal);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-user fa-2x text-primary"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].personal ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Datos\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"
@@ -267,21 +282,6 @@ var render = function render() {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].charging ? "font-black" : "font-light"
   }, [_vm._v("\n                    Métodos de "), _c("br"), _vm._v("\n                    Cobro\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
-    staticClass: "flex flex-col items-center justify-start space-y-2",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.changeEmitAndClass(_vm.mobileSection.rating);
-      }
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-star text-primary fa-2x"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "tracking-tight",
-    "class": _vm.sections[0].rating ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Calificaciones\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",
     attrs: {
       type: "button"

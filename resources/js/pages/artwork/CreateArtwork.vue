@@ -156,6 +156,20 @@
                                         </span>
                                     </template>
                                 </v-text-field>
+                                <v-textarea
+                                    v-model="form.large_description"
+                                    :counter="2000"
+                                    :rules="largeDescriptionRules"
+                                    rows="2"
+                                >
+                                    <template slot="label">
+                                        <span
+                                            class="font-black tracking-wide uppercase text-gray-900"
+                                        >
+                                            Descripción larga
+                                        </span>
+                                    </template>
+                                </v-textarea>
                                 <v-text-field
                                     v-model="form.width"
                                     :rules="dimensionRules"
@@ -214,6 +228,18 @@
                                         </span>
                                     </template>
                                 </v-text-field>
+                                <div
+                                    class="flex justify-end items-left gap-5 flex-col md:flex-row"
+                                >
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Comisión por venta (15%)
+                                    </span>
+                                    <span class="text-lg text-primary">
+                                        {{ euro }} {{ calTax }}
+                                    </span>
+                                </div>
                             </div>
                         </v-col>
 
@@ -277,20 +303,6 @@
                                         </span>
                                     </template>
                                 </v-autocomplete>
-                                <!-- <v-text-field
-                                    v-model="form.shipping"
-                                    :rules="dateRules"
-                                    :counter="100"
-                                    required
-                                >
-                                    <template slot="label">
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Envío
-                                        </span>
-                                    </template>
-                                </v-text-field> -->
                             </div>
                         </v-col>
                         <v-col cols="12" md="8">
@@ -298,17 +310,6 @@
                                 :category="form.type"
                                 :dataCategories="categories"
                             />
-                        </v-col>
-                        <v-col cols="12">
-                            <v-textarea v-model="form.large_description">
-                                <template slot="label">
-                                    <span
-                                        class="font-black tracking-wide uppercase text-gray-900"
-                                    >
-                                        Descripción larga
-                                    </span>
-                                </template>
-                            </v-textarea>
                         </v-col>
                         <v-col cols="12">
                             <v-textarea v-model="form.other_details">
@@ -372,7 +373,6 @@
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import Header from "../landing/sections/Header.vue";
 import PreHeader from "../landing/sections/PreHeader.vue";
 import Newletter from "../landing/sections/Newletter.vue";
@@ -389,6 +389,7 @@ import requestErrorsMixin from "../../mixins/requestErrorsMixin";
 import AlertPayment from "./components/AlertPayment.vue";
 
 export default {
+    name: "CreateArtwork",
     components: {
         Header,
         PreHeader,
@@ -398,7 +399,6 @@ export default {
         Category,
         AlertPayment,
     },
-    name: "CreateArtwork",
     mixins: [
         createRules,
         utilMixin,
@@ -417,7 +417,6 @@ export default {
                 price: "",
                 date_created: "",
                 location: "",
-                // shipping: "",
                 large_description: "",
                 other_details: "",
                 type: {
@@ -430,24 +429,23 @@ export default {
             hasPaymentMethod: true,
             menuPicker: false,
             isDraft: 3,
+            calTax: 0,
+            tax: 15,
         };
     },
-    mounted() {
-        // mixin
-        this.form.date_created = this.actualDate;
-        this.getCategories();
 
-        if (this.userProfile.id) {
-            this.haveAChargingMethod();
-        }
+    mounted() {
+        this.form.date_created = this.actualDate; // @utilMixin
+        this.getCategories(); // @getDataMixin
     },
+
     computed: {
         /**
-         * Acceder a los getters necesarios
+         * Usuario logueado
          */
-        ...mapGetters({
-            userProfile: "getProfile",
-        }),
+        user() {
+            return this.$store.getters.getProfile;
+        },
 
         /**
          * Verificar si el parámetro type de la ruta es igual a 2
@@ -467,72 +465,49 @@ export default {
     },
 
     watch: {
-        userProfile(val) {
+        user(val) {
             if (val.id) {
-                this.haveAChargingMethod();
+                // @getDataMixin
+                this.userHaveChargingMethod(val.id).then((resp) => {
+                    if (resp.length === 0) {
+                        this.hasPaymentMethod = false;
+                    }
+                });
             }
+        },
+
+        /**
+         * Calcular el impuesto de la app (15%)
+         * cada vez que cambie el precio de la obra
+         */
+        "form.price"(val) {
+            this.calTax = (val * this.tax) / 100;
         },
     },
 
     methods: {
         /**
-         * Verifica si el usuario tiene agregado algún método de cobro
-         * si no lo tiene se desactiva el formulario
-         */
-        haveAChargingMethod() {
-            this.axios
-                .get(this.ep.user.getUserChargeMethods + this.userProfile.id)
-                .then((resp) => {
-                    if (resp.data.length === 0) {
-                        this.hasPaymentMethod = false;
-                        // this.formIsValid = false;
-                        // this.disabledForm = true;
-                        // this.confirmedDialog({
-                        //     title: "Agrega un método de cobro",
-                        //     text: "Para poder publicar una obra debes agregar un método de cobro primero",
-                        //     icon: "warning",
-                        //     confirmButtonText: "Agregar método de cobro",
-                        //     cancelButtonText: "No, gracias",
-                        // }).then((result) => {
-                        //     if (result.isConfirmed) {
-                        //         this.$router.push({
-                        //             name: "userProfile",
-                        //             params: {
-                        //                 id: this.userProfile.id,
-                        //                 section: "charging",
-                        //             },
-                        //         });
-                        //     }
-                        // });
-                    }
-                })
-                .catch((error) => this.manageError(error));
-        },
-
-        /**
          * Guardar, publicar o guardar como borrador
          */
         saveArtwork() {
-            if (this.isDraft === 1) {
-                if (!this.$refs.artworkForm.validate()) {
-                    this.noty(
-                        "Por favor, revisa los campos, algunos son requeridos",
-                        "error",
-                        5000
-                    );
-                    return;
-                }
+            if (this.isDraft === 1 && !this.$refs.artworkForm.validate()) {
+                return this.noty(
+                    "Algunos campos son requeridos, verifique antes de publicar",
+                    "error",
+                    5000
+                );
             }
 
-            // evaluare parámetro type de ruta
+            // evaluar el parámetro type de ruta
             const type_artwork = this.$route.params.type ?? 1;
 
-            this.globalLoading = true;
-
-            const data = new FormData();
+            // verificar estado antes de guardar/publicar
             const state =
                 this.isDraft === 1 ? (!this.hasPaymentMethod ? 5 : 1) : 3;
-            // const in_pause = !this.hasPaymentMethod && this.isDraft === 1 ? 1 : 0;
+
+            // formdata
+            const data = new FormData();
+            const files = this.uploadedFiles;
             data.append("title", this.form.title);
             data.append("description", this.form.description);
             data.append("large_description", this.form.large_description);
@@ -544,25 +519,17 @@ export default {
             data.append("date_created", this.form.date_created);
             data.append("location", this.form.location);
             data.append("state", state);
-            // data.append("in_pause", in_pause);
             data.append(`type`, JSON.stringify(this.form.type));
             data.append(`type_artwork`, type_artwork);
-
+            files.forEach((file) => data.append(`gallery[]`, file));
             if (this.collectiveId) {
                 data.append(`collective_id`, this.collectiveId);
             }
 
-            // data sync
-            const files = this.uploadedFiles;
-            files.forEach((file) => data.append(`gallery[]`, file));
-
             // request
+            this.globalLoading = true;
             this.axios
-                .post(this.ep.artworks.save, data, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                })
+                .post(this.ep.artworks.save, data, this.headerFormData)
                 .then((resp) => {
                     if (resp.status === 200) {
                         // mensaje
@@ -579,24 +546,23 @@ export default {
                             this.noty(draftMsj);
                         }
 
+                        // --------------------
                         // redireccion
-                        // obra de artista
+                        // --------------------
                         if (type_artwork == 1) {
-                            this.$router.push(
-                                `/usuario/perfil/${this.userProfile.id}/obras`
-                            );
-                            return;
+                            // obra de artista
+                            const url = `/usuario/perfil/${this.user.id}/obras`;
+                            this.$router.push(url);
                         }
 
-                        // obra de colectivo
                         if (type_artwork == 2) {
-                            this.$router.push(
-                                `/colectivos/perfil/${this.collectiveId}/artwork`
-                            );
+                            // obra de colectivo
+                            const url = `/colectivos/perfil/${this.collectiveId}/artwork`;
+                            this.$router.push(url);
                         }
                     }
                 })
-                .catch((error) => this.showRequestErrors(error))
+                .catch((error) => this.manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
     },
