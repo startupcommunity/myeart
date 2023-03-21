@@ -29,6 +29,23 @@ class OrderDB
   }
 
   /**
+   * Devuelve loas datos de un item de una orden
+   *
+   * @param integer $id       ID del item de la orden
+   * @return OrderItem|null   Item de la orden
+   */
+  public function getItem(int $id): ?OrderItem
+  {
+    $item = OrderItem::with('user:id,name,username,profile_photo')->find($id);
+
+    if (!$item) {
+      abort(404);
+    }
+
+    return $item;
+  }
+
+  /**
    * Obtiene una orden en especifico
    *
    * @param integer $id
@@ -157,5 +174,22 @@ class OrderDB
     // dd($orders->toArray());
 
     return $orders->toArray();
+  }
+
+  /**
+   * Obtiene los mensajes entre comprador y vendedor de un item de una orden
+   *
+   * @param integer $id
+   * @return OrderItem|null
+   */
+  public function getContactMessages(int $id): ?Collection
+  {
+    $item = $this->getItem($id);
+
+    if (!$item) {
+      abort(404);
+    }
+
+    return $item->messages()->with('user')->get();
   }
 }

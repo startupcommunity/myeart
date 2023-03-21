@@ -11,7 +11,6 @@
             :items="items"
             :address="address"
             :shipping="shipping"
-            :tax="tax"
             :form="form"
             :client-secret="client_secret"
             @changedMethod="changedMethod"

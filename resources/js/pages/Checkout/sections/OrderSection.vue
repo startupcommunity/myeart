@@ -232,15 +232,12 @@ export default {
         subtotal() {
             const sub = this.items.reduce((total, item) => {
                 const one = parseFloat(total);
-                const two = parseFloat(item.artwork?.price);
+                const two = parseFloat(item.artwork?.total);
                 const result = one + two;
                 return parseFloat(result).toFixed(2);
             }, 0);
 
-            // incluir el impuesto
-            const subTax = (sub * this.tax) / 100;
-            const subTotal = parseFloat(sub) + parseFloat(subTax);
-            return subTotal.toFixed(2);
+            return parseFloat(sub).toFixed(2);
         },
 
         /**

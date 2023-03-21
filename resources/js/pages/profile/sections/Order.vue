@@ -99,6 +99,7 @@
                         class="w-full"
                         @see-purchase="seePurchase"
                         @confirm-order="seeConfirmOrder"
+                        @contact-seller="contactSeller"
                     />
                 </div>
             </div>
@@ -310,6 +311,18 @@ export default {
             this.showConfirmItem = false;
             this.showPurchase = false;
             this.getOrders();
+        },
+
+        /**
+         * Contactar al vendedor
+         *
+         * @param {Object} item     item de la orden
+         */
+        contactSeller(item) {
+            this.$router.push({
+                name: "contactSeller",
+                params: { id: item.id },
+            });
         },
     },
 };

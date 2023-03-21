@@ -4,7 +4,6 @@ namespace App\Factories;
 
 use App\Enums\TypeNotificationEnum;
 use App\Events\NotificationEvent;
-use App\Models\Artwork;
 use App\Models\User;
 
 class UserFactory

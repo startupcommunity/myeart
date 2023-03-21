@@ -63,7 +63,7 @@
             <div class="flex flex-col items-start md:items-end">
                 <div class="md:mb-3">
                     <h4 class="text-2xl font-bold text-zinc-900 uppercase">
-                        {{ artwork.price }} {{ euro }}
+                        {{ artwork.total }} {{ euro }}
                     </h4>
                 </div>
                 <div class="md:mb-3">

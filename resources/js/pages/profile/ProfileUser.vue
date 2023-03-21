@@ -253,7 +253,6 @@ export default {
         this.sections.pub = true;
 
         this.loadSectionForParameter();
-        // globalThis.scrollTo(0, 0);
     },
     methods: {
         /**

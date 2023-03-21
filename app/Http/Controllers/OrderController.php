@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Factories\OrderFactory;
 use App\Http\Requests\CancelItemOrderRequest;
 use App\Http\Requests\ConfirmItemOrderRequest;
+use App\Http\Requests\CreateOrderItemMessageRequest;
 use Illuminate\Http\Request;
 use App\Utils\ResponseJson;
 use App\Querys\OrderDB;
@@ -34,6 +35,24 @@ class OrderController extends Controller
             $this->authorize('getItems', $this->db->getOrder($id));
             $items = $this->db->getItems($id);
             return $this->resp->json($items, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Devuelve los datos de un item de una orden
+     *
+     * @param integer $id       ID del item de la orden
+     * @return JsonResponse
+     */
+    public function getItem(int $id): JsonResponse
+    {
+        try {
+            $item = $this->db->getItem($id);
+            // $this->authorize('getOrder', $item->order);
+            // $this->authorize('getItem', $item);
+            return $this->resp->json($item, 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }
@@ -151,6 +170,39 @@ class OrderController extends Controller
         try {
             $sales = $this->db->getUserSales($id);
             return $this->resp->json($sales, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Obtiene los mensajes entre comprador y vendedor
+     * de un item de una orden
+     *
+     * @param integer $id       ID del item de la orden
+     * @return JsonResponse
+     */
+    public function getContactMessages(int $id): JsonResponse
+    {
+        try {
+            $messages = $this->db->getContactMessages($id);
+            return $this->resp->json($messages, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Envía un mensaje entre comprador y vendedor
+     *
+     * @param CreateOrderItemMessageRequest $request
+     * @return JsonResponse
+     */
+    public function sendContactMessage(CreateOrderItemMessageRequest $request): JsonResponse
+    {
+        try {
+            $this->factory->sendContactMessage($request);
+            return $this->resp->json('Mensaje enviado', 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
         }

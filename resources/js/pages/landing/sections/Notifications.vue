@@ -9,17 +9,19 @@
                 <div class="position-relative">
                     <span
                         class="badge badge-super rounded bg-danger"
-                        v-if="notifications.length > 0"
+                        v-if="unreadNotifications.length > 0"
                     >
-                        <span class="visually-hidden">unread messages</span>
+                        <span class="visually-hidden">no leídas</span>
                     </span>
-                    <i class="fas fa-bell"></i>
+                    <i class="fas fa-bell"></i> ({{
+                        shortNotifications.length
+                    }})
                 </div>
             </a>
         </div>
         <ul
-            class="sub-menu-notification w-full md:w-[600px] text-zinc-900 h-80 overflow-y-auto"
-            v-if="notifications.length > 0"
+            class="sub-menu-notification w-full md:w-[600px] text-zinc-900"
+            v-if="shortNotifications.length > 0"
         >
             <div class="p-3">
                 <h2
@@ -28,17 +30,13 @@
                     NOTIFICACIONES
                 </h2>
             </div>
-            <div class="w-full">
+            <div class="w-full overflow-y-auto h-80">
                 <div
-                    v-for="noty in notifications"
+                    v-for="noty in shortNotifications"
                     :key="noty.id"
-                    class="flex items-center gap-3 hover:bg-gray-100 transition-all duration-300 ease-in-out p-3"
+                    class="flex items-center gap-3 hover:bg-gray-100 transition-all duration-300 ease-in-out px-3"
                 >
-                    <div class="min-w-[50px]">
-                        <!-- <img
-                            :src="profilePhoto(noty.data)"
-                            class="rounded-full w-10 h-10 sm:w-12 sm:h-12 aspect-square"
-                        /> -->
+                    <div class="flex justify-start items-center gap-1">
                         <Avatar
                             :artist="{
                                 id: noty.data.user_id,
@@ -46,23 +44,21 @@
                             }"
                             defaultClass="w-10 h-10 sm:w-12 sm:h-12 aspect-square border"
                         />
-                    </div>
-                    <div class="flex flex-col justify-center">
-                        <span class="font-bold text-xs">
-                            {{ noty.data.user_username }}
-                        </span>
-                        <span
-                            class="text-[10px] font-normal tracking-wide"
-                            v-html="noty.data.message"
-                        >
-                        </span>
-                    </div>
-                    <div>
-                        <timeago
-                            class="text-[10px] font-bold tracking-wide text-gray-900"
-                            :datetime="noty.data.created_at"
-                            :auto-update="60"
-                        ></timeago>
+                        <div class="flex flex-col justify-center gap-1">
+                            <span class="font-bold text-xs tracking-wide">
+                                {{ noty.data.user_username }}
+                            </span>
+                            <span
+                                class="text-xs font-normal tracking-wide"
+                                v-html="noty.data.message"
+                            >
+                            </span>
+                            <timeago
+                                class="text-[10px] font-light tracking-wide text-gray-500"
+                                :datetime="noty.data.created_at"
+                                :auto-update="60"
+                            ></timeago>
+                        </div>
                     </div>
                     <div class="max-w-[100px]">
                         <FollowArtistButton
@@ -138,6 +134,7 @@ export default {
                 ACCEPT_INVITATION_COLLECTIVE: 15,
                 UNFOLLOW: 16,
             },
+            shortNotifications: [],
         };
     },
 
@@ -153,6 +150,13 @@ export default {
          * Notificaciones del usuario logueado
          */
         notifications() {
+            return this.user?.notifications || [];
+        },
+
+        /**
+         * no leídas
+         */
+        unreadNotifications() {
             return this.user?.unread_notifications || [];
         },
     },
@@ -167,7 +171,30 @@ export default {
             }
         );
     },
+
+    watch: {
+        user() {
+            this.setNotifications();
+        },
+    },
+
     methods: {
+        /**
+         * Ordenar y mostrar solo 10 notificaciones
+         */
+        setNotifications() {
+            this.shortNotifications = [];
+
+            // ordenar notificaciones por fecha
+            this.shortNotifications = this.notifications.sort(
+                (a, b) =>
+                    new Date(b.data.created_at) - new Date(a.data.created_at)
+            );
+
+            // mostrar max 10 notificaciones
+            this.shortNotifications = this.shortNotifications.slice(0, 10);
+        },
+
         /**
          * Marca como leída y redirige a la url indicada
          *
@@ -231,7 +258,7 @@ export default {
          * Marcar todas como leídas
          */
         markAllAsRead() {
-            if (!this.notifications.length) return false;
+            if (!this.unreadNotifications.length) return false;
             const data = { user_id: this.user.id };
             this.axios
                 .post(this.ep.notifications.markAllAsRead, data)

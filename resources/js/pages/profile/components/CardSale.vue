@@ -66,6 +66,15 @@
                         </v-btn>
                         <v-btn
                             color="gray darken-1"
+                            outlined
+                            class="text-zinc-900"
+                            @click.stop="$emit('contact-buyer', item)"
+                            v-if="status === ITEM_STATES.shipped.val"
+                        >
+                            <span> Contactar comprador </span>
+                        </v-btn>
+                        <v-btn
+                            color="gray darken-1"
                             large
                             outlined
                             class="text-zinc-900"

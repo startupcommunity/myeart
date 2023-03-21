@@ -7,6 +7,16 @@
         <!-- title -->
         <section>
             <div class="container pt-10">
+                <div class="flex justify-center justify-md-end">
+                    <v-btn
+                        class="text-xs md:text-xs xl:text-base text-white"
+                        @click.stop="$router.push({ name: 'collectiveCreate' })"
+                        color="#B2794C"
+                    >
+                        <i class="fas fa-plus pr-2"></i>
+                        Crear colectivo
+                    </v-btn>
+                </div>
                 <div class="w-full border-b border-gray-800 pb-7">
                     <h1 class="text-zinc-900 font-bold text-2xl text-center">
                         Descubre colectivos de tu interés
@@ -201,6 +211,7 @@ export default {
 
     mounted() {
         this.filters.sortBy = 1;
+        this.$vuetify.theme.dark = false;
     },
 
     watch: {

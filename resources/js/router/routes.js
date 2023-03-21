@@ -232,6 +232,14 @@ export const routes = [
         component: importPage("contact/Index"),
         // beforeEnter: ifAuthenticated,
     },
+
+    // ---------- pedidos --------------------
+    {
+        name: "contactSeller",
+        path: "/pedidos/contactar/:id",
+        component: importPage("order/ContactSeller"),
+        beforeEnter: ifAuthenticated,
+    },
 ];
 
 const config = new VueRouter({

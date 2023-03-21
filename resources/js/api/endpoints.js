@@ -183,6 +183,15 @@ const endpoints = {
 
         // confirma una orden y marca como entregada
         confirm: `${API}/orders/confirm`, // post
+
+        // obtiene el item de una orden / {id}
+        getItem: `${API}/orders/get-item/`, // get
+
+        // obtener mensajes entre comprador y vendedor / {id}
+        getMessages: `${API}/orders/contact/get-messages/`, // get
+
+        // envía un mensaje entre comprador y vendedor
+        sendContactMessage: `${API}/orders/contact/send-message`, // post
     },
 
     // ventas

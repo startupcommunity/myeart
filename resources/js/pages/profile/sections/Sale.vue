@@ -83,6 +83,7 @@
                         :item="art"
                         class="w-full"
                         @see-purchase="seePurchase"
+                        @contact-buyer="contactBuyer"
                     />
                 </div>
             </div>
@@ -245,6 +246,18 @@ export default {
                 .then((_) => this.filterOrders())
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.loading = false));
+        },
+
+        /**
+         * Contactar al comprador
+         *
+         * @param {Object} item     item de la orden
+         */
+        contactBuyer(item) {
+            this.$router.push({
+                name: "contactSeller",
+                params: { id: item.id },
+            });
         },
     },
 };

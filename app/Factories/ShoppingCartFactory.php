@@ -91,22 +91,21 @@ class ShoppingCartFactory
   {
     $tripe = new Stripe();
     $user = auth()->user();
-    $tax = $this->tax;
 
     // obtener los items del carrito de compras
     $items = $user->shoppingCart()->get();
 
     if ($items == null || $items->count() == 0) {
-      return "";
+      return null;
     }
 
     // obtener el total y subtotal de la compra
-    $subtotal = $items->sum('artwork.price');
+    $subtotal = $items->sum('artwork.total');
 
     // agregar el impuesto y el envío y los decimales
     $subT = floatval(number_format($subtotal, 2, ',', ''));   // subtotal formateado
-    $calc = ($subT * $tax) / 100;                             // calculo del impuesto
-    $totalFinal = ($subT + $calc) * 100;                      // total final en céntimos
+    // $calc = ($subT * $tax) / 100;                          // calculo del impuesto
+    $totalFinal = $subT * 100;                                // total final en céntimos
     $random = Str::random(40);                                // random para el grupo de transferencia
 
     // crear intento de pago
@@ -160,9 +159,9 @@ class ShoppingCartFactory
       $source = $payment->latest_charge;                        // datos del pago, solo usar si es un pago pendiente
 
       $items = $user->shoppingCart()->get();                    // items u obras del carrito de compras
-      $subtotal = $items->sum('artwork.price');                 // subtotal
-      $calTax = ($subtotal * $tax) / 100;                       // calcular el impuesto
-      $total = $subtotal + $calTax;                             // total
+      $subtotal = $items->sum('artwork.total');                 // subtotal
+      // $calTax = ($subtotal * $tax) / 100;                    // calcular el impuesto
+      $total = $subtotal;                                       // total
 
       // crear la orden
       $order = $user->orders()->create([
@@ -180,14 +179,14 @@ class ShoppingCartFactory
 
       // agregar los items a la orden
       foreach ($items as $item) {
-        $random = $item->artwork->id . date('Ymd');
+        $random = $item->artwork->id . Str::random(20);   // random para el grupo de transferencia
         $frontPhoto = $item->artwork->getFrontPhoto();
 
         $order->items()->create([
           'number'      => $random,
           'artwork_id'  => $item->artwork_id,
           'user_id'     => $item->artwork->user_id,
-          'price'       => $item->artwork->price,
+          'price'       => $item->artwork->total,
           'quantity'    => 1,
           'title'       => $item->artwork->title,
           'photo'       => $frontPhoto,

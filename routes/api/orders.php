@@ -11,9 +11,24 @@ Route::group(['prefix' => 'orders'], function () {
   Route::get('/get-items/{id}', [OrderController::class, 'getItems'])->name('getItemsOrders');
 
   /**
+   * Obtiene los datos de un item de una orden
+   */
+  Route::get('/get-item/{id}', [OrderController::class, 'getItem'])->name('getItemOrders');
+
+  /**
    * Obtiene las ordenes de un usuario
    */
   Route::get('/get-user-orders/{id?}', [OrderController::class, 'getUserOrders'])->name('getUserOrders');
+
+  /**
+   * Obtiene los mensajes entre vendedor y comprador
+   */
+  Route::get('/contact/get-messages/{id}', [OrderController::class, 'getContactMessages'])->name('getContactMessagesOrders');
+
+  /**
+   * Envía un mensaje entre vendedor y comprador
+   */
+  Route::post('/contact/send-message', [OrderController::class, 'sendContactMessage'])->name('sendContactMessageOrders');
 
   /**
    * Cancelar una orden

@@ -28,9 +28,9 @@ class AppNotification
     $type = $data['type'] ?? 0;
 
     // no es posible notificar a uno mismo
-    if ($userID == $notifiableID) {
-      return;
-    }
+    // if ($userID == $notifiableID) {
+    //   return;
+    // }
 
     $noty = [
       'user_id' => $userID,                         // usuario que envía la notificacion

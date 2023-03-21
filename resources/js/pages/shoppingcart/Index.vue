@@ -36,9 +36,6 @@
                                 {{ total }}
                             </span>
                         </h4>
-                        <p class="uppercase text-base font-light">
-                            + impuestos incluidos
-                        </p>
                         <div class="mt-8 flex flex-col gap-3">
                             <v-btn
                                 x-large
@@ -112,21 +109,17 @@ export default {
         total() {
             const total = this.items.reduce((total, item) => {
                 const one = parseFloat(total);
-                const two = parseFloat(item.artwork?.price);
+                const two = parseFloat(item.artwork?.total);
                 const result = one + two;
                 return parseFloat(result).toFixed(2);
             }, 0);
-
-            // aplicar impuesto
-            const tax = (total * this.appTax) / 100;
-            const totalTax = parseFloat(total) + parseFloat(tax);
 
             // si el numero es miles, se le agrega un punto
             // para indicar que es miles
             return new Intl.NumberFormat("de-DE", {
                 style: "currency",
                 currency: "EUR",
-            }).format(totalTax);
+            }).format(total);
         },
 
         /**
@@ -157,15 +150,6 @@ export default {
          */
         allPublished() {
             return this.items.every((item) => item.artwork?.state === 1);
-        },
-
-        /**
-         * Impuesto cobrado por la app 15%
-         *
-         * @returns {Number}
-         */
-        appTax() {
-            return 15;
         },
     },
 

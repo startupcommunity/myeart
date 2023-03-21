@@ -51,8 +51,8 @@
                         <div class="w-full border-t border-gray-800 my-4"></div>
                         <div class="w-full flex justify-between items-center">
                             <div class="text-gray-900 font-black">
-                                {{ euro }}
                                 {{ artwork.total ?? 0 }}
+                                {{ euro }}
                             </div>
                             <div class="text-gray-400">
                                 <FollowArtworkButton

@@ -43,7 +43,8 @@
                             <img
                                 :src="getImage"
                                 alt="obra-de-arte"
-                                class="w-28 h-28 object-cover object-center aspect-square"
+                                class="w-28 h-28 object-cover object-center aspect-square cursor-pointer"
+                                @click.stop="goToArtwork"
                             />
                             <div>
                                 <p class="text-xl font-bold text-zinc-900">
@@ -54,11 +55,9 @@
                     </div>
                 </div>
                 <div class="w-full lg:w-[30%]">
-                    <!-- <LoadingTailwind v-if="loadingPdf" /> -->
                     <div class="flex flex-col gap-3" v-if="!loadingPdf">
                         <v-btn
                             color="gray darken-1"
-                            large
                             outlined
                             class="text-zinc-900"
                             @click.stop="$emit('see-purchase', item)"
@@ -68,7 +67,6 @@
                         </v-btn>
                         <v-btn
                             color="#B2794C"
-                            large
                             class="text-white"
                             @click.stop="$emit('see-purchase', item)"
                             v-if="status !== ITEM_STATES.canceled.val"
@@ -77,17 +75,24 @@
                         </v-btn>
                         <v-btn
                             color="gray darken-1"
-                            large
+                            outlined
+                            class="text-zinc-900"
+                            @click.stop="$emit('contact-seller', item)"
+                            v-if="status === ITEM_STATES.shipped.val"
+                        >
+                            <span> Contactar vendedor </span>
+                        </v-btn>
+                        <v-btn
+                            color="gray darken-1"
                             outlined
                             class="text-zinc-900"
                             @click.stop="$emit('confirm-order', item)"
                             v-if="status === ITEM_STATES.shipped.val"
                         >
-                            Confirmar pedido
+                            Calificar pedido
                         </v-btn>
                         <v-btn
                             color="gray darken-1"
-                            large
                             outlined
                             class="text-zinc-900"
                             @click.stop="downloadPdf"
@@ -123,12 +128,10 @@
 <script>
 import html2pdf from "html2pdf.js";
 import getDataMixin from "../../../mixins/getDataMixin";
-import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 
 export default {
     name: "CardItem",
     mixins: [getDataMixin],
-    components: { LoadingTailwind },
 
     props: {
         item: {
@@ -256,6 +259,16 @@ export default {
             setTimeout(() => {
                 this.loadingPdf = false;
             }, 1000);
+        },
+
+        /**
+         * Ir a la obra
+         */
+        goToArtwork() {
+            this.$router.push({
+                name: "showArtwork",
+                params: { id: this.item.artwork_id },
+            });
         },
     },
 };

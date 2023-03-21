@@ -173,7 +173,8 @@ class UserInformationsController extends Controller
             'socialNetwork',
             'favoriteReleases',
             'shoppingCart.artwork',
-            'unreadNotifications'
+            'unreadNotifications',
+            'notifications'
         ]);
     }
 }

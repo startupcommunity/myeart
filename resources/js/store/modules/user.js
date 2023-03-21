@@ -17,6 +17,7 @@ export default {
             following_artists: [],
             favorite_releases: [],
             unread_notifications: [],
+            notifications: [],
         },
     },
     getters: {

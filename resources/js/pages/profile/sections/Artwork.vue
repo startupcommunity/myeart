@@ -117,7 +117,7 @@
                                         class="w-full border-t-2 border-gray-800 my-4"
                                     ></div>
                                     <p class="text-gray-900">
-                                        {{ euro }} {{ art.total ?? 0 }}
+                                        {{ art.total ?? 0 }} {{ euro }}
                                     </p>
                                 </div>
                                 <div

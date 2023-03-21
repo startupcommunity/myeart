@@ -58,10 +58,6 @@
                     </p>
                     <p class="font-bold text-gray-900">
                         Total: {{ total }} {{ euro }}
-                        <br />
-                        <span class="font-light uppercase">
-                            + Impuestos incluidos
-                        </span>
                     </p>
                     <div
                         class="flex gap-3 items-center mt-3"
@@ -88,7 +84,7 @@
                             :disabled="loading"
                             v-if="!isDelivered"
                         >
-                            Confirmar pedido
+                            ¿Confirmar recepción?
                         </v-btn>
                     </div>
                 </div>

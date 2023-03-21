@@ -17,7 +17,7 @@
             <h3
                 class="text-3xl uppercase font-bold text-zinc-900 tracking-wider"
             >
-                Confirmar pedido
+                Calificar y confirmar pedido
             </h3>
             <p class="uppercase text-2xl font-medium">Nº {{ item.number }}</p>
             <p class="text-base font-medium">
@@ -38,36 +38,29 @@
                             <img
                                 :src="getImage"
                                 alt="obra-de-arte"
-                                class="w-28 h-28 object-cover object-center aspect-square"
+                                class="w-28 h-28 object-cover object-center aspect-square cursor-pointer"
+                                @click.stop="goToArtwork"
                             />
                         </div>
                     </div>
                 </div>
                 <div>
-                    <h3 class="font-light text-gray-900">
-                        ¿Has recibido tu pedido?
+                    <h3 class="font-bold text-gray-900 text-lg">
+                        ¿Tienes alguna duda?
                     </h3>
                     <div>
-                        <v-radio-group
-                            v-model="form.delivered"
-                            row
-                            class="flex gap-5"
+                        <p class="text-gray-900 font-light text-sm">
+                            Si tienes alguna duda sobre tu compra, puedes
+                            contactar al vendedor.
+                        </p>
+                        <v-btn
+                            color="gray darken-1"
+                            outlined
+                            class="text-zinc-900"
+                            @click.stop="contactSeller"
                         >
-                            <v-radio value="1" color="#B2794C">
-                                <template v-slot:label>
-                                    <span class="font-bold mt-2 text-gray-900">
-                                        SI
-                                    </span>
-                                </template>
-                            </v-radio>
-                            <v-radio value="2" color="#B2794C">
-                                <template v-slot:label>
-                                    <span class="font-bold mt-2 text-gray-900">
-                                        No
-                                    </span>
-                                </template>
-                            </v-radio>
-                        </v-radio-group>
+                            <span> Contactar vendedor </span>
+                        </v-btn>
                     </div>
                 </div>
             </div>
@@ -161,7 +154,7 @@ export default {
                 order_id: this.item.order_id,
                 artwork_id: this.item.artwork_id,
                 item_id: this.item.id,
-                delivered: null,
+                delivered: 1,
                 rating: 0,
                 comment: null,
             },
@@ -222,6 +215,26 @@ export default {
                 })
                 .catch((error) => this.manageError(error))
                 .finally(() => (this.globalLoading = false));
+        },
+
+        /**
+         * Ir a la obra
+         */
+        goToArtwork() {
+            this.$router.push({
+                name: "showArtwork",
+                params: { id: this.item.artwork_id },
+            });
+        },
+
+        /**
+         * Contactar al vendedor
+         */
+        contactSeller() {
+            this.$router.push({
+                name: "contactSeller",
+                params: { id: this.item.id },
+            });
         },
     },
 };

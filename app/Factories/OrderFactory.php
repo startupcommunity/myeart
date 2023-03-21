@@ -8,6 +8,7 @@ use App\Enums\OrderStatusEnum;
 use App\Enums\TypeNotificationEnum;
 use App\Models\Artwork;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Utils\AppNotification;
 use App\Utils\Payment\Stripe;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class OrderFactory
 {
 
   public function __construct(
-    private Order $model
+    private Order $model,
+    private OrderItem $orderItem,
   ) {
   }
 
@@ -227,6 +229,50 @@ class OrderFactory
         'rating' => $request->rating,
         'comment' => $request->comment,
         'user_id' => $order->user_id,
+      ]);
+
+      return true;
+    });
+
+    return $tra;
+  }
+
+  /**
+   * Envía mensajes entre comprador y vendedor
+   *
+   * @param Request $request
+   * @return boolean
+   */
+  public function sendContactMessage(Request $request): ?bool
+  {
+    $tra = DB::transaction(function () use ($request) {
+      $orderItem = $this->orderItem->find($request->order_item_id);
+      $canceled = $orderItem && $orderItem->status === OrderStatusEnum::CANCELED;
+      $delivered = $orderItem && $orderItem->status === OrderStatusEnum::DELIVERED;
+      $refunded = $orderItem && $orderItem->status === OrderStatusEnum::REFUNDED;
+
+      // no se pudo enviar el mensaje
+      if (!$orderItem || $canceled || $delivered || $refunded) {
+        return false;
+      }
+
+      // almacenar el mensaje
+      $orderItem->messages()->create([
+        'user_id' => $request->user_id,
+        'message' => $request->message,
+      ]);
+
+      // el que envía el mensaje - notificador
+      $notifiable_id = $orderItem->user_id === $request->user_id ? $orderItem->order->user_id : $orderItem->user_id;
+      $msj = $orderItem->user_id === $request->user_id ? '¡El vendedor te ha dejado un mensaje!' : '¡El comprador te ha dejado un mensaje!';
+
+      // notificar al usuario que corresponda
+      AppNotification::sendNoty([
+        'user_id' => $request->user_id,
+        'notifiable_id' => $notifiable_id,
+        'url' => '/pedidos/contactar/' . $request->order_item_id,
+        'msj' => $msj,
+        'type' => TypeNotificationEnum::MSJ_CONTACT_ORDER_ITEM,
       ]);
 
       return true;

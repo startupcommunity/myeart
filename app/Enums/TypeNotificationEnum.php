@@ -29,6 +29,7 @@ final class TypeNotificationEnum
   const ITEM_DELIVERED = 17;
   const TAGGED = 18;
   const LIKE_EVENT = 19;
+  const MSJ_CONTACT_ORDER_ITEM = 20;
 
   public static function getValues(): array
   {
@@ -52,6 +53,7 @@ final class TypeNotificationEnum
       self::ITEM_DELIVERED,
       self::TAGGED,
       self::LIKE_EVENT,
+      self::MSJ_CONTACT_ORDER_ITEM,
     ];
   }
 
@@ -77,6 +79,7 @@ final class TypeNotificationEnum
       self::ITEM_DELIVERED => 'Artículo entregado',
       self::TAGGED => 'Etiquetado',
       self::LIKE_EVENT => 'Me gusta evento',
+      self::MSJ_CONTACT_ORDER_ITEM => 'Mensaje entre vendedor y comprador de artículo',
     ];
   }
 }

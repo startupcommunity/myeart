@@ -401,14 +401,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         var _item$artwork2;
 
         var one = parseFloat(total);
-        var two = parseFloat((_item$artwork2 = item.artwork) === null || _item$artwork2 === void 0 ? void 0 : _item$artwork2.price);
+        var two = parseFloat((_item$artwork2 = item.artwork) === null || _item$artwork2 === void 0 ? void 0 : _item$artwork2.total);
         var result = one + two;
         return parseFloat(result).toFixed(2);
-      }, 0); // incluir el impuesto
-
-      var subTax = sub * this.tax / 100;
-      var subTotal = parseFloat(sub) + parseFloat(subTax);
-      return subTotal.toFixed(2);
+      }, 0);
+      return parseFloat(sub).toFixed(2);
     },
 
     /**
