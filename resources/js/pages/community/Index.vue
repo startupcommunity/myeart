@@ -111,6 +111,9 @@
                                 </span>
                             </div>
                         </div>
+                        <div>
+                            <v-btn> Enviar mensaje </v-btn>
+                        </div>
                     </div>
                     <!-- /artistas -->
                 </div>

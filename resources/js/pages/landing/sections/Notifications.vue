@@ -170,6 +170,8 @@ export default {
                 this.$store.dispatch("userRequest");
             }
         );
+
+        this.setNotifications();
     },
 
     watch: {
