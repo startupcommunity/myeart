@@ -35,7 +35,7 @@
                             <button
                                 type="button"
                                 class="inline-flex items-center text-gray-50 hover:text-blue-800 transition-all ease-out duration-200"
-                                @click.stop="$emit('closeChat', chat.id)"
+                                @click.stop="closeChat"
                             >
                                 <i class="fa fa-times"></i>
                             </button>
@@ -153,6 +153,7 @@
 </template>
 
 <script>
+import { init } from "events";
 import Avatar from "../../../components/Avatar.vue";
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 
@@ -172,6 +173,7 @@ export default {
         return {
             loading: false,
             autoUpdateMessages: false,
+            globalSetInterval: null,
             message: "",
             chatID: "",
             messages: [],
@@ -260,9 +262,7 @@ export default {
          */
         autoUpdateMessages(val) {
             if (val) {
-                setInterval(() => {
-                    this.loadMessages(false);
-                }, 30000);
+                this.initAutoUpdate();
             }
         },
     },
@@ -274,6 +274,14 @@ export default {
         toggleChat() {
             this.chat.isOpen = !this.chat.isOpen;
             this.$emit("toggleChat", this.chat);
+        },
+
+        /**
+         * Cerrar chat
+         */
+        closeChat() {
+            this.$emit("closeChat", this.chat.id);
+            this.stopAutoUpdate();
         },
 
         /**
@@ -343,6 +351,23 @@ export default {
          */
         isSameUser(userID) {
             return userID === this.user.id;
+        },
+
+        /**
+         * Iniciar actualización automática
+         */
+        initAutoUpdate() {
+            this.globalSetInterval = setInterval(() => {
+                this.loadMessages(false);
+            }, 30000);
+        },
+
+        /**
+         * Detener actualización automática
+         */
+        stopAutoUpdate() {
+            this.autoUpdateMessages = false;
+            clearInterval(this.globalSetInterval);
         },
     },
 };
