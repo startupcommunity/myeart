@@ -14,7 +14,7 @@
                         <span class="visually-hidden">no leídas</span>
                     </span>
                     <i class="fas fa-bell"></i> ({{
-                        shortNotifications.length
+                        unreadNotifications.length
                     }})
                 </div>
             </a>
@@ -47,6 +47,13 @@
                         <div class="flex flex-col justify-center gap-1">
                             <span class="font-bold text-xs tracking-wide">
                                 {{ noty.data.user_username }}
+
+                                <span
+                                    class="text-red-500 text-lg font-bold"
+                                    v-if="noty.read_at === null"
+                                >
+                                    *
+                                </span>
                             </span>
                             <span
                                 class="text-xs font-normal tracking-wide"
@@ -177,6 +184,9 @@ export default {
     watch: {
         user() {
             this.setNotifications();
+
+            // actualizar mensajes del chat
+            this.$store.dispatch("trueChat");
         },
     },
 

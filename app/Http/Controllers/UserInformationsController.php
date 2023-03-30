@@ -167,14 +167,20 @@ class UserInformationsController extends Controller
      */
     public function getAuthUser(Request $request)
     {
-        return $request->user()->load([
+        $data =  $request->user()->load([
             'profile',
             'followingArtists',
             'socialNetwork',
             'favoriteReleases',
             'shoppingCart.artwork',
             'unreadNotifications',
-            'notifications'
+            'notifications',
         ]);
+
+        // agregar conversaciones
+        $data['conversations'] = $data->conversations()->with(['messages.user'])->get();
+
+        // dd($data['conversations']->toArray());
+        return $data;
     }
 }

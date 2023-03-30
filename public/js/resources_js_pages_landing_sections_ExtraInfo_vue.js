@@ -58,7 +58,7 @@ var staticRenderFns = [function () {
     staticClass: "text-white text-center text-sm"
   }, [_vm._v("PAGO SEGURO")]), _vm._v(" "), _c("p", {
     staticClass: "text-white text-center text-xs sm:text-sm"
-  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v(" consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v("\n                    consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-3 col-sm-12 col-xs-12 mb-8 md:mb-0"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
@@ -69,9 +69,9 @@ var staticRenderFns = [function () {
     }
   })]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center text-sm"
-  }, [_vm._v("ARTISTAS VERIFICADOS")]), _vm._v(" "), _c("h6", {
+  }, [_vm._v("\n                    ARTISTAS VERIFICADOS\n                ")]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center text-xs sm:text-sm"
-  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v(" consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v("\n                    consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-3 col-sm-12 col-xs-12 mb-8 md:mb-0"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
@@ -82,9 +82,9 @@ var staticRenderFns = [function () {
     }
   })]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center text-sm"
-  }, [_vm._v("OBRAS ORIGINALES")]), _vm._v(" "), _c("h6", {
+  }, [_vm._v("\n                    OBRAS ORIGINALES\n                ")]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center text-xs sm:text-sm"
-  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v(" consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v("\n                    consectetur adipiscing elit.\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-3 col-sm-12 col-xs-12"
   }, [_c("div", {
     staticClass: "w-100 d-flex justify-content-center"
@@ -95,9 +95,9 @@ var staticRenderFns = [function () {
     }
   })]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center text-sm"
-  }, [_vm._v("SOPORTE 24 HORAS")]), _vm._v(" "), _c("h6", {
+  }, [_vm._v("\n                    SOPORTE 24 HORAS\n                ")]), _vm._v(" "), _c("h6", {
     staticClass: "text-white text-center text-xs sm:text-sm"
-  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v(" consectetur adipiscing elit.\n                ")])])])])]);
+  }, [_vm._v("\n                    Lorem ipsum dolor sit amet,"), _c("br"), _vm._v("\n                    consectetur adipiscing elit.\n                ")])])])])]);
 }];
 render._withStripped = true;
 

@@ -4,6 +4,7 @@ import endpoints from "../../api/endpoints";
 export default {
     state: {
         status: "", // estado de la petición
+        updateChat: false, // actualizar el chat
         following_artists: [], // artistas seguidos
         following_artworks: [], // obras seguidas
         following_releases: [], // publicaciones seguidas
@@ -18,6 +19,7 @@ export default {
             favorite_releases: [],
             unread_notifications: [],
             notifications: [],
+            conversations: [],
         },
     },
     getters: {
@@ -44,6 +46,24 @@ export default {
                     commit("userError");
                     // dispatch("authLogout");
                 });
+        },
+
+        /**
+         * indicar que sea actualice el chat
+         *
+         * @param {commit} param0
+         */
+        trueChat: ({ commit }) => {
+            commit("setUpdateChat", true);
+        },
+
+        /**
+         * Indicar que no se actualice el chat
+         *
+         * @param {commit} param0
+         */
+        falseChat: ({ commit }) => {
+            commit("setUpdateChat", false);
         },
 
         /**
@@ -160,6 +180,10 @@ export default {
         setCollective: async (state, resp) => {
             await Vue.set(state, "collective", resp);
             state.status = "success";
+        },
+
+        setUpdateChat: (state, resp) => {
+            state.updateChat = resp;
         },
 
         /**

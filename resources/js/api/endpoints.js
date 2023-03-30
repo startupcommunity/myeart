@@ -349,6 +349,18 @@ const endpoints = {
         // devuelve las publicaciones de la app
         getAllReleases: `${API}/guest/releases`, // get
     },
+
+    // conversaciones o chat
+    conversations: {
+        // verifica si existe una conversación entre dos usuarios, si no la crea
+        check: `${API}/conversations/check`, // post
+
+        // obtiene los mensajes de una conversación / {id}
+        getMessages: `${API}/conversations/get-messages/`, // get
+
+        // envía un nuevo mensaje a una conversación
+        sendMessage: `${API}/conversations/send-message`, // post
+    },
 };
 
 export default endpoints;

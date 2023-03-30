@@ -6,6 +6,7 @@ use App\Enums\ArtworkStateEnum;
 use App\Enums\ProfileTypeEnum;
 use App\Enums\ReleaseTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -289,6 +290,34 @@ class User extends Authenticatable
     {
         return $this->hasMany(ChargingMethod::class);
     }
+
+    /**
+     * Devuelve los chat o conversaciones que ha tenido el usuario
+     *
+     * @return
+     */
+    public function conversations()
+    {
+        // return Conversation::where('init_user_id', $this->id)
+        //     ->orWhere('resp_user_id', $this->id)
+        //     ->get();
+
+        // hacerlo como una relación husmany
+        return $this->hasMany(Conversation::class, 'init_user_id')
+            ->where('init_user_id', $this->id)
+            ->orWhere('resp_user_id', $this->id);
+    }
+
+    /**
+     * Devuelve los mensajes de una conversación del usuario
+     *
+     * @return HasMany
+     */
+    // public function messages(): HasMany
+    // {
+    //     return $this->hasMany(ConversationMessage::class);
+    // }
+
 
     /**
      * Determina si el usuario tiene foto de perfil

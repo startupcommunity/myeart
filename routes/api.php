@@ -56,4 +56,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     // newsletter
     require __DIR__ . '/api/newsletter.php';
+
+    // conversations
+    require __DIR__ . '/api/conversations.php';
 });

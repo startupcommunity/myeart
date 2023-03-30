@@ -78,7 +78,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div v-else class="md:pt-5">
+                            <div v-else class="md:pt-5 w-24">
                                 <span class="text-zinc-400 text-sm">
                                     No hay publicaciones de tus amigos para
                                     mostrar
@@ -103,6 +103,8 @@
                                     v-for="artist in artists"
                                     :key="artist.id"
                                     :artist="artist"
+                                    :show-btn-chat="true"
+                                    @openChat="openConversation"
                                 />
                             </div>
                             <div v-else>
@@ -110,9 +112,6 @@
                                     No hay artistas que te puedan interesar
                                 </span>
                             </div>
-                        </div>
-                        <div>
-                            <v-btn> Enviar mensaje </v-btn>
                         </div>
                     </div>
                     <!-- /artistas -->
@@ -126,6 +125,21 @@
             :releaseID="release.id"
             @close-comments="show = false"
         />
+
+        <!-- chat -->
+        <section class="fixed right-0 bottom-0 z-[999]">
+            <div class="container">
+                <div class="flex flex-row-reverse gap-3 items-end">
+                    <Chat
+                        v-for="(chat, index) in chats"
+                        :key="index"
+                        :chat="chat"
+                        @toggleChat="toggleChat"
+                        @closeChat="closeChat"
+                    />
+                </div>
+            </div>
+        </section>
     </MainLayout>
 </template>
 <script>
@@ -140,6 +154,7 @@ import CardEvent from "../event/components/CardEvent.vue";
 import InfoReservationModal from "../event/components/InfoReservationModal.vue";
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
 import CreateReleaseSection from "./sections/index/CreateReleaseSection.vue";
+import Chat from "../chat/components/Chat.vue";
 
 const MAX_EVENTS = 3;
 const RANDOM_ARTIST = 6;
@@ -161,6 +176,7 @@ export default {
         InfoReservationModal,
         LoadingTailwind,
         CreateReleaseSection,
+        Chat,
     },
     data() {
         return {
@@ -175,15 +191,19 @@ export default {
             loadingReleases: false,
             show: false,
             isModalClose: true,
+            openChat: false,
             hashtag: "",
+            chats: [],
         };
     },
+
     created() {
         const filters = { sortBy: 1 };
         this.getEvents();
         this.getRandomArtists();
         this.getReleaseFollowArtists(filters);
     },
+
     computed: {
         user() {
             return this.$store.getters.getProfile;
@@ -192,6 +212,14 @@ export default {
             return this.releases.length < this.original.length;
         },
     },
+
+    watch: {
+        // evaluar cuando cambie el tamaño de la pantalla
+        "window.innerWidth"(val) {
+            console.log(val);
+        },
+    },
+
     methods: {
         /**
          * Obtiene los Artistas de forma random
@@ -264,9 +292,63 @@ export default {
             this.show = true;
         },
 
+        /**
+         * Abrir el modal de información de la reserva
+         * @param {Object} event     Evento
+         */
         openReservationInfo(event) {
             this.event = event;
             this.showReservation = true;
+        },
+
+        /**
+         * Abrir chat de conversación
+         */
+        openConversation(artist) {
+            // verificar si el chat ya esta agregado
+            const chat = this.chats.find((c) => c.id === artist.id);
+            if (chat) return false;
+
+            // si es el mismo usuario, no abrir el chat
+            if (artist.id === this.user.id) return false;
+
+            // abrir el chat
+            this.chats.push({ id: artist.id, isOpen: true, artist });
+
+            //-------- evaluar el tamaño de la pantalla --------
+
+            // si es menor a 768px, dejar el ultimo chat
+            if (window.innerWidth < 768) {
+                this.chats = this.chats.slice(-1);
+            }
+
+            // si es menor a 768px, dejar solo los últimos 2 chats
+            if (window.innerWidth > 768 && window.innerWidth < 1024) {
+                this.chats = this.chats.slice(-2);
+            }
+
+            // si es mayor a 1024px, dejar solo los últimos 3 chats
+            if (window.innerWidth > 1024 && window.innerWidth < 1500) {
+                this.chats = this.chats.slice(-3);
+            }
+
+            // si es mayor a 1500px, dejar solo los últimos 4 chats
+            if (window.innerWidth > 1500) {
+                this.chats = this.chats.slice(-4);
+            }
+        },
+
+        toggleChat(chat) {
+            console.log(this.chats);
+        },
+
+        /**
+         * Cerra un chat
+         *
+         * @param {Number} id   Id del chat
+         */
+        closeChat(id) {
+            this.chats = this.chats.filter((c) => c.id !== id);
         },
     },
 };

@@ -6,6 +6,13 @@
                 <div class="font-semibold text-gray-900 text-xs">
                     <div class="pb-1">{{ artist?.name }}</div>
                     <FollowArtistButton :artist="artist" />
+                    <button
+                        v-if="showBtnChat"
+                        @click.stop="$emit('openChat', artist)"
+                        class="inline-flex items-center text-zinc-900 border text-xs px-3 py-1 font-light hover:bg-gray-100 transition-all duration-200 ease-in-out"
+                    >
+                        chat
+                    </button>
                 </div>
             </div>
         </div>
@@ -27,6 +34,10 @@ export default {
         artist: {
             type: Object,
             default: {},
+        },
+        showBtnChat: {
+            type: Boolean,
+            default: false,
         },
     },
     computed: {
