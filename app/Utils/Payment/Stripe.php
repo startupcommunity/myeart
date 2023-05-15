@@ -90,12 +90,17 @@ class Stripe
         'card_payments' => ['requested' => true],
         'transfers' => ['requested' => true],
       ],
+
+      // tipo de negocio
       'business_type' => 'individual',
       'business_profile' => [
         'url' => env('APP_URL'),
         'mcc' => '5971',
       ],
+
       'individual' => [
+
+        // datos personales
         'email' => $request->email,
         'first_name' => $request->name,
         'last_name' => date('dmY'),
@@ -132,7 +137,7 @@ class Stripe
       // aprobar los términos de servicio
       'tos_acceptance' => [
         'date' => time(),
-        'ip' => $request->ip(),
+        'ip' => $request->ip() ?? '127.0.0.1',
       ],
     ];
   }

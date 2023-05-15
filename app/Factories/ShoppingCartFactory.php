@@ -179,7 +179,8 @@ class ShoppingCartFactory
 
       // agregar los items a la orden
       foreach ($items as $item) {
-        $random = $item->artwork->id . Str::random(20);   // random para el grupo de transferencia
+        // números random para cada item, int de 18 números
+        $random = rand(100000000000000000, 999999999999999999);
         $frontPhoto = $item->artwork->getFrontPhoto();
 
         $order->items()->create([
