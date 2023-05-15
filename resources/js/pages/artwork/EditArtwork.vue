@@ -252,62 +252,93 @@
                                 </h2>
                             </div>
                         </v-col>
-                        <v-col cols="12" md="4">
-                            <div class="flex flex-col space-y-4 sm:space-y-28">
-                                <v-menu
-                                    v-model="menuPicker"
-                                    :close-on-content-click="false"
-                                    transition="scale-transition"
-                                    offset-y
-                                    min-width="auto"
-                                >
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-text-field
-                                            v-model="form.date_created"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                            :rules="dateRules"
-                                        >
-                                            <template slot="label">
-                                                <span
-                                                    class="font-black tracking-wide uppercase text-gray-900"
-                                                >
-                                                    Fecha de creación
-                                                </span>
-                                            </template>
-                                        </v-text-field>
-                                    </template>
-                                    <v-date-picker
-                                        v-model="form.date_created"
-                                        no-title
-                                        @input="menuPicker = false"
-                                        :max="dateMaxPicker"
-                                    ></v-date-picker>
-                                </v-menu>
-                                <v-autocomplete
-                                    v-model="form.location"
-                                    :items="listCityCountry()"
-                                    auto-select-first
-                                    clearable
-                                    item-text="text"
-                                    item-value="val"
-                                >
-                                    <template slot="label">
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Ubicación
-                                        </span>
-                                    </template>
-                                </v-autocomplete>
-                            </div>
-                        </v-col>
-                        <v-col cols="12" md="8">
+                        <v-col cols="12">
                             <Category
                                 :category="form.type"
                                 :dataCategories="categories"
-                                :edit="true"
                             />
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <v-autocomplete
+                                v-model="form.target"
+                                :items="listCityCountry()"
+                                auto-select-first
+                                clearable
+                                item-text="text"
+                                item-value="val"
+                            >
+                                <template slot="label">
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Ubicación
+                                    </span>
+                                </template>
+                            </v-autocomplete>
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <v-text-field
+                                v-model="form.province"
+                                :rules="provinceRules"
+                                :counter="250"
+                                required
+                            >
+                                <template slot="label">
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Provincia
+                                    </span>
+                                </template>
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <v-text-field
+                                v-model="form.location"
+                                :rules="locationRules"
+                                :counter="250"
+                                required
+                            >
+                                <template slot="label">
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Localidad
+                                    </span>
+                                </template>
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <v-menu
+                                v-model="menuPicker"
+                                :close-on-content-click="false"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                        v-model="form.date_created"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        :rules="dateRules"
+                                    >
+                                        <template slot="label">
+                                            <span
+                                                class="font-black tracking-wide uppercase text-gray-900"
+                                            >
+                                                Fecha de creación
+                                            </span>
+                                        </template>
+                                    </v-text-field>
+                                </template>
+                                <v-date-picker
+                                    v-model="form.date_created"
+                                    no-title
+                                    @input="menuPicker = false"
+                                    :max="dateMaxPicker"
+                                ></v-date-picker>
+                            </v-menu>
                         </v-col>
                         <v-col cols="12">
                             <v-textarea v-model="form.other_details">
@@ -370,8 +401,7 @@
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-
+// componentes
 import Header from "../landing/sections/Header.vue";
 import PreHeader from "../landing/sections/PreHeader.vue";
 import Newletter from "../landing/sections/Newletter.vue";
@@ -419,6 +449,8 @@ export default {
                 weight: 0,
                 price: 0,
                 date_created: "",
+                target: "",
+                province: "",
                 location: "",
                 state: "",
                 gallery: [],
@@ -450,6 +482,7 @@ export default {
          */
         "form.price"(val) {
             this.calTax = (val * this.tax) / 100;
+            this.calTax = this.calTax.toFixed(2);
         },
     },
     computed: {
@@ -562,14 +595,14 @@ export default {
                         const draftMsj = "Obra guardada como borrador";
                         const publishMsj = "Obra publicada con éxito";
                         const inPauseMsj =
-                            "Obra en pausa hasta que se agregue un método de cobro";
+                            "Obra en pausa/borrador hasta que se agregue un método de cobro";
 
                         if (data.get("state") == 1) {
                             this.noty(publishMsj);
-                        } else if (data.get("state") == 5) {
-                            this.noty(inPauseMsj);
                         } else if (data.get("state") == 3) {
                             this.noty(draftMsj);
+                        } else if (data.get("state") == 5) {
+                            this.noty(inPauseMsj);
                         }
 
                         // --------------------
@@ -650,6 +683,8 @@ export default {
             data.append("weight", form.weight ?? "");
             data.append("price", form.price ?? "");
             data.append("date_created", form.date_created);
+            data.append("target", form.target ?? "");
+            data.append("province", form.province ?? "");
             data.append("location", form.location ?? "");
             data.append("state", state);
             data.append(`type`, JSON.stringify(this.form.type));

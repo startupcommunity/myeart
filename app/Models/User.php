@@ -158,17 +158,6 @@ class User extends Authenticatable
     }
 
     /**
-     * devuelve los colectivos seguidos o que ha
-     * sido invitado por el usuario
-     *
-     * @return HasMany
-     */
-    // public function guestCollectives(): HasMany
-    // {
-    //     return $this->hasMany(GuestCollective::class);
-    // }
-
-    /**
      * devuelve los colectivos a los que pertenece el usuario
      *
      * @return HasMany
@@ -177,7 +166,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(MemberCollective::class);
     }
-
 
     /**
      * devuelve las publicaciones del usuario
@@ -298,26 +286,21 @@ class User extends Authenticatable
      */
     public function conversations()
     {
-        // return Conversation::where('init_user_id', $this->id)
-        //     ->orWhere('resp_user_id', $this->id)
-        //     ->get();
-
-        // hacerlo como una relación husmany
+        // hacerlo como una relación hasMany
         return $this->hasMany(Conversation::class, 'init_user_id')
             ->where('init_user_id', $this->id)
             ->orWhere('resp_user_id', $this->id);
     }
 
     /**
-     * Devuelve los mensajes de una conversación del usuario
+     * Devuelve la relación del usuario con su password reset
      *
-     * @return HasMany
+     * @return HasOne
      */
-    // public function messages(): HasMany
-    // {
-    //     return $this->hasMany(ConversationMessage::class);
-    // }
-
+    public function userPasswordReset(): HasOne
+    {
+        return $this->hasOne(UserPasswordReset::class);
+    }
 
     /**
      * Determina si el usuario tiene foto de perfil

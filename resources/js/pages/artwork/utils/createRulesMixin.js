@@ -43,7 +43,10 @@ export default {
                     (v && ONLY_POSITIVE.test(v)) ||
                     "El precio debe ser un valor positivo",
             ],
-            dateRules: [(v) => !!v || "La fecha es requerida"],
+            dateRules: [], // [(v) => !!v || "La fecha es requerida"],
+            targetRules: [], //[(v) => !!v || "La ubicación es requerido"],
+            provinceRules: [], //[(v) => !!v || "La provincia es requerida"],
+            locationRules: [], //[(v) => !!v || "La localidad es requerida"],
         };
     },
 };

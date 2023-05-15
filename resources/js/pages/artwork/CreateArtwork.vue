@@ -255,61 +255,93 @@
                                 </h2>
                             </div>
                         </v-col>
-                        <v-col cols="12" md="4">
-                            <div class="flex flex-col space-y-4 sm:space-y-28">
-                                <v-menu
-                                    v-model="menuPicker"
-                                    :close-on-content-click="false"
-                                    transition="scale-transition"
-                                    offset-y
-                                    min-width="auto"
-                                >
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-text-field
-                                            v-model="form.date_created"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                            :rules="dateRules"
-                                        >
-                                            <template slot="label">
-                                                <span
-                                                    class="font-black tracking-wide uppercase text-gray-900"
-                                                >
-                                                    Fecha de creación
-                                                </span>
-                                            </template>
-                                        </v-text-field>
-                                    </template>
-                                    <v-date-picker
-                                        v-model="form.date_created"
-                                        no-title
-                                        @input="menuPicker = false"
-                                        :max="dateMaxPicker"
-                                    ></v-date-picker>
-                                </v-menu>
-                                <v-autocomplete
-                                    v-model="form.location"
-                                    :items="listCityCountry()"
-                                    auto-select-first
-                                    clearable
-                                    item-text="text"
-                                    item-value="val"
-                                >
-                                    <template slot="label">
-                                        <span
-                                            class="font-black tracking-wide uppercase text-gray-900"
-                                        >
-                                            Ubicación
-                                        </span>
-                                    </template>
-                                </v-autocomplete>
-                            </div>
-                        </v-col>
-                        <v-col cols="12" md="8">
+                        <v-col cols="12">
                             <Category
                                 :category="form.type"
                                 :dataCategories="categories"
                             />
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <v-autocomplete
+                                v-model="form.target"
+                                :items="listCityCountry()"
+                                auto-select-first
+                                clearable
+                                item-text="text"
+                                item-value="val"
+                            >
+                                <template slot="label">
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Ubicación
+                                    </span>
+                                </template>
+                            </v-autocomplete>
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <v-text-field
+                                v-model="form.province"
+                                :rules="provinceRules"
+                                :counter="250"
+                                required
+                            >
+                                <template slot="label">
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Provincia
+                                    </span>
+                                </template>
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <v-text-field
+                                v-model="form.location"
+                                :rules="locationRules"
+                                :counter="250"
+                                required
+                            >
+                                <template slot="label">
+                                    <span
+                                        class="font-black tracking-wide uppercase text-gray-900"
+                                    >
+                                        Localidad
+                                    </span>
+                                </template>
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <v-menu
+                                v-model="menuPicker"
+                                :close-on-content-click="false"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                        v-model="form.date_created"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        :rules="dateRules"
+                                    >
+                                        <template slot="label">
+                                            <span
+                                                class="font-black tracking-wide uppercase text-gray-900"
+                                            >
+                                                Fecha de creación
+                                            </span>
+                                        </template>
+                                    </v-text-field>
+                                </template>
+                                <v-date-picker
+                                    v-model="form.date_created"
+                                    no-title
+                                    @input="menuPicker = false"
+                                    :max="dateMaxPicker"
+                                ></v-date-picker>
+                            </v-menu>
                         </v-col>
                         <v-col cols="12">
                             <v-textarea v-model="form.other_details">
@@ -339,7 +371,7 @@
                                 <button
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
                                     type="submit"
-                                    @click.stop="isDraft = 3"
+                                    @click.stop="clickBtn = 3"
                                     v-if="!isCollective"
                                 >
                                     Guardar como borrador
@@ -347,7 +379,7 @@
                                 <button
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
                                     type="submit"
-                                    @click.stop="isDraft = 1"
+                                    @click.stop="clickBtn = 1"
                                     :disabled="!formIsValid"
                                 >
                                     Publicar
@@ -416,6 +448,8 @@ export default {
                 weight: "",
                 price: "",
                 date_created: "",
+                target: "",
+                province: "",
                 location: "",
                 large_description: "",
                 other_details: "",
@@ -428,15 +462,22 @@ export default {
             disabledForm: false,
             hasPaymentMethod: true,
             menuPicker: false,
-            isDraft: 3,
+            clickBtn: 3, // 1 = publicar, 3 = borrador, 5 = en pausa
             calTax: 0,
             tax: 15,
         };
     },
 
-    mounted() {
+    async mounted() {
         this.form.date_created = this.actualDate; // @utilMixin
         this.getCategories(); // @getDataMixin
+
+        // @getDataMixin
+        const resp = await this.userHaveChargingMethod(this.user.id);
+        if (resp.length === 0) {
+            this.hasPaymentMethod = false;
+            console.log(this.hasPaymentMethod);
+        }
     },
 
     computed: {
@@ -465,14 +506,16 @@ export default {
     },
 
     watch: {
-        user(val) {
+        async user(val) {
             if (val.id) {
                 // @getDataMixin
-                this.userHaveChargingMethod(val.id).then((resp) => {
-                    if (resp.length === 0) {
-                        this.hasPaymentMethod = false;
-                    }
-                });
+                // la primera vez se ejecuta este, el que esta dentro del watch
+                // luego se ejecuta el que esta dentro del mounted
+                const resp = await this.userHaveChargingMethod(val.id);
+                if (resp.length === 0) {
+                    this.hasPaymentMethod = false;
+                    console.log(this.hasPaymentMethod);
+                }
             }
         },
 
@@ -482,6 +525,7 @@ export default {
          */
         "form.price"(val) {
             this.calTax = (val * this.tax) / 100;
+            this.calTax = this.calTax.toFixed(2);
         },
     },
 
@@ -490,7 +534,7 @@ export default {
          * Guardar, publicar o guardar como borrador
          */
         saveArtwork() {
-            if (this.isDraft === 1 && !this.$refs.artworkForm.validate()) {
+            if (this.clickBtn === 1 && !this.$refs.artworkForm.validate()) {
                 return this.noty(
                     "Algunos campos son requeridos, verifique antes de publicar",
                     "error",
@@ -502,8 +546,10 @@ export default {
             const type_artwork = this.$route.params.type ?? 1;
 
             // verificar estado antes de guardar/publicar
+            // para publicar debe tener un método de pago
+            // sino pasa a estado 5 (pendiente de pago o pausa)
             const state =
-                this.isDraft === 1 ? (!this.hasPaymentMethod ? 5 : 1) : 3;
+                this.clickBtn === 1 ? (!this.hasPaymentMethod ? 5 : 1) : 3;
 
             // formdata
             const data = new FormData();
@@ -517,6 +563,8 @@ export default {
             data.append("weight", this.form.weight);
             data.append("price", this.form.price);
             data.append("date_created", this.form.date_created);
+            data.append("target", this.form.target);
+            data.append("province", this.form.province);
             data.append("location", this.form.location);
             data.append("state", state);
             data.append(`type`, JSON.stringify(this.form.type));
@@ -536,14 +584,14 @@ export default {
                         const draftMsj = "Obra guardada como borrador";
                         const publishMsj = "Obra publicada con éxito";
                         const inPauseMsj =
-                            "Obra en pausa hasta que se agregue un método de cobro";
+                            "Obra en pausa/borrador hasta que se agregue un método de cobro";
 
-                        if (data.get("state") == 1) {
+                        if (state == 1) {
                             this.noty(publishMsj);
-                        } else if (data.get("state") == 5) {
-                            this.noty(inPauseMsj);
-                        } else if (data.get("state") == 3) {
+                        } else if (state == 3) {
                             this.noty(draftMsj);
+                        } else if (state == 5) {
+                            this.noty(inPauseMsj);
                         }
 
                         // --------------------

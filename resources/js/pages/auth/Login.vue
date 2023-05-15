@@ -68,13 +68,24 @@
                         />
                         <span class="focus-input100 password-input"></span>
                     </div>
-                    <div class="container-login-form-btn">
+                    <div class="">
                         <button
                             class="btn btn-primary login-form-btn"
                             type="submit"
                         >
                             Iniciar sesión
                         </button>
+                    </div>
+                    <div class="text-center py-3">
+                        <router-link
+                            exact-active-class="active"
+                            :to="{
+                                name: 'forgotPassword',
+                            }"
+                            class="text-white"
+                        >
+                            ¿Olvidaste tu contraseña?
+                        </router-link>
                     </div>
                     <div class="container-login-form-btn">
                         <button class="btn btn-primary google-form-btn">

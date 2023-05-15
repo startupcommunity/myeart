@@ -110,6 +110,8 @@ class ArtworkFactory
       'width',
       'large',
       'weight',
+      'target',
+      'province',
       'location',
       'shipping',
       'price',

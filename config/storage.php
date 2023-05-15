@@ -53,5 +53,8 @@ return [
 
     // foto de perfil del colectivo
     'collective_profile_photo' => 'public/img/collective/profile/',
-  ]
+  ],
+
+  // link imagen en producción
+  'img-production' => 'https://myeart.org/images/Logo_Myeart.svg',
 ];

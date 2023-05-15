@@ -60,6 +60,18 @@ export const routes = [
         component: importPage("landing/guest/Index"),
         beforeEnter: ifNotAuthenticated,
     },
+    {
+        name: "forgotPassword",
+        path: "/forgot-password",
+        component: importPage("auth/ForgotPassword"),
+        beforeEnter: ifNotAuthenticated,
+    },
+    {
+        name: "enterToken",
+        path: "/enter-token/:email",
+        component: importPage("auth/EnterToken"),
+        beforeEnter: ifNotAuthenticated,
+    },
 
     // ----------- dashboard -----------
     {

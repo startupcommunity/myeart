@@ -19,31 +19,37 @@ class CategorySeeder extends Seeder
         SubCategory::truncate();
         if (Category::count() == 0) {
             Category::insert([
+                // [
+                //     'name' => 'Literatura',
+                //     'qualified' => 'Literario',
+                // ], // 1
                 [
-                    'name' => 'Literatura',
-                    'qualified' => 'Literario',
-                ], // 1
-                [
+                    'id' => 2,
                     'name' => 'Pintura',
                     'qualified' => 'Pintor',
                 ], // 2
                 [
+                    'id' => 3,
                     'name' => 'Escultura',
                     'qualified' => 'Escultor',
                 ], // 3
                 [
+                    'id' => 4,
                     'name' => 'Dibujo',
                     'qualified' => 'Dibujante',
                 ], // 4
                 [
+                    'id' => 5,
                     'name' => 'Fotografía',
                     'qualified' => 'Fotógrafo',
                 ], // 5
                 [
+                    'id' => 6,
                     'name' => 'Artesanía y Manualidades',
                     'qualified' => 'Artesano',
                 ], // 6
                 [
+                    'id' => 7,
                     'name' => 'Libros',
                     'qualified' => 'Escritor',
                 ], // 7
@@ -53,38 +59,38 @@ class CategorySeeder extends Seeder
             SubCategory::insert([
 
                 // Literatura
-                ['name' => 'Temática', 'category_id' => 1],     // 1
-                ['name' => 'Idioma', 'category_id' => 1],       // 2
-                ['name' => 'Material', 'category_id' => 1],     // 3
+                // ['name' => 'Temática', 'category_id' => 1],     // 1
+                // ['name' => 'Idioma', 'category_id' => 1],       // 2
+                // ['name' => 'Material', 'category_id' => 1],     // 3
 
                 // Pintura
-                ['name' => 'Temática', 'category_id' => 2],     // 4
-                ['name' => 'Estilo', 'category_id' => 2],       // 5
-                ['name' => 'Técnica', 'category_id' => 2],      // 6
+                ['id' => '4', 'name' => 'Temática', 'category_id' => 2],     // 4
+                ['id' => '5', 'name' => 'Estilo', 'category_id' => 2],       // 5
+                ['id' => '6', 'name' => 'Técnica', 'category_id' => 2],      // 6
 
                 // Escultura
-                ['name' => 'Temática', 'category_id' => 3],     // 7
-                ['name' => 'Estilo', 'category_id' => 3],       // 8
-                ['name' => 'Material', 'category_id' => 3],     // 9
+                ['id' => '7', 'name' => 'Temática', 'category_id' => 3],     // 7
+                ['id' => '8', 'name' => 'Estilo', 'category_id' => 3],       // 8
+                ['id' => '9', 'name' => 'Material', 'category_id' => 3],     // 9
 
                 // Dibujo
-                ['name' => 'Temática', 'category_id' => 4],
-                ['name' => 'Estilo', 'category_id' => 4],
-                ['name' => 'Técnica', 'category_id' => 4],
+                ['id' => '10', 'name' => 'Temática', 'category_id' => 4],
+                ['id' => '11', 'name' => 'Estilo', 'category_id' => 4],
+                ['id' => '12', 'name' => 'Técnica', 'category_id' => 4],
 
                 // Fotografía
-                ['name' => 'Temática', 'category_id' => 5],
-                ['name' => 'Estilo', 'category_id' => 5],
-                ['name' => 'Técnica', 'category_id' => 5],
+                ['id' => '13', 'name' => 'Temática', 'category_id' => 5],
+                ['id' => '14', 'name' => 'Estilo', 'category_id' => 5],
+                ['id' => '15', 'name' => 'Técnica', 'category_id' => 5],
 
                 // Artesanía
-                ['name' => 'Temática', 'category_id' => 6],
-                ['name' => 'Material', 'category_id' => 6],
+                ['id' => '16', 'name' => 'Temática', 'category_id' => 6],
+                ['id' => '17', 'name' => 'Material', 'category_id' => 6],
 
                 // Libros
-                ['name' => 'Temática', 'category_id' => 7],
-                ['name' => 'Idioma', 'category_id' => 7],
-                ['name' => 'Material', 'category_id' => 7],
+                ['id' => '18', 'name' => 'Temática', 'category_id' => 7],
+                ['id' => '19', 'name' => 'Idioma', 'category_id' => 7],
+                ['id' => '20', 'name' => 'Material', 'category_id' => 7],
             ]);
         }
     }

@@ -65,6 +65,8 @@ class ArtworkController extends Controller
         $data = $request->all();
         $hasFiles = isset($data['gallery']);
 
+        // dd($data);
+
         // guardar y crear obra
         $artwork = $this->artworkfactory->saveSyncArtwork($data);
 

@@ -91,6 +91,21 @@ const endpoints = {
         getUserChargeMethods: `${API}/user/get-user-charge-methods/`, // get
     },
 
+    // user password resets
+    passwordResets: {
+        // envia un token al correo para resetear la contraseña
+        sendToken: `${API}/password-resets/send-token`, // post
+
+        // tiempo de expiración del token
+        tokenRemainingTime: `${API}/password-resets/token-remaining-time`, // get
+
+        // verificar token
+        verifyToken: `${API}/password-resets/verify-token`, // post
+
+        // resetear contraseña
+        changePassword: `${API}/password-resets/change-password`, // post
+    },
+
     // comentarios
     comments: {
         artworkSave: `${API}/comments/artworks/save`, // post

@@ -86,3 +86,6 @@ Route::group(['prefix' => 'newsletter'], function () {
    */
   Route::post('/suscribe', [NewsletterController::class, 'suscribe'])->name('suscribeNewsletter');
 });
+
+// recuperar contraseña
+require __DIR__ . '/password_reset.php';

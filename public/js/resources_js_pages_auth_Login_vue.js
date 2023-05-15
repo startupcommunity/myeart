@@ -230,16 +230,24 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 password-input"
-  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])])])], 1);
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "text-center py-3"
+  }, [_c("router-link", {
+    staticClass: "text-white",
+    attrs: {
+      "exact-active-class": "active",
+      to: {
+        name: "forgotPassword"
+      }
+    }
+  }, [_vm._v("\n                        ¿Olvidaste tu contraseña?\n                    ")])], 1), _vm._v(" "), _vm._m(1)])])])], 1);
 };
 
 var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", {
-    staticClass: "container-login-form-btn"
-  }, [_c("button", {
+  return _c("div", {}, [_c("button", {
     staticClass: "btn btn-primary login-form-btn",
     attrs: {
       type: "submit"
