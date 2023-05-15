@@ -79,6 +79,11 @@ export default {
         // BreakingNews,
         Hero,
     },
+
+    mounted() {
+        this.$vuetify.theme.dark = false;
+    },
+
     computed: {
         apiStateFormLoading() {
             return this.status === "loading";

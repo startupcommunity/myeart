@@ -13545,6 +13545,9 @@ video {
 .pb-1{
   padding-bottom: 0.25rem;
 }
+.pb-3{
+  padding-bottom: 0.75rem;
+}
 .pt-12{
   padding-top: 3rem;
 }
@@ -13559,9 +13562,6 @@ video {
 }
 .pt-3{
   padding-top: 0.75rem;
-}
-.pb-3{
-  padding-bottom: 0.75rem;
 }
 .pr-4{
   padding-right: 1rem;
