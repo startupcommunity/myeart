@@ -56,7 +56,7 @@
                                 Clases
                             </v-btn>
                         </div> -->
-                        <div class="">
+                        <div>
                             <v-btn
                                 class="uppercase tracking-widest hover:no-underline"
                                 :class="{
@@ -66,6 +66,7 @@
                                 type="button"
                                 text
                                 @click.stop="$emit('action', 5)"
+                                :disabled="isUserGuest"
                             >
                                 Amigos
                             </v-btn>
@@ -102,6 +103,8 @@
 </template>
 
 <script>
+import utilMixin from "../../../mixins/utilMixin";
+
 const ACTIONS = {
     featured: 1,
     local: 2,
@@ -112,6 +115,7 @@ const ACTIONS = {
 
 export default {
     name: "FiltersSection",
+    mixins: [utilMixin],
     props: {
         filters: {
             type: Object,

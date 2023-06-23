@@ -77,12 +77,14 @@ import Title from "./sections/Title.vue";
 import ButtonCreate from "./sections/ButtonCreate.vue";
 import CardEvent from "./components/CardEvent.vue";
 import InfoReservationModal from "./components/InfoReservationModal.vue";
+import utilMixin from "../../mixins/utilMixin";
 
 const MAX_INIT_EVENTS = 12;
 const ADD_EVENTS = 3;
 
 export default {
     name: "EventList",
+    mixins: [utilMixin],
     components: {
         MainLayout,
         Header,
@@ -116,11 +118,13 @@ export default {
         },
         getEvents() {
             this.loading = true;
+            const params = { params: this.filters };
+            const ep = this.isUserGuest
+                ? this.ep.events.getGuestAll
+                : this.ep.events.getAll;
 
             this.axios
-                .get(this.ep.events.getAll, {
-                    params: this.filters,
-                })
+                .get(ep, params)
                 .then((resp) => {
                     this.original = JSON.parse(JSON.stringify(resp.data));
                     this.events = this.original.slice(0, MAX_INIT_EVENTS);

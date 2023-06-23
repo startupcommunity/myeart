@@ -67,6 +67,12 @@ class ReleaseDB
    */
   public function getReleaseFollowArtists($request = null): array|SupportCollection
   {
+
+    // con usuario logueado
+    if (!auth()->user()) {
+      return [];
+    }
+
     $user = auth()->user();
     $sortBy = $this->getSortByInt($request->sortBy);
     $option1 = $this->isMoreRecent($sortBy);

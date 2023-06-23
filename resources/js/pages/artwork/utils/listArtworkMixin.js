@@ -119,7 +119,7 @@ export default {
             this.filters.page = this.showPage;
 
             this.axios
-                .post(this.ep.artworks.filterPublished, this.filters)
+                .post(this.ep.artworks.guestFilterPublished, this.filters)
                 .then(async (resp) => {
                     if (resp.status === 200) {
                         // copia original - originales

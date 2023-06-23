@@ -17,6 +17,12 @@ use App\Http\Controllers\UserEventController;
 use App\Http\Controllers\UserReleaseController;
 use Illuminate\Support\Facades\Route;
 
+// recuperar contraseña
+require __DIR__ . '/password_reset.php';
+
+// categorias y sub categorias
+require __DIR__ . '/categories.php';
+
 /**
  * Login y registro
  */
@@ -41,38 +47,15 @@ Route::get('events/show/{id}', [UserEventController::class, 'show'])->name('show
  *
  * @param int|string $id  id del colectivo o slug
  */
-Route::get('collectives/get-collective/{id}', [CollectiveController::class, 'getCollective'])->name('getCollective');
-
-
-/**
- * Con el prefijo guest
- */
-Route::group(['prefix' => 'guest'], function () {
-
-  /**
-   * devuelve todas las obras publicadas de la app
-   */
-  Route::get('/artworks/published', [ArtworkController::class, 'getPublish'])->name('getPublishedArtworksGuest');
-
-  /**
-   * Devuelve artistas activos de forma random, con un valor máximo
-   */
-  Route::get('/artists/random', [UserController::class, 'getRandomArtists'])->name('getRandomArtistGuest');
-
-  /**
-   * Devuelve las publicaciones de la app
-   */
-  Route::get('/releases', [UserReleaseController::class, 'getAllReleases'])->name('getAllReleasesGuest');
-});
+Route::get('collectives/get-collective/{id}', [CollectiveController::class, 'getCollective'])
+  ->name('getCollective');
 
 /**
  * Con prefijo contact
  */
 Route::group(['prefix' => 'contact'], function () {
 
-  /**
-   * Envía un mensaje de contacto
-   */
+  // Envía un mensaje de contacto
   Route::post('/send', [ContactController::class, 'send'])->name('sendMessageContact');
 });
 
@@ -81,11 +64,56 @@ Route::group(['prefix' => 'contact'], function () {
  */
 Route::group(['prefix' => 'newsletter'], function () {
 
-  /**
-   * Suscribe un usuario a la newsletter
-   */
+  // Suscribe un usuario a la newsletter
   Route::post('/suscribe', [NewsletterController::class, 'suscribe'])->name('suscribeNewsletter');
 });
 
-// recuperar contraseña
-require __DIR__ . '/password_reset.php';
+/**
+ * endpoints que no requieren autenticación
+ * Con el prefijo guest
+ */
+Route::group(['prefix' => 'guest'], function () {
+
+  /**
+   * devuelve todas las obras publicadas de la app
+   */
+  Route::get('/artworks/published', [ArtworkController::class, 'getPublish'])
+    ->name('getPublishedArtworksGuest');
+
+  /**
+   * Devuelve artistas activos de forma random, con un valor máximo
+   */
+  Route::get('/artists/random', [UserController::class, 'getRandomArtists'])
+    ->name('getRandomArtistGuest');
+
+  /**
+   * Devuelve las publicaciones de la app
+   */
+  Route::get('/releases', [UserReleaseController::class, 'getAllReleases'])
+    ->name('getAllReleasesGuest');
+
+  /**
+   * Devuelve las obras publicas filtradas
+   */
+  Route::post('/artworks/filterPublished', [ArtworkController::class, 'filterArtworksPublished'])
+    ->name('guestFilterArtworksPublished');
+
+  /**
+   * Devuelve todos los artistas de la app, excluyendo el usuario logueado y los eliminados
+   * paginados
+   */
+  Route::get('/artists/get-artists', [UserController::class, 'getArtists'])
+    ->name('getGuestArtists');
+
+  /**
+   * Obtiene todos los eventos
+   */
+  Route::get('/events/get-all', [UserEventController::class, 'all'])
+    ->name('getGuestAllEvents');
+
+  /**
+   * Devuelve todas las publicaciones de los usuarios
+   */
+  Route::get('/releases/get-artists-releases', [UserReleaseController::class, 'getReleaseFollowArtists'])
+    ->name('getGuestReleaseFollowArtists');
+});

@@ -74,7 +74,7 @@ export default {
         },
 
         /**
-         * Devuelve si el usuario esta logueado
+         * Devuelve si el usuario no esta logueado
          */
         isUserGuest() {
             return (
@@ -83,6 +83,15 @@ export default {
                 this.authUser?.id === "" ||
                 this.authUser?.id === 0
             );
+        },
+
+        /**
+         * Mostrar mensaje sino ha iniciado sesión
+         *
+         * @returns     Notification
+         */
+        messageGuest() {
+            return this.noty("Debe iniciar sesión", "warning");
         },
     },
 

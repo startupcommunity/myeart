@@ -79,9 +79,10 @@
                                                 COLECTIVOS
                                             </router-link>
                                         </li>
+                                        <li v-if="isUserGuest"></li>
 
                                         <!-- area del perfil -->
-                                        <li>
+                                        <li v-if="!isUserGuest">
                                             <ul>
                                                 <li class="menu-items-sub">
                                                     <div class="header-icons">
@@ -186,10 +187,12 @@
 <script>
 import MobileMenu from "./components/MobileMenu.vue";
 import Notifications from "./Notifications.vue";
+import utilMixin from "./../../../mixins/utilMixin";
 
 export default {
     name: "Header",
     components: { MobileMenu, Notifications },
+    mixins: [utilMixin],
     methods: {
         logout() {
             this.$store.dispatch("authLogout").then(() => {
@@ -222,7 +225,7 @@ export default {
             return {
                 name: "userProfile",
                 params: {
-                    id: this.user.id,
+                    id: this.user?.id,
                 },
             };
         },

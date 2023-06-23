@@ -93,7 +93,7 @@ export const routes = [
     // ----------- user profile -----------
     {
         name: "userProfile",
-        path: "/usuario/perfil/:id/:section?",
+        path: "/usuario/perfil/:id?/:section?",
         component: importPage("profile/ProfileUser"),
         beforeEnter: ifAuthenticated,
     },
@@ -115,7 +115,7 @@ export const routes = [
         name: "listArtwork",
         path: "/obras/:keyword?",
         component: importPage("artwork/ListArtwork"),
-        beforeEnter: ifAuthenticated,
+        // beforeEnter: ifNotAuthenticated,
     },
     {
         name: "showSlugArtwork",
@@ -135,7 +135,7 @@ export const routes = [
         name: "listArtist",
         path: "/artistas",
         component: importPage("artist/List"),
-        beforeEnter: ifAuthenticated,
+        // beforeEnter: ifNotAuthenticated,
     },
     {
         name: "showArtist",
@@ -149,7 +149,7 @@ export const routes = [
         name: "indexCommunity",
         path: "/comunidad/:hashtag?",
         component: importPage("community/Index"),
-        beforeEnter: ifAuthenticated,
+        // beforeEnter: ifAuthenticated,
     },
 
     // ------------- Publicaciones -------------
@@ -186,7 +186,7 @@ export const routes = [
         name: "eventList",
         path: "/eventos",
         component: importPage("event/List"),
-        beforeEnter: ifAuthenticated,
+        // beforeEnter: ifNotAuthenticated
     },
     {
         name: "eventShow",

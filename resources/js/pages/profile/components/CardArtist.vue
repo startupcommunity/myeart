@@ -77,16 +77,19 @@
             :id="artist.id"
             :show="showRating"
             @close="showRating = false"
+            v-if="!isUserGuest"
         />
     </div>
 </template>
 <script>
 import Avatar from "../../../components/Avatar.vue";
+import utilMixin from "../../../mixins/utilMixin";
 import RatingModal from "../../artist/components/RatingModal.vue";
 import FollowArtistButton from "./../../artwork/components/FollowArtistButton";
 
 export default {
     name: "CardArtist",
+    mixins: [utilMixin],
     components: { FollowArtistButton, Avatar, RatingModal },
     data() {
         return {
@@ -190,6 +193,10 @@ export default {
          * Abrir la modal de calificaciones
          */
         openRatings() {
+            if (this.isUserGuest) {
+                return this.messageGuest;
+            }
+
             this.showRating = true;
         },
     },

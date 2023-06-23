@@ -18,8 +18,9 @@ const endpoints = {
         disliked: `${API}/artworks/disliked/`,
         show: `${API}/artworks/show/`,
         slug: `${API}/artworks/slug/`,
-        filterPublished: `${API}/artworks/filterPublished`,
-        addVisit: `${API}/artworks/addvisit`,
+        filterPublished: `${API}/artworks/filterPublished`, // post
+        guestFilterPublished: `${API}/guest/artworks/filterPublished`, // post
+        addVisit: `${API}/artworks/addvisit`, // post
     },
 
     // direcciones del usuario
@@ -68,6 +69,9 @@ const endpoints = {
 
         // colección de artistas activos
         getArtists: `${API}/user/get-artists`, // get
+
+        // colección de artistas activos - para usuario no logueado
+        getGuestArtists: `${API}/guest/artists/get-artists`, // get
 
         // colección de artistas activos, de forma random
         getRandomArtists: `${API}/user/get-random-artists`, // get
@@ -223,6 +227,9 @@ const endpoints = {
         // devuelve todos los eventos
         getAll: `${API}/events/get-all`, // get
 
+        // devuelve todos los eventos - guest
+        getGuestAll: `${API}/guest/events/get-all`, // get
+
         // devuelve todos los eventos de un usuario / {id}
         getUserEvents: `${API}/events/get-user-events/`, // get
 
@@ -363,6 +370,9 @@ const endpoints = {
 
         // devuelve las publicaciones de la app
         getAllReleases: `${API}/guest/releases`, // get
+
+        // devuelve todas las publicaciones de la app filtradas por request
+        getAllReleasesByRequest: `${API}/guest/releases/get-artists-releases`, // get
     },
 
     // conversaciones o chat

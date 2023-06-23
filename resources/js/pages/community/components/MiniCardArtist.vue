@@ -7,9 +7,13 @@
                     <div class="pb-1">{{ artist?.name }}</div>
                     <FollowArtistButton :artist="artist" />
                     <button
-                        v-if="showBtnChat"
+                        v-if="showBtnChat && !isUserGuest"
                         @click.stop="$emit('openChat', artist)"
                         class="inline-flex items-center text-zinc-900 border text-xs px-3 py-1 font-light hover:bg-gray-100 transition-all duration-200 ease-in-out"
+                        :disabled="isUserGuest"
+                        :class="{
+                            'cursor-not-allowed': isUserGuest,
+                        }"
                     >
                         chat
                     </button>
@@ -25,10 +29,12 @@
 </template>
 <script>
 import Avatar from "../../../components/Avatar.vue";
+import utilMixin from "../../../mixins/utilMixin";
 import FollowArtistButton from "../../artwork/components/FollowArtistButton.vue";
 
 export default {
     name: "MiniCardArtist",
+    mixins: [utilMixin],
     components: { Avatar, FollowArtistButton },
     props: {
         artist: {

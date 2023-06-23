@@ -8,6 +8,7 @@
         <CreateReleaseSection
             @open-modal-create-release="isModalClose = false"
             @close-modal-create-release="isModalClose = true"
+            v-if="!isUserGuest"
         />
 
         <!-- section title -->
@@ -52,7 +53,7 @@
                     <!-- publicaciones -->
                     <div class="w-full md:w-1/2 px-5">
                         <div class="flex flex-col -mt-5 pb-5 md:px-10">
-                            <div v-if="releases.length">
+                            <div v-if="releases.length && !isUserGuest">
                                 <CardRelease
                                     v-for="release in releases"
                                     :key="release.id"
@@ -78,11 +79,15 @@
                                     </button>
                                 </div>
                             </div>
-                            <div v-else class="md:pt-5 w-24">
-                                <span class="text-zinc-400 text-sm">
-                                    No hay publicaciones de tus amigos para
-                                    mostrar
-                                </span>
+                            <div v-else class="md:pt-5">
+                                <!-- icon -->
+                                <div class="flex flex-col justify-center items-center gap-5">
+                                    <i class="fa fa-info-circle fa-3x text-zinc-400"></i>
+                                    <span class="text-zinc-400 text-lg text-center">
+                                        No hay publicaciones de tus amigos para
+                                        mostrar
+                                    </span>
+                                </div>
                             </div>
                             <LoadingTailwind
                                 v-if="loadingReleases"
@@ -124,6 +129,7 @@
             :show="show"
             :releaseID="release.id"
             @close-comments="show = false"
+            v-if="!isUserGuest"
         />
 
         <!-- chat -->
@@ -136,6 +142,7 @@
                         :chat="chat"
                         @toggleChat="toggleChat"
                         @closeChat="closeChat"
+                        v-if="!isUserGuest"
                     />
                 </div>
             </div>
@@ -155,6 +162,7 @@ import InfoReservationModal from "../event/components/InfoReservationModal.vue";
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
 import CreateReleaseSection from "./sections/index/CreateReleaseSection.vue";
 import Chat from "../chat/components/Chat.vue";
+import utilMixin from "../../mixins/utilMixin";
 
 const MAX_EVENTS = 3;
 const RANDOM_ARTIST = 6;
@@ -163,6 +171,7 @@ const SHOW_MORE_RELEASES = 2;
 
 export default {
     name: "Index",
+    mixins: [utilMixin],
     components: {
         MainLayout,
         Header,
@@ -226,8 +235,12 @@ export default {
          */
         getRandomArtists() {
             this.loading = true;
+            const ep = this.isUserGuest
+                ? this.ep.guest.getRandomArtists
+                : this.ep.user.getRandomArtists;
+
             this.axios
-                .get(this.ep.user.getRandomArtists)
+                .get(ep)
                 .then(async (resp) => (this.artists = await resp.data))
                 .then(() => this.artists.slice(0, RANDOM_ARTIST))
                 .catch((error) => this.manageError(error))
@@ -245,8 +258,13 @@ export default {
             }
 
             this.loadingReleases = true;
+
+            const ep = this.isUserGuest
+                ? this.ep.guest.getAllReleasesByRequest
+                : this.ep.releases.followArtists;
+
             this.axios
-                .get(this.ep.releases.followArtists, { params: filters })
+                .get(ep, { params: filters })
                 .then(async (resp) => {
                     // si la respuesta es un objeto, se convierte a array
                     if (typeof resp.data === "object") {
@@ -265,9 +283,12 @@ export default {
          */
         getEvents() {
             this.loading = true;
+            const ep = this.isUserGuest
+                ? this.ep.events.getGuestAll
+                : this.ep.events.getAll;
 
             this.axios
-                .get(this.ep.events.getAll, { params: { sortBy: 1 } })
+                .get(ep, { params: { sortBy: 1 } })
                 .then((resp) => {
                     this.events = resp.data.slice(0, MAX_EVENTS);
                 })

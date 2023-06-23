@@ -1,11 +1,12 @@
 import { tns } from "tiny-slider";
 import getDataMixin from "../../../mixins/getDataMixin";
+import utilMixin from "../../../mixins/utilMixin";
 
 const INIT_ARTIST_PER_PAGE = 8;
 let addArtist = 3;
 
 export default {
-    mixins: [getDataMixin],
+    mixins: [getDataMixin, utilMixin],
     data() {
         return {
             // loading para los cuando cargan los artistas
@@ -130,17 +131,18 @@ export default {
 
             this.filters.page = this.showPage;
 
-            const params = {
-                params: this.filters,
-            };
+            const params = { params: this.filters };
+
+            const ep = !this.isUserGuest
+                ? this.ep.user.getArtists
+                : this.ep.user.getGuestArtists;
 
             this.axios
-                .get(this.ep.user.getArtists, params)
+                .get(ep, params)
                 .then((resp) => {
                     const availableArtists = resp.data.data.filter((artist) => {
                         const art = this.filterByTypeAndStatus(artist);
                         if (art.length) {
-                            // console.log(art);
                             const user = artist;
                             return (user.artworks = art);
                         }
@@ -148,8 +150,6 @@ export default {
 
                     this.artists = availableArtists;
                     this.totalRecords = availableArtists.length;
-
-                    // console.log(availableArtists);
 
                     // solo para vista mobile
                     if (this.aspectMobile) {
