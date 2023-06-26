@@ -20,21 +20,26 @@
                 </div>
             </div>
             <div class="flex gap-3 justify-end">
-                <button
-                    v-if="isWatchingCreator || isUserInCollective"
-                    class="py-1 px-2 rounded-lg hover:bg-gray-200"
-                    @click.stop="goToCollectiveProfile"
-                >
-                    <i class="fa-solid fa-cogs text-blue-800"></i>
-                </button>
-                <button
-                    v-else
-                    class="py-1 px-2 rounded-lg hover:bg-gray-200"
-                    @click.stop="goToCollectiveProfile"
-                >
-                    <i class="fa-solid fa-eye text-zinc-800"></i>
-                </button>
-                <LikeButtonCollective :collective="collective" />
+                <div v-if="!isUserGuest" class="flex justify-end items-center">
+                    <button
+                        v-if="isWatchingCreator || isUserInCollective"
+                        class="py-1 px-2 rounded-lg hover:bg-gray-200"
+                        @click.stop="goToCollectiveProfile"
+                    >
+                        <i class="fa-solid fa-cogs text-blue-800"></i>
+                    </button>
+                    <button
+                        v-else
+                        class="py-1 px-2 rounded-lg hover:bg-gray-200"
+                        @click.stop="goToCollectiveProfile"
+                    >
+                        <i class="fa-solid fa-eye text-zinc-800"></i>
+                    </button>
+                </div>
+                <LikeButtonCollective
+                    :collective="collective"
+                    v-if="!isUserGuest"
+                />
                 <button @click.stop="share">
                     <i class="fa-solid fa-share-nodes text-gray-400"></i>
                 </button>
@@ -44,13 +49,12 @@
 
         <!-- imagen -->
         <div>
-            <router-link :to="getPathShowCollective">
-                <img
-                    :src="getFrontImage"
-                    class="w-full h-full object-cover object-center aspect-square"
-                    alt="imagen de portada del colectivo"
-                />
-            </router-link>
+            <img
+                @click="getPathShowCollective"
+                :src="getFrontImage"
+                class="w-full h-full object-cover object-center aspect-square cursor-pointer"
+                alt="imagen de portada del colectivo"
+            />
         </div>
         <!-- /imagen -->
 
@@ -108,12 +112,12 @@ import LikeButtonCollective from "./LikeButtonCollective.vue";
 
 export default {
     name: "CardCollective",
+    mixins: [utilMixin, getDataMixin],
     components: {
         CollectiveAvatar,
         LikeButtonCollective,
         FollowCollectiveButton,
     },
-    mixins: [utilMixin, getDataMixin],
     props: {
         collective: {
             type: Object,
@@ -150,15 +154,6 @@ export default {
 
         artworks() {
             return this.collective?.artworks?.length || 0;
-        },
-
-        getPathShowCollective() {
-            return {
-                name: "collectiveShow",
-                params: {
-                    id: this.collective?.id,
-                },
-            };
         },
 
         isWatchingCreator() {
@@ -240,6 +235,22 @@ export default {
             this.collective.followers = this.collective.followers.filter(
                 (follower) => follower.user_id !== this.user.id
             );
+        },
+
+        /**
+         * Ir al detalle del colectivo
+         */
+        getPathShowCollective() {
+            if (this.isUserGuest) {
+                return this.messageGuest;
+            }
+
+            this.$router.push({
+                name: "collectiveShow",
+                params: {
+                    id: this.collective?.id,
+                },
+            });
         },
     },
 };

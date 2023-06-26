@@ -116,4 +116,11 @@ Route::group(['prefix' => 'guest'], function () {
    */
   Route::get('/releases/get-artists-releases', [UserReleaseController::class, 'getReleaseFollowArtists'])
     ->name('getGuestReleaseFollowArtists');
+
+  /**
+   * Devuelve todos los colectivos
+   * filtrados por request y paginados
+   */
+  Route::get('/collectives/get-all', [CollectiveController::class, 'getAllCollectives'])
+    ->name('getGuestAllCollectives');
 });

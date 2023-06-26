@@ -81,11 +81,16 @@
                             </div>
                             <div v-else class="md:pt-5">
                                 <!-- icon -->
-                                <div class="flex flex-col justify-center items-center gap-5">
-                                    <i class="fa fa-info-circle fa-3x text-zinc-400"></i>
-                                    <span class="text-zinc-400 text-lg text-center">
-                                        No hay publicaciones de tus amigos para
-                                        mostrar
+                                <div
+                                    class="flex flex-col justify-center items-center gap-5"
+                                >
+                                    <i
+                                        class="fa fa-info-circle fa-3x text-zinc-400"
+                                    ></i>
+                                    <span
+                                        class="text-zinc-400 text-lg text-center"
+                                    >
+                                        {{ validateMessage }}
                                     </span>
                                 </div>
                             </div>
@@ -219,6 +224,24 @@ export default {
         },
         isMoreReleasesToShow() {
             return this.releases.length < this.original.length;
+        },
+        validateMessage() {
+            const messages = {
+                guest: "Debe iniciar sesión para ver las publicaciones de sus amigos",
+                noFriendReleases:
+                    "No hay publicaciones de tus amigos para mostrar",
+                noReleases: "No hay publicaciones para mostrar",
+            };
+
+            if (this.isUserGuest) {
+                return messages.guest;
+            }
+
+            if (this.releases.length === 0) {
+                return messages.noFriendReleases;
+            }
+
+            return messages.noReleases;
         },
     },
 

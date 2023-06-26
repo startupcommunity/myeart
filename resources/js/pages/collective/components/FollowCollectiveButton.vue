@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import utilMixin from '../../../mixins/utilMixin';
+import utilMixin from "../../../mixins/utilMixin";
 
 export default {
     name: "FollowCollectiveButton",
@@ -74,6 +74,10 @@ export default {
 
     methods: {
         followOrUnfollow() {
+            if (this.isUserGuest) {
+                return this.messageGuest;
+            }
+
             if (this.isCreator) {
                 this.noty("No puedes seguir tu propio colectivo", "warning");
                 return;

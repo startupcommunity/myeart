@@ -12,7 +12,7 @@
                 <div
                     class="container py-5 py-md-10 flex justify-md-end justify-center"
                 >
-                    <ButtonCreate />
+                    <ButtonCreate v-if="!isUserGuest" />
                 </div>
             </section>
             <!-- /botón crear -->

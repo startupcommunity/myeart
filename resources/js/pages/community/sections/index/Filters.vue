@@ -7,7 +7,14 @@
                 <div
                     class="md:border-r border-gray-900 h-full md:pr-16 order-2 order-md-1"
                 >
-                    <button class="rounded-md p-2">
+                    <button
+                        class="rounded-md p-2"
+                        :disabled="isUserGuest"
+                        :class="{
+                            'cursor-not-allowed': isUserGuest,
+                            'opacity-50': isUserGuest,
+                        }"
+                    >
                         <span
                             class="text-zinc-900 font-bold tracking-normal uppercase text-sm md:text-base"
                         >
@@ -54,8 +61,11 @@
     </section>
 </template>
 <script>
+import utilMixin from "../../../../mixins/utilMixin";
+
 export default {
     name: "Filters",
+    mixins: [utilMixin],
     data() {
         return {
             sortBy: [

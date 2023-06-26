@@ -7,7 +7,7 @@
         <!-- title -->
         <section>
             <div class="container pt-10">
-                <div class="flex justify-center justify-md-end">
+                <div class="flex justify-center justify-md-end" v-if="!isUserGuest">
                     <v-btn
                         class="text-xs md:text-xs xl:text-base text-white"
                         @click.stop="$router.push({ name: 'collectiveCreate' })"
@@ -161,6 +161,7 @@
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
 import Paginator from "../../components/Paginator.vue";
 import getDataMixin from "../../mixins/getDataMixin";
+import utilMixin from "../../mixins/utilMixin";
 import CategoryTypeFilter from "../artwork/components/CategoryTypeFilter.vue";
 import Header from "../landing/sections/Header.vue";
 import MainLayout from "../layouts/MainLayout.vue";
@@ -169,7 +170,7 @@ import FilterCollectiveModal from "./components/FilterCollectiveModal.vue";
 
 export default {
     name: "IndexCollective",
-    mixins: [getDataMixin],
+    mixins: [getDataMixin, utilMixin],
     components: {
         MainLayout,
         Header,
@@ -206,7 +207,9 @@ export default {
         this.getCategories();
 
         // consulta de colectivos que sigue el usuario
-        this.$store.dispatch("userFollowCollectives");
+        if (!this.isUserGuest) {
+            this.$store.dispatch("userFollowCollectives");
+        }
     },
 
     mounted() {
@@ -260,8 +263,12 @@ export default {
                 page: this.showPage,
             };
 
+            const ep = this.isUserGuest
+                ? this.ep.guest.getAllCollectivesByRequest
+                : this.ep.collectives.getAll;
+
             this.axios
-                .get(this.ep.collectives.getAll, { params })
+                .get(ep, { params })
                 .then((res) => {
                     if (res.status === 200) {
                         this.collectives = res.data.data;

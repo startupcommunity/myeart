@@ -373,6 +373,9 @@ const endpoints = {
 
         // devuelve todas las publicaciones de la app filtradas por request
         getAllReleasesByRequest: `${API}/guest/releases/get-artists-releases`, // get
+
+        // devuelve todos los colectivos filtrados por request
+        getAllCollectivesByRequest: `${API}/guest/collectives/get-all`, // get
     },
 
     // conversaciones o chat
