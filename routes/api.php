@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-// sin middleware
+// sin restricción de acceso
 require __DIR__ . '/api/public.php';
 
 /**
@@ -59,4 +59,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     // conversations
     require __DIR__ . '/api/conversations.php';
+
+    // notifications
+    require __DIR__ . '/api/notifications.php';
 });

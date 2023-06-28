@@ -11,3 +11,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('orders/download-pdf/{id}', [OrderController::class, 'downloadPdf'])
         ->name('order.downloadPdf');
 });
+
+// ruta para indicar la url de la pagina de verificación de registro
+Route::get(
+    '/confirm-register-email/{token}',
+    fn () => redirect(env('APP_URL') . 'confirm-register-email/' . request()->token)
+)->name('confirmRegisterEmail');

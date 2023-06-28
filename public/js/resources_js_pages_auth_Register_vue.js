@@ -1,6 +1,36 @@
 "use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_pages_auth_register_vue"],{
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "ConfirmRegisterModal",
+  props: {
+    show: {
+      type: Boolean,
+      "default": false
+    },
+    fullScreen: {
+      type: Boolean,
+      "default": false
+    },
+    email: {
+      type: String,
+      "default": ""
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/components/Terms.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/components/Terms.vue?vue&type=script&lang=js& ***!
@@ -44,8 +74,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_Terms_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Terms.vue */ "./resources/js/pages/auth/components/Terms.vue");
+/* harmony import */ var _components_ConfirmRegister_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ConfirmRegister.vue */ "./resources/js/pages/auth/components/ConfirmRegister.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -54,10 +85,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "register",
   components: {
-    Terms: _components_Terms_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Terms: _components_Terms_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ConfirmRegister: _components_ConfirmRegister_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -68,7 +101,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       password: "",
       password_confirmation: "",
       accept: false,
-      showTerms: false
+      showTerms: false,
+      showConfirmRegister: false
     };
   },
   beforeDestroy: function beforeDestroy() {
@@ -78,7 +112,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     apiStateFormLoading: function apiStateFormLoading() {
       return this.status === "loading";
     }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)({
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapState)({
     status: function status(state) {
       return state.auth.status;
     }
@@ -98,39 +132,53 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     register: function register() {
       var _this = this;
 
-      if (this.accept) {
-        var action = this.action,
-            username = this.username,
-            name = this.name,
-            email = this.email,
-            password = this.password,
-            password_confirmation = this.password_confirmation;
-        this.$store.dispatch("authRequest", {
-          action: action,
-          username: username,
-          name: name,
-          email: email,
-          password: password,
-          password_confirmation: password_confirmation
-        }).then(function () {
-          _this.$notify({
-            group: "container",
-            text: "Usuario registrado",
-            type: "success"
-          });
+      var obj = {
+        action: this.action,
+        username: this.username,
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.password_confirmation
+      };
 
-          _this.$store.dispatch("userRequest");
-
-          _this.$router.push("/dashboard");
-        });
-        return;
+      if (this.username === "") {
+        return this.noty("Por favor ingrese su nombre de usuario", "error");
       }
 
-      this.$notify({
-        group: "container",
-        title: "¡Error!",
-        text: "Por favor aceptar los términos y condiciones",
-        type: "error"
+      if (this.name === "") {
+        return this.noty("Por favor ingrese su nombre", "error");
+      }
+
+      if (this.email === "") {
+        return this.noty("Por favor ingrese su correo", "error");
+      }
+
+      if (this.password === "") {
+        return this.noty("Por favor ingrese su contraseña", "error");
+      }
+
+      if (this.password_confirmation === "") {
+        return this.noty("Por favor ingrese su confirmación de contraseña", "error");
+      }
+
+      if (!this.accept) {
+        return this.noty("Por favor acepte los términos y condiciones", "error");
+      }
+
+      this.$store.dispatch("authRequest", obj).then(function () {
+        _this.noty("Registro exitoso"); // this.$store.dispatch("userRequest");
+        // this.$router.push("/dashboard");
+        // this.$router.push({ name: "confirmRegisterEmail" });
+        // modal para confirmar el correo
+
+
+        _this.showConfirmRegister = true; // limpiar campos
+
+        _this.username = "";
+        _this.name = "";
+        _this.password = "";
+        _this.password_confirmation = "";
+        _this.accept = false;
       });
     },
     showTermsAndCondition: function showTermsAndCondition() {
@@ -138,6 +186,79 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=template&id=5056a458&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=template&id=5056a458& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "text-center"
+  }, [_c("v-dialog", {
+    attrs: {
+      width: "600",
+      persistent: "",
+      fullscreen: _vm.fullScreen
+    },
+    model: {
+      value: _vm.show,
+      callback: function callback($$v) {
+        _vm.show = $$v;
+      },
+      expression: "show"
+    }
+  }, [_c("v-card", [_c("v-card-text", [_c("div", {
+    staticClass: "w-full",
+    "class": {
+      "py-5 md:p-10": _vm.fullScreen,
+      "py-5": !_vm.fullScreen
+    }
+  }, [_c("div", {
+    staticClass: "flex flex-col"
+  }, [_c("div", {
+    staticClass: "w-full"
+  }, [_c("h3", {
+    staticClass: "text-xl font-light leading-5"
+  }, [_vm._v("\n                                Te hemos enviado un correo electrónico a\n                                "), _c("span", {
+    staticClass: "font-bold"
+  }, [_vm._v(_vm._s(_vm.email))]), _vm._v("\n                                para que confirmes tu cuenta.\n                            ")]), _vm._v(" "), _c("h5", {
+    staticClass: "mt-5 font-light"
+  }, [_c("span", {
+    staticClass: "text-sm"
+  }, [_c("i", {
+    staticClass: "fa fa-info-circle"
+  }), _vm._v("\n                                    Si no lo encuentras, revisa tu carpeta\n                                    de spam.\n                                ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "w-full"
+  }, [_c("div", {
+    staticClass: "flex justify-center mt-6"
+  }, [_c("v-btn", {
+    attrs: {
+      outlined: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.$emit("close");
+      }
+    }
+  }, [_vm._v("\n                                    Aceptar\n                                ")])], 1)])])])])], 1)], 1)], 1);
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
 
 /***/ }),
 
@@ -561,7 +682,17 @@ var render = function render() {
     on: {
       click: _vm.register
     }
-  }, [_vm._v("\n                        Regístrate\n                    ")])])])])])], 1);
+  }, [_vm._v("\n                        Regístrate\n                    ")])]), _vm._v(" "), _c("ConfirmRegister", {
+    attrs: {
+      show: _vm.showConfirmRegister,
+      email: _vm.email
+    },
+    on: {
+      close: function close($event) {
+        _vm.showConfirmRegister = false;
+      }
+    }
+  })], 1)])])], 1);
 };
 
 var staticRenderFns = [function () {
@@ -629,6 +760,44 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_register_vue_vue_type_style_index_0_id_425558de_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./resources/js/pages/auth/components/ConfirmRegister.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/pages/auth/components/ConfirmRegister.vue ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ConfirmRegister_vue_vue_type_template_id_5056a458___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConfirmRegister.vue?vue&type=template&id=5056a458& */ "./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=template&id=5056a458&");
+/* harmony import */ var _ConfirmRegister_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConfirmRegister.vue?vue&type=script&lang=js& */ "./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ConfirmRegister_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ConfirmRegister_vue_vue_type_template_id_5056a458___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ConfirmRegister_vue_vue_type_template_id_5056a458___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/auth/components/ConfirmRegister.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
 
@@ -710,6 +879,21 @@ component.options.__file = "resources/js/pages/auth/register.vue"
 
 /***/ }),
 
+/***/ "./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ConfirmRegister_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ConfirmRegister.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ConfirmRegister_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/pages/auth/components/Terms.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************!*\
   !*** ./resources/js/pages/auth/components/Terms.vue?vue&type=script&lang=js& ***!
@@ -737,6 +921,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./register.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/register.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=template&id=5056a458&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=template&id=5056a458& ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ConfirmRegister_vue_vue_type_template_id_5056a458___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ConfirmRegister_vue_vue_type_template_id_5056a458___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ConfirmRegister_vue_vue_type_template_id_5056a458___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ConfirmRegister.vue?vue&type=template&id=5056a458& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/components/ConfirmRegister.vue?vue&type=template&id=5056a458&");
+
 
 /***/ }),
 

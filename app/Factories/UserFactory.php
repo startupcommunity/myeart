@@ -4,7 +4,11 @@ namespace App\Factories;
 
 use App\Enums\TypeNotificationEnum;
 use App\Events\NotificationEvent;
+use App\Mail\ConfirmRegisterEmail;
 use App\Models\User;
+use App\Models\UserConfirmRegister;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserFactory
 {
@@ -127,5 +131,24 @@ class UserFactory
 
     // caso contrario, se elimina
     return $artwork->delete();
+  }
+
+  /**
+   * Envia un mail de confirmación de registro
+   */
+  public function sendEmailConfirmRegister(string $email): void
+  {
+    $user = $this->user->where('email', $email)->first();
+    $confirmEmail = new ConfirmRegisterEmail($user);
+    Mail::to($user->email)->send($confirmEmail);
+  }
+
+  /**
+   * Crear token de confirmación de registro
+   */
+  public function createTokenConfirmRegister(string $email): UserConfirmRegister
+  {
+    $user = $this->user->where('email', $email)->first();
+    return $user->userConfirmRegister()->create(['token' => Str::random(40)]);
   }
 }

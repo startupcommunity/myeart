@@ -389,6 +389,13 @@ const endpoints = {
         // envía un nuevo mensaje a una conversación
         sendMessage: `${API}/conversations/send-message`, // post
     },
+
+    // confirmar registro
+    confirmRegister: {
+
+        // verificar token de confirmación de registro
+        verifyToken: `${API}/confirm-register/verify-token`, // post
+    }
 };
 
 export default endpoints;

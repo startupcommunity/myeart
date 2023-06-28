@@ -21,6 +21,12 @@ const guestRoutes = [
         beforeEnter: ifNotAuthenticated,
     },
     {
+        name: "confirmRegisterEmail",
+        path: "/confirm-register-email/:token",
+        component: importPage("auth/ConfirmRegisterEmail"),
+        beforeEnter: ifNotAuthenticated,
+    },
+    {
         name: "guestHome",
         path: "/", // guest home
         component: importPage("landing/guest/Index"),

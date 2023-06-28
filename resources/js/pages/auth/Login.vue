@@ -87,7 +87,7 @@
                             ¿Olvidaste tu contraseña?
                         </router-link>
                     </div>
-                    <div class="container-login-form-btn">
+                    <!-- <div class="container-login-form-btn">
                         <button class="btn btn-primary google-form-btn">
                             Entrar Con
                             <img
@@ -96,7 +96,7 @@
                                 style="margin-top: 4px"
                             />
                         </button>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>
@@ -133,10 +133,19 @@ export default {
                     await this.$store.dispatch("userRequest");
                     this.$notify({
                         group: "container",
-                        text: "Logueado con éxito",
+                        text: "Iniciando sesión...",
                         type: "success",
                     });
                     this.$router.push("/dashboard");
+                })
+                .catch((error) => {
+                    if (error.response.status === 401) {
+                        this.notySwal({
+                            icon: "error",
+                            title: "Aviso",
+                            text: "Debe verificar su correo electrónico para poder iniciar sesión. Revise su bandeja de entrada o spam.",
+                        });
+                    }
                 });
         },
     },

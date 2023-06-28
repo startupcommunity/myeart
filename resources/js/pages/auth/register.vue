@@ -141,6 +141,12 @@
                         </button>
                     </div>
 
+                    <ConfirmRegister
+                        :show="showConfirmRegister"
+                        :email="email"
+                        @close="showConfirmRegister = false"
+                    />
+
                     <!-- <div class="container-login-form-btn">
                         <button class="btn btn-primary google-form-btn">
                             Entrar Con
@@ -160,10 +166,11 @@
 <script>
 import { mapState } from "vuex";
 import Terms from "./components/Terms.vue";
+import ConfirmRegister from "./components/ConfirmRegister.vue";
 
 export default {
     name: "register",
-    components: { Terms },
+    components: { Terms, ConfirmRegister },
     data() {
         return {
             action: "register",
@@ -174,6 +181,7 @@ export default {
             password_confirmation: "",
             accept: false,
             showTerms: false,
+            showConfirmRegister: false,
         };
     },
     beforeDestroy() {
@@ -199,42 +207,63 @@ export default {
     },
     methods: {
         register() {
-            if (this.accept) {
-                const {
-                    action,
-                    username,
-                    name,
-                    email,
-                    password,
-                    password_confirmation,
-                } = this;
-                this.$store
-                    .dispatch("authRequest", {
-                        action,
-                        username,
-                        name,
-                        email,
-                        password,
-                        password_confirmation,
-                    })
-                    .then(() => {
-                        this.$notify({
-                            group: "container",
-                            text: "Usuario registrado",
-                            type: "success",
-                        });
-                        this.$store.dispatch("userRequest");
-                        this.$router.push("/dashboard");
-                    });
+            const obj = {
+                action: this.action,
+                username: this.username,
+                name: this.name,
+                email: this.email,
+                password: this.password,
+                password_confirmation: this.password_confirmation,
+            };
 
-                return;
+            if (this.username === "") {
+                return this.noty(
+                    "Por favor ingrese su nombre de usuario",
+                    "error"
+                );
             }
 
-            this.$notify({
-                group: "container",
-                title: "¡Error!",
-                text: "Por favor aceptar los términos y condiciones",
-                type: "error",
+            if (this.name === "") {
+                return this.noty("Por favor ingrese su nombre", "error");
+            }
+
+            if (this.email === "") {
+                return this.noty("Por favor ingrese su correo", "error");
+            }
+
+            if (this.password === "") {
+                return this.noty("Por favor ingrese su contraseña", "error");
+            }
+
+            if (this.password_confirmation === "") {
+                return this.noty(
+                    "Por favor ingrese su confirmación de contraseña",
+                    "error"
+                );
+            }
+
+            if (!this.accept) {
+                return this.noty(
+                    "Por favor acepte los términos y condiciones",
+                    "error"
+                );
+            }
+
+            this.$store.dispatch("authRequest", obj).then(() => {
+                this.noty("Registro exitoso");
+                // this.$store.dispatch("userRequest");
+                // this.$router.push("/dashboard");
+                // this.$router.push({ name: "confirmRegisterEmail" });
+
+                // modal para confirmar el correo
+                this.showConfirmRegister = true;
+
+                // limpiar campos
+                this.username = "";
+                this.name = "";
+                this.password = "";
+                this.password_confirmation = "";
+                this.accept = false;
             });
         },
 

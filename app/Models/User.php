@@ -284,7 +284,7 @@ class User extends Authenticatable
      *
      * @return
      */
-    public function conversations()
+    public function conversations(): HasMany
     {
         // hacerlo como una relación hasMany
         return $this->hasMany(Conversation::class, 'init_user_id')
@@ -300,6 +300,14 @@ class User extends Authenticatable
     public function userPasswordReset(): HasOne
     {
         return $this->hasOne(UserPasswordReset::class);
+    }
+
+    /**
+     * Devuelve la relación con la confirmación de registro del usuario
+     */
+    public function userConfirmRegister(): HasOne
+    {
+        return $this->hasOne(UserConfirmRegister::class);
     }
 
     /**

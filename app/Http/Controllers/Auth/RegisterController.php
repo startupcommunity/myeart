@@ -4,21 +4,24 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
+use App\Factories\UserFactory;
 use App\Utils\Payment\Stripe;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Validator;
-use Exception;
 
 class RegisterController extends Controller
 {
+    public function __construct(
+        private UserFactory $userFactory
+    ) {
+    }
+
     /**
      * Register the given user.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), $this->rules());
 
@@ -31,41 +34,48 @@ class RegisterController extends Controller
         // transaction
         $db = DB::transaction(function () use ($request) {
             // crear cuenta de stripe
-            $stripe = new Stripe();
-            $arr = $stripe->setDefaultAccountData($request);
-            $resp = $stripe->createAccount($arr);
+            $resp = $this->createStripeAccount($request);
 
             // si se genero la cuenta de stripe
             if ($resp->id) {
-                // crear usuario
-                User::create([
-                    'name' => $request->name,
-                    'username' => $request->username,
-                    'email' => $request->email,
-                    'password' => bcrypt($request->password),
+
+                // stripe_account_id
+                $request->merge([
                     'stripe_account_id' => $resp->id,
+                    'password' => bcrypt($request->password)
                 ]);
+
+                // crear usuario
+                $this->createUser($request->all());
+
+                // crear token de verificación
+                $this->userFactory->createTokenConfirmRegister($request->email);
+
                 return true;
-            } else {
-                throw new Exception('Error al crear la cuenta de stripe');
             }
+
+            return false;
         });
 
-        if ($db) {
-            return (new LoginController())->login($request);
-        } else {
+        if (!$db) {
+            // return (new LoginController())->login($request);
             return response()->json([
                 'message' => 'Error al registrar el usuario'
             ], 500);
         }
+
+        // enviar email de verificación de registro
+        $this->userFactory->sendEmailConfirmRegister($request->email);
+
+        return response()->json([
+            'message' => 'Usuario registrado correctamente'
+        ], 200);
     }
 
     /**
      * Get the user registration validation rules.
-     *
-     * @return array
      */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             'name' => 'required|string|max:80',
@@ -76,12 +86,28 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get the user registration validation error messages.
-     *
-     * @return array
+     * Get the user registration validation error messages
      */
-    protected function validationErrorMessages()
+    // protected function validationErrorMessages(): array
+    // {
+    //     return [];
+    // }
+
+    /**
+     * create user in BD
+     */
+    public function createUser(array $data): User
     {
-        return [];
+        return User::create($data);
+    }
+
+    /**
+     * Create user stripe account
+     */
+    public function createStripeAccount(Request $request): object
+    {
+        $stripe = new Stripe();
+        $arr = $stripe->setDefaultAccountData($request);
+        return $stripe->createAccount($arr);
     }
 }

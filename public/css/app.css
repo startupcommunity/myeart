@@ -12535,6 +12535,9 @@ video {
 .-mt-4{
   margin-top: -1rem;
 }
+.mb-96{
+  margin-bottom: 24rem;
+}
 .mb-5{
   margin-bottom: 1.25rem;
 }
@@ -12938,19 +12941,6 @@ video {
 }
 .animate-fade-in-both{
   animation: fade-in-both 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-}
-@keyframes bg-gray-light{
-  0%{
-    transform: translateZ(0);
-    box-shadow: 0 0 0 0 transparent;
-  }
-  100%{
-    transform: translateZ(50px);
-    background-color: #eeeeee;
-  }
-}
-.animate-bg-gray-light{
-  animation: bg-gray-light .4s cubic-bezier(.25,.46,.45,.94) both;
 }
 .cursor-pointer{
   cursor: pointer;
@@ -13814,6 +13804,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(153 27 27 / var(--tw-text-opacity));
 }
+.text-red-600{
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
 .text-app-brown-1{
   --tw-text-opacity: 1;
   color: rgb(178 121 76 / var(--tw-text-opacity));
@@ -13845,10 +13839,6 @@ video {
 .text-gray-800{
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
-}
-.text-red-600{
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 .text-red-500{
   --tw-text-opacity: 1;
@@ -14167,6 +14157,9 @@ body {
   }
   .sm\:ml-0{
     margin-left: 0px;
+  }
+  .sm\:mb-auto{
+    margin-bottom: auto;
   }
   .sm\:ml-\[9\%\]{
     margin-left: 9%;

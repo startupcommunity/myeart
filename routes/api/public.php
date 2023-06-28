@@ -23,6 +23,9 @@ require __DIR__ . '/password_reset.php';
 // categorias y sub categorias
 require __DIR__ . '/categories.php';
 
+// confirm register
+require __DIR__ . '/confirm_register.php';
+
 /**
  * Login y registro
  */

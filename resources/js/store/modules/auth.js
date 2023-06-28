@@ -62,9 +62,11 @@ const actions = {
                     commit("authSuccess", access_token);
                     //dispatch('userRequest');
                     resolve(access_token);
+
+                    console.log(resp);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.log(err.response);
                     commit("authError", err.response.data);
                     JwtService.unsetUser();
                     ApiService.init();
