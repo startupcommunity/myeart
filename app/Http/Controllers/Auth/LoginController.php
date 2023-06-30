@@ -36,7 +36,7 @@ class LoginController extends Controller
 
         // verificar si el usuario ya verifico el email
         $user = User::where('email', $request->email)->first();
-        if (!$user->email_verified_at) {
+        if ($user && !$user->email_verified_atç) {
 
             // crear token de verificación
             $this->userFactory->createTokenConfirmRegister($request->email);
