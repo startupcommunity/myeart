@@ -261,7 +261,7 @@ export default {
          */
         loading(val) {
             if (val && !this.user?.id) {
-                this.noty(this.msj, "warning");
+                this.$flowForGuest();
 
                 // detener el loading
                 this.loading = false;
@@ -295,7 +295,7 @@ export default {
                     // la publicación actualizada
                     this.release = resp.data;
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loadingComments = false));
         },
         /**
@@ -318,12 +318,12 @@ export default {
             this.axios
                 .post(this.ep.releases.storeComment, data)
                 .then(() => {
-                    this.noty("Tu comentario ha sido publicado");
+                    this.$noty("Tu comentario ha sido publicado");
                     this.question = "";
                     this.$refs.formComment.resetValidation();
                     this.getComments();
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

@@ -12,7 +12,7 @@ const eventRoute = [
         name: "eventShow",
         path: "/eventos/show/:id",
         component: importPage("event/Show"),
-        beforeEnter: ifAuthenticated,
+        // beforeEnter: ifAuthenticated,
     },
     {
         name: "eventSlug",

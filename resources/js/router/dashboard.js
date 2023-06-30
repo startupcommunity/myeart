@@ -6,7 +6,7 @@ const dashboardRoute = [
         name: "dashboard",
         path: "/dashboard",
         component: importPage("dashboard/dashboard"),
-        beforeEnter: ifAuthenticated,
+        // beforeEnter: ifAuthenticated,
     },
 ];
 

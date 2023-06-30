@@ -98,7 +98,7 @@ export default {
                     this.releases = response.data.slice(0, INIT_RELEASES);
                     this.original = JSON.parse(JSON.stringify(response.data));
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 

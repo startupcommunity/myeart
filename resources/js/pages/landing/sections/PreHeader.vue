@@ -1,21 +1,22 @@
 <template>
     <div
-        class="flex flex-row justify-between items-center bg-white px-2 sm:px-4"
+        class="flex flex-row justify-between items-center bg-white px-2 h-20 sm:px-4"
     >
-        <div class="flex-auto w-4/5 sm:w-[90%]">
+        <div class="md:w-2/6 hidden sm:flex"></div>
+        <div class="w-2/4 md:w-2/6 pt-7">
             <div
-                class="flex flex-wrap sm:justify-center items-center text-start sm:text-center text-dark"
+                class="flex sm:justify-center items-center text-start sm:text-center text-dark"
             >
                 <img src="/img/shipping.png" alt="shipping" />
-                <div>
-                    <b class="text-[10px] sm:text-lg text-">
-                        ENVÍOS GRATIS A TODO EL MUNDO
-                    </b>
-                </div>
+                <b class="text-[10px] sm:text-lg">
+                    ENVÍOS GRATIS A TODO EL MUNDO
+                </b>
             </div>
         </div>
-        <div class="text-end text-primary flex-auto w-1/5 sm:w-[10%]">
-            <b class="text-xs sm:text-lg">ESPAÑOL</b>
+        <div class="w-2/4 md:w-2/6 pt-10">
+            <p class="text-end text-primary">
+                <span class="text-xs sm:text-lg font-bold">ESPAÑOL</span>
+            </p>
         </div>
     </div>
 </template>

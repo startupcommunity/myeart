@@ -535,7 +535,7 @@ export default {
          */
         saveArtwork() {
             if (this.clickBtn === 1 && !this.$refs.artworkForm.validate()) {
-                return this.noty(
+                return this.$noty(
                     "Algunos campos son requeridos, verifique antes de publicar",
                     "error",
                     5000
@@ -587,11 +587,11 @@ export default {
                             "Obra en pausa/borrador hasta que se agregue un método de cobro";
 
                         if (state == 1) {
-                            this.noty(publishMsj);
+                            this.$noty(publishMsj);
                         } else if (state == 3) {
-                            this.noty(draftMsj);
+                            this.$noty(draftMsj);
                         } else if (state == 5) {
-                            this.noty(inPauseMsj);
+                            this.$noty(inPauseMsj);
                         }
 
                         // --------------------
@@ -610,7 +610,7 @@ export default {
                         }
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
     },

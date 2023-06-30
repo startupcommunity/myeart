@@ -189,7 +189,7 @@ export default {
                 .get(ep)
                 .then((resp) => (this.artists = resp.data))
                 .then((resp) => this.loadData())
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -220,7 +220,7 @@ export default {
          * Algún error al cargar el archivo
          */
         errorCropper(error) {
-            this.noty("Error al carga el archivo [" + error + "]", "error");
+            this.$noty("Error al carga el archivo [" + error + "]", "error");
         },
 
         /**
@@ -260,17 +260,17 @@ export default {
             const firstCase = !form.image && !this.croppedFile;
 
             if (firstCase) {
-                this.noty("Debe seleccionar una imagen", "error");
+                this.$noty("Debe seleccionar una imagen", "error");
                 this.formIsValid = false;
             }
 
             if (!form.text || form.text.length < 1) {
-                this.noty("Debe indicar un texto descriptivo", "error");
+                this.$noty("Debe indicar un texto descriptivo", "error");
                 this.formIsValid = false;
             }
 
             if (!form.location || form.location.length < 1) {
-                this.noty("Debe indicar una ubicación", "error");
+                this.$noty("Debe indicar una ubicación", "error");
                 this.formIsValid = false;
             }
         },
@@ -319,7 +319,7 @@ export default {
 
                             this.$emit("updated");
                         })
-                        .catch((error) => this.manageError(error))
+                        .catch((error) => this.$manageError(error))
                         .finally(() => (this.globalLoading = false));
                 }
             });

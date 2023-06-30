@@ -148,7 +148,7 @@ export default {
             this.axios
                 .get(this.ep.user.getUserPaymentMethods + this.user.id)
                 .then((resp) => (this.payments = resp.data))
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
 
@@ -174,7 +174,7 @@ export default {
                                 });
                             }
                         })
-                        .catch((error) => this.manageError(error))
+                        .catch((error) => this.$manageError(error))
                         .finally(() => (this.globalLoading = false));
                 }
             });

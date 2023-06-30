@@ -2,6 +2,7 @@
 
 namespace App\Querys;
 
+use App\Models\User;
 use App\Models\UserRelease;
 use App\Querys\Traits\UseReleaseTrait;
 use Illuminate\Database\Eloquent\Collection;
@@ -57,7 +58,7 @@ class ReleaseDB
   {
     $user = $id ? User::find($id) : auth()->user();
     $relations = ['labels.user', 'likes.user', 'creator.artworks.categories', 'comments'];
-    return $user->releases()->with($relations)->commonType()->get();
+    return $user ? $user->releases()->with($relations)->commonType()->get() : new Collection();
   }
 
   /**

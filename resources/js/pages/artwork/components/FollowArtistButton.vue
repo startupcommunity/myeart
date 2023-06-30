@@ -64,12 +64,7 @@ export default {
          */
         followArtist() {
             if (!this.canFollowArtist) {
-                this.noty("No es posible autoseguirte", "error");
-                return;
-            }
-
-            if (this.isGuest) {
-                this.noty("Debe iniciar sesión", "warning");
+                this.$noty("No es posible autoseguirte", "error");
                 return;
             }
 
@@ -89,11 +84,11 @@ export default {
                         ? "Dejaste de seguir a este artista"
                         : "Ahora sigues a este artista";
 
-                    this.noty(mjs);
+                    this.$noty(mjs);
 
                     this.$store.dispatch("userRequest");
                 })
-                .catch((error) => console.error(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loadFollow = false));
         },
     },

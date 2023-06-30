@@ -259,7 +259,7 @@ export default {
                     this.original = JSON.parse(JSON.stringify(resp.data));
                     this.releases = resp.data.slice(0, INIT_RELEASES);
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
 
@@ -283,7 +283,7 @@ export default {
                     this.original = JSON.parse(JSON.stringify(resp.data));
                     this.releases = resp.data.slice(0, INIT_RELEASES);
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
 

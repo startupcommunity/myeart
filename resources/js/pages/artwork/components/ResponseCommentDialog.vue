@@ -155,7 +155,7 @@ export default {
                     user_id: this.user?.id,
                 })
                 .then(() => this.$emit("saveAnswer"))
-                .catch((err) => this.manageError(err))
+                .catch((err) => this.$manageError(err))
                 .finally(() => (this.globalLoading = false));
         },
     },

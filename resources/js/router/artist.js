@@ -12,7 +12,7 @@ const artistRoute = [
         name: "showArtist",
         path: "/artista/:id",
         component: importPage("artist/Show"),
-        beforeEnter: ifAuthenticated,
+        // beforeEnter: ifAuthenticated,
     },
 ];
 

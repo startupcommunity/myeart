@@ -376,6 +376,39 @@ const endpoints = {
 
         // devuelve todos los colectivos filtrados por request
         getAllCollectivesByRequest: `${API}/guest/collectives/get-all`, // get
+
+        // obtiene todos los datos de un artista (params :id)
+        getArtist: `${API}/guest/user/get-artist/`, // get
+
+        // obtiene todos los eventos del artista (params :id)
+        getUserEvents: `${API}/guest/events/get-user-events/`, // get
+
+        // obtiene las calificaciones del artista (params :id)
+        getArtistRatings: `${API}/guest/user/get-artist-ratings/`, // get
+
+        // obtiene todas las publicaciones de un artista especifico - {id}
+        getAllUserForID: `${API}/guest/releases/get-user-releases/`, // get
+
+        // obtiene todas las obras publicadas de un artista especifico - {id}
+        getUserPublish: `${API}/guest/artworks/user/publish/`, // get - params :id
+
+        // obtiene los detalles de una obra - {id}
+        showArtwork: `${API}/guest/artworks/show/`, // get - params :id
+
+        // obtiene una imagen de una obra - {id}
+        getImage: `${API}/guest/artworks/image/`, // get - params :id
+
+        // agrega una visita a la obra
+        addVisit: `${API}/guest/artworks/addvisit`, // post
+
+        // obtienes otras obras publicadas
+        getPublishForCategory: `${API}/guest/artworks/publish/category/`, // get - params :id
+
+        // obtiene los comentarios de una obra - {id}
+        artworkList: `${API}/guest/comments/artwork-list/`, // get
+
+        // obtiene los comentarios de una publicación / {id}
+        getComment: `${API}/guest/releases/get-comments/`, // get
     },
 
     // conversaciones o chat
@@ -392,10 +425,9 @@ const endpoints = {
 
     // confirmar registro
     confirmRegister: {
-
         // verificar token de confirmación de registro
         verifyToken: `${API}/confirm-register/verify-token`, // post
-    }
+    },
 };
 
 export default endpoints;

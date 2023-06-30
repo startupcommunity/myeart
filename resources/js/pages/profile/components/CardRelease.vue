@@ -136,7 +136,7 @@ export default {
     methods: {
         editRelease() {
             if (this.isUserGuest) {
-                this.noty("Debe iniciar sesión", "warning");
+                this.$noty("Debe iniciar sesión", "warning");
                 return;
             }
 
@@ -144,23 +144,23 @@ export default {
         },
         deleteRelease() {
             if (this.isUserGuest) {
-                this.noty("Debe iniciar sesión", "warning");
+                this.$noty("Debe iniciar sesión", "warning");
                 return;
             }
 
             this.$emit("activeDelete", this.release);
         },
         openModalComment() {
-            if (this.isUserGuest) {
-                this.noty("Debe iniciar sesión", "warning");
-                return;
-            }
+            // if (this.isUserGuest) {
+            //     this.$noty("Debe iniciar sesión", "warning");
+            //     return;
+            // }
 
             this.$emit("showCommentDialog", this.release);
         },
         updateRelease() {
             if (this.isUserGuest) {
-                this.noty("Debe iniciar sesión", "warning");
+                this.$noty("Debe iniciar sesión", "warning");
                 return;
             }
 

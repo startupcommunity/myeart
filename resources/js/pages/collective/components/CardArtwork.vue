@@ -190,11 +190,11 @@ export default {
                         .post(endpoint, { _method: "delete" })
                         .then((res) => {
                             if (res.status === 200) {
-                                this.noty("Obra eliminada con éxito.");
+                                this.$noty("Obra eliminada con éxito.");
                                 this.$emit("deleted");
                             }
                         })
-                        .catch((error) => this.manageError(error))
+                        .catch((error) => this.$manageError(error))
                         .finally(() => (this.globalLoading = false));
                 }
             });

@@ -48,7 +48,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (!this.isFormValidate) {
-        return this.noty("Todos los campos son requeridos", "warning");
+        return this.$noty("Todos los campos son requeridos", "warning");
       }
 
       this.globalLoading = true;
@@ -60,7 +60,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$emit("reload-address");
 
-          _this.noty("Dirección agregada con éxito");
+          _this.$noty("Dirección agregada con éxito");
         }
       })["catch"](function (error) {
         return _this.showRequestErrors(error);

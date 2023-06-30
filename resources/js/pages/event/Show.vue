@@ -241,7 +241,7 @@ export default {
             this.axios
                 .get(this.ep.events.show + id)
                 .then((resp) => (this.event = resp.data))
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
     },

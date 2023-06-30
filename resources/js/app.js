@@ -29,6 +29,9 @@ import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import loadingOverlayComponent from "./components/loadingOverlay";
 
+// register and login modal
+// import RegisterModal from "./components/RegisterModal.vue";
+
 // noty
 import Notifications from "vue-notification";
 
@@ -40,15 +43,15 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import * as VueGoogleMaps from "vue2-google-maps";
 
 //echo
-import Echo from 'laravel-echo';
+import Echo from "laravel-echo";
 
-window.Pusher = require('pusher-js');
+window.Pusher = require("pusher-js");
 
 window.Echo = new Echo({
-    broadcaster: 'pusher',
+    broadcaster: "pusher",
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    forceTLS: true
+    forceTLS: true,
 });
 
 Vue.use(VueGoogleMaps, {
@@ -71,6 +74,7 @@ Vue.use(VueSweetalert2);
 Vue.component("loading-overlay-original", Loading);
 Vue.component("loading-overlay", loadingOverlayComponent);
 Vue.component("vgm-places", VueGoogleMaps.Autocomplete);
+// Vue.component("register-modal", RegisterModal);
 Vue.mixin(globalMixin);
 
 // init API

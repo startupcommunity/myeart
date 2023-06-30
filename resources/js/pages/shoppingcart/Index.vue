@@ -163,7 +163,7 @@ export default {
             this.axios
                 .get(this.ep.carts.getItems)
                 .then((response) => (this.items = response.data))
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 

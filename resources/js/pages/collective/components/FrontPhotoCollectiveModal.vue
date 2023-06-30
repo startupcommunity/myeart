@@ -175,7 +175,7 @@ export default {
                 .post(ep, formData, this.headerFormData)
                 .then((resp) => {
                     if (resp.status === 200) {
-                        this.noty("Imagen de portada actualizada");
+                        this.$noty("Imagen de portada actualizada");
                         this.$emit("close-modal");
 
                         // reload user
@@ -188,7 +188,7 @@ export default {
                         this.clickBtnClear();
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
 

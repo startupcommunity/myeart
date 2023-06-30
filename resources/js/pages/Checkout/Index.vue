@@ -120,7 +120,7 @@ export default {
             this.axios
                 .get(this.ep.carts.getItems)
                 .then((response) => (this.items = response.data))
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -134,7 +134,7 @@ export default {
                     this.client_secret = resp.data;
                     this.showCart = true;
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -149,7 +149,7 @@ export default {
                     // devolver la dirección por defecto
                     this.address = response.data.find((a) => a.default === 1);
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -192,7 +192,7 @@ export default {
 
             if (!this.isShippingAddressInfo) {
                 const msj = "Debes llenar la dirección de envío";
-                this.noty(msj, "error");
+                this.$noty(msj, "error");
                 return;
             }
 
@@ -218,7 +218,7 @@ export default {
             });
 
             if (error) {
-                this.noty(error.message, "error");
+                this.$noty(error.message, "error");
                 this.loading = false;
             } else {
                 console.info("Pago procesado correctamente");

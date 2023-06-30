@@ -172,7 +172,7 @@ export default {
                     this.original = JSON.parse(JSON.stringify(res.data));
                     this.members = this.original.slice(0, INIT_ARTIST);
                 })
-                .catch((err) => this.manageError(err))
+                .catch((err) => this.$manageError(err))
                 .finally(() => (this.globalLoading = false));
         },
 
@@ -201,7 +201,7 @@ export default {
                         .post(this.ep.collectives.removeMember, data)
                         .then((resp) => {
                             if (resp.status !== 200) {
-                                this.noty(
+                                this.$noty(
                                     "No se pudo eliminar el miembro",
                                     "error"
                                 );
@@ -225,7 +225,7 @@ export default {
                                 this.collective.id
                             );
                         })
-                        .catch((err) => this.manageError(err))
+                        .catch((err) => this.$manageError(err))
                         .finally(() => (this.globalLoading = false));
                 }
             });

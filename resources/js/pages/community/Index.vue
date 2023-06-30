@@ -266,7 +266,7 @@ export default {
                 .get(ep)
                 .then(async (resp) => (this.artists = await resp.data))
                 .then(() => this.artists.slice(0, RANDOM_ARTIST))
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -297,7 +297,7 @@ export default {
                     this.releases = resp.data.slice(0, MAX_INIT_RELEASES);
                     this.original = JSON.parse(JSON.stringify(await resp.data));
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loadingReleases = false));
         },
 
@@ -315,7 +315,7 @@ export default {
                 .then((resp) => {
                     this.events = resp.data.slice(0, MAX_EVENTS);
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 

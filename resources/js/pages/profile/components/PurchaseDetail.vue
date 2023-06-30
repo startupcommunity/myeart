@@ -263,7 +263,7 @@ export default {
                                 });
                             }
                         })
-                        .catch((error) => this.manageError(error))
+                        .catch((error) => this.$manageError(error))
                         .finally(() => (this.loading = false));
                 }
             });

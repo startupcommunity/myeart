@@ -14,7 +14,7 @@
                         v-show="globalLoading"
                         css="w-full animate-swing-in-top-fwd"
                     />
-                    <div id="slider-other-events">
+                    <div id="slider-other-events" v-if="events.length">
                         <CardEvent
                             :event="event"
                             :key="event.id"
@@ -22,6 +22,14 @@
                             class="mb-5"
                             @interested="openReservationInfo"
                         />
+                    </div>
+                    <div v-else>
+                        <p class="text-center text-gray-500 text-lg font-light">
+                            No hay eventos disponibles
+                        </p>
+                        <p class="text-center text-gray-500 text-lg font-light -mt-2">
+                            <i class="fas fa-frown fa-2x text-gray-400"></i>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -57,9 +65,13 @@ export default {
     },
     methods: {
         getEvents() {
+            const ep = this.$isUserGuest
+                ? this.ep.events.getGuestAll
+                : this.ep.events.getAll;
+
             this.globalLoading = true;
             this.axios
-                .get(this.ep.events.getAll, {
+                .get(ep, {
                     params: {
                         sortBy: 1,
                         exclude: this.$route.params.id,
@@ -67,7 +79,7 @@ export default {
                 })
                 .then((resp) => (this.events = resp.data))
                 .then(() => this.showTNS())
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
         openReservationInfo(event) {

@@ -78,14 +78,18 @@ export default {
          * carga las calificaciones de un artista
          */
         loadRatings() {
+            const ep = this.$isUserGuest
+                ? this.ep.guest.getArtistRatings
+                : this.ep.user.getArtistRatings;
+
             this.loading = true;
             this.axios
-                .get(this.ep.user.getArtistRatings + this.artist.id)
+                .get(ep + this.artist.id)
                 .then((resp) => {
                     this.original = JSON.parse(JSON.stringify(resp.data));
                     this.ratings = resp.data.slice(0, INIT_RATING);
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 

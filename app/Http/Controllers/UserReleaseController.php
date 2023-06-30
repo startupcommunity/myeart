@@ -44,10 +44,10 @@ class UserReleaseController extends Controller
      *
      * @return JsonResponse
      */
-    public function getUserRelease(): JsonResponse
+    public function getUserRelease(int $id = null): JsonResponse
     {
         try {
-            $data = $this->db->getUserRelease();
+            $data = $this->db->getUserRelease($id);
             return $this->resp->json($data, 200);
         } catch (Exception $e) {
             return $this->resp->json($e, 500);

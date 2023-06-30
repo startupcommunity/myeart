@@ -51,7 +51,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.email = "";
       })["catch"](function (error) {
-        return _this.manageError(error);
+        return _this.$manageError(error);
       })["finally"](function () {
         return _this.loading = false;
       });

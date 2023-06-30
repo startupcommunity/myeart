@@ -8,6 +8,7 @@ export const importPage = (page) => () => import(`../pages/${page}.vue`);
 export const ifNotAuthenticated = (to, from, next) => {
     if (!store.getters.isAuthenticated) {
         next();
+        // store.dispatch("setShowModalRegister", true);
         return;
     }
     next("/dashboard");
@@ -19,5 +20,6 @@ export const ifAuthenticated = (to, from, next) => {
         next();
         return;
     }
-    next("/");
+    // next("/");
+    store.dispatch("setShowModalRegister", true);
 };

@@ -30,7 +30,7 @@ const artworkRoute = [
         name: "showArtwork",
         path: "/obras/:id",
         component: importPage("artwork/ShowArtwork"),
-        beforeEnter: ifAuthenticated,
+        // beforeEnter: ifAuthenticated,
     },
 ];
 

@@ -96,14 +96,18 @@ export default {
          * carga las publicaciones de un artista
          */
         loadReleases() {
+            const ep = this.$isUserGuest
+                ? this.ep.guest.getAllUserForID
+                : this.ep.releases.getAllUserForID;
+
             this.loading = true;
             this.axios
-                .get(this.ep.releases.getAllUserForID + this.artist.id)
+                .get(ep + this.artist.id)
                 .then((resp) => {
                     this.original = JSON.parse(JSON.stringify(resp.data));
                     this.releases = resp.data.slice(0, INIT_RELEASES);
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 

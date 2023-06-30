@@ -91,7 +91,7 @@ export default {
          * @returns     Notification
          */
         messageGuest() {
-            return this.noty("Debe iniciar sesión", "warning");
+            return this.$noty("Debe iniciar sesión", "warning");
         },
     },
 
@@ -177,7 +177,10 @@ export default {
                 });
 
                 // obtener datos de la imagen
-                const endpoint = this.ep.artworks.getImage + id;
+                const url = this.$isUserGuest
+                    ? this.ep.guest.getImage
+                    : this.ep.artworks.getImage;
+                const endpoint = url + id;
                 const image = await this.axios.get(endpoint);
                 const data = await image.data;
                 return { file, front: data.front_page };
@@ -206,7 +209,7 @@ export default {
                 document.execCommand("copy");
                 document.body.removeChild(textArea);
 
-                return this.noty("Copiado al portapapeles");
+                return this.$noty("Copiado al portapapeles");
             }
 
             // opción 2 - navigator
@@ -218,7 +221,7 @@ export default {
                     console.error("Async: Could not copy text: ", err);
                 }
             );
-            this.noty("Copiado al portapapeles");
+            this.$noty("Copiado al portapapeles");
         },
 
         /**

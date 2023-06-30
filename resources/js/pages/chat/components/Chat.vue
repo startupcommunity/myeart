@@ -300,7 +300,7 @@ export default {
                 .post(this.ep.conversations.check, data)
                 .then((resp) => (this.chatID = resp.data.id))
                 .then((_) => this.loadMessages())
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -317,7 +317,7 @@ export default {
             this.axios
                 .get(ep)
                 .then((resp) => (this.messages = resp.data))
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => {
                     if (indicateUpdate) this.loading = false;
                 });
@@ -340,7 +340,7 @@ export default {
                     this.message = "";
                     this.loadMessages();
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 

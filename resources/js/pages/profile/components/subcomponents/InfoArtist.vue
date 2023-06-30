@@ -119,7 +119,7 @@ export default {
 
                         this.$emit("updated-release");
                     } catch (error) {
-                        this.manageError(error);
+                        this.$manageError(error);
                     } finally {
                         this.globalLoading = false;
                     }

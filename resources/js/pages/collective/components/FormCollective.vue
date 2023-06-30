@@ -215,7 +215,7 @@ export default {
                         this.$store.dispatch("getUserCollective", this.form.id);
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
     },

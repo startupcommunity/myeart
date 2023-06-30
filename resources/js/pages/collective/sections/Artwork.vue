@@ -167,7 +167,7 @@ export default {
                     this.original = JSON.parse(JSON.stringify(res.data));
                     this.artworks = this.original.slice(0, INIT_ARTWORK);
                 })
-                .catch((err) => this.manageError(err))
+                .catch((err) => this.$manageError(err))
                 .finally(() => (this.globalLoading = false));
         },
 
@@ -190,7 +190,7 @@ export default {
                     this.original = JSON.parse(JSON.stringify(res.data));
                     this.artworks = this.original.slice(0, INIT_ARTWORK);
                 })
-                .catch((err) => this.manageError(err))
+                .catch((err) => this.$manageError(err))
                 .finally(() => (this.globalLoading = false));
         },
 

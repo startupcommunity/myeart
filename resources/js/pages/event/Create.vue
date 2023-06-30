@@ -256,7 +256,7 @@ export default {
             btn.click();
         },
         errorCropper(error) {
-            this.noty("Error al carga el archivo [" + error + "]", "error");
+            this.$noty("Error al carga el archivo [" + error + "]", "error");
         },
         savedCropper(file) {
             this.form.image = file;
@@ -267,7 +267,7 @@ export default {
             // si algo ha faltado
             if (!this.formIsValid) {
                 this.errors.forEach((error) => {
-                    this.noty(error, "error");
+                    this.$noty(error, "error");
                 });
 
                 return;
@@ -342,7 +342,7 @@ export default {
                         this.success = true;
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

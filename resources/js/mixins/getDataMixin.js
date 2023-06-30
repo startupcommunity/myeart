@@ -127,8 +127,12 @@ export default {
          * opcional: ignora una obra concreta
          */
         async getUserArtworks(userID, ignoreArtworkID = null) {
-            const ep = this.ep.artworks.getUserPublish;
-            const endpoint = `${ep + userID}/${ignoreArtworkID}`;
+            // const ep = this.ep.artworks.getUserPublish;
+            const url = this.$isUserGuest
+                ? this.ep.guest.getUserPublish
+                : this.ep.artworks.getUserPublish;
+
+            const endpoint = `${url + userID}/${ignoreArtworkID}`;
 
             return await this.axios
                 .get(endpoint)
@@ -136,7 +140,7 @@ export default {
                     if (resp.status !== 200) return false;
                     return await resp.data;
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => this.$manageError(error));
         },
 
         /**
@@ -150,7 +154,7 @@ export default {
             return this.axios
                 .get(this.ep.user.getUserChargeMethods + user_id)
                 .then((resp) => resp.data)
-                .catch((error) => this.manageError(error));
+                .catch((error) => this.$manageError(error));
         },
 
         /**
@@ -158,8 +162,12 @@ export default {
          * opcional: ignora un usuario en particular
          */
         async getPublishForCategory(categoryID, ignoreUserID = null) {
-            const ep = this.ep.artworks.getPublishForCategory;
-            const endpoint = `${ep + categoryID}/${ignoreUserID}`;
+            const url = this.$isUserGuest
+                ? this.ep.guest.getPublishForCategory
+                : this.ep.artworks.getPublishForCategory;
+
+            // const ep = this.ep.artworks.getPublishForCategory;
+            const endpoint = `${url + categoryID}/${ignoreUserID}`;
 
             return await this.axios
                 .get(endpoint)

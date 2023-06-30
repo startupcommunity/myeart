@@ -186,7 +186,7 @@ export default {
          */
         saveDirection() {
             if (!this.isFormValidate) {
-                return this.noty("Todos los campos son requeridos", "warning");
+                return this.$noty("Todos los campos son requeridos", "warning");
             }
 
             this.globalLoading = true;
@@ -200,7 +200,7 @@ export default {
                         this.$emit("close-modal-create-address");
                         this.$emit("reload-address");
 
-                        this.noty("Dirección agregada con éxito");
+                        this.$noty("Dirección agregada con éxito");
                     }
                 })
                 .catch((error) => this.showRequestErrors(error))

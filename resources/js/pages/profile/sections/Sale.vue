@@ -241,10 +241,10 @@ export default {
                         return;
                     }
 
-                    this.noty("Error al obtener las ventas", "error");
+                    this.$noty("Error al obtener las ventas", "error");
                 })
                 .then((_) => this.filterOrders())
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 

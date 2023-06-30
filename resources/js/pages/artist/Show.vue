@@ -17,9 +17,6 @@
             title="Obras del artista"
         />
 
-        <!-- blog -->
-        <!-- <Blog :artist="artist" title="Mis blog" /> -->
-
         <!-- events -->
         <EventSection
             :artist="artist"
@@ -28,7 +25,11 @@
         />
 
         <!-- publications -->
-        <Release :artist="artist" title="Publicaciones del artista" />
+        <Release
+            :artist="artist"
+            title="Publicaciones del artista"
+            v-if="artist?.id"
+        />
 
         <!-- calificaciones -->
         <RatingUserSection
@@ -101,15 +102,18 @@ export default {
          */
         getArtist() {
             const id = this.$route.params.id;
+            const ep = this.$isUserGuest
+                ? this.ep.guest.getArtist
+                : this.ep.user.getArtist;
             this.globalLoading = true;
 
             this.axios
-                .get(this.ep.user.getArtist + id)
+                .get(`${ep + id}`)
                 .then((res) => {
                     if (res.status !== 200) return false;
                     this.artist = res.data;
                 })
-                .catch((resp) => this.manageError(resp))
+                .catch((resp) => this.$manageError(resp))
                 .finally(() => (this.globalLoading = false));
         },
     },

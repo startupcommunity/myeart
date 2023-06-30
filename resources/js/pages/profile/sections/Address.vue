@@ -173,7 +173,7 @@ export default {
                         .post(endpoint, params)
                         .then((resp) => {
                             if (resp.status === 200) {
-                                this.noty("Eliminado con éxito");
+                                this.$noty("Eliminado con éxito");
                                 this.getShippingAddress();
                             }
                         })

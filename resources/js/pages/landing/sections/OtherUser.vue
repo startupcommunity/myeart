@@ -68,7 +68,7 @@ export default {
                     this.artists = response.data;
                 })
                 .then(() => this.loadTNS())
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 

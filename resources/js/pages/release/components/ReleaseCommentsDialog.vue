@@ -302,9 +302,13 @@ export default {
          * Obtiene los comentarios de la publicación
          */
         getComments() {
+            const ep = this.$isUserGuest
+                ? this.ep.guest.getComment
+                : this.ep.releases.getComment;
             this.loading = true;
+
             this.axios
-                .get(this.ep.releases.getComment + this.releaseID)
+                .get(ep + this.releaseID)
                 .then((resp) => {
                     // ordenar por fecha
                     this.comments = resp.data.comments.sort((a, b) => {
@@ -314,7 +318,7 @@ export default {
                     // la publicación actualizada
                     this.release = resp.data;
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -338,12 +342,12 @@ export default {
             this.axios
                 .post(this.ep.releases.storeComment, data)
                 .then(() => {
-                    this.noty("Tu comentario ha sido publicado");
+                    this.$noty("Tu comentario ha sido publicado");
                     this.question = "";
                     this.$refs.formComment.resetValidation();
                     this.getComments();
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

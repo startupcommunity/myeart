@@ -163,11 +163,15 @@ export default {
          * y sus calificaciones
          */
         getRatings() {
+            const ep = this.$isUserGuest
+                ? this.ep.guest.getArtistRatings
+                : this.ep.user.getArtistRatings;
+
             this.loading = true;
             this.axios
-                .get(this.ep.user.getArtistRatings + this.id)
+                .get(`${ep + this.id}`)
                 .then((response) => (this.data = response.data))
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

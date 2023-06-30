@@ -70,12 +70,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2 = this;
 
       if (!this.canFollowArtist) {
-        this.noty("No es posible autoseguirte", "error");
-        return;
-      }
-
-      if (this.isGuest) {
-        this.noty("Debe iniciar sesión", "warning");
+        this.$noty("No es posible autoseguirte", "error");
         return;
       }
 
@@ -88,11 +83,11 @@ __webpack_require__.r(__webpack_exports__);
         if (resp.status !== 200) return false;
         var mjs = _this2.isFollowingArtist ? "Dejaste de seguir a este artista" : "Ahora sigues a este artista";
 
-        _this2.noty(mjs);
+        _this2.$noty(mjs);
 
         _this2.$store.dispatch("userRequest");
       })["catch"](function (error) {
-        return console.error(error);
+        return _this2.$manageError(error);
       })["finally"](function () {
         return _this2.loadFollow = false;
       });

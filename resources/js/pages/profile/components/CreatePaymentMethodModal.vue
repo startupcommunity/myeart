@@ -151,7 +151,7 @@ export default {
 
         createPaymentMethod() {
             if (!this.isDataValid()) {
-                this.noty("Por favor, rellena todos los campos", "error");
+                this.$noty("Por favor, rellena todos los campos", "error");
                 return;
             }
 
@@ -162,7 +162,7 @@ export default {
                 .post(this.ep.paymentMethods.store, this.form)
                 .then((resp) => {
                     if (resp.status !== 200) {
-                        this.noty(
+                        this.$noty(
                             "Hubo un error al crear el método de pago",
                             "error"
                         );
@@ -176,7 +176,7 @@ export default {
                     this.$emit("created");
                     this.$emit("close");
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

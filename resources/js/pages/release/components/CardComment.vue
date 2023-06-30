@@ -255,7 +255,7 @@ export default {
                     // aumenta o disminuye el numero de likes
                     this.liked ? this.likes++ : this.likes--;
                 })
-                .catch((error) => this.manageError(error));
+                .catch((error) => this.$manageError(error));
         },
 
         /**
@@ -290,7 +290,7 @@ export default {
             if (!this.$refs.formAnswer.validate()) return;
 
             if (!this.user?.id) {
-                this.noty(
+                this.$noty(
                     "Debes iniciar sesión para poder responder",
                     "warning"
                 );
@@ -311,11 +311,11 @@ export default {
                 .post(this.ep.comments.addAnswerRelease, data)
                 .then(() => {
                     this.$emit("addAnswer");
-                    this.noty("Tu respuesta agregada ha sido publicada");
+                    this.$noty("Tu respuesta agregada ha sido publicada");
                     this.releaseAnswer = "";
                     this.answer = false;
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

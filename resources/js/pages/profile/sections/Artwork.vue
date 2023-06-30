@@ -474,7 +474,7 @@ export default {
                 .then((r) => {
                     this.hasPaymentMethod = r.data.length === 0 ? false : true;
                 })
-                .catch((error) => this.manageError(error));
+                .catch((error) => this.$manageError(error));
         },
     },
     watch: {

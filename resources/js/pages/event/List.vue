@@ -129,7 +129,7 @@ export default {
                     this.original = JSON.parse(JSON.stringify(resp.data));
                     this.events = this.original.slice(0, MAX_INIT_EVENTS);
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
         openReservationInfo(event) {

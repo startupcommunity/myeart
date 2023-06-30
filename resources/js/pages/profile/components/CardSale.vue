@@ -222,7 +222,7 @@ export default {
     methods: {
         downloadPdf() {
             this.loadingPdf = true;
-            this.noty("Descargando certificado...", "info", 5000);
+            this.$noty("Descargando certificado...", "info", 5000);
 
             const element = document.getElementById("item_" + this.item.id);
             const opt = {

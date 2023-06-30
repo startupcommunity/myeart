@@ -89,12 +89,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$refs.commentForm.resetValidation();
 
-        _this.noty("Pregunta agregada correctamente"); // emit
+        _this.$noty("Pregunta agregada correctamente"); // emit
 
 
         _this.$emit("saveComment", resp.data);
       })["catch"](function (err) {
-        return _this.manageError(err);
+        return _this.$manageError(err);
       })["finally"](function () {
         return _this.loading = false;
       });

@@ -201,7 +201,7 @@ export default {
         updateDirection() {
             console.log(this.form);
             if (!this.isFormValidate) {
-                return this.noty("Todos los campos son requeridos", "warning");
+                return this.$noty("Todos los campos son requeridos", "warning");
             }
 
             this.globalLoading = true;
@@ -216,7 +216,7 @@ export default {
                         this.$emit("close-modal-edit-address");
                         this.$emit("reload-address");
 
-                        this.noty("Dirección actualizada con éxito");
+                        this.$noty("Dirección actualizada con éxito");
                     }
                 })
                 .catch((error) => this.showRequestErrors(error))

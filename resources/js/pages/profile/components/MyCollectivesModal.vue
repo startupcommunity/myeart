@@ -90,7 +90,7 @@ export default {
                         this.collectives = resp.data;
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
     },

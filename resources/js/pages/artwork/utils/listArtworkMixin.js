@@ -129,7 +129,7 @@ export default {
                         this.totalRecords = await resp.data.total;
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loadArtworkPublished = false));
         },
 

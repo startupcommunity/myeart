@@ -102,7 +102,7 @@ export default {
                         this.$router.push({ name: "login" });
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
     },

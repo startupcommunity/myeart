@@ -198,12 +198,12 @@ export default {
                         return;
                     }
 
-                    this.noty(
+                    this.$noty(
                         "No se pudo agregar los datos bancarios",
                         "error"
                     );
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

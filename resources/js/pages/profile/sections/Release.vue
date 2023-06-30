@@ -156,7 +156,7 @@ export default {
                     this.original = JSON.parse(JSON.stringify(resp.data));
                     this.releases = resp.data.splice(0, INIT_RELEASES);
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -251,7 +251,7 @@ export default {
 
                         this.getReleases();
                     } catch (error) {
-                        this.manageError(error);
+                        this.$manageError(error);
                     } finally {
                         this.loading = false;
                     }

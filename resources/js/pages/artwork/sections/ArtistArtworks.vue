@@ -97,6 +97,7 @@ export default {
                     }
                 })
                 .then(() => this.showTNS())
+                .catch((err) => this.$manageError(err))
                 .finally(() => (this.loading = false));
         },
 

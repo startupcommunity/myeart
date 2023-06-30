@@ -276,7 +276,7 @@ export default {
                 .get(this.ep.orders.getItem + this.orderItemID)
                 .then((resp) => (this.orderItem = resp.data))
                 .then((_) => this.loadMessages())
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -291,7 +291,7 @@ export default {
                 .then((resp) => {
                     this.messages = resp.data;
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
@@ -310,7 +310,7 @@ export default {
          */
         sendMessage() {
             if (!this.message) {
-                this.noty("El mensaje no puede estar vacío", "error");
+                this.$noty("El mensaje no puede estar vacío", "error");
                 return;
             }
 
@@ -325,10 +325,10 @@ export default {
                     if (resp.status === 200) {
                         this.message = "";
                         this.loadMessages();
-                        this.noty("Mensaje enviado correctamente", "success");
+                        this.$noty("Mensaje enviado correctamente", "success");
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

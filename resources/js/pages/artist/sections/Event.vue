@@ -85,16 +85,23 @@ export default {
          */
         getEvents() {
             this.loading = true;
+            const ep = this.$isUserGuest
+                ? this.ep.guest.getUserEvents
+                : this.ep.events.getUserEvents;
 
             this.axios
-                .get(this.ep.events.getUserEvents + this.artist.id)
+                .get(`${ep + this.artist.id}`)
                 .then((resp) => {
                     this.events = resp.data.slice(0, MAX_INIT_EVENTS);
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
+        /**
+         * Abre el modal de info de reserva
+         * @param {Object} event
+         */
         openReservationInfo(event) {
             this.event = event;
             this.showReservation = true;

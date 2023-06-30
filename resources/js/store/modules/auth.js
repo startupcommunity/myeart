@@ -22,8 +22,8 @@ const getters = {
 
 const actions = {
     authRequest: ({ commit, dispatch }, payload) => {
+        // default action -> login
         let actionUrl = "/api/login";
-        let remember = payload.remember ? payload.remember : false;
         let data = {
             email: payload.email,
             password: payload.password,
@@ -39,15 +39,6 @@ const actions = {
                 password_confirmation: payload.password_confirmation,
             };
         }
-        if (payload.action == "password-reset") {
-            actionUrl = "/api/password/reset";
-            data = {
-                token: payload.token,
-                email: payload.email,
-                password: payload.password,
-                password_confirmation: payload.password_confirmation,
-            };
-        }
 
         return new Promise((resolve, reject) => {
             commit("authRequest");
@@ -55,21 +46,24 @@ const actions = {
                 .post(actionUrl, data)
                 .then((resp) => {
                     let access_token = "Bearer " + resp.data.access_token;
+
+                    // registro
+                    if (payload.action == "register") {
+                        commit("registerSuccess", resp.data);
+                        resolve(access_token);
+                        return;
+                    }
+
+                    // login
                     JwtService.setUser(resp.data);
-
                     ApiService.setHeader();
-
                     commit("authSuccess", access_token);
-                    //dispatch('userRequest');
                     resolve(access_token);
-
-                    console.log(resp);
                 })
                 .catch((err) => {
                     console.log(err.response);
                     commit("authError", err.response.data);
-                    JwtService.unsetUser();
-                    ApiService.init();
+                    commit("authLogout");
                     reject(err);
                 });
         });
@@ -117,6 +111,11 @@ const mutations = {
         state.access_token = "";
         JwtService.unsetUser();
         ApiService.init();
+    },
+
+    registerSuccess(state) {
+        state.status = "success";
+        state.hasLoadedOnce = true;
     },
 };
 

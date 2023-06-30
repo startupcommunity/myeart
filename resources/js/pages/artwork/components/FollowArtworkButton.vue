@@ -83,12 +83,8 @@ export default {
          * Seguir o dejar de seguir a una obra
          */
         followOrUnfollow() {
-            if (this.isUserGuest) {
-                return this.noty("Debes iniciar sesión", "warning");
-            }
-
             if (!this.canFollowArtwork) {
-                this.noty("No es posible auto seguir tus obras", "error");
+                this.$noty("No es posible auto seguir tus obras", "error");
                 return;
             }
 
@@ -101,19 +97,19 @@ export default {
                 .post(ep, { artwork_id: this.artworkID })
                 .then((resp) => {
                     if (resp.status === 204) {
-                        this.noty(resp.data, "error");
+                        this.$noty(resp.data, "error");
                         return;
                     }
 
                     if (this.isFollowingArtwork) {
-                        this.noty("Obra eliminada de favoritos", "success");
+                        this.$noty("Obra eliminada de favoritos", "success");
                     } else {
-                        this.noty("Obra agregada a favoritos", "success");
+                        this.$noty("Obra agregada a favoritos", "success");
                     }
 
                     this.$store.dispatch("userFollowArtworks");
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loadFollow = false));
         },
     },

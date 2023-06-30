@@ -623,28 +623,28 @@ export default {
             this.globalLoading = true;
             const id = this.$route.params.id;
 
+            const ep = this.$isUserGuest
+                ? this.ep.guest.showArtwork
+                : this.ep.artworks.show;
+
             this.axios
-                .get(this.ep.artworks.show + id)
+                .get(ep + id)
                 .then((resp) => {
                     if (resp.status !== 200) return false;
-
-                    // data
-                    const { gallery, views } = resp.data;
-
-                    // obra
-                    this.artwork = resp.data;
-
-                    // load galeria
-                    this.loadGallery(gallery);
+                    const { gallery, views } = resp.data; // data
+                    this.artwork = resp.data; // cargar la obra
+                    this.loadGallery(gallery); // cargar la galeria
+                    this.loadView(views); // cargar las views
 
                     // si esta like por el usuario
-                    this.isLiked();
-
-                    // cargar las views
-                    this.loadView(views);
+                    if (!this.$isUserGuest) {
+                        this.isLiked();
+                    }
 
                     // agregar una visita
-                    this.addView();
+                    if (!this.$isUserGuest) {
+                        this.addView();
+                    }
                 })
                 .catch((error) => console.error(error))
                 .finally(() => (this.globalLoading = false));
@@ -701,7 +701,7 @@ export default {
                         this.isLike = !this.isLike;
                     }
                 })
-                .catch((error) => console.log(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
 
@@ -732,8 +732,12 @@ export default {
                 artwork_id: this.artwork.id,
             };
 
+            const url = this.$isUserGuest
+                ? this.ep.guest.addVisit
+                : this.ep.artworks.addVisit;
+
             this.axios
-                .post(this.ep.artworks.addVisit, data)
+                .post(url, data)
                 .then((_) => console.info("visita agregada con éxito"))
                 .catch((error) => console.log(error));
         },
@@ -782,13 +786,13 @@ export default {
                     }
 
                     if (resp.status === 204) {
-                        this.noty(
+                        this.$noty(
                             "La obra no se encuentra disponible",
                             "warning"
                         );
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

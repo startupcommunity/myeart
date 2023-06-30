@@ -211,7 +211,7 @@ class ArtworkController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $this->authorize('view', Artwork::class);
+        // $this->authorize('view', Artwork::class);
 
         $resp = ArtworkDB::getArtworkWithRelations($id);
 
@@ -230,7 +230,7 @@ class ArtworkController extends Controller
      */
     public function getUserPublish(int $id, int $artworkID = null): JsonResponse
     {
-        $this->authorize('view', Artwork::class);
+        // $this->authorize('view', Artwork::class);
 
         $resp = ArtworkDB::getPublishUserArtworks($id, $artworkID);
 
@@ -248,7 +248,9 @@ class ArtworkController extends Controller
      */
     public function getPublishForCategory(int $categoryID, int $userID = null): JsonResponse
     {
-        $this->authorize('view', Artwork::class);
+        if (auth()->user()) {
+            $this->authorize('view', Artwork::class);
+        }
 
         $resp = ArtworkDB::getPublishForCategory($categoryID, $userID);
 
@@ -263,7 +265,9 @@ class ArtworkController extends Controller
      */
     public function addView(Request $request): JsonResponse
     {
-        $this->authorize('view', Artwork::class);
+        if (auth()->user()) {
+            $this->authorize('view', Artwork::class);
+        }
 
         $resp = $this->artworkfactory->addView($request);
 

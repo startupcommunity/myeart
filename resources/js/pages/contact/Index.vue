@@ -172,7 +172,7 @@ export default {
                     this.form.email = "";
                     this.form.message = "";
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

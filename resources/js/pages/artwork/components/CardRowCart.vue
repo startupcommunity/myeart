@@ -179,7 +179,7 @@ export default {
                     this.axios
                         .post(ep, _method)
                         .then((resp) => this.successMsj())
-                        .catch((error) => this.manageError(error))
+                        .catch((error) => this.$manageError(error))
                         .finally(() => (this.loading = false));
                 }
             });

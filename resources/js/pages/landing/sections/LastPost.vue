@@ -70,7 +70,7 @@ export default {
                 .get(ep)
                 .then((resp) => (this.artworks = resp.data))
                 .then(() => this.loadTNS())
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 

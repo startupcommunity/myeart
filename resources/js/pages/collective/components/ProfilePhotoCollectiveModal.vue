@@ -176,7 +176,7 @@ export default {
                 .post(ep, formData, this.headerFormData)
                 .then((resp) => {
                     if (resp.status === 200) {
-                        this.noty("Imagen actualizada");
+                        this.$noty("Imagen actualizada");
                         this.$emit("close-modal");
 
                         // reload collective
@@ -189,7 +189,7 @@ export default {
                         this.clickBtnClear();
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
 

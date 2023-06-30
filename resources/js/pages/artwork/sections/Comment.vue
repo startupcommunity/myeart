@@ -150,7 +150,10 @@ export default {
          */
         loadComments() {
             this.loading = true;
-            const ep = `${this.ep.comments.artworkList + this.artwork.id}`;
+            const url = this.$isUserGuest
+                ? this.ep.guest.artworkList
+                : this.ep.comments.artworkList;
+            const ep = `${url + this.artwork.id}`;
 
             this.axios
                 .get(ep)
@@ -164,7 +167,7 @@ export default {
                         MAX_COMMENTS
                     );
                 })
-                .catch((err) => this.manageError(err))
+                .catch((err) => this.$manageError(err))
                 .finally(() => (this.loading = false));
         },
 

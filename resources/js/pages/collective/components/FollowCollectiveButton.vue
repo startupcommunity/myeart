@@ -79,7 +79,7 @@ export default {
             }
 
             if (this.isCreator) {
-                this.noty("No puedes seguir tu propio colectivo", "warning");
+                this.$noty("No puedes seguir tu propio colectivo", "warning");
                 return;
             }
 
@@ -98,10 +98,10 @@ export default {
                 .then((resp) => {
                     if (resp.status === 201 || resp.status === 200) {
                         if (this.isFollowing) {
-                            this.noty("Has dejado de seguir este colectivo");
+                            this.$noty("Has dejado de seguir este colectivo");
                             this.$emit("unfollow");
                         } else {
-                            this.noty("Has seguido este colectivo");
+                            this.$noty("Has seguido este colectivo");
                             this.$emit("follow");
                         }
 
@@ -109,7 +109,7 @@ export default {
                         this.$store.dispatch("userFollowCollectives");
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

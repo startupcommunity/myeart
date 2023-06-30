@@ -262,7 +262,7 @@ export default {
 
                     this.original = JSON.parse(JSON.stringify(this.friends));
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
 
@@ -285,16 +285,16 @@ export default {
                 .post(ep, data)
                 .then((resp) => {
                     if (resp.status === 201) {
-                        this.noty("Invitación enviada");
+                        this.$noty("Invitación enviada");
                         this.getFriends();
                         return;
                     }
 
                     if (resp.status === 204) {
-                        this.noty("Ya fue enviada la invitación", "warning");
+                        this.$noty("Ya fue enviada la invitación", "warning");
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => {
                     this.globalLoading = false;
                     artist.loading = false;

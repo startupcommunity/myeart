@@ -66,7 +66,7 @@ export default {
             this.axios
                 .get(this.ep.user.getArtistRatings + this.user.id)
                 .then((resp) => (this.ratings = resp.data))
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

@@ -112,12 +112,12 @@ export default {
                 .then((resp) => {
                     this.form.comment = "";
                     this.$refs.commentForm.resetValidation();
-                    this.noty("Pregunta agregada correctamente");
+                    this.$noty("Pregunta agregada correctamente");
 
                     // emit
                     this.$emit("saveComment", resp.data);
                 })
-                .catch((err) => this.manageError(err))
+                .catch((err) => this.$manageError(err))
                 .finally(() => (this.loading = false));
         },
     },

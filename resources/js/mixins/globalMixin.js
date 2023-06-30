@@ -13,6 +13,7 @@ import requestErrorsMixin from "./requestErrorsMixin";
 export default {
     name: "globalMixin",
     mixins: [requestErrorsMixin],
+
     data() {
         return {
             globalLoading: false,
@@ -21,104 +22,22 @@ export default {
             ArtWeight: "kg",
         };
     },
-    methods: {
-        /**
-         * Muestra una notificacion al usuario
-         */
-        noty(text, type = "success", duration = 3000) {
-            this.$notify({
-                group: "container",
-                type,
-                text,
-                duration,
-            });
-        },
 
-        /**
-         * Devuelve una notificación al estilo de swalert
-         *
-         * @param {Object} params       objeto de config
-         * @returns
-         */
-        notySwal({ icon = "success", title, text, showConfirmButton = true }) {
-            const config = this.$swal.mixin({
-                customClass: {
-                    confirmButton: "btn btn-outline-success",
-                    cancelButton: "btn btn-danger",
-                    // showCancelButton: "btn-outline-success",
-                },
-                buttonsStyling: false,
-            });
-
-            return config.fire(title, text, icon, showConfirmButton);
-        },
-
-        /**
-         * Muestra un dialog de confirmación para una acción concreta
-         *
-         * @returns new Promise
-         */
-        async confirmedDialog({
-            title = "¿Desea eliminar definitivamente?",
-            text = "Esta opción no se puede revertir.",
-            icon = "warning",
-            confirmButtonText = "Si, Eliminar",
-            cancelButtonText = "Cancelar",
-        } = {}) {
-            return await this.$swal
-                .fire({
-                    title,
-                    text,
-                    icon,
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText,
-                    cancelButtonText,
-                })
-                .then(async (result) => await result);
-        },
-
-        /**
-         * Ir directamente a una sección indicada
-         *  dentro de la pagina
-         *
-         * @param {String} id
-         */
-        toScrollTo(id = null, setTop = 0) {
-            // encontrar el elemento por el id
-            let ele = { top: setTop };
-            if (id) {
-                const el = document.getElementById(id);
-                ele = el ? el.getBoundingClientRect() : ele;
-            }
-
-            // en caso de recibir el parámetro, se asigna el mismo
-            const top = setTop > 0 ? setTop : ele.top;
-
-            globalThis.scrollTo({ top, behavior: "smooth" });
-        },
-
-        /**
-         * Administra el error como request del backend
-         *
-         * @param {Object} resp  respuesta del backend
-         */
-        manageError(resp) {
-            console.error(resp);
-            if (resp?.request?.status === 404) {
-                this.$router.push({ name: "NotFound" });
-            }
-
-            if (resp?.request?.status === 500) {
-                this.$router.push({ name: "ServerError" });
-            }
-
-            // si el error es de validación
-            this.showRequestErrors(resp);
-        },
-    },
     computed: {
+        /**
+         * Devuelve si el usuario no esta logueado
+         */
+        $isUserGuest() {
+            const authUser = this.$store.getters.getProfile;
+
+            return (
+                authUser?.id === undefined ||
+                authUser?.id === null ||
+                authUser?.id === "" ||
+                authUser?.id === 0
+            );
+        },
+
         /**
          * Path para las fotos de portadas
          */
@@ -306,5 +225,119 @@ export default {
          * @returns string
          */
         ep: () => endpoints,
+    },
+
+    methods: {
+        /**
+         * Muestra una notificacion al usuario
+         */
+        $noty(text, type = "success", duration = 3000) {
+            this.$notify({
+                group: "container",
+                type,
+                text,
+                duration,
+            });
+        },
+
+        /**
+         * Devuelve una notificación al estilo de swalert
+         *
+         * @param {Object} params       objeto de config
+         * @returns
+         */
+        notySwal({ icon = "success", title, text, showConfirmButton = true }) {
+            const config = this.$swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-outline-success",
+                    cancelButton: "btn btn-danger",
+                    // showCancelButton: "btn-outline-success",
+                },
+                buttonsStyling: false,
+            });
+
+            return config.fire(title, text, icon, showConfirmButton);
+        },
+
+        /**
+         * Muestra un dialog de confirmación para una acción concreta
+         *
+         * @returns new Promise
+         */
+        async confirmedDialog({
+            title = "¿Desea eliminar definitivamente?",
+            text = "Esta opción no se puede revertir.",
+            icon = "warning",
+            confirmButtonText = "Si, Eliminar",
+            cancelButtonText = "Cancelar",
+        } = {}) {
+            return await this.$swal
+                .fire({
+                    title,
+                    text,
+                    icon,
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText,
+                    cancelButtonText,
+                })
+                .then(async (result) => await result);
+        },
+
+        /**
+         * Ir directamente a una sección indicada
+         *  dentro de la pagina
+         *
+         * @param {String} id
+         */
+        toScrollTo(id = null, setTop = 0) {
+            // encontrar el elemento por el id
+            let ele = { top: setTop };
+            if (id) {
+                const el = document.getElementById(id);
+                ele = el ? el.getBoundingClientRect() : ele;
+            }
+
+            // en caso de recibir el parámetro, se asigna el mismo
+            const top = setTop > 0 ? setTop : ele.top;
+
+            globalThis.scrollTo({ top, behavior: "smooth" });
+        },
+
+        /**
+         * Administra los errores de la app
+         *
+         * @param {Object} resp  respuesta del backend
+         */
+        $manageError(resp) {
+            // console.error(resp);
+            if (resp?.request?.status === 404) {
+                // NOT FOUND
+                this.$router.push({ name: "NotFound" });
+            }
+
+            if (resp?.request?.status === 500) {
+                // SERVER ERROR
+                this.$router.push({ name: "ServerError" });
+            }
+
+            if (resp?.request?.status === 401) {
+                // UNAUTHORIZED
+                this.$flowForGuest();
+            }
+
+            // si el error es de validaciones del backend
+            this.showRequestErrors(resp);
+        },
+
+        /**
+         * Flujo para usuarios invitados
+         * dispara el modal de registro
+         * @returns    Notification
+         */
+        $flowForGuest() {
+            return this.$store.dispatch("setShowModalRegister", true);
+        },
     },
 };

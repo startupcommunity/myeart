@@ -57,15 +57,6 @@ export default {
             this.likes = this.event?.likes?.length || 0;
         },
         addLikeOrDislike() {
-            if (!this.hasUser) {
-                this.noty(
-                    "Debes iniciar sesión para dar un like",
-                    "error"
-                );
-
-                return;
-            }
-
             const data = {
                 event_id: this.event.id,
                 user_id: this.user.id,
@@ -89,7 +80,7 @@ export default {
                         this.likes++;
                     }
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
     },

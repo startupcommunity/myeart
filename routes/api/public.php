@@ -10,6 +10,7 @@ use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CollectiveController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\UserController;
@@ -126,4 +127,73 @@ Route::group(['prefix' => 'guest'], function () {
    */
   Route::get('/collectives/get-all', [CollectiveController::class, 'getAllCollectives'])
     ->name('getGuestAllCollectives');
+
+  /**
+   * Devuelve un usuario artista con sus respectivas relaciones
+   */
+  Route::get('/user/get-artist/{id}', [UserController::class, 'getArtist'])
+    ->name('getGuestArtist');
+
+  /**
+   * Obtiene los eventos de un usuario
+   */
+  Route::get('/events/get-user-events/{id}', [UserEventController::class, 'getUserEvents'])
+    ->name('getGuestUserEvents');
+
+  /**
+   * Devuelve las calificaciones de un usuario
+   */
+  Route::get('/user/get-artist-ratings/{id}', [UserController::class, 'getUserRatings'])
+    ->name('getGuestUserRatings');
+
+  /**
+   * Devuelve todas las publicaciones del un usuario
+   */
+  Route::get('/releases/get-user-releases/{id?}', [UserReleaseController::class, 'getUserRelease'])
+    ->name('getGuestUserRelease');
+
+  /**
+   * @param Int $id   id del usuario
+   * @param Int|null  $artworkID   id de la obra a ignorar (opcional)
+   */
+  Route::get('/artworks/user/publish/{id}/{artworkID?}', [ArtworkController::class, 'getUserPublish'])
+    ->name('getGuestUserPublishArtworks');
+
+  /**
+   * Obtiene una obra por su id con sus relaciones
+   */
+  Route::get('/artworks/show/{id}', [ArtworkController::class, 'show'])
+    ->name('showGuestArtworks');
+
+  /**
+   * Devuelve la imagen de la obra
+   */
+  Route::get('/artworks/image/{id}', [ArtworkController::class, 'getImage'])
+    ->name('getGuestImage');
+
+  /**
+   * Agrega una visita a la obra
+   */
+  Route::post('/artworks/addvisit', [ArtworkController::class, 'addView'])
+    ->name('addGuestView');
+
+  /**
+   * Devuelve otras obras publicadas
+   * @param Int $category_id      id de la categoría a filtrar
+   * @param Int $user_id          id del usuario con obras a ignorar
+   */
+  Route::get('/artworks/publish/category/{category_id}/{user_id?}', [ArtworkController::class, 'getPublishForCategory'])
+    ->name('getGuestPublishForCategory');
+
+  /**
+   * Devuelve la lista de comentarios de una obra
+   */
+  Route::get('/comments/artwork-list/{id}', [CommentController::class, 'artworkList'])
+    ->name('artworkGuestList');
+
+  /**
+   * Devuelve los comentarios de una publicación
+   */
+  Route::get('/releases/get-comments/{id}', [UserReleaseController::class, 'getComments'])
+    ->name('getGuestReleaseComments');
 });

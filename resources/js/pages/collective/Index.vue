@@ -275,7 +275,7 @@ export default {
                         this.totalRecords = res.data.total;
                     }
                 })
-                .catch((err) => this.manageError(err))
+                .catch((err) => this.$manageError(err))
                 .finally(() => (this.collectiveLoading = false));
         },
 

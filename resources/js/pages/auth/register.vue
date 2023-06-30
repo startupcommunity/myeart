@@ -217,40 +217,40 @@ export default {
             };
 
             if (this.username === "") {
-                return this.noty(
+                return this.$noty(
                     "Por favor ingrese su nombre de usuario",
                     "error"
                 );
             }
 
             if (this.name === "") {
-                return this.noty("Por favor ingrese su nombre", "error");
+                return this.$noty("Por favor ingrese su nombre", "error");
             }
 
             if (this.email === "") {
-                return this.noty("Por favor ingrese su correo", "error");
+                return this.$noty("Por favor ingrese su correo", "error");
             }
 
             if (this.password === "") {
-                return this.noty("Por favor ingrese su contraseña", "error");
+                return this.$noty("Por favor ingrese su contraseña", "error");
             }
 
             if (this.password_confirmation === "") {
-                return this.noty(
+                return this.$noty(
                     "Por favor ingrese su confirmación de contraseña",
                     "error"
                 );
             }
 
             if (!this.accept) {
-                return this.noty(
+                return this.$noty(
                     "Por favor acepte los términos y condiciones",
                     "error"
                 );
             }
 
             this.$store.dispatch("authRequest", obj).then(() => {
-                this.noty("Registro exitoso");
+                this.$noty("Registro exitoso");
                 // this.$store.dispatch("userRequest");
                 // this.$router.push("/dashboard");
                 // this.$router.push({ name: "confirmRegisterEmail" });

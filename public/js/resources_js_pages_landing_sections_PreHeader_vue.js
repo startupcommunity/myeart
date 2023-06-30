@@ -40,23 +40,27 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "flex flex-row justify-between items-center bg-white px-2 sm:px-4"
+    staticClass: "flex flex-row justify-between items-center bg-white px-2 h-20 sm:px-4"
   }, [_c("div", {
-    staticClass: "flex-auto w-4/5 sm:w-[90%]"
+    staticClass: "md:w-2/6 hidden sm:flex"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "w-2/4 md:w-2/6 pt-7"
   }, [_c("div", {
-    staticClass: "flex flex-wrap sm:justify-center items-center text-start sm:text-center text-dark"
+    staticClass: "flex sm:justify-center items-center text-start sm:text-center text-dark"
   }, [_c("img", {
     attrs: {
       src: "/img/shipping.png",
       alt: "shipping"
     }
-  }), _vm._v(" "), _c("div", [_c("b", {
-    staticClass: "text-[10px] sm:text-lg text-"
-  }, [_vm._v("\n                    ENVÍOS GRATIS A TODO EL MUNDO\n                ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "text-end text-primary flex-auto w-1/5 sm:w-[10%]"
-  }, [_c("b", {
-    staticClass: "text-xs sm:text-lg"
-  }, [_vm._v("ESPAÑOL")])])]);
+  }), _vm._v(" "), _c("b", {
+    staticClass: "text-[10px] sm:text-lg"
+  }, [_vm._v("\n                ENVÍOS GRATIS A TODO EL MUNDO\n            ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "w-2/4 md:w-2/6 pt-10"
+  }, [_c("p", {
+    staticClass: "text-end text-primary"
+  }, [_c("span", {
+    staticClass: "text-xs sm:text-lg font-bold"
+  }, [_vm._v("ESPAÑOL")])])])]);
 }];
 render._withStripped = true;
 

@@ -38,9 +38,6 @@ export default {
         favEvents() {
             return this.$store.getters.getFollowEvents;
         },
-        hasUser() {
-            return this.user?.id;
-        },
     },
 
     methods: {
@@ -49,15 +46,6 @@ export default {
         },
 
         addOrRemoveFav() {
-            if (!this.hasUser) {
-                this.noty(
-                    "Debes iniciar sesión para agregar a favoritos",
-                    "error"
-                );
-
-                return;
-            }
-
             const data = {
                 event_id: this.event.id,
                 user_id: this.user.id,
@@ -73,16 +61,16 @@ export default {
                 .then((_) => {
                     if (this.isFav) {
                         this.isFav = false;
-                        this.noty("Evento eliminado de favoritos", "success");
+                        this.$noty("Evento eliminado de favoritos", "success");
                     } else {
-                        this.noty("Evento agregado a favoritos", "success");
+                        this.$noty("Evento agregado a favoritos", "success");
                         this.isFav = true;
                     }
 
                     // this.$store.dispatch("userRequest");
                     this.$store.dispatch("userFavoriteEvents");
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
     },

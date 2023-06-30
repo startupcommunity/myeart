@@ -87,7 +87,7 @@ export default {
                     // limpiar campos
                     this.email = "";
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

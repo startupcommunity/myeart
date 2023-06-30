@@ -222,7 +222,7 @@ class ArtworkFactory
   {
     $user = auth()->user();
     $data = [
-      'user_id' => $user->id,
+      'user_id' => $user->id ?? null,
       'ip' => $request->ip(),
     ];
 

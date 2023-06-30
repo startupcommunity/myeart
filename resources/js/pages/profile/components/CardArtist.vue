@@ -77,7 +77,6 @@
             :id="artist.id"
             :show="showRating"
             @close="showRating = false"
-            v-if="!isUserGuest"
         />
     </div>
 </template>
@@ -193,10 +192,6 @@ export default {
          * Abrir la modal de calificaciones
          */
         openRatings() {
-            if (this.isUserGuest) {
-                return this.messageGuest;
-            }
-
             this.showRating = true;
         },
     },

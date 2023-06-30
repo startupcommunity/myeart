@@ -266,12 +266,12 @@ export default {
                         return;
                     }
 
-                    this.noty(
+                    this.$noty(
                         "Hubo un problema para finalizar su pedido",
                         "error"
                     );
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
     },

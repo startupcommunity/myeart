@@ -93,7 +93,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function () {
         return _this.$emit("saveAnswer");
       })["catch"](function (err) {
-        return _this.manageError(err);
+        return _this.$manageError(err);
       })["finally"](function () {
         return _this.globalLoading = false;
       });

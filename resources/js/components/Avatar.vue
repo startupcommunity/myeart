@@ -1,5 +1,5 @@
 <template>
-    <a @click.stop="showProfile">
+    <a @click.stop="getPathProfile">
         <img
             class="rounded-full"
             :class="custom || defaultClass"
@@ -41,25 +41,13 @@ export default {
             // path en el servidor @globalMixin
             return `${this.pathProfilePhoto + photo}`;
         },
-
-        /**
-         * Devuelve el path del perfil del artista
-         */
-        getPathProfile() {
-            return {
-                name: "showArtist",
-                params: {
-                    id: this.artist?.id,
-                },
-            };
-        },
     },
 
     methods: {
-        showProfile() {
-            if (this.isUserGuest) {
-                return this.noty("Debes iniciar sesión", "warning");
-            }
+        getPathProfile() {
+            // if (this.isUserGuest) {
+            //     return this.$noty("Debes iniciar sesión", "warning");
+            // }
 
             this.$router.push({
                 name: "showArtist",

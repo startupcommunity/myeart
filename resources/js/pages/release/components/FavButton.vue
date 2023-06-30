@@ -12,11 +12,9 @@
 </template>
 
 <script>
-import utilMixin from '../../../mixins/utilMixin';
 
 export default {
     name: "FavButtonRelease",
-    mixins: [utilMixin],
     props: {
         release: {
             type: Object,
@@ -39,11 +37,6 @@ export default {
     },
     methods: {
         addOrRemoveFav() {
-            if (this.isUserGuest) {
-                this.noty("Debe iniciar sesión", "warning");
-                return;
-            }
-
             const data = {
                 release_id: this.release.id,
                 user_id: this.user.id,
@@ -56,7 +49,7 @@ export default {
             this.loading = true;
             this.axios
                 .post(ep, data)
-                .then((resp) => {
+                .then((_) => {
                     if (this.isFav) {
                         this.$emit("fav-removed", true);
                         this.isFav = false;
@@ -68,7 +61,7 @@ export default {
                     this.$store.dispatch("userRequest");
                     this.$store.dispatch("userFavoriteReleases");
                 })
-                .catch((error) => this.manageError(error))
+                .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
         },
 
