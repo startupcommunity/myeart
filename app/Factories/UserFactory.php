@@ -148,7 +148,15 @@ class UserFactory
    */
   public function createTokenConfirmRegister(string $email): UserConfirmRegister
   {
+    // buscar user
     $user = $this->user->where('email', $email)->first();
+
+    // verificar si ya tiene token de confirmación
+    if ($user->userConfirmRegister()->exists()) {
+      return $user->userConfirmRegister;
+    }
+
+    // crear token de confirmación
     return $user->userConfirmRegister()->create(['token' => Str::random(40)]);
   }
 }
