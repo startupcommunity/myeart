@@ -74,10 +74,6 @@ export default {
 
     methods: {
         followOrUnfollow() {
-            if (this.isUserGuest) {
-                return this.messageGuest;
-            }
-
             if (this.isCreator) {
                 this.$noty("No puedes seguir tu propio colectivo", "warning");
                 return;

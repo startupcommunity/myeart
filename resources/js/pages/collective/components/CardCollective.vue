@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="flex gap-3 justify-end">
-                <div v-if="!isUserGuest" class="flex justify-end items-center">
+                <div v-if="!$isUserGuest" class="flex justify-end items-center">
                     <button
                         v-if="isWatchingCreator || isUserInCollective"
                         class="py-1 px-2 rounded-lg hover:bg-gray-200"
@@ -38,7 +38,7 @@
                 </div>
                 <LikeButtonCollective
                     :collective="collective"
-                    v-if="!isUserGuest"
+                    v-if="!$isUserGuest"
                 />
                 <button @click.stop="share">
                     <i class="fa-solid fa-share-nodes text-gray-400"></i>
@@ -241,10 +241,6 @@ export default {
          * Ir al detalle del colectivo
          */
         getPathShowCollective() {
-            if (this.isUserGuest) {
-                return this.messageGuest;
-            }
-
             this.$router.push({
                 name: "collectiveShow",
                 params: {
