@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { init } from "events";
+// import { init } from "events";
 import Avatar from "../../../components/Avatar.vue";
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 

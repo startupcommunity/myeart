@@ -8,7 +8,7 @@
         <CreateReleaseSection
             @open-modal-create-release="isModalClose = false"
             @close-modal-create-release="isModalClose = true"
-            v-if="!isUserGuest"
+            v-if="!$isUserGuest"
         />
 
         <!-- section title -->
@@ -53,7 +53,7 @@
                     <!-- publicaciones -->
                     <div class="w-full md:w-1/2 px-5">
                         <div class="flex flex-col -mt-5 pb-5 md:px-10">
-                            <div v-if="releases.length && !isUserGuest">
+                            <div v-if="releases.length && !$isUserGuest">
                                 <CardRelease
                                     v-for="release in releases"
                                     :key="release.id"
@@ -114,7 +114,7 @@
                                     :key="artist.id"
                                     :artist="artist"
                                     :show-btn-chat="true"
-                                    @openChat="openConversation"
+                                    @openChat="openChat"
                                 />
                             </div>
                             <div v-else>
@@ -134,24 +134,8 @@
             :show="show"
             :releaseID="release.id"
             @close-comments="show = false"
-            v-if="!isUserGuest"
+            v-if="!$isUserGuest"
         />
-
-        <!-- chat -->
-        <section class="fixed right-0 bottom-0 z-[999]">
-            <div class="container">
-                <div class="flex flex-row-reverse gap-3 items-end">
-                    <Chat
-                        v-for="(chat, index) in chats"
-                        :key="index"
-                        :chat="chat"
-                        @toggleChat="toggleChat"
-                        @closeChat="closeChat"
-                        v-if="!isUserGuest"
-                    />
-                </div>
-            </div>
-        </section>
     </MainLayout>
 </template>
 <script>
@@ -168,6 +152,7 @@ import LoadingTailwind from "../../components/LoadingTailwind.vue";
 import CreateReleaseSection from "./sections/index/CreateReleaseSection.vue";
 import Chat from "../chat/components/Chat.vue";
 import utilMixin from "../../mixins/utilMixin";
+import useChat from "./../chat/mixins/useChat";
 
 const MAX_EVENTS = 3;
 const RANDOM_ARTIST = 6;
@@ -176,7 +161,7 @@ const SHOW_MORE_RELEASES = 2;
 
 export default {
     name: "Index",
-    mixins: [utilMixin],
+    mixins: [useChat],
     components: {
         MainLayout,
         Header,
@@ -205,9 +190,7 @@ export default {
             loadingReleases: false,
             show: false,
             isModalClose: true,
-            openChat: false,
             hashtag: "",
-            chats: [],
         };
     },
 
@@ -233,7 +216,7 @@ export default {
                 noReleases: "No hay publicaciones para mostrar",
             };
 
-            if (this.isUserGuest) {
+            if (this.$isUserGuest) {
                 return messages.guest;
             }
 
@@ -258,7 +241,7 @@ export default {
          */
         getRandomArtists() {
             this.loading = true;
-            const ep = this.isUserGuest
+            const ep = this.$isUserGuest
                 ? this.ep.guest.getRandomArtists
                 : this.ep.user.getRandomArtists;
 
@@ -282,7 +265,7 @@ export default {
 
             this.loadingReleases = true;
 
-            const ep = this.isUserGuest
+            const ep = this.$isUserGuest
                 ? this.ep.guest.getAllReleasesByRequest
                 : this.ep.releases.followArtists;
 
@@ -306,7 +289,7 @@ export default {
          */
         getEvents() {
             this.loading = true;
-            const ep = this.isUserGuest
+            const ep = this.$isUserGuest
                 ? this.ep.events.getGuestAll
                 : this.ep.events.getAll;
 
@@ -343,56 +326,6 @@ export default {
         openReservationInfo(event) {
             this.event = event;
             this.showReservation = true;
-        },
-
-        /**
-         * Abrir chat de conversación
-         */
-        openConversation(artist) {
-            // verificar si el chat ya esta agregado
-            const chat = this.chats.find((c) => c.id === artist.id);
-            if (chat) return false;
-
-            // si es el mismo usuario, no abrir el chat
-            if (artist.id === this.user.id) return false;
-
-            // abrir el chat
-            this.chats.push({ id: artist.id, isOpen: true, artist });
-
-            //-------- evaluar el tamaño de la pantalla --------
-
-            // si es menor a 768px, dejar el ultimo chat
-            if (window.innerWidth < 768) {
-                this.chats = this.chats.slice(-1);
-            }
-
-            // si es menor a 768px, dejar solo los últimos 2 chats
-            if (window.innerWidth > 768 && window.innerWidth < 1024) {
-                this.chats = this.chats.slice(-2);
-            }
-
-            // si es mayor a 1024px, dejar solo los últimos 3 chats
-            if (window.innerWidth > 1024 && window.innerWidth < 1500) {
-                this.chats = this.chats.slice(-3);
-            }
-
-            // si es mayor a 1500px, dejar solo los últimos 4 chats
-            if (window.innerWidth > 1500) {
-                this.chats = this.chats.slice(-4);
-            }
-        },
-
-        toggleChat(chat) {
-            console.log(this.chats);
-        },
-
-        /**
-         * Cerra un chat
-         *
-         * @param {Number} id   Id del chat
-         */
-        closeChat(id) {
-            this.chats = this.chats.filter((c) => c.id !== id);
         },
     },
 };

@@ -73,6 +73,7 @@ class ConversationFactory
       'notifiable_id' => $notifiable_id,
       'url' => '/comunidad',
       'msj' => "Te ha dejado un mensaje privado",
+      'chat_id' => $con->id, // id de la conversación
       'type' => TypeNotificationEnum::MSJ_PRIVATE // tipo de notificación
     ]);
 

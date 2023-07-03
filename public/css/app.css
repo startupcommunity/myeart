@@ -12332,9 +12332,6 @@ video {
 .invisible{
   visibility: hidden;
 }
-.static{
-  position: static;
-}
 .fixed{
   position: fixed;
 }
@@ -12354,11 +12351,14 @@ video {
   left: 0px;
   right: 0px;
 }
-.top-0{
-  top: 0px;
-}
 .right-0{
   right: 0px;
+}
+.bottom-0{
+  bottom: 0px;
+}
+.top-0{
+  top: 0px;
 }
 .top-2{
   top: 0.5rem;
@@ -12380,9 +12380,6 @@ video {
 }
 .left-5{
   left: 1.25rem;
-}
-.bottom-0{
-  bottom: 0px;
 }
 .bottom-3{
   bottom: 0.75rem;
@@ -13005,14 +13002,14 @@ video {
 .justify-items-center{
   justify-items: center;
 }
+.gap-3{
+  gap: 0.75rem;
+}
 .gap-5{
   gap: 1.25rem;
 }
 .gap-1{
   gap: 0.25rem;
-}
-.gap-3{
-  gap: 0.75rem;
 }
 .gap-4{
   gap: 1rem;

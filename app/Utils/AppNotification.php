@@ -20,24 +20,20 @@ class AppNotification
    */
   public static function sendNoty(array $data)
   {
-
     $userID = $data['user_id'] ?? auth()->user()->id;
     $notifiableID = $data['notifiable_id'] ?? auth()->user()->id;
     $url = $data['url'] ?? '/';
     $msj = $data['msj'] ?? 'Nueva Notificación';
     $type = $data['type'] ?? 0;
-
-    // no es posible notificar a uno mismo
-    // if ($userID == $notifiableID) {
-    //   return;
-    // }
+    $chat = $data['chat_id'] ?? null;
 
     $noty = [
       'user_id' => $userID,                         // usuario que envía la notificacion
       'notifiable_id' => $notifiableID,             // usuario que recibe la notificacion
       'url' => $url,                                // url de la notificacion
       'message' => $msj,                            // mensaje de la notificacion
-      'type' => $type                               // tipo de notificacion
+      'type' => $type,                              // tipo de notificacion
+      'chat_id' => $chat,                           // id de la conversación (chat - opcional)
     ];
 
     event(new NotificationEvent($noty));

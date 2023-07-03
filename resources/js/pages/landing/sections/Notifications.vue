@@ -76,13 +76,7 @@
                         <button
                             class="btn btn-primary btn-sm text-xs px-4 uppercase btn-block"
                             v-else
-                            @click="
-                                actionButton(
-                                    noty.data.url,
-                                    noty.id,
-                                    noty.data.type
-                                )
-                            "
+                            @click="actionButton(noty)"
                         >
                             {{ setNamebutton(noty.data.type) }}
                         </button>
@@ -140,6 +134,11 @@ export default {
                 DECLINE_INVITATION_COLLECTIVE: 14,
                 ACCEPT_INVITATION_COLLECTIVE: 15,
                 UNFOLLOW: 16,
+                ITEM_DELIVERED: 17,
+                TAGGED: 18,
+                LIKE_EVENT: 19,
+                MSJ_CONTACT_ORDER_ITEM: 20,
+                MSJ_PRIVATE: 21,
             },
             shortNotifications: [],
         };
@@ -192,7 +191,7 @@ export default {
 
     methods: {
         /**
-         * Ordenar y mostrar solo 10 notificaciones
+         * Ordenar y muestra solo 10 notificaciones
          */
         setNotifications() {
             this.shortNotifications = [];
@@ -210,13 +209,20 @@ export default {
         /**
          * Marca como leída y redirige a la url indicada
          *
-         * @param {String} url  Url a la que se redirige
-         * @param {Number} id        Id de la notificacion
-         * @param {Number} type      Tipo de notificacion
+         * @param {object} noty  datos de la notificacion
          */
-        actionButton(url, id, type = null) {
+        actionButton(noty) {
+            const url = noty.data.url;
+            const id = noty.id;
+            const type = noty.data.type;
+            const chat_id = noty.data.chat_id || null;
+
             if (!this.isInvitationCollective(type)) {
                 this.markAsRead(id);
+            }
+
+            if (type === this.typeNoty.MSJ_PRIVATE) {
+                return this.openChat(chat_id);
             }
 
             if (this.$route.path !== url) this.$router.push(url);
@@ -228,9 +234,16 @@ export default {
          * @param {String} type   Tipo de notificacion
          */
         setNamebutton(type) {
-            if (!this.isFollowOrUnfollow(type)) {
-                return "Ir";
+            // if (!this.isFollowOrUnfollow(type)) {
+            //     return "Ir";
+            // }
+
+            // si es un chat - MSJ_PRIVATE
+            if (type === this.typeNoty.MSJ_PRIVATE) {
+                return "Ver";
             }
+
+            return "Ir";
         },
 
         /**
@@ -395,6 +408,24 @@ export default {
             if (!data.user_profile_photo) return "/img/avatar.png";
             return `${this.pathProfilePhoto + data.user_profile_photo}`;
         },
+
+        /**
+         * Abrir chat de conversación
+         *
+         * @param {Number|null} chat_id   Id del chat
+         */
+        openChat(chat_id) {
+            console.log(chat_id);
+
+            if (!chat_id) {
+                this.notySwal({
+                    icon: "warning",
+                    title: "¡Hubo un problema!",
+                    text: "No se pudo abrir el chat, intente ir a la pagina 'Mi comunidad' y abrirlo desde allí",
+                });
+                return false;
+            }
+        },
     },
 };
 </script>
@@ -413,25 +444,6 @@ export default {
     visibility: hidden;
     box-shadow: 0 0 20px #555555;
 }
-
-.user-name {
-    font-weight: 600;
-    font-size: 12px !important;
-    line-height: 133.9%;
-    color: #1d1d1c;
-}
-
-.message {
-    font-weight: 400;
-    font-size: 9px;
-    line-height: 133.9%;
-}
-
-/* .time {
-    font-size: 8px;
-    color: #000;
-    font-weight: 900;
-} */
 
 .visually-hidden {
     position: absolute !important;
