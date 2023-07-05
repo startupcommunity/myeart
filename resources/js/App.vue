@@ -15,19 +15,7 @@
         <RegisterModal />
 
         <!-- chat entre usuarios -->
-        <section class="fixed right-0 bottom-0 z-[999]">
-            <div class="container">
-                <div class="flex flex-row-reverse gap-3 items-end">
-                    <Chat
-                        v-for="(chat, index) in globalChats"
-                        :key="index"
-                        :chat="chat"
-                        @toggleChat="$store.commit('toggleChat', chat)"
-                        @closeChat="$store.commit('closeChat', chat)"
-                    />
-                </div>
-            </div>
-        </section>
+        <SectionChat />
 
         <!-- vistas -->
         <router-view :key="$route.path"></router-view>
@@ -36,29 +24,18 @@
 
 <script>
 import RegisterModal from "./components/RegisterModal.vue";
-import Chat from "./pages/chat/components/Chat.vue";
-import useChat from "./pages/chat/mixins/useChat";
+import SectionChat from "./pages/chat/SectionChat.vue";
 
 export default {
     name: "App",
-    mixins: [useChat],
-    components: { RegisterModal, Chat },
+    components: { RegisterModal, SectionChat },
 
-    // cada vez que se cargue una ruta, se va a ejecutar este método
     created() {
+        // cada vez que se cargue una ruta, se va a ejecutar este método
         this.$router.beforeEach((to, from, next) => {
-            this.scrollOnTop();
+            globalThis.scrollTo(0, 0);
             next();
         });
-    },
-
-    methods: {
-        /**
-         * Siempre desde el inicio de la página
-         */
-        scrollOnTop() {
-            globalThis.scrollTo(0, 0);
-        },
     },
 };
 </script>

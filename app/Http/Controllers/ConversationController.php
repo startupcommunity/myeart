@@ -8,6 +8,7 @@ use App\Factories\ConversationFactory;
 use Illuminate\Http\JsonResponse;
 use App\Querys\ConversationDB;
 use App\Utils\ResponseJson;
+use Illuminate\Http\Request;
 
 class ConversationController extends Controller
 {
@@ -53,6 +54,21 @@ class ConversationController extends Controller
     {
         try {
             $data = $this->db->getMessages($id);
+            return $this->resp->json($data, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e, 500);
+        }
+    }
+
+    /**
+     * Marca todos los mensajes de un usuario como Leidos
+     *
+     * @param Request $request
+     */
+    public function markAllAsRead(Request $request): JsonResponse
+    {
+        try {
+            $data = $this->factory->markAllAsRead($request);
             return $this->resp->json($data, 200);
         } catch (Exception $e) {
             return $this->resp->json($e, 500);

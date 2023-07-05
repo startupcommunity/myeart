@@ -6,10 +6,6 @@ const sizes = {
 
 export default {
     computed: {
-        authUser() {
-            return this.$store.getters.getProfile;
-        },
-
         globalChats: {
             get() {
                 return this.$store.getters.chats;
@@ -19,25 +15,43 @@ export default {
 
     methods: {
         /**
-         * Abrir chat de conversación
+         * Iniciar chat de conversación
          */
-        openChat(artist) {
-            // verificar si el chat ya esta agregado
-            const chat = this.globalChats.find((c) => c.id === artist.id);
-            if (chat) return false;
-
+        initChat(artist) {
             // si es el mismo usuario, no abrir el chat
-            if (artist.id === this.authUser.id) return false;
+            if (artist.id === this.$userAuth?.id) return false;
+            // si el chat ya esta abierto, no abrirlo
+            const chat = this.isChatOpen(artist.id);
+            if (chat) {
+                this.$store.dispatch("openChat", chat);
+                return false;
+            }
 
-            // add  chat
-            this.$store.dispatch("addChat", {
-                id: artist.id,
-                isOpen: true,
-                artist,
-            });
+            // create new chat
+            this.createChat(artist);
 
             // ajustar la cantidad de chats a mostrar
             this.adjustChats();
+        },
+
+        /**
+         * Verifica si el chat ya esta abierto
+         * @param {Number} id   id del artista
+         */
+        isChatOpen(id) {
+            return this.globalChats.find((c) => c.id === id);
+        },
+
+        /**
+         * Crear un nuevo chat
+         */
+        createChat(artist) {
+            this.$store.dispatch("addChat", {
+                id: artist.id,
+                isOpen: true,
+                autoUpdate: false,
+                artist,
+            });
         },
 
         /**

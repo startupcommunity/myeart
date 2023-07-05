@@ -109,11 +109,13 @@
 import VueTimeago from "vue-timeago";
 import FollowArtistButton from "../../artwork/components/FollowArtistButton.vue";
 import Avatar from "../../../components/Avatar.vue";
+import useChat from "../../chat/mixins/useChat";
 Vue.use(VueTimeago, { name: "Timeago", locale: "es_ES" });
 
 export default {
     name: "Notifications",
     components: { FollowArtistButton, Avatar },
+    mixins: [useChat],
 
     data() {
         return {
@@ -183,9 +185,6 @@ export default {
     watch: {
         user() {
             this.setNotifications();
-
-            // actualizar mensajes del chat
-            this.$store.dispatch("trueChat");
         },
     },
 
@@ -204,6 +203,9 @@ export default {
 
             // mostrar max 10 notificaciones
             this.shortNotifications = this.shortNotifications.slice(0, 10);
+
+            // verificar si ha llegado alguna notificacion tipo mensaje privado
+            // this.checkPrivateMessage();
         },
 
         /**
@@ -215,14 +217,16 @@ export default {
             const url = noty.data.url;
             const id = noty.id;
             const type = noty.data.type;
-            const chat_id = noty.data.chat_id || null;
 
             if (!this.isInvitationCollective(type)) {
                 this.markAsRead(id);
             }
 
             if (type === this.typeNoty.MSJ_PRIVATE) {
-                return this.openChat(chat_id);
+                return this.initChat({
+                    id: noty.data.user_id,
+                    name: noty.data.user_username,
+                });
             }
 
             if (this.$route.path !== url) this.$router.push(url);
@@ -234,10 +238,6 @@ export default {
          * @param {String} type   Tipo de notificacion
          */
         setNamebutton(type) {
-            // if (!this.isFollowOrUnfollow(type)) {
-            //     return "Ir";
-            // }
-
             // si es un chat - MSJ_PRIVATE
             if (type === this.typeNoty.MSJ_PRIVATE) {
                 return "Ver";
@@ -410,22 +410,13 @@ export default {
         },
 
         /**
-         * Abrir chat de conversación
-         *
-         * @param {Number|null} chat_id   Id del chat
+         * Cargar mensajes privados
          */
-        openChat(chat_id) {
-            console.log(chat_id);
-
-            if (!chat_id) {
-                this.notySwal({
-                    icon: "warning",
-                    title: "¡Hubo un problema!",
-                    text: "No se pudo abrir el chat, intente ir a la pagina 'Mi comunidad' y abrirlo desde allí",
-                });
-                return false;
-            }
-        },
+        // checkPrivateMessage() {
+        //     const data = this.shortNotifications;
+        //     const type = this.typeNoty.MSJ_PRIVATE;
+        //     const noty = data.find((item) => item.data.type === type);
+        // },
     },
 };
 </script>

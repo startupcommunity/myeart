@@ -26,10 +26,18 @@ export default {
 
     computed: {
         /**
+         * Datos del usuario autenticado
+         * @returns  {Object}  user
+         */
+        $userAuth() {
+            return this.$store.getters.getProfile;
+        },
+
+        /**
          * Devuelve si el usuario no esta logueado
          */
         $isUserGuest() {
-            const authUser = this.$store.getters.getProfile;
+            const authUser = this.$userAuth;
 
             return (
                 authUser?.id === undefined ||

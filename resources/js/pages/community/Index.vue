@@ -114,7 +114,7 @@
                                     :key="artist.id"
                                     :artist="artist"
                                     :show-btn-chat="true"
-                                    @openChat="openChat"
+                                    @openChat="initChat"
                                 />
                             </div>
                             <div v-else>
@@ -151,7 +151,6 @@ import InfoReservationModal from "../event/components/InfoReservationModal.vue";
 import LoadingTailwind from "../../components/LoadingTailwind.vue";
 import CreateReleaseSection from "./sections/index/CreateReleaseSection.vue";
 import Chat from "../chat/components/Chat.vue";
-import utilMixin from "../../mixins/utilMixin";
 import useChat from "./../chat/mixins/useChat";
 
 const MAX_EVENTS = 3;

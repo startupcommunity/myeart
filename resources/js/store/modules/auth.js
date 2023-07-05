@@ -76,7 +76,8 @@ const actions = {
                 .post("/api/logout")
                 .then((resp) => {
                     commit("authLogout");
-                    dispatch("userClearProfile");
+                    dispatch("userClearProfile"); // user
+                    dispatch("clearChats"); // chat
                     resolve();
                 })
                 .catch((err) => {

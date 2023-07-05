@@ -16,8 +16,9 @@ use App\Utils\AppNotification;
 class ConversationFactory
 {
 
-  public function __construct(private Conversation $chat)
-  {
+  public function __construct(
+    private Conversation $chat
+  ) {
   }
 
   /**
@@ -78,5 +79,23 @@ class ConversationFactory
     ]);
 
     return $message;
+  }
+
+  /**
+   * Marcar todos los mensajes de un usuario como Leidos
+   */
+  public function markAllAsRead($request): bool
+  {
+    $con = $this->chat->find($request->conversation_id);
+
+    if (!$con) {
+      abort(404, 'No se encontró la conversación');
+    }
+
+    $rep = $con->messages()
+      ->where('user_id', '!=', $request->user_id)
+      ->update(['is_read' => true]);
+
+    return $rep;
   }
 }

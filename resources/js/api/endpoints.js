@@ -421,6 +421,9 @@ const endpoints = {
 
         // envía un nuevo mensaje a una conversación
         sendMessage: `${API}/conversations/send-message`, // post
+
+        // marcar mensajes como Leidos del usuario logueado
+        markAllAsRead: `${API}/conversations/mark-all-as-read`, // post
     },
 
     // confirmar registro

@@ -1,5 +1,7 @@
 <template>
-    <div class="bg-white animate-swing-in-top-fwd">
+    <div
+        class="bg-white animate-swing-in-top-fwd border-zinc-200 border rounded-lg"
+    >
         <div
             class="flex flex-col items-center justify-center text-gray-800"
             :class="chat.isOpen ? 'h-[460px]' : 'h-10'"
@@ -12,7 +14,7 @@
                     <div
                         class="flex justify-between items-center py-2 px-5 gap-5"
                     >
-                        <div>
+                        <div class="relative">
                             <router-link
                                 :to="routeArtist"
                                 class="text-gray-50 no-underline hover:no-underline"
@@ -21,6 +23,16 @@
                                     {{ artist.name }}
                                 </h3>
                             </router-link>
+                            <span
+                                class="fixed top-0 left-0 -mt-3 -mr-5"
+                                v-if="totalMessageUnread > 0"
+                            >
+                                <span
+                                    class="bg-[#e41e3f] rounded-full block py-1 px-2 text-xs text-center text-white font-bold"
+                                >
+                                    {{ totalMessages }}
+                                </span>
+                            </span>
                         </div>
                         <div class="flex justify-end gap-5">
                             <!-- hide chat -->
@@ -48,6 +60,7 @@
                 <div
                     class="flex flex-col flex-grow h-0 p-3 overflow-auto max-w-[300px]"
                     v-if="chat.isOpen"
+                    ref="chatContainer"
                 >
                     <LoadingTailwind v-if="loading" />
                     <div
@@ -114,6 +127,7 @@
                 <div
                     class="bg-white px-5 py-2 border-t pt-3"
                     v-if="chat.isOpen"
+                    ref="chatSendMessage"
                 >
                     <div class="flex justify-between items-center gap-3">
                         <input
@@ -153,9 +167,10 @@
 </template>
 
 <script>
-// import { init } from "events";
 import Avatar from "../../../components/Avatar.vue";
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
+
+const UPDATE_SEG = 30000;
 
 export default {
     name: "Chat",
@@ -171,13 +186,16 @@ export default {
 
     data() {
         return {
-            loading: false,
-            autoUpdateMessages: false,
-            globalSetInterval: null,
-            message: "",
-            chatID: "",
-            messages: [],
+            loading: false, // cargando
+            setInterval: null, // intervalo de tiempo
+            message: "", // mensaje a enviar
+            chatID: "", // id del chat
+            messages: [], // mensajes del chat
         };
+    },
+
+    created() {
+        this.checkConversation();
     },
 
     computed: {
@@ -189,20 +207,6 @@ export default {
         },
 
         /**
-         * usuario logueado
-         */
-        user() {
-            return this.$store.getters.getProfile;
-        },
-
-        /**
-         * Si se debe actualizar el chat
-         */
-        shouldUpdate() {
-            return this.$store.getters.updateChat || false;
-        },
-
-        /**
          * Ruta del artista
          */
         routeArtist() {
@@ -211,10 +215,27 @@ export default {
                 params: { id: 1 },
             };
         },
-    },
 
-    created() {
-        this.checkConversation();
+        /**
+         * Chats sin leer
+         */
+        totalMessageUnread() {
+            // seleccionar los mensajes sin leer del usuario activo
+            const msjs = this.messages.filter(
+                (msj) => msj.user_id !== this.$userAuth.id && !msj.is_read
+            );
+
+            // contar los mensajes sin leer
+            return msjs.length;
+        },
+
+        /**
+         * validar la cantidad de mensajes a mostrar en el globo
+         */
+        totalMessages() {
+            const total = this.totalMessageUnread;
+            return total > 99 ? "99+" : total;
+        },
     },
 
     filters: {
@@ -240,29 +261,34 @@ export default {
             } else {
                 return "hace un momento";
             }
-            return `${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`;
         },
     },
 
     watch: {
         /**
          * Si se debe actualizar el chat
+         * hacerlo cada UPDATE_SEG
          */
-        shouldUpdate(val) {
+        "chat.autoUpdate"(val) {
             if (val) {
-                this.loadMessages();
-                this.$store.commit("setUpdateChat", false);
+                this.initAutoUpdate();
+            }
+
+            if (!val) {
+                this.stopAutoUpdate();
             }
         },
 
         /**
-         * Si se debe actualizar el chat
-         *
-         * hacerlo cada 30 segundos
+         * Verificar si el chat esta abierto
          */
-        autoUpdateMessages(val) {
-            if (val) {
-                this.initAutoUpdate();
+        "chat.isOpen"(val) {
+            if (val && this.totalMessageUnread) {
+                this.markAllAsRead(false);
+            }
+
+            if (!val) {
+                this.stopAutoUpdate();
             }
         },
     },
@@ -273,6 +299,7 @@ export default {
          */
         toggleChat() {
             this.chat.isOpen = !this.chat.isOpen;
+            this.$store.commit("toggleChat", this.chat);
             this.$emit("toggleChat", this.chat);
         },
 
@@ -280,7 +307,8 @@ export default {
          * Cerrar chat
          */
         closeChat() {
-            this.$emit("closeChat", this.chat.id);
+            this.$store.commit("closeChat", this.chat);
+            this.$emit("closeChat", this.chat);
             this.stopAutoUpdate();
         },
 
@@ -289,37 +317,60 @@ export default {
          * si no existe se crea desde cero
          */
         checkConversation() {
-            this.loading = true;
-            this.autoUpdateMessages = true;
             const data = {
-                first_user_id: this.user.id,
+                first_user_id: this.$userAuth.id,
                 second_user_id: this.artist.id,
             };
-            // verificar si ya existe un chat entre estos artistas
+
+            this.loading = true;
+            this.$store.dispatch("initAutoUpdateChat", this.chat).then((_) => {
+                this.axios
+                    .post(this.ep.conversations.check, data)
+                    .then((resp) => (this.chatID = resp.data.id))
+                    .then((_) => this.markAllAsRead())
+                    .catch((error) => console.log(error))
+                    .finally(() => (this.loading = false));
+            });
+        },
+
+        /**
+         * Marcar todos los mensajes como leídos
+         */
+        markAllAsRead(loading = false) {
+            if (!this.chatID) return;
+            const ep = `${this.ep.conversations.markAllAsRead}`;
+            const data = {
+                user_id: this.$userAuth.id,
+                conversation_id: this.chatID,
+            };
+
             this.axios
-                .post(this.ep.conversations.check, data)
-                .then((resp) => (this.chatID = resp.data.id))
-                .then((_) => this.loadMessages())
-                .catch((error) => this.$manageError(error))
-                .finally(() => (this.loading = false));
+                .post(ep, data)
+                .then((_) => this.loadMessages(loading))
+                .catch((error) => this.$manageError(error));
         },
 
         /**
          * Carga los mensajes del chat
          *
-         * @param {Boolean} indicateUpdate indica si se debe mostrar el loading
+         * @param {Boolean} load indica si se debe mostrar el loading
          */
-        loadMessages(indicateUpdate = true) {
+        loadMessages(load = true) {
             if (!this.chatID) return;
-            if (indicateUpdate) this.loading = true;
+            if (load) this.loading = true;
+            this.messages = [];
 
             const ep = `${this.ep.conversations.getMessages + this.chatID}`;
             this.axios
                 .get(ep)
-                .then((resp) => (this.messages = resp.data))
+                .then((resp) => {
+                    this.messages = resp.data;
+
+                    setTimeout(() => this.scrollToEnd(), 100);
+                })
                 .catch((error) => this.$manageError(error))
                 .finally(() => {
-                    if (indicateUpdate) this.loading = false;
+                    if (load) this.loading = false;
                 });
         },
 
@@ -331,9 +382,10 @@ export default {
             this.loading = true;
             const data = {
                 conversation_id: this.chatID,
-                user_id: this.user.id,
+                user_id: this.$userAuth.id,
                 message: this.message,
             };
+
             this.axios
                 .post(this.ep.conversations.sendMessage, data)
                 .then((_) => {
@@ -350,24 +402,36 @@ export default {
          * @param {Number} userID
          */
         isSameUser(userID) {
-            return userID === this.user.id;
+            return userID === this.$userAuth.id;
         },
 
         /**
          * Iniciar actualización automática
          */
         initAutoUpdate() {
-            this.globalSetInterval = setInterval(() => {
-                this.loadMessages(false);
-            }, 30000);
+            this.setInterval = setInterval(() => {
+                if (this.chat.isOpen) {
+                    this.markAllAsRead(false);
+                } else {
+                    this.loadMessages(false);
+                }
+            }, UPDATE_SEG);
         },
 
         /**
          * Detener actualización automática
          */
         stopAutoUpdate() {
-            this.autoUpdateMessages = false;
-            clearInterval(this.globalSetInterval);
+            clearInterval(this.setInterval);
+        },
+
+        /**
+         * Scroll al final del chat
+         */
+        scrollToEnd() {
+            const chatContainer = this.$refs.chatContainer;
+            if (!chatContainer) return;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         },
     },
 };
