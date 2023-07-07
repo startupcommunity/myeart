@@ -28,6 +28,10 @@ mix.copy("resources/img/layout", "public/img/layout");
 // colectivos
 mix.copy("resources/img/collective", "public/img/collective");
 
+// banderas de paises
+mix.copy("resources/img/country_flags", "public/img/country_flags");
+
+
 if (process.env.MIX_IN_PRODUCTION) {
     mix.version();
 }

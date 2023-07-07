@@ -13,6 +13,7 @@ use App\Http\Controllers\CollectiveController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PaisesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserEventController;
 use App\Http\Controllers\UserReleaseController;
@@ -53,6 +54,9 @@ Route::get('events/show/{id}', [UserEventController::class, 'show'])->name('show
  */
 Route::get('collectives/get-collective/{id}', [CollectiveController::class, 'getCollective'])
   ->name('getCollective');
+
+// devuelve todos los paises
+Route::get('/paises', [PaisesController::class, 'getAll']);
 
 /**
  * Con prefijo contact

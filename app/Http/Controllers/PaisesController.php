@@ -14,10 +14,8 @@ class PaisesController extends Controller
      */
     public function getAll()
     {
-        $paises_all = Paises::select('paises.id as id','paises.nombre as nombre')
-        ->where('paises.activo',1)
-        ->get();
+        $paises_all = Paises::where('activo', 1)->get();
 
-        return response()->json(['success' => true, 'data' => $paises_all ], 200);
+        return response()->json(['success' => true, 'data' => $paises_all], 200);
     }
 }

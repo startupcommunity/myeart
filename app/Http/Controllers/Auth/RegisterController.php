@@ -80,6 +80,7 @@ class RegisterController extends Controller
         return [
             'name' => 'required|string|max:80',
             'username' => 'required|string|max:50|unique:users',
+            'pais_id' => 'required|integer|exists:paises,id',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:6',
         ];
@@ -98,7 +99,12 @@ class RegisterController extends Controller
      */
     public function createUser(array $data): User
     {
-        return User::create($data);
+        // user
+        $user = User::create($data);
+        // add pais
+        $user->profile()->create(['pais_id' => $data['pais_id']]);
+
+        return $user;
     }
 
     /**

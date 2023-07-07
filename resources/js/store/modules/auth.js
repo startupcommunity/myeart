@@ -35,6 +35,7 @@ const actions = {
                 username: payload.username,
                 name: payload.name,
                 email: payload.email,
+                pais_id: payload.pais_id,
                 password: payload.password,
                 password_confirmation: payload.password_confirmation,
             };

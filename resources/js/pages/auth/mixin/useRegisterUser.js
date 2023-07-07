@@ -1,4 +1,7 @@
+import getDataMixin from "../../../mixins/getDataMixin";
+
 export default {
+    mixins: [getDataMixin],
     data() {
         return {
             action: "register",
@@ -6,6 +9,7 @@ export default {
             name: "",
             email: "",
             password: "",
+            pais_id: "",
             password_confirmation: "",
             accept: false,
             showTerms: false,
@@ -14,10 +18,9 @@ export default {
         };
     },
 
-    // mounted() {
-    //     // clear data
-    //     this.clearRegisterData();
-    // },
+    created() {
+        this.getCountries();
+    },
 
     computed: {
         /**
@@ -52,6 +55,7 @@ export default {
                 username: this.username,
                 name: this.name,
                 email: this.email,
+                pais_id: this.pais_id,
                 password: this.password,
                 password_confirmation: this.password_confirmation,
             };
@@ -69,6 +73,10 @@ export default {
 
             if (this.email === "") {
                 return this.$noty("Por favor ingrese su correo", "error");
+            }
+
+            if (this.pais_id === "") {
+                return this.$noty("Por favor ingrese su pais", "error");
             }
 
             if (this.password === "") {
@@ -102,6 +110,7 @@ export default {
                     // limpiar campos
                     this.username = "";
                     this.name = "";
+                    this.pais_id = "";
                     this.password = "";
                     this.password_confirmation = "";
                     this.accept = false;
@@ -123,6 +132,7 @@ export default {
             this.username = "";
             this.name = "";
             this.email = "";
+            this.pais_id = "";
             this.password = "";
             this.password_confirmation = "";
             this.accept = false;

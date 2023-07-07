@@ -17,6 +17,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        if (User::count()) {
+            return;
+        }
+
         $data = [
             [
                 'name' => 'Kristian Salemi',

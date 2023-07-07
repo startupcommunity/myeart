@@ -11,9 +11,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_Terms_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Terms.vue */ "./resources/js/pages/auth/components/Terms.vue");
 /* harmony import */ var _components_ConfirmRegister_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ConfirmRegister.vue */ "./resources/js/pages/auth/components/ConfirmRegister.vue");
+/* harmony import */ var _components_CountryAutoComplete_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/CountryAutoComplete.vue */ "./resources/js/components/CountryAutoComplete.vue");
+/* harmony import */ var _mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/getDataMixin */ "./resources/js/mixins/getDataMixin.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -23,12 +25,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "register",
   components: {
     Terms: _components_Terms_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    ConfirmRegister: _components_ConfirmRegister_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    ConfirmRegister: _components_ConfirmRegister_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CountryAutoComplete: _components_CountryAutoComplete_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
+  mixins: [_mixins_getDataMixin__WEBPACK_IMPORTED_MODULE_3__["default"]],
   data: function data() {
     return {
       action: "register",
@@ -37,10 +43,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       email: "",
       password: "",
       password_confirmation: "",
+      pais_id: "",
       accept: false,
       showTerms: false,
       showConfirmRegister: false
     };
+  },
+  created: function created() {
+    this.getCountries();
   },
   beforeDestroy: function beforeDestroy() {
     this.authErrors.clear();
@@ -49,7 +59,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     apiStateFormLoading: function apiStateFormLoading() {
       return this.status === "loading";
     }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapState)({
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapState)({
     status: function status(state) {
       return state.auth.status;
     }
@@ -74,6 +84,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         username: this.username,
         name: this.name,
         email: this.email,
+        pais_id: this.pais_id,
         password: this.password,
         password_confirmation: this.password_confirmation
       };
@@ -88,6 +99,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.email === "") {
         return this.$noty("Por favor ingrese su correo", "error");
+      }
+
+      if (this.pais_id === "") {
+        return this.$noty("Por favor seleccione un pais", "error");
       }
 
       if (this.password === "") {
@@ -170,7 +185,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-arrow-left"
-  })])], 1), _vm._v(" "), _vm.authErrors.has("username") || _vm.authErrors.has("name") || _vm.authErrors.has("email") || _vm.authErrors.has("password") ? _c("div", {
+  })])], 1), _vm._v(" "), _vm.authErrors.has("username") || _vm.authErrors.has("name") || _vm.authErrors.has("email") || _vm.authErrors.has("pais_id") || _vm.authErrors.has("password") ? _c("div", {
     staticClass: "alert alert-danger mt-3",
     attrs: {
       role: "alert"
@@ -186,6 +201,10 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     domProps: {
       textContent: _vm._s(_vm.authErrors.get("email"))
+    }
+  }), _vm._v(" "), _c("div", {
+    domProps: {
+      textContent: _vm._s(_vm.authErrors.get("pais_id"))
     }
   }), _vm._v(" "), _c("div", {
     domProps: {
@@ -276,6 +295,28 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "focus-input100 user-input"
   })]), _vm._v(" "), _c("div", {
+    staticClass: "-mt-3 mb-3",
+    attrs: {
+      "data-validate": "Enter country"
+    }
+  }, [_c("CountryAutoComplete", {
+    attrs: {
+      isEditable: true,
+      modelID: _vm.pais_id,
+      name: "pais_id",
+      label: "País",
+      textColor: "#9ca3af",
+      icon: "mdi-earth",
+      isDarkMode: true,
+      countries: _vm.countries.data,
+      sizeImg: 25
+    },
+    on: {
+      "change-value": function changeValue($event) {
+        _vm.pais_id = $event;
+      }
+    }
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "wrap-input100 validate-input",
     attrs: {
       "data-validate": "Enter password"

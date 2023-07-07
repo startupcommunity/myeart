@@ -28,12 +28,14 @@
                             authErrors.has('username') ||
                             authErrors.has('name') ||
                             authErrors.has('email') ||
+                            authErrors.has('pais_id') ||
                             authErrors.has('password')
                         "
                     >
                         <div v-text="authErrors.get('username')"></div>
                         <div v-text="authErrors.get('name')"></div>
                         <div v-text="authErrors.get('email')"></div>
+                        <div v-text="authErrors.get('pais_id')"></div>
                         <div v-text="authErrors.get('password')"></div>
                     </div>
 
@@ -74,6 +76,21 @@
                             class="input100"
                         />
                         <span class="focus-input100 user-input"></span>
+                    </div>
+
+                    <div class="-mt-3 mb-3" data-validate="Enter country">
+                        <CountryAutoComplete
+                            :isEditable="true"
+                            :modelID="pais_id"
+                            name="pais_id"
+                            label="País"
+                            textColor="#9ca3af"
+                            icon="mdi-earth"
+                            :isDarkMode="true"
+                            :countries="countries.data"
+                            :sizeImg="25"
+                            @change-value="pais_id = $event"
+                        />
                     </div>
 
                     <div
@@ -146,17 +163,6 @@
                         :email="email"
                         @close="showConfirmRegister = false"
                     />
-
-                    <!-- <div class="container-login-form-btn">
-                        <button class="btn btn-primary google-form-btn">
-                            Entrar Con
-                            <img
-                                src="../../../../public/img/image 31.png"
-                                width="70px"
-                                style="margin-top: 4px"
-                            />
-                        </button>
-                    </div> -->
                 </form>
             </div>
         </div>
@@ -167,10 +173,14 @@
 import { mapState } from "vuex";
 import Terms from "./components/Terms.vue";
 import ConfirmRegister from "./components/ConfirmRegister.vue";
+import CountryAutoComplete from "../../components/CountryAutoComplete.vue";
+import getDataMixin from "../../mixins/getDataMixin";
 
 export default {
     name: "register",
-    components: { Terms, ConfirmRegister },
+    components: { Terms, ConfirmRegister, CountryAutoComplete },
+    mixins: [getDataMixin],
+
     data() {
         return {
             action: "register",
@@ -179,14 +189,21 @@ export default {
             email: "",
             password: "",
             password_confirmation: "",
+            pais_id: "",
             accept: false,
             showTerms: false,
             showConfirmRegister: false,
         };
     },
+
+    created() {
+        this.getCountries();
+    },
+
     beforeDestroy() {
         this.authErrors.clear();
     },
+
     computed: {
         apiStateFormLoading() {
             return this.status === "loading";
@@ -212,6 +229,7 @@ export default {
                 username: this.username,
                 name: this.name,
                 email: this.email,
+                pais_id: this.pais_id,
                 password: this.password,
                 password_confirmation: this.password_confirmation,
             };
@@ -229,6 +247,10 @@ export default {
 
             if (this.email === "") {
                 return this.$noty("Por favor ingrese su correo", "error");
+            }
+
+            if (this.pais_id === "") {
+                return this.$noty("Por favor seleccione un pais", "error");
             }
 
             if (this.password === "") {

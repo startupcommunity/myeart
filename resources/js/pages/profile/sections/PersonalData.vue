@@ -101,19 +101,14 @@
                         ></v-select>
                     </v-col>
                     <v-col cols="12" sm="6">
-                        <v-autocomplete
-                            v-model="userProfile.profile.pais_id"
-                            :items="countries.data"
-                            auto-select-first
-                            clearable
+                        <CountryAutoComplete
+                            :isEditable="editDataProfile"
+                            :modelID="userProfile.profile.pais_id"
                             name="pais_id"
                             label="País"
-                            item-text="nombre"
-                            item-value="id"
-                            color="#B2794C"
-                            item-color="brown darken-2"
-                            :disabled="!editDataProfile"
-                        ></v-autocomplete>
+                            :countries="countries.data"
+                            @change-value="changeCountryId"
+                        />
                     </v-col>
                     <v-col cols="12" sm="6">
                         <v-select
@@ -277,10 +272,12 @@ import { mapGetters } from "vuex";
 import utilMixin from "../../../mixins/utilMixin";
 import getDataMixin from "../../../mixins/getDataMixin";
 import requestErrorsMixin from "../../../mixins/requestErrorsMixin";
+import CountryAutoComplete from "../../../components/CountryAutoComplete.vue";
 
 export default {
     name: "PersonalData",
     mixins: [utilMixin, getDataMixin, requestErrorsMixin],
+    components: { CountryAutoComplete },
     props: {
         editDataProfile: {
             type: Boolean,
@@ -303,7 +300,6 @@ export default {
             userProfile: "getProfile",
         }),
     },
-
     watch: {
         showSection(val) {
             if (val) {
@@ -311,16 +307,13 @@ export default {
             }
         },
     },
-
     methods: {
         /**
          * Actualizar los datos del usuario
          */
         updateUser() {
             this.loadingFormProfile = true;
-
             const data = this.loadData();
-
             // request
             this.axios
                 .post(this.ep.user.editProfile, data)
@@ -330,7 +323,6 @@ export default {
                             title: "Éxito",
                             text: "Tus datos fueron actualizados satisfactoriamente",
                         });
-
                         // reload user
                         this.$store.dispatch("userRequest");
                     }
@@ -338,7 +330,6 @@ export default {
                 .catch((error) => this.showRequestErrors(error))
                 .finally(() => (this.loadingFormProfile = false));
         },
-
         /**
          * Data a guardar
          */
@@ -354,11 +345,9 @@ export default {
                 fecha_nacimiento: p.fecha_nacimiento
                     ? p.fecha_nacimiento
                     : null,
-
                 // bio
                 bio_title: p.bio_title ? p.bio_title : null,
                 bio_content: p.bio_content ? p.bio_content : null,
-
                 // social
                 web_url: p.web_url ? p.web_url : null,
                 facebook: social.facebook ? social.facebook : null,
@@ -366,6 +355,12 @@ export default {
                 behance: social.behance ? social.behance : null,
                 linkedin: social.linkedin ? social.linkedin : null,
             };
+        },
+        /**
+         * cargar imagenes de las banderas
+         */
+        changeCountryId(event) {
+            this.userProfile.profile.pais_id = event;
         },
     },
 };

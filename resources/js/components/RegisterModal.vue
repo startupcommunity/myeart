@@ -1,6 +1,11 @@
 <template>
     <v-row justify="center">
-        <v-dialog v-model="showModalRegister" persistent max-width="600" content-class="mt-20">
+        <v-dialog
+            v-model="showModalRegister"
+            persistent
+            max-width="600"
+            content-class="mt-20"
+        >
             <loading-overlay
                 :active="loading"
                 :is-full-page="true"
@@ -28,21 +33,7 @@
                 <v-card-text>
                     <div>
                         <form class="text-lg font-medium flex flex-col gap-5">
-                            <div
-                                class="alert alert-danger mt-3"
-                                role="alert"
-                                v-if="
-                                    authErrors.has('username') ||
-                                    authErrors.has('name') ||
-                                    authErrors.has('email') ||
-                                    authErrors.has('password')
-                                "
-                            >
-                                <div v-text="authErrors.get('username')"></div>
-                                <div v-text="authErrors.get('name')"></div>
-                                <div v-text="authErrors.get('email')"></div>
-                                <div v-text="authErrors.get('password')"></div>
-                            </div>
+                            <SectionRequestError :authErrors="authErrors" />
 
                             <div>
                                 <label
@@ -89,6 +80,28 @@
                                     placeholder="andres_perez"
                                     class="w-full border border-zinc-300 px-3 py-2 rounded-lg focus:outline-none focus:border-primary focus:ring-1 text-base font-light text-zinc-600"
                                     id="username"
+                                />
+                            </div>
+
+                            <div>
+                                <label
+                                    for="country"
+                                    class="text-base font-light text-zinc-500"
+                                >
+                                    País
+                                </label>
+                                <CountryAutoComplete
+                                    :isEditable="true"
+                                    :modelID="pais_id"
+                                    name="pais_id"
+                                    label="Seleccione un país"
+                                    textColor="#9ca3af"
+                                    icon="mdi-earth"
+                                    :isDarkMode="false"
+                                    :countries="countries.data"
+                                    :sizeImg="25"
+                                    @change-value="pais_id = $event"
+                                    class="-mt-2"
                                 />
                             </div>
 
@@ -194,11 +207,13 @@
 import Terms from "./../pages/auth/components/Terms.vue";
 import ConfirmRegister from "./../pages/auth/components/ConfirmRegister.vue";
 import userRegisterUser from "./../pages/auth/mixin/useRegisterUser";
+import CountryAutoComplete from "./CountryAutoComplete.vue";
+import SectionRequestError from "./SectionRequestError.vue";
 
 export default {
     name: "RegisterModal",
     mixins: [userRegisterUser],
-    components: { Terms, ConfirmRegister },
+    components: { Terms, ConfirmRegister, CountryAutoComplete, SectionRequestError },
 
     beforeDestroy() {
         this.authErrors.clear();

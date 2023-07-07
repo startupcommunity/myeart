@@ -14,5 +14,4 @@ use Illuminate\Support\Facades\Route;
 
 // general
 Route::post('/logout', [LoginController::class, 'logout']);
-Route::get('/paises', [PaisesController::class, 'getAll']);
 Route::get('/artistics', [ArtisticActivitysController::class, 'getAll']);

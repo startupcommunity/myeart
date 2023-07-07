@@ -37,6 +37,7 @@
         "mdbvue": "^6.7.3",
         "neo-async": "^2.6.2",
         "stripe": "^11.8.0",
+        "svg-country-flags": "^1.2.10",
         "tiny-slider": "^2.9.4",
         "vue": "^2.6.12",
         "vue-anka-cropper": "^1.1.0",
