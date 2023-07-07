@@ -64,7 +64,7 @@ class Alert extends Notification
             'type' => $this->data['type'],
             'message' => $this->data['message'],
             'url' => $this->data['url'],
-            'chat_id' => $this->data['chat_id'],
+            'chat_id' => $this->data['chat_id'] ?? null,
             'created_at' => now()
         ];
     }
