@@ -28,8 +28,9 @@ const guestRoutes = [
     },
     {
         name: "guestHome",
-        path: "/", // guest home
-        component: importPage("landing/guest/Index"),
+        path: "/", // dashboard
+        // component: importPage("landing/guest/Index"),
+        component: importPage("dashboard/dashboard"),
         beforeEnter: ifNotAuthenticated,
     },
     {
