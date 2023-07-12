@@ -9,7 +9,7 @@
         <!-- /loading full page -->
 
         <!-- pre y header -->
-        <PreHeader :class="preClass" v-if="showPre" />
+        <!-- <PreHeader :class="preClass" v-if="showPre" /> -->
         <Header :class="headerClass" v-if="showHeader" />
         <!-- /pre y header -->
 

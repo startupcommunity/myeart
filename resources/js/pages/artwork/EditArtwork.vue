@@ -5,7 +5,7 @@
             :is-full-page="true"
             loader="bars"
         />
-        <PreHeader />
+        <!-- <PreHeader /> -->
         <div class="bg-zinc-900 pb-32">
             <Header class="mt-5" />
         </div>
@@ -403,7 +403,6 @@
 <script>
 // componentes
 import Header from "../landing/sections/Header.vue";
-import PreHeader from "../landing/sections/PreHeader.vue";
 import Newletter from "../landing/sections/Newletter.vue";
 import ExtraInfo from "../landing/sections/ExtraInfo.vue";
 import Footer from "../landing/sections/Footer.vue";
@@ -420,7 +419,6 @@ import AlertPayment from "./components/AlertPayment.vue";
 export default {
     components: {
         Header,
-        PreHeader,
         Newletter,
         ExtraInfo,
         Footer,

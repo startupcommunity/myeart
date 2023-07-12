@@ -5,7 +5,7 @@
             :is-full-page="true"
             loader="bars"
         />
-        <PreHeader />
+        <!-- <PreHeader /> -->
         <div class="bg-zinc-900 pb-32">
             <Header class="mt-5" />
         </div>
@@ -406,7 +406,6 @@
 </template>
 <script>
 import Header from "../landing/sections/Header.vue";
-import PreHeader from "../landing/sections/PreHeader.vue";
 import Newletter from "../landing/sections/Newletter.vue";
 import ExtraInfo from "../landing/sections/ExtraInfo.vue";
 import Footer from "../landing/sections/Footer.vue";
@@ -424,7 +423,6 @@ export default {
     name: "CreateArtwork",
     components: {
         Header,
-        PreHeader,
         Newletter,
         ExtraInfo,
         Footer,

@@ -955,7 +955,7 @@ var render = function render() {
       }
     }
   }, [_vm._v("\n                        Crear colectivo\n                    ")])], 1)])])]), _vm._v(" "), _c("div", {
-    staticClass: "absolute top-0 bottom-auto pb-24 inset-x-0 bg-zinc-900 bg-opacity-60"
+    staticClass: "absolute top-0 bottom-auto pb-28 inset-x-0 bg-zinc-900 bg-opacity-60"
   })]);
 };
 

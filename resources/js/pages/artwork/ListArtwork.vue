@@ -1,7 +1,7 @@
 <template>
     <main-layout :showHeader="false">
         <!-- visible: md+ -->
-        <Header class="hidden md:block" />
+        <Header class="hidden md:block py-11" />
 
         <!-- visible mobile -->
         <div class="bg-zinc-900 pb-32 block md:hidden" v-if="!showOptionModal">

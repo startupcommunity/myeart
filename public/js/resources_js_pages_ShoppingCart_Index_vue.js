@@ -2726,9 +2726,7 @@ var render = function render() {
       "is-full-page": true,
       loader: "bars"
     }
-  }), _vm._v(" "), _vm.showPre ? _c("PreHeader", {
-    "class": _vm.preClass
-  }) : _vm._e(), _vm._v(" "), _vm.showHeader ? _c("Header", {
+  }), _vm._v(" "), _vm.showHeader ? _c("Header", {
     "class": _vm.headerClass
   }) : _vm._e(), _vm._v(" "), _c("main", [_vm._t("default")], 2), _vm._v(" "), _c("Newletter"), _vm._v(" "), _c("ExtraInfo"), _vm._v(" "), _c("Footer")], 1);
 };

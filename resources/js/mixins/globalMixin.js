@@ -240,11 +240,13 @@ export default {
         /**
          * Muestra una notificacion al usuario
          */
-        $noty(text, type = "success", duration = 3000) {
+        $noty(text, type = "success", duration = 4000, width = "400px") {
             this.$notify({
                 group: "container",
                 type,
-                text,
+                title: `<h1 class="text-2xl font-bold">¡Aviso!</h1><br>`,
+                text: `<p class="text-lg font-normal">${text}</p>`,
+                width,
                 duration,
             });
         },

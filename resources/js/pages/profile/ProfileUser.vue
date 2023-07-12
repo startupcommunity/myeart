@@ -7,8 +7,8 @@
         />
 
         <!-- pre y header -->
-        <PreHeader />
-        <Header v-if="showHeader" />
+        <!-- <PreHeader /> -->
+        <Header v-if="showHeader" class="py-11" />
         <!-- /pre y header -->
 
         <!-- sección hero -->
@@ -162,7 +162,6 @@ import { mapState, mapGetters } from "vuex";
 import ExtraInfo from "../landing/sections/ExtraInfo.vue";
 import Header from "../landing/sections/Header.vue";
 import Newletter from "../landing/sections/Newletter.vue";
-import PreHeader from "../landing/sections/PreHeader.vue";
 import Footer from "../landing/sections/Footer.vue";
 import ModalFrontPhoto from "./ModalFrontPhoto.vue";
 import ModalProfilePhoto from "./ModalProfilePhoto.vue";
@@ -202,7 +201,6 @@ export default {
     name: "ProfileUser",
     components: {
     Header,
-    PreHeader,
     Newletter,
     ExtraInfo,
     Footer,

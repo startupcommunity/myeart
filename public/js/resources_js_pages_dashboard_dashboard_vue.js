@@ -3613,7 +3613,9 @@ var render = function render() {
       "is-full-page": true,
       loader: "bars"
     }
-  }), _vm._v(" "), _c("PreHeader"), _vm._v(" "), _c("Header"), _vm._v(" "), _c("Hero"), _vm._v(" "), _c("LastPost"), _vm._v(" "), _c("OtherUser"), _vm._v(" "), _c("Community"), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _c("Header", {
+    staticClass: "py-11"
+  }), _vm._v(" "), _c("Hero"), _vm._v(" "), _c("LastPost"), _vm._v(" "), _c("OtherUser"), _vm._v(" "), _c("Community"), _vm._v(" "), _c("div", {
     staticClass: "container border-t border-gray-200 mt-8 lg:mt-0 mb-1"
   }), _vm._v(" "), _c("Newletter"), _vm._v(" "), _c("ExtraInfo"), _vm._v(" "), _c("AppFooter")], 1);
 };

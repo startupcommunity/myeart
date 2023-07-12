@@ -1375,7 +1375,7 @@ var render = function render() {
       showHeader: false
     }
   }, [_c("Header", {
-    staticClass: "hidden md:block"
+    staticClass: "hidden md:block py-11"
   }), _vm._v(" "), !_vm.showOptionModal ? _c("div", {
     staticClass: "bg-zinc-900 pb-32 block md:hidden"
   }, [_c("Header", {
@@ -2921,9 +2921,7 @@ var render = function render() {
       "is-full-page": true,
       loader: "bars"
     }
-  }), _vm._v(" "), _vm.showPre ? _c("PreHeader", {
-    "class": _vm.preClass
-  }) : _vm._e(), _vm._v(" "), _vm.showHeader ? _c("Header", {
+  }), _vm._v(" "), _vm.showHeader ? _c("Header", {
     "class": _vm.headerClass
   }) : _vm._e(), _vm._v(" "), _c("main", [_vm._t("default")], 2), _vm._v(" "), _c("Newletter"), _vm._v(" "), _c("ExtraInfo"), _vm._v(" "), _c("Footer")], 1);
 };

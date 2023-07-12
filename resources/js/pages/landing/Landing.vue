@@ -7,11 +7,11 @@
         />
 
         <!-- pre-header -->
-        <PreHeader />
+        <!-- <PreHeader /> -->
         <!-- /pre-header -->
 
         <!-- header -->
-        <Header />
+        <Header class="py-11" />
         <!-- /header -->
 
         <!-- hero area -->

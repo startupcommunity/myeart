@@ -1,6 +1,6 @@
 <template>
     <section class="bg-black" id="home">
-        <div class="w-full p-3">
+        <div class="w-full">
             <div class="container">
                 <div class="flex justify-between items-center">
                     <!-- solo mobile -->
