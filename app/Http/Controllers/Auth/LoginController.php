@@ -34,7 +34,7 @@ class LoginController extends Controller
             ], 422);
         }
 
-        // verificar si el usuario ya verifico el email
+        // verificar si el usuario ya confirmo el email
         $user = User::where('email', $request->email)->first();
         if ($user && !$user->email_verified_at) {
 

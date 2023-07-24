@@ -8,7 +8,6 @@
  */
 
 import endpoints from "../api/endpoints";
-// import useChat from "../pages/chat/mixins/useChat";
 import requestErrorsMixin from "./requestErrorsMixin";
 
 export default {

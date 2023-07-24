@@ -10,4 +10,10 @@ Route::group(['prefix' => 'confirm-register'], function () {
    */
   Route::post('/verify-token', [ConfirmRegisterController::class, 'verifyToken'])
     ->name('passwordRegister.verifyToken');
+
+  /**
+   * Reenvía el email de verificación del registro
+   */
+  Route::post('/resend-email', [ConfirmRegisterController::class, 'sendRegisterConfirmationEmail'])
+    ->name('passwordRegister.sendRegisterConfirmationEmail');
 });

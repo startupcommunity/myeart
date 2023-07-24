@@ -430,6 +430,9 @@ const endpoints = {
     confirmRegister: {
         // verificar token de confirmación de registro
         verifyToken: `${API}/confirm-register/verify-token`, // post
+
+        // reenvía el email de verificación
+        resendEmail: `${API}/confirm-register/resend-email`, // post
     },
 };
 

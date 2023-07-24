@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use App\Factories\UserFactory;
+use App\Http\Requests\RegisterUserRequest;
 use App\Utils\Payment\Stripe;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Validator;
 
 class RegisterController extends Controller
 {
@@ -21,16 +21,8 @@ class RegisterController extends Controller
     /**
      * Register the given user.
      */
-    public function register(Request $request): JsonResponse
+    public function register(RegisterUserRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), $this->rules());
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
         // transaction
         $db = DB::transaction(function () use ($request) {
             // crear cuenta de stripe
@@ -58,7 +50,6 @@ class RegisterController extends Controller
         });
 
         if (!$db) {
-            // return (new LoginController())->login($request);
             return response()->json([
                 'message' => 'Error al registrar el usuario'
             ], 500);
@@ -71,28 +62,6 @@ class RegisterController extends Controller
             'message' => 'Usuario registrado correctamente'
         ], 200);
     }
-
-    /**
-     * Get the user registration validation rules.
-     */
-    protected function rules(): array
-    {
-        return [
-            'name' => 'required|string|max:80',
-            'username' => 'required|string|max:50|unique:users',
-            'pais_id' => 'required|integer|exists:paises,id',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ];
-    }
-
-    /**
-     * Get the user registration validation error messages
-     */
-    // protected function validationErrorMessages(): array
-    // {
-    //     return [];
-    // }
 
     /**
      * create user in BD

@@ -126,7 +126,7 @@
                                     for="pass_confirm"
                                     class="text-base font-light text-zinc-500"
                                 >
-                                    Contraseña
+                                    Confirmar contraseña
                                 </label>
                                 <input
                                     v-model="password_confirmation"

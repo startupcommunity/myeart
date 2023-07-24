@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Factories\UserFactory;
 use App\Http\Requests\ConfirmRegisterToken;
 use App\Models\UserConfirmRegister;
+use App\Utils\ResponseJson;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ConfirmRegisterController extends Controller
 {
+    public function __construct(
+        private UserFactory $userFactory,
+        private ResponseJson $resp
+    ) {
+    }
+
     /**
      * Verificar token y validar usuario
      */
@@ -38,8 +46,24 @@ class ConfirmRegisterController extends Controller
             ], 200);
         }
 
-        return response()->json([
+        return $this->resp->json([
             'message' => 'Token no encontrado'
         ], 204);
+    }
+
+    /**
+     * Enviar correo de verificación
+     */
+    public function sendRegisterConfirmationEmail(Request $request): JsonResponse
+    {
+        // crear token
+        $this->userFactory->createTokenConfirmRegister($request->email);
+
+        // send email
+        $this->userFactory->sendEmailConfirmRegister($request->email);
+
+        return $this->resp->json([
+            'message' => 'Email enviado'
+        ], 200);
     }
 }

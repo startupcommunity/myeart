@@ -53,6 +53,26 @@
                                         de spam.
                                     </span>
                                 </h5>
+
+                                <div class="mt-3">
+                                    <v-btn
+                                        outlined
+                                        small
+                                        @click.stop="resendEmail"
+                                        color="#B2794C"
+                                        :loading="loading"
+                                        :disabled="loading"
+                                    >
+                                        Reenviar email
+
+                                        <span
+                                            v-if="counter > 0"
+                                            class="font-bold"
+                                        >
+                                            | {{ counter }}
+                                        </span>
+                                    </v-btn>
+                                </div>
                             </div>
                             <hr class="border-zinc-400 mt-5" />
                             <div class="w-full">
@@ -89,6 +109,62 @@ export default {
         email: {
             type: String,
             default: "",
+        },
+    },
+
+    data() {
+        return {
+            loading: false,
+            counter: 0,
+        };
+    },
+
+    methods: {
+        /**
+         * Reenviar email
+         */
+        resendEmail() {
+            if (this.counter !== 0) {
+                this.notySwal({
+                    icon: "info",
+                    title: "Aviso",
+                    text:
+                        "Debe esperar " +
+                        this.counter +
+                        " Segundos para poder enviar de nuevo el email de verificación",
+                });
+                return;
+            }
+
+            this.loading = true;
+            const data = { email: this.email };
+            this.axios
+                .post(this.ep.confirmRegister.resendEmail, data)
+                .then((resp) => {
+                    if (resp.status !== 200) return;
+                    this.counter = 60;
+                    this.startCounter();
+                    this.notySwal({
+                        icon: "info",
+                        title: "Aviso",
+                        text: "Email reenviado con éxito, verifique su bandeja de correo o spam",
+                    });
+                })
+                .catch((error) => this.$manageError(error))
+                .finally(() => (this.loading = false));
+        },
+
+        /**
+         * Activar contador - cuenta regresiva
+         */
+        startCounter() {
+            setInterval(() => {
+                this.counter--;
+                if (this.counter <= 0) {
+                    clearInterval();
+                    this.counter = 0;
+                }
+            }, 1000);
         },
     },
 };

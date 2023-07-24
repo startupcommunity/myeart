@@ -102,9 +102,6 @@ export default {
             this.$store
                 .dispatch("authRequest", obj)
                 .then(() => {
-                    // this.$store.dispatch("userRequest");
-                    // this.$router.push("/dashboard");
-                    // this.$router.push({ name: "confirmRegisterEmail" });
                     this.$noty("Registro exitoso");
 
                     // limpiar campos

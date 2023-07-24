@@ -7,6 +7,7 @@ use App\Events\NotificationEvent;
 use App\Mail\ConfirmRegisterEmail;
 use App\Models\User;
 use App\Models\UserConfirmRegister;
+use Illuminate\Mail\PendingMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -136,11 +137,11 @@ class UserFactory
   /**
    * Envia un mail de confirmación de registro
    */
-  public function sendEmailConfirmRegister(string $email): void
+  public function sendEmailConfirmRegister(string $email)
   {
     $user = $this->user->where('email', $email)->first();
     $confirmEmail = new ConfirmRegisterEmail($user);
-    Mail::to($user->email)->send($confirmEmail);
+    return Mail::to($user->email)->send($confirmEmail);
   }
 
   /**
