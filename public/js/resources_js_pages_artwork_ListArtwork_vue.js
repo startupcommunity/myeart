@@ -2433,7 +2433,23 @@ var render = function render() {
         name: "indexCollective"
       }
     }
-  }, [_vm._v("\n                                            COLECTIVOS\n                                        ")])], 1), _vm._v(" "), _vm.isUserGuest ? _c("li") : _vm._e(), _vm._v(" "), !_vm.isUserGuest ? _c("li", [_c("ul", [_c("li", {
+  }, [_vm._v("\n                                            COLECTIVOS\n                                        ")])], 1), _vm._v(" "), _vm.isUserGuest ? _c("li", {
+    staticClass: "2xl:mr-12"
+  }, [_c("router-link", {
+    staticClass: "bg-app-brown-1 text-white rounded uppercase",
+    attrs: {
+      to: {
+        name: "login"
+      }
+    }
+  }, [_vm._v("\n                                            Login\n                                        ")]), _vm._v(" "), _c("router-link", {
+    staticClass: "bg-app-brown-1 text-white rounded uppercase",
+    attrs: {
+      to: {
+        name: "register"
+      }
+    }
+  }, [_vm._v("\n                                            REGISTRARME\n                                        ")])], 1) : _vm._e(), _vm._v(" "), !_vm.isUserGuest ? _c("li", [_c("ul", [_c("li", {
     staticClass: "menu-items-sub"
   }, [_c("div", {
     staticClass: "header-icons"

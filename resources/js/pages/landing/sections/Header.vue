@@ -79,7 +79,20 @@
                                                 COLECTIVOS
                                             </router-link>
                                         </li>
-                                        <li v-if="isUserGuest"></li>
+                                        <li v-if="isUserGuest" class="2xl:mr-12">
+                                            <router-link
+                                                :to="{ name: 'login' }"
+                                                class="bg-app-brown-1 text-white rounded uppercase"
+                                            >
+                                                Login
+                                            </router-link>
+                                            <router-link
+                                                :to="{ name: 'register' }"
+                                                class="bg-app-brown-1 text-white rounded uppercase"
+                                            >
+                                                REGISTRARME
+                                            </router-link>
+                                        </li>
 
                                         <!-- area del perfil -->
                                         <li v-if="!isUserGuest">

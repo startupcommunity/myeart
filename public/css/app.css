@@ -15086,6 +15086,12 @@ body {
   }
 }
 @media (min-width: 1536px){
+  .\32xl\:mr-10{
+    margin-right: 2.5rem;
+  }
+  .\32xl\:mr-12{
+    margin-right: 3rem;
+  }
   .\32xl\:block{
     display: block;
   }
