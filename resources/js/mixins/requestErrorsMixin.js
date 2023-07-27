@@ -19,13 +19,7 @@ export default {
                     mjsErrors.push(errors[error][0]);
                 }
 
-                this.$notify({
-                    title: "Aviso!",
-                    text: mjsErrors.join("<br/>"),
-                    group: "container",
-                    type: "warning",
-                    duration: 6000,
-                });
+                this.$noty(mjsErrors.join("<br/>"), "error", 6000);
             }
         },
     },

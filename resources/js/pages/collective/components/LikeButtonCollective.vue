@@ -1,11 +1,15 @@
 <template>
     <div class="mt-3">
-        <button @click.stop="addLikeOrDislike" :disabled="loading">
+        <button
+            @click.stop="addLikeOrDislike"
+            :disabled="loading || isTheCreator"
+        >
             <i
                 class="fa-regular fa-heart text-base"
                 :class="{
                     'text-red-600': liked,
                     'text-gray-500': !liked,
+                    'cursor-not-allowed': isTheCreator,
                 }"
             ></i>
         </button>
@@ -41,12 +45,26 @@ export default {
         user() {
             return this.$store.getters.getProfile;
         },
+
+        creator() {
+            return this.collective?.user || {};
+        },
+
+        isTheCreator() {
+            return this.user.id === this.creator?.id;
+        },
     },
     methods: {
         /**
          * Add like or dislike
          */
         addLikeOrDislike() {
+            // si es el admin del colectivo no puede dar like
+            if (this.isTheCreator) {
+                this.$noty("No puede dar like a su propio colectivo", "error");
+                return;
+            }
+
             const data = {
                 collective_id: this.collective.id,
                 user_id: this.user.id,

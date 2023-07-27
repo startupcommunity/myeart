@@ -50,7 +50,7 @@ class CreateArtworkRequest extends FormRequest
     {
         return [
             'title.required_if' => 'El título es requerido cuando se quiere publicar la obra',
-            'title.string' => 'El título debe ser un string',
+            'title.string' => 'El título debe ser un texto de palabras, no debe incluir números o caracteres especiales',
             'title.max' => 'El título debe tener un máximo de 100 caracteres',
             'description.required_if' => 'La descripción es requerida cuando se quiere publicar la obra',
             'description.string' => 'La descripción debe ser un string',

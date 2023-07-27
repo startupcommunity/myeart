@@ -16,7 +16,7 @@
             ></div>
             <div class="flex flex-wrap mt-4 sm:mt-0">
                 <div
-                    class="lg:border-r-2 lg:border-gray-800 lg:pr-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
+                    class="lg:border-r-2 lg:border-gray-800 lg:pr-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0 relative"
                 >
                     <v-btn
                         text
@@ -28,6 +28,14 @@
                     >
                         Publicadas
                     </v-btn>
+                    <span
+                        class="absolute top-0 right-20 md:right-2 py-1 px-2 bg-red-700 rounded-full text-xs text-white"
+                        :class="{
+                            'md:right-1': publishArts > 9,
+                        }"
+                    >
+                        {{ publishArts }}
+                    </span>
                 </div>
                 <div
                     class="lg:border-r-2 lg:border-gray-800 lg:px-4 w-full lg:w-auto border-b border-b-gray-300 lg:border-b-0"
@@ -244,6 +252,15 @@ export default {
                     art.state === this.STATEARTWORK.paused
             );
         },
+
+        /**
+         * Obras publicadas
+         */
+        publishArts() {
+            return this.originalArtworks.filter(
+                (art) => art.state === this.STATEARTWORK.published
+            ).length;
+        },
     },
 
     methods: {
@@ -256,13 +273,18 @@ export default {
                 .get("/api/artworks")
                 .then(async (resp) => {
                     if (resp.status === 200) {
+                        // obtiene solo las obras type 1
+                        const data = await resp.data.filter(
+                            (art) => art.type === 1
+                        );
+
                         // datos originales
                         this.originalArtworks = await JSON.parse(
-                            JSON.stringify(resp.data)
+                            JSON.stringify(data)
                         );
 
                         // cargar y solo mostrar 3
-                        this.artworks = await resp.data;
+                        this.artworks = data;
                         const remaining = this.artworks.splice(counterArtworks);
 
                         // obras restantes
@@ -395,7 +417,6 @@ export default {
          * @params id Number
          */
         deleteArtwork(id) {
-            console.log(this.getStateActive);
             this.$swal
                 .fire({
                     title: "¿Desea eliminar definitivamente?",

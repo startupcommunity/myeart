@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-2"
+            class="bg-orange-100 border-t border-b border-orange-500 text-orange-700 px-4 py-2"
             role="alert"
         >
             <p class="font-bold">

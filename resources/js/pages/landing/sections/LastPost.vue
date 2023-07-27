@@ -22,13 +22,13 @@
                 <div class="col-12">
                     <!-- slider -->
                     <div id="slider-publish" class="mb-5">
-                        <div v-for="art in artworks" :key="art.id">
-                            <CardArtwork
-                                :artwork="art"
-                                principal-class="w-full animate-fade-in-down"
-                                classCard="min-h-[34rem] bg-gray-50"
-                            />
-                        </div>
+                        <CardArtwork
+                            :artwork="art"
+                            principal-class="w-full animate-fade-in-down"
+                            classCard="min-h-[34rem] bg-gray-50"
+                            v-for="art in artworks"
+                            :key="art.id"
+                        />
                     </div>
                 </div>
             </div>
@@ -81,15 +81,18 @@ export default {
             tns({
                 container: "#slider-publish",
                 mode: "carousel",
-                speed: 800,
+                speed: 400,
                 gutter: 20,
                 items: 4,
-                autoplay: true,
+                autoplay: false,
                 mouseDrag: true,
-                autoplayButtonOutput: false,
-                autoplayHoverPause: true,
-                lazyload: true,
+                // autoplayButtonOutput: false,
+                // autoplayHoverPause: true,
+                // lazyload: true,
                 controls: false,
+                slideBy: "page",
+                swipeAngle: false,
+                arrowKeys: true,
                 responsive: {
                     0: {
                         items: 1,

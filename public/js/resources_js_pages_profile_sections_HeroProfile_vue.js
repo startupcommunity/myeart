@@ -352,6 +352,16 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     user: function user() {
       return this.$store.getters.getProfile;
+    },
+    creator: function creator() {
+      var _this$collective;
+
+      return ((_this$collective = this.collective) === null || _this$collective === void 0 ? void 0 : _this$collective.user) || {};
+    },
+    isTheCreator: function isTheCreator() {
+      var _this$creator;
+
+      return this.user.id === ((_this$creator = this.creator) === null || _this$creator === void 0 ? void 0 : _this$creator.id);
     }
   },
   methods: {
@@ -360,6 +370,12 @@ __webpack_require__.r(__webpack_exports__);
      */
     addLikeOrDislike: function addLikeOrDislike() {
       var _this = this;
+
+      // si es el admin del colectivo no puede dar like
+      if (this.isTheCreator) {
+        this.$noty("No puede dar like a su propio colectivo", "error");
+        return;
+      }
 
       var data = {
         collective_id: this.collective.id,
@@ -390,11 +406,11 @@ __webpack_require__.r(__webpack_exports__);
      * Chequear si el usuario ya dio like
      */
     isLiked: function isLiked() {
-      var _this$collective,
-          _this$collective$like,
+      var _this$collective2,
+          _this$collective2$lik,
           _this2 = this;
 
-      var liked = (_this$collective = this.collective) === null || _this$collective === void 0 ? void 0 : (_this$collective$like = _this$collective.likes) === null || _this$collective$like === void 0 ? void 0 : _this$collective$like.some(function (like) {
+      var liked = (_this$collective2 = this.collective) === null || _this$collective2 === void 0 ? void 0 : (_this$collective2$lik = _this$collective2.likes) === null || _this$collective2$lik === void 0 ? void 0 : _this$collective2$lik.some(function (like) {
         var _this2$user;
 
         return like.user_id === ((_this2$user = _this2.user) === null || _this2$user === void 0 ? void 0 : _this2$user.id);
@@ -406,9 +422,9 @@ __webpack_require__.r(__webpack_exports__);
      * Obtener la cantidad de likes
      */
     getLikes: function getLikes() {
-      var _this$collective2, _this$collective2$lik;
+      var _this$collective3, _this$collective3$lik;
 
-      this.likes = ((_this$collective2 = this.collective) === null || _this$collective2 === void 0 ? void 0 : (_this$collective2$lik = _this$collective2.likes) === null || _this$collective2$lik === void 0 ? void 0 : _this$collective2$lik.length) || 0;
+      this.likes = ((_this$collective3 = this.collective) === null || _this$collective3 === void 0 ? void 0 : (_this$collective3$lik = _this$collective3.likes) === null || _this$collective3$lik === void 0 ? void 0 : _this$collective3$lik.length) || 0;
     }
   }
 });
@@ -739,7 +755,7 @@ var render = function render() {
     staticClass: "mt-3"
   }, [_c("button", {
     attrs: {
-      disabled: _vm.loading
+      disabled: _vm.loading || _vm.isTheCreator
     },
     on: {
       click: function click($event) {
@@ -751,7 +767,8 @@ var render = function render() {
     staticClass: "fa-regular fa-heart text-base",
     "class": {
       "text-red-600": _vm.liked,
-      "text-gray-500": !_vm.liked
+      "text-gray-500": !_vm.liked,
+      "cursor-not-allowed": _vm.isTheCreator
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "text-xs text-gray-500 font-medium flex justify-center -mt-1"

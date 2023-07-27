@@ -380,7 +380,6 @@
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
                                     type="submit"
                                     @click.stop="clickBtn = 1"
-                                    :disabled="!formIsValid"
                                 >
                                     Publicar
                                 </button>
@@ -410,6 +409,7 @@ import Newletter from "../landing/sections/Newletter.vue";
 import ExtraInfo from "../landing/sections/ExtraInfo.vue";
 import Footer from "../landing/sections/Footer.vue";
 import Category from "./sections/Category.vue";
+import AlertPayment from "./components/AlertPayment.vue";
 
 // mixin
 import createRules from "./utils/createRulesMixin";
@@ -417,7 +417,7 @@ import uploadFilesMixin from "./utils/uploadFilesMixin";
 import utilMixin from "../../mixins/utilMixin";
 import getDataMixin from "../../mixins/getDataMixin";
 import requestErrorsMixin from "../../mixins/requestErrorsMixin";
-import AlertPayment from "./components/AlertPayment.vue";
+import useArtwork from "./utils/useArtwork";
 
 export default {
     name: "CreateArtwork",
@@ -435,6 +435,7 @@ export default {
         getDataMixin,
         requestErrorsMixin,
         uploadFilesMixin,
+        useArtwork,
     ],
     data() {
         return {
@@ -463,6 +464,8 @@ export default {
             clickBtn: 3, // 1 = publicar, 3 = borrador, 5 = en pausa
             calTax: 0,
             tax: 15,
+            // state: 0,
+            // typeArtwork: 1,
         };
     },
 
@@ -474,7 +477,6 @@ export default {
         const resp = await this.userHaveChargingMethod(this.user.id);
         if (resp.length === 0) {
             this.hasPaymentMethod = false;
-            console.log(this.hasPaymentMethod);
         }
     },
 
@@ -541,17 +543,49 @@ export default {
             }
 
             // evaluar el parámetro type de ruta
-            const type_artwork = this.$route.params.type ?? 1;
+            this.typeArtwork = this.$route.params.type ?? 1;
 
             // verificar estado antes de guardar/publicar
             // para publicar debe tener un método de pago
             // sino pasa a estado 5 (pendiente de pago o pausa)
-            const state =
+            // estados:
+            // PUBLISHED = 1;
+            // SOLD = 2;
+            // DRAFT = 3;
+            // IN_CART = 4;
+            // PAUSED = 5;
+            this.state =
                 this.clickBtn === 1 ? (!this.hasPaymentMethod ? 5 : 1) : 3;
 
             // formdata
+            const data = this.loadDataBeforeSave();
+
+            this.globalLoading = true;
+            // request
+            this.axios
+                .post(this.ep.artworks.save, data, this.headerFormData)
+                .then((resp) => {
+                    if (resp.status === 200) {
+                        // mensaje
+                        this.loadSuccessMessage();
+
+                        // --------------------
+                        // redireccion
+                        // --------------------
+                        this.artCollectiveID = this.collectiveId;
+                        this.redirectAccordingTypeArtwork();
+                    }
+                })
+                .catch((error) => this.$manageError(error))
+                .finally(() => (this.globalLoading = false));
+        },
+
+        /**
+         * Carga y estructura los datos antes de guardar
+         */
+        loadDataBeforeSave() {
+            // data general
             const data = new FormData();
-            const files = this.uploadedFiles;
             data.append("title", this.form.title);
             data.append("description", this.form.description);
             data.append("large_description", this.form.large_description);
@@ -564,52 +598,19 @@ export default {
             data.append("target", this.form.target);
             data.append("province", this.form.province);
             data.append("location", this.form.location);
-            data.append("state", state);
+            data.append("state", this.state);
             data.append(`type`, JSON.stringify(this.form.type));
-            data.append(`type_artwork`, type_artwork);
+            data.append(`type_artwork`, this.typeArtwork);
+
+            // files o imagenes
+            const files = this.uploadedFiles;
             files.forEach((file) => data.append(`gallery[]`, file));
+
             if (this.collectiveId) {
                 data.append(`collective_id`, this.collectiveId);
             }
 
-            // request
-            this.globalLoading = true;
-            this.axios
-                .post(this.ep.artworks.save, data, this.headerFormData)
-                .then((resp) => {
-                    if (resp.status === 200) {
-                        // mensaje
-                        const draftMsj = "Obra guardada como borrador";
-                        const publishMsj = "Obra publicada con éxito";
-                        const inPauseMsj =
-                            "Obra en pausa/borrador hasta que se agregue un método de cobro";
-
-                        if (state == 1) {
-                            this.$noty(publishMsj);
-                        } else if (state == 3) {
-                            this.$noty(draftMsj);
-                        } else if (state == 5) {
-                            this.$noty(inPauseMsj);
-                        }
-
-                        // --------------------
-                        // redireccion
-                        // --------------------
-                        if (type_artwork == 1) {
-                            // obra de artista
-                            const url = `/usuario/perfil/${this.user.id}/obras`;
-                            this.$router.push(url);
-                        }
-
-                        if (type_artwork == 2) {
-                            // obra de colectivo
-                            const url = `/colectivos/perfil/${this.collectiveId}/artwork`;
-                            this.$router.push(url);
-                        }
-                    }
-                })
-                .catch((error) => this.$manageError(error))
-                .finally(() => (this.globalLoading = false));
+            return data;
         },
     },
 };

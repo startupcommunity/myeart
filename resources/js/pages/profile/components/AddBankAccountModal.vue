@@ -165,6 +165,17 @@ export default {
          * Agregar una cuenta bancaria
          */
         addAccount() {
+
+            // modo prueba activado
+            // eliminar validación cuando se cambie al modo prod
+            if (this.form.account_number !== "ES0700120345030000067890") {
+                return this.$noty(
+                    "MODO PRUEBA ACTIVADO: Solo esta permitido agregar método de cobro de prueba: ES0700120345030000067890",
+                    "error",
+                    7000
+                );
+            }
+
             this.loading = true;
             this.form.user_id = this.user.id;
             let ep = this.ep.chargingMethods.store;

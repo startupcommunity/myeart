@@ -367,15 +367,14 @@
                                 <button
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
                                     type="submit"
-                                    :disabled="!formIsValid"
                                     @click.stop="publish = false"
+                                    v-if="!isCollective"
                                 >
                                     Guardar borrador
                                 </button>
                                 <button
                                     class="w-full sm:w-auto px-7 py-4 bg-green-700 text-gray-50 border border-green-900 hover:bg-green-900 transition-all text-base font-light rounded-md uppercase"
                                     type="submit"
-                                    :disabled="!formIsValid"
                                     @click.stop="publish = true"
                                 >
                                     Actualizar y publicar
@@ -415,8 +414,10 @@ import utilMixin from "../../mixins/utilMixin";
 import getDataMixin from "../../mixins/getDataMixin";
 import requestErrorsMixin from "../../mixins/requestErrorsMixin";
 import AlertPayment from "./components/AlertPayment.vue";
+import useArtwork from "./utils/useArtwork";
 
 export default {
+    name: "EditArtwork",
     components: {
         Header,
         Newletter,
@@ -425,7 +426,6 @@ export default {
         Category,
         AlertPayment,
     },
-    name: "EditArtwork",
     mixins: [
         createRules,
         utilMixin,
@@ -433,6 +433,7 @@ export default {
         requestErrorsMixin,
         uploadFilesMixin,
         getDataMixin,
+        useArtwork,
     ],
     data() {
         return {
@@ -577,46 +578,50 @@ export default {
                 }
             }
 
-            // loading
-            this.globalLoading = true;
-
             // cargar datos
             const data = this.loadFormData();
             const ep = this.ep.artworks.update + this.form.id;
+            this.state = parseInt(data.get("state"));
 
             // request
+            // loading
+            this.globalLoading = true;
             this.axios
                 .post(ep, data, this.headerFormData)
                 .then((resp) => {
                     if (resp.status === 200) {
-                        // mensajes
-                        const draftMsj = "Obra guardada como borrador";
-                        const publishMsj = "Obra publicada con éxito";
-                        const inPauseMsj =
-                            "Obra en pausa/borrador hasta que se agregue un método de cobro";
+                        // mensaje
+                        this.loadSuccessMessage();
+                        // const draftMsj = "Obra guardada como borrador";
+                        // const publishMsj = "Obra publicada con éxito";
+                        // const inPauseMsj =
+                        //     "Obra en pausa/borrador hasta que se agregue un método de cobro";
 
-                        if (data.get("state") == 1) {
-                            this.$noty(publishMsj);
-                        } else if (data.get("state") == 3) {
-                            this.$noty(draftMsj);
-                        } else if (data.get("state") == 5) {
-                            this.$noty(inPauseMsj);
-                        }
+                        // if (data.get("state") == 1) {
+                        //     this.$noty(publishMsj);
+                        // } else if (data.get("state") == 3) {
+                        //     this.$noty(draftMsj);
+                        // } else if (data.get("state") == 5) {
+                        //     this.$noty(inPauseMsj);
+                        // }
 
                         // --------------------
                         // redireccion
                         // --------------------
-                        if (!this.isCollective) {
-                            // obra de artista
-                            const url = `/usuario/perfil/${this.user.id}/obras`;
-                            this.$router.push(url);
-                        }
+                        this.typeArtwork = this.isCollective ? 2 : 1;
+                        this.artCollectiveID = this.collectiveId;
+                        this.redirectAccordingTypeArtwork();
+                        // if (!this.isCollective) {
+                        //     // obra de artista
+                        //     const url = `/usuario/perfil/${this.user.id}/obras`;
+                        //     this.$router.push(url);
+                        // }
 
-                        if (this.isCollective) {
-                            // obra de colectivo
-                            const url = `/colectivos/perfil/${this.collectiveId}/artwork`;
-                            this.$router.push(url);
-                        }
+                        // if (this.isCollective) {
+                        //     // obra de colectivo
+                        //     const url = `/colectivos/perfil/${this.collectiveId}/artwork`;
+                        //     this.$router.push(url);
+                        // }
                     }
                 })
                 .catch((error) => this.$manageError(error))

@@ -1120,15 +1120,18 @@ __webpack_require__.r(__webpack_exports__);
       (0,tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)({
         container: "#slider-publish",
         mode: "carousel",
-        speed: 800,
+        speed: 400,
         gutter: 20,
         items: 4,
-        autoplay: true,
+        autoplay: false,
         mouseDrag: true,
-        autoplayButtonOutput: false,
-        autoplayHoverPause: true,
-        lazyload: true,
+        // autoplayButtonOutput: false,
+        // autoplayHoverPause: true,
+        // lazyload: true,
         controls: false,
+        slideBy: "page",
+        swipeAngle: false,
+        arrowKeys: true,
         responsive: {
           0: {
             items: 1,
@@ -1618,15 +1621,19 @@ __webpack_require__.r(__webpack_exports__);
       (0,tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)({
         container: "#slider-user",
         mode: "carousel",
-        speed: 800,
+        speed: 400,
         gutter: 20,
         items: 7,
-        autoplay: true,
+        autoplay: false,
         mouseDrag: true,
-        autoplayButtonOutput: false,
-        autoplayHoverPause: true,
-        lazyload: true,
+        // autoplayButtonOutput: false,
+        // autoplayHoverPause: true,
+        // lazyload: true,
+        // controls: false,
         controls: false,
+        slideBy: "page",
+        swipeAngle: false,
+        arrowKeys: true,
         responsive: {
           0: {
             items: 2,
@@ -4233,16 +4240,15 @@ var render = function render() {
       id: "slider-publish"
     }
   }, _vm._l(_vm.artworks, function (art) {
-    return _c("div", {
-      key: art.id
-    }, [_c("CardArtwork", {
+    return _c("CardArtwork", {
+      key: art.id,
       attrs: {
         artwork: art,
         "principal-class": "w-full animate-fade-in-down",
         classCard: "min-h-[34rem] bg-gray-50"
       }
-    })], 1);
-  }), 0)])])])]);
+    });
+  }), 1)])])])]);
 };
 
 var staticRenderFns = [];
