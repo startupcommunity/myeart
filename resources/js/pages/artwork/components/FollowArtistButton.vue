@@ -87,6 +87,7 @@ export default {
                     this.$noty(mjs);
 
                     this.$store.dispatch("userRequest");
+                    this.$store.dispatch("userFollowArtists");
                 })
                 .catch((error) => this.$manageError(error))
                 .finally(() => (this.loadFollow = false));

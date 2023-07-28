@@ -1,6 +1,6 @@
 <template>
     <div
-        class="bg-white animate-swing-in-top-fwd border-zinc-200 border rounded-lg"
+        class="bg-white animate-swing-in-top-fwd border-zinc-200 border rounded"
     >
         <div
             class="flex flex-col items-center justify-center text-gray-800"
@@ -170,7 +170,7 @@
 import Avatar from "../../../components/Avatar.vue";
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 
-const UPDATE_SEG = 30000;
+const UPDATE_SEG = 15000;
 
 export default {
     name: "Chat",
@@ -287,9 +287,12 @@ export default {
                 this.markAllAsRead(false);
             }
 
-            if (!val) {
-                this.stopAutoUpdate();
+            if (val) {
+                this.scrollToEnd();
             }
+            // if (!val) {
+            //     this.stopAutoUpdate();
+            // }
         },
     },
 
@@ -366,7 +369,7 @@ export default {
                 .then((resp) => {
                     this.messages = resp.data;
 
-                    setTimeout(() => this.scrollToEnd(), 100);
+                    this.scrollToEnd();
                 })
                 .catch((error) => this.$manageError(error))
                 .finally(() => {
@@ -412,10 +415,14 @@ export default {
             this.setInterval = setInterval(() => {
                 if (this.chat.isOpen) {
                     this.markAllAsRead(false);
+                    // console.log("marcando Leidos");
                 } else {
                     this.loadMessages(false);
+                    // console.log("cargando mensajes...");
                 }
             }, UPDATE_SEG);
+
+            // console.log("init auto update");
         },
 
         /**
@@ -428,10 +435,12 @@ export default {
         /**
          * Scroll al final del chat
          */
-        scrollToEnd() {
-            const chatContainer = this.$refs.chatContainer;
-            if (!chatContainer) return;
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+        scrollToEnd(time = 400) {
+            setTimeout(() => {
+                const chatContainer = this.$refs.chatContainer;
+                if (!chatContainer) return;
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, time);
         },
     },
 };

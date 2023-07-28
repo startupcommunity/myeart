@@ -7,7 +7,7 @@
                     <div class="pb-1">{{ artist?.name }}</div>
                     <FollowArtistButton :artist="artist" />
                     <button
-                        v-if="showBtnChat && !isUserGuest"
+                        v-if="showBtnChat && !isUserGuest && isFollowing"
                         @click.stop="$emit('openChat', artist)"
                         class="inline-flex items-center text-zinc-900 border text-xs px-3 py-1 font-light hover:bg-gray-100 transition-all duration-200 ease-in-out"
                         :disabled="isUserGuest"
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div v-if="showQualified">
             <span class="text-primary text-xs">
                 {{ getNameQualified }}
             </span>
@@ -45,6 +45,11 @@ export default {
             type: Boolean,
             default: false,
         },
+        showQualified: {
+            type: Boolean,
+            default: true,
+            description: "Muestra o no eel calificativo del artista",
+        },
     },
     computed: {
         /**
@@ -68,6 +73,15 @@ export default {
 
             // devolver solo 1
             return categoriesUnique[0];
+        },
+
+        /**
+         * Comprueba si ya se sigue al artista seleccionado
+         */
+        isFollowing() {
+            return this.$userAuth?.following_artists?.some(
+                (follow) => follow.following_id === this.artist.id
+            );
         },
     },
 };

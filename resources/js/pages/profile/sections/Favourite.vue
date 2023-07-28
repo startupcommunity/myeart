@@ -126,7 +126,7 @@
                     />
                 </div>
             </div>
-            <!-- /artistas -->
+            <!-- /obras -->
 
             <!-- publicaciones -->
             <div class="py-6 w-full" v-if="states.news">

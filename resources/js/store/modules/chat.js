@@ -7,12 +7,17 @@
 
 export default {
     state: {
-        chats: [],
+        chats: [], // chats iniciados
+        sidebarChats: false, // si la barra de amigos esta abierta o cerrada
     },
 
     getters: {
         chats(state) {
             return state.chats;
+        },
+
+        sidebarChats(state) {
+            return state.sidebarChats;
         },
     },
 
@@ -74,6 +79,20 @@ export default {
         stopAutoUpdateChat({ commit }, payload) {
             commit("stopAutoUpdateChat", payload);
         },
+
+        /**
+         * Abrir el sidebar de chats
+         */
+        openSidebarChats({ commit }) {
+            commit("openSidebarChats", true);
+        },
+
+        /**
+         * cerrar el sidebar de chats
+         */
+        closeSidebarChats({ commit }) {
+            commit("closeSidebarChats", false);
+        },
     },
 
     mutations: {
@@ -91,7 +110,14 @@ export default {
         },
 
         closeChat(state, payload) {
-            state.chats = state.chats.filter((chat) => chat.id !== payload.id);
+            // index
+            const index = state.chats.findIndex(
+                (chat) => chat.id === payload.id
+            );
+            // eliminar si existe
+            if (index !== -1) {
+                state.chats.splice(index, 1);
+            }
         },
 
         toggleChat(state, payload) {},
@@ -105,7 +131,7 @@ export default {
                 chat.autoUpdate = false;
             });
 
-            // esperar 1 segundo para limpiar los chats
+            // esperar 0.1 segundo para limpiar los chats
             setTimeout(() => {
                 state.chats = [];
             }, 100);
@@ -120,6 +146,14 @@ export default {
             const chat = state.chats.find((chat) => chat.id === payload.id);
             chat.autoUpdate = false;
             return chat;
+        },
+
+        openSidebarChats(state, payload) {
+            state.sidebarChats = payload;
+        },
+
+        closeSidebarChats(state, payload) {
+            state.sidebarChats = payload;
         },
     },
 };

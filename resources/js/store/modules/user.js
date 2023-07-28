@@ -4,7 +4,7 @@ import endpoints from "../../api/endpoints";
 export default {
     state: {
         status: "", // estado de la petición
-        // updateChat: false, // actualizar el chat
+        loadingFollowArtist: false,
         following_artists: [], // artistas seguidos
         following_artworks: [], // obras seguidas
         following_releases: [], // publicaciones seguidas
@@ -31,6 +31,7 @@ export default {
         getCollective: (state) => state.collective,
         getProfile: (state) => state.profile,
         isProfileLoaded: (state) => !!state.profile.name,
+        loadingFollowArtist: (state) => state.loadingFollowArtist,
     },
     actions: {
         /**
@@ -53,11 +54,12 @@ export default {
          * @param {Commit} param
          */
         userFollowArtists: ({ commit }) => {
-            // commit("userRequest");
+            commit("initLoadingFollowArtist");
             Vue.axios
                 .get(endpoints.user.getFollowArtists)
                 .then((resp) => commit("setFollowArtists", resp.data))
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(err))
+                .finally((_) => commit("stopLoadingFollowArtist"));
         },
 
         /**
@@ -131,6 +133,12 @@ export default {
     mutations: {
         userRequest: (state) => {
             state.status = "loading";
+        },
+        initLoadingFollowArtist: (state) => {
+            state.initLoadingFollowArtist = true;
+        },
+        stopLoadingFollowArtist: (state) => {
+            state.initLoadingFollowArtist = false;
         },
         userError: (state) => {
             state.status = "error";

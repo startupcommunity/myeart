@@ -145,6 +145,7 @@ module.exports = {
             },
             colors: {
                 "app-brown-1": "#B2794C",
+                "app-brown-2": "#C27446",
                 "app-gray-1": "#E0E0E0",
                 "app-hashtag": "#298FC2",
             },

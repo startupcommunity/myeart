@@ -17,6 +17,9 @@
         <!-- chat entre usuarios -->
         <SectionChat />
 
+        <!-- sección para chats de amigos -->
+        <SectionChatsBetweenFriend v-if="!$isUserGuest" />
+
         <!-- vistas -->
         <router-view :key="$route.path"></router-view>
     </v-app>
@@ -25,10 +28,11 @@
 <script>
 import RegisterModal from "./components/RegisterModal.vue";
 import SectionChat from "./pages/chat/SectionChat.vue";
+import SectionChatsBetweenFriend from "./pages/chat/SectionChatsBetweenFriend.vue";
 
 export default {
     name: "App",
-    components: { RegisterModal, SectionChat },
+    components: { RegisterModal, SectionChat, SectionChatsBetweenFriend },
 
     created() {
         // cada vez que se cargue una ruta, se va a ejecutar este método
