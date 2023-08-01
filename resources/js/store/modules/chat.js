@@ -1,5 +1,5 @@
 /**
- * Modulo para manejar los chats
+ * Modulo para gestionar los chats de la app
  *
  * @type {Object}   store
  * @author luisandev - https://luisan.dev
@@ -8,17 +8,14 @@
 export default {
     state: {
         chats: [], // chats iniciados
+        unreadChats: 0, // chats sin leer
         sidebarChats: false, // si la barra de amigos esta abierta o cerrada
     },
 
     getters: {
-        chats(state) {
-            return state.chats;
-        },
-
-        sidebarChats(state) {
-            return state.sidebarChats;
-        },
+        chats: (state) => state.chats,
+        sidebarChats: (state) => state.sidebarChats,
+        unreadChats: (state) => state.unreadChats,
     },
 
     actions: {
@@ -134,6 +131,7 @@ export default {
             // esperar 0.1 segundo para limpiar los chats
             setTimeout(() => {
                 state.chats = [];
+                state.unreadChats = 0;
             }, 100);
         },
 
@@ -154,6 +152,19 @@ export default {
 
         closeSidebarChats(state, payload) {
             state.sidebarChats = payload;
+        },
+
+        increaseUnreadChats(state, payload) {
+            state.unreadChats++;
+        },
+
+        decreaseUnreadChats(state, payload) {
+            if (state.unreadChats > 0) {
+                state.unreadChats--;
+                return;
+            }
+
+            state.unreadChats = 0;
         },
     },
 };

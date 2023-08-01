@@ -3,7 +3,7 @@
         <div class="flex flex-row justify-start items-center">
             <Avatar :artist="artist" custom="w-14 h-14 border" />
             <div class="ml-2">
-                <div class="font-semibold text-gray-900 text-xs">
+                <div class="font-semibold text-gray-900 text-xs relative">
                     <div class="pb-1">{{ artist?.name }}</div>
                     <FollowArtistButton :artist="artist" />
                     <button
@@ -17,6 +17,12 @@
                     >
                         chat
                     </button>
+                    <span
+                        v-if="showUnreadBadge"
+                        class="px-1 py-0.5 text-white bg-red-600 -mt-5 rounded-full text-xs absolute top-7 -right-1"
+                    >
+                        {{ counterUnreadMessages }}
+                    </span>
                 </div>
             </div>
         </div>
@@ -48,7 +54,17 @@ export default {
         showQualified: {
             type: Boolean,
             default: true,
-            description: "Muestra o no eel calificativo del artista",
+            description: "Muestra o no el calificativo del artista",
+        },
+        showUnreadBadge: {
+            type: Boolean,
+            default: false,
+            description: "Muestra o no el badge de mensajes sin leer",
+        },
+        counterUnreadMessages: {
+            type: Number,
+            default: 0,
+            description: "Cantidad de mensajes sin leer",
         },
     },
     computed: {

@@ -12378,9 +12378,6 @@ video {
 .bottom-0{
   bottom: 0px;
 }
-.right-80{
-  right: 20rem;
-}
 .right-1{
   right: 0.25rem;
 }
@@ -12411,6 +12408,12 @@ video {
 .right-5{
   right: 1.25rem;
 }
+.top-7{
+  top: 1.75rem;
+}
+.-right-1{
+  right: -0.25rem;
+}
 .right-20{
   right: 5rem;
 }
@@ -12431,9 +12434,6 @@ video {
 }
 .order-3{
   order: 3;
-}
-.float-right{
-  float: right;
 }
 .m-8{
   margin: 2rem;
@@ -12556,14 +12556,14 @@ video {
 .mr-1{
   margin-right: 0.25rem;
 }
+.-mt-5{
+  margin-top: -1.25rem;
+}
 .mb-5{
   margin-bottom: 1.25rem;
 }
 .-mb-10{
   margin-bottom: -2.5rem;
-}
-.-mt-5{
-  margin-top: -1.25rem;
 }
 .mb-6{
   margin-bottom: 1.5rem;
@@ -13299,6 +13299,10 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(194 116 70 / var(--tw-bg-opacity));
 }
+.bg-red-600{
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+}
 .bg-\[\#B2794C\]{
   --tw-bg-opacity: 1;
   background-color: rgb(178 121 76 / var(--tw-bg-opacity));
@@ -13336,10 +13340,6 @@ video {
 .bg-green-600{
   --tw-bg-opacity: 1;
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
-}
-.bg-red-600{
-  --tw-bg-opacity: 1;
-  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
 }
 .bg-red-700{
   --tw-bg-opacity: 1;
@@ -13515,6 +13515,10 @@ video {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
 }
+.py-1\.5{
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
 .py-10{
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
@@ -13554,6 +13558,10 @@ video {
 .px-1{
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+}
+.py-0\.5{
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
 }
 .py-6{
   padding-top: 1.5rem;
@@ -14214,14 +14222,14 @@ body {
   .sm\:left-3{
     left: 0.75rem;
   }
+  .sm\:right-80{
+    right: 20rem;
+  }
   .sm\:-bottom-12{
     bottom: -3rem;
   }
   .sm\:bottom-16{
     bottom: 4rem;
-  }
-  .sm\:right-80{
-    right: 20rem;
   }
   .sm\:ml-0{
     margin-left: 0px;
@@ -14886,9 +14894,6 @@ body {
   }
 }
 @media (min-width: 1024px){
-  .lg\:right-80{
-    right: 20rem;
-  }
   .lg\:mb-0{
     margin-bottom: 0px;
   }

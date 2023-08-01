@@ -294,6 +294,19 @@ export default {
             //     this.stopAutoUpdate();
             // }
         },
+
+        /**
+         * Verifica si hay o no mensajes sin leer
+         * e incrementa o decrementa el contador de chats sin leer
+         */
+        totalMessageUnread(val) {
+            if (val) {
+                this.$store.commit("increaseUnreadChats", this.chat);
+                return;
+            }
+
+            this.$store.commit("decreaseUnreadChats", this.chat);
+        },
     },
 
     methods: {
@@ -415,14 +428,10 @@ export default {
             this.setInterval = setInterval(() => {
                 if (this.chat.isOpen) {
                     this.markAllAsRead(false);
-                    // console.log("marcando Leidos");
                 } else {
                     this.loadMessages(false);
-                    // console.log("cargando mensajes...");
                 }
             }, UPDATE_SEG);
-
-            // console.log("init auto update");
         },
 
         /**

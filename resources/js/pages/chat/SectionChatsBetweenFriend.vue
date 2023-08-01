@@ -27,6 +27,12 @@
                                 <h3 class="text-lg text-zinc-50 font-medium">
                                     Chats
                                 </h3>
+                                <span
+                                    class="px-2 py-1.5 text-white bg-red-600 -mt-5 rounded-full text-xs"
+                                    v-if="unreadChats"
+                                >
+                                    {{ unreadChats }}
+                                </span>
                                 <i
                                     class="fa-solid fa-spinner fa-spin-pulse ml-2 text-white"
                                     v-show="loadingFollowArtist"
@@ -49,6 +55,8 @@
                         :artist="artist"
                         :show-btn-chat="true"
                         :show-qualified="false"
+                        :show-unread-badge="false"
+                        :counter-unread-messages="0"
                         @openChat="initChat"
                         class="max-h-16"
                     />
@@ -81,11 +89,7 @@ export default {
          * Artistas seguidos por el usuario
          */
         followArtists() {
-            let data = [];
-            // setTimeout(() => {
-            //     // sacar los artistas seguidos
-            // }, 1000);
-            data = this.$store.getters.getFollowArtists || [];
+            const data = this.$store.getters.getFollowArtists || [];
             return data.map((item) => item.following);
         },
 
@@ -95,9 +99,19 @@ export default {
         loadingFollowArtist() {
             return this.$store.getters.loadingFollowArtist;
         },
+
+        /**
+         * Devuelve la cantidad de chats no Leidos
+         */
+        unreadChats() {
+            return this.$store.getters.unreadChats;
+        },
     },
 
     watch: {
+        /**
+         * Si no hay artistas seguidos cerrar el sidebar de chats
+         */
         followArtists(val) {
             if (!val.length) {
                 this.$store.dispatch("closeSidebarChats");
