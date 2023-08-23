@@ -104,7 +104,6 @@ class ShoppingCartFactory
 
     // agregar el impuesto y el envío y los decimales
     $subT = floatval(number_format($subtotal, 2, ',', ''));   // subtotal formateado
-    // $calc = ($subT * $tax) / 100;                          // calculo del impuesto
     $totalFinal = $subT * 100;                                // total final en céntimos
     $random = Str::random(40);                                // random para el grupo de transferencia
 
@@ -114,7 +113,7 @@ class ShoppingCartFactory
         'amount' => $totalFinal,
         'currency' => 'eur',
         'payment_method_types' => ['card'],
-        'transfer_group' => 'INTENT_' . $random,
+        'transfer_group' => 'INTENT_' . $random, // grupo de transferencia
         'metadata' => [
           'account_id' => $user->stripe_account_id,
           'group' => 'INTENT_' . $random,
@@ -160,7 +159,6 @@ class ShoppingCartFactory
 
       $items = $user->shoppingCart()->get();                    // items u obras del carrito de compras
       $subtotal = $items->sum('artwork.total');                 // subtotal
-      // $calTax = ($subtotal * $tax) / 100;                    // calcular el impuesto
       $total = $subtotal;                                       // total
 
       // crear la orden

@@ -7,8 +7,8 @@
 
 namespace App\Querys;
 
-use App\Enums\ArtworkTypeEnum;
 use App\Models\User;
+use App\Utils\Payment\Stripe;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
@@ -249,5 +249,41 @@ class UserDB
         $user = $this->getUser($id);
 
         return $user->chargingMethods;
+    }
+
+    /**
+     * Devuelve el balance del usuario
+     */
+    public function getUserBalance(int $id): array
+    {
+        $user = $this->getUser($id);
+
+        if (!$user) {
+            abort(404, 'Usuario no encontrado');
+        }
+
+        // cuenta conectada
+        $stripe = new Stripe();
+        $conected = $stripe->getBalanceConectedAccount($user->stripe_account_id);
+
+        // obtener el balance de la cuenta
+        return $conected->toArray();
+    }
+
+    /**
+     * Devuelve los pagos realizados al usuario
+     */
+    public function getUserPayout(int $id): array
+    {
+        $user = $this->getUser($id);
+
+        if (!$user) {
+            abort(404, 'Usuario no encontrado');
+        }
+
+        // los pagos
+        $payouts = $user->getStripePayouts();
+
+        return $payouts->toArray();
     }
 }

@@ -129,8 +129,6 @@ class OrderFactory
         $order->update(['status' => OrderStatusEnum::DELIVERED]);
       }
 
-      // dd($artwork->user->stripe_account_id);
-
       // realizar el pago al vendedor
       if ($isDelivered) {
         $stripe = new Stripe();   // instancia de stripe
@@ -180,6 +178,13 @@ class OrderFactory
     // es decir, el saldo que se retira de stripe a la cuenta bancaria principal
     // debe ser solo el ganado por comisión (15%)
     // este punto ya Miguel decidirá cuanto y cuando se retira el dinero ganado por venta
+
+    // Transferencias
+    // De forma predeterminada, una solicitud de transferencia falla cuando el monto excede
+    // el saldo de cuenta disponible de la plataforma. En su lugar, puede validar el monto de
+    // la transferencia contra su cargo asociado especificando ese cargo como source_transaction de
+    // la transferencia. En ese caso, la solicitud de transferencia tiene éxito automáticamente,
+    // pero no se ejecuta hasta que los fondos de ese cargo estén disponibles en la cuenta de la plataforma.
 
     return $tra;
   }

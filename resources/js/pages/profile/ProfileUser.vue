@@ -118,6 +118,13 @@
                         class="sm:min-h-[60rem]"
                     />
                     <!-- /calificaciones -->
+
+                    <!-- calificaciones -->
+                    <Balance
+                        :showSection="sections.balance"
+                        class="sm:min-h-[60rem]"
+                    />
+                    <!-- /calificaciones -->
                 </div>
             </div>
         </div>
@@ -181,6 +188,7 @@ import Sale from "./sections/Sale.vue";
 import PaymentMethod from "./sections/PaymentMethod.vue";
 import ChargingMethod from "./sections/ChargingMethod.vue";
 import Rating from "./sections/Rating.vue";
+import Balance from "./sections/Balance.vue";
 
 // secciones como tabs
 const SECTIONS = {
@@ -195,32 +203,34 @@ const SECTIONS = {
     charging: "charging",
     rating: "rating",
     seguridad: "seguridad",
+    balance: "balance",
 };
 
 export default {
     name: "ProfileUser",
     components: {
-    Header,
-    Newletter,
-    ExtraInfo,
-    Footer,
-    ModalFrontPhoto,
-    ModalProfilePhoto,
-    MobileKeypad,
-    Artwork,
-    PersonalData,
-    Address,
-    Favourite,
-    DesktopKeypad,
-    Release,
-    Order,
-    HeroProfile,
-    MyCollectivesModal,
-    Sale,
-    PaymentMethod,
-    ChargingMethod,
-    Rating
-},
+        Header,
+        Newletter,
+        ExtraInfo,
+        Footer,
+        ModalFrontPhoto,
+        ModalProfilePhoto,
+        MobileKeypad,
+        Artwork,
+        PersonalData,
+        Address,
+        Favourite,
+        DesktopKeypad,
+        Release,
+        Order,
+        HeroProfile,
+        MyCollectivesModal,
+        Sale,
+        PaymentMethod,
+        ChargingMethod,
+        Rating,
+        Balance,
+    },
     data() {
         return {
             editDataProfile: false,
@@ -242,6 +252,7 @@ export default {
                 charging: false,
                 rating: false,
                 security: false,
+                balance: false,
             },
         };
     },
@@ -302,6 +313,8 @@ export default {
             this.sections.payment = id == SECTIONS.payment;
             this.sections.charging = id == SECTIONS.charging;
             this.sections.rating = id == SECTIONS.rating;
+            this.sections.security = id == SECTIONS.seguridad;
+            this.sections.balance = id == SECTIONS.balance;
         },
 
         /**

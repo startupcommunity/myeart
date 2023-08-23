@@ -4,8 +4,10 @@ namespace App\Utils\Payment;
 
 use Illuminate\Http\Request;
 use Stripe\Account;
+use Stripe\Balance;
 use Stripe\BankAccount;
 use Stripe\PaymentIntent;
+use Stripe\Payout;
 use Stripe\StripeClient;
 use Stripe\Transfer;
 
@@ -31,6 +33,26 @@ class Stripe
   }
 
   /**
+   * Obtiene el balance de una cuenta conectada
+   *
+   * @param string $accountID
+   */
+  public function getBalanceConectedAccount(string $accountID): Balance
+  {
+    return $this->stripeClient->balance->retrieve([], ['stripe_account' => $accountID]);
+  }
+
+  /**
+   * Devuelve todos los datos de una cuenta conectada
+   *
+   * @param string $accountID
+   */
+  public function getConnectedAccount(string $accountID): Account
+  {
+    return $this->stripeClient->accounts->retrieve($accountID);
+  }
+
+  /**
    * Obtiene un intento de pago
    *
    * @param string $paymentIntentId
@@ -42,6 +64,25 @@ class Stripe
   }
 
   /**
+   * Obtiene los detalles de una transferencia
+   * @param string $transferId
+   */
+  public function getTransfer(string $transferId): Transfer
+  {
+    return $this->stripeClient->transfers->retrieve($transferId);
+  }
+
+  /**
+   * Devuelve los detalles de un pago realizado
+   * @param string $payoutId
+   * @param array $data
+   */
+  public function getPayout(string $payoutId, array $data = []): Payout
+  {
+    return $this->stripeClient->payouts->retrieve($payoutId, $data);
+  }
+
+  /**
    * Ejecutar una transferencia
    *
    * @param array $data
@@ -50,11 +91,11 @@ class Stripe
   public function createTransfer(array $data): Transfer
   {
     $arr = [
-      'amount' => $data['amount'],
-      'currency' => 'eur',
-      'destination' => $data['destination'],
-      'transfer_group' => $data['transfer_group'],
-      'source_transaction' => $data['source_transaction'],
+      'amount' => $data['amount'],                            // monto
+      'currency' => 'eur',                                    // moneda
+      'destination' => $data['destination'],                  // cuenta conectada de destino
+      'transfer_group' => $data['transfer_group'],            // grupo de transferencia
+      'source_transaction' => $data['source_transaction'],    // ID de la transacción
     ];
 
     if ($arr['source_transaction'] === null) {
@@ -62,6 +103,18 @@ class Stripe
     }
 
     return $this->stripeClient->transfers->create($arr);
+  }
+
+  /**
+   * Ejecutar una transferencia a una cuenta bancaria
+   * de una cuenta conectada
+   *
+   * @param array $data         datos de la transferencia
+   * @param string $accountID   ID de la cuenta conectada
+   */
+  public function createTransferToBank(array $data, string $accountID): Transfer
+  {
+    return $this->stripeClient->transfers->create($data, ['stripe_account' => $accountID]);
   }
 
   /**
@@ -73,6 +126,17 @@ class Stripe
   public function createAccount(array $data): Account
   {
     return $this->stripeClient->accounts->create($data);
+  }
+
+  /**
+   * Crea un nuevo pago de stripe para retiro de fondos
+   *
+   * @param array $data       datos del pago
+   * @param array $accountID  ID de la cuenta conectada
+   */
+  public function createPayout(array $data, array $accountID = []): Payout
+  {
+    return $this->stripeClient->payouts->create($data, $accountID);
   }
 
   /**
@@ -139,7 +203,34 @@ class Stripe
         'date' => time(),
         'ip' => $request->ip() ?? '127.0.0.1',
       ],
+
+
+      // settings
+      'settings' => [
+        "payouts" => [
+          "debit_negative_balances" => false,   // si se puede debitar el saldo negativo
+          "schedule" => [
+            "delay_days" => 7,      // días de retraso
+            "interval" => "manual"  // manual o daily
+          ],
+          "statement_descriptor" => null
+        ],
+      ],
     ];
+  }
+
+  /**
+   * Actualiza los datos de una cuenta conectada
+   * ejemplo:
+   * $accountId:  $user->stripe_account_id,
+   * $data: ['settings' => ['payouts' => ['schedule' => ['interval' => 'manual']]]]
+   *
+   * @param string $accountID   ID de la cuenta conectada
+   * @param array $data         datos a actualizar
+   */
+  public function updateConnectedAccount(string $accountID, array $data): Account
+  {
+    return $this->stripeClient->accounts->update($accountID, $data);
   }
 
   /**
@@ -167,7 +258,7 @@ class Stripe
   }
 
   /**
-   * Coloca el banco mo predeterminado
+   * Coloca el banco como predeterminado
    *
    * @param string $accountId       ID de la cuenta
    * @param string $bankId          ID del banco

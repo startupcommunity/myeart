@@ -27,7 +27,8 @@ __webpack_require__.r(__webpack_exports__);
         payment: false,
         charging: false,
         rating: false,
-        seguridad: false
+        seguridad: false,
+        balance: false
       }],
       // original secciones
       original: [{
@@ -41,7 +42,8 @@ __webpack_require__.r(__webpack_exports__);
         payment: false,
         charging: false,
         rating: false,
-        seguridad: false
+        seguridad: false,
+        balance: false
       }],
       // id de secciones
       mobileSection: {
@@ -55,7 +57,8 @@ __webpack_require__.r(__webpack_exports__);
         payment: "payment",
         charging: "charging",
         rating: "rating",
-        seguridad: "seguridad"
+        seguridad: "seguridad",
+        balance: "balance"
       }
     };
   },
@@ -219,7 +222,22 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "tracking-tight",
     "class": _vm.sections[0].fav ? "font-black" : "font-light"
-  }, [_vm._v("\n                    Favoritos\n                ")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    Favoritos\n                ")])])]), _vm._v(" "), _c("div", [_c("button", {
+    staticClass: "flex flex-col items-center justify-start space-y-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.changeEmitAndClass(_vm.mobileSection.balance);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-euro-sign text-primary fa-2x"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight",
+    "class": _vm.sections[0].balance ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Balance\n                ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-wrap justify-center items-start text-primary text-xs gap-3 mt-5"
   }, [_c("div", [_c("button", {
     staticClass: "flex flex-col items-center justify-start space-y-2",

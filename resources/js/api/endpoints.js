@@ -93,6 +93,15 @@ const endpoints = {
 
         // obtiene los métodos de cobro del usuario - {id}
         getUserChargeMethods: `${API}/user/get-user-charge-methods/`, // get
+
+        // obtiene el balance del usuario - {id}
+        getUserBalance: `${API}/user/get-user-balance/`, // get
+
+        // crear pago de stripe para retirar el dinero
+        createPayout: `${API}/user/create-payout`, // post
+
+        // obtiene los pagos del usuario - {id}
+        getUserPayouts: `${API}/user/get-user-payouts/`, // get
     },
 
     // user password resets
@@ -433,6 +442,11 @@ const endpoints = {
 
         // reenvía el email de verificación
         resendEmail: `${API}/confirm-register/resend-email`, // post
+    },
+
+    payouts: {
+        // devuelve los detalles de un pago
+        getDetails: `${API}/payouts/get-details/`, // get
     },
 };
 

@@ -91,17 +91,6 @@
                     </span>
                 </button>
             </div>
-            <!-- <div class="flex flex-wrap gap-4 items-center justify-start py-6">
-                <button type="button" @click="showSection('payment')">
-                    <i class="fas fa-money-check text-primary"></i>
-                    <span
-                        class="tracking-tight uppercase"
-                        :class="sections.payment ? 'font-black' : 'font-light'"
-                    >
-                        Métodos de pago
-                    </span>
-                </button>
-            </div> -->
             <div class="flex flex-wrap gap-4 items-center justify-start py-6">
                 <button type="button" @click="showSection('charging')">
                     <i class="fas fa-bank text-primary"></i>
@@ -110,6 +99,18 @@
                         :class="sections.charging ? 'font-black' : 'font-light'"
                     >
                         Métodos de cobro
+                    </span>
+                </button>
+            </div>
+            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
+                <button type="button" @click="showSection('balance')">
+                    <!-- <i class="fas fa-bank "></i> -->
+                    <i class="fa-solid fa-euro-sign text-primary"></i>
+                    <span
+                        class="tracking-tight uppercase"
+                        :class="sections.balance ? 'font-black' : 'font-light'"
+                    >
+                        Mi balance
                     </span>
                 </button>
             </div>

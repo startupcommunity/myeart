@@ -285,4 +285,46 @@ class UserController extends Controller
             return $this->resp->json($e->getMessage(), 500);
         }
     }
+
+    /**
+     * obtiene el balance del usuario
+     */
+    public function getUserBalance(int $id): JsonResponse
+    {
+        try {
+            $resp = $this->db->getUserBalance($id);
+            return $this->resp->json($resp, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * obtiene el balance del usuario
+     */
+    public function getUserPayout(int $id): JsonResponse
+    {
+        try {
+            $resp = $this->db->getUserPayout($id);
+            return $this->resp->json($resp, 200);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Crea un nuevo pago de stripe para retiro de fondos
+     */
+    public function createUserPayout(Request $request): JsonResponse
+    {
+        try {
+            $resp = $this->userfactory->createUserPayout($request);
+            return $this->resp->json([
+                'message' => $resp['message'],
+                'data' => $resp['data']
+            ], $resp['code']);
+        } catch (Exception $e) {
+            return $this->resp->json($e->getMessage(), 500);
+        }
+    }
 }

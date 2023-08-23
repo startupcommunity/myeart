@@ -7,17 +7,22 @@ use App\Events\NotificationEvent;
 use App\Mail\ConfirmRegisterEmail;
 use App\Models\User;
 use App\Models\UserConfirmRegister;
-use Illuminate\Mail\PendingMail;
+use App\Models\UserStripePayout;
+use App\Querys\UserDB;
+use App\Utils\Payment\Stripe;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class UserFactory
 {
   private $user;
+  private $db;
 
-  public function __construct(User $user)
+  public function __construct(User $user, UserDB $db)
   {
     $this->user = $user;
+    $this->db = $db;
   }
 
   /**
@@ -159,5 +164,109 @@ class UserFactory
 
     // crear token de confirmación
     return $user->userConfirmRegister()->create(['token' => Str::random(40)]);
+  }
+
+  /**
+   * Crea un nuevo pago de stripe para retiro de fondos
+   *
+   * @param Request $request    datos del usuario a realizar el retiro
+   */
+  public function createUserPayout($request): array
+  {
+    $user = $this->db->getUser($request->user_id);
+
+    if (!$user) {
+      return [
+        'message' => 'El usuario del retiro de fondos no se ha encontrado',
+        'code' => 201,
+        'data' => null
+      ];
+    }
+
+    $charging = $user->getDefaultChargingMethod();
+
+    if (!$charging) {
+      return [
+        'message' => 'El usuario no tiene un método de cobro predeterminado',
+        'code' => 201,
+        'data' => null
+      ];
+    }
+
+    // usuario
+    $stripe = new Stripe();
+    $userBalance = $stripe->getBalanceConectedAccount($user->stripe_account_id)->toArray();
+    // $getcc = $stripe->getConnectedAccount($user->stripe_account_id)->toArray();
+    // dd($getcc);
+
+    // restar el disponible - el pendiente
+    // eliminar signo negativo si lo tiene el saldo pendiente
+    $pending = $userBalance['pending'][0]['amount'];
+    if ($pending < 0) {
+      $pending = $pending * -1;
+    }
+
+    // restar
+    $rest = $userBalance['available'][0]['amount'] - $pending;
+    $amount = $userBalance['available'][0]['amount'];
+
+    if ($rest <= 0) {
+      return [
+        'message' => 'El usuario no tiene fondos disponibles para retirar',
+        'code' => 201,
+        'data' => null
+      ];
+    }
+
+    // dd($rest, $amount);
+    // establecer el formato correcto para retirar fondos
+    // $totalParcial = (int) floor($amount / 100);
+    // tax stripe = 1.5% + 0.25€
+    // $tax = (int) floor($amount * 0.015) + 25;
+    // $totalParcial = (int) floor($amount - $tax);
+    // $total = $totalParcial;
+    // $total = $total * 100;
+    // dd($amount, $total);
+    // convertir saldo de euros a centavos
+
+    // crear payout
+    $payoutStripe = $stripe->createPayout([
+      'amount' => $rest,
+      'currency' => 'eur',
+      'method' => 'standard',
+      // 'destination' => $charging->stripe_bank_account_id,
+      // 'source_type' => 'bank_account',
+      'description' => 'Retiro de fondos para el usuario ' . $user->name,
+      'statement_descriptor' => 'Retiro de fondos',
+    ], ['stripe_account' => $user->stripe_account_id]);
+
+    // guardar en la base de datos
+    $payoutDB = $user->userStripePayouts()->create([
+      'stripe_payout_id' => $payoutStripe->id,
+      'destination' => $payoutStripe->destination,
+      'amount' => $payoutStripe->amount,
+      'method' => $payoutStripe->method,
+      'currency' => $payoutStripe->currency,
+      'arrival_date' => $payoutStripe->arrival_date,
+      'created' => $payoutStripe->created,
+      'description' => $payoutStripe->description,
+      'automatic' => $payoutStripe->automatic,
+      'statement_descriptor' => $payoutStripe->statement_descriptor,
+      'failure_balance_transaction' => $payoutStripe->failure_balance_transaction,
+      'failure_code' => $payoutStripe->failure_code,
+      'failure_message' => $payoutStripe->failure_message,
+      'original_payout' => $payoutStripe->original_payout,
+      'reconciliation_status' => $payoutStripe->reconciliation_status,
+      'reversed_by' => $payoutStripe->reversed_by,
+      'source_type' => $payoutStripe->source_type,
+      'type' => $payoutStripe->type,
+      'status' => $payoutStripe->status,
+    ]);
+
+    return [
+      'message' => 'El retiro de fondos se ha realizado correctamente',
+      'data' => $payoutDB,
+      'code'  => 200
+    ];
   }
 }

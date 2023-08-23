@@ -199,6 +199,22 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
+        return _vm.showSection("balance");
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-euro-sign text-primary"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "tracking-tight uppercase",
+    "class": _vm.sections.balance ? "font-black" : "font-light"
+  }, [_vm._v("\n                    Mi balance\n                ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-wrap gap-4 items-center justify-start py-6"
+  }, [_c("button", {
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
         return _vm.showSection("seguridad");
       }
     }

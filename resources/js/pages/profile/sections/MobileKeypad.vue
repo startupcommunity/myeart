@@ -116,6 +116,21 @@
                     </span>
                 </button>
             </div>
+            <div>
+                <button
+                    type="button"
+                    class="flex flex-col items-center justify-start space-y-2"
+                    @click="changeEmitAndClass(mobileSection.balance)"
+                >
+                    <i class="fa-solid fa-euro-sign text-primary fa-2x"></i>
+                    <span
+                        class="tracking-tight"
+                        :class="sections[0].balance ? 'font-black' : 'font-light'"
+                    >
+                        Balance
+                    </span>
+                </button>
+            </div>
         </div>
 
         <!-- segunda hilera -->
@@ -237,6 +252,7 @@ export default {
                     charging: false,
                     rating: false,
                     seguridad: false,
+                    balance: false,
                 },
             ],
 
@@ -254,6 +270,7 @@ export default {
                     charging: false,
                     rating: false,
                     seguridad: false,
+                    balance: false,
                 },
             ],
 
@@ -270,6 +287,7 @@ export default {
                 charging: "charging",
                 rating: "rating",
                 seguridad: "seguridad",
+                balance: "balance",
             },
         };
     },

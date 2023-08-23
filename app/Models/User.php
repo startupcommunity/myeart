@@ -5,9 +5,8 @@ namespace App\Models;
 use App\Enums\ArtworkStateEnum;
 use App\Enums\ProfileTypeEnum;
 use App\Enums\ReleaseTypeEnum;
+use App\Models\Traits\UserScope;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -18,7 +17,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Billable;
+    use HasApiTokens, HasFactory, Notifiable, Billable, UserScope;
 
     /**
      * The attributes that are mass assignable.
@@ -311,58 +310,62 @@ class User extends Authenticatable
     }
 
     /**
+     * Devuelve los pagos por medio de stripe al usuario
+     */
+    public function userStripePayouts(): HasMany
+    {
+        return $this->hasMany(UserStripePayout::class);
+    }
+
+    /**
      * Determina si el usuario tiene foto de perfil
      * @luisandev
      * @return boolean      true si posee
      */
-    public function hasAProfilePhoto(): bool
-    {
-        return !is_null($this->profile_photo);
-    }
+    // public function hasAProfilePhoto(): bool
+    // {
+    //     return !is_null($this->profile_photo);
+    // }
 
-    /**
-     * Determina si el usuario tiene foto de portada
-     * @luisandev
-     * @return boolean      true si posee
-     */
-    public function hasAFrontPhoto(): bool
-    {
-        return !is_null($this->front_photo);
-    }
+    // /**
+    //  * Determina si el usuario tiene foto de portada
+    //  * @luisandev
+    //  * @return boolean      true si posee
+    //  */
+    // public function hasAFrontPhoto(): bool
+    // {
+    //     return !is_null($this->front_photo);
+    // }
 
-    /**
-     * Verificar si tiene obras publicadas
-     *
-     * @return boolean
-     */
-    public function hasPublishedArtworks(): bool
-    {
-        return $this->artworks()->get()->filter(fn ($art) => $art->isAvailable())->count() > 0;
-    }
+    // /**
+    //  * Verificar si tiene obras publicadas
+    //  *
+    //  * @return boolean
+    //  */
+    // public function hasPublishedArtworks(): bool
+    // {
+    //     return $this->artworks()->get()->filter(fn ($art) => $art->isAvailable())->count() > 0;
+    // }
 
-    /**
-     * Verifica si solo tiene un método de cobro en la BD
-     *
-     * @return boolean
-     */
-    public function hasOnlyOneChargingMethod(): bool
-    {
-        return $this->chargingMethods()->count() <= 1;
-    }
+    // /**
+    //  * Verifica si solo tiene un método de cobro en la BD
+    //  *
+    //  * @return boolean
+    //  */
+    // public function hasOnlyOneChargingMethod(): bool
+    // {
+    //     return $this->chargingMethods()->count() <= 1;
+    // }
 
-    /**
-     * Colocar las obras en pausa comp publicadas
-     */
-    public function setPausedArtworksAsPublished(): bool
-    {
-        return $this->artworks()
-            ->where('state', ArtworkStateEnum::PAUSED)
-            ->update(['state' => ArtworkStateEnum::PUBLISHED]);
-    }
-
-    // ------------------------------------------------
-    // ------------- Local Scopes ---------------------
-    // ------------------------------------------------
+    // /**
+    //  * Colocar las obras en pausa comp publicadas
+    //  */
+    // public function setPausedArtworksAsPublished(): bool
+    // {
+    //     return $this->artworks()
+    //         ->where('state', ArtworkStateEnum::PAUSED)
+    //         ->update(['state' => ArtworkStateEnum::PUBLISHED]);
+    // }
 
     /**
      * Devuelve los usuario del tipo artista
@@ -370,65 +373,65 @@ class User extends Authenticatable
      * @param  Builder $query
      * @return Builder
      */
-    public function scopeArtist($query)
-    {
-        return $query->whereHas(
-            'profile',
-            fn ($pro) => $pro->where('perfil', ProfileTypeEnum::ARTIST)
-        );
-    }
+    // public function scopeArtist($query)
+    // {
+    //     return $query->whereHas(
+    //         'profile',
+    //         fn ($pro) => $pro->where('perfil', ProfileTypeEnum::ARTIST)
+    //     );
+    // }
 
-    /**
-     * Filtra de no incluir el usuario indicado
-     *
-     * @param  Builder $query
-     * @return Builder
-     */
-    public function scopeNotUser($query, $id)
-    {
-        return $query->where('id', '<>', $id);
-    }
+    // /**
+    //  * Filtra de no incluir el usuario indicado
+    //  *
+    //  * @param  Builder $query
+    //  * @return Builder
+    //  */
+    // public function scopeNotUser($query, $id)
+    // {
+    //     return $query->where('id', '<>', $id);
+    // }
 
-    /**
-     * Filtra por las categorías de las obras de los artistas
-     *
-     * @param  Builder $query
-     * @return Builder
-     */
-    public function scopeArtworkCategory($query, $cat = null, $sub = null, $label = null)
-    {
-        return $query->whereHas('artworks', fn ($art) => $art->category($cat, $sub, $label));
-    }
+    // /**
+    //  * Filtra por las categorías de las obras de los artistas
+    //  *
+    //  * @param  Builder $query
+    //  * @return Builder
+    //  */
+    // public function scopeArtworkCategory($query, $cat = null, $sub = null, $label = null)
+    // {
+    //     return $query->whereHas('artworks', fn ($art) => $art->category($cat, $sub, $label));
+    // }
 
-    /**
-     * Devuelve las publicaciones de los usuarios seguidos
-     *
-     * @param Builder $query
-     * @return void
-     */
-    public function scopeFollowReleases($query)
-    {
-        return $query->whereHas('followingArtists', fn ($art) => $art->whereHas('following', fn ($rel) => $rel->releases()));
-    }
+    // /**
+    //  * Devuelve las publicaciones de los usuarios seguidos
+    //  *
+    //  * @param Builder $query
+    //  * @return void
+    //  */
+    // public function scopeFollowReleases($query)
+    // {
+    //     return $query->whereHas('followingArtists', fn ($art) => $art->whereHas('following', fn ($rel) => $rel->releases()));
+    // }
 
-    /**
-     * Devuelve los artistas seguidos con sus publicaciones
-     *
-     * @param Builder $query
-     * @return void
-     */
-    public function scopeFollowingArtistReleases($query, ?int $type = null)
-    {
-        $artists = $this->followingArtists();
-        $releaseRelations = ['labels.user', 'likes.user', 'creator.artworks.categories', 'comments'];
-        $type = $type ?? ReleaseTypeEnum::ARTIST;
+    // /**
+    //  * Devuelve los artistas seguidos con sus publicaciones
+    //  *
+    //  * @param Builder $query
+    //  * @return void
+    //  */
+    // public function scopeFollowingArtistReleases($query, ?int $type = null)
+    // {
+    //     $artists = $this->followingArtists();
+    //     $releaseRelations = ['labels.user', 'likes.user', 'creator.artworks.categories', 'comments'];
+    //     $type = $type ?? ReleaseTypeEnum::ARTIST;
 
-        // indicar también el type del release
-        $relations = [
-            'following.releases' =>
-            fn ($rel) => $rel->with($releaseRelations)->where('type', $type),
-        ];
+    //     // indicar también el type del release
+    //     $relations = [
+    //         'following.releases' =>
+    //         fn ($rel) => $rel->with($releaseRelations)->where('type', $type),
+    //     ];
 
-        return $artists->with($relations);
-    }
+    //     return $artists->with($relations);
+    // }
 }

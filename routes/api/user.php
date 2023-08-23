@@ -101,4 +101,19 @@ Route::group(['prefix' => 'user'], function () {
    * obtiene los métodos de cobro del usuario
    */
   Route::get('/get-user-charge-methods/{id}', [UserController::class, 'getUserChargingMethods'])->name('getUserChargingMethods');
+
+  /**
+   * Obtiene todo el balance del usuario
+   */
+  Route::get('/get-user-balance/{id}', [UserController::class, 'getUserBalance'])->name('getUserBalance');
+
+  /**
+   * Obtiene los pagos realizados al usuario
+   */
+  Route::get('/get-user-payouts/{id}', [UserController::class, 'getUserPayout'])->name('getUserPayout');
+
+  /**
+   * Crea un nuevo pago de stripe para retiro de fondos
+   */
+  Route::post('/create-payout', [UserController::class, 'createUserPayout'])->name('createUserPayout');
 });

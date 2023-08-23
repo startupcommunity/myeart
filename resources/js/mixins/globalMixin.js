@@ -280,6 +280,8 @@ export default {
             icon = "warning",
             confirmButtonText = "Si, Eliminar",
             cancelButtonText = "Cancelar",
+            showDenyButton = false,
+            denyButtonText = "Cancelar",
         } = {}) {
             return await this.$swal
                 .fire({
@@ -291,6 +293,8 @@ export default {
                     cancelButtonColor: "#d33",
                     confirmButtonText,
                     cancelButtonText,
+                    showDenyButton,
+                    denyButtonText,
                 })
                 .then(async (result) => await result);
         },
@@ -324,7 +328,7 @@ export default {
             // console.error(resp);
             if (resp?.request?.status === 404) {
                 // NOT FOUND
-                this.$router.push({ name: "NotFound" });
+                // this.$router.push({ name: "NotFound" });
             }
 
             if (resp?.request?.status === 500) {
