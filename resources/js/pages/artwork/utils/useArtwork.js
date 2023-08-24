@@ -1,3 +1,17 @@
+/**
+ * Gestion de una obra de arte
+ * Creación y edición
+ *
+ * @autor  Luis Annunziato: luisannunziato@gmail.com
+ * @link https://luisan.dev
+ */
+
+import {
+    DRAFT_ARTWORK,
+    PUBLISH_ARTWORK,
+    SUCCESS_TITLE_NOTY,
+} from "../../../util/text";
+
 export default {
     data() {
         return {
@@ -12,44 +26,41 @@ export default {
          * Cargar mensaje de éxito según sea el caso
          */
         loadSuccessMessage() {
-            const draftMsj = "Obra guardada como borrador";
-            const publishMsj = "Obra publicada con éxito";
-            const inPauseMsj = "Obra guardada en borradores";
-
+            // obra publicada
             if (this.state === 1) {
-                // obra publicada
                 this.notySwal({
-                    title: publishMsj,
-                    text: "¡Éxito!",
+                    title: SUCCESS_TITLE_NOTY,
+                    text: PUBLISH_ARTWORK,
                 });
             } else if (this.state === 3) {
                 // obra como borrador
                 this.notySwal({
-                    title: draftMsj,
-                    text: "¡Éxito!",
-                });
-            } else if (this.state === 5) {
-                // mensaje para cuando queda en pausa/borrador
-                const confirm = this.confirmedDialog({
-                    title: inPauseMsj,
-                    text: "Para poder publicarla debe agregar un método de cobro",
-                    icon: "success",
-                    confirmButtonText: "Agregar un método de cobro",
-                    cancelButtonText: "Cancelar",
+                    title: SUCCESS_TITLE_NOTY,
+                    text: DRAFT_ARTWORK,
                 });
 
+                // TODO: validación en desuso, nunca va a llegar al estado 5
+            } else if (this.state === 5) {
+                // mensaje para cuando queda en pausa/borrador
+                // const confirm = this.confirmedDialog({
+                //     title: inPauseMsj,
+                //     text: "Para poder publicarla debe agregar un método de cobro",
+                //     icon: "success",
+                //     confirmButtonText: "Agregar un método de cobro",
+                //     cancelButtonText: "Cancelar",
+                // });
                 // respuesta promesa
-                confirm.then((resp) => {
-                    if (resp.isConfirmed) {
-                        this.$router.push({
-                            name: "userProfile",
-                            params: {
-                                id: this.$userAuth.id,
-                                section: "charging",
-                            },
-                        });
-                    }
-                });
+                // confirm.then((resp) => {
+                //     if (resp.isConfirmed) {
+                //         this.$router.push({
+                //             name: "userProfile",
+                //             params: {
+                //                 id: this.$userAuth.id,
+                //                 section: "charging",
+                //             },
+                //         });
+                //     }
+                // });
             }
         },
 

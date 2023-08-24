@@ -359,14 +359,6 @@
                         <!-- borrador o publicar -->
                         <!-- ------------------- -->
                         <v-col cols="12" v-if="!disabledForm">
-                            <AlertPayment
-                                v-if="!hasPaymentMethod"
-                                class="pb-5"
-                            />
-
-                            <!-- <div
-                                class="w-full border-t border-gray-700 mt-8 pb-8"
-                            ></div> -->
                             <div class="flex flex-wrap w-full sm:justify-end">
                                 <button
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
@@ -409,7 +401,6 @@ import Newletter from "../landing/sections/Newletter.vue";
 import ExtraInfo from "../landing/sections/ExtraInfo.vue";
 import Footer from "../landing/sections/Footer.vue";
 import Category from "./sections/Category.vue";
-import AlertPayment from "./components/AlertPayment.vue";
 
 // mixin
 import createRules from "./utils/createRulesMixin";
@@ -427,7 +418,6 @@ export default {
         ExtraInfo,
         Footer,
         Category,
-        AlertPayment,
     },
     mixins: [
         createRules,
@@ -439,6 +429,12 @@ export default {
     ],
     data() {
         return {
+            formIsValid: true,
+            disabledForm: false,
+            menuPicker: false,
+            clickBtn: 3, // 1 = publicar, 3 = borrador
+            calTax: 0,
+            tax: 15,
             form: {
                 title: "",
                 description: "",
@@ -457,27 +453,12 @@ export default {
                     sub_category: [],
                 },
             },
-            formIsValid: true,
-            disabledForm: false,
-            hasPaymentMethod: true,
-            menuPicker: false,
-            clickBtn: 3, // 1 = publicar, 3 = borrador, 5 = en pausa
-            calTax: 0,
-            tax: 15,
-            // state: 0,
-            // typeArtwork: 1,
         };
     },
 
-    async mounted() {
+    mounted() {
         this.form.date_created = this.actualDate; // @utilMixin
         this.getCategories(); // @getDataMixin
-
-        // @getDataMixin
-        const resp = await this.userHaveChargingMethod(this.user.id);
-        if (resp.length === 0) {
-            this.hasPaymentMethod = false;
-        }
     },
 
     computed: {
@@ -485,7 +466,7 @@ export default {
          * Usuario logueado
          */
         user() {
-            return this.$store.getters.getProfile;
+            return this.$userAuth;
         },
 
         /**
@@ -506,19 +487,6 @@ export default {
     },
 
     watch: {
-        async user(val) {
-            if (val.id) {
-                // @getDataMixin
-                // la primera vez se ejecuta este, el que esta dentro del watch
-                // luego se ejecuta el que esta dentro del mounted
-                const resp = await this.userHaveChargingMethod(val.id);
-                if (resp.length === 0) {
-                    this.hasPaymentMethod = false;
-                    console.log(this.hasPaymentMethod);
-                }
-            }
-        },
-
         /**
          * Calcular el impuesto de la app (15%)
          * cada vez que cambie el precio de la obra
@@ -534,6 +502,7 @@ export default {
          * Guardar, publicar o guardar como borrador
          */
         saveArtwork() {
+            // validar el formulario
             if (this.clickBtn === 1 && !this.$refs.artworkForm.validate()) {
                 return this.$noty(
                     "Algunos campos son requeridos, verifique antes de publicar",
@@ -542,24 +511,9 @@ export default {
                 );
             }
 
-            // evaluar el parámetro type de ruta
-            this.typeArtwork = this.$route.params.type ?? 1;
-
-            // verificar estado antes de guardar/publicar
-            // para publicar debe tener un método de pago
-            // sino pasa a estado 5 (pendiente de pago o pausa)
-            // estados:
-            // PUBLISHED = 1;
-            // SOLD = 2;
-            // DRAFT = 3;
-            // IN_CART = 4;
-            // PAUSED = 5;
-            this.state =
-                this.clickBtn === 1 ? (!this.hasPaymentMethod ? 5 : 1) : 3;
-
             // formdata
             const data = this.loadDataBeforeSave();
-
+            // loading
             this.globalLoading = true;
             // request
             this.axios
@@ -568,10 +522,7 @@ export default {
                     if (resp.status === 200) {
                         // mensaje
                         this.loadSuccessMessage();
-
-                        // --------------------
                         // redireccion
-                        // --------------------
                         this.artCollectiveID = this.collectiveId;
                         this.redirectAccordingTypeArtwork();
                     }
@@ -584,6 +535,16 @@ export default {
          * Carga y estructura los datos antes de guardar
          */
         loadDataBeforeSave() {
+            // PUBLISHED = 1;
+            // SOLD = 2;
+            // DRAFT = 3;
+            // IN_CART = 4;
+            // PAUSED = 5;
+            this.state = this.clickBtn;
+
+            // evaluar el parámetro type de ruta
+            this.typeArtwork = this.$route.params.type ?? 1;
+
             // data general
             const data = new FormData();
             data.append("title", this.form.title);

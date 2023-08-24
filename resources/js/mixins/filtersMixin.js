@@ -5,6 +5,16 @@
  * @link https://luisan.dev
  */
 
+import {
+    BANK_ACCOUNT,
+    CARD,
+    FAILED,
+    PAID,
+    PENDING,
+    SEPA_DEBIT,
+    UNKNOWN,
+} from "../util/text";
+
 export default {
     filters: {
         /**
@@ -32,18 +42,18 @@ export default {
          */
         formatTypePayout(value) {
             if (value === "card") {
-                return "Tarjeta";
+                return CARD;
             }
 
             if (value === "sepa_debit") {
-                return "Débito SEPA";
+                return SEPA_DEBIT;
             }
 
             if (value === "bank_account") {
-                return "Cuenta bancaria";
+                return BANK_ACCOUNT;
             }
 
-            return "Desconocido";
+            return UNKNOWN;
         },
 
         /**
@@ -52,18 +62,18 @@ export default {
          */
         formatStatusPayout(value) {
             if (value === "pending") {
-                return "Pendiente";
+                return PENDING;
             }
 
             if (value === "paid") {
-                return "Pagado";
+                return PAID;
             }
 
             if (value === "failed") {
-                return "Fallido";
+                return FAILED;
             }
 
-            return "Desconocido";
+            return UNKNOWN;
         },
     },
 };

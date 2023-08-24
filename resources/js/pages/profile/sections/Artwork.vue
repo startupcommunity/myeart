@@ -83,7 +83,6 @@
                     Subir obra
                 </router-link>
             </div>
-            <AlertPayment v-if="!hasPaymentMethod" class="py-6 w-full" />
 
             <!-- obras -->
             <div class="py-6 w-full">
@@ -177,7 +176,6 @@
 </template>
 <script>
 // componentes
-import AlertPayment from "../../artwork/components/AlertPayment.vue";
 import LoadingTailwind from "./../../../components/LoadingTailwind.vue";
 
 // mixin
@@ -188,7 +186,7 @@ let counterArtworks = 4;
 
 export default {
     name: "Artwork",
-    components: { LoadingTailwind, AlertPayment },
+    components: { LoadingTailwind },
     mixins: [getDataMixin],
     props: {
         showSection: {
@@ -197,12 +195,10 @@ export default {
     },
     data() {
         return {
-            symbol: "€",
             loading: false,
             stateActivePub: false,
             stateActiveSold: false,
             stateActiveDraft: false,
-            hasPaymentMethod: true,
             artworks: [],
             originalArtworks: [],
             remainingArtworks: [],
@@ -488,15 +484,6 @@ export default {
                 params: { id },
             };
         },
-
-        haveAChargingMethod() {
-            this.axios
-                .get(this.ep.user.getUserChargeMethods + this.user.id)
-                .then((r) => {
-                    this.hasPaymentMethod = r.data.length === 0 ? false : true;
-                })
-                .catch((error) => this.$manageError(error));
-        },
     },
     watch: {
         showSection(val) {
@@ -504,7 +491,6 @@ export default {
                 this.stateActivePub = true;
                 this.resetData();
                 this.getArtworks();
-                this.haveAChargingMethod();
             }
         },
     },

@@ -8,6 +8,7 @@
  */
 
 import endpoints from "../api/endpoints";
+import { INFO_TITLE_NOTY, NOT_FOUND_RESOURCE } from "../util/text";
 import requestErrorsMixin from "./requestErrorsMixin";
 
 export default {
@@ -325,10 +326,14 @@ export default {
          * @param {Object} resp  respuesta del backend
          */
         $manageError(resp) {
-            // console.error(resp);
             if (resp?.request?.status === 404) {
                 // NOT FOUND
                 // this.$router.push({ name: "NotFound" });
+                this.notySwal({
+                    title: INFO_TITLE_NOTY,
+                    text: NOT_FOUND_RESOURCE(resp?.request?.status),
+                    icon: "error",
+                });
             }
 
             if (resp?.request?.status === 500) {

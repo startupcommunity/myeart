@@ -194,6 +194,17 @@ export default {
          * Ir a la sección métodos de cobro
          */
         goTochargingMethod() {
+            // verificar si ya esta en la url charging
+            if (this.$route.name === "userProfile") {
+                // si esta en la url charging
+                if (this.$route.params.section === "charging") {
+                    // cerrar el modal
+                    this.$emit("goToSectionChargingMethod", "charging");
+                    return;
+                }
+            }
+
+            // ir a la url charging
             this.$router.push({
                 name: "userProfile",
                 params: {

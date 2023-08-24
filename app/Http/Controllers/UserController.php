@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateFollowArtworkRequest;
 use Illuminate\Http\JsonResponse;
 use App\Factories\UserFactory;
+use App\Http\Requests\CreateUserStripePayoutRequest;
 use App\Querys\CollectiveDB;
 use Illuminate\Http\Request;
 use App\Utils\ResponseJson;
@@ -315,7 +316,7 @@ class UserController extends Controller
     /**
      * Crea un nuevo pago de stripe para retiro de fondos
      */
-    public function createUserPayout(Request $request): JsonResponse
+    public function createUserPayout(CreateUserStripePayoutRequest $request): JsonResponse
     {
         try {
             $resp = $this->userfactory->createUserPayout($request);

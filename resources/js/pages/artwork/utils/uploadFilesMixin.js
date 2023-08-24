@@ -1,11 +1,18 @@
 /**
  * Mixin para gestionar las propiedades y métodos
  * que son de utilidad para subir y validar las imagenes
- *  de la galeria de obras del usuario
+ * de la galeria de obras del usuario
+ *
+ * @autor  Luis Annunziato: luisannunziato@gmail.com
+ * @link https://luisan.dev
  */
 
-// cantidad de imagenes permitidos
-const MAX_FILES_ALLOWED = 10;
+import { MAX_FILES_ALLOWED, VALID_FILES } from "../../../util/const";
+import {
+    INFO_TITLE_NOTY,
+    INVALID_FILES,
+    ONLY_MAX_FILES_ALLOWED,
+} from "../../../util/text";
 
 export default {
     data() {
@@ -15,7 +22,7 @@ export default {
             dropzoneFile: true,
             dragover: false,
 
-             // utilizada para verificar la imagen de portada
+            // utilizada para verificar la imagen de portada
             //  unicamente para el editar
             isFront: false,
         };
@@ -44,18 +51,12 @@ export default {
          * validos: jpg, png, svg
          */
         validateFiles(files) {
-            const validFiles = [
-                "image/png",
-                "image/jpeg",
-                "image/svg+xml",
-                "image/gif",
-            ];
             const arrayFiles = Object.values(files);
             let validUploadFiles = [];
             let invalidFiles = [];
 
             arrayFiles.forEach((file) => {
-                if (validFiles.includes(file.type)) {
+                if (VALID_FILES.includes(file.type)) {
                     validUploadFiles.push(file);
 
                     // unicamente para editar las imagenes
@@ -71,8 +72,8 @@ export default {
 
             if (invalidFiles.length) {
                 return this.$notify({
-                    title: "Aviso!",
-                    text: "Uno o mas archivos son inválidos, verifique!",
+                    title: INFO_TITLE_NOTY,
+                    text: INVALID_FILES,
                     group: "container",
                     type: "warning",
                     duration: 6000,
@@ -124,7 +125,7 @@ export default {
                 this.uploadedFiles.splice(MAX_FILES_ALLOWED);
                 this.$notify({
                     title: "Aviso!",
-                    text: `Solo puede cargar un máximo de ${MAX_FILES_ALLOWED} imágenes`,
+                    text: ONLY_MAX_FILES_ALLOWED(MAX_FILES_ALLOWED),
                     group: "container",
                     type: "info",
                     duration: 6000,

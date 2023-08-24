@@ -123,6 +123,7 @@
                     <Balance
                         :showSection="sections.balance"
                         class="sm:min-h-[60rem]"
+                        @goToSectionChargingMethod="loadSection"
                     />
                     <!-- /calificaciones -->
                 </div>

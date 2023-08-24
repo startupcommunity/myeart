@@ -356,13 +356,6 @@
                         <!-- borrador o publicar -->
                         <!-- ------------------- -->
                         <v-col cols="12">
-                            <!-- <div
-                                class="w-full border-t border-gray-700 mt-8 pb-8"
-                            ></div> -->
-                            <AlertPayment
-                                v-if="!hasPaymentMethod"
-                                class="pb-5"
-                            />
                             <div class="flex flex-wrap w-full sm:justify-end">
                                 <button
                                     class="w-full sm:w-auto px-7 py-4 bg-zinc-800 text-gray-50 border border-gray-800 hover:animate-shadow-and-color-app text-base font-light rounded-md uppercase"
@@ -413,8 +406,15 @@ import uploadFilesMixin from "./utils/uploadFilesMixin";
 import utilMixin from "../../mixins/utilMixin";
 import getDataMixin from "../../mixins/getDataMixin";
 import requestErrorsMixin from "../../mixins/requestErrorsMixin";
-import AlertPayment from "./components/AlertPayment.vue";
 import useArtwork from "./utils/useArtwork";
+import {
+    CONFIRM_DRAFT_ARTWORK,
+    CONFIRM_PUBLISH_ARTWORK,
+    YES_DRAFT,
+    YES_PUBLISH,
+    CANCEL,
+    REQUIRED_FIELDS,
+} from "../../util/text";
 
 export default {
     name: "EditArtwork",
@@ -424,7 +424,6 @@ export default {
         ExtraInfo,
         Footer,
         Category,
-        AlertPayment,
     },
     mixins: [
         createRules,
@@ -437,6 +436,12 @@ export default {
     ],
     data() {
         return {
+            formIsValid: true,
+            menuPicker: false,
+            loadingGallery: false,
+            publish: false,
+            calTax: 0,
+            tax: 15,
             form: {
                 id: "",
                 title: "",
@@ -458,13 +463,6 @@ export default {
                     sub_category: [],
                 },
             },
-            formIsValid: true,
-            menuPicker: false,
-            loadingGallery: false,
-            publish: false,
-            hasPaymentMethod: true,
-            calTax: 0,
-            tax: 15,
         };
     },
     mounted() {
@@ -489,7 +487,7 @@ export default {
          * Usuario logueado
          */
         user() {
-            return this.$store.getters.getProfile;
+            return this.$userAuth;
         },
 
         /**
@@ -536,9 +534,6 @@ export default {
 
                     // galeria
                     this.loadGallery(gallery);
-
-                    // comprobar si ya ha cargado un método de cobro
-                    this.haveAChargingMethod();
                 })
                 .catch((error) => console.log(error))
                 .finally(() => {
@@ -570,11 +565,7 @@ export default {
         updateArtwork() {
             if (this.form.state === 1 || this.publish) {
                 if (!this.$refs.artworkForm.validate()) {
-                    return this.$noty(
-                        "Por favor, revisa los campos, algunos son requeridos",
-                        "error",
-                        5000
-                    );
+                    return this.$noty(REQUIRED_FIELDS, "error", 5000);
                 }
             }
 
@@ -592,36 +583,10 @@ export default {
                     if (resp.status === 200) {
                         // mensaje
                         this.loadSuccessMessage();
-                        // const draftMsj = "Obra guardada como borrador";
-                        // const publishMsj = "Obra publicada con éxito";
-                        // const inPauseMsj =
-                        //     "Obra en pausa/borrador hasta que se agregue un método de cobro";
-
-                        // if (data.get("state") == 1) {
-                        //     this.$noty(publishMsj);
-                        // } else if (data.get("state") == 3) {
-                        //     this.$noty(draftMsj);
-                        // } else if (data.get("state") == 5) {
-                        //     this.$noty(inPauseMsj);
-                        // }
-
-                        // --------------------
                         // redireccion
-                        // --------------------
                         this.typeArtwork = this.isCollective ? 2 : 1;
                         this.artCollectiveID = this.collectiveId;
                         this.redirectAccordingTypeArtwork();
-                        // if (!this.isCollective) {
-                        //     // obra de artista
-                        //     const url = `/usuario/perfil/${this.user.id}/obras`;
-                        //     this.$router.push(url);
-                        // }
-
-                        // if (this.isCollective) {
-                        //     // obra de colectivo
-                        //     const url = `/colectivos/perfil/${this.collectiveId}/artwork`;
-                        //     this.$router.push(url);
-                        // }
                     }
                 })
                 .catch((error) => this.$manageError(error))
@@ -632,20 +597,20 @@ export default {
          * Confirmar si se desea actualizar o no la obra
          */
         confirmUpdate() {
-            const msj = this.publish
-                ? "¿Esta seguro de publicar esta obra?"
-                : "¿Esta seguro de guardar esta obra como borrador?";
+            const title = this.publish
+                ? CONFIRM_PUBLISH_ARTWORK
+                : CONFIRM_DRAFT_ARTWORK;
 
-            const msjBtn = this.publish ? "Si, Publicar" : "Si, Guardar";
+            const msjBtn = this.publish ? YES_PUBLISH : YES_DRAFT;
 
             this.$swal
                 .fire({
-                    title: msj,
+                    title,
                     showCancelButton: true,
                     confirmButtonColor: "#00BF30",
                     cancelButtonColor: "#d33",
                     confirmButtonText: msjBtn,
-                    cancelButtonText: "Cancelar",
+                    cancelButtonText: CANCEL,
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
@@ -658,21 +623,16 @@ export default {
          * Cargar los datos para ser enviados al backend
          */
         loadFormData() {
+            const data = new FormData();
             const form = this.form;
             const files = this.uploadedFiles;
-            const data = new FormData();
             let state = 1;
 
             // si se guarda como borrador
             if (!this.publish) {
                 state = 3;
-
-                // si se quiere publicar
-            } else if (this.publish && !this.hasPaymentMethod) {
-                state = 5;
-
-                // si cumple con todo, se publica
             } else {
+                // si cumple con todo, se publica
                 state = 1;
             }
 
@@ -747,21 +707,6 @@ export default {
                     this.addFileToUploadFilesWithFront(data);
                 });
             });
-        },
-
-        /**
-         * Verifica si el usuario tiene agregado algún método de cobro
-         * si no lo tiene todas las obras se guardan como borrador
-         */
-        haveAChargingMethod() {
-            this.axios
-                .get(this.ep.user.getUserChargeMethods + this.user.id)
-                .then((resp) => {
-                    if (resp.data.length === 0) {
-                        this.hasPaymentMethod = false;
-                    }
-                })
-                .catch((error) => this.$manageError(error));
         },
     },
 };
