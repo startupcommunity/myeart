@@ -22,8 +22,8 @@
                                 Disponible para retiro
                             </h4>
                             <p class="text-gray-900 text-2xl font-light">
-                                {{ euro }}
                                 {{ availableForTransfer | stripeAmountToEuro }}
+                                {{ euro }}
                             </p>
                             <div v-if="availableForTransfer">
                                 <v-btn

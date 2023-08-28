@@ -16,12 +16,12 @@
                         </p>
                         <p>
                             <span class="font-bold">Monto: </span>
-                            {{ euro }}
                             {{ payout.amount | stripeAmountToEuro }}
+                            {{ euro }}
                         </p>
                         <p>
                             <span class="font-bold">Moneda: </span>
-                            {{ payout.currency }}
+                            {{ payout.currency | formatCurrency }}
                         </p>
                         <p>
                             <span class="font-bold"

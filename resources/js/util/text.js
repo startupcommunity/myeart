@@ -86,3 +86,9 @@ export const PENDING = "Pendiente";
 export const PAID = "Pagado";
 // fallido
 export const FAILED = "Fallido";
+// euro
+export const EURO = "Euro";
+// dólar
+export const DOLLAR = "Dólar";
+// libra
+export const POUND = "Libra";

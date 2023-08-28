@@ -30,8 +30,8 @@
                     {{ pay.currency }}
                 </td>
                 <td class="whitespace-nowrap border-r px-6 py-4">
-                    {{ euro }}
                     {{ pay.amount | stripeAmountToEuro }}
+                    {{ euro }}
                 </td>
             </tr>
         </tbody>
@@ -39,8 +39,8 @@
             <tr>
                 <td colspan="3" class="px-6 py-4 font-medium">Total</td>
                 <td class="px-6 py-4 font-medium">
-                    {{ euro }}
                     {{ total | stripeAmountToEuro }}
+                    {{ euro }}
                 </td>
             </tr>
             <tr v-if="showButton">
@@ -67,18 +67,6 @@ import ShowDetailsPayoutModal from "./ShowDetailsPayoutModal.vue";
 export default {
     components: { LoadingTailwind, ShowDetailsPayoutModal },
     mixins: [filtersMixin],
-    props: {
-        // payouts: {
-        //     type: Array,
-        //     default: () => [],
-        //     description: "Listado de pagos",
-        // },
-        // loadingPayout: {
-        //     type: Boolean,
-        //     default: false,
-        //     description: "Cargando pagos",
-        // },
-    },
 
     data() {
         return {

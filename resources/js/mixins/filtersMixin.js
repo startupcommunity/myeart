@@ -8,9 +8,12 @@
 import {
     BANK_ACCOUNT,
     CARD,
+    DOLLAR,
+    EURO,
     FAILED,
     PAID,
     PENDING,
+    POUND,
     SEPA_DEBIT,
     UNKNOWN,
 } from "../util/text";
@@ -71,6 +74,22 @@ export default {
 
             if (value === "failed") {
                 return FAILED;
+            }
+
+            return UNKNOWN;
+        },
+
+        formatCurrency(value) {
+            if (value === "eur") {
+                return EURO;
+            }
+
+            if (value === "usd") {
+                return DOLLAR;
+            }
+
+            if (value === "gbp") {
+                return POUND;
             }
 
             return UNKNOWN;
