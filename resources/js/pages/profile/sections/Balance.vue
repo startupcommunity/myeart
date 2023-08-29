@@ -22,10 +22,17 @@
                                 Disponible para retiro
                             </h4>
                             <p class="text-gray-900 text-2xl font-light">
-                                {{ availableForTransfer | stripeAmountToEuro }}
-                                {{ euro }}
+                                <span v-if="showBalance">
+                                    {{ amount | stripeAmountToEuro }}
+                                    {{ euro }}
+                                </span>
+                                <span v-else>******</span>
+                                <v-btn @click.stop="showOrNotBalance" text>
+                                    <i class="fa fa-eye" v-if="showBalance"></i>
+                                    <i class="fa fa-eye-slash" v-else></i>
+                                </v-btn>
                             </p>
-                            <div v-if="availableForTransfer">
+                            <div v-if="amount">
                                 <v-btn
                                     large
                                     outlined
@@ -129,6 +136,7 @@ export default {
             checkUserChargingMethod: false,
             openConfirm: false,
             reloadTablePayout: true,
+            showBalance: false,
             balance: {
                 available: 0,
                 pending: 0,
@@ -145,9 +153,9 @@ export default {
             return this.balance.pending[0] || { amount: 0 };
         },
 
-        availableForTransfer() {
-            const pending = this.pending.amount;
+        amount() {
             // si es mayor a cero y con signo negativo se elimina el signo
+            const pending = this.pending.amount;
             const amount = pending > 0 ? pending * -1 : pending;
             return this.available.amount + amount;
         },
@@ -299,6 +307,13 @@ export default {
                 })
                 .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
+        },
+
+        /**
+         * Ver/ocultar balance
+         */
+        showOrNotBalance() {
+            this.showBalance = !this.showBalance;
         },
     },
 };
