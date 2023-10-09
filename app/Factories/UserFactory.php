@@ -196,8 +196,6 @@ class UserFactory
     // usuario
     $stripe = new Stripe();
     $userBalance = $stripe->getBalanceConectedAccount($user->stripe_account_id)->toArray();
-    // $getcc = $stripe->getConnectedAccount($user->stripe_account_id)->toArray();
-    // dd($getcc);
 
     // restar el disponible - el pendiente
     // eliminar signo negativo si lo tiene el saldo pendiente
@@ -208,7 +206,7 @@ class UserFactory
 
     // restar
     $rest = $userBalance['available'][0]['amount'] - $pending;
-    $amount = $userBalance['available'][0]['amount'];
+    // $amount = $userBalance['available'][0]['amount'];
 
     if ($rest <= 0) {
       return [
@@ -217,17 +215,6 @@ class UserFactory
         'data' => null
       ];
     }
-
-    // dd($rest, $amount);
-    // establecer el formato correcto para retirar fondos
-    // $totalParcial = (int) floor($amount / 100);
-    // tax stripe = 1.5% + 0.25€
-    // $tax = (int) floor($amount * 0.015) + 25;
-    // $totalParcial = (int) floor($amount - $tax);
-    // $total = $totalParcial;
-    // $total = $total * 100;
-    // dd($amount, $total);
-    // convertir saldo de euros a centavos
 
     // crear payout
     $payoutStripe = $stripe->createPayout([

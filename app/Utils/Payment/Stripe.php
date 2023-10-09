@@ -210,7 +210,7 @@ class Stripe
         "payouts" => [
           "debit_negative_balances" => false,   // si se puede debitar el saldo negativo
           "schedule" => [
-            "delay_days" => 7,      // días de retraso
+            // "delay_days" => 7,      // días de retraso
             "interval" => "manual"  // manual o daily
           ],
           "statement_descriptor" => null
