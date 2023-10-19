@@ -244,6 +244,22 @@ export default {
         user() {
             return this.$store.getters.getProfile || {};
         },
+        
+        /**
+         * Verificar si el parámetro type de la ruta es igual a 2
+         * 1 = artista
+         * 2- colectivo
+         */
+         isCollective() {
+            return this.$route.params.type == 2;
+        },
+
+        /**
+         * Id del colectivo
+         */
+        collectiveId() {
+            return this.$route.params.collectiveID || null;
+        },
     },
 
     methods: {
@@ -333,6 +349,9 @@ export default {
             data.append("location", this.form.location);
             data.append("phone_number", this.form.phone_number);
             data.append("description", this.form.description);
+            if (this.collectiveId) {
+                data.append(`collective_id`, this.collectiveId);
+            }
 
             this.axios
                 .post(this.ep.events.store, data, this.headerFormData)

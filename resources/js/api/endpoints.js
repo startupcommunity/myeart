@@ -236,6 +236,9 @@ const endpoints = {
         // devuelve todos los eventos
         getAll: `${API}/events/get-all`, // get
 
+        // devuelve todos los eventos de un colectivo {id}
+        getAllCollective: `${API}/events/get-all-collective/`, // get
+
         // devuelve todos los eventos - guest
         getGuestAll: `${API}/guest/events/get-all`, // get
 

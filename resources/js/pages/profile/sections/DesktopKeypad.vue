@@ -24,6 +24,17 @@
                 </button>
             </div>
             <div class="flex flex-wrap gap-4 items-center justify-start py-6">
+                <button type="button" @click="showSection('colectivos')">
+                    <i class="fas fa-palette text-primary"></i>
+                    <span
+                        class="tracking-tight uppercase"
+                        :class="sections.collective ? 'font-black' : 'font-light'"
+                    >
+                        Mis colectivos
+                    </span>
+                </button>
+            </div>
+            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
                 <button type="button" @click="showSection('order')">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span
@@ -121,6 +132,19 @@
                         :class="sections.security ? 'font-black' : 'font-light'"
                     >
                         Privacidad y seguridad
+                    </span>
+                </button>
+            </div>
+            <div class="flex flex-wrap gap-4 items-center justify-start py-6">
+                <button type="button" onclick="window.location.href='/comunidad'">
+                    <i class="fas fa-location-arrow text-primary"></i>
+                    <span
+                        class="tracking-tight uppercase"
+                        :class="
+                            sections.direction ? 'font-black' : 'font-light'
+                        "
+                    >
+                        Mi comunidad
                     </span>
                 </button>
             </div>

@@ -32,7 +32,8 @@ class UserEvent extends Model
         'location',
         'phone_number',
         'description',
-        'slug'
+        'slug',
+        'collective_id'
     ];
 
     // crear slug al momento de guardar
@@ -52,6 +53,16 @@ class UserEvent extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * El colectivo al que pertenece (no)
+     *
+     * @return BelongsTo
+     */
+    public function collective(): BelongsTo
+    {
+        return $this->belongsTo(Collective::class);
     }
 
     /**

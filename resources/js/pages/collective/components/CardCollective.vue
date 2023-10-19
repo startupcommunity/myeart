@@ -22,7 +22,14 @@
             <div class="flex gap-3 justify-end">
                 <div v-if="!$isUserGuest" class="flex justify-end items-center">
                     <button
-                        v-if="isWatchingCreator || isUserInCollective"
+                        v-if="(isWatchingCreator || isUserInCollective) && updateText"
+                        class="py-1 px-2 rounded-lg hover:bg-gray-200"
+                        @click.stop="goToCollectiveProfile"
+                    >
+                        EDITAR
+                    </button>
+                    <button
+                        v-if="(isWatchingCreator || isUserInCollective) && !updateText"
                         class="py-1 px-2 rounded-lg hover:bg-gray-200"
                         @click.stop="goToCollectiveProfile"
                     >
@@ -109,6 +116,7 @@ import utilMixin from "../../../mixins/utilMixin";
 import CollectiveAvatar from "./CollectiveAvatar.vue";
 import FollowCollectiveButton from "./FollowCollectiveButton.vue";
 import LikeButtonCollective from "./LikeButtonCollective.vue";
+//import FollowersModal from "./FollowersModal.vue";
 
 export default {
     name: "CardCollective",
@@ -117,6 +125,7 @@ export default {
         CollectiveAvatar,
         LikeButtonCollective,
         FollowCollectiveButton,
+        //FollowersModal,
     },
     props: {
         collective: {
@@ -127,6 +136,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        updateText: {
+            type: Boolean,
+            default: false,
+        }
     },
 
     computed: {

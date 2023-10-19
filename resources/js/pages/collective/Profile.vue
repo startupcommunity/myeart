@@ -82,6 +82,17 @@
                                 >
                                     Obras
                                 </v-btn>
+                                <v-btn
+                                    class="uppercase hover:no-underline text-lg"
+                                    text
+                                    @click.stop="activeSection('event')"
+                                    :class="{
+                                        'font-bold': sections.event,
+                                        'font-normal': !sections.event,
+                                    }"
+                                >
+                                    Eventos
+                                </v-btn>
                             </div>
                             <!-- /links -->
                         </div>
@@ -117,6 +128,10 @@
                             :collective="collective"
                             v-if="sections.artwork && collective?.id"
                         />
+                        <Event
+                            :collective="collective"
+                            v-if="sections.event && collective?.id"
+                        />
                     </div>
                     <!-- content -->
                 </div>
@@ -135,6 +150,7 @@ import Info from "./sections/Info.vue";
 import Release from "./sections/Release.vue";
 import Member from "./sections/Member.vue";
 import Artwork from "./sections/Artwork.vue";
+import Event from "./sections/Event.vue";
 
 export default {
     name: "Profile",
@@ -148,6 +164,7 @@ export default {
         Release,
         Member,
         Artwork,
+        Event
     },
 
     mounted() {

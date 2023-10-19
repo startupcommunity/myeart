@@ -55,6 +55,16 @@ class Collective extends Model
     }
 
     /**
+     * Devuelve los eventos que pertenezcan a el collectivo
+     *
+     * @return HasMany
+     */
+    public function events(): HasMany
+    {
+        return $this->hasMany(UserEvent::class);
+    }
+
+    /**
      * Perfil del colectivo
      */
     public function profile(): HasOne

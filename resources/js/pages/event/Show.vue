@@ -71,6 +71,17 @@
                                     </span>
                                 </router-link>
                             </p>
+                            <p class="text-sm text-zinc-500 font-light" v-if="event?.collective">
+                                Colectivo:
+                                <router-link
+                                    :to="getPathProfileCollective"
+                                    class="hover:no-underline"
+                                >
+                                    <span class="text-primary font-bold">
+                                        {{ event?.collective?.name }}
+                                    </span>
+                                </router-link>
+                            </p>
                             <p class="text-primary uppercase text-sm font-bold">
                                 {{ getMode }}
                             </p>
@@ -181,6 +192,12 @@ export default {
             return {
                 name: "showArtist",
                 params: { id: this.creator?.id },
+            };
+        },
+        getPathProfileCollective() {
+            return {
+                name: "collectiveShow",
+                params: { id: this.event?.collective_id },
             };
         },
         getMode() {
