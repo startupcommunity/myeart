@@ -103,7 +103,7 @@ export default {
         getPathDetailArtwork() {
             return {
                 name: "showArtwork",
-                params: { id: this.artwork.id },
+                params: { id: this.artwork.id,title:this.artwork.title.toLowerCase().replace(/ /g, '-') },
             };
         },
         /**

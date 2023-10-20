@@ -2137,7 +2137,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getPathProfile: function getPathProfile() {
-      var _this$artist2;
+      var _this$artist2, _this$artist3;
       // if (this.isUserGuest) {
       //     return this.$noty("Debes iniciar sesión", "warning");
       // }
@@ -2145,7 +2145,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         name: "showArtist",
         params: {
-          id: (_this$artist2 = this.artist) === null || _this$artist2 === void 0 ? void 0 : _this$artist2.id
+          id: (_this$artist2 = this.artist) === null || _this$artist2 === void 0 ? void 0 : _this$artist2.id,
+          name: (_this$artist3 = this.artist) === null || _this$artist3 === void 0 ? void 0 : _this$artist3.name.toLowerCase().replace(/ /g, '-')
         }
       });
     }
@@ -8947,7 +8948,7 @@ var artistRoute = [{
   // beforeEnter: ifNotAuthenticated,
 }, {
   name: "showArtist",
-  path: "/artista/:id",
+  path: "/artista/:id/:name",
   component: (0,_util__WEBPACK_IMPORTED_MODULE_0__.importPage)("artist/Show")
   // beforeEnter: ifAuthenticated,
 }];
@@ -8993,7 +8994,7 @@ var artworkRoute = [{
   beforeEnter: _util__WEBPACK_IMPORTED_MODULE_0__.ifNotAuthenticated
 }, {
   name: "showArtwork",
-  path: "/obras/:id",
+  path: "/obras/:id/:title",
   component: (0,_util__WEBPACK_IMPORTED_MODULE_0__.importPage)("artwork/ShowArtwork")
   // beforeEnter: ifAuthenticated,
 }];
@@ -9059,7 +9060,7 @@ var collectivesRoute = [{
   beforeEnter: _util__WEBPACK_IMPORTED_MODULE_0__.ifAuthenticated
 }, {
   name: "collectiveShow",
-  path: "/colectivos/ver/:id",
+  path: "/colectivos/ver/:id/:name",
   component: (0,_util__WEBPACK_IMPORTED_MODULE_0__.importPage)("collective/Show")
   // beforeEnter: ifAuthenticated,
 }, {

@@ -258,6 +258,7 @@ export default {
                 name: "collectiveShow",
                 params: {
                     id: this.collective?.id,
+                    name: this.collective?.name.toLowerCase().replace(/ /g, '-')
                 },
             });
         },

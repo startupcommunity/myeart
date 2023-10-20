@@ -53,6 +53,7 @@ export default {
                 name: "showArtist",
                 params: {
                     id: this.artist?.id,
+                    name: this.artist?.name.toLowerCase().replace(/ /g, '-')
                 },
             });
         },
