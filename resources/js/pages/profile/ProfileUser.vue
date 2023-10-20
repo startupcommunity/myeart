@@ -69,6 +69,12 @@
                         class="sm:min-h-[60rem]"
                     />
                     <!-- /sección obras -->
+                    <!-- sección colectivos -->
+                    <Collective
+                        :showSection="sections.collective"
+                        class="sm:min-h-[60rem]"
+                    />
+                    <!-- /sección colectivos -->
 
                     <!-- sección favoritos -->
                     <Favourite
@@ -190,6 +196,7 @@ import PaymentMethod from "./sections/PaymentMethod.vue";
 import ChargingMethod from "./sections/ChargingMethod.vue";
 import Rating from "./sections/Rating.vue";
 import Balance from "./sections/Balance.vue";
+import Collective from "./sections/Collective.vue";
 
 // secciones como tabs
 const SECTIONS = {
@@ -205,6 +212,7 @@ const SECTIONS = {
     rating: "rating",
     seguridad: "seguridad",
     balance: "balance",
+    collective:"colectivos",
 };
 
 export default {
@@ -231,6 +239,7 @@ export default {
         ChargingMethod,
         Rating,
         Balance,
+        Collective
     },
     data() {
         return {
@@ -254,6 +263,7 @@ export default {
                 rating: false,
                 security: false,
                 balance: false,
+                collective: false,
             },
         };
     },
@@ -316,6 +326,7 @@ export default {
             this.sections.rating = id == SECTIONS.rating;
             this.sections.security = id == SECTIONS.seguridad;
             this.sections.balance = id == SECTIONS.balance;
+            this.sections.collective = id == SECTIONS.collective;
         },
 
         /**

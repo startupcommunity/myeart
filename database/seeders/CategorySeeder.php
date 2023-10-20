@@ -53,6 +53,26 @@ class CategorySeeder extends Seeder
                     'name' => 'Libros',
                     'qualified' => 'Escritor',
                 ], // 7
+                [
+                    'id' => 8,
+                    'name' => 'Literatura',
+                    'qualified' => 'Libro',
+                ], // 8
+                [
+                    'id' => 9,
+                    'name' => 'Antigüedades',
+                    'qualified' => 'Antigüo',
+                ], // 9
+                [
+                    'id' => 10,
+                    'name' => 'Coleccionismo',
+                    'qualified' => 'Colección',
+                ], // 10
+                [
+                    'id' => 11,
+                    'name' => 'OtrasColeccionismo',
+                    'qualified' => 'Otro',
+                ], // 11
             ]);
 
             // sub categorías - 2do nivel
