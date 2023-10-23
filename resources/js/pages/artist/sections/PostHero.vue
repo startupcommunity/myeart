@@ -6,7 +6,7 @@
             <div class="flex flex-wrap justify-center items-start">
                 <div class="w-full md:w-1/3 order-3 order-md-1">
                     <div class="flex gap-4 justify-between px-10 px-md-0">
-                        <div class="border-b pb-2 border-gray-400 text-center" @click="openDialogFollowers">
+                        <div class="border-b pb-2 border-gray-400 text-center pointer" @click="openDialogFollowers">
                             <div class="text-2xl font-bold">
                                 {{ artist.followers_count | numberK }}
                             </div>
@@ -16,7 +16,7 @@
                                 Seguidores
                             </span>
                         </div>
-                        <div class="border-b pb-2 border-gray-400 text-center" @click="openDialogFollowing">
+                        <div class="border-b pb-2 border-gray-400 text-center pointer" @click="openDialogFollowing">
                             <div class="text-2xl font-bold">
                                 {{ artist.following_artists_count | numberK }}
                             </div>
@@ -339,3 +339,8 @@ export default {
     }
 };
 </script>
+<style>
+    .pointer {
+        cursor: pointer;
+    }
+</style>

@@ -80,6 +80,8 @@ class EventDB
 
     if($request->id){
       $events->where('collective_id', '=', $request->id);
+    }else{
+      $events->whereNUll('collective_id');
     }
 
     // ordenar por

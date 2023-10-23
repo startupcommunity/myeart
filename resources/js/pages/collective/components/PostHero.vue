@@ -8,7 +8,7 @@
                     <div
                         class="flex gap-4 md:gap-12 justify-center px-10 px-md-0"
                     >
-                        <div class="border-b pb-2 border-gray-400 text-center" @click="openDialogCollectives">
+                        <div class="border-b pb-2 border-gray-400 text-center pointer" @click="openDialogCollectives">
                             <div class="text-2xl font-bold">
                                 {{ followers.length | numberK }}
                             </div>
@@ -220,3 +220,8 @@ export default {
     }
 };
 </script>
+<style>
+.pointer {
+    cursor: pointer;
+}
+</style>
