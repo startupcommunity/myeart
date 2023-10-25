@@ -122,13 +122,21 @@ class UserDB
      */
     public function getArtist(int $id): ?User
     {
-        return User::with([
-            'profile', 'artworks.gallery', 'socialNetwork', 'ratings',
+        $user = User::with([
+            'profile', 'artworks.gallery', 'socialNetwork', 'ratings','followingArtists.following','followers.follower',
         ])
             ->withCount('artworks')
             ->withCount('followingArtists')
             ->withCount('followers')
             ->find($id);
+
+        foreach($user->followers as $follower){
+            $follower["user"] = $follower["follower"];
+        }
+        foreach($user->followingArtists as $following){
+            $following["user"] = $following["following"];
+        }
+        return $user;
     }
 
     /**

@@ -16,7 +16,7 @@ const collectivesRoute = [
     },
     {
         name: "collectiveShow",
-        path: "/colectivos/ver/:id",
+        path: "/colectivos/ver/:id/:name",
         component: importPage("collective/Show"),
         // beforeEnter: ifAuthenticated,
     },

@@ -6,7 +6,7 @@
             <div class="flex flex-wrap justify-center items-start">
                 <div class="w-full md:w-1/3 order-3 order-md-1">
                     <div class="flex gap-4 justify-between px-10 px-md-0">
-                        <div class="border-b pb-2 border-gray-400 text-center">
+                        <div class="border-b pb-2 border-gray-400 text-center pointer" @click="openDialogFollowers">
                             <div class="text-2xl font-bold">
                                 {{ artist.followers_count | numberK }}
                             </div>
@@ -16,7 +16,7 @@
                                 Seguidores
                             </span>
                         </div>
-                        <div class="border-b pb-2 border-gray-400 text-center">
+                        <div class="border-b pb-2 border-gray-400 text-center pointer" @click="openDialogFollowing">
                             <div class="text-2xl font-bold">
                                 {{ artist.following_artists_count | numberK }}
                             </div>
@@ -171,6 +171,7 @@
                         </p>
                     </div>
                 </div>
+                
                 <div class="w-full md:w-1/3 order-2 order-md-3 md:px-0 mb-5">
                     <div
                         class="flex gap-3 justify-center px-10"
@@ -200,15 +201,28 @@
             :show="showRating"
             @close="showRating = false"
         />
+        <FollowersModal
+            :show="dialogFollowing"
+            @close-modal="closeDialogFollowing"
+            :followers="artist.following_artists"
+            title="Seguidos"
+        />
+        <FollowersModal
+            :show="dialogFollowers"
+            @close-modal="closeDialogFollowers"
+            :followers="artist.followers"
+            title="Seguidores"
+        />
     </section>
 </template>
 <script>
 import getDataMixin from "../../../mixins/getDataMixin";
 import FollowArtistButton from "../../artwork/components/FollowArtistButton.vue";
 import RatingModal from "../components/RatingModal.vue";
+import FollowersModal from "../../collective/components/FollowersModal.vue";
 
 export default {
-    components: { FollowArtistButton, RatingModal },
+    components: { FollowArtistButton, RatingModal, FollowersModal},
     name: "PostHero",
     mixins: [getDataMixin],
 
@@ -230,6 +244,8 @@ export default {
     data() {
         return {
             showRating: false,
+            dialogFollowing: false,
+            dialogFollowers: false,
         };
     },
 
@@ -300,5 +316,31 @@ export default {
             return value;
         },
     },
+    methods: {        
+        openDialogFollowing() {
+            this.dialogFollowing = true;
+            this.$emit("dialog-Following-opened");
+        },
+
+        closeDialogFollowing() {
+            this.dialogFollowing = false;
+            this.$emit("dialog-Following-closed");
+        },
+        openDialogFollowers() {
+            this.dialogFollowers = true;
+            this.$emit("dialog-Followers-opened");
+        },
+
+        closeDialogFollowers() {
+            this.dialogFollowers = false;
+            this.$emit("dialog-Followers-closed");
+        },
+    
+    }
 };
 </script>
+<style>
+    .pointer {
+        cursor: pointer;
+    }
+</style>

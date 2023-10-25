@@ -11,6 +11,7 @@ export default {
                 release: false,
                 member: false,
                 artwork: false,
+                event: false,
             },
 
             // control para abrir/cerra el modal de imagen de perfil
@@ -56,6 +57,7 @@ export default {
                 release: false,
                 member: false,
                 artwork: false,
+                event: false,
             };
             this.sections[section] = true;
         },

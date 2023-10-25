@@ -10,21 +10,30 @@
                             class="text-white font-medium"
                             block
                             @click.stop="openArtworks"
-                            v-if="!openSectionArtworks"
+                            v-if="!openSectionEvents && !openSectionArtworks"
                         >
                             ver obras del colectivo
                         </v-btn>
                         <v-btn
+                            color="#B2794C"
+                            class="text-white font-medium"
+                            block
+                            @click.stop="openEvents"
+                            v-if="!openSectionEvents && !openSectionArtworks"
+                        >
+                            ver eventos del colectivo
+                        </v-btn>
+                        <v-btn
                             class="font-medium"
-                            @click.stop="closeArtworks"
+                            @click.stop="closeEvents"
                             text
-                            v-else
+                            v-if="openSectionEvents | openSectionArtworks"
                         >
                             <i class="fas fa-arrow-left"></i>
                             volver atrás
                         </v-btn>
 
-                        <div v-if="!openSectionArtworks">
+                        <div v-if="openSectionArtworks">
                             <h3 class="uppercase font-bold text-zinc-900 mb-3">
                                 Algunas obras del colectivo
                             </h3>
@@ -38,6 +47,21 @@
                                     :showButtonEdit="false"
                                     :type="2"
                                     :collectiveID="collective.id"
+                                />
+                            </div>
+                        </div>
+                        <div v-if="openSectionEvents">
+                            <h3 class="uppercase font-bold text-zinc-900 mb-3">
+                                Algunos eventos del colectivo
+                            </h3>
+
+                            <div class="grid grid-cols-1">
+                                <CardEvent
+                                    v-for="event in events"
+                                    :key="event.id"
+                                    :event="event"
+                                    class="w-full animate-fade-in-down md:mb-10"
+                                    @interested="openReservationInfo"
                                 />
                             </div>
                         </div>
@@ -57,7 +81,7 @@
 
                         <div
                             class="grid grid-cols-1"
-                            v-if="!openSectionArtworks"
+                            v-if="!openSectionArtworks && !openSectionEvents"
                         >
                             <CardRelease
                                 v-for="rel in releases"
@@ -84,7 +108,7 @@
                         </div>
 
                         <div
-                            v-else
+                            v-if="openSectionArtworks && !openSectionEvents"
                             class="grid grid-cols-1 md:grid-cols-2 gap-3"
                         >
                             <CardArtwork
@@ -96,6 +120,19 @@
                                 :type="2"
                                 :collectiveID="collective.id"
                                 class=""
+                            />
+                        </div>
+
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-3"
+                            v-if="openSectionEvents && !openSectionArtworks"
+                        >
+                            <CardEvent
+                                v-for="event in events"
+                                :key="event.id"
+                                :event="event"
+                                class="w-full animate-fade-in-down md:mb-10"
+                                @interested="openReservationInfo"
                             />
                         </div>
                     </div>
@@ -134,6 +171,7 @@ import CardArtwork from "./CardArtwork.vue";
 import MiniCardArtist from "./../../community/components/MiniCardArtist.vue";
 import CardRelease from "../../profile/components/CardRelease.vue";
 import ReleaseCommentsDialog from "../../release/components/ReleaseCommentsDialog.vue";
+import CardEvent from "../../event/components/CardEvent.vue";
 
 export default {
     name: "ContentCollective",
@@ -142,6 +180,7 @@ export default {
         MiniCardArtist,
         CardRelease,
         ReleaseCommentsDialog,
+        CardEvent
     },
     props: {
         collective: {
@@ -154,11 +193,14 @@ export default {
         return {
             showComments: false,
             openSectionArtworks: false,
+            openSectionEvents: false,
             release: {},
             releases: [],
             original: [],
             artworks: [],
+            events: [],
             originalArtworks: [],
+            originalEvents:[],
         };
     },
     computed: {
@@ -217,6 +259,9 @@ export default {
         const orderByArtworks = artworks.sort((a, b) => b.id - a.id);
         this.artworks = orderByArtworks;
         this.originalArtworks = JSON.parse(JSON.stringify(orderByArtworks));
+
+        this.events = this.collective?.events || [];
+        this.originalEvents = this.collective?.events || [];
     },
 
     methods: {
@@ -229,11 +274,13 @@ export default {
             const text = event.toString().toLowerCase();
 
             const searchArtworks = this.openSectionArtworks;
+            const searchEvents = this.openSectionEvents;
+            console.log(text, searchArtworks,searchEvents)
 
             if (text.length > 0) {
                 // si la sección obras esta cerrada
                 // se busca en las publicaciones
-                if (!searchArtworks) {
+                if (!searchArtworks && !searchEvents) {
                     this.releases = this.original.filter((release) => {
                         const name = release.text.toLowerCase();
                         return name.includes(text);
@@ -248,9 +295,20 @@ export default {
                         return name.includes(text);
                     });
                 }
+
+                //si la seccion de eventos esta abierta
+                //busca en los eventos
+                if (searchEvents) {
+                    this.events = this.originalEvents.filter((event) => {
+                        const name = event.name.toLowerCase();
+                        return name.includes(text);
+                    });
+                    console.log(this.events)
+                }
             } else {
                 this.releases = this.original;
                 this.artworks = this.originalArtworks;
+                this.events = this.originalEvents;
             }
         },
 
@@ -286,6 +344,24 @@ export default {
          * muestra solo 3 obras
          */
         closeArtworks() {
+            this.openSectionEvents = false;
+            this.openSectionArtworks = false;
+        },
+
+        /**
+         * Abrir Mini sección de eventos del colectivo
+         * muestra todas las eventos
+         */
+        openEvents() {
+            this.openSectionEvents = true;
+        },
+
+        /**
+         * Cerrar Mini sección de eventos del colectivo
+         * muestra solo 3 eventos
+         */
+        closeEvents() {
+            this.openSectionEvents = false;
             this.openSectionArtworks = false;
         },
     },

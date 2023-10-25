@@ -27,9 +27,10 @@ class CollectiveDB
   public function getAllCollectiveRelations(): array
   {
     return [
+      'events',
       'categories.category',
       'members.user.artworks.categories',
-      'followers',
+      'followers.user',
       'artworks.user',
       'artworks.gallery',
       'artworks.categories',

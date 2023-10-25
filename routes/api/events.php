@@ -14,6 +14,12 @@ Route::group(['prefix' => 'events'], function () {
    * Obtiene todos los eventos
    */
   Route::get('/get-all', [UserEventController::class, 'all'])->name('getAllEvents');
+  
+  /**
+   * Obtiene todos los eventos de un colectivo
+   */
+  Route::get('/get-all-collective/{id}', [UserEventController::class, 'all'])
+    ->name('getAllEventsCollective');
 
   /**
    * Obtiene los eventos de un usuario

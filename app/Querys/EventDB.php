@@ -20,7 +20,7 @@ class EventDB
    */
   public function initWithRelations(): Builder
   {
-    return UserEvent::with(['user', 'likes']);
+    return UserEvent::with(['user', 'likes','collective']);
   }
 
   /**
@@ -76,6 +76,12 @@ class EventDB
     // excluir el id enviado
     if ($request->has('exclude')) {
       $events->where('id', '!=', $request->exclude);
+    }
+
+    if($request->id){
+      $events->where('collective_id', '=', $request->id);
+    }else{
+      $events->whereNUll('collective_id');
     }
 
     // ordenar por

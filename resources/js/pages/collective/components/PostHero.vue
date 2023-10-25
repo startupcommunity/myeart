@@ -8,7 +8,7 @@
                     <div
                         class="flex gap-4 md:gap-12 justify-center px-10 px-md-0"
                     >
-                        <div class="border-b pb-2 border-gray-400 text-center">
+                        <div class="border-b pb-2 border-gray-400 text-center pointer" @click="openDialogCollectives">
                             <div class="text-2xl font-bold">
                                 {{ followers.length | numberK }}
                             </div>
@@ -26,6 +26,16 @@
                                 class="font-bold text-xs md:text-base text-primary uppercase"
                             >
                                 Obras
+                            </span>
+                        </div>
+                        <div class="border-b pb-2 border-gray-400 text-center">
+                            <div class="text-2xl font-bold">
+                                {{ events.length | numberK }}
+                            </div>
+                            <span
+                                class="font-bold text-xs md:text-base text-primary uppercase"
+                            >
+                                Eventos
                             </span>
                         </div>
                     </div>
@@ -47,6 +57,9 @@
                         </h3>
                         <p class="text-zinc-900 font-light text-sm text-center">
                             {{ type?.text ?? "independiente" }}
+                        </p>
+                        <p class="text-zinc-900 font-light text-sm text-center">
+                            Creado por: {{ collective.user.name }}
                         </p>
                     </div>
                 </div>
@@ -70,6 +83,18 @@
                             :collective="collective"
                             :small="false"
                         />
+                        <!--<FollowersModal
+                            :show="isOwner"
+                            :followers="followers"
+                            v-if="isOwner"
+                            title="Seguidores"
+                        />-->
+                        <FollowersModal
+                            :show="dialogCollectives"
+                            @close-modal="closeDialogCollectives"
+                            :followers="followers"
+                            title="Seguidores"
+                        />
                     </div>
                 </div>
             </div>
@@ -82,6 +107,7 @@ import CollectiveAvatar from "./CollectiveAvatar.vue";
 import FollowCollectiveButton from "./FollowCollectiveButton.vue";
 import LikeButtonOutlinedCollective from "./LikeButtonOutlinedCollective.vue";
 import ShareButtonCollective from "./ShareButtonCollective.vue";
+import FollowersModal from "./FollowersModal.vue";
 
 export default {
     components: {
@@ -89,6 +115,7 @@ export default {
         FollowCollectiveButton,
         LikeButtonOutlinedCollective,
         ShareButtonCollective,
+        FollowersModal
     },
     name: "PostHeroCollective",
     mixins: [getDataMixin],
@@ -125,6 +152,13 @@ export default {
          */
         artworks() {
             return this.collective?.artworks || [];
+        },
+
+        /**
+         * eventos del colectivo
+         */
+        events() {
+            return this.collective?.events || [];
         },
 
         /**
@@ -166,5 +200,28 @@ export default {
             return value;
         },
     },
+    data() {
+        return {
+            isOwner: false,
+            dialogCollectives: false,
+        }
+    },
+    methods: {        
+        openDialogCollectives() {
+            this.dialogCollectives = true;
+            this.$emit("dialog-collectives-opened");
+        },
+
+        closeDialogCollectives() {
+            this.dialogCollectives = false;
+            this.$emit("dialog-collectives-closed");
+        },
+    
+    }
 };
 </script>
+<style>
+.pointer {
+    cursor: pointer;
+}
+</style>

@@ -4,7 +4,7 @@
             <v-dialog
                 v-model="show"
                 persistent
-                width="1200"
+                width="600"
                 content-class=""
                 scrollable
             >
@@ -13,8 +13,9 @@
                         <div
                             class="flex justify-between border-b border-gray-800 pb-3"
                         >
+                            
                             <h1 class="text-2xl font-medium">
-                                Colectivos al cual pertenezco
+                                {{title}}
                             </h1>
                             <button type="button" @click="$emit('close-modal')">
                                 <i class="fa fa-times text-primary"></i>
@@ -24,7 +25,7 @@
                     <v-card-text>
                         <div>
                             <LoadingTailwind v-if="globalLoading" />
-                            <div
+                            <!--<div
                                 v-else
                                 class="grid grid-cols-1 md:grid-cols-3 content-center gap-5"
                             >
@@ -34,8 +35,35 @@
                                     :collective="collective"
                                     class="mb-5"
                                 />
+                            </div>-->
+                            <div>
+                                <ul>
+                                
+                                <li v-for="follow in followers" :key="follow.id">
+                                    <div class="flex justify-start items-center">
+                                        <Avatar
+                                            :artist="follow"
+                                            custom="border w-12 h-12"
+                                        />
+                                        <div class="flex flex-col pl-2">
+                                            <div
+                                                class="text-sm font-bold text-zinc-900"
+                                            >
+                                            {{ follow.user.name}} 
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <FollowArtistButton
+                                                :artist="follow"
+                                                class="btn-custom-follow py-2"
+                                            />
+                                        </div>
+                                    </div>
+                                </li>
+                                </ul>
                             </div>
                         </div>
+                        
                     </v-card-text>
                     <v-card-actions class="bg-white">
                         <div class="flex justify-center py-5 py-md-8">
@@ -58,41 +86,26 @@
 <script>
 import LoadingTailwind from "../../../components/LoadingTailwind.vue";
 import CardCollective from "../../collective/components/CardCollective.vue";
-
+import FollowArtistButton from "../../artwork/components/FollowArtistButton";
+import Avatar from "../../../components/Avatar.vue";
 
 export default {
-    name: "MyCollectivesModal",
-    components: { LoadingTailwind, CardCollective },
+    name: "FollowersModal",
+    components: { LoadingTailwind, CardCollective,FollowArtistButton,Avatar },
     props: {
+        title: {
+            type: String,
+            default:''
+        },
         show: {
             type: Boolean,
             default: false,
         },
-    },
-    data() {
-        return {
-            collectives: [],
-        };
-    },
-    watch: {
-        show(val) {
-            if (val) {
-                this.getCollectives();
+        followers: {
+            type: Array,
+            default: function () {
+               return []; 
             }
-        },
-    },
-    methods: {
-        getCollectives() {
-            this.globalLoading = true;
-            this.axios
-                .get(this.ep.collectives.getUserCollectives)
-                .then((resp) => {
-                    if (resp.status === 200) {
-                        this.collectives = resp.data;
-                    }
-                })
-                .catch((error) => this.$manageError(error))
-                .finally(() => (this.globalLoading = false));
         }
     },
 };

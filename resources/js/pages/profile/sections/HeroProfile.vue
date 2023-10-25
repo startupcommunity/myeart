@@ -62,14 +62,14 @@
                         >
                             <i class="fas fa-camera"></i> Editar portada
                         </button>
-                        <v-btn
+                        <!--<v-btn
                             class="text-xs md:text-xs xl:text-base"
                             @click.stop="$emit('openCollectivesModal')"
                             outlined
                             color="grey lighten-5"
                         >
                             Ver mis colectivos
-                        </v-btn>
+                        </v-btn>-->
                         <v-btn
                             class="text-xs md:text-xs xl:text-base text-white"
                             @click.stop="$router.push('/colectivos/crear')"

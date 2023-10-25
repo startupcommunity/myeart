@@ -55,6 +55,7 @@ export default {
                 .get(this.ep.collectives.getCollective + param)
                 .then((resp) => {
                     if (resp.status === 200) {
+                        console.log("collective",resp.data)
                         this.collective = resp.data;
                     }
                 })
