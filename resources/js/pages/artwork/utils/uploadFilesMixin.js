@@ -1,0 +1,209 @@
+/**
+ * Mixin para gestionar las propiedades y métodos
+ * que son de utilidad para subir y validar las imagenes
+ * de la galeria de obras del usuario
+ *
+ * @autor  Luis Annunziato: luisannunziato@gmail.com
+ * @link https://luisan.dev
+ */
+
+import { MAX_FILES_ALLOWED, VALID_FILES } from "../../../util/const";
+import {
+    INFO_TITLE_NOTY,
+    INVALID_FILES,
+    ONLY_MAX_FILES_ALLOWED,
+} from "../../../util/text";
+
+export default {
+    data() {
+        return {
+            previewFiles: [],
+            uploadedFiles: [],
+            dropzoneFile: true,
+            dragover: false,
+
+            // utilizada para verificar la imagen de portada
+            //  unicamente para el editar
+            isFront: false,
+        };
+    },
+    methods: {
+        /**
+         * Obtiene los files a través del drag and drop
+         * luego valida cada uno de los files
+         */
+        onDrop(e) {
+            this.dragover = false;
+            this.validateFiles(e.dataTransfer.files);
+        },
+
+        /**
+         * Obtiene los files a través de la selección del botón
+         * luego valida cada uno de los files
+         */
+        getFiles(e) {
+            this.validateFiles(e.target.files);
+        },
+
+        /**
+         * Valida los archivos permitidos antes de ser cargados
+         * o mostrados en pantalla
+         * validos: jpg, png, svg
+         */
+        validateFiles(files) {
+            const arrayFiles = Object.values(files);
+            let validUploadFiles = [];
+            let invalidFiles = [];
+
+            arrayFiles.forEach((file) => {
+                if (VALID_FILES.includes(file.type)) {
+                    validUploadFiles.push(file);
+
+                    // unicamente para editar las imagenes
+                    if (this.isFront) {
+                        const files = this.uploadedFiles.length;
+                        const data = { file, front: files ? 0 : 1 };
+                        this.addFileToUploadFilesWithFront(data);
+                    }
+                } else {
+                    invalidFiles.push(file);
+                }
+            });
+
+            if (invalidFiles.length) {
+                return this.$notify({
+                    title: INFO_TITLE_NOTY,
+                    text: INVALID_FILES,
+                    group: "container",
+                    type: "warning",
+                    duration: 6000,
+                });
+            }
+
+            this.isFront ? null : this.addFilesToUploadFiles(validUploadFiles);
+        },
+
+        /**
+         * Carga los archivos validos a la propiedad uploadedFiles
+         * - limita la cantidad de archivos
+         * - carga la vista previa de imagenes
+         */
+        addFilesToUploadFiles(files) {
+            // archivos validos
+            files.forEach((file) => this.uploadedFiles.push(file));
+
+            // limite de hasta 10 archivos
+            this.limitFiles();
+
+            // carga vista previa
+            this.loadPreviewFile();
+        },
+
+        /**
+         * Cargar una imagen a la propiedad uploadFiles
+         * y cargar la vista previa indicando la foto de portada
+         *
+         * @param {File} file
+         */
+        addFileToUploadFilesWithFront(file) {
+            // archivos validos
+            this.uploadedFiles.push(file);
+
+            // limite de hasta 10 archivos
+            this.limitFiles();
+
+            // carga vista previa
+            this.loadPreviewFileWithFront();
+        },
+
+        /**
+         * Limita los archivos cargados a solo 4
+         * solo esta permitido subir max 4 archivos
+         */
+        limitFiles() {
+            if (this.uploadedFiles.length > MAX_FILES_ALLOWED) {
+                this.uploadedFiles.splice(MAX_FILES_ALLOWED);
+                this.$notify({
+                    title: "Aviso!",
+                    text: ONLY_MAX_FILES_ALLOWED(MAX_FILES_ALLOWED),
+                    group: "container",
+                    type: "info",
+                    duration: 6000,
+                });
+            }
+        },
+
+        /**
+         * Mostrar las imagenes previamente cargadas
+         * esto para indicarle al usuario como quedara
+         * la posición de cada una, incluyendo la de portada
+         */
+        loadPreviewFile() {
+            this.previewFiles = [];
+            this.uploadedFiles.forEach((file, index) => {
+                const objectUrl = URL.createObjectURL(file);
+                this.previewFiles.push({
+                    id: index,
+                    file: objectUrl,
+                });
+            });
+        },
+
+        /**
+         * Mostrar las imagenes previamente cargadas
+         * esto para indicarle al usuario como quedara
+         * la posición de cada una, incluyendo la de portada
+         *
+         * indicando también la foto de portada recibida
+         */
+        loadPreviewFileWithFront() {
+            this.previewFiles = [];
+            this.uploadedFiles.forEach((file, index) => {
+                const objectUrl = URL.createObjectURL(file.file);
+                this.previewFiles.push({
+                    id: index,
+                    file: objectUrl,
+                    front: file.front,
+                });
+            });
+
+            // ordenar por foto de portada
+            this.previewFiles.sort((a, b) => b.front - a.front);
+        },
+
+        /**
+         * Elimina todas las preview de imagenes cargadas
+         * esto antes después de cargar la propiedad uploadedFiles
+         */
+        resetPreviewFiles() {
+            this.previewFiles = [];
+        },
+
+        /**
+         * Elimina un file por medio de su indice
+         * ademas, recargar la vistas previas
+         * y valida si mostrar o no la zona de carga de files
+         */
+        deleteFile(index) {
+            // eliminar
+            this.uploadedFiles.splice(index, 1);
+
+            // reset de las vistas previas
+            this.resetPreviewFiles();
+
+            // recargar las vistas previas
+            this.isFront
+                ? this.loadPreviewFileWithFront()
+                : this.loadPreviewFile();
+        },
+
+        /**
+         * Devuelve todos los valores al inicio
+         */
+        resetUpload() {
+            this.resetPreviewFiles();
+            this.uploadedFiles = [];
+            this.dropzoneFile = true;
+        },
+    },
+};

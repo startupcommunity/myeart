@@ -1,20 +1,33 @@
 <template>
     <div class="home-login">
-        <div class="wrap-login p-2 ">
+        <div class="wrap-login p-2">
             <div class="container-login">
                 <form class="login-form validate-form">
-					<div class="w-100 d-flex justify-content-center">
-                        <img src="../../img/Logo_Myeart.svg" style="margin-bottom: 50px;" class="img-fluid" alt="Responsive image" />
+                    <div class="w-100 d-flex justify-content-center">
+                        <img
+                            src="./../../img/Logo_Myeart.svg"
+                            class="img-fluid mb-12"
+                            alt="Responsive image"
+                        />
                     </div>
                     <div class="container-login-form-btn">
-                        <router-link exact-active-class="active" to="/login" class="btn btn-secundary register-form-btn">Iniciar sesión</router-link>
-					</div>
+                        <router-link
+                            exact-active-class="active"
+                            to="/login"
+                            class="btn btn-secundary register-form-btn"
+                        >
+                            Iniciar sesión
+                        </router-link>
+                    </div>
 
                     <div class="container-login-form-btn">
-						<router-link to="/register"  class="btn btn-primary login-form-btn">
-							Registrate
+                        <router-link
+                            to="/register"
+                            class="btn btn-primary btn-block text-white btn-lg"
+                        >
+                            Regístrate
                         </router-link>
-					</div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -22,14 +35,7 @@
 </template>
 
 <script>
-    //data
-    function data(){
-        return {
-            
-        }
-    }
-    export default {
-        name:'home',
-        data
-    }
+export default {
+    name: "Home",
+};
 </script>

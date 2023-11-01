@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Artwork;
+use App\Policies\ArtworkPolicy;
+use App\Policies\CollectivePolicy;
+use App\Policies\OrderPolicy;
 use Laravel\Passport\Passport;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,7 +17,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Artwork::class => ArtworkPolicy::class,
+        Order::class => OrderPolicy::class,
+        Collective::class => CollectivePolicy::class,
     ];
 
     /**
@@ -26,9 +31,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Passport::routes(function($router){
+        Passport::routes(function ($router) {
             $router->forAccessTokens();
         });
-        //
     }
 }

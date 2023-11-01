@@ -1,37 +1,51 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\PaisesController;
-use App\Http\Controllers\ArtisticActivitysController;
-use App\Http\Controllers\UserInformationsController;
-use App\Models\User;
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/register', [RegisterController::class, 'register']);
 
-Route::middleware('auth:api')->post('/logout', [LoginController::class, 'logout']);
-Route::middleware('auth:api')->get('/paises', [PaisesController::class, 'getAll']);
-Route::middleware('auth:api')->get('/artistics', [ArtisticActivitysController::class, 'getAll']);
-Route::middleware('auth:api')->put('/registerPerfil', [UserInformationsController::class, 'create']);
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    $user = $request->user();
-    $user->perfil = $user->perfil();
-    return $user;
+// sin restricción de acceso
+require __DIR__ . '/api/public.php';
+
+/**
+ * grupo de rutas protegidas
+ *
+ * @luisandev https://luisan.dev
+ */
+Route::middleware(['auth:api'])->group(function () {
+
+    // globales
+    require __DIR__ . '/api/global.php';
+    // user
+    require __DIR__ . '/api/user.php';
+    // perfil
+    require __DIR__ . '/api/profile.php';
+    // obras
+    require __DIR__ . '/api/artwork.php';
+    // direcciones de envió
+    require __DIR__ . '/api/shipping_address.php';
+    // comentarios / preguntas
+    require __DIR__ . '/api/comment.php';
+    // publicaciones
+    require __DIR__ . '/api/release.php';
+    // carrito de compras
+    require __DIR__ . '/api/shopping_cart.php';
+    // ordenes
+    require __DIR__ . '/api/orders.php';
+    // eventos
+    require __DIR__ . '/api/events.php';
+    // colectivos
+    require __DIR__ . '/api/collectives.php';
+    // métodos de pago
+    require __DIR__ . '/api/payment_methods.php';
+    // métodos de cobro
+    require __DIR__ . '/api/charging_methods.php';
+    // contacto
+    require __DIR__ . '/api/contact.php';
+    // newsletter
+    require __DIR__ . '/api/newsletter.php';
+    // conversations
+    require __DIR__ . '/api/conversations.php';
+    // notifications
+    require __DIR__ . '/api/notifications.php';
+    // pagos
+    require __DIR__ . '/api/payouts.php';
 });
-
-Route::middleware('auth:api')->get('/users', [UserInformationsController::class, 'getAll']);
-Route::middleware('auth:api')->get('/user-detail/{id}', [UserInformationsController::class, 'getUser']);
-Route::middleware('auth:api')->post('/addOrUpdateUser', [UserInformationsController::class, 'addOrUpdateUser']);
-Route::middleware('auth:api')->delete('/deleteUser/{id}', [UserInformationsController::class, 'deleteUser']);

@@ -1,59 +1,39 @@
-const Home = () => import('../pages/Home.vue')
-const Register = () => import('../pages/auth/register.vue')
-const Login = () => import('../pages/auth/Login.vue')
-const Perfil = () => import('../pages/auth/perfil.vue')
-
-const Dashboard = () => import('../pages/dashboard/dashboard.vue')
-
-import {store} from '../store/store'
-const ifNotAuthenticated = (to, from, next) => {
-    if (!store.getters.isAuthenticated) {
-        next();
-        return
-    }
-    next('/')
-}
-
-const ifAuthenticated = (to, from, next) => {
-    if (store.getters.isAuthenticated) {
-        next();
-        return
-    }
-    next('/home');
-}
+import Vue from "vue";
+import VueRouter from "vue-router";
+import guestRoute from "./guest";
+import errorsRoute from "./errors";
+import dashboardRoute from "./dashboard";
+import profileRoute from "./profile";
+import artworkRoute from "./artwork";
+import artistRoute from "./artist";
+import eventRoute from "./event";
+import collectivesRoute from "./collectives";
+import checkoutRoute from "./checkout";
+import communityRoute from "./community";
+import releasesRoute from "./releases";
+import shoppingCartRoute from "./shoppingcart";
+import orderRoute from "./order";
 
 export const routes = [
-    {
-        name: 'home',
-        path: '/home',
-        component: Home,
-        beforeEnter: ifNotAuthenticated,
-    },
-    {
-        name: 'login',
-        path: '/login',
-        component: Login,
-        beforeEnter: ifNotAuthenticated,
-    },
-    {
-        name: 'register',
-        path: '/register',
-        component: Register,
-        beforeEnter: ifNotAuthenticated,
-    },
-    {
-        name: 'dashboard',
-        path: '/',
-        component: Dashboard,
-        beforeEnter: ifAuthenticated,
-    },
-    {
-        name: 'perfil',
-        path: '/perfil',
-        component: Perfil,
-        beforeEnter: ifAuthenticated,
-        meta:{
-            title: 'perfil'
-        }
-    },
-]
+    ...errorsRoute,
+    ...guestRoute,
+    ...dashboardRoute,
+    ...profileRoute,
+    ...artworkRoute,
+    ...artistRoute,
+    ...communityRoute,
+    ...releasesRoute,
+    ...shoppingCartRoute,
+    ...checkoutRoute,
+    ...eventRoute,
+    ...collectivesRoute,
+    ...orderRoute,
+];
+
+Vue.use(VueRouter);
+const config = new VueRouter({
+    mode: "history",
+    routes: routes,
+});
+
+export default config;

@@ -1,15 +1,23 @@
 <?php
- 
- namespace App\Http\Controllers\Auth;
 
- use App\Http\Controllers\Controller;
- use Illuminate\Http\Request;
- 
- use Illuminate\Support\Facades\DB;
+namespace App\Http\Controllers\Auth;
+
+use App\Factories\UserFactory;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
 use Validator;
- 
+
 class LoginController extends Controller
 {
+    public function __construct(
+        private UserFactory $userFactory
+    ) {
+    }
+
     /**
      * Show the profile for a given user.
      *
@@ -19,11 +27,26 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), $this->rules());
-   
+
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
             ], 422);
+        }
+
+        // verificar si el usuario ya confirmo el email
+        $user = User::where('email', $request->email)->first();
+        if ($user && !$user->email_verified_at) {
+
+            // crear token de verificación
+            $this->userFactory->createTokenConfirmRegister($request->email);
+
+            // enviar email de verificación
+            $this->userFactory->sendEmailConfirmRegister($request->email);
+
+            return response()->json([
+                'message' => 'Email no verificado'
+            ], 401);
         }
 
         $request = Request::create('/oauth/token', 'POST', [
@@ -38,7 +61,11 @@ class LoginController extends Controller
         return app()->handle($request);
     }
 
-    public function logout()
+    /**
+     * Cerrar session y eliminar token
+     *
+     */
+    public function logout(): JsonResponse
     {
         $accessToken = auth()->user()->token();
 

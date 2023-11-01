@@ -1,18 +1,43 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" value="{{ csrf_token() }}"/>
-        <title>MY HEARTS</title>
-        <!-- CDNs de Font-Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
-        <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet"/>
-    </head>
-    <body>
-        <div id="app">
-        
-        </div>
-        <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" value="{{ csrf_token() }}" />
+
+    {{--  title  --}}
+    <title>{{ config('app.name') }}</title>
+
+    {{--  path secure rul  --}}
+    <meta name="secure-url" content="{{ secure_url('/') }}" />
+    <meta name="simple-url" content="{{ url('/') }}" />
+
+    {{--  paths  --}}
+    <meta name="front-photo" content="{{ config('storage.front_photo') }}" />
+    <meta name="profile-photo" content="{{ config('storage.profile_photo') }}" />
+    <meta name="artwork-gallery" content="{{ config('storage.artwork_gallery') }}" />
+    <meta name="release-image" content="{{ config('storage.release_image') }}" />
+    <meta name="event-image" content="{{ config('storage.event_image') }}" />
+    <meta name="profile-photo-collective" content="{{ config('storage.collective_profile_photo') }}" />
+    <meta name="front-photo-collective" content="{{ config('storage.collective_front_photo') }}" />
+
+    <!-- CDNs de Font-Awesome -->
+    <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
+    <script src="{{ mix('js/app.js') }}" type="text/javascript" defer></script>
+    {{--  <script src="https://js.stripe.com/v3/" type="text/javascript"></script>  --}}
+
+    {{--  favicon  --}}
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon/favicon-16x16.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon/favicon-16x16.ico') }}">
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+    <noscript>Debe activar el Javascript de su navegador para visualizar el contenido</noscript>
+</body>
+
 </html>

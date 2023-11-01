@@ -1,18 +1,19 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('{any}', fn () => view('app'))->where('any', '.*');
 
-Route::get('{any}', function () {
-    return view('app');
-})->where('any', '.*');
+// ruta para descargar certificado de mis pedidos - pdf
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::get('orders/download-pdf/{id}', [OrderController::class, 'downloadPdf'])
+        ->name('order.downloadPdf');
+});
+
+// ruta para indicar la url de la pagina de verificación de registro
+Route::get(
+    '/confirm-register-email/{token}',
+    fn () => redirect(env('APP_URL') . 'confirm-register-email/' . request()->token)
+)->name('confirmRegisterEmail');

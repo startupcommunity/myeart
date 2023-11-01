@@ -1,70 +1,103 @@
-import vue from 'vue'
-import VueRouter from 'vue-router'
+//require('./bootstrap');
+import vue from "vue";
+import App from "./App.vue";
 window.Vue = vue;
 
-import { routes } from './router/routes';
-import VueEvents from 'vue-events';
-import 'vue-loading-overlay/dist/vue-loading.css';
+// config
+import router from "./router/routes";
+import store from "./store/store";
+import vuetify from "./plugins/vuetify";
+import i18n from "./plugins/lang";
+import globalMixin from "./mixins/globalMixin";
 
-import ApiService from './api/api.service';
-import Vuelidate from 'vuelidate';
-import jwtService from './common/jwt.service';
+// events
+import VueEvents from "vue-events";
 
-import App from './App.vue';
+// api + token
+import ApiService from "./api/api.service";
+import jwtService from "./common/jwt.service";
 
-import VueFormWizard from 'vue-form-wizard';
-import 'vue-form-wizard/dist/vue-form-wizard.min.css';
+// validate
+import Vuelidate from "vuelidate";
 
-import vuetify  from './plugins/vuetify'
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
-import loadingOverlayComponent from './components/loadingOverlay';
-import Notifications from 'vue-notification';
+// wizard
+import VueFormWizard from "vue-form-wizard";
+import "vue-form-wizard/dist/vue-form-wizard.min.css";
 
-import VueI18n from 'vue-i18n';
-import { en } from './lang/en';
-import { es } from './lang/es';
+// loadings
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+import loadingOverlayComponent from "./components/loadingOverlay";
+
+// register and login modal
+// import RegisterModal from "./components/RegisterModal.vue";
+
+// noty
+import Notifications from "vue-notification";
+
+// swalert
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
+// maps
+import * as VueGoogleMaps from "vue2-google-maps";
+
+//echo
+import Echo from "laravel-echo";
+
+window.Pusher = require("pusher-js");
+
+window.Echo = new Echo({
+    broadcaster: "pusher",
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: true,
+});
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: "AIzaSyCoEZAiDQOxmweKf1caokAcGqkOjlXxa04",
+        // This is required if you use the Autocomplete plugin
+        libraries: "places",
+        // OR: libraries: 'places,drawing'
+        // OR: libraries: 'places,drawing,visualization'
+        // v: '3.26',
+    },
+    installComponents: false,
+});
 
 Vue.use(Notifications);
 Vue.use(Vuelidate);
 Vue.use(VueEvents);
-Vue.use(VueRouter);
 Vue.use(VueFormWizard);
-Vue.component('loading-overlay-original', Loading);
-Vue.component('loading-overlay', loadingOverlayComponent);
+Vue.use(VueSweetalert2);
+Vue.component("loading-overlay-original", Loading);
+Vue.component("loading-overlay", loadingOverlayComponent);
+Vue.component("vgm-places", VueGoogleMaps.Autocomplete);
+// Vue.component("register-modal", RegisterModal);
+Vue.mixin(globalMixin);
 
-Vue.use(VueI18n);
-const i18n = new VueI18n({
-    locale: 'es',
-    fallbackLocale: 'es',
-    messages: {
-        en, es
-    }
-})
-
-const router = new VueRouter({
-    mode: 'history',
-    routes: routes
-});
-
+// init API
 ApiService.init();
 
-if(jwtService.getUser()){
+if (jwtService.getUser()) {
     ApiService.setHeader();
 }
 
-import { store } from './store/store';
-
-const app = new Vue({
-    el: '#app',
-    router: router,
-    async beforeCreate(){
-        if (this.$store.getters.isAuthenticated) {
-            await this.$store.dispatch('userRequest');
-        }
-    },
+new Vue({
+    router,
     store,
     vuetify,
     i18n,
-    render: h => h(App),
-});
+    async beforeCreate() {
+        if (this.$store.getters.isAuthenticated) {
+            await this.$store.dispatch("userRequest");
+            await this.$store.dispatch("userFollowArtists");
+            await this.$store.dispatch("userFollowArtworks");
+            await this.$store.dispatch("userFavoriteReleases");
+            await this.$store.dispatch("userFavoriteEvents");
+            // await this.$store.dispatch("userFollowCollectives");
+        }
+    },
+    render: (h) => h(App),
+}).$mount("#app");

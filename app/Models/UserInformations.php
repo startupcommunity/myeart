@@ -10,6 +10,13 @@ class UserInformations extends Model
     use HasFactory;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'user_informations';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -24,5 +31,10 @@ class UserInformations extends Model
         'consejeria_ayuntamiento',
         'galeria',
         'asociacion_turismo',
+        'lang',
+        'country',
+        'bio_title',
+        'bio_content',
+        'web_url',
     ];
 }

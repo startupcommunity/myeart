@@ -3,60 +3,86 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
+use App\Factories\UserFactory;
+use App\Http\Requests\RegisterUserRequest;
+use App\Utils\Payment\Stripe;
 use Illuminate\Http\Request;
-use Validator;
 use App\Models\User;
 
 class RegisterController extends Controller
 {
+    public function __construct(
+        private UserFactory $userFactory
+    ) {
+    }
+
     /**
      * Register the given user.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(RegisterUserRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), $this->rules());
-        
-        if ($validator->fails()) {
+        // transaction
+        $db = DB::transaction(function () use ($request) {
+            // crear cuenta de stripe
+            $resp = $this->createStripeAccount($request);
+
+            // si se genero la cuenta de stripe
+            if ($resp->id) {
+
+                // stripe_account_id
+                $request->merge([
+                    'stripe_account_id' => $resp->id,
+                    'password' => bcrypt($request->password)
+                ]);
+
+                // crear usuario
+                $this->createUser($request->all());
+
+                // crear token de verificación
+                $this->userFactory->createTokenConfirmRegister($request->email);
+
+                return true;
+            }
+
+            return false;
+        });
+
+        if (!$db) {
             return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
+                'message' => 'Error al registrar el usuario'
+            ], 500);
         }
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->password = bcrypt( $request->password );
-        $user->save();
+        // enviar email de verificación de registro
+        $this->userFactory->sendEmailConfirmRegister($request->email);
 
-        return (new LoginController())->login($request);
+        return response()->json([
+            'message' => 'Usuario registrado correctamente'
+        ], 200);
     }
 
     /**
-     * Get the user registration validation rules.
-     *
-     * @return array
+     * create user in BD
      */
-    protected function rules()
+    public function createUser(array $data): User
     {
-        return [
-            'name' => 'required|string|max:80',
-            'username' => 'required|string|max:50|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6|confirmed',
-        ];
+        // user
+        $user = User::create($data);
+        // add pais
+        $user->profile()->create(['pais_id' => $data['pais_id']]);
+
+        return $user;
     }
 
     /**
-     * Get the user registration validation error messages.
-     *
-     * @return array
+     * Create user stripe account
      */
-    protected function validationErrorMessages()
+    public function createStripeAccount(Request $request): object
     {
-        return [];
+        $stripe = new Stripe();
+        $arr = $stripe->setDefaultAccountData($request);
+        return $stripe->createAccount($arr);
     }
 }
