@@ -205,7 +205,7 @@ export default {
             this.loading = true;
 
             let url = this.secureUrl + "/checkout/success";
-            url = url.replace("https", "http");
+            url = url.replace("https://localhost", "http://localhost");
             const { error } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {

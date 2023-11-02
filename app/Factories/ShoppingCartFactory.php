@@ -227,7 +227,7 @@ class ShoppingCartFactory
           $frontPhoto = $item->artwork->getFrontPhoto();
         }
 
-        $order->items()->create([
+        $newOrder = $order->items()->create([
           'number'      => $random,
           'artwork_id'  => $item->artwork? $item->artwork_id : null,
           'event_id'    => $item->event? $item->event_id : null,
@@ -243,6 +243,15 @@ class ShoppingCartFactory
         if($item->artwork){
           $item->artwork->update(['state' => ArtworkStateEnum::SOLD]);
         }
+
+        //crear tickets del evento
+        if($item->event_id){
+          for($i=0;$i<$item->quantity;$i++){
+            UserTicket::create(['order_item_id'=> $newOrder->id, 'event_id' => $item->event_id, 'user_id' => $user->id]);
+          }
+        }
+        
+        UserTicket::where("event_id",$val->event->event_id)->count();        
 
         // Evento de notificacion para compra
         
