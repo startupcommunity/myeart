@@ -50,10 +50,16 @@
                             {{ sellerMethod.text }}
                         </span>
                     </p>
-                    <p class="font-bold text-gray-900">
+                    <p class="font-bold text-gray-900" v-if="item.artwork_id">
                         Dirección: <br />
                         <span class="font-light">
                             {{ address }}
+                        </span>
+                    </p>
+                    <p class="font-bold text-gray-900" v-if="!item.artwork_id">
+                        Cantidad: <br />
+                        <span class="font-light">
+                            {{ item.quantity }}
                         </span>
                     </p>
                     <p class="font-bold text-gray-900">

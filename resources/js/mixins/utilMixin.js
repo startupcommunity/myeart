@@ -143,6 +143,14 @@ export default {
                 return "fas fa-book-reader";
             }
 
+            if (name == "Coleccionismo") {
+                return "fas fa-images";
+            }
+
+            if (name == "Coleccionismo") {
+                return "fas magnifying-glass";
+            }
+            
             return "fas fa-info";
         },
 

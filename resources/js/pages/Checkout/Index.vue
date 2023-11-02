@@ -131,8 +131,11 @@ export default {
             this.axios
                 .get(this.ep.carts.intent)
                 .then((resp) => {
-                    this.client_secret = resp.data;
                     this.showCart = true;
+                    if (resp.data == 2) { // algun evento su cantidad de compra mas los ya vendido supera el stock
+                        return false;
+                    }
+                    this.client_secret = resp.data;
                 })
                 .catch((error) => this.$manageError(error))
                 .finally(() => (this.loading = false));
@@ -201,7 +204,8 @@ export default {
 
             this.loading = true;
 
-            const url = this.secureUrl + "/checkout/success";
+            let url = this.secureUrl + "/checkout/success";
+            url = url.replace("https", "http");
             const { error } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {

@@ -10,6 +10,7 @@ use App\Models\Artwork;
 use App\Models\Order;
 use App\Models\ShoppingCart;
 use App\Models\User;
+use App\Models\UserTicket;
 use Illuminate\Support\Facades\DB;
 use App\Events\NotificationEvent;
 use App\Querys\OrderDB;
@@ -43,17 +44,24 @@ class ShoppingCartFactory
   public function addItemToCart($request): ?ShoppingCart
   {
     $user = User::find($request->user_id);
-
-    // si ya la obra en este u otro carrito de compras
-    // entonces no se agrega
-    $available = $this->isItemAvailable($request->artwork_id);
-
-    if ($available) {
-      // add to cart
+    if($request->artwork_id){
+      // si ya la obra en este u otro carrito de compras
+      // entonces no se agrega
+      $available = $this->isItemAvailable($request->artwork_id);
+      if ($available) {
+        // add to cart
+        return $user->shoppingCart()->create([
+          'artwork_id' => $request->artwork_id,
+        ]);
+      }
+    }else if($request->event_id){
       return $user->shoppingCart()->create([
-        'artwork_id' => $request->artwork_id,
+        'event_id' => $request->event_id,
+        'quantity' => $request->quantity
       ]);
     }
+
+    
 
     return null;
   }
@@ -64,14 +72,24 @@ class ShoppingCartFactory
    * @param integer $artworkID
    * @return boolean
    */
-  public function deleteItem(int $artworkID): bool
+  public function deleteItem(int $ID,int $type): bool
   {
     $user = auth()->user();
 
     // verificar si el item existe
-    $item = ShoppingCart::where('user_id', $user->id)
-      ->where('artwork_id', $artworkID)
+    $item=null;
+    if($type == 1 ){
+      $item = ShoppingCart::where('user_id', $user->id)
+      ->where('artwork_id', $ID)
       ->first();
+    }
+
+    if($type == 2 ){
+      $item = ShoppingCart::where('user_id', $user->id)
+      ->where('event_id', $ID)
+      ->first();
+    }
+    
 
     // si no existe, cancelar la operación
     if (!$item) {
@@ -101,6 +119,19 @@ class ShoppingCartFactory
 
     // obtener el total y subtotal de la compra
     $subtotal = $items->sum('artwork.total');
+    //$subtotal += $items->sum('event.price');
+    foreach ($items as $key => $val) {
+      if($val->event){
+        $subtotal += $val->event->price * $val->quantity;
+        /*
+        esto es para validar si la cantidad del ticket a comprar no excede el stock disponible
+        $quantityTicketSales = UserTicket::where("event_id",$val->event->event_id)->count();
+        if(($quantityTicketSales + $val->quantity) > $val->event->stock){
+          return false;
+        }*/
+        
+      }
+    }
 
     // agregar el impuesto y el envío y los decimales
     $subT = floatval(number_format($subtotal, 2, ',', ''));   // subtotal formateado
@@ -159,6 +190,18 @@ class ShoppingCartFactory
 
       $items = $user->shoppingCart()->get();                    // items u obras del carrito de compras
       $subtotal = $items->sum('artwork.total');                 // subtotal
+      foreach ($items as $key => $val) {
+        if($val->event){
+          $subtotal += $val->event->price * $val->quantity;
+          
+          //esto es para validar si la cantidad del ticket a comprar no excede el stock disponible
+          $quantityTicketSales = UserTicket::where("event_id",$val->event->event_id)->count();
+          if(($quantityTicketSales + $val->quantity) > $val->event->stock){
+            return false;
+          }
+          
+        }
+      }
       $total = $subtotal;                                       // total
 
       // crear la orden
@@ -179,32 +222,40 @@ class ShoppingCartFactory
       foreach ($items as $item) {
         // números random para cada item, int de 18 números
         $random = rand(100000000000000000, 999999999999999999);
-        $frontPhoto = $item->artwork->getFrontPhoto();
+        $frontPhoto = '';
+        if($item->artwork){
+          $frontPhoto = $item->artwork->getFrontPhoto();
+        }
 
         $order->items()->create([
           'number'      => $random,
-          'artwork_id'  => $item->artwork_id,
-          'user_id'     => $item->artwork->user_id,
-          'price'       => $item->artwork->total,
-          'quantity'    => 1,
-          'title'       => $item->artwork->title,
+          'artwork_id'  => $item->artwork? $item->artwork_id : null,
+          'event_id'    => $item->event? $item->event_id : null,
+          'user_id'     => $item->artwork? $item->artwork->user_id : $item->event->user_id,
+          'price'       => $item->artwork? $item->artwork->total : $item->event->price,
+          'quantity'    => $item->artwork? 1 : $item->quantity,
+          'title'       => $item->artwork? $item->artwork->title : $item->event->name,
           'photo'       => $frontPhoto,
-          'status'      => ItemStatusEnum::SHIPPED,
+          'status'      => $item->artwork? ItemStatusEnum::SHIPPED : 2,
         ]);
 
         // pasar los items a estado vendido
-        $item->artwork->update(['state' => ArtworkStateEnum::SOLD]);
+        if($item->artwork){
+          $item->artwork->update(['state' => ArtworkStateEnum::SOLD]);
+        }
 
         // Evento de notificacion para compra
+        
         $data = [
           'user_id' => $user->id,
-          'notifiable_id' => $item->artwork->user_id,
-          'url' => '/usuario/perfil/' . $item->artwork->user_id . '/sale',
+          'notifiable_id' => $item->artwork? $item->artwork->user_id : $item->event->user_id,
+          'url' => '/usuario/perfil/' . ($item->artwork? $item->artwork->user_id : $item->event->user_id) . '/sale',
           'message' => "Ha comprado su obra",
           'type' => TypeNotificationEnum::BUY //'new-buy'
         ];
 
         event(new NotificationEvent($data));
+        
       }
 
       // registrar la dirección de envío

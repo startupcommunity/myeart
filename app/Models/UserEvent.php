@@ -33,7 +33,10 @@ class UserEvent extends Model
         'phone_number',
         'description',
         'slug',
-        'collective_id'
+        'collective_id',
+        'pay',
+        'price',
+        'stock'
     ];
 
     // crear slug al momento de guardar
@@ -73,6 +76,16 @@ class UserEvent extends Model
     public function likes(): HasMany
     {
         return $this->hasMany(EventLike::class, 'event_id');
+    }
+
+    /**
+     * Devuelve los tickets del evento
+     *
+     * @return HasMany
+     */
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(UserTicket::class, 'event_id');
     }
 
     /**

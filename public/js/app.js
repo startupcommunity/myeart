@@ -7212,6 +7212,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         undelivered: {
           text: "No entregado",
           val: 4
+        },
+        //para filtrar los eventos en la vista de ventas
+        events: {
+          text: "Eventos",
+          val: 5
         }
       };
     },
@@ -8210,6 +8215,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
       if (name == "Libros") {
         return "fas fa-book-reader";
+      }
+      if (name == "Coleccionismo") {
+        return "fas fa-images";
+      }
+      if (name == "Coleccionismo") {
+        return "fas magnifying-glass";
       }
       return "fas fa-info";
     },

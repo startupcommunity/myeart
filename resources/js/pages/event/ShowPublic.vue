@@ -83,6 +83,29 @@
                                 >
                                     Me interesa
                                 </v-btn>
+                                <div class="py-2" v-if="!hasOwner">
+                                    <v-btn
+                                        large
+                                        :color="
+                                            insideCart
+                                                ? 'green darken-4'
+                                                : 'grey darken-4'
+                                        "
+                                        @click.stop="addToCart"
+                                        :disabled="!canAddToCart"
+                                        :loading="loading"
+                                    >
+                                        <span
+                                            class="uppercase text-white"
+                                            v-if="!insideCart"
+                                        >
+                                            Agregar al carrito
+                                        </span>
+                                        <span class="uppercase text-white" v-else>
+                                            Agregada al carrito
+                                        </span>
+                                    </v-btn>
+                                </div>
                             </div>
 
                             <!-- visible en mobile -->
@@ -167,6 +190,28 @@ export default {
     },
 
     computed: {
+        /**
+         * Verifica si es el dueño del evento
+         */
+        hasOwner() {
+            console.log("🚀 ~ file: ShowPublic.vue:198 ~ hasOwner ~ return this.event?.user?.id === this.user?.id;:", this.event?.user?.id === this.user?.id);
+            return this.event?.user?.id === this.user?.id;
+            
+        },
+        /**
+         * Verifica si el evento ya fue agregado
+         * al carrito de compras del usuario
+         */
+        insideCart() {
+            const cart = this.user?.shopping_cart || [];
+            return cart.some((item) => item.event_id === this.event.id);
+        },
+        /**
+         * Verifica si el evento esta disponible
+         */
+        canAddToCart() {
+            return !this.loading && !this.insideCart;
+        },
         getImage() {
             const image = this.event?.image;
             if (image) return this.$pathEventImage + image;
@@ -242,6 +287,10 @@ export default {
                 .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
         },
+        /**
+         * Agrega el evento al carrito de compras
+         */
+         addToCart() { }
     },
 };
 </script>

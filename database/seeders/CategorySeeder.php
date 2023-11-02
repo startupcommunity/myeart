@@ -70,7 +70,7 @@ class CategorySeeder extends Seeder
                 ], // 10
                 [
                     'id' => 11,
-                    'name' => 'OtrasColeccionismo',
+                    'name' => 'Otras',
                     'qualified' => 'Otro',
                 ], // 11
             ]);

@@ -58,8 +58,10 @@
                     <div class="w-full md:w-1/2 md:px-7">
                         <div class="py-5 border-b border-zinc-900 space-y-5">
                             <CardItemCheckout
-                                :artwork="item.artwork"
                                 v-for="item in items"
+                                :artwork="item.artwork"
+                                :event="item.event"
+                                :item="item"
                                 :key="item.id"
                             />
                         </div>
@@ -221,7 +223,19 @@ export default {
          */
         availableItems() {
             const items = this.items;
-            const filter = items.filter((item) => item.artwork?.state === 1);
+            
+            const filter = items.filter((item) => {
+                if (item.artwork) {
+                    return item.artwork?.state === 1
+                } else { //es evento
+                    return true
+                    console.log(item.quantity, item.event?.tickets.length, item.event?.stock);
+                    console.log((item.quantity + item.event?.tickets.length) <= item.event?.stock);
+                    return ((item.quantity + item.event?.tickets.length) <= item.event?.stock);
+                    
+                }
+                
+            });
             return filter.length;
         },
 
@@ -232,8 +246,16 @@ export default {
         subtotal() {
             const sub = this.items.reduce((total, item) => {
                 const one = parseFloat(total);
-                const two = parseFloat(item.artwork?.total);
-                const result = one + two;
+                let two = 0;
+                let three = 0;
+                if (item.artwork) {
+                    two = parseFloat(item.artwork?.total);
+                }
+                if (item.event) {
+                    three = parseFloat((item.event?.price*item.quantity));
+                }
+                const result = one + two + three;
+                
                 return parseFloat(result).toFixed(2);
             }, 0);
 
@@ -253,7 +275,14 @@ export default {
          * state = 1  => publicada
          */
         allPublished() {
-            return this.items.every((item) => item.artwork?.state === 1);
+            //return this.items.every((item) => item.artwork?.state === 1);
+            return this.items.every((item) => {
+                if(item.artwork){
+                    return item.artwork?.state === 1
+                } else {
+                    return true
+                }
+            });
         },
 
         /**

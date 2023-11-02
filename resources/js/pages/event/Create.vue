@@ -88,10 +88,78 @@
                                     </v-btn>
                                 </v-btn-toggle>
 
-                                <!-- nombre deñ evento -->
+                                <v-btn-toggle
+                                    v-model="form.pay"
+                                    borderless
+                                    rounded
+                                    @change="changePay"
+                                    class="mt-5 mt-md-0"
+                                >
+                                    <v-btn
+                                        value="1"
+                                        :color="
+                                            form.pay == 1
+                                                ? '#B2794C'
+                                                : 'grey lighten-2'
+                                        "
+                                        x-large
+                                        class="px-5 px-md-10"
+                                    >
+                                        <span
+                                            class="uppercase tracking-widest text-zinc-900"
+                                            :class="{
+                                                'text-white': form.pay == 1,
+                                                'text-zinc-900': form.pay == 2,
+                                            }"
+                                        >
+                                            Pago
+                                        </span>
+                                    </v-btn>
+
+                                    <v-btn
+                                        value="2"
+                                        :color="
+                                            form.pay == 2
+                                                ? '#B2794C'
+                                                : 'grey lighten-2'
+                                        "
+                                        x-large
+                                        class="px-5 px-md-10"
+                                    >
+                                        <span
+                                            class="uppercase tracking-widest text-zinc-900"
+                                            :class="{
+                                                'text-white': form.pay == 2,
+                                                'text-zinc-900': form.pay == 1,
+                                            }"
+                                        >
+                                            Gratuito
+                                        </span>
+                                    </v-btn>
+                                </v-btn-toggle>
+
+                                <!-- nombre del evento -->
                                 <v-text-field
                                     v-model="form.name"
                                     label="Nombre del evento"
+                                    color="#B2794C"
+                                    class="w-full"
+                                ></v-text-field>
+
+                                <!-- Precio del evento -->
+                                <v-text-field
+                                    v-if="form.pay == 1"
+                                    v-model="form.price"
+                                    label="Precio de la entrada del evento"
+                                    color="#B2794C"
+                                    class="w-full"
+                                ></v-text-field>
+
+                                <!-- Stock del evento -->
+                                <v-text-field
+                                    v-if="form.pay == 1"
+                                    v-model="form.stock"
+                                    label="Stock de entradas del evento"
                                     color="#B2794C"
                                     class="w-full"
                                 ></v-text-field>
@@ -197,6 +265,9 @@ export default {
             form: {
                 name: "",
                 mode: "",
+                pay: "",
+                price: "",
+                stock: "",
                 init_date: "",
                 init_time: "",
                 location: "",
@@ -266,6 +337,9 @@ export default {
         changeMode(mode) {
             this.mode = mode;
         },
+        changePay(pay) {
+            this.pay = pay;
+        },
         clickSaveButton() {
             const btn = document.querySelector('a[title="Save"]');
             if (!btn) return;
@@ -306,6 +380,21 @@ export default {
                 this.errors.push("El tipo del evento es obligatorio");
             }
 
+            if (!this.form.pay) {
+                this.formIsValid = false;
+                this.errors.push("El tipo pago del evento es obligatorio");
+            }
+
+            if (this.form.pay == 1 && !this.form.price) {
+                this.formIsValid = false;
+                this.errors.push("El precio del evento es obligatorio");
+            }
+
+            if (this.form.pay == 1 && !this.form.stock) {
+                this.formIsValid = false;
+                this.errors.push("El stock del evento es obligatorio");
+            }
+
             if (!this.form.init_date) {
                 this.formIsValid = false;
                 this.errors.push("La fecha de inicio es obligatoria");
@@ -344,6 +433,9 @@ export default {
             data.append("image", cropped);
             data.append("name", this.form.name);
             data.append("mode", this.form.mode);
+            data.append("pay", this.form.pay);
+            data.append("price", this.form.price);
+            data.append("stock", this.form.stock);
             data.append("init_date", this.form.init_date);
             data.append("init_time", this.form.init_time);
             data.append("location", this.form.location);

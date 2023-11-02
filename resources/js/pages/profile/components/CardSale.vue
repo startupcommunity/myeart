@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="w-full pt-3">
-                <p class="font-bold text-zinc-900">
+                <p class="font-bold text-zinc-900" v-if="!item.event">
                     Enviado:
                     <span class="font-light text-zinc-800">
                         {{ address }}
@@ -191,8 +191,10 @@ export default {
             //     return "Cancelado. El pedido ha sido cancelado";
             // }
 
-            if (states.delivered.val === this.status) {
+            if (states.delivered.val === this.status && !this.item?.event) {
                 return "Finalizado. Ha sido entregado en la dirección indicada";
+            } else if(this.item?.event) {
+                return "Finalizado.";
             }
 
             return "---";

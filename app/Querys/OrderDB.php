@@ -147,6 +147,7 @@ class OrderDB
 
     // primero obtener los artículos vendidos
     $artworks = $user->artworks()->where('state', ArtworkStateEnum::SOLD)->get();
+    $events = $user->events()->get();
 
     // obtener las ordenes de los artículos y sus relaciones
     $orders = OrderItem::whereIn('artwork_id', $artworks->pluck('id'))
@@ -154,6 +155,16 @@ class OrderDB
         'artwork.gallery',
         'order.shippingAddress',
         'order.shippingMethod',
+        // 'user'
+      ])
+      ->orderByDesc('created_at')
+      ->get();
+
+    $ordersEvents = OrderItem::whereIn('event_id', $events->pluck('id'))
+      ->with([
+        'order.shippingAddress',
+        'order.shippingMethod',
+        'event'
         // 'user'
       ])
       ->orderByDesc('created_at')
@@ -173,7 +184,7 @@ class OrderDB
 
     // dd($orders->toArray());
 
-    return $orders->toArray();
+    return [$orders->toArray(),$ordersEvents->toArray()];
   }
 
   /**

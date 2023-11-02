@@ -69,6 +69,21 @@
                                 Canceladas
                             </v-btn>
                         </div> -->
+                        <div
+                            class="w-full lg:w-auto lg:px-4 border-b border-b-gray-300 lg:border-b-0"
+                        >
+                            <v-btn
+                                text
+                                depressed
+                                block
+                                class="uppercase tracking-wide"
+                                @click.stop="
+                                    filterToState(ITEM_STATES.events.val)
+                                "
+                            >
+                                Eventos
+                            </v-btn>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,6 +142,7 @@ export default {
             showConfirmItems: false,
             sales: [],
             original: [],
+            events:[],
             item: {},
             status: {
                 shipped: false,
@@ -176,6 +192,7 @@ export default {
             this.status.shipped = state === this.ITEM_STATES.shipped.val;
             this.status.delivered = state === this.ITEM_STATES.delivered.val;
             this.status.canceled = state === this.ITEM_STATES.canceled.val;
+            this.status.events = state === this.ITEM_STATES.events.val;
             this.filterOrders();
         },
 
@@ -195,6 +212,11 @@ export default {
                 this.sales = this.original.filter(
                     (i) => i.status === this.ITEM_STATES.delivered.val
                 );
+            }
+
+            // eventos - listar los eventos comprados
+            if (this.status.events) {
+                this.sales = this.events;
             }
         },
 
@@ -236,8 +258,9 @@ export default {
                 .get(this.ep.sales.getUserSales)
                 .then((resp) => {
                     if (resp.status === 200) {
-                        this.sales = resp.data;
+                        this.sales = resp.data[0];
                         this.original = JSON.parse(JSON.stringify(this.sales));
+                        this.events = resp.data[1];
                         return;
                     }
 

@@ -27,7 +27,7 @@ class EventFactory
       $file = $data->file('image');
       $name = 'picture-' . '-' . date('Ymdhis');
       $path = config('storage.public.event_image');
-      $data = $data->only(['name', 'description', 'location', 'init_date', 'init_time', 'mode', 'phone_number','collective_id']);
+      $data = $data->only(['name', 'description', 'location', 'init_date', 'init_time', 'mode', 'phone_number','collective_id','pay','price','stock']);
 
       // primero se debe guardar la imagen
       $filename = AppStorage::saveFile($file, $name, $path);

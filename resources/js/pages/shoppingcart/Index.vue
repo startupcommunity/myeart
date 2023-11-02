@@ -23,6 +23,8 @@
                     <div class="py-5 border-b border-zinc-900 pb-5">
                         <CardRowCart
                             :artwork="item.artwork"
+                            :event="item.event"
+                            :quantity="item.quantity"
                             v-for="item in items"
                             :key="item.id"
                             class="mb-8"
@@ -109,8 +111,15 @@ export default {
         total() {
             const total = this.items.reduce((total, item) => {
                 const one = parseFloat(total);
-                const two = parseFloat(item.artwork?.total);
-                const result = one + two;
+                let two = 0;
+                let three = 0;
+                if (item.artwork) {
+                    two = parseFloat(item.artwork?.total);
+                }
+                if (item.event) {
+                    three = parseFloat((item.event?.price*item.quantity));
+                }
+                const result = one + two + three;
                 return parseFloat(result).toFixed(2);
             }, 0);
 
@@ -149,7 +158,13 @@ export default {
          * state = 1  => publicada
          */
         allPublished() {
-            return this.items.every((item) => item.artwork?.state === 1);
+            return this.items.every((item) => {
+                if(item.artwork){
+                    return item.artwork?.state === 1
+                } else { //es evento
+                    return true
+                }
+            });
         },
     },
 

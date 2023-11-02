@@ -30,6 +30,7 @@ class OrderItem extends Model
         'price',        // decimal
         'photo',        // string
         'status',       // tinyint '0' => 'pending', '1' => 'shipped', '2' => 'delivered', '3' => 'cancelled
+        'event_id'      //int
     ];
 
     /**
@@ -50,6 +51,16 @@ class OrderItem extends Model
     public function artwork(): BelongsTo
     {
         return $this->belongsTo(Artwork::class);
+    }
+
+    /**
+     * Get the event that owns the order item.
+     *
+     * @return BelongsTo
+     */
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(UserEvent::class);
     }
 
     /**

@@ -26,6 +26,7 @@ class ShoppingCart extends Model
         'user_id',
         'artwork_id',
         'quantity', // por defecto siempre sera 1
+        'event_id',
     ];
 
     /**
@@ -57,5 +58,15 @@ class ShoppingCart extends Model
     public function artwork(): BelongsTo
     {
         return $this->belongsTo(Artwork::class);
+    }
+
+    /**
+     * el evento que tiene el carrito de compras
+     *
+     * @return BelongsTo
+     */
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(UserEvent::class);
     }
 }

@@ -11,9 +11,9 @@
                 </div>
                 <div class="flex flex-col justify-start space-y-3 w-full">
                     <h3 class="text-lg md:text-2xl font-bold text-zinc-900">
-                        {{ artwork.title }}
+                        {{ artwork?.title || event?.name }}
                     </h3>
-                    <div>
+                    <div v-if="artwork">
                         <p class="uppercase text-base leading-8 font-bold">
                             Medida: {{ measures }}
                         </p>
@@ -21,6 +21,19 @@
                             class="uppercase text-base leading-8 font-bold -mt-5"
                         >
                             Peso: {{ weight }}
+                        </p>
+                    </div>
+                    <div v-if="event">
+                        <p class="uppercase text-base leading-8 font-bold">
+                            Evento
+                        </p>
+                        <p class="uppercase text-base leading-8 font-bold">
+                            Cantidad: {{ quantity }}
+                        </p>
+                        <p
+                            class="uppercase text-base leading-8 font-bold -mt-5"
+                        >
+                            Fecha: {{ event.init_date }} {{ event.init_time }}
                         </p>
                     </div>
                     <div class="w-full">
@@ -63,13 +76,13 @@
             <div class="flex flex-col items-start md:items-end">
                 <div class="md:mb-3">
                     <h4 class="text-2xl font-bold text-zinc-900 uppercase">
-                        {{ artwork.total }} {{ euro }}
+                        {{ artwork?.total || event?.price }} {{ euro }}
                     </h4>
                 </div>
                 <div class="md:mb-3">
                     <v-btn text @click.stop="deleteItem">Eliminar</v-btn>
                 </div>
-                <div v-if="!isAvailable">
+                <div v-if="!isAvailable && this.artwork">
                     <p class="text-red-500 text-sm">
                         <i class="fa fa-warning"></i>
                         Esta obra ya no se encuentra disponible
@@ -96,13 +109,21 @@ export default {
             type: Object,
             default: () => ({}),
         },
+        event: {
+            type: Object,
+            default: () => ({}),
+        },
+        quantity: {
+            type: Number,
+            default: () => 1,
+        },
     },
     computed: {
         /**
          * Devuelve el creador de la obra
          */
         creator() {
-            return this.artwork?.user || {};
+            return (this.artwork?.user || this.event?.user) || {};
         },
         /**
          * Devuelve las medidas de la obra
@@ -173,7 +194,13 @@ export default {
                     };
 
                     // ep
-                    const ep = this.ep.carts.deleteItem + this.artwork.id;
+                    let ep = ''
+                    if (this.artwork) {
+                        ep = this.ep.carts.deleteItem + this.artwork.id+'/1';
+                    }
+                    if (this.event) {
+                        ep = this.ep.carts.deleteItem + this.event.id+'/2';
+                    }
 
                     // request axios
                     this.axios

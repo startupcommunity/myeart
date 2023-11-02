@@ -16,8 +16,17 @@ class ShoppingCartDB
   {
     $user = auth()->user();
     $items = $user->shoppingCart()->with([
-      'artwork.gallery', 'artwork.user.artworks.categories', 'artwork.categories'
+      'artwork.gallery', 'artwork.user.artworks.categories', 'artwork.categories','event.user','event.tickets'
     ])->get();
+
+    /*foreach($items as $item){
+      if(isset($item['event'])){
+        unset($item["artwork"]);
+        $item->artwork = [
+          "title" => $item["event"]["name"]
+        ];
+      }
+    }*/
 
     return $items;
   }

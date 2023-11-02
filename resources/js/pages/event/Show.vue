@@ -91,7 +91,18 @@
                                 {{ getDescription }}
                             </p>
                             <div class="mt-5 hidden md:flex items-end">
+                                <!-- Cantidad de tickets del evente -->
+                                <v-text-field
+                                    v-model="quantity"
+                                    type="number"
+                                    label="Cantidad de tickets"
+                                    color="#B2794C"
+                                    class="w-full"
+                                ></v-text-field>
+                            </div>
+                            <div class="mt-5 hidden md:flex items-end">
                                 <v-btn
+                                    v-if="event.pay == 2"
                                     color="#B2794C"
                                     class="uppercase tracking-widest text-white rounded"
                                     type="button"
@@ -99,6 +110,29 @@
                                 >
                                     Me interesa
                                 </v-btn>
+                                <div v-if="!hasOwner && event.pay == 1">
+                                    <v-btn
+                                        large
+                                        :color="
+                                            insideCart
+                                                ? 'green darken-4'
+                                                : 'grey darken-4'
+                                        "
+                                        @click.stop="addToCart"
+                                        :disabled="!canAddToCart"
+                                        :loading="loading"
+                                    >
+                                        <span
+                                            class="uppercase text-white"
+                                            v-if="!insideCart"
+                                        >
+                                            Agregar al carrito
+                                        </span>
+                                        <span class="uppercase text-white" v-else>
+                                            Agregada al carrito
+                                        </span>
+                                    </v-btn>
+                                </div>
                             </div>
 
                             <!-- visible en mobile -->
@@ -114,6 +148,7 @@
                                         Me interesa
                                     </v-btn>
                                 </div>
+                                
                                 <div
                                     class="flex gap-5 items-start justify-end text-2xl"
                                 >
@@ -144,6 +179,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Header from "../landing/sections/Header.vue";
 import MainLayout from "../layouts/MainLayout.vue";
 import ButtonFavEvent from "./components/ButtonFavEvent.vue";
@@ -172,6 +208,8 @@ export default {
         return {
             event: {},
             showReservation: false,
+            loading: false,
+            quantity:1,
         };
     },
 
@@ -180,6 +218,33 @@ export default {
     },
 
     computed: {
+        /**
+         * Acceder a los getters necesarios
+         * user profile
+         */
+        ...mapGetters({
+            user: "getProfile",
+        }),
+        /**
+         * Verifica si es el dueño del evento
+         */
+        hasOwner() {
+            return this.event?.user?.id === this.user?.id;
+        },
+        /**
+         * Verifica si el evento ya fue agregado
+         * al carrito de compras del usuario
+         */
+        insideCart() {
+            const cart = this.user?.shopping_cart || [];
+            return cart.some((item) => item.event_id === this.event.id);
+        },
+        /**
+         * Verifica si el evento esta disponible
+         */
+        canAddToCart() {
+            return !this.loading && !this.insideCart;
+        },
         getImage() {
             const image = this.event?.image;
             if (image) return this.$pathEventImage + image;
@@ -260,6 +325,52 @@ export default {
                 .then((resp) => (this.event = resp.data))
                 .catch((error) => this.$manageError(error))
                 .finally(() => (this.globalLoading = false));
+        },
+        /**
+         * Agrega el evento al carrito de compras
+         */
+        addToCart() {
+            if (!this.canAddToCart) return false;
+
+            this.loading = true;
+            const data = {
+                event_id: this.event.id,
+                user_id: this.user.id,
+                quantity:this.quantity,
+            };
+            
+
+            this.axios
+                .post(this.ep.carts.addItem, data)
+                .then((resp) => {
+                    if (resp.status === 200) {
+                        this.$store.dispatch("userRequest");
+
+                        const title = `El evento ${this.event.name} se agregó al carrito de compras`;
+                        const dialog = {
+                            title,
+                            text: "Excelente!",
+                            icon: "success",
+                            confirmButtonText: "Ir al carrito de compras",
+                            cancelButtonText: "Seguir comprando",
+                        };
+
+                        this.confirmedDialog(dialog).then((resp) => {
+                            if (resp.isConfirmed) {
+                                this.$router.push({ name: "shoppingCart" });
+                            }
+                        });
+                    }
+
+                    if (resp.status === 204) {
+                        this.$noty(
+                            "El evento no se encuentra disponible",
+                            "warning"
+                        );
+                    }
+                })
+                .catch((error) => this.$manageError(error))
+                .finally(() => (this.loading = false));
         },
     },
 };

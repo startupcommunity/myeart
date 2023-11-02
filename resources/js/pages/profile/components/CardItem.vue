@@ -207,7 +207,11 @@ export default {
             }
 
             if (states.delivered.val === this.status) {
-                return "Finalizado. Ha sido entregado en la dirección indicada";
+                if (this.item.artwork_id) {
+                    return "Finalizado. Ha sido entregado en la dirección indicada";
+                } else {
+                    return "Finalizado.";
+                }
             }
 
             return "---";

@@ -88,6 +88,8 @@ export default {
                 delivered: { text: "Entregado", val: 2 },
                 canceled: { text: "Cancelado", val: 3 },
                 undelivered: { text: "No entregado", val: 4 },
+                //para filtrar los eventos en la vista de ventas
+                events: { text: "Eventos", val: 5 },
             };
         },
 

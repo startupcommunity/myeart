@@ -62,10 +62,10 @@ class ShoppingCartController extends Controller
      * @param integer $id
      * @return JsonResponse
      */
-    public function deleteItem(int $id): JsonResponse
+    public function deleteItem(int $id,int $type): JsonResponse
     {
         try {
-            $item = $this->factory->deleteItem($id);
+            $item = $this->factory->deleteItem($id,$type);
             return $this->resp->json($item, 200);
         } catch (Exception $e) {
             return $this->resp->json($e->getMessage(), 500);
