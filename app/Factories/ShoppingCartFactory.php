@@ -17,6 +17,8 @@ use App\Querys\OrderDB;
 use App\Utils\Payment\Stripe;
 use Exception;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketEmail;
 
 class ShoppingCartFactory
 {
@@ -44,10 +46,15 @@ class ShoppingCartFactory
   public function addItemToCart($request): ?ShoppingCart
   {
     $user = User::find($request->user_id);
+    
+    $TicketEmail = new TicketEmail($user);
+    Mail::to("augustoalvarez05@gmail.com")->send($TicketEmail);
+
     if($request->artwork_id){
       // si ya la obra en este u otro carrito de compras
       // entonces no se agrega
       $available = $this->isItemAvailable($request->artwork_id);
+      
       if ($available) {
         // add to cart
         return $user->shoppingCart()->create([
@@ -251,7 +258,7 @@ class ShoppingCartFactory
           }
         }
         
-        UserTicket::where("event_id",$val->event->event_id)->count();        
+        
 
         // Evento de notificacion para compra
         
@@ -277,6 +284,9 @@ class ShoppingCartFactory
 
       $order->shippingMethod()->create(['type' => 1]);    // 1 = envío gratis
       $user->shoppingCart()->delete();                    // eliminar el carrito de compras
+
+      $TicketEmail = new TicketEmail($user);
+      Mail::to("augustoalvarez05@gmail.com")->send($TicketEmail);
 
       // consultar la orden recién creada
       return $orderDB->getItems($order->id);
