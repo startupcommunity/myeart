@@ -43,27 +43,12 @@ class TicketEmail extends Mailable
             new RendererStyle(400),
             new ImagickImageBackEnd()
         );
-        //$writer = new Writer($renderer);
-        //$output = $writer->writeString('https://www.example.com');
+        $writer = new Writer($renderer);
+        $output = $writer->writeString('https://www.example.com');
         
-        //$qrCodeBase64 = base64_encode($output);
-        $renderer = new RendererStyle(new RendererStyle(400),
-        new ImagickImageBackEnd());
-        $writer = new Writer(new Png(), $renderer);
-
-        // Define el contenido del QR
-        $content = 'https://www.example.com';
-
-        // Define el path donde se guardará la imagen, en el disco público.
-        $path = 'qrcodes/event-ticket.png';
-
-        // Guarda la imagen en el sistema de archivos público
-        Storage::disk('public')->put($path, $writer->writeString($content));
-
-        // Obtiene la URL pública para acceder a la imagen.
-        $qrCodeUrl = Storage::disk('public')->url($path);
+        $qrCodeBase64 = base64_encode($output);
         return $this->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
             ->subject('Ticket de evento - Myeart ' . env('APP_NAME'))
-            ->view('emails.ticket')->with(['qrCode'=> $qrCodeUrl]);
+            ->view('emails.ticket')->with(['qrCode'=> $qrCodeBase64]);
     }
 }
