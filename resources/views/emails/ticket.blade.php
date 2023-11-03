@@ -32,7 +32,7 @@
                         <p>
                             asas {{ $qrCode }}
                         </p>
-                            <img src="data:image/png;base64,{{ $qrCode }}" alt="QR Code">
+                            <img src="{{ $qrCode }}" alt="QR Code">
                         <p>
                             
                         </p>
