@@ -32,7 +32,7 @@
                         <p>
                             asas
                         </p>
-                            <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('https://www.example.com')) !!} ">
+                            <img src="data:image/png;base64, {{ $qrCode }}" alt="QR Code">
                         <p>
                             
                         </p>
