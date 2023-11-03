@@ -47,7 +47,8 @@ class TicketEmail extends Mailable
         //$output = $writer->writeString('https://www.example.com');
         
         //$qrCodeBase64 = base64_encode($output);
-        $renderer = new RendererStyle(400);
+        $renderer = new RendererStyle(new RendererStyle(400),
+        new ImagickImageBackEnd());
         $writer = new Writer(new Png(), $renderer);
 
         // Define el contenido del QR
