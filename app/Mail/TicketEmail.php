@@ -42,12 +42,15 @@ class TicketEmail extends Mailable
             new RendererStyle(400),
             new ImagickImageBackEnd()
         );
-        $writer = new Writer($renderer);
-        $output = $writer->writeString('https://www.example.com');
-        $qrCodeBase64 = base64_encode($output);
-
+        //$writer = new Writer($renderer);
+        //$output = $writer->writeString('https://www.example.com');
+        
+        //$qrCodeBase64 = base64_encode($output);
+        $path = 'qrcodes/event-ticket.png';
+        QrCode::format('png')->size(400)->generate('https://www.example.com', public_path($path));
+        $qrCodeUrl = asset($path);
         return $this->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
             ->subject('Ticket de evento - Myeart ' . env('APP_NAME'))
-            ->view('emails.ticket')->with(['qrCode'=> "data:image/png;base64,$qrCodeBase64"]);
+            ->view('emails.ticket')->with(['qrCode'=> $qrCodeUrl]);
     }
 }
