@@ -15,6 +15,7 @@ use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Encoder\Encoder;
 use BaconQrCode\Common\ErrorCorrectionLevel;
+use BaconQrCode\Renderer\Image\Png;
 
 class TicketEmail extends Mailable
 {
