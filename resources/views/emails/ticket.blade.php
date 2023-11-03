@@ -38,6 +38,10 @@
                         </p>
                             <img src='{!! html_entity_decode($qrCode) !!}' alt="QR Code"/>
                         <p>
+
+                        </p>
+                            <img src='{!! $qrCode !!}' alt="QR Code"/>
+                        <p>
                             
                         </p>
                     </h5>
