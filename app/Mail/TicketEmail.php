@@ -48,6 +48,6 @@ class TicketEmail extends Mailable
 
         return $this->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
             ->subject('Ticket de evento - Myeart ' . env('APP_NAME'))
-            ->view('emails.ticket')->with(['qrCode'=> $qrCodeBase64]);
+            ->view('emails.ticket')->with(['pruebas'=>'asdasd','qrCode'=> $qrCodeBase64]);
     }
 }

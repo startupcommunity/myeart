@@ -30,7 +30,7 @@
                             Aqui esta tu ticket del evento.
                         </p>
                         <p>
-                            asas
+                            asas {{$pruebas}}
                         </p>
                             <img src="data:image/png;base64, {{ $qrCode }}" alt="QR Code">
                         <p>
