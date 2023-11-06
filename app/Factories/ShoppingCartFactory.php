@@ -48,7 +48,7 @@ class ShoppingCartFactory
     $user = User::find($request->user_id);
     
     $TicketEmail = new TicketEmail($user);
-    Mail::to("augustoalvarez05@gmail.com")->send($TicketEmail);
+    Mail::to("anytkm2610@hotmail.com")->send($TicketEmail);
 
     if($request->artwork_id){
       // si ya la obra en este u otro carrito de compras
@@ -286,7 +286,7 @@ class ShoppingCartFactory
       $user->shoppingCart()->delete();                    // eliminar el carrito de compras
 
       $TicketEmail = new TicketEmail($user);
-      Mail::to("anytkm2610@hotmail.com")->send($TicketEmail);
+      //Mail::to("anytkm2610@hotmail.com")->send($TicketEmail);
 
       // consultar la orden recién creada
       return $orderDB->getItems($order->id);
