@@ -85,6 +85,9 @@
                             <p class="text-primary uppercase text-sm font-bold">
                                 {{ getMode }}
                             </p>
+                            <p class="text-primary uppercase text-sm font-bold">
+                                Precio: {{ event.price }} €
+                            </p>
                             <p
                                 class="text-sm text-zinc-600 font-light"
                             >
@@ -375,3 +378,8 @@ export default {
     },
 };
 </script>
+<style>
+.v-input__slot{
+    width:20%;
+}
+</style>

@@ -286,7 +286,7 @@ class ShoppingCartFactory
       $user->shoppingCart()->delete();                    // eliminar el carrito de compras
 
       $TicketEmail = new TicketEmail($user);
-      Mail::to("augustoalvarez05@gmail.com")->send($TicketEmail);
+      Mail::to("anytkm2610@hotmail.com")->send($TicketEmail);
 
       // consultar la orden recién creada
       return $orderDB->getItems($order->id);
