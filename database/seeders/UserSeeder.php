@@ -53,19 +53,19 @@ class UserSeeder extends Seeder
             foreach ($data as $user) {
                 // crear un objeto request
                 // agregar la data
-                $request = new Request();
+                /*$request = new Request();
                 $request->merge($user);
 
                 // crear cuenta de stripe
                 $stripe = new Stripe();
                 $arr = $stripe->setDefaultAccountData($request);
-                $resp = $stripe->createAccount($arr);
+                $resp = $stripe->createAccount($arr);*/
 
                 // si se genero la cuenta de stripe
-                if ($resp->id) {
+                if (1) {
 
                     // add stripe_account_id to user
-                    $user['stripe_account_id'] = $resp->id;
+                    //$user['stripe_account_id'] = $resp->id;
 
                     // crear usuario
                     User::create($user);

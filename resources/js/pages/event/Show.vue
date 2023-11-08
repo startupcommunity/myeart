@@ -85,7 +85,7 @@
                             <p class="text-primary uppercase text-sm font-bold">
                                 {{ getMode }}
                             </p>
-                            <p class="text-primary uppercase text-sm font-bold">
+                            <p class="text-primary uppercase text-sm font-bold" v-if="event.pay == 1">
                                 Precio: {{ event.price }} €
                             </p>
                             <p
