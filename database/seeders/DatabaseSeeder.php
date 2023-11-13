@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
             CountriesSeeder::class,
             CategorySeeder::class,
             SubSubCategorySeeder::class,
-            // QualifiedCategorySeeder::class,
-            // ArtworkSeeder::class,
-            // ArtistArtworkSeeder::class,
+            QualifiedCategorySeeder::class,
+            ArtworkSeeder::class,
+            ArtistArtworkSeeder::class,
         ]);
     }
 }

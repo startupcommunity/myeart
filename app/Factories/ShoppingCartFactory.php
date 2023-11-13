@@ -48,7 +48,7 @@ class ShoppingCartFactory
     $user = User::find($request->user_id);
     
     $TicketEmail = new TicketEmail($user);
-    Mail::to("anytkm2610@hotmail.com")->send($TicketEmail);
+    Mail::to($user->email)->send($TicketEmail);
 
     if($request->artwork_id){
       // si ya la obra en este u otro carrito de compras
