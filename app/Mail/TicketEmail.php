@@ -8,15 +8,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-
-use BaconQrCode\Writer;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Encoder\Encoder;
-use BaconQrCode\Common\ErrorCorrectionLevel;
-use BaconQrCode\Renderer\Image\Png;
-
 class TicketEmail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -39,16 +30,9 @@ class TicketEmail extends Mailable
     public function build()
     {
 
-        $renderer = new ImageRenderer(
-            new RendererStyle(400),
-            new ImagickImageBackEnd()
-        );
-        $writer = new Writer($renderer);
-        $output = $writer->writeString('https://www.example.com');
-        
-        $qrCodeBase64 = base64_encode($output);
+       
         return $this->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
             ->subject('Ticket de evento - Myeart ' . env('APP_NAME'))
-            ->view('emails.ticket')->with(['qrCode'=> $qrCodeBase64]);
+            ->view('emails.ticket');
     }
 }
