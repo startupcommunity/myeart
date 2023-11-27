@@ -12,7 +12,7 @@ class CategoryController extends Controller
     {
         try {
             // obtener y ordenar por nombre
-            $categories = Category::where('status', 1)->orderBy('name')->get();
+            $categories = Category::where('status', 1)/*->orderBy('name')*/->get();
             return response()->json($categories, 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 500);
