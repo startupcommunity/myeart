@@ -10,6 +10,7 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Utils\Payment\Stripe;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -56,7 +57,7 @@ class RegisterController extends Controller
         }
 
         // enviar email de verificación de registro
-        $this->userFactory->sendEmailConfirmRegister($request->email);
+        //$this->userFactory->sendEmailConfirmRegister($request->email);
 
         return response()->json([
             'message' => 'Usuario registrado correctamente'
@@ -70,9 +71,13 @@ class RegisterController extends Controller
     {
         // user
         $user = User::create($data);
+        
+        
+        $user->email_verified_at = Carbon::now();
+        
         // add pais
         $user->profile()->create(['pais_id' => $data['pais_id']]);
-
+        $user->save();
         return $user;
     }
 

@@ -38,10 +38,4 @@
 export default {
     name: "Home",
 };
-window.onload = function () {
-    if(localStorage.getItem('act.x') == "1")
-    sessionStorage.clear();
-    localStorage.clear();
-    localStorage.setItem('act.x',"1")
-};
 </script>
